@@ -4,11 +4,11 @@ Module handling adb functionality, inspired by [adbkit](https://www.npmjs.com/pa
 Developed and tested with Android Debug Bridge version 1.0.41
 Version 29.0.5-5949299.
 
-##Installation
+## Installation
 ```bash
 yarn add adb-ts
 ```
-##API
+## API
 * **AdbClient(options?: AdbClientOptions)**
 - **options?** optitional callback function:
     - `bin: string`: path to adb.exe, if not set, env path is taken
@@ -102,6 +102,15 @@ adb.kill()
 Kills the adb server.
 
 * Returns: `Promise<void>`
+
+##### adb.exec(...args: ReadonlyArray<string>)
+```ts
+adb.exec('devices')
+    .then((output: string) => console.log(output));
+```
+Executes a given command via adb console interfase.
+
+* Returns: `Promise<string>`
 
 ##### adb.custom<T>(CustomCommand: CommandConstruct, cb?: (err: Error, value: T) => void)
 Enables to execute any custom command. Provided parameter has to extend the `Command` class.
@@ -730,6 +739,24 @@ device.openMonkey()
 Establishes a new monkey connection on port `1080`. For more see [`Monkey`](L720).
 
 * Returns: `Promise<Monkey>`
+
+##### device.exec(...args: ReadonlyArray<string>)
+```ts
+device.exec('reboot')
+    .then((output: string) => console.log(output));
+```
+Executes a given command via adb console interface.
+
+* Returns: `Promise<string>`
+
+##### device.execShell(...args: ReadonlyArray<string>)
+```ts
+device.exec('pm list packages')
+    .then((output: string) => console.log(output));
+```
+Executes a given shell command via adb console interface. Analogous to `adb -s <serial> shell <command>`.
+
+* Returns: `Promise<string>`
 
 #### adb monkey
 

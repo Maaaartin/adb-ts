@@ -77,7 +77,6 @@ export function stringToType(value: string): SimpleType {
     }
 }
 
-
 export type DeviceState = 'offline' | 'device' | 'emulator' | 'unauthorized' | 'recovery' | 'no permissions';
 
 export type AdbFlag = '-f' | '-d' | '-e' | '-g' | '-k' | '-s' | '-t' | '-3' | '-i' | '-u';
@@ -111,7 +110,8 @@ export interface IAdbDevice {
     device?: string
     model?: string
     product?: string
-    transportId?: string
+    transportId?: string,
+    transport: TransportType
 }
 
 export interface AdbError extends Error {

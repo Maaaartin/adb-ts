@@ -1,10 +1,17 @@
 import { IAdbDevice, DeviceState, Reply } from '.';
 import Command from './command';
 import Promise from 'bluebird';
+import ipRegex from 'ip-regex';
+
+export function constructDevice(device: IAdbDevice) {
+    device.transport = ipRegex().test(device.id) ? 'local' : 'usb';
+    device.state = /emulator/.test(device.id) && device.state === 'device' ? 'emulator' : device.state;
+    return device;
+}
 
 export default class DevicesCommand extends Command {
     protected parse(value: string) {
-        const devices: IAdbDevice[] = [];
+        const devices = [];
         const valueStr = value;
         if (!value.length) {
             return devices;
@@ -13,15 +20,16 @@ export default class DevicesCommand extends Command {
         for (const line of lines) {
             if (line) {
                 const tmp = line.split(/\s+/);
-                devices.push({
+                devices.push(constructDevice({
                     id: tmp[0],
                     state: tmp[1] as DeviceState,
                     path: tmp[2],
                     product: tmp[3],
                     model: tmp[4],
                     device: tmp[5],
-                    transportId: tmp[6]
-                });
+                    transportId: tmp[6],
+                    transport: 'any'
+                }));
             }
         }
         return devices;

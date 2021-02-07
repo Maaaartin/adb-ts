@@ -1,9 +1,9 @@
 import Promise from "bluebird";
 import { EventEmitter } from "events";
-import DevicesCommand from './devices';
 import { IAdbDevice, PrematureEOFError } from ".";
-import AdbDevice from "./device";
 import AdbClient from "./client";
+import AdbDevice from "./device";
+import DevicesCommand from './devices';
 
 Promise.config({ cancellation: true });
 

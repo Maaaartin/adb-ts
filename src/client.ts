@@ -3,6 +3,7 @@ import { execFile } from 'child_process';
 import { EventEmitter } from 'events';
 import fs, { Stats } from 'fs';
 import Jimp from 'jimp';
+import { stdin } from 'process';
 import { Readable } from "stream";
 import stringToStreamfrom from 'string-to-stream';
 import { AdbClientOptions, CommandConstruct, ForwardsObject, IAdbDevice, InputOptions, InputSource, InstallOptions, KeyStringObject, LogcatOptions, ReversesObject, SettingsMode, SimpleType, StartActivityOptions, StartServiceOptions, TransportType, UninstallOptions, WaitForState } from ".";
@@ -170,7 +171,7 @@ export default class AdbClient extends EventEmitter {
         return this.connection()
             .then((conn) => {
                 return new ListDevicesCommand(conn)
-                    .execute();
+                    .execute()
             }).nodeify(cb);
     }
 
@@ -816,5 +817,28 @@ export default class AdbClient extends EventEmitter {
     killApp(serial: string, pkg: string, cb?: (err: Error) => void) {
         this.shell(serial, `am force-stop ${pkg}`).return()
             .nodeify(cb);
+    }
+
+    private execInternal(...args: ReadonlyArray<string>) {
+        return new Promise<string>((resolve, reject) => {
+            execFile(this.options.bin, args, (err, stdout, stderr) => {
+                if (err) return reject(err);
+                else if (stderr) return reject(new Error(stderr.trim()));
+                else if (/Error/.test(stdout)) return reject(new Error(stdout.trim()));
+                else return resolve(stdout);
+            });
+        });
+    }
+
+    exec(...args: ReadonlyArray<string>) {
+        return this.execInternal(...args);
+    }
+
+    execDevice(serial: string, ...args: ReadonlyArray<string>) {
+        return this.execInternal(...['-s', serial, ...args]);
+    }
+
+    execDeviceShell(serial: string, ...args: ReadonlyArray<string>) {
+        return this.execInternal(...['-s', serial, 'shell', ...args]);
     }
 }

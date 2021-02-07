@@ -1,4 +1,5 @@
 import Promise from 'bluebird';
+import { execFile } from 'child_process';
 import ipRegex from 'ip-regex';
 import Jimp from 'jimp';
 import { Readable } from "stream";
@@ -27,15 +28,6 @@ export default class AdbDevice implements IAdbDevice {
 
     constructor(client: AdbClient, props?: IAdbDevice) {
         Object.assign(this, props || {});
-        if (this.state !== 'device' && this.state !== 'emulator') {
-            this.transport = 'any';
-        }
-        else {
-            if (ipRegex().test(this.id)) {
-                this.transport = 'local';
-            }
-            else this.transport = 'usb';
-        }
         this.client = client;
     }
 
@@ -265,5 +257,13 @@ export default class AdbDevice implements IAdbDevice {
 
     killApp(pkg: string, cb?: (err: Error) => void) {
         return this.client.killApp(this.id, pkg, cb);
+    }
+
+    exec(...args: ReadonlyArray<string>) {
+        return this.client.execDevice(this.id, ...args);
+    }
+
+    execShell(...args: ReadonlyArray<string>) {
+        return this.client.execDeviceShell(this.id, ...args);
     }
 }
