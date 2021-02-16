@@ -1,5 +1,5 @@
 import Promise from 'bluebird';
-import { execFile } from 'child_process';
+import { exec, execFile } from 'child_process';
 import { EventEmitter } from 'events';
 import fs, { Stats } from 'fs';
 import Jimp from 'jimp';
@@ -819,7 +819,7 @@ export default class AdbClient extends EventEmitter {
 
     private execInternal(...args: ReadonlyArray<string>) {
         return new Promise<string>((resolve, reject) => {
-            execFile(this.options.bin, args, (err, stdout, stderr) => {
+            exec(`${this.options.bin} ${args.join(' ')}`, (err, stdout, stderr) => {
                 if (err) return reject(err);
                 else if (stderr) return reject(new Error(stderr.trim()));
                 else if (/Error/.test(stdout)) return reject(new Error(stdout.trim()));
