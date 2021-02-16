@@ -758,6 +758,15 @@ Executes a given shell command via adb console interface. Analogous to `adb -s <
 
 * Returns: `Promise<string>`
 
+##### device.batteryStatus()
+```ts
+device.batteryStatus()
+    .then((output: KeyStringObject) => console.log(KeyStringObject));
+```
+Retrieves current batery status. Analogous to `adb -s <serial> shell dumpsys battery`.
+
+* Returns: `Promise<KeyStringObject>`
+
 #### adb monkey
 
 ##### device openMonkey(port: number, cb?: (err: Error, value: Monkey) => void)

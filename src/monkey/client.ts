@@ -4,7 +4,7 @@ import Api from "./api";
 import Command from "./command";
 import CommandQueue from "./commandqueue";
 import Parser from "./parser";
-import Reply from "./reply";
+import Reply, { ReplyType } from "./reply";
 
 export default class Monkey extends Api {
     public readonly queue: Command[] = [];
@@ -26,6 +26,23 @@ export default class Monkey extends Api {
             this.queue.push(new Command(commands, cb));
             this.stream.write("" + commands + "\n");
         }
+        let hadError = true;
+        this.stream?.once('data', (data) => {
+            hadError = false;
+        });
+        this.stream?.once('error', (err) => {
+            hadError = false;
+        });
+        this.stream?.once('end', () => {
+            hadError = false;
+        });
+        this.stream?.once('finish', () => {
+            hadError = false;
+        });
+        this.stream.setTimeout(100, () => {
+            if (hadError) this.consume(new Reply(ReplyType.ERROR,
+                'Command failed'));
+        });
         return this;
     }
 

@@ -3,13 +3,13 @@ import { execFile } from 'child_process';
 import { EventEmitter } from 'events';
 import fs, { Stats } from 'fs';
 import Jimp from 'jimp';
-import { stdin } from 'process';
 import { Readable } from "stream";
 import stringToStreamfrom from 'string-to-stream';
 import { AdbClientOptions, CommandConstruct, ForwardsObject, IAdbDevice, InputOptions, InputSource, InstallOptions, KeyStringObject, LogcatOptions, ReversesObject, SettingsMode, SimpleType, StartActivityOptions, StartServiceOptions, TransportType, UninstallOptions, WaitForState } from ".";
 import ForwardCommand from "./commands/host-serial/forward";
 import GetDevicePathCommand from "./commands/host-serial/getdevicepath";
 import ListForwardsCommand from "./commands/host-serial/listforwards";
+import BatteryStatusCommand from './commands/host-trasport/baterrystatus';
 import ClearCommand from "./commands/host-trasport/clear";
 import GetPropertyCommand from './commands/host-trasport/getproperty';
 import GetSetting from './commands/host-trasport/getsetting';
@@ -62,7 +62,6 @@ import SyncEntry from './sync/entry';
 import PullTransfer from './sync/pulltransfer';
 import PushTransfer from './sync/pushtransfer';
 import Tracker from './tracker';
-
 
 export default class AdbClient extends EventEmitter {
     private options: AdbClientOptions;
@@ -691,7 +690,6 @@ export default class AdbClient extends EventEmitter {
             .nodeify(cb);
     }
 
-    // TODO return buffer?
     pullDataFromFile(serial: string, srcPath: string, cb?: (err: Error, value: string) => void): Promise<string> {
         return this.pull(serial, `${srcPath}`)
             .then((transfer: PullTransfer): Promise<string> => {
@@ -830,15 +828,27 @@ export default class AdbClient extends EventEmitter {
         });
     }
 
-    exec(...args: ReadonlyArray<string>) {
-        return this.execInternal(...args);
+    exec(cmd: string, cb?: (err: Error, value: string) => void) {
+        return this.execInternal(cmd)
+            .nodeify(cb);
     }
 
-    execDevice(serial: string, ...args: ReadonlyArray<string>) {
-        return this.execInternal(...['-s', serial, ...args]);
+    execDevice(serial: string, cmd: string, cb?: (err: Error, value: string) => void) {
+        return this.execInternal(...['-s', serial, cmd])
+            .nodeify(cb);
     }
 
-    execDeviceShell(serial: string, ...args: ReadonlyArray<string>) {
-        return this.execInternal(...['-s', serial, 'shell', ...args]);
+    execDeviceShell(serial: string, cmd: string, cb?: (err: Error, value: string) => void) {
+        return this.execInternal(...['-s', serial, 'shell', cmd])
+            .nodeify(cb);
+    }
+
+    batteryStatus(serial: string, cb?: (err: Error, value: KeyStringObject) => void) {
+        return this.connection()
+            .then((conn) => {
+                return new BatteryStatusCommand(conn)
+                    .execute(serial)
+            })
+            .nodeify(cb);
     }
 }

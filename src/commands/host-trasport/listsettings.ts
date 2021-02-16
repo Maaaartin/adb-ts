@@ -6,8 +6,8 @@ export default class ListSettingsCommand extends TransportParseAllCommand {
     parse(value) {
         const settings: KeyStringObject = {};
         let match;
-        const rexExp = /^([\s\S]*?)=([\s\S]*?)\n/gm;
-        while (match = rexExp.exec(value)) {
+        const regExp = /^([\s\S]*?)=([\s\S]*?)\n/gm;
+        while (match = regExp.exec(value)) {
             settings[match[1]] = stringToType(match[2] === '' ? undefined : match[2]);
         }
         return settings;

@@ -6,8 +6,8 @@ export default class ListFeaturesCommand extends TransportParseAllCommand {
     parse(value: string) {
         const features: KeyStringObject = {};
         let match;
-        const rexExp = /^feature:(.*?)(?:=(.*?))?\r?$/gm;
-        while (match = rexExp.exec(value)) {
+        const regExp = /^feature:(.*?)(?:=(.*?))?\r?$/gm;
+        while (match = regExp.exec(value)) {
             features[match[1]] = stringToType(match[2]) || true;
         }
         return features;

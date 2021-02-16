@@ -1,6 +1,4 @@
 import Promise from 'bluebird';
-import { execFile } from 'child_process';
-import ipRegex from 'ip-regex';
 import Jimp from 'jimp';
 import { Readable } from "stream";
 import { CommandConstruct, DeviceState, ForwardsObject, IAdbDevice, InputOptions, InputSource, InstallOptions, KeyStringObject, LogcatOptions, ReversesObject, SettingsMode, SimpleType, StartActivityOptions, StartServiceOptions, TransportType, UninstallOptions } from ".";
@@ -259,11 +257,15 @@ export default class AdbDevice implements IAdbDevice {
         return this.client.killApp(this.id, pkg, cb);
     }
 
-    exec(...args: ReadonlyArray<string>) {
-        return this.client.execDevice(this.id, ...args);
+    exec(cmd: string, cb?: (err: Error, value: string) => void) {
+        return this.client.execDevice(this.id, cmd, cb);
     }
 
-    execShell(...args: ReadonlyArray<string>) {
-        return this.client.execDeviceShell(this.id, ...args);
+    execShell(cmd: string, cb?: (err: Error, value: string) => void) {
+        return this.client.execDeviceShell(this.id, cmd, cb);
+    }
+
+    batteryStatus(cb?: (err: Error, value: KeyStringObject) => void) {
+        return this.client.batteryStatus(this.id, cb);
     }
 }
