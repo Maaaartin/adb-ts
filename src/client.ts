@@ -98,7 +98,6 @@ export default class AdbClient extends EventEmitter {
     const args = port
       ? ['-P', port.toString(), 'start-server']
       : ['start-server'];
-    console.log('Starting ADB server');
     return new Promise<void>((resolve, reject) => {
       execFile(this.options.bin, args, (err) => {
         if (err) return reject(err);

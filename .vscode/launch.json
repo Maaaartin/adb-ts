@@ -10,6 +10,7 @@
             "request": "launch",
             "runtimeExecutable": "node",
             "runtimeArgs": [
+                "--trace-warnings",
                 "--nolazy",
                 "-r",
                 "ts-node/register/transpile-only"
