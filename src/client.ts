@@ -1091,9 +1091,18 @@ export default class AdbClient extends EventEmitter {
       .then(
         (transfer: PullTransfer): Promise<void> => {
           return new Promise((resolve, reject) => {
-            transfer.on('end', resolve);
-            transfer.on('error', reject);
-            transfer.pipe(fs.createWriteStream(destPath));
+            // data is piped only when in case there is no error
+            let hadError = false;
+            transfer.once('readable', () => {
+              if (!hadError) {
+                transfer.pipe(fs.createWriteStream(destPath));
+              }
+            });
+            transfer.once('end', resolve);
+            transfer.once('error', (err) => {
+              hadError = true;
+              reject(err);
+            });
           });
         }
       )
@@ -1239,10 +1248,27 @@ export default class AdbClient extends EventEmitter {
   private execInternal(...args: ReadonlyArray<string>) {
     return new Promise<string>((resolve, reject) => {
       exec(`${this.options.bin} ${args.join(' ')}`, (err, stdout, stderr) => {
-        if (err) return reject(err);
-        else if (stderr) return reject(new Error(stderr.trim()));
-        else if (/Error/.test(stdout)) return reject(new Error(stdout.trim()));
-        else return resolve(stdout);
+        if (stdout) {
+          if (/Error/.test(stdout)) {
+            reject(new Error(stdout.trim()));
+          }
+          // e.g. when executing ls
+          else if (stderr) {
+            resolve(stderr.concat(stdout));
+          } else {
+            resolve(stdout);
+          }
+        } else {
+          if (err) {
+            reject(err);
+          } else {
+            reject(new Error(stderr.trim()));
+          }
+        }
+        // if (err) return reject(err);
+        // else if (stderr) return reject(new Error(stderr.trim()));
+        // else if (/Error/.test(stdout)) return reject(new Error(stdout.trim()));
+        // else return resolve(stdout);
       });
     });
   }
