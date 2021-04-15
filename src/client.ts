@@ -1248,27 +1248,10 @@ export default class AdbClient extends EventEmitter {
   private execInternal(...args: ReadonlyArray<string>) {
     return new Promise<string>((resolve, reject) => {
       exec(`${this.options.bin} ${args.join(' ')}`, (err, stdout, stderr) => {
-        if (stdout) {
-          if (/Error/.test(stdout)) {
-            reject(new Error(stdout.trim()));
-          }
-          // e.g. when executing ls
-          else if (stderr) {
-            resolve(stderr.concat(stdout));
-          } else {
-            resolve(stdout);
-          }
-        } else {
-          if (err) {
-            reject(err);
-          } else {
-            reject(new Error(stderr.trim()));
-          }
-        }
-        // if (err) return reject(err);
-        // else if (stderr) return reject(new Error(stderr.trim()));
-        // else if (/Error/.test(stdout)) return reject(new Error(stdout.trim()));
-        // else return resolve(stdout);
+        if (err) return reject(err);
+        else if (stderr) return reject(new Error(stderr.trim()));
+        else if (/Error/.test(stdout)) return reject(new Error(stdout.trim()));
+        else return resolve(stdout);
       });
     });
   }
