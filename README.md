@@ -673,7 +673,7 @@ device.listSettings('system')
     .then((settings: KeyStringObject) => console.log(settings));
 ```
 
-  + **mode: SettingsMode**: values `system`,    `global` or `secure`.
+  + **mode: SettingsMode**: values `system`,                        `global` or `secure`.
 
 Gets the device features. Analogous to `adb shell settings list system <mode>` .
 
@@ -931,6 +931,113 @@ device.batteryStatus()
 Retrieves current batery status. Analogous to `adb -s <serial> shell dumpsys battery` .
 
 * Returns: `Promise<KeyStringObject>`
+
+##### device.rm(path: string, options?: RmOption, cb?: (err: Error | null, value: string) => void)
+
+``` ts
+device.rm('/sdcard/some-file')
+    .then(() => null);
+```
+
+RmOptions
+
+  + **force** Adds `-f` flag
+  + **interactive** Adds `-i` flag
+  + **recursive** Adds `-r` flag
+
+Removes file/forder specified by `path` paramter. Analogous to `adb shell rm <filename>` .
+
+* Returns: `Promise<string>`
+
+##### device.mkdir(path: string, options?: MkDirOptions, cb?: (err: Error | null, value: string) => void)
+
+``` ts
+device.mkdir('/sdcard/some-dir')
+    .then(() => null);
+```
+
+MkDirOptions
+
+  + **verbose** Adds `-v` flag
+  + **mode** Adds `-m <value>` flag, sets access mode
+  + **parent** Adds `-p` flag, creates parent directory if needed
+
+Creates forder specified by `path` paramter. Analogous to `adb shell mkdir <filename>` .
+
+* Returns: `Promise<string>`
+
+##### device.touch(path: string, options?: TouchOptions, cb?: (err: Error | null, value: string) => void)
+
+``` ts
+device.touch('/sdcard/some-file')
+    .then(() => null);
+```
+
+TouchOptions
+
+  + **aTime** Adds `-a` flag, changes access time
+  + **mTime** Adds `-m` flag, sets modification time
+  + **noCreate** Adds `-c` flag
+  + **symlink** Adds `-h` flag, creates symlink
+  + **date** Adds `-d <date>` flag
+  + **time** Adds `-t <time>` flag
+  + **reference** Adds `-r <reference>` flag
+
+Updates access and modification times of file specified by `path` paramter. Analogous to `adb shell touch <filename>` .
+
+* Returns: `Promise<string>`
+
+##### device. mv(srcPath: string, destDir, options?: MvOptions, cb?: (err: Error | null, value: string) => void)
+
+``` ts
+device.mv('/sdcard/file', '/sdcard/some-dir')
+    .then(() => null);
+```
+
+MvOptions
+
+  + **force** Adds `-f` flag
+  + **interactive** Adds `-i` flag
+  + **verbose** Adds `-v` flag
+  + **noClobber** Adds `-n` flag, no override
+
+Moves data with `srcPath` to `destPath` paramter. Analogous to `adb shell mv <src> <dest>` .
+
+* Returns: `Promise<string>`
+
+##### device.cp(srcPath: string, destDir, options?: CpOptions, cb?: (err: Error | null, value: string) => void)
+
+``` ts
+device.cp('/sdcard/file', '/sdcard/some-dir')
+    .then(() => null);
+```
+
+CpOptions
+
+  + **interactive** Adds `-i` flag
+  + **verbose** Adds `-v` flag
+  + **noClobber** Adds `-n` flag, no override
+  + **symlink** Adds `-s` flag, creates symlink
+  + **recursive** Adds `-r` flag, dest must be a directory
+  + **hardLink** Adds `-l` flag
+  + **noDereference** Adds `-d` flag
+  + **archive** Adds `-a` flag, same as `-dpr`, if specified,          `noDereference`,         `preserve` and `recursive` attributes are ignored
+
+  + **noFollowSymlinks** Adds `-P` flag
+
+  + **fololowAllSymlinks** Adds `-L` flag
+  + **followListedSymlinks** Adds `-H` flag
+  + **preserve** Adds `--preserve=[ATTRIBUTES]` flag
+        - **mode**
+        - **ownership**
+        - **timestamps**
+        - **context**
+        - **xattr**
+        - **all** - adds all previous arrtibutes
+
+Copies data with `srcPath` to `destPath` paramter. Analogous to `adb shell cp <src> <dest>` .
+
+* Returns: `Promise<string>`
 
 #### adb monkey
 
