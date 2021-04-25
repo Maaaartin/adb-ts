@@ -8,6 +8,7 @@ import stringToStreamfrom from 'string-to-stream';
 import {
   AdbClientOptions,
   CommandConstruct,
+  CpOptions,
   ForwardsObject,
   IAdbDevice,
   InputOptions,
@@ -15,11 +16,15 @@ import {
   InstallOptions,
   KeyStringObject,
   LogcatOptions,
+  MkDirOptions,
+  MvOptions,
   ReversesObject,
+  RmOption,
   SettingsMode,
   SimpleType,
   StartActivityOptions,
   StartServiceOptions,
+  TouchOptions,
   TransportType,
   UninstallOptions,
   WaitForState,
@@ -29,6 +34,7 @@ import GetDevicePathCommand from './commands/host-serial/getdevicepath';
 import ListForwardsCommand from './commands/host-serial/listforwards';
 import BatteryStatusCommand from './commands/host-trasport/baterrystatus';
 import ClearCommand from './commands/host-trasport/clear';
+import CpCommand from './commands/host-trasport/cp';
 import GetPropertyCommand from './commands/host-trasport/getproperty';
 import GetSetting from './commands/host-trasport/getsetting';
 import InputCommand from './commands/host-trasport/input';
@@ -41,11 +47,14 @@ import ListPropertiesCommand from './commands/host-trasport/listproperties';
 import ListReversesCommand from './commands/host-trasport/listreverses';
 import ListSettingsCommand from './commands/host-trasport/listsettings';
 import LogcatCommand from './commands/host-trasport/logcat';
+import MkDirCommand from './commands/host-trasport/mkdir';
 import MonkeyCommand from './commands/host-trasport/monkey';
+import MvCommand from './commands/host-trasport/mv';
 import PutSetting from './commands/host-trasport/putsetting';
 import RebootCommand from './commands/host-trasport/reboot';
 import RemountCommand from './commands/host-trasport/remount';
 import ReverseCommand from './commands/host-trasport/reverse';
+import RmCommand from './commands/host-trasport/rm';
 import RootCommand from './commands/host-trasport/root';
 import ScreenShotCommand from './commands/host-trasport/screencap';
 import SetProp from './commands/host-trasport/setproperty';
@@ -57,6 +66,7 @@ import StartServiceCommand from './commands/host-trasport/startservice';
 import SyncCommand from './commands/host-trasport/sync';
 import TcpCommand from './commands/host-trasport/tcp';
 import TcpIpCommand from './commands/host-trasport/tcpip';
+import TouchCommand from './commands/host-trasport/touch';
 import UninstallCommand from './commands/host-trasport/uninstall';
 import UsbCommand from './commands/host-trasport/usb';
 import WaitBootCompleteCommand from './commands/host-trasport/wainbootcomplete';
@@ -1283,6 +1293,160 @@ export default class AdbClient extends EventEmitter {
     return this.connection()
       .then((conn) => {
         return new BatteryStatusCommand(conn).execute(serial);
+      })
+      .nodeify(cb);
+  }
+
+  rm(
+    serial: string,
+    path: string,
+    cb?: (err: Error | null, value: string) => void
+  ): Promise<string>;
+  rm(
+    serial: string,
+    path: string,
+    options?: RmOption,
+    cb?: (err: Error | null, value: string) => void
+  ): Promise<string>;
+  rm(
+    serial: string,
+    path: string,
+    options?: any,
+    cb?: (err: Error | null, value: string) => void
+  ) {
+    if (typeof options === 'function') {
+      cb = options;
+      options = undefined;
+    }
+    return this.connection()
+      .then((conn) => {
+        return new RmCommand(conn).execute(serial, path, options);
+      })
+      .nodeify(cb);
+  }
+
+  mkdir(
+    serial: string,
+    path: string,
+    cb?: (err: Error | null, value: string) => void
+  ): Promise<string>;
+  mkdir(
+    serial: string,
+    path: string,
+    options?: MkDirOptions,
+    cb?: (err: Error | null, value: string) => void
+  ): Promise<string>;
+  mkdir(
+    serial: string,
+    path: string,
+    options?: any,
+    cb?: (err: Error | null, value: string) => void
+  ) {
+    if (typeof options === 'function') {
+      cb = options;
+      options = undefined;
+    }
+    return this.connection()
+      .then((conn) => {
+        return new MkDirCommand(conn).execute(serial, path, options);
+      })
+      .nodeify(cb);
+  }
+
+  touch(
+    serial: string,
+    path: string,
+    cb?: (err: Error | null, value: string) => void
+  ): Promise<string>;
+  touch(
+    serial: string,
+    path: string,
+    options?: TouchOptions,
+    cb?: (err: Error | null, value: string) => void
+  ): Promise<string>;
+  touch(
+    serial: string,
+    path: string,
+    options?: any,
+    cb?: (err: Error | null, value: string) => void
+  ) {
+    if (typeof options === 'function') {
+      cb = options;
+      options = undefined;
+    }
+    return this.connection()
+      .then((conn) => {
+        return new TouchCommand(conn).execute(serial, path, options);
+      })
+      .nodeify(cb);
+  }
+
+  mv(
+    serial: string,
+    srcPath: string,
+    destPath: string,
+    cb?: (err: Error | null, value: string) => void
+  ): Promise<string>;
+  mv(
+    serial: string,
+    srcPath: string,
+    destPath: string,
+    options?: MvOptions,
+    cb?: (err: Error | null, value: string) => void
+  ): Promise<string>;
+  mv(
+    serial: string,
+    srcPath: string,
+    destPath: string,
+    options?: any,
+    cb?: (err: Error | null, value: string) => void
+  ) {
+    if (typeof options === 'function') {
+      cb = options;
+      options = undefined;
+    }
+    return this.connection()
+      .then((conn) => {
+        return new MvCommand(conn).execute(
+          serial,
+          [srcPath, destPath],
+          options
+        );
+      })
+      .nodeify(cb);
+  }
+
+  cp(
+    serial: string,
+    srcPath: string,
+    destPath: string,
+    cb?: (err: Error | null, value: string) => void
+  ): Promise<string>;
+  cp(
+    serial: string,
+    srcPath: string,
+    destPath: string,
+    options?: CpOptions,
+    cb?: (err: Error | null, value: string) => void
+  ): Promise<string>;
+  cp(
+    serial: string,
+    srcPath: string,
+    destPath: string,
+    options?: any,
+    cb?: (err: Error | null, value: string) => void
+  ) {
+    if (typeof options === 'function') {
+      cb = options;
+      options = undefined;
+    }
+    return this.connection()
+      .then((conn) => {
+        return new CpCommand(conn).execute(
+          serial,
+          [srcPath, destPath],
+          options
+        );
       })
       .nodeify(cb);
   }
