@@ -16,7 +16,7 @@
                 "ts-node/register/transpile-only"
             ],
             "args": [
-                "test.ts"
+                "script.ts"
             ],
             "cwd": "${workspaceRoot}",
             "internalConsoleOptions": "openOnSessionStart",

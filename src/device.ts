@@ -26,6 +26,7 @@ import {
 } from '.';
 import AdbClient from './client';
 import Connection from './connection';
+import FileStats from './filestats';
 import { KeyCode } from './keycode';
 import LogcatReader from './logcat/reader';
 import Monkey from './monkey/client';
@@ -529,5 +530,9 @@ export default class AdbDevice implements IAdbDevice {
     cb?: (err: Error | null, value: string) => void
   ) {
     return this.client.cp(this.id, srcPath, destPath, options, cb);
+  }
+
+  fileStat(path: string, cb?: (err: Error | null, value: FileStats) => void) {
+    return this.client.fileStat(this.id, path, cb);
   }
 }

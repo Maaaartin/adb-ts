@@ -35,6 +35,7 @@ import ListForwardsCommand from './commands/host-serial/listforwards';
 import BatteryStatusCommand from './commands/host-trasport/baterrystatus';
 import ClearCommand from './commands/host-trasport/clear';
 import CpCommand from './commands/host-trasport/cp';
+import FileStatCommand from './commands/host-trasport/filestat';
 import GetPropertyCommand from './commands/host-trasport/getproperty';
 import GetSetting from './commands/host-trasport/getsetting';
 import InputCommand from './commands/host-trasport/input';
@@ -80,6 +81,7 @@ import VersionCommand from './commands/host/version';
 import WaitForDeviceCommand from './commands/host/waitfordevice';
 import Connection from './connection';
 import AdbDevice from './device';
+import FileStats from './filestats';
 import { KeyCode } from './keycode';
 import Logcat from './logcat';
 import LogcatReader from './logcat/reader';
@@ -1449,5 +1451,15 @@ export default class AdbClient extends EventEmitter {
         );
       })
       .nodeify(cb);
+  }
+
+  fileStat(
+    serial: string,
+    path: string,
+    cb?: (err: Error | null, value: FileStats) => void
+  ) {
+    return this.connection().then((conn) => {
+      return new FileStatCommand(conn).execute(serial, path).nodeify(cb);
+    });
   }
 }
