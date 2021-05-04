@@ -89,6 +89,6 @@ test('file system', () => {
 test('file stats', () => {
   adb.map(async (d) => {
     const exp = await d.fileStat('/');
-    expect(exp.type === 'directory').toBe(true);
+    expect(exp.isDirectory() && exp.moutpoint === '/').toBe(true);
   });
 });

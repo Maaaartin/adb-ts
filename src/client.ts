@@ -507,7 +507,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error) => void
   ) {
-    if (typeof options === 'function' || !options) {
+    if (typeof options === 'function' || !options || !options) {
       cb = options;
       options = {};
     }
@@ -554,7 +554,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error) => void
   ) {
-    if (typeof options === 'function' || !options) {
+    if (typeof options === 'function' || !options || !options) {
       cb = options;
       options = {};
     }
@@ -592,7 +592,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error) => void
   ) {
-    if (typeof options === 'function' || !options) {
+    if (typeof options === 'function' || !options || !options) {
       cb = options;
       options = {};
     }
@@ -683,7 +683,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error, value: LogcatReader) => void
   ) {
-    if (typeof options === 'function') {
+    if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
     }
@@ -761,7 +761,7 @@ export default class AdbClient extends EventEmitter {
     args?: any,
     cb?: (err: Error) => void
   ): Promise<void> {
-    if (typeof options === 'function') {
+    if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
     }
@@ -814,7 +814,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error) => void
   ) {
-    if (typeof options === 'function') {
+    if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
     }
@@ -857,7 +857,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error) => void
   ) {
-    if (typeof options === 'function') {
+    if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
     }
@@ -893,7 +893,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error) => void
   ) {
-    if (typeof options === 'function') {
+    if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
     }
@@ -910,6 +910,7 @@ export default class AdbClient extends EventEmitter {
   }
 
   stat(serial: string, path: string, cb?: (err: Error, value: Stats) => void) {
+    process.emitWarning('Use fileStats() function instead', 'Warning');
     return this.syncService(serial)
       .then((sync) => {
         return sync.stat(path).finally(() => {
@@ -1316,7 +1317,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error | null, value: string) => void
   ) {
-    if (typeof options === 'function') {
+    if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
     }
@@ -1344,7 +1345,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error | null, value: string) => void
   ) {
-    if (typeof options === 'function') {
+    if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
     }
@@ -1372,7 +1373,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error | null, value: string) => void
   ) {
-    if (typeof options === 'function') {
+    if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
     }
@@ -1403,7 +1404,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error | null, value: string) => void
   ) {
-    if (typeof options === 'function') {
+    if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
     }
@@ -1438,7 +1439,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error | null, value: string) => void
   ) {
-    if (typeof options === 'function') {
+    if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
     }

@@ -673,7 +673,7 @@ device.listSettings('system')
     .then((settings: KeyStringObject) => console.log(settings));
 ```
 
-  + **mode: SettingsMode**: values `system`,                        `global` or `secure`.
+  + **mode: SettingsMode**: values `system`,                               `global` or `secure`.
 
 Gets the device features. Analogous to `adb shell settings list system <mode>` .
 
@@ -1021,7 +1021,7 @@ CpOptions
   + **recursive** Adds `-r` flag, dest must be a directory
   + **hardLink** Adds `-l` flag
   + **noDereference** Adds `-d` flag
-  + **archive** Adds `-a` flag, same as `-dpr`, if specified,          `noDereference`,         `preserve` and `recursive` attributes are ignored
+  + **archive** Adds `-a` flag, same as `-dpr`, if specified,                 `noDereference`,                `preserve` and `recursive` attributes are ignored
 
   + **noFollowSymlinks** Adds `-P` flag
 
@@ -1038,6 +1038,17 @@ CpOptions
 Copies data with `srcPath` to `destPath` paramter. Analogous to `adb shell cp <src> <dest>` .
 
 * Returns: `Promise<string>`
+
+##### device.fileStats(path: string, cb?: (err: Error | null, value: FileStats) => void)
+
+``` ts
+device.fileStats('some-file')
+    .then((stats: FileStats) => console.log(stats));
+```
+
+Gets file stats for specified path. Use instead of `device.stat()` Analogous to `adb stats <filepath>` .
+
+* Returns: `Promise<FileStats>`
 
 #### adb monkey
 

@@ -31,10 +31,6 @@ export interface IFileStats {
 }
 
 export default class FileStats extends Stats implements IFileStats {
-  constructor(props: IFileStats) {
-    super();
-    Object.assign(this, props);
-  }
   abits: number;
   aflags: string;
   allModeBits: number;
@@ -51,4 +47,36 @@ export default class FileStats extends Stats implements IFileStats {
   seccon: string;
   type: string;
   uname: string;
+  constructor(props: IFileStats) {
+    super();
+    Object.assign(this, props);
+  }
+
+  isSocket() {
+    return /socket/.test(this.type);
+  }
+
+  isFIFO() {
+    return /fifo/.test(this.type);
+  }
+
+  isSymbolicLink() {
+    return /link/.test(this.type);
+  }
+
+  isCharacterDevice() {
+    return /character/.test(this.type);
+  }
+
+  isBlockDevice() {
+    return /block/.test(this.type);
+  }
+
+  isDirectory() {
+    return /directory/.test(this.type);
+  }
+
+  isFile() {
+    return /file/.test(this.type);
+  }
 }
