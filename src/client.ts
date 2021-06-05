@@ -1,10 +1,3 @@
-import Promise from 'bluebird';
-import { exec, execFile } from 'child_process';
-import { EventEmitter } from 'events';
-import fs, { Stats } from 'fs';
-import Jimp from 'jimp';
-import { Readable } from 'stream';
-import stringToStreamfrom from 'string-to-stream';
 import {
   AdbClientOptions,
   CommandConstruct,
@@ -29,29 +22,52 @@ import {
   UninstallOptions,
   WaitForState,
 } from '.';
-import ForwardCommand from './commands/host-serial/forward';
-import GetDevicePathCommand from './commands/host-serial/getdevicepath';
-import ListForwardsCommand from './commands/host-serial/listforwards';
+import Sync, { SyncMode } from './sync';
+import { exec, execFile } from 'child_process';
+import fs, { Stats } from 'fs';
+
+import AdbDevice from './device';
 import BatteryStatusCommand from './commands/host-trasport/baterrystatus';
 import ClearCommand from './commands/host-trasport/clear';
+import ConnectCommand from './commands/host/connect';
+import Connection from './connection';
 import CpCommand from './commands/host-trasport/cp';
+import DisconnectCommand from './commands/host/disconnect';
+import { EventEmitter } from 'events';
 import FileStatCommand from './commands/host-trasport/filestat';
+import FileStats from './filestats';
+import ForwardCommand from './commands/host-serial/forward';
+import GetDevicePathCommand from './commands/host-serial/getdevicepath';
+import GetIpAddressCommand from './commands/host-trasport/ipaddress';
 import GetPropertyCommand from './commands/host-trasport/getproperty';
 import GetSetting from './commands/host-trasport/getsetting';
+import HostTransportCommand from './commands/host/transport';
 import InputCommand from './commands/host-trasport/input';
 import InstallCommand from './commands/host-trasport/install';
-import GetIpAddressCommand from './commands/host-trasport/ipaddress';
 import IsInstalledCommand from './commands/host-trasport/isinstalled';
+import Jimp from 'jimp';
+import { KeyCode } from './keycode';
+import KillCommand from './commands/host/kill';
+import ListDevicesCommand from './commands/host/listdevices';
 import ListFeaturesCommand from './commands/host-trasport/listfeatures';
+import ListForwardsCommand from './commands/host-serial/listforwards';
 import ListPackagesCommand from './commands/host-trasport/listpackages';
 import ListPropertiesCommand from './commands/host-trasport/listproperties';
 import ListReversesCommand from './commands/host-trasport/listreverses';
 import ListSettingsCommand from './commands/host-trasport/listsettings';
+import Logcat from './logcat';
 import LogcatCommand from './commands/host-trasport/logcat';
+import LogcatReader from './logcat/reader';
 import MkDirCommand from './commands/host-trasport/mkdir';
+import Monkey from './monkey/client';
 import MonkeyCommand from './commands/host-trasport/monkey';
 import MvCommand from './commands/host-trasport/mv';
+import Parser from './parser';
+import Promise from 'bluebird';
+import PullTransfer from './sync/pulltransfer';
+import PushTransfer from './sync/pushtransfer';
 import PutSetting from './commands/host-trasport/putsetting';
+import { Readable } from 'stream';
 import RebootCommand from './commands/host-trasport/reboot';
 import RemountCommand from './commands/host-trasport/remount';
 import ReverseCommand from './commands/host-trasport/reverse';
@@ -65,33 +81,18 @@ import ShutdownCommand from './commands/host-trasport/shutdown';
 import StartActivityCommand from './commands/host-trasport/startactivity';
 import StartServiceCommand from './commands/host-trasport/startservice';
 import SyncCommand from './commands/host-trasport/sync';
+import SyncEntry from './sync/entry';
 import TcpCommand from './commands/host-trasport/tcp';
 import TcpIpCommand from './commands/host-trasport/tcpip';
 import TouchCommand from './commands/host-trasport/touch';
+import TrackCommand from './commands/host/trackdevices';
+import Tracker from './tracker';
 import UninstallCommand from './commands/host-trasport/uninstall';
 import UsbCommand from './commands/host-trasport/usb';
-import WaitBootCompleteCommand from './commands/host-trasport/wainbootcomplete';
-import ConnectCommand from './commands/host/connect';
-import DisconnectCommand from './commands/host/disconnect';
-import KillCommand from './commands/host/kill';
-import ListDevicesCommand from './commands/host/listdevices';
-import TrackCommand from './commands/host/trackdevices';
-import HostTransportCommand from './commands/host/transport';
 import VersionCommand from './commands/host/version';
+import WaitBootCompleteCommand from './commands/host-trasport/wainbootcomplete';
 import WaitForDeviceCommand from './commands/host/waitfordevice';
-import Connection from './connection';
-import AdbDevice from './device';
-import FileStats from './filestats';
-import { KeyCode } from './keycode';
-import Logcat from './logcat';
-import LogcatReader from './logcat/reader';
-import Monkey from './monkey/client';
-import Parser from './parser';
-import Sync, { SyncMode } from './sync';
-import SyncEntry from './sync/entry';
-import PullTransfer from './sync/pulltransfer';
-import PushTransfer from './sync/pushtransfer';
-import Tracker from './tracker';
+import stringToStreamfrom from 'string-to-stream';
 
 export default class AdbClient extends EventEmitter {
   private options: AdbClientOptions;
@@ -1164,7 +1165,7 @@ export default class AdbClient extends EventEmitter {
   listSettings(
     serial: string,
     mode: SettingsMode,
-    cb?: (err: Error, value: KeyStringObject[]) => void
+    cb?: (err: Error, value: KeyStringObject) => void
   ) {
     return this.connection()
       .then((conn) => {

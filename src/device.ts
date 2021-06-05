@@ -1,6 +1,3 @@
-import Promise from 'bluebird';
-import Jimp from 'jimp';
-import { Readable } from 'stream';
 import {
   CommandConstruct,
   CpOptions,
@@ -24,17 +21,21 @@ import {
   TransportType,
   UninstallOptions,
 } from '.';
+
 import AdbClient from './client';
 import Connection from './connection';
 import FileStats from './filestats';
+import Jimp from 'jimp';
 import { KeyCode } from './keycode';
 import LogcatReader from './logcat/reader';
 import Monkey from './monkey/client';
-import { SyncMode } from './sync';
-import SyncEntry from './sync/entry';
+import Promise from 'bluebird';
 import PullTransfer from './sync/pulltransfer';
 import PushTransfer from './sync/pushtransfer';
+import { Readable } from 'stream';
 import Stats from './sync/stats';
+import SyncEntry from './sync/entry';
+import { SyncMode } from './sync';
 
 export default class AdbDevice implements IAdbDevice {
   id: string;
@@ -280,7 +281,7 @@ export default class AdbDevice implements IAdbDevice {
 
   listSettings(
     mode: SettingsMode,
-    cb?: (err: Error, value: KeyStringObject[]) => void
+    cb?: (err: Error, value: KeyStringObject) => void
   ) {
     return this.client.listSettings(this.id, mode, cb);
   }
