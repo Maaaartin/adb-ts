@@ -4,15 +4,12 @@
     "module": "commonjs",
     "declaration": true,
     "outDir": "./lib",
-    "strict": false,
+    "strict": true,
     "esModuleInterop": true,
-    "removeComments": true,
-    "allowJs": true
+    "removeComments": false,
+    "allowJs": false,
+    "skipLibCheck": true
   },
-  "include": [
-    "./src"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["./src"],
+  "exclude": ["node_modules"]
 }
