@@ -31,22 +31,22 @@ export interface IFileStats {
 }
 
 export default class FileStats extends Stats implements IFileStats {
-  abits: number;
-  aflags: string;
-  allModeBits: number;
-  atimems: number;
-  bytes: number;
-  ctimems: number;
-  dTypeMajor: number;
-  dTypeMinor: number;
-  gname: string;
-  moutpoint: string;
-  mtimems: number;
-  name: string;
-  lname: string;
-  seccon: string;
-  type: string;
-  uname: string;
+  abits!: number;
+  aflags!: string;
+  allModeBits!: number;
+  atimems!: number;
+  bytes!: number;
+  ctimems!: number;
+  dTypeMajor!: number;
+  dTypeMinor!: number;
+  gname!: string;
+  moutpoint!: string;
+  mtimems!: number;
+  name!: string;
+  lname!: string;
+  seccon!: string;
+  type!: string;
+  uname!: string;
   constructor(props: IFileStats) {
     super();
     Object.assign(this, props);

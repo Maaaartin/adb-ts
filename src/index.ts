@@ -191,7 +191,7 @@ export interface LogcatReaderOptions {
   filter?: (entry: LogcatEntry) => boolean;
 }
 
-export type TransportType = 'usb' | 'local' | 'any';
+export type TransportType = 'usb' | 'local'; // | 'any' - impossible state
 
 export type WaitForState = 'device' | 'recovery' | 'sideload' | 'bootloader';
 
