@@ -726,5 +726,5 @@ export enum KeyCode {
     KEYCODE_SYSTEM_NAVIGATION_RIGHT = 283,
     /** Key code constant: Show all apps
      * @hide */
-    KEYCODE_ALL_APPS = 284
+    KEYCODE_ALL_APPS = 284,
 }

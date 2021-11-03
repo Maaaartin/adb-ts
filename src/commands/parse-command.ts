@@ -1,11 +1,10 @@
-import ValueCommand from "./value-command";
+import ValueCommand from './value-command'
 
 export default abstract class ParseCommand extends ValueCommand {
-    protected abstract parse(value: string): any;
+    protected abstract parse(value: string): any
     execute(...params: any[]) {
-        return super.execute(...params)
-            .then((value) => {
-                return this.parse(value);
-            })
+        return super.execute(...params).then((value) => {
+            return this.parse(value)
+        })
     }
 }

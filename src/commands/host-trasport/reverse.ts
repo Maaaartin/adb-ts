@@ -1,5 +1,5 @@
-import EmptyCommand from '../empty-command';
-import Promise from 'bluebird';
+import EmptyCommand from '../empty-command'
+import Promise from 'bluebird'
 
 export default class ReverseCommand extends EmptyCommand {
     execute(serial: string, remote: string, local: string): Promise<void> {

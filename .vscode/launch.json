@@ -15,15 +15,10 @@
                 "-r",
                 "ts-node/register/transpile-only"
             ],
-            "args": [
-                "script.ts"
-            ],
+            "args": ["script.ts"],
             "cwd": "${workspaceRoot}",
             "internalConsoleOptions": "openOnSessionStart",
-            "skipFiles": [
-                "<node_internals>/**",
-                "node_modules/**"
-            ],
+            "skipFiles": ["<node_internals>/**", "node_modules/**"],
             "env": {
                 "NODE_ENV": "development"
             }
