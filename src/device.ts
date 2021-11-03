@@ -20,22 +20,22 @@ import {
   TouchOptions,
   TransportType,
   UninstallOptions,
-} from '.';
+} from ".";
 
-import AdbClient from './client';
-import Connection from './connection';
-import FileStats from './filestats';
-import Jimp from 'jimp';
-import { KeyCode } from './keycode';
-import LogcatReader from './logcat/reader';
-import Monkey from './monkey/client';
-import Promise from 'bluebird';
-import PullTransfer from './sync/pulltransfer';
-import PushTransfer from './sync/pushtransfer';
-import { Readable } from 'stream';
-import Stats from './sync/stats';
-import SyncEntry from './sync/entry';
-import { SyncMode } from './sync';
+import AdbClient from "./client";
+import Connection from "./connection";
+import FileStats from "./filestats";
+import Jimp from "jimp";
+import { KeyCode } from "./keycode";
+import LogcatReader from "./logcat/reader";
+import Monkey from "./monkey/client";
+import Promise from "bluebird";
+import PullTransfer from "./sync/pulltransfer";
+import PushTransfer from "./sync/pushtransfer";
+import { Readable } from "stream";
+import Stats from "./sync/stats";
+import SyncEntry from "./sync/entry";
+import { SyncMode } from "./sync";
 
 export default class AdbDevice implements IAdbDevice {
   id: string;
@@ -44,12 +44,19 @@ export default class AdbDevice implements IAdbDevice {
   device: string;
   model: string;
   product: string;
-  transportId?: string;
+  transportId: string;
   transport: TransportType;
   private client: AdbClient;
 
-  constructor(client: AdbClient, props?: IAdbDevice) {
-    Object.assign(this, props || {});
+  constructor(client: AdbClient, props: IAdbDevice) {
+    this.id = props.id;
+    this.state = props.state;
+    this.path = props.path;
+    this.device = props.device;
+    this.model = props.model;
+    this.product = props.product;
+    this.transportId = props.transportId;
+    this.transport = props.transport;
     this.client = client;
   }
 
@@ -93,7 +100,10 @@ export default class AdbDevice implements IAdbDevice {
     return this.client.listReverses(this.id, cb);
   }
 
-  shell(command: string | string[], cb?: (err: Error, value: string) => void) {
+  shell(
+    command: string | string[],
+    cb?: (err: Error, value: SimpleType) => void
+  ) {
     return this.client.shell(this.id, command, cb);
   }
 
@@ -203,7 +213,11 @@ export default class AdbDevice implements IAdbDevice {
     return this.client.startActivity(this.id, pkg, activity, options, cb);
   }
 
-  startService(pkg: string, service: string, cb?: (err: Error) => void);
+  startService(
+    pkg: string,
+    service: string,
+    cb?: (err: Error) => void
+  ): Promise<void>;
   startService(
     pkg: string,
     service: string,

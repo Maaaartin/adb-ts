@@ -1,5 +1,6 @@
 import {
   AdbClientOptions,
+  AdbClientOptionsValues,
   CommandConstruct,
   CpOptions,
   ForwardsObject,
@@ -21,103 +22,100 @@ import {
   TransportType,
   UninstallOptions,
   WaitForState,
-} from '.';
-import Sync, { SyncMode } from './sync';
-import { exec, execFile } from 'child_process';
-import fs, { Stats } from 'fs';
+} from ".";
+import Sync, { SyncMode } from "./sync";
+import { exec, execFile } from "child_process";
+import fs, { Stats } from "fs";
 
-import AdbDevice from './device';
-import BatteryStatusCommand from './commands/host-trasport/baterrystatus';
-import ClearCommand from './commands/host-trasport/clear';
-import ConnectCommand from './commands/host/connect';
-import Connection from './connection';
-import CpCommand from './commands/host-trasport/cp';
-import DisconnectCommand from './commands/host/disconnect';
-import { EventEmitter } from 'events';
-import FileStatCommand from './commands/host-trasport/filestat';
-import FileStats from './filestats';
-import ForwardCommand from './commands/host-serial/forward';
-import GetDevicePathCommand from './commands/host-serial/getdevicepath';
-import GetIpAddressCommand from './commands/host-trasport/ipaddress';
-import GetPropertyCommand from './commands/host-trasport/getproperty';
-import GetSetting from './commands/host-trasport/getsetting';
-import HostTransportCommand from './commands/host/transport';
-import InputCommand from './commands/host-trasport/input';
-import InstallCommand from './commands/host-trasport/install';
-import IsInstalledCommand from './commands/host-trasport/isinstalled';
-import Jimp from 'jimp';
-import { KeyCode } from './keycode';
-import KillCommand from './commands/host/kill';
-import ListDevicesCommand from './commands/host/listdevices';
-import ListFeaturesCommand from './commands/host-trasport/listfeatures';
-import ListForwardsCommand from './commands/host-serial/listforwards';
-import ListPackagesCommand from './commands/host-trasport/listpackages';
-import ListPropertiesCommand from './commands/host-trasport/listproperties';
-import ListReversesCommand from './commands/host-trasport/listreverses';
-import ListSettingsCommand from './commands/host-trasport/listsettings';
-import Logcat from './logcat';
-import LogcatCommand from './commands/host-trasport/logcat';
-import LogcatReader from './logcat/reader';
-import MkDirCommand from './commands/host-trasport/mkdir';
-import Monkey from './monkey/client';
-import MonkeyCommand from './commands/host-trasport/monkey';
-import MvCommand from './commands/host-trasport/mv';
-import Parser from './parser';
-import Promise from 'bluebird';
-import PullTransfer from './sync/pulltransfer';
-import PushTransfer from './sync/pushtransfer';
-import PutSetting from './commands/host-trasport/putsetting';
-import { Readable } from 'stream';
-import RebootCommand from './commands/host-trasport/reboot';
-import RemountCommand from './commands/host-trasport/remount';
-import ReverseCommand from './commands/host-trasport/reverse';
-import RmCommand from './commands/host-trasport/rm';
-import RootCommand from './commands/host-trasport/root';
-import ScreenShotCommand from './commands/host-trasport/screencap';
-import SetProp from './commands/host-trasport/setproperty';
-import ShellCommand from './commands/host-trasport/shell';
-import ShellRawCommand from './commands/host-trasport/shellraw';
-import ShutdownCommand from './commands/host-trasport/shutdown';
-import StartActivityCommand from './commands/host-trasport/startactivity';
-import StartServiceCommand from './commands/host-trasport/startservice';
-import SyncCommand from './commands/host-trasport/sync';
-import SyncEntry from './sync/entry';
-import TcpCommand from './commands/host-trasport/tcp';
-import TcpIpCommand from './commands/host-trasport/tcpip';
-import TouchCommand from './commands/host-trasport/touch';
-import TrackCommand from './commands/host/trackdevices';
-import Tracker from './tracker';
-import UninstallCommand from './commands/host-trasport/uninstall';
-import UsbCommand from './commands/host-trasport/usb';
-import VersionCommand from './commands/host/version';
-import WaitBootCompleteCommand from './commands/host-trasport/wainbootcomplete';
-import WaitForDeviceCommand from './commands/host/waitfordevice';
-import stringToStreamfrom from 'string-to-stream';
+import AdbDevice from "./device";
+import BatteryStatusCommand from "./commands/host-trasport/baterrystatus";
+import ClearCommand from "./commands/host-trasport/clear";
+import ConnectCommand from "./commands/host/connect";
+import Connection from "./connection";
+import CpCommand from "./commands/host-trasport/cp";
+import DisconnectCommand from "./commands/host/disconnect";
+import { EventEmitter } from "events";
+import FileStatCommand from "./commands/host-trasport/filestat";
+import FileStats from "./filestats";
+import ForwardCommand from "./commands/host-serial/forward";
+import GetDevicePathCommand from "./commands/host-serial/getdevicepath";
+import GetIpAddressCommand from "./commands/host-trasport/ipaddress";
+import GetPropertyCommand from "./commands/host-trasport/getproperty";
+import GetSetting from "./commands/host-trasport/getsetting";
+import HostTransportCommand from "./commands/host/transport";
+import InputCommand from "./commands/host-trasport/input";
+import InstallCommand from "./commands/host-trasport/install";
+import IsInstalledCommand from "./commands/host-trasport/isinstalled";
+import Jimp from "jimp";
+import { KeyCode } from "./keycode";
+import KillCommand from "./commands/host/kill";
+import ListDevicesCommand from "./commands/host/listdevices";
+import ListFeaturesCommand from "./commands/host-trasport/listfeatures";
+import ListForwardsCommand from "./commands/host-serial/listforwards";
+import ListPackagesCommand from "./commands/host-trasport/listpackages";
+import ListPropertiesCommand from "./commands/host-trasport/listproperties";
+import ListReversesCommand from "./commands/host-trasport/listreverses";
+import ListSettingsCommand from "./commands/host-trasport/listsettings";
+import Logcat from "./logcat";
+import LogcatCommand from "./commands/host-trasport/logcat";
+import LogcatReader from "./logcat/reader";
+import MkDirCommand from "./commands/host-trasport/mkdir";
+import Monkey from "./monkey/client";
+import MonkeyCommand from "./commands/host-trasport/monkey";
+import MvCommand from "./commands/host-trasport/mv";
+import Parser from "./parser";
+import Promise from "bluebird";
+import PullTransfer from "./sync/pulltransfer";
+import PushTransfer from "./sync/pushtransfer";
+import PutSetting from "./commands/host-trasport/putsetting";
+import { Readable } from "stream";
+import RebootCommand from "./commands/host-trasport/reboot";
+import RemountCommand from "./commands/host-trasport/remount";
+import ReverseCommand from "./commands/host-trasport/reverse";
+import RmCommand from "./commands/host-trasport/rm";
+import RootCommand from "./commands/host-trasport/root";
+import ScreenShotCommand from "./commands/host-trasport/screencap";
+import SetProp from "./commands/host-trasport/setproperty";
+import ShellCommand from "./commands/host-trasport/shell";
+import ShellRawCommand from "./commands/host-trasport/shellraw";
+import ShutdownCommand from "./commands/host-trasport/shutdown";
+import StartActivityCommand from "./commands/host-trasport/startactivity";
+import StartServiceCommand from "./commands/host-trasport/startservice";
+import SyncCommand from "./commands/host-trasport/sync";
+import SyncEntry from "./sync/entry";
+import TcpCommand from "./commands/host-trasport/tcp";
+import TcpIpCommand from "./commands/host-trasport/tcpip";
+import TouchCommand from "./commands/host-trasport/touch";
+import TrackCommand from "./commands/host/trackdevices";
+import Tracker from "./tracker";
+import UninstallCommand from "./commands/host-trasport/uninstall";
+import UsbCommand from "./commands/host-trasport/usb";
+import VersionCommand from "./commands/host/version";
+import WaitBootCompleteCommand from "./commands/host-trasport/wainbootcomplete";
+import WaitForDeviceCommand from "./commands/host/waitfordevice";
+import stringToStreamfrom from "string-to-stream";
 
-export interface AdbClientOptionsWithoutOptional extends AdbClientOptions {
-  port: number;
-  bin: string;
-  host: string;
-  noAutoStart: boolean;
-}
 export default class AdbClient extends EventEmitter {
-  private options: AdbClientOptionsWithoutOptional;
+  public static readonly defaultOptions: Readonly<AdbClientOptionsValues> =
+    Object.freeze({
+      port: 5037,
+      host: "localhost",
+      bin: "adb",
+      noAutoStart: false,
+    });
+  private options: AdbClientOptionsValues;
   constructor(options?: AdbClientOptions) {
     super();
-    this.options = {
-      port: options?.port || 5037,
-      host: options?.host || 'localhost',
-      bin: options?.bin || 'adb',
-      noAutoStart:
-        options?.noAutoStart != undefined ? options.noAutoStart : false,
-    };
+    this.options = Object.entries(options || {})
+      .filter(([_key, value]) => typeof value !== "undefined")
+      .reduce((def, opt) => ({ ...def, ...opt }), AdbClient.defaultOptions);
   }
 
   startServer(cb?: (err: Error) => void): Promise<void> {
     const port = this.options.port;
     const args = port
-      ? ['-P', port.toString(), 'start-server']
-      : ['start-server'];
+      ? ["-P", port.toString(), "start-server"]
+      : ["start-server"];
     return new Promise<void>((resolve, reject) => {
       execFile(this.options.bin, args, (err) => {
         if (err) return reject(err);
@@ -131,12 +129,12 @@ export default class AdbClient extends EventEmitter {
     const connection = new Connection();
     return new Promise<Connection>((resolve, reject) => {
       connection.connect(this.options);
-      connection.once('connect', () => {
+      connection.once("connect", () => {
         return resolve(connection);
       });
-      connection.on('error', (err: any) => {
+      connection.on("error", (err: any) => {
         if (
-          err.code === 'ECONNREFUSED' &&
+          err.code === "ECONNREFUSED" &&
           !triedStarting &&
           !this.options?.noAutoStart
         ) {
@@ -177,12 +175,12 @@ export default class AdbClient extends EventEmitter {
     cb?: (err: Error, value: number) => void
   ): Promise<string>;
   connect(host: string, port?: any, cb?: (err: Error, value: number) => void) {
-    if (typeof port === 'function') {
+    if (typeof port === "function") {
       cb = port;
       port = undefined;
     }
-    if (host && host.indexOf(':') !== -1) {
-      const tmp = host.split(':', 2);
+    if (host && host.indexOf(":") !== -1) {
+      const tmp = host.split(":", 2);
       host = tmp[0];
       port = Number(tmp[1]);
     }
@@ -207,12 +205,12 @@ export default class AdbClient extends EventEmitter {
     port?: any,
     cb?: (err: Error, value: number) => void
   ) {
-    if (typeof port === 'function') {
+    if (typeof port === "function") {
       cb = port;
       port = undefined;
     }
-    if (host.indexOf(':') !== -1) {
-      const tmp = host.split(':', 2);
+    if (host.indexOf(":") !== -1) {
+      const tmp = host.split(":", 2);
       host = tmp[0];
       port = Number(tmp[1]);
     }
@@ -252,7 +250,7 @@ export default class AdbClient extends EventEmitter {
   }
 
   getSerialNo(serial: string, cb?: (err: Error, value: string) => void) {
-    return this.getProp(serial, 'ro.serialno', cb && ((e, v) => cb(e, `${v}`)));
+    return this.getProp(serial, "ro.serialno", cb && ((e, v) => cb(e, `${v}`)));
   }
 
   getDevicePath(serial: string, cb?: (err: Error, value: string) => void) {
@@ -399,13 +397,13 @@ export default class AdbClient extends EventEmitter {
         return new ScreenShotCommand(conn).execute(serial).then((transform) => {
           return new Promise<Jimp>((resolve, reject) => {
             const bufs: Buffer[] = [];
-            transform.on('data', (data) => {
+            transform.on("data", (data) => {
               bufs.push(data);
             });
-            transform.on('end', () => {
+            transform.on("end", () => {
               Jimp.read(Buffer.concat(bufs)).then(resolve).catch(reject);
             });
-            transform.on('error', reject);
+            transform.on("error", reject);
           });
         });
       })
@@ -429,7 +427,7 @@ export default class AdbClient extends EventEmitter {
     host?: any,
     cb?: (err: Error, value: Connection) => void
   ): Promise<any> {
-    if (typeof host === 'function') {
+    if (typeof host === "function") {
       cb = host;
       host = undefined;
     }
@@ -460,13 +458,13 @@ export default class AdbClient extends EventEmitter {
     source: any,
     cb?: (err: Error) => void
   ) {
-    if (typeof source === 'function') {
+    if (typeof source === "function") {
       cb = source;
     }
-    source = source || 'trackball';
+    source = source || "trackball";
     return this.connection()
       .then((conn) => {
-        return new InputCommand(conn).execute(serial, source, 'roll', x, y);
+        return new InputCommand(conn).execute(serial, source, "roll", x, y);
       })
       .nodeify(cb);
   }
@@ -478,13 +476,13 @@ export default class AdbClient extends EventEmitter {
     cb?: (err: Error) => void
   ): Promise<void>;
   press(serial: string, source: any, cb?: (err: Error) => void) {
-    if (typeof source === 'function') {
+    if (typeof source === "function") {
       cb = source;
     }
-    source = source || 'trackball';
+    source = source || "trackball";
     return this.connection()
       .then((conn) => {
-        return new InputCommand(conn).execute(serial, source, 'press');
+        return new InputCommand(conn).execute(serial, source, "press");
       })
       .nodeify(cb);
   }
@@ -515,22 +513,22 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error) => void
   ) {
-    if (typeof options === 'function' || !options || !options) {
+    if (typeof options === "function" || !options || !options) {
       cb = options;
       options = {};
     }
-    options.source = options.source || 'touchscreen';
+    options.source = options.source || "touchscreen";
     return this.connection()
       .then((conn) => {
         return new InputCommand(conn).execute(
           serial,
           options.source,
-          'draganddrop',
+          "draganddrop",
           x1,
           y1,
           x2,
           y2,
-          options.duration ? options.duration : ''
+          options.duration ? options.duration : ""
         );
       })
       .nodeify(cb);
@@ -562,22 +560,22 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error) => void
   ) {
-    if (typeof options === 'function' || !options || !options) {
+    if (typeof options === "function" || !options || !options) {
       cb = options;
       options = {};
     }
-    options.source = options.source || 'touchscreen';
+    options.source = options.source || "touchscreen";
     return this.connection()
       .then((conn) => {
         return new InputCommand(conn).execute(
           serial,
           options.source,
-          'swipe',
+          "swipe",
           x1,
           y1,
           x2,
           y2,
-          options.duration ? options.duration : ''
+          options.duration ? options.duration : ""
         );
       })
       .nodeify(cb);
@@ -600,19 +598,19 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error) => void
   ) {
-    if (typeof options === 'function' || !options || !options) {
+    if (typeof options === "function" || !options || !options) {
       cb = options;
       options = {};
     }
-    options.source = options.source || 'keyboard';
+    options.source = options.source || "keyboard";
     return this.connection()
       .then((conn) => {
         return new InputCommand(conn).execute(
           serial,
-          'keyevent',
+          "keyevent",
           options.source,
           code,
-          options.longpress ? '--longpress' : ''
+          options.longpress ? "--longpress" : ""
         );
       })
       .nodeify(cb);
@@ -638,13 +636,13 @@ export default class AdbClient extends EventEmitter {
     source: any,
     cb?: (err: Error) => void
   ) {
-    if (typeof source === 'function') {
+    if (typeof source === "function") {
       cb = source;
     }
-    source = source || 'touchscreen';
+    source = source || "touchscreen";
     return this.connection()
       .then((conn) => {
-        return new InputCommand(conn).execute(serial, source, 'tap', x, y);
+        return new InputCommand(conn).execute(serial, source, "tap", x, y);
       })
       .nodeify(cb);
   }
@@ -666,13 +664,13 @@ export default class AdbClient extends EventEmitter {
     source: any,
     cb?: (err: Error) => void
   ) {
-    if (typeof source === 'function') {
+    if (typeof source === "function") {
       cb = source;
     }
-    source = source || 'touchscreen';
+    source = source || "touchscreen";
     return this.connection()
       .then((conn) => {
-        return new InputCommand(conn).execute(serial, source, 'text', text);
+        return new InputCommand(conn).execute(serial, source, "text", text);
       })
       .nodeify(cb);
   }
@@ -691,7 +689,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error, value: LogcatReader) => void
   ) {
-    if (typeof options === 'function' || !options) {
+    if (typeof options === "function" || !options) {
       cb = options;
       options = undefined;
     }
@@ -704,7 +702,7 @@ export default class AdbClient extends EventEmitter {
               ...options,
               fixLineFeeds: false,
             });
-            conn.on('error', (err) => logCat.emit('error', err));
+            conn.on("error", (err) => logCat.emit("error", err));
             return logCat;
           });
       })
@@ -735,7 +733,7 @@ export default class AdbClient extends EventEmitter {
       return new InstallCommand(conn)
         .execute(serial, apk, options, args)
         .then(() => {
-          return this.shellInternal(serial, ['rm', '-f', apk]).then(
+          return this.shellInternal(serial, ["rm", "-f", apk]).then(
             (stream) => {
               return new Parser(stream).readAll().return();
             }
@@ -769,27 +767,27 @@ export default class AdbClient extends EventEmitter {
     args?: any,
     cb?: (err: Error) => void
   ): Promise<void> {
-    if (typeof options === 'function' || !options) {
+    if (typeof options === "function" || !options) {
       cb = options;
       options = undefined;
     }
-    if (typeof args === 'function') {
+    if (typeof args === "function") {
       cb = args;
       args = undefined;
     }
-    const temp = Sync.temp(typeof apk === 'string' ? apk : '_stream.apk');
+    const temp = Sync.temp(typeof apk === "string" ? apk : "_stream.apk");
     return this.push(serial, apk, temp).then((transfer) => {
       let errorListener: (err: Error) => void;
       let endListener: VoidFunction;
       return new Promise<void>((resolve, reject) => {
         transfer.on(
-          'error',
+          "error",
           (errorListener = (err) => {
             reject(err);
           })
         );
         transfer.on(
-          'end',
+          "end",
           (endListener = () => {
             this.installRemote(serial, temp, options, args)
               .then(resolve)
@@ -798,8 +796,8 @@ export default class AdbClient extends EventEmitter {
         );
       })
         .finally(() => {
-          transfer.removeListener('error', errorListener);
-          return transfer.removeListener('end', endListener);
+          transfer.removeListener("error", errorListener);
+          return transfer.removeListener("end", endListener);
         })
         .nodeify(cb);
     });
@@ -822,7 +820,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error) => void
   ) {
-    if (typeof options === 'function' || !options) {
+    if (typeof options === "function" || !options) {
       cb = options;
       options = undefined;
     }
@@ -865,7 +863,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error) => void
   ) {
-    if (typeof options === 'function' || !options) {
+    if (typeof options === "function" || !options) {
       cb = options;
       options = undefined;
     }
@@ -901,7 +899,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error) => void
   ): Promise<void> {
-    if (typeof options === 'function' || !options) {
+    if (typeof options === "function" || !options) {
       cb = options;
       options = undefined;
     }
@@ -918,7 +916,7 @@ export default class AdbClient extends EventEmitter {
   }
 
   stat(serial: string, path: string, cb?: (err: Error, value: Stats) => void) {
-    process.emitWarning('Use fileStats() function instead', 'Warning');
+    process.emitWarning("Use fileStats() function instead", "Warning");
     return this.syncService(serial)
       .then((sync) => {
         return sync.stat(path).finally(() => {
@@ -949,7 +947,7 @@ export default class AdbClient extends EventEmitter {
   ) {
     return this.syncService(serial)
       .then((sync) => {
-        return sync.pull(path).on('end', () => {
+        return sync.pull(path).on("end", () => {
           sync.end();
         });
       })
@@ -976,13 +974,13 @@ export default class AdbClient extends EventEmitter {
     mode?: any,
     cb?: (err: Error, value: PushTransfer) => void
   ) {
-    if (typeof mode === 'function') {
+    if (typeof mode === "function") {
       cb = mode;
       mode = undefined;
     }
     return this.syncService(serial)
       .then((sync) => {
-        return sync.push(srcPath, destPath, mode).on('end', () => {
+        return sync.push(srcPath, destPath, mode).on("end", () => {
           sync.end();
         });
       })
@@ -999,7 +997,7 @@ export default class AdbClient extends EventEmitter {
     cb?: (err: Error, value: string) => void
   ): Promise<string>;
   tcpip(serial: string, port: any, cb?: (err: Error, value: string) => void) {
-    if (typeof port === 'function') {
+    if (typeof port === "function") {
       cb = port;
       port = 5555;
     }
@@ -1049,10 +1047,10 @@ export default class AdbClient extends EventEmitter {
   private pushInternal(serial: string, data: any, dest: string): Promise<void> {
     return this.push(serial, data, `${dest}`).then((transfer) => {
       return new Promise((resolve, reject) => {
-        transfer.on('end', () => {
+        transfer.on("end", () => {
           return resolve();
         });
-        transfer.on('error', reject);
+        transfer.on("error", reject);
       });
     });
   }
@@ -1087,14 +1085,14 @@ export default class AdbClient extends EventEmitter {
     return this.pull(serial, `${srcPath}`)
       .then((transfer: PullTransfer): Promise<string> => {
         return new Promise((resolve, reject) => {
-          let data = '';
-          transfer.on('data', (chunk) => {
+          let data = "";
+          transfer.on("data", (chunk) => {
             data += chunk.toString();
           });
-          transfer.on('end', () => {
+          transfer.on("end", () => {
             resolve(data);
           });
-          transfer.on('error', reject);
+          transfer.on("error", reject);
         });
       })
       .nodeify(cb);
@@ -1111,13 +1109,13 @@ export default class AdbClient extends EventEmitter {
         return new Promise((resolve, reject) => {
           // data is piped only when in case there is no error
           let hadError = false;
-          transfer.once('readable', () => {
+          transfer.once("readable", () => {
             if (!hadError) {
               transfer.pipe(fs.createWriteStream(destPath));
             }
           });
-          transfer.once('end', resolve);
-          transfer.once('error', (err) => {
+          transfer.once("end", resolve);
+          transfer.once("error", (err) => {
             hadError = true;
             reject(err);
           });
@@ -1247,7 +1245,7 @@ export default class AdbClient extends EventEmitter {
       })
       .then((out) => {
         return tryConnect(20).then((monkey) => {
-          return monkey.once('end', () => {
+          return monkey.once("end", () => {
             return out.end();
           });
         });
@@ -1261,7 +1259,7 @@ export default class AdbClient extends EventEmitter {
 
   private execInternal(...args: ReadonlyArray<string>) {
     return new Promise<string>((resolve, reject) => {
-      exec(`${this.options.bin} ${args.join(' ')}`, (err, stdout, stderr) => {
+      exec(`${this.options.bin} ${args.join(" ")}`, (err, stdout, stderr) => {
         if (err) return reject(err);
         else if (stderr) return reject(new Error(stderr.trim()));
         else if (/Error/.test(stdout)) return reject(new Error(stdout.trim()));
@@ -1279,7 +1277,7 @@ export default class AdbClient extends EventEmitter {
     cmd: string,
     cb?: (err: Error, value: string) => void
   ) {
-    return this.execInternal(...['-s', serial, cmd]).nodeify(cb);
+    return this.execInternal(...["-s", serial, cmd]).nodeify(cb);
   }
 
   execDeviceShell(
@@ -1287,7 +1285,7 @@ export default class AdbClient extends EventEmitter {
     cmd: string,
     cb?: (err: Error, value: string) => void
   ) {
-    return this.execInternal(...['-s', serial, 'shell', cmd]).nodeify(cb);
+    return this.execInternal(...["-s", serial, "shell", cmd]).nodeify(cb);
   }
 
   batteryStatus(
@@ -1318,7 +1316,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error | null, value: string) => void
   ) {
-    if (typeof options === 'function' || !options) {
+    if (typeof options === "function" || !options) {
       cb = options;
       options = undefined;
     }
@@ -1346,7 +1344,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error | null, value: string) => void
   ) {
-    if (typeof options === 'function' || !options) {
+    if (typeof options === "function" || !options) {
       cb = options;
       options = undefined;
     }
@@ -1374,7 +1372,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error | null, value: string) => void
   ) {
-    if (typeof options === 'function' || !options) {
+    if (typeof options === "function" || !options) {
       cb = options;
       options = undefined;
     }
@@ -1405,7 +1403,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error | null, value: string) => void
   ) {
-    if (typeof options === 'function' || !options) {
+    if (typeof options === "function" || !options) {
       cb = options;
       options = undefined;
     }
@@ -1440,7 +1438,7 @@ export default class AdbClient extends EventEmitter {
     options?: any,
     cb?: (err: Error | null, value: string) => void
   ) {
-    if (typeof options === 'function' || !options) {
+    if (typeof options === "function" || !options) {
       cb = options;
       options = undefined;
     }

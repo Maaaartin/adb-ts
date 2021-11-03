@@ -1,22 +1,22 @@
-export { default as AdbClient } from './client';
-export { default as Command } from './command';
-export { default as EmptyCommand } from './commands/empty-command';
-export { default as ParseCommand } from './commands/parse-command';
-export { default as RawCommand } from './commands/raw-command';
-export { default as TransportCommand } from './commands/tranport';
-export { default as TransportParseAllCommand } from './commands/transport-parse-all-command';
-export { default as TransportParseValueCommand } from './commands/transport-parse-value-command';
-export { default as ValueCommand } from './commands/value-command';
-export { KeyCode } from './keycode';
-export { default as LineTransform } from './linetransform';
-export { default as Parser } from './parser';
-export { default as Sync } from './sync';
-export { default as Tracker } from './tracker';
+export { default as AdbClient } from "./client";
+export { default as Command } from "./command";
+export { default as EmptyCommand } from "./commands/empty-command";
+export { default as ParseCommand } from "./commands/parse-command";
+export { default as RawCommand } from "./commands/raw-command";
+export { default as TransportCommand } from "./commands/tranport";
+export { default as TransportParseAllCommand } from "./commands/transport-parse-all-command";
+export { default as TransportParseValueCommand } from "./commands/transport-parse-value-command";
+export { default as ValueCommand } from "./commands/value-command";
+export { KeyCode } from "./keycode";
+export { default as LineTransform } from "./linetransform";
+export { default as Parser } from "./parser";
+export { default as Sync } from "./sync";
+export { default as Tracker } from "./tracker";
 
-import Command from './command';
-import Connection from './connection';
-import { EventEmitter } from 'events';
-import LogcatEntry from './logcat/entry';
+import Command from "./command";
+import Connection from "./connection";
+import { EventEmitter } from "events";
+import LogcatEntry from "./logcat/entry";
 
 export enum Priority {
   DEFAULT = 1,
@@ -30,16 +30,16 @@ export enum Priority {
 }
 
 export enum Reply {
-  OKAY = 'OKAY',
-  FAIL = 'FAIL',
-  STAT = 'STAT',
-  LIST = 'LIST',
-  DENT = 'DENT',
-  RECV = 'RECV',
-  DATA = 'DATA',
-  DONE = 'DONE',
-  SEND = 'SEND',
-  QUIT = 'QUIT',
+  OKAY = "OKAY",
+  FAIL = "FAIL",
+  STAT = "STAT",
+  LIST = "LIST",
+  DENT = "DENT",
+  RECV = "RECV",
+  DATA = "DATA",
+  DONE = "DONE",
+  SEND = "SEND",
+  QUIT = "QUIT",
 }
 
 export function decodeLength(length: string) {
@@ -47,7 +47,7 @@ export function decodeLength(length: string) {
 }
 
 export function encodeLength(length: number) {
-  return ('0000' + length.toString(16)).slice(-4).toUpperCase();
+  return ("0000" + length.toString(16)).slice(-4).toUpperCase();
 }
 
 export function encodeData(data: any) {
@@ -59,15 +59,15 @@ export function encodeData(data: any) {
 
 export function stringToType(value: string): SimpleType {
   const num = Number(value);
-  if (isNaN(num) || value === '') {
+  if (isNaN(num) || value === "") {
     switch (value) {
-      case '':
+      case "":
         return undefined;
-      case 'true':
+      case "true":
         return true;
-      case 'false':
+      case "false":
         return false;
-      case 'null':
+      case "null":
         return null;
       default:
         return value;
@@ -78,34 +78,34 @@ export function stringToType(value: string): SimpleType {
 }
 
 export type DeviceState =
-  | 'offline'
-  | 'device'
-  | 'emulator'
-  | 'unauthorized'
-  | 'recovery'
-  | 'no permissions';
+  | "offline"
+  | "device"
+  | "emulator"
+  | "unauthorized"
+  | "recovery"
+  | "no permissions";
 
 export type AdbFlag =
-  | '-f'
-  | '-d'
-  | '-e'
-  | '-g'
-  | '-k'
-  | '-s'
-  | '-t'
-  | '-3'
-  | '-i'
-  | '-u';
+  | "-f"
+  | "-d"
+  | "-e"
+  | "-g"
+  | "-k"
+  | "-s"
+  | "-t"
+  | "-3"
+  | "-i"
+  | "-u";
 
 export type AdbExtraType =
-  | 'string'
-  | 'null'
-  | 'bool'
-  | 'int'
-  | 'long'
-  | 'float'
-  | 'uri'
-  | 'component';
+  | "string"
+  | "null"
+  | "bool"
+  | "int"
+  | "long"
+  | "float"
+  | "uri"
+  | "component";
 
 export type AdbExtra = {
   key: string;
@@ -131,10 +131,10 @@ export interface IAdbDevice {
   id: string;
   state: DeviceState;
   path: string;
-  device?: string;
-  model?: string;
-  product?: string;
-  transportId?: string;
+  device: string;
+  model: string;
+  product: string;
+  transportId: string;
   transport: TransportType;
 }
 
@@ -173,13 +173,16 @@ export interface InstallOptions {
 export interface UninstallOptions {
   keepCache?: boolean;
 }
+export type AdbClientOptionsValues = {
+  port: number;
+  bin: string;
+  host: string;
+  noAutoStart: boolean;
+};
 
-export interface AdbClientOptions {
-  port?: number;
-  bin?: string;
-  host?: string;
-  noAutoStart?: boolean;
-}
+export type AdbClientOptions = {
+  [K in keyof AdbClientOptionsValues]?: AdbClientOptionsValues[K];
+};
 
 export interface LogcatOptions {
   clear?: boolean;
@@ -191,32 +194,32 @@ export interface LogcatReaderOptions {
   filter?: (entry: LogcatEntry) => boolean;
 }
 
-export type TransportType = 'usb' | 'local'; // | 'any' - impossible state
+export type TransportType = "usb" | "local"; // | 'any' - impossible state
 
-export type WaitForState = 'device' | 'recovery' | 'sideload' | 'bootloader';
+export type WaitForState = "device" | "recovery" | "sideload" | "bootloader";
 
-export type SettingsMode = 'system' | 'global' | 'secure';
+export type SettingsMode = "system" | "global" | "secure";
 
 export type InputSource =
-  | 'dpad'
-  | 'keyboard'
-  | 'mouse'
-  | 'touchpad'
-  | 'gamepad'
-  | 'touchnavigation'
-  | 'joystick'
-  | 'touchscreen'
-  | 'stylus'
-  | 'trackball';
+  | "dpad"
+  | "keyboard"
+  | "mouse"
+  | "touchpad"
+  | "gamepad"
+  | "touchnavigation"
+  | "joystick"
+  | "touchscreen"
+  | "stylus"
+  | "trackball";
 
 export type InputType =
-  | 'text'
-  | 'keyevent'
-  | 'tap'
-  | 'swipe'
-  | 'draganddrop'
-  | 'press'
-  | 'roll';
+  | "text"
+  | "keyevent"
+  | "tap"
+  | "swipe"
+  | "draganddrop"
+  | "press"
+  | "roll";
 
 export interface InputOptions {
   source?: InputSource;
@@ -295,7 +298,7 @@ export class FailError extends Error {
   constructor(message?: string) {
     super();
     Object.setPrototypeOf(this, PrematureEOFError.prototype);
-    this.name = 'FailError';
+    this.name = "FailError";
     this.message = `Failure: ${message}`;
     Error.captureStackTrace(this);
   }
@@ -308,7 +311,7 @@ export class UnexpectedDataError extends Error {
     super();
     // hack
     Object.setPrototypeOf(this, PrematureEOFError.prototype);
-    this.name = 'UnexpectedDataError';
+    this.name = "UnexpectedDataError";
     this.message = `Unexpected '${unexpected}', was expecting ${expected}`;
     this.unexpected = unexpected;
     this.expected = expected;
@@ -320,9 +323,9 @@ export class PrematureEOFError extends Error {
   constructor(howManyMissing: number) {
     super();
     Object.setPrototypeOf(this, PrematureEOFError.prototype);
-    this.name = 'PrematureEOFError';
+    this.name = "PrematureEOFError";
     this.message =
-      'Premature end of stream, needed ' + howManyMissing + ' more bytes';
+      "Premature end of stream, needed " + howManyMissing + " more bytes";
     this.missingBytes = howManyMissing;
     Error.captureStackTrace(this);
   }
@@ -332,9 +335,9 @@ export class NotConnectedError extends Error {
   constructor() {
     super();
     Object.setPrototypeOf(this, PrematureEOFError.prototype);
-    this.name = 'NotConnectedError';
+    this.name = "NotConnectedError";
     this.message =
-      'Client not connected. `connect` function must be called before use.';
+      "Client not connected. `connect` function must be called before use.";
     Error.captureStackTrace(this);
   }
 }
