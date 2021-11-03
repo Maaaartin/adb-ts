@@ -1,6 +1,6 @@
-import Command from '../../command'
-import { Reply, WaitForState, TransportType } from '../..'
-import Promise from 'bluebird'
+import Command from '../../command';
+import { Reply, WaitForState, TransportType } from '../..';
+import Promise from 'bluebird';
 
 export default class WaitForDeviceCommand extends Command {
     execute(tranport: TransportType, state: WaitForState): Promise<void> {
@@ -9,12 +9,12 @@ export default class WaitForDeviceCommand extends Command {
             .then((reply) => {
                 switch (reply) {
                     case Reply.OKAY:
-                        return this.parser.readAscii(4).return(undefined)
+                        return this.parser.readAscii(4).return(undefined);
                     case Reply.FAIL:
-                        return this.parser.readError()
+                        return this.parser.readError();
                     default:
-                        return this.parser.unexpected(reply, 'OKAY or FAIL')
+                        return this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
-            })
+            });
     }
 }

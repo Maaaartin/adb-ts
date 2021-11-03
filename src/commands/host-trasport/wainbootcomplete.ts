@@ -1,5 +1,5 @@
-import { Reply } from '../..'
-import TransportCommand from '../tranport'
+import { Reply } from '../..';
+import TransportCommand from '../tranport';
 
 export default class WaitBootCompleteCommand extends TransportCommand {
     execute(serial: string) {
@@ -14,16 +14,16 @@ export default class WaitBootCompleteCommand extends TransportCommand {
                         return this.parser
                             .searchLine(/^1$/)
                             .finally(() => {
-                                return this.parser.end()
+                                return this.parser.end();
                             })
                             .then(() => {
-                                return
-                            })
+                                return;
+                            });
                     case Reply.FAIL:
-                        return this.parser.readError()
+                        return this.parser.readError();
                     default:
-                        return this.parser.unexpected(reply, 'OKAY or FAIL')
+                        return this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
-            })
+            });
     }
 }

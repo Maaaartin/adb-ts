@@ -1,5 +1,5 @@
-import { StartActivityOptions } from '../..'
-import StartServiceCommand from './startservice'
+import { StartActivityOptions } from '../..';
+import StartServiceCommand from './startservice';
 
 export default class StartActivityCommand extends StartServiceCommand {
     execute(
@@ -8,6 +8,6 @@ export default class StartActivityCommand extends StartServiceCommand {
         activity: string,
         options?: StartActivityOptions
     ) {
-        return super.execute(serial, pkg, activity, options, 'shell:am start ')
+        return super.execute(serial, pkg, activity, options, 'shell:am start ');
     }
 }

@@ -1,5 +1,5 @@
-import Command from '../command'
-import { Reply } from '..'
+import Command from '../command';
+import { Reply } from '..';
 
 export default class ValueCommand extends Command {
     execute(...params: any[]) {
@@ -7,13 +7,13 @@ export default class ValueCommand extends Command {
             switch (reply) {
                 case Reply.OKAY:
                     return this.parser.readValue().then((value) => {
-                        return value.toString().trim()
-                    })
+                        return value.toString().trim();
+                    });
                 case Reply.FAIL:
-                    return this.parser.readError()
+                    return this.parser.readError();
                 default:
-                    return this.parser.unexpected(reply, 'OKAY or FAIL')
+                    return this.parser.unexpected(reply, 'OKAY or FAIL');
             }
-        })
+        });
     }
 }

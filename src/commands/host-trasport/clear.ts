@@ -1,5 +1,5 @@
-import { Reply } from '../..'
-import TransportCommand from '../tranport'
+import { Reply } from '../..';
+import TransportCommand from '../tranport';
 
 export default class ClearCommand extends TransportCommand {
     execute(serial: string, pkg: string) {
@@ -9,25 +9,25 @@ export default class ClearCommand extends TransportCommand {
                     return this.parser
                         .searchLine(/^(Success|Failed)$/)
                         .finally(() => {
-                            return this.parser.end()
+                            return this.parser.end();
                         })
                         .then((result) => {
                             switch (result[0]) {
                                 case 'Success':
-                                    return
+                                    return;
                                 case 'Failed':
                                     throw new Error(
                                         "Package '" +
                                             pkg +
                                             "' could not be cleared"
-                                    )
+                                    );
                             }
-                        })
+                        });
                 case Reply.FAIL:
-                    return this.parser.readError()
+                    return this.parser.readError();
                 default:
-                    return this.parser.unexpected(reply, 'OKAY or FAIL')
+                    return this.parser.unexpected(reply, 'OKAY or FAIL');
             }
-        })
+        });
     }
 }

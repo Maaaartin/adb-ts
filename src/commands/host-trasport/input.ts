@@ -1,4 +1,4 @@
-import TransportCommand from '../tranport'
+import TransportCommand from '../tranport';
 
 export default class InputCommand extends TransportCommand {
     execute(serial: string, param1: string, param2: string, ...args: any[]) {
@@ -10,6 +10,6 @@ export default class InputCommand extends TransportCommand {
                 param2,
                 ...args.map((arg) => this.escape(arg))
             )
-            .thenReturn()
+            .thenReturn();
     }
 }

@@ -1,5 +1,5 @@
-import Command from '../../command'
-import { Reply } from '../..'
+import Command from '../../command';
+import { Reply } from '../..';
 
 export default class DisconnectCommand extends Command {
     execute(host: string, port: number | string) {
@@ -9,18 +9,18 @@ export default class DisconnectCommand extends Command {
                 switch (reply) {
                     case Reply.OKAY:
                         return this.parser.readValue().then((value) => {
-                            const regExp = /disconnected/
+                            const regExp = /disconnected/;
                             if (regExp?.test(value.toString())) {
-                                return host + ':' + port
+                                return host + ':' + port;
                             } else {
-                                throw new Error(value.toString())
+                                throw new Error(value.toString());
                             }
-                        })
+                        });
                     case Reply.FAIL:
-                        return this.parser.readError()
+                        return this.parser.readError();
                     default:
-                        return this.parser.unexpected(reply, 'OKAY or FAIL')
+                        return this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
-            })
+            });
     }
 }

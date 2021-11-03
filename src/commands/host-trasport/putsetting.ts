@@ -1,5 +1,5 @@
-import { SettingsMode, SimpleType } from '../..'
-import TransportCommand from '../tranport'
+import { SettingsMode, SimpleType } from '../..';
+import TransportCommand from '../tranport';
 
 export default class PutSetting extends TransportCommand {
     execute(
@@ -18,11 +18,11 @@ export default class PutSetting extends TransportCommand {
             )
             .then(() => {
                 return this.parser.readAll().then((value) => {
-                    const valueStr = value.toString()
+                    const valueStr = value.toString();
                     if (/failed/.test(valueStr)) {
-                        throw new Error(valueStr)
+                        throw new Error(valueStr);
                     }
-                })
-            })
+                });
+            });
     }
 }

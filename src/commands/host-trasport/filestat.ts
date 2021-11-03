@@ -1,12 +1,12 @@
-import Promise from 'bluebird'
-import FileStats, { IFileStats } from '../../filestats'
-import TransportParseAllCommand from '../transport-parse-all-command'
+import Promise from 'bluebird';
+import FileStats, { IFileStats } from '../../filestats';
+import TransportParseAllCommand from '../transport-parse-all-command';
 
 export default class FileStatCommand extends TransportParseAllCommand {
     protected parse(value: string) {
-        const props = value.split('\\_')
+        const props = value.split('\\_');
         if (props.length === 1) {
-            throw new Error(value.trim())
+            throw new Error(value.trim());
         }
         const parsed: IFileStats = {
             abits: parseInt(props[0], 8),
@@ -35,10 +35,10 @@ export default class FileStatCommand extends TransportParseAllCommand {
             mtime: new Date(props[24]),
             mtimeMs: Number(props[25]),
             ctime: new Date(props[26]),
-            ctimeMs: Number(props[27]),
-        }
+            ctimeMs: Number(props[27])
+        };
 
-        return new FileStats(parsed)
+        return new FileStats(parsed);
     }
 
     execute(serial: string, path: string): Promise<FileStats> {
@@ -70,12 +70,12 @@ export default class FileStatCommand extends TransportParseAllCommand {
             'y',
             'Y',
             'z',
-            'Z',
-        ]
+            'Z'
+        ];
         return super.execute(
             serial,
             `shell:stat -c "%${flags.join('\\_%')}"`,
             path
-        )
+        );
     }
 }

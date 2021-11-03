@@ -1,34 +1,34 @@
-import moment from 'moment'
-import { MvOptions, TouchOptions } from '../..'
-import FileSystemCommand from '../filesystem'
+import moment from 'moment';
+import { MvOptions, TouchOptions } from '../..';
+import FileSystemCommand from '../filesystem';
 
 export default class MvCommand extends FileSystemCommand {
     intentArgs(options?: MvOptions) {
-        const args: string[] = []
+        const args: string[] = [];
         if (!options) {
-            return args
+            return args;
         } else {
             if (options.force) {
-                args.push('-f')
+                args.push('-f');
             }
             if (options.interactive) {
-                args.push('-i')
+                args.push('-i');
             }
             if (options.verbose) {
-                args.push('-v')
+                args.push('-v');
             }
             if (options.noClobber) {
-                args.push('-n')
+                args.push('-n');
             }
-            return args
+            return args;
         }
     }
 
     getCmd() {
-        return 'mv'
+        return 'mv';
     }
 
     execute(serial: string, paths: string[], options?: MvOptions) {
-        return super.execute(serial, paths, options)
+        return super.execute(serial, paths, options);
     }
 }

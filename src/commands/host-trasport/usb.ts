@@ -1,5 +1,5 @@
-import { Reply } from '../..'
-import TransportCommand from '../tranport'
+import { Reply } from '../..';
+import TransportCommand from '../tranport';
 
 export default class UsbCommand extends TransportCommand {
     execute(serial: string) {
@@ -7,18 +7,18 @@ export default class UsbCommand extends TransportCommand {
             switch (reply) {
                 case Reply.OKAY:
                     return this.parser.readAll().then((value) => {
-                        const valueStr = value.toString()
+                        const valueStr = value.toString();
                         if (/restarting in/.test(valueStr)) {
-                            return
+                            return;
                         } else {
-                            throw new Error(valueStr.trim())
+                            throw new Error(valueStr.trim());
                         }
-                    })
+                    });
                 case Reply.FAIL:
-                    return this.parser.readError()
+                    return this.parser.readError();
                 default:
-                    return this.parser.unexpected(reply, 'OKAY or FAIL')
+                    return this.parser.unexpected(reply, 'OKAY or FAIL');
             }
-        })
+        });
     }
 }

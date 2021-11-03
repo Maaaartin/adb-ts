@@ -1,6 +1,6 @@
-import { PrematureEOFError } from '../..'
-import LineTransform from '../../linetransform'
-import RawCommand from '../raw-command'
+import { PrematureEOFError } from '../..';
+import LineTransform from '../../linetransform';
+import RawCommand from '../raw-command';
 
 export default class ScreencapCommand extends RawCommand {
     execute(serial: string) {
@@ -11,15 +11,15 @@ export default class ScreencapCommand extends RawCommand {
                     .readBytes(1)
                     .then((chunk) => {
                         const transform = new LineTransform({
-                            autoDetect: true,
-                        })
-                        transform.write(chunk)
-                        this.connection.pipe(transform)
-                        return transform
+                            autoDetect: true
+                        });
+                        transform.write(chunk);
+                        this.connection.pipe(transform);
+                        return transform;
                     })
                     .catch(PrematureEOFError, () => {
-                        throw new Error('No support for the screencap command')
-                    })
-            })
+                        throw new Error('No support for the screencap command');
+                    });
+            });
     }
 }

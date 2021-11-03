@@ -1,6 +1,6 @@
-import Command from '../../command'
-import { Reply } from '../..'
-import Promise from 'bluebird'
+import Command from '../../command';
+import { Reply } from '../..';
+import Promise from 'bluebird';
 
 export default class ForwardCommand extends Command {
     execute(serial: string, local: string, remote: string): Promise<void> {
@@ -12,21 +12,21 @@ export default class ForwardCommand extends Command {
                         return this.parser.readAscii(4).then((reply) => {
                             switch (reply) {
                                 case Reply.OKAY:
-                                    return
+                                    return;
                                 case Reply.FAIL:
-                                    return this.parser.readError()
+                                    return this.parser.readError();
                                 default:
                                     return this.parser.unexpected(
                                         reply,
                                         'OKAY or FAIL'
-                                    )
+                                    );
                             }
-                        })
+                        });
                     case Reply.FAIL:
-                        return this.parser.readError()
+                        return this.parser.readError();
                     default:
-                        return this.parser.unexpected(reply, 'OKAY or FAIL')
+                        return this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
-            })
+            });
     }
 }

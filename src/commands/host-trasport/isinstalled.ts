@@ -1,7 +1,7 @@
-import { Readable } from 'stream'
-import Connection from '../../connection'
-import { Reply } from '../..'
-import TransportCommand from '../tranport'
+import { Readable } from 'stream';
+import Connection from '../../connection';
+import { Reply } from '../..';
+import TransportCommand from '../tranport';
 
 export default class IsInstalledCommand extends TransportCommand {
     execute(serial: string, pkg: string | Readable) {
@@ -15,22 +15,22 @@ export default class IsInstalledCommand extends TransportCommand {
                             .then((reply) => {
                                 switch (reply) {
                                     case 'package:':
-                                        return true
+                                        return true;
                                     default:
                                         return this.parser.unexpected(
                                             reply,
                                             'package:'
-                                        )
+                                        );
                                 }
                             })
                             .catch((err) => {
-                                return false
-                            })
+                                return false;
+                            });
                     case Reply.FAIL:
-                        return this.parser.readError()
+                        return this.parser.readError();
                     default:
-                        return this.parser.unexpected(reply, 'OKAY or FAIL')
+                        return this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
-            })
+            });
     }
 }

@@ -1,5 +1,5 @@
-import { Reply, UninstallOptions } from '../..'
-import TransportCommand from '../tranport'
+import { Reply, UninstallOptions } from '../..';
+import TransportCommand from '../tranport';
 
 export default class UninstallCommand extends TransportCommand {
     execute(serial: string, pkg: string, options?: UninstallOptions) {
@@ -18,16 +18,16 @@ export default class UninstallCommand extends TransportCommand {
                                 /^(Success|Failure.*|.*Unknown package:.*)$/
                             )
                             .then(() => {
-                                return
+                                return;
                             })
                             .finally(() => {
-                                return this.parser.readAll()
-                            })
+                                return this.parser.readAll();
+                            });
                     case Reply.FAIL:
-                        return this.parser.readError()
+                        return this.parser.readError();
                     default:
-                        return this.parser.unexpected(reply, 'OKAY or FAIL')
+                        return this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
-            })
+            });
     }
 }

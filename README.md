@@ -21,8 +21,8 @@ yarn add adb-ts
     -   `port: number`: default `5037`
 
 ```ts
-import { AdbClient } from 'adb-ts'
-const adb = new AdbClient({ bin: 'path-to-adb.exe' })
+import { AdbClient } from 'adb-ts';
+const adb = new AdbClient({ bin: 'path-to-adb.exe' });
 ```
 
 #### adb methods
@@ -30,7 +30,7 @@ const adb = new AdbClient({ bin: 'path-to-adb.exe' })
 ##### adb.version(cb?: (err: Error, value: number) => void)
 
 ```ts
-adb.version().then((version: number) => console.log(version))
+adb.version().then((version: number) => console.log(version));
 ```
 
 Gets the adb server version.
@@ -41,8 +41,8 @@ Gets the adb server version.
 
 ```ts
 adb.map(async (device: AdbDevice) => {
-    const props = await device.listProperties()
-})
+    const props = await device.listProperties();
+});
 ```
 
 Maps through all devices. In the mapper function, instance of `AdbDevice` is available. `AdbDevice` has properties `id` , `state` , `path` , `device` , `model` , `product` , `transport` and `transportId` .
@@ -51,9 +51,9 @@ Snippet above is equivalent to:
 ```ts
 adb.listDevices().then((devices) => {
     return Promise.map(devices, async (device) => {
-        const props = await adb.listProperties(device.id)
-    })
-})
+        const props = await adb.listProperties(device.id);
+    });
+});
 ```
 
 -   Returns: `Promise<R[]>`
@@ -62,11 +62,11 @@ adb.listDevices().then((devices) => {
 
 ```ts
 adb.map(async (device) => {
-    await device.tcpip()
-    await adb.waitForDevice('usb', 'device')
-    const ip = await device.getIpAddress()
-    await adb.connect(ip)
-})
+    await device.tcpip();
+    await adb.waitForDevice('usb', 'device');
+    const ip = await device.getIpAddress();
+    await adb.connect(ip);
+});
 ```
 
 Connects to device over local network.
@@ -76,7 +76,7 @@ Connects to device over local network.
 ##### adb.disconnect(host: string, port = 5555, cb?: (err: Error, value: string) => void)
 
 ```ts
-adb.connect('192.168.1.10').then((id: string) => console.log(id))
+adb.connect('192.168.1.10').then((id: string) => console.log(id));
 ```
 
 Disconnects from the given device.
@@ -86,7 +86,7 @@ Disconnects from the given device.
 ##### adb.listDevices(cb?: (err: Error, value: IAdbDevice[]) => void)
 
 ```ts
-adb.listDevices().then((devices: IAdbDevice[]) => console.log(devices))
+adb.listDevices().then((devices: IAdbDevice[]) => console.log(devices));
 ```
 
 Gets the list of currently connected devices and emulators.
@@ -99,9 +99,9 @@ Gets the list of currently connected devices and emulators.
 adb.trackDevices().then((tracker: Tracker) => {
     tracker.on('add', (device) => {
         // ...
-    })
-    tracker.end()
-})
+    });
+    tracker.end();
+});
 ```
 
 Return instance of `Tracker` extending `EventEmitter` , which can emit events `add` , `remove` , `change` , `end` or `error` .
@@ -111,7 +111,7 @@ Return instance of `Tracker` extending `EventEmitter` , which can emit events `a
 ##### adb.kill(cb?: (err: Error) => void)
 
 ```ts
-adb.kill().then(() => null)
+adb.kill().then(() => null);
 ```
 
 Kills the adb server.
@@ -121,7 +121,7 @@ Kills the adb server.
 ##### adb.exec(...args: ReadonlyArray<string>)
 
 ```ts
-adb.exec('devices').then((output: string) => console.log(output))
+adb.exec('devices').then((output: string) => console.log(output));
 ```
 
 Executes a given command via adb console interfase.
@@ -140,19 +140,19 @@ class MyCommand extends Command {
             switch (reply) {
                 case Reply.OKAY:
                     return this.parser.readValue().then((value) => {
-                        return parseInt(value.toString(), 10)
-                    })
+                        return parseInt(value.toString(), 10);
+                    });
                 case Reply.FAIL:
-                    return this.parser.readError()
+                    return this.parser.readError();
                 default:
-                    return parseInt(reply, 10)
+                    return parseInt(reply, 10);
             }
-        })
+        });
     }
 }
 adb.custom<number>(MyCommand).then((value) => {
-    console.log(value)
-})
+    console.log(value);
+});
 ```
 
 Execute method `ParseCommand` instance will call overriden `parse` method.
@@ -164,7 +164,7 @@ Custom Transport command to be executed on a particular device:
 ##### device.getSerialNo(cb?: (err: Error, value: string) => void)
 
 ```ts
-device.getSerialNo().then((id: string) => console.log(id))
+device.getSerialNo().then((id: string) => console.log(id));
 ```
 
 Gets the serial number of the device. Meant for getting serial number of local devices. Analogous to `adb shell getprop ro.serialno` .
@@ -174,7 +174,7 @@ Gets the serial number of the device. Meant for getting serial number of local d
 ##### device.getDevicePath(cb?: (err: Error, value: string) => void)
 
 ```ts
-device.getDevicePath().then((path: string) => console.log(path))
+device.getDevicePath().then((path: string) => console.log(path));
 ```
 
 Gets the device path of the device identified by the device.
@@ -186,7 +186,7 @@ Gets the device path of the device identified by the device.
 ```ts
 device
     .listProperties()
-    .then((properties: KeyStringObject) => console.log(properties))
+    .then((properties: KeyStringObject) => console.log(properties));
 ```
 
 Gets the device properties. Analogous to `adb shell getprop` .
@@ -196,7 +196,9 @@ Gets the device properties. Analogous to `adb shell getprop` .
 ##### device.listFeatures(cb?: (err: Error, value: KeyStringObject) => void)
 
 ```ts
-device.listFeatures().then((features: KeyStringObject) => console.log(features))
+device
+    .listFeatures()
+    .then((features: KeyStringObject) => console.log(features));
 ```
 
 Gets the device features. Analogous to `adb shell pm list features` .
@@ -206,7 +208,7 @@ Gets the device features. Analogous to `adb shell pm list features` .
 ##### device.listPackages(cb?: (err: Error, value: string[]) => void)
 
 ```ts
-device.listPackages().then((packages: string[]) => console.log(packages))
+device.listPackages().then((packages: string[]) => console.log(packages));
 ```
 
 Gets the installed packages. Analogous to `adb shell pm list packages` .
@@ -229,7 +231,7 @@ Gets the the ip address of default wlan interface. If device has no ip address a
 ```ts
 device
     .forward('tcp:9222', 'localabstract:chrome_devtools_remote')
-    .then(() => null)
+    .then(() => null);
 ```
 
 Forwards socket connections from the ADB server host (local) to the device (remote). Analogous to `adb forward <local> <remote>` .
@@ -247,7 +249,7 @@ Forwards socket connections from the ADB server host (local) to the device (remo
 ##### device.listForwards(cb?: (err: Error, value: ForwardsObject[]) => void)
 
 ```ts
-device.listForwards().then((list: ForwardsObject[]) => console.log(list))
+device.listForwards().then((list: ForwardsObject[]) => console.log(list));
 ```
 
 Lists all forwarded connections. Analogous to `adb forward --list` .
@@ -259,7 +261,7 @@ Lists all forwarded connections. Analogous to `adb forward --list` .
 ```ts
 device
     .reverse('localabstract:chrome_devtools_remote', 'tcp:9222')
-    .then(() => null)
+    .then(() => null);
 ```
 
 Reverses socket connections from the device (remote) to the ADB server host (local). Analogous to `adb reverse <remote> <local>` ;
@@ -277,7 +279,7 @@ Reverses socket connections from the device (remote) to the ADB server host (loc
 ##### device.listReverses(cb?: (err: Error, value: ReversesObject[]) => void)
 
 ```ts
-device.listReverses().then((list: ReversesObject[]) => console.log(list))
+device.listReverses().then((list: ReversesObject[]) => console.log(list));
 ```
 
 Lists all reversed connections. Analogous to `adb reverse --list` .
@@ -287,7 +289,7 @@ Lists all reversed connections. Analogous to `adb reverse --list` .
 ##### device.shell(command: string | string[], cb?: (err: Error, value: string) => void)
 
 ```ts
-device.shell('ip route').then((value: string) => console.log(value))
+device.shell('ip route').then((value: string) => console.log(value));
 ```
 
 Executes a shell command on the device. Analogous to `adb shell 'command'` ;
@@ -297,7 +299,7 @@ Executes a shell command on the device. Analogous to `adb shell 'command'` ;
 ##### device.reboot(cb?: (err: Error) => void)
 
 ```ts
-device.reboot().then(() => null)
+device.reboot().then(() => null);
 ```
 
 Reboots the device. Analogous to `adb reboot` .
@@ -307,7 +309,7 @@ Reboots the device. Analogous to `adb reboot` .
 ##### device.shutdown(cb?: (err: Error) => void)
 
 ```ts
-device.shutdown().then(() => null)
+device.shutdown().then(() => null);
 ```
 
 Shuts the device down. Analogous to `adb reboot -p` .
@@ -317,7 +319,7 @@ Shuts the device down. Analogous to `adb reboot -p` .
 ##### device.remount(cb?: (err: Error) => void)
 
 ```ts
-device.remount().then(() => null)
+device.remount().then(() => null);
 ```
 
 Attempts to remount the /system partition in read-write mode. Can be done on a rooted device. Analogous to `adb remount` .
@@ -327,7 +329,7 @@ Attempts to remount the /system partition in read-write mode. Can be done on a r
 ##### device.root(serial: string)
 
 ```ts
-device.root().then(() => null)
+device.root().then(() => null);
 ```
 
 Attempts to which the device to the root mode. Analogous to `adb root` .
@@ -338,8 +340,8 @@ Attempts to which the device to the root mode. Analogous to `adb root` .
 
 ```ts
 device.screenshot().then((image: Jimp) => {
-    image.write('some-image.jpg')
-})
+    image.write('some-image.jpg');
+});
 ```
 
 Gets a screenshot on the specified device. See [Jimp](https://www.npmjs.com/package/jimp) for fot its API.
@@ -351,7 +353,7 @@ Gets a screenshot on the specified device. See [Jimp](https://www.npmjs.com/pack
 ```ts
 device.openTcp(5555).then((socket: Connection) => {
     // socket.write(...)
-})
+});
 ```
 
 Opens a direct TCP connection to a port on the device, without any port forwarding required. Analogous to `adb tcp <port>:<host>` .
@@ -365,15 +367,15 @@ device
     .openLogcat({
         filter: (entry) =>
             entry.message.includes('some string') &&
-            entry.prioritiy >= Priority.FATAL,
+            entry.prioritiy >= Priority.FATAL
     })
     .then((reader: LogcatReader) => {
         reader.on('entry', (entry) => {
-            console.log(entry)
-        })
+            console.log(entry);
+        });
         // ...
-        reader.end()
-    })
+        reader.end();
+    });
 ```
 
 Returns a `LogcatReader` instance. Enables to set `filter` option for cleaner filtering of the incoming logs. e.g. `filter: (entry) => entry.message.includes('some string')` is roughly similar to `adb logcat | grep 'some string'` .
@@ -384,7 +386,7 @@ Returns a `LogcatReader` instance. Enables to set `filter` option for cleaner fi
 ##### device.clear(pkg: string, cb?: (err: Error) => void)
 
 ```ts
-device.clear().then(() => null)
+device.clear().then(() => null);
 ```
 
 Deletes all data associated with a package from the device. Analogous to `adb shell pm clear <pkg>` .
@@ -394,7 +396,7 @@ Deletes all data associated with a package from the device. Analogous to `adb sh
 ##### device.install(apk: string | Readable, options?: InstallOptions, cb?: (err: Error) => void)
 
 ```ts
-device.install('path-to-apk', { test: true }).then(() => null)
+device.install('path-to-apk', { test: true }).then(() => null);
 ```
 
 -   **options?: InstallOptions**:
@@ -418,7 +420,7 @@ Installs an apk to the device. Analogous to `adb install` .
 ##### device.uninstall(pkg: string, options?: UninstallOptions, cb?: (err: Error) => void)
 
 ```ts
-device.uninstall('pkg').then(() => null)
+device.uninstall('pkg').then(() => null);
 ```
 
 -   **options?: InstallOptions**:
@@ -431,7 +433,7 @@ Uninstalls a package from the device. Analogous to `adb uninstall` .
 ##### device.isInstalled(pkg: string, options?: UninstallOptions, cb?: (err: Error) => void)
 
 ```ts
-device.isInstalled('pkg').then((result: boolean) => console.log(result))
+device.isInstalled('pkg').then((result: boolean) => console.log(result));
 ```
 
 -   **pkg: string**: package name to examine
@@ -449,10 +451,10 @@ device
         extras: {
             key: 'name',
             value: '0',
-            type: 'string',
-        },
+            type: 'string'
+        }
     })
-    .then((result: boolean) => console.log(result))
+    .then((result: boolean) => console.log(result));
 ```
 
 -   **options:**
@@ -482,7 +484,7 @@ Starts a new activity with options. Extras data type needs to be defined separat
 ```ts
 device
     .startActivity('com.some.package', 'SomeActivity', { debug: true })
-    .then((result: boolean) => console.log(result))
+    .then((result: boolean) => console.log(result));
 ```
 
 -   **debug: boolean**: adds `-D` flag, enables debugging
@@ -497,7 +499,7 @@ Starts a new activity with options.
 #### device.stat(cb?: (err: Error, value: Stats) => void)
 
 ```ts
-device.stat('/path/on/device').then((value: Stats) => {})
+device.stat('/path/on/device').then((value: Stats) => {});
 ```
 
 Return instance of `Stats` , object extending `fs.Stats` .
@@ -507,7 +509,7 @@ Return instance of `Stats` , object extending `fs.Stats` .
 #### device.readDir(cb?: (err: Error, value: SyncEntry[]) => void)
 
 ```ts
-device.readDir('/path/on/device').then((entries: SyncEntry[]) => {})
+device.readDir('/path/on/device').then((entries: SyncEntry[]) => {});
 ```
 
 Return array of `SyncEntry` , object extending `Stats` .
@@ -522,12 +524,12 @@ Note, the path should start with a slash.
 ```ts
 device.pull('/path/on/device').then((transfer: PullTransfer) => {
     transfer.on('data', (chunk) => {
-        data += chunk.toString()
-    })
+        data += chunk.toString();
+    });
     transfer.on('end', () => {
-        console.log(data)
-    })
-})
+        console.log(data);
+    });
+});
 ```
 
 Returns instance of `PullTransfer` extending `Stream.PassThrough` , which can emit events `end` , `data` , `close` , `pause` , `readable` , `resume` , `progress` or `error` .
@@ -538,7 +540,7 @@ Generaly it is more convinient to use `pullFile()` or `pullDataFromFile()` metho
 #### device.pullFile(srcPath: string, destPath: string, cb?: (err: Error) => void)
 
 ```ts
-device.pullFile('/path/on/device', 'output.txt').then(() => null)
+device.pullFile('/path/on/device', 'output.txt').then(() => null);
 ```
 
 -   **srcPath: string**: path to file on the device to be read
@@ -553,7 +555,7 @@ Wraps `pull()` method, reads the content of file on the device to a file on the 
 ```ts
 device
     .pullDataFromFile('/path/on/device')
-    .then((output: string) => console.log(output))
+    .then((output: string) => console.log(output));
 ```
 
 -   **srcPath: string**: path to file on the device to be read
@@ -566,8 +568,8 @@ Wraps `pull()` method, reads the file content and resolves with the output.
 
 ```ts
 device.push('path-to-src', '/path/on/device').then((transfer: PushTransfer) => {
-    transfer.on('end', () => {})
-})
+    transfer.on('end', () => {});
+});
 ```
 
 Return instance of `PushTransfer` extending `EventEmitter` , which can emit events `end` , `cancel` , `progress` or `error` .
@@ -578,7 +580,7 @@ Generaly it is more convinient to use `pushFile` or `pushDataToFile` methods.
 #### device.pushFile(src: string, dest: string, cb?: (err: Error) => void)
 
 ```ts
-device.pushFile('path-to-source', '/path/on/device').then(() => null)
+device.pushFile('path-to-source', '/path/on/device').then(() => null);
 ```
 
 -   **srcPath: string**: path to file on the host to be written
@@ -593,7 +595,7 @@ Wraps `push()` method, reads the content of file on the host to a file on the de
 ```ts
 device
     .pushDataToFile('contents', '/path/on/device')
-    .then((output: string) => console.log(output))
+    .then((output: string) => console.log(output));
 ```
 
 -   **data: string**: string to be written
@@ -606,7 +608,7 @@ Wraps `push()` method, provides API for quick data writting.
 #### device.tcpip(port = 5555, cb?: (err: Error, value: string) => void)
 
 ```ts
-device.tcpip().then(() => null)
+device.tcpip().then(() => null);
 ```
 
 Puts the device's ADB daemon into tcp mode. Afterwards it is possible to use `connect` method. Analogous to `adb tcpip 5555` . Resolves with port number.
@@ -616,7 +618,7 @@ Puts the device's ADB daemon into tcp mode. Afterwards it is possible to use `co
 ##### device.usb(cb?: (err: Error) => void)
 
 ```ts
-device.usb().then(() => null)
+device.usb().then(() => null);
 ```
 
 Puts to device transport back to usb.
@@ -628,9 +630,9 @@ Puts to device transport back to usb.
 ```ts
 adb.trackDevices((err, tracker) => {
     tracker.on('add', (device) => {
-        device.waitBootComplete().then(() => {})
-    })
-})
+        device.waitBootComplete().then(() => {});
+    });
+});
 ```
 
 Waits until the device has finished booting.
@@ -642,7 +644,7 @@ Waits until the device has finished booting.
 ```ts
 device
     .listSettings('system')
-    .then((settings: KeyStringObject) => console.log(settings))
+    .then((settings: KeyStringObject) => console.log(settings));
 ```
 
 -   **mode: SettingsMode**: values `system`, `global` or `secure`.
@@ -656,7 +658,7 @@ Gets the device features. Analogous to `adb shell settings list system <mode>` .
 ```ts
 device
     .getProp('ro.build.version.sdk')
-    .then((value: SimpleType) => console.log(value))
+    .then((value: SimpleType) => console.log(value));
 ```
 
 Gets the device features. Analogous to `adb shell getprop <propname>` .
@@ -668,7 +670,7 @@ Gets the device features. Analogous to `adb shell getprop <propname>` .
 ```ts
 device
     .getSetting('global', 'wifi_on')
-    .then((value: SimpleType) => console.log(value))
+    .then((value: SimpleType) => console.log(value));
 ```
 
 Gets the device features. Analogous to `adb shell settings get <mode> <name>` .
@@ -678,7 +680,7 @@ Gets the device features. Analogous to `adb shell settings get <mode> <name>` .
 ##### device.putSetting(mode: SettingsMode, name: string, value: SimpleType, cb?: (err: Error) => void)
 
 ```ts
-device.putSetting('global', 'wifi_on', 0).then(() => null)
+device.putSetting('global', 'wifi_on', 0).then(() => null);
 ```
 
 Gets the device features. Analogous to `adb shell settings put <mode> <name> <value>` .
@@ -688,7 +690,7 @@ Gets the device features. Analogous to `adb shell settings put <mode> <name> <va
 ##### device.killApp(pkg: string, cb?: (err: Error) => void)
 
 ```ts
-device.killApp('com.some.package').then(() => null)
+device.killApp('com.some.package').then(() => null);
 ```
 
 Gets the device features. Analogous to `adb shell am force-stop <package>` .
@@ -702,7 +704,7 @@ Note: for multiple input it is more efficient to use [ `Monkey` ](https://github
 ##### device.roll(x: number, y: number, source: InputSource = 'trackball')
 
 ```ts
-device.roll(100, 0).then(() => null)
+device.roll(100, 0).then(() => null);
 ```
 
 -   **x** Horizontal coordinate
@@ -716,7 +718,7 @@ Send roll input command to the device shell. Analogous to `adb shell input track
 ##### device.press(source: InputSource = 'trackball')
 
 ```ts
-device.press().then(() => null)
+device.press().then(() => null);
 ```
 
 -   **source** Optitional parameter of `InputSource`. Default `trackball`
@@ -728,7 +730,7 @@ Send roll input command to the device shell. Analogous to `adb shell input track
 ##### device.dragAndDrop(x1: number, y2: number, x1: number, y2: number, options?: InputOptions & { duration?: number })
 
 ```ts
-device.dragAndDrop(100, 0, 200, 10, { duration: 3000 }).then(() => null)
+device.dragAndDrop(100, 0, 200, 10, { duration: 3000 }).then(() => null);
 ```
 
 -   **x1** Horizontal starting coordinate
@@ -747,7 +749,7 @@ Send roll input command to the device shell. Analogous to `adb shell input touch
 ##### device.swipe(x1: number, y2: number, x1: number, y2: number, options?: InputOptions & { duration?: number })
 
 ```ts
-device.swipe(100, 0, 200, 10, { duration: 3000 }).then(() => null)
+device.swipe(100, 0, 200, 10, { duration: 3000 }).then(() => null);
 ```
 
 -   **x1** Horizontal starting coordinate
@@ -766,7 +768,7 @@ Send swipe input command to the device shell. Analogous to `adb shell input touc
 ##### device.keyEvent(code: KeyCode | number, options?: InputOptions & { longpress?: boolean })
 
 ```ts
-device.keyEvent(KeyCode.KEYCODE_HOME).then(() => null)
+device.keyEvent(KeyCode.KEYCODE_HOME).then(() => null);
 ```
 
 -   **code** Key code number
@@ -782,7 +784,7 @@ Send keyevent input command to the device shell. Analogous to `adb shell input k
 ##### device.tap(x: number, y: number, source: InputSource = 'touchscreen')
 
 ```ts
-device.tap(100, 0).then(() => null)
+device.tap(100, 0).then(() => null);
 ```
 
 -   **x** Horizontal coordinate
@@ -796,7 +798,7 @@ Send swipe input command to the device shell. Analogous to `adb shell input touc
 ##### device.text(text: SimpleType, source: InputSource = 'touchscreen')
 
 ```ts
-device.text('some text').then(() => null)
+device.text('some text').then(() => null);
 ```
 
 -   **text** Value to be written
@@ -816,18 +818,20 @@ class MyCommand extends TransportCommand {
             switch (reply) {
                 case Reply.OKAY:
                     return this.parser.readAll().then((value) => {
-                        const valueStr = value.toString().trim()
-                        return /not found/.test(valueStr) ? undefined : valueStr
-                    })
+                        const valueStr = value.toString().trim();
+                        return /not found/.test(valueStr)
+                            ? undefined
+                            : valueStr;
+                    });
                 case Reply.FAIL:
-                    return this.parser.readError()
+                    return this.parser.readError();
                 default:
-                    return this.parser.unexpected(reply, 'OKAY or FAIL')
+                    return this.parser.unexpected(reply, 'OKAY or FAIL');
             }
-        })
+        });
     }
 }
-device.custom<string>(MyCommand).then((reply: string) => {})
+device.custom<string>(MyCommand).then((reply: string) => {});
 ```
 
 `execute()` method `TransportParseAllCommand` instance will automatically read all data from the stream and calls overriden `parse()` method.
@@ -836,10 +840,10 @@ device.custom<string>(MyCommand).then((reply: string) => {})
 ```ts
 class MyCommand extends TransportParseAllCommand {
     protected parse(value) {
-        return value
+        return value;
     }
     execute(serial: string, prop: string): Promise<SimpleType> {
-        return super.execute(serial, `shell:getprop ${prop}`)
+        return super.execute(serial, `shell:getprop ${prop}`);
     }
 }
 ```
@@ -850,8 +854,8 @@ class MyCommand extends TransportParseAllCommand {
 
 ```ts
 device.openMonkey().then((monkey: Monkey) => {
-    monkey.send('')
-})
+    monkey.send('');
+});
 ```
 
 Establishes a new monkey connection on port `1080` . For more see [ `Monkey` ](https://github.com/Maaaartin/adb-ts#adb-monkey).
@@ -861,7 +865,7 @@ Establishes a new monkey connection on port `1080` . For more see [ `Monkey` ](h
 ##### device.exec(...args: ReadonlyArray<string>)
 
 ```ts
-device.exec('reboot').then((output: string) => console.log(output))
+device.exec('reboot').then((output: string) => console.log(output));
 ```
 
 Executes a given command via adb console interface.
@@ -871,7 +875,7 @@ Executes a given command via adb console interface.
 ##### device.execShell(...args: ReadonlyArray<string>)
 
 ```ts
-device.exec('pm list packages').then((output: string) => console.log(output))
+device.exec('pm list packages').then((output: string) => console.log(output));
 ```
 
 Executes a given shell command via adb console interface. Analogous to `adb -s <serial> shell <command>` .
@@ -883,7 +887,7 @@ Executes a given shell command via adb console interface. Analogous to `adb -s <
 ```ts
 device
     .batteryStatus()
-    .then((output: KeyStringObject) => console.log(KeyStringObject))
+    .then((output: KeyStringObject) => console.log(KeyStringObject));
 ```
 
 Retrieves current batery status. Analogous to `adb -s <serial> shell dumpsys battery` .
@@ -893,7 +897,7 @@ Retrieves current batery status. Analogous to `adb -s <serial> shell dumpsys bat
 ##### device.rm(path: string, options?: RmOption, cb?: (err: Error | null, value: string) => void)
 
 ```ts
-device.rm('/sdcard/some-file').then(() => null)
+device.rm('/sdcard/some-file').then(() => null);
 ```
 
 RmOptions
@@ -909,7 +913,7 @@ Removes file/forder specified by `path` paramter. Analogous to `adb shell rm <fi
 ##### device.mkdir(path: string, options?: MkDirOptions, cb?: (err: Error | null, value: string) => void)
 
 ```ts
-device.mkdir('/sdcard/some-dir').then(() => null)
+device.mkdir('/sdcard/some-dir').then(() => null);
 ```
 
 MkDirOptions
@@ -925,7 +929,7 @@ Creates forder specified by `path` paramter. Analogous to `adb shell mkdir <file
 ##### device.touch(path: string, options?: TouchOptions, cb?: (err: Error | null, value: string) => void)
 
 ```ts
-device.touch('/sdcard/some-file').then(() => null)
+device.touch('/sdcard/some-file').then(() => null);
 ```
 
 TouchOptions
@@ -945,7 +949,7 @@ Updates access and modification times of file specified by `path` paramter. Anal
 ##### device. mv(srcPath: string, destDir, options?: MvOptions, cb?: (err: Error | null, value: string) => void)
 
 ```ts
-device.mv('/sdcard/file', '/sdcard/some-dir').then(() => null)
+device.mv('/sdcard/file', '/sdcard/some-dir').then(() => null);
 ```
 
 MvOptions
@@ -962,7 +966,7 @@ Moves data with `srcPath` to `destPath` paramter. Analogous to `adb shell mv <sr
 ##### device.cp(srcPath: string, destDir, options?: CpOptions, cb?: (err: Error | null, value: string) => void)
 
 ```ts
-device.cp('/sdcard/file', '/sdcard/some-dir').then(() => null)
+device.cp('/sdcard/file', '/sdcard/some-dir').then(() => null);
 ```
 
 CpOptions
@@ -989,7 +993,7 @@ Copies data with `srcPath` to `destPath` paramter. Analogous to `adb shell cp <s
 ##### device.fileStats(path: string, cb?: (err: Error | null, value: FileStats) => void)
 
 ```ts
-device.fileStats('some-file').then((stats: FileStats) => console.log(stats))
+device.fileStats('some-file').then((stats: FileStats) => console.log(stats));
 ```
 
 Gets file stats for specified path. Use instead of `device.stat()` Analogous to `adb stats <filepath>` .
@@ -1007,16 +1011,16 @@ function startMonkey() {
     device.openMonkey((err, monkey) => {
         // monkey sometimes emits an error
         monkey.on('error', () => {
-            startMonkey()
-        })
+            startMonkey();
+        });
         // monkey might end the connection
         monkey.on('end', () => {
-            startMonkey()
-        })
-        monkey.tap(100, 0)
-    })
+            startMonkey();
+        });
+        monkey.tap(100, 0);
+    });
 }
-startMonkey()
+startMonkey();
 ```
 
 The methods take `MonkeyCallback` as an argument. `MonkeyCallback` is a generic type of `(err: Error, value?: T, command?: string) => void` .
@@ -1024,7 +1028,7 @@ The methods take `MonkeyCallback` as an argument. `MonkeyCallback` is a generic 
 ##### monkey.send(commands: string[] | string, cb: MonkeyCallback)
 
 ```ts
-monkey.send('key event 24', (err, value, command) => {})
+monkey.send('key event 24', (err, value, command) => {});
 ```
 
 Sends a raw protocol command to monkey.
@@ -1034,7 +1038,7 @@ Sends a raw protocol command to monkey.
 ##### monkey.end()
 
 ```ts
-monkey.end()
+monkey.end();
 ```
 
 Ends the connection.
@@ -1050,8 +1054,8 @@ monkey
     .sleep(5)
     .touchUp(100, 0)
     .execute((err, values) => {
-        monkey.end()
-    })
+        monkey.end();
+    });
 ```
 
 Enables to execute multiple commands at once. `execute()` method has to be called, output is available in execute callback.
@@ -1062,8 +1066,8 @@ Enables to execute multiple commands at once. `execute()` method has to be calle
 
 ```ts
 monkey.keyDown(KeyCode.KEYCODE_VOLUME_DOWN, (err, value, command) => {
-    startMonkey()
-})
+    startMonkey();
+});
 ```
 
 Sends a `key down` event. Should be used with `keyUp()` . Note that api. `press()` method performs both of these events.
@@ -1073,7 +1077,7 @@ Sends a `key down` event. Should be used with `keyUp()` . Note that api. `press(
 ##### monkey.keyUp((keyCode: KeyCode | number, cb?: MonkeyCallback)
 
 ```ts
-monkey.keyUp(KeyCode.KEYCODE_VOLUME_DOWN, (err, value, command) => {})
+monkey.keyUp(KeyCode.KEYCODE_VOLUME_DOWN, (err, value, command) => {});
 ```
 
 Sends a `key down` event. Should be used with `keyDown()` . Note that api. `press()` method performs both of these events.
@@ -1083,7 +1087,7 @@ Sends a `key down` event. Should be used with `keyDown()` . Note that api. `pres
 ##### monkey.touchDown(x: number, y: number, cb?: MonkeyCallback)
 
 ```ts
-monkey.touchDown(100, 0, (err, value, command) => {})
+monkey.touchDown(100, 0, (err, value, command) => {});
 ```
 
 Sends a `touch down` event on the given coordinates.
@@ -1093,7 +1097,7 @@ Sends a `touch down` event on the given coordinates.
 ##### monkey.touchUp(x: number, y: number, cb?: MonkeyCallback)
 
 ```ts
-monkey.touchUp(100, 0, (err, value, command) => {})
+monkey.touchUp(100, 0, (err, value, command) => {});
 ```
 
 Sends a `touch up` event on the given coordinates.
@@ -1103,7 +1107,7 @@ Sends a `touch up` event on the given coordinates.
 ##### monkey.touchMove(x: number, y: number, cb?: MonkeyCallback)
 
 ```ts
-monkey.touchMove(100, 0, (err, value, command) => {})
+monkey.touchMove(100, 0, (err, value, command) => {});
 ```
 
 Sends a `touch move` event on the given coordinates.
@@ -1113,7 +1117,7 @@ Sends a `touch move` event on the given coordinates.
 ##### monkey.flipOpen(cb?: MonkeyCallback)
 
 ```ts
-monkey.flipOpen((err, value, command) => {})
+monkey.flipOpen((err, value, command) => {});
 ```
 
 Simulates opening the keyboard.
@@ -1123,7 +1127,7 @@ Simulates opening the keyboard.
 ##### monkey.flipClose(cb?: MonkeyCallback)
 
 ```ts
-monkey.flipClose((err, value, command) => {})
+monkey.flipClose((err, value, command) => {});
 ```
 
 Simulates closing the keyboard.
@@ -1133,7 +1137,7 @@ Simulates closing the keyboard.
 ##### monkey.wake(cb?: MonkeyCallback)
 
 ```ts
-monkey.wake((err, value, command) => {})
+monkey.wake((err, value, command) => {});
 ```
 
 Wakes the device from sleep and allows user input.
@@ -1143,7 +1147,7 @@ Wakes the device from sleep and allows user input.
 ##### monkey.tap(x: number, y: number, cb?: MonkeyCallback)
 
 ```ts
-monkey.tap(100, 0, (err, value, command) => {})
+monkey.tap(100, 0, (err, value, command) => {});
 ```
 
 Taps the given coordinates.
@@ -1153,7 +1157,7 @@ Taps the given coordinates.
 ##### monkey.press((keyCode: KeyCode | number, cb?: MonkeyCallback)
 
 ```ts
-monkey.press(KeyCode.KEYCODE_VOLUME_DOWN, (err, value, command) => {})
+monkey.press(KeyCode.KEYCODE_VOLUME_DOWN, (err, value, command) => {});
 ```
 
 Sends a key `press` event.
@@ -1163,7 +1167,7 @@ Sends a key `press` event.
 ##### monkey.type((str: string, cb?: MonkeyCallback)
 
 ```ts
-monkey.type('some text', (err, value, command) => {})
+monkey.type('some text', (err, value, command) => {});
 ```
 
 Types the given string.
@@ -1173,7 +1177,7 @@ Types the given string.
 ##### monkey.list((cb?: MonkeyCallback<string[]>)
 
 ```ts
-monkey.list((err, value, command) => {})
+monkey.list((err, value, command) => {});
 ```
 
 Lists supported variables. uses `listvar` command.
@@ -1183,7 +1187,7 @@ Lists supported variables. uses `listvar` command.
 ##### monkey.get(name: string, cb?: MonkeyCallback)
 
 ```ts
-monkey.get((err, value, command) => {})
+monkey.get((err, value, command) => {});
 ```
 
 Gets the value of a variable. Use `list()` to retrieve a list of supported variables.
@@ -1193,7 +1197,7 @@ Gets the value of a variable. Use `list()` to retrieve a list of supported varia
 ##### monkey.sleep(ms: number, cb?: MonkeyCallback)
 
 ```ts
-monkey.sleep(5, (err, value, command) => {})
+monkey.sleep(5, (err, value, command) => {});
 ```
 
 Sleeps for the given duration.
@@ -1203,7 +1207,7 @@ Sleeps for the given duration.
 ##### monkey.quit(cb?: MonkeyCallback)
 
 ```ts
-monkey.quit((err, value, command) => {})
+monkey.quit((err, value, command) => {});
 ```
 
 Closes the current monkey session and quits monkey.
@@ -1213,7 +1217,7 @@ Closes the current monkey session and quits monkey.
 ##### monkey.done(cb?: MonkeyCallback)
 
 ```ts
-monkey.done((err, value, command) => {})
+monkey.done((err, value, command) => {});
 ```
 
 Closes the current monkey session and allows a new session to connect.
@@ -1223,7 +1227,7 @@ Closes the current monkey session and allows a new session to connect.
 ##### monkey.getAmCurrentAction(cb?: MonkeyCallback)
 
 ```ts
-monkey.getAmCurrentAction((err, value, command) => {})
+monkey.getAmCurrentAction((err, value, command) => {});
 ```
 
 Shorcut for `get('am.current.action', cb)` .
@@ -1233,7 +1237,7 @@ Shorcut for `get('am.current.action', cb)` .
 ##### monkey.getAmCurrentCategories(cb?: MonkeyCallback)
 
 ```ts
-monkey.getAmCurrentCategories((err, value, command) => {})
+monkey.getAmCurrentCategories((err, value, command) => {});
 ```
 
 Shorcut for `get('am.current.categories', cb)` .
@@ -1243,7 +1247,7 @@ Shorcut for `get('am.current.categories', cb)` .
 ##### monkey.getAmCurrentCompClass(cb?: MonkeyCallback)
 
 ```ts
-monkey.getAmCurrentCompClass((err, value, command) => {})
+monkey.getAmCurrentCompClass((err, value, command) => {});
 ```
 
 Shorcut for `get('am.current.comp.class', cb)` .
@@ -1253,7 +1257,7 @@ Shorcut for `get('am.current.comp.class', cb)` .
 ##### monkey.getAmCurrentCompPackage(cb?: MonkeyCallback)
 
 ```ts
-monkey.getAmCurrentCompPackage((err, value, command) => {})
+monkey.getAmCurrentCompPackage((err, value, command) => {});
 ```
 
 Shorcut for `get('am.current.comp.package', cb)` .
@@ -1263,7 +1267,7 @@ Shorcut for `get('am.current.comp.package', cb)` .
 ##### monkey.getAmCurrentData(cb?: MonkeyCallback)
 
 ```ts
-monkey.getAmCurrentData((err, value, command) => {})
+monkey.getAmCurrentData((err, value, command) => {});
 ```
 
 Shorcut for `get('am.current.data', cb)` .
@@ -1273,7 +1277,7 @@ Shorcut for `get('am.current.data', cb)` .
 ##### monkey.getAmCurrentPackage(cb?: MonkeyCallback)
 
 ```ts
-monkey.getAmCurrentPackage((err, value, command) => {})
+monkey.getAmCurrentPackage((err, value, command) => {});
 ```
 
 Shorcut for `get('am.current.package', cb)` .
@@ -1283,7 +1287,7 @@ Shorcut for `get('am.current.package', cb)` .
 ##### monkey.getBuildBoard(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildBoard((err, value, command) => {})
+monkey.getBuildBoard((err, value, command) => {});
 ```
 
 Shorcut for `get('build.board', cb)` .
@@ -1293,7 +1297,7 @@ Shorcut for `get('build.board', cb)` .
 ##### monkey.getBuildBrand(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildBrand((err, value, command) => {})
+monkey.getBuildBrand((err, value, command) => {});
 ```
 
 Shorcut for `get('build.brand', cb)` .
@@ -1303,7 +1307,7 @@ Shorcut for `get('build.brand', cb)` .
 ##### monkey.getBuildCpuAbi(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildCpuAbi((err, value, command) => {})
+monkey.getBuildCpuAbi((err, value, command) => {});
 ```
 
 Shorcut for `get('build.cpu_abi', cb)` .
@@ -1313,7 +1317,7 @@ Shorcut for `get('build.cpu_abi', cb)` .
 ##### monkey.getBuildDevice(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildDevice((err, value, command) => {})
+monkey.getBuildDevice((err, value, command) => {});
 ```
 
 Shorcut for `get('build.display', cb)` .
@@ -1323,7 +1327,7 @@ Shorcut for `get('build.display', cb)` .
 ##### monkey.getBuildFingerprint(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildFingerprint((err, value, command) => {})
+monkey.getBuildFingerprint((err, value, command) => {});
 ```
 
 Shorcut for `get('build.fingerprint', cb)` .
@@ -1333,7 +1337,7 @@ Shorcut for `get('build.fingerprint', cb)` .
 ##### monkey.getBuildHost(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildHost((err, value, command) => {})
+monkey.getBuildHost((err, value, command) => {});
 ```
 
 Shorcut for `get('build.host', cb)` .
@@ -1343,7 +1347,7 @@ Shorcut for `get('build.host', cb)` .
 ##### monkey.getBuildId(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildId((err, value, command) => {})
+monkey.getBuildId((err, value, command) => {});
 ```
 
 Shorcut for `get('build.id', cb)` .
@@ -1353,7 +1357,7 @@ Shorcut for `get('build.id', cb)` .
 ##### monkey.getBuildManufacturer(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildManufacturer((err, value, command) => {})
+monkey.getBuildManufacturer((err, value, command) => {});
 ```
 
 Shorcut for `get('build.manufacturer', cb)` .
@@ -1363,7 +1367,7 @@ Shorcut for `get('build.manufacturer', cb)` .
 ##### monkey.getBuildModel(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildModel((err, value, command) => {})
+monkey.getBuildModel((err, value, command) => {});
 ```
 
 Shorcut for `get('build.model', cb)` .
@@ -1373,7 +1377,7 @@ Shorcut for `get('build.model', cb)` .
 ##### monkey.getBuildProduct(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildProduct((err, value, command) => {})
+monkey.getBuildProduct((err, value, command) => {});
 ```
 
 Shorcut for `get('build.product', cb)` .
@@ -1383,7 +1387,7 @@ Shorcut for `get('build.product', cb)` .
 ##### monkey.getBuildTags(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildTags((err, value, command) => {})
+monkey.getBuildTags((err, value, command) => {});
 ```
 
 Shorcut for `get('build.tags', cb)` .
@@ -1393,7 +1397,7 @@ Shorcut for `get('build.tags', cb)` .
 ##### monkey.getBuildType(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildType((err, value, command) => {})
+monkey.getBuildType((err, value, command) => {});
 ```
 
 Shorcut for `get('build.type', cb)` .
@@ -1403,7 +1407,7 @@ Shorcut for `get('build.type', cb)` .
 ##### monkey.getBuildUser(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildUser((err, value, command) => {})
+monkey.getBuildUser((err, value, command) => {});
 ```
 
 Shorcut for `get('build.user', cb)` .
@@ -1413,7 +1417,7 @@ Shorcut for `get('build.user', cb)` .
 ##### monkey.getBuildVersionCodename(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildVersionCodename((err, value, command) => {})
+monkey.getBuildVersionCodename((err, value, command) => {});
 ```
 
 Shorcut for `get('build.version.codename', cb)` .
@@ -1423,7 +1427,7 @@ Shorcut for `get('build.version.codename', cb)` .
 ##### monkey.getBuildVersionIncremental(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildVersionIncremental((err, value, command) => {})
+monkey.getBuildVersionIncremental((err, value, command) => {});
 ```
 
 Shorcut for `get('build.version.incremental', cb)` .
@@ -1433,7 +1437,7 @@ Shorcut for `get('build.version.incremental', cb)` .
 ##### monkey.getBuildVersionRelease(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildVersionRelease((err, value, command) => {})
+monkey.getBuildVersionRelease((err, value, command) => {});
 ```
 
 Shorcut for `get('build.version.release', cb)` .
@@ -1443,7 +1447,7 @@ Shorcut for `get('build.version.release', cb)` .
 ##### monkey.getBuildVersionSdk(cb?: MonkeyCallback)
 
 ```ts
-monkey.getBuildVersionSdk((err, value, command) => {})
+monkey.getBuildVersionSdk((err, value, command) => {});
 ```
 
 Shorcut for `get('build.version.sdk', cb)` .
@@ -1453,7 +1457,7 @@ Shorcut for `get('build.version.sdk', cb)` .
 ##### monkey.getClockMillis(cb?: MonkeyCallback)
 
 ```ts
-monkey.getClockMillis((err, value, command) => {})
+monkey.getClockMillis((err, value, command) => {});
 ```
 
 Shorcut for `get('clock.millis', cb)` .
@@ -1463,7 +1467,7 @@ Shorcut for `get('clock.millis', cb)` .
 ##### monkey.getClockRealtime(cb?: MonkeyCallback)
 
 ```ts
-monkey.getClockRealtime((err, value, command) => {})
+monkey.getClockRealtime((err, value, command) => {});
 ```
 
 Shorcut for `get('clock.realtime', cb)` .
@@ -1473,7 +1477,7 @@ Shorcut for `get('clock.realtime', cb)` .
 ##### monkey.getClockUptime(cb?: MonkeyCallback)
 
 ```ts
-monkey.getClockUptime((err, value, command) => {})
+monkey.getClockUptime((err, value, command) => {});
 ```
 
 Shorcut for `get('clock.uptime', cb)` .
@@ -1483,7 +1487,7 @@ Shorcut for `get('clock.uptime', cb)` .
 ##### monkey.getDisplayDensity(cb?: MonkeyCallback)
 
 ```ts
-monkey.getDisplayDensity((err, value, command) => {})
+monkey.getDisplayDensity((err, value, command) => {});
 ```
 
 Shorcut for `get('display.density', cb)` .
@@ -1493,7 +1497,7 @@ Shorcut for `get('display.density', cb)` .
 ##### monkey.getDisplayHeight(cb?: MonkeyCallback)
 
 ```ts
-monkey.getDisplayHeight((err, value, command) => {})
+monkey.getDisplayHeight((err, value, command) => {});
 ```
 
 Shorcut for `get('display.height', cb)` .
@@ -1503,7 +1507,7 @@ Shorcut for `get('display.height', cb)` .
 ##### monkey.getDisplayWidth(cb?: MonkeyCallback)
 
 ```ts
-monkey.getDisplayWidth((err, value, command) => {})
+monkey.getDisplayWidth((err, value, command) => {});
 ```
 
 Shorcut for `get('display.width', cb)` .

@@ -1,7 +1,7 @@
-import Command from '../../command'
-import { Reply } from '../..'
-import TransportCommand from '../tranport'
-import Promise from 'bluebird'
+import Command from '../../command';
+import { Reply } from '../..';
+import TransportCommand from '../tranport';
+import Promise from 'bluebird';
 
 export default class RootCommand extends TransportCommand {
     execute(serial: string): Promise<void> {
@@ -9,18 +9,18 @@ export default class RootCommand extends TransportCommand {
             switch (reply) {
                 case Reply.OKAY:
                     return this.parser.readAll().then((value) => {
-                        const valueStr = value.toString()
+                        const valueStr = value.toString();
                         if (/restarting adbd as root/.test(valueStr)) {
-                            return
+                            return;
                         } else {
-                            throw new Error(valueStr.trim())
+                            throw new Error(valueStr.trim());
                         }
-                    })
+                    });
                 case Reply.FAIL:
-                    return this.parser.readError()
+                    return this.parser.readError();
                 default:
-                    return this.parser.unexpected(reply, 'OKAY or FAIL')
+                    return this.parser.unexpected(reply, 'OKAY or FAIL');
             }
-        })
+        });
     }
 }

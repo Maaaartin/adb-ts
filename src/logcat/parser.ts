@@ -1,5 +1,5 @@
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'events';
 
 export default abstract class Parser extends EventEmitter {
-    public abstract parse(...data: any[]): any
+    public abstract parse(...data: any[]): any;
 }

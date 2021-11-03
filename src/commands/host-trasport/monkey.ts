@@ -1,6 +1,6 @@
-import { Reply } from '../..'
-import Promise from 'bluebird'
-import TransportCommand from '../tranport'
+import { Reply } from '../..';
+import Promise from 'bluebird';
+import TransportCommand from '../tranport';
 
 export default class MonkeyCommand extends TransportCommand {
     execute(serial: string, port: number | string) {
@@ -16,12 +16,12 @@ export default class MonkeyCommand extends TransportCommand {
                             .searchLine(/^:Monkey:/)
                             .timeout(1000)
                             .then(() => this.connection)
-                            .catch(Promise.TimeoutError, () => this.connection)
+                            .catch(Promise.TimeoutError, () => this.connection);
                     case Reply.FAIL:
-                        return this.parser.readError()
+                        return this.parser.readError();
                     default:
-                        return this.parser.unexpected(reply, 'OKAY or FAIL')
+                        return this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
-            })
+            });
     }
 }

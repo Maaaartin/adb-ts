@@ -1,27 +1,27 @@
-import { MkDirOptions } from '../..'
-import FileSystemCommand from '../filesystem'
+import { MkDirOptions } from '../..';
+import FileSystemCommand from '../filesystem';
 
 export default class MkDirCommand extends FileSystemCommand {
     intentArgs(options?: MkDirOptions) {
-        const args: string[] = []
+        const args: string[] = [];
         if (!options) {
-            return args
+            return args;
         }
         if (options.mode !== undefined) {
-            args.push('-m', options.mode.toString())
+            args.push('-m', options.mode.toString());
         }
         if (options.parent) {
-            args.push('-p')
+            args.push('-p');
         }
 
-        return args
+        return args;
     }
 
     getCmd() {
-        return 'mkdir'
+        return 'mkdir';
     }
 
     execute(serial: string, path: string, options?: MkDirOptions) {
-        return super.execute(serial, path, options)
+        return super.execute(serial, path, options);
     }
 }
