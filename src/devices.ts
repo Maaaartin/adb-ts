@@ -1,7 +1,7 @@
 import { DeviceState, IAdbDevice, Reply } from '.';
 
 import Command from './command';
-import Promise from 'bluebird';
+
 import ipRegex from 'ip-regex';
 
 export function constructDevice(values: string[]): IAdbDevice {
@@ -37,9 +37,11 @@ export default class DevicesCommand extends Command {
                 case Reply.OKAY:
                     return;
                 case Reply.FAIL:
-                    return this.parser.readError();
+                    return this.parser.readError().then((e) => {
+                        throw e;
+                    });
                 default:
-                    return this.parser.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

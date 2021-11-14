@@ -10,7 +10,9 @@ export default class VersionCommand extends Command {
                         return parseInt(value.toString(), 10);
                     });
                 case Reply.FAIL:
-                    return this.parser.readError();
+                    return this.parser.readError().then((e) => {
+                        throw e;
+                    });
                 default:
                     return parseInt(reply, 10);
             }

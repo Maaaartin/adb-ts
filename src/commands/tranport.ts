@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import Command from '../command';
 import { Reply } from '..';
 
@@ -11,9 +10,11 @@ export default class TransportCommand extends Command {
                     case Reply.OKAY:
                         return super.execute(...args);
                     case Reply.FAIL:
-                        return this.parser.readError();
+                        return this.parser.readError().then((e) => {
+                            throw e;
+                        });
                     default:
-                        return this.parser.unexpected(reply, 'OKAY or FAIL');
+                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
             });
     }

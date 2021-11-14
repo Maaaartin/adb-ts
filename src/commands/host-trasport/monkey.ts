@@ -1,9 +1,10 @@
 import { Reply } from '../..';
-import Promise from 'bluebird';
+import Connection from '../../connection';
+
 import TransportCommand from '../tranport';
 
 export default class MonkeyCommand extends TransportCommand {
-    execute(serial: string, port: number | string) {
+    execute(serial: string, port: number | string): Promise<Connection> {
         return super
             .execute(
                 serial,
@@ -12,15 +13,24 @@ export default class MonkeyCommand extends TransportCommand {
             .then((reply) => {
                 switch (reply) {
                     case Reply.OKAY:
-                        return this.parser
-                            .searchLine(/^:Monkey:/)
-                            .timeout(1000)
-                            .then(() => this.connection)
-                            .catch(Promise.TimeoutError, () => this.connection);
+                        return new Promise((resolve, reject) => {
+                            let timeout: NodeJS.Timeout;
+                            const resolvePromise = () => {
+                                clearTimeout(timeout);
+                                resolve(this.connection);
+                            };
+                            this.parser
+                                .searchLine(/^:Monkey:/)
+                                .then(resolvePromise)
+                                .catch(reject);
+                            timeout = setTimeout(resolvePromise, 1000);
+                        });
                     case Reply.FAIL:
-                        return this.parser.readError();
+                        return this.parser.readError().then((e) => {
+                            throw e;
+                        });
                     default:
-                        return this.parser.unexpected(reply, 'OKAY or FAIL');
+                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
             });
     }

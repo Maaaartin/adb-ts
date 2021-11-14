@@ -17,8 +17,14 @@ export default class ScreencapCommand extends RawCommand {
                         this.connection.pipe(transform);
                         return transform;
                     })
-                    .catch(PrematureEOFError, () => {
-                        throw new Error('No support for the screencap command');
+                    .catch((err) => {
+                        if (err instanceof PrematureEOFError) {
+                            throw new Error(
+                                'No support for the screencap command'
+                            );
+                        } else {
+                            throw err;
+                        }
                     });
             });
     }

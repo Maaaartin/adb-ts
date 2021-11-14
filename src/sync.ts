@@ -4,17 +4,14 @@ import Connection from './connection';
 import { EventEmitter } from 'events';
 import Parser from './parser';
 import Path from 'path';
-import Promise from 'bluebird';
+
 import PullTransfer from './sync/pulltransfer';
 import PushTransfer from './sync/pushtransfer';
 import { Readable } from 'stream';
 import Stats from './sync/stats';
 import SyncEntry from './sync/entry';
-import fs from 'fs';
-
-Promise.config({
-    cancellation: true
-});
+import fs, { write } from 'fs';
+import { promisify } from 'util';
 
 export enum SyncMode {
     DEFAULT_CHMOD = 0x1a4,
@@ -54,7 +51,7 @@ export default class Sync extends EventEmitter {
             return this.parser
                 .readBytes(length.readUInt32LE(0))
                 .then((buff) => {
-                    return Promise.reject(new FailError(buff.toString()));
+                    throw new FailError(buff.toString());
                 });
         });
     }
@@ -72,9 +69,10 @@ export default class Sync extends EventEmitter {
         let connErrorListener: (error?: Error | null) => void,
             endListener: VoidFunction,
             errorListener: (error?: Error | null) => void,
-            readableListener: VoidFunction;
+            readableListener: VoidFunction,
+            canceled = false;
         const writeData = (): Promise<any> => {
-            return new Promise((resolve, reject) => {
+            return new Promise<void>((resolve, reject) => {
                 const writeNext = (): Promise<any> => {
                     const chunk =
                         stream.read(SyncMode.DATA_MAX_LENGTH) || stream.read();
@@ -117,11 +115,11 @@ export default class Sync extends EventEmitter {
                 );
                 const waitForDrain = () => {
                     let drainListener: VoidFunction;
-                    return new Promise((resolve) => {
+                    return new Promise<void>((resolve) => {
                         this.connection.on(
                             'drain',
                             (drainListener = () => {
-                                return resolve();
+                                resolve();
                             })
                         );
                     }).finally(() => {
@@ -151,29 +149,27 @@ export default class Sync extends EventEmitter {
                     case Reply.FAIL:
                         return this.readError();
                     default:
-                        return this.parser.unexpected(reply, 'OKAY or FAIL');
+                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
             });
         };
-        const writer: Promise<any> = writeData()
-            .catch(Promise.CancellationError, () => {
-                return this.connection.end();
-            })
-            .catch((err) => {
+        writeData().catch((err) => {
+            if (canceled) {
+                return promisify(this.connection.end)();
+            } else {
                 transfer.emit('error', err);
-                return reader.cancel();
-            });
-        const reader: Promise<any> = readReply()
-            .catch(Promise.CancellationError, (err) => {
-                this.emit('error', err);
-                return writer.cancel();
+                return Promise.resolve();
+            }
+        });
+        readReply()
+            .catch((err) => {
+                if (canceled) {
+                    this.emit('error', err);
+                }
             })
-            .finally(() => {
-                return transfer.end();
-            });
-        transfer.on('cancel', () => {
-            writer.cancel();
-            reader.cancel();
+            .finally(transfer.end);
+        transfer.once('cancel', () => {
+            canceled = true;
         });
         return transfer;
     }
@@ -208,7 +204,7 @@ export default class Sync extends EventEmitter {
     }
 
     private readData() {
-        let cancelListener: VoidFunction;
+        let canceled = false;
         const transfer = new PullTransfer();
         const readNext = (): Promise<any> => {
             return this.parser.readAscii(4).then((reply) => {
@@ -221,34 +217,29 @@ export default class Sync extends EventEmitter {
                                 .then(readNext);
                         });
                     case Reply.DONE:
-                        return this.parser.readBytes(4).return();
+                        return this.parser.readBytes(4).then(() => {});
+
                     case Reply.FAIL:
                         return this.readError();
                     default:
-                        return this.parser.unexpected(
+                        throw this.parser.unexpected(
                             reply,
                             'DATA, DONE or FAIL'
                         );
                 }
             });
         };
-        const reader = readNext()
-            .catch(Promise.CancellationError, (err) => {
-                this.connection.end();
-            })
+        readNext()
             .catch((err) => {
-                transfer.emit('error', err);
+                if (canceled) {
+                    return promisify(this.connection.end)();
+                } else {
+                    transfer.emit('error', err);
+                    return Promise.resolve();
+                }
             })
-            .finally(() => {
-                transfer.removeListener('cancel', cancelListener);
-                return transfer.end();
-            });
-        transfer.on(
-            'cancel',
-            (cancelListener = () => {
-                reader.cancel();
-            })
-        );
+            .finally(() => promisify(transfer.end)());
+        transfer.once('cancel', () => (canceled = true));
         return transfer;
     }
 
@@ -292,9 +283,12 @@ export default class Sync extends EventEmitter {
                             return files;
                         });
                     case Reply.FAIL:
-                        return this.parser.readError();
+                        return this.parser.readError().then((e) => {
+                            throw e;
+                        });
+
                     default:
-                        return this.parser.unexpected(
+                        throw this.parser.unexpected(
                             reply,
                             'DENT, DONE or FAIL'
                         );
@@ -309,7 +303,7 @@ export default class Sync extends EventEmitter {
         this.connection.end();
         return this;
     }
-    public stat(path: string, cb?: Function) {
+    public stat(path: string) {
         this.sendCommandWithArg(Reply.STAT, path);
         return this.parser.readAscii(4).then((reply) => {
             switch (reply) {
@@ -325,9 +319,12 @@ export default class Sync extends EventEmitter {
                         }
                     });
                 case Reply.FAIL:
-                    return this.readError();
+                    return this.parser.readError().then((e) => {
+                        throw e;
+                    });
+
                 default:
-                    return this.parser.unexpected(reply, 'STAT or FAIL');
+                    throw this.parser.unexpected(reply, 'STAT or FAIL');
             }
         });
     }

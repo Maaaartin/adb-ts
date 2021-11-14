@@ -11,9 +11,11 @@ export default class HostTransportCommand extends Command {
                 case Reply.OKAY:
                     return true;
                 case Reply.FAIL:
-                    return this.parser.readError();
+                    return this.parser.readError().then((e) => {
+                        throw e;
+                    });
                 default:
-                    return this.parser.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

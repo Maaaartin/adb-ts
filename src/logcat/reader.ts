@@ -4,7 +4,7 @@ import Binary from './parser/binary';
 import { EventEmitter } from 'events';
 import LogcatEntry from './entry';
 import LogcatParser from './parser';
-import Promise from 'bluebird';
+
 import Transform from './transform';
 import { Writable } from 'stream';
 

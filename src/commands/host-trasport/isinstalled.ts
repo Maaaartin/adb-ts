@@ -17,7 +17,7 @@ export default class IsInstalledCommand extends TransportCommand {
                                     case 'package:':
                                         return true;
                                     default:
-                                        return this.parser.unexpected(
+                                        throw this.parser.unexpected(
                                             reply,
                                             'package:'
                                         );
@@ -27,9 +27,11 @@ export default class IsInstalledCommand extends TransportCommand {
                                 return false;
                             });
                     case Reply.FAIL:
-                        return this.parser.readError();
+                        return this.parser.readError().then((e) => {
+                            throw e;
+                        });
                     default:
-                        return this.parser.unexpected(reply, 'OKAY or FAIL');
+                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
             });
     }

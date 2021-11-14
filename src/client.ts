@@ -64,7 +64,7 @@ import Monkey from './monkey/client';
 import MonkeyCommand from './commands/host-trasport/monkey';
 import MvCommand from './commands/host-trasport/mv';
 import Parser from './parser';
-import Promise from 'bluebird';
+
 import PullTransfer from './sync/pulltransfer';
 import PushTransfer from './sync/pushtransfer';
 import PutSetting from './commands/host-trasport/putsetting';
@@ -96,14 +96,13 @@ import WaitForDeviceCommand from './commands/host/waitfordevice';
 import stringToStreamfrom from 'string-to-stream';
 
 export default class AdbClient extends EventEmitter {
-    public static readonly defaultOptions: Readonly<AdbClientOptionsValues> = Object.freeze(
-        {
+    public static readonly defaultOptions: Readonly<AdbClientOptionsValues> =
+        Object.freeze({
             port: 5037,
             host: 'localhost',
             bin: 'adb',
             noAutoStart: false
-        }
-    );
+        });
     private options: AdbClientOptionsValues;
     constructor(options?: AdbClientOptions) {
         super();
@@ -1128,20 +1127,18 @@ export default class AdbClient extends EventEmitter {
         cb?: (err: Error, value: string) => void
     ): Promise<string> {
         return this.pull(serial, `${srcPath}`)
-            .then(
-                (transfer: PullTransfer): Promise<string> => {
-                    return new Promise((resolve, reject) => {
-                        let data = '';
-                        transfer.on('data', (chunk) => {
-                            data += chunk.toString();
-                        });
-                        transfer.on('end', () => {
-                            resolve(data);
-                        });
-                        transfer.on('error', reject);
+            .then((transfer: PullTransfer): Promise<string> => {
+                return new Promise((resolve, reject) => {
+                    let data = '';
+                    transfer.on('data', (chunk) => {
+                        data += chunk.toString();
                     });
-                }
-            )
+                    transfer.on('end', () => {
+                        resolve(data);
+                    });
+                    transfer.on('error', reject);
+                });
+            })
             .nodeify(cb);
     }
 
@@ -1152,24 +1149,22 @@ export default class AdbClient extends EventEmitter {
         cb?: (err: Error) => void
     ): Promise<void> {
         return this.pull(serial, `${srcPath}`)
-            .then(
-                (transfer: PullTransfer): Promise<void> => {
-                    return new Promise((resolve, reject) => {
-                        // data is piped only when in case there is no error
-                        let hadError = false;
-                        transfer.once('readable', () => {
-                            if (!hadError) {
-                                transfer.pipe(fs.createWriteStream(destPath));
-                            }
-                        });
-                        transfer.once('end', resolve);
-                        transfer.once('error', (err) => {
-                            hadError = true;
-                            reject(err);
-                        });
+            .then((transfer: PullTransfer): Promise<void> => {
+                return new Promise((resolve, reject) => {
+                    // data is piped only when in case there is no error
+                    let hadError = false;
+                    transfer.once('readable', () => {
+                        if (!hadError) {
+                            transfer.pipe(fs.createWriteStream(destPath));
+                        }
                     });
-                }
-            )
+                    transfer.once('end', resolve);
+                    transfer.once('error', (err) => {
+                        hadError = true;
+                        reject(err);
+                    });
+                });
+            })
             .nodeify(cb);
     }
 

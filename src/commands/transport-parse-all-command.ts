@@ -11,9 +11,11 @@ export default abstract class TransportParseAllCommand extends TransportCommand 
                         return this.parse(value.toString().trim());
                     });
                 case Reply.FAIL:
-                    return this.parser.readError();
+                    return this.parser.readError().then((e) => {
+                        throw e;
+                    });
                 default:
-                    return this.parser.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

@@ -29,7 +29,7 @@ import Jimp from 'jimp';
 import { KeyCode } from './keycode';
 import LogcatReader from './logcat/reader';
 import Monkey from './monkey/client';
-import Promise from 'bluebird';
+
 import PullTransfer from './sync/pulltransfer';
 import PushTransfer from './sync/pushtransfer';
 import { Readable } from 'stream';

@@ -1,13 +1,13 @@
-import { EventEmitter } from 'events';
-import { StatsObject } from '..';
+import { StatsObject, StreamHandler } from '..';
 
-export default class PushTransfer extends EventEmitter {
+export default class PushTransfer extends StreamHandler {
     private readonly stack: number[] = [];
     private readonly stats: StatsObject = {
         bytesTransferred: 0
     };
 
     cancel() {
+        this.removeAllListeners;
         this.emit('cancel');
     }
 
@@ -22,7 +22,9 @@ export default class PushTransfer extends EventEmitter {
     }
 
     end() {
+        this.removeAllListeners;
         this.emit('end');
+        return Promise.resolve();
     }
 
     on(event: 'error', listener: (err: Error) => void): this;

@@ -1,6 +1,5 @@
 import { KeyStringObject, SettingsMode, stringToType } from '../..';
 
-import Promise from 'bluebird';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
 export default class ListSettingsCommand extends TransportParseAllCommand {

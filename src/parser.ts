@@ -1,7 +1,7 @@
 import { PrematureEOFError, UnexpectedDataError, decodeLength } from '.';
 
 import Connection from './connection';
-import Promise from 'bluebird';
+
 import { Writable } from 'stream';
 
 export default class Parser {
@@ -15,7 +15,7 @@ export default class Parser {
         let tryRead: () => void,
             errorListener: (err: Error) => void,
             endListener: () => void;
-        return new Promise<Buffer>((resolve, reject) => {
+        return new Promise<Buffer>((resolve, reject: (err: Error) => void) => {
             tryRead = () => {
                 if (howMany) {
                     let chunk;
@@ -100,20 +100,18 @@ export default class Parser {
     }
 
     readError() {
-        return this.readValue().then((value) => {
-            return Promise.reject(new Error(value.toString()));
-        });
+        return this.readValue().then((value) => new Error(value.toString()));
     }
 
     unexpected(data: string, expected: string) {
-        return Promise.reject(new UnexpectedDataError(data, expected));
+        return new UnexpectedDataError(data, expected);
     }
 
     readByteFlow(howMany: number, targetStream: Writable) {
         let tryRead: () => void,
             errorListener: (err: Error) => void,
             endListener: () => void;
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             tryRead = () => {
                 let chunk: Buffer;
                 if (howMany) {

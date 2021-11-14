@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import ipRegex from 'ip-regex';
 import { Reply } from '../..';
 import TransportCommand from '../tranport';
@@ -17,9 +16,11 @@ export default class GetIpAddressCommand extends TransportCommand {
                                 : undefined;
                         });
                     case Reply.FAIL:
-                        return this.parser.readError();
+                        return this.parser.readError().then((e) => {
+                            throw e;
+                        });
                     default:
-                        return this.parser.unexpected(reply, 'OKAY or FAIL');
+                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
             });
     }

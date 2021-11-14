@@ -7,7 +7,6 @@ import {
     PrematureEOFError
 } from '../..';
 import TransportCommand from '../tranport';
-import Promise from 'bluebird';
 
 // const { PrematureEOFError } = require('../../constants');
 export default class StartServiceCommand extends TransportCommand {
@@ -117,19 +116,23 @@ export default class StartServiceCommand extends TransportCommand {
                 case Reply.OKAY:
                     return this.parser
                         .searchLine(/^Error: (.*)$/)
-                        .finally(() => {
-                            return this.parser.end();
-                        })
+                        .finally(() => this.parser.end())
                         .then((match) => {
                             throw new Error(match[1]);
                         })
-                        .catch(PrematureEOFError, (err) => {
-                            return;
+                        .catch((err) => {
+                            if (err instanceof PrematureEOFError) {
+                                return;
+                            } else {
+                                throw err;
+                            }
                         });
                 case Reply.FAIL:
-                    return this.parser.readError();
+                    return this.parser.readError().then((e) => {
+                        throw e;
+                    });
                 default:
-                    return this.parser.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

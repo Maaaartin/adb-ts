@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import FileStats, { IFileStats } from '../../filestats';
 import TransportParseAllCommand from '../transport-parse-all-command';
 

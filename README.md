@@ -143,7 +143,9 @@ class MyCommand extends Command {
                         return parseInt(value.toString(), 10);
                     });
                 case Reply.FAIL:
-                    return this.parser.readError();
+                    return this.parser.readError().then((e) => {
+                        throw e;
+                    });
                 default:
                     return parseInt(reply, 10);
             }
@@ -824,9 +826,11 @@ class MyCommand extends TransportCommand {
                             : valueStr;
                     });
                 case Reply.FAIL:
-                    return this.parser.readError();
+                    return this.parser.readError().then((e) => {
+                        throw e;
+                    });
                 default:
-                    return this.parser.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

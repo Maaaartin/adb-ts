@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import { ReversesObject } from '../..';
 import TransportParseValueCommand from '../transport-parse-value-command';
 

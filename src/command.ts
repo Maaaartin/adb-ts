@@ -1,7 +1,6 @@
 import Connection from './connection';
 import { encodeData } from '.';
 import Parser from './parser';
-import Promise from 'bluebird';
 
 export default abstract class Command implements Command {
     protected readonly connection: Connection;

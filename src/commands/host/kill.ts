@@ -1,6 +1,5 @@
 import Command from '../../command';
 import { Reply } from '../..';
-import Promise from 'bluebird';
 
 export default class KillCommand extends Command {
     execute(): Promise<void> {
@@ -9,9 +8,11 @@ export default class KillCommand extends Command {
                 case Reply.OKAY:
                     return;
                 case Reply.FAIL:
-                    return this.parser.readError();
+                    return this.parser.readError().then((e) => {
+                        throw e;
+                    });
                 default:
-                    return this.parser.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

@@ -1,6 +1,6 @@
 import { Reply } from '..';
 import TransportCommand from './tranport';
-import Promise from 'bluebird';
+
 import Connection from '../connection';
 
 export default class RawCommand extends TransportCommand {
@@ -10,9 +10,11 @@ export default class RawCommand extends TransportCommand {
                 case Reply.OKAY:
                     return this.connection;
                 case Reply.FAIL:
-                    return this.parser.readError();
+                    return this.parser.readError().then((e) => {
+                        throw e;
+                    });
                 default:
-                    return this.parser.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

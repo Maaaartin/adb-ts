@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import { SimpleType, stringToType } from '../..';
 import TransportParseAllCommand from '../transport-parse-all-command';
 

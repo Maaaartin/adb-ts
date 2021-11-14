@@ -1,5 +1,5 @@
 import TransportParseAllCommand from '../transport-parse-all-command';
-import Promise from 'bluebird';
+
 import { KeyStringObject, stringToType } from '../..';
 
 export default class ListFeaturesCommand extends TransportParseAllCommand {

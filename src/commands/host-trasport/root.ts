@@ -1,7 +1,6 @@
 import Command from '../../command';
 import { Reply } from '../..';
 import TransportCommand from '../tranport';
-import Promise from 'bluebird';
 
 export default class RootCommand extends TransportCommand {
     execute(serial: string): Promise<void> {
@@ -17,9 +16,11 @@ export default class RootCommand extends TransportCommand {
                         }
                     });
                 case Reply.FAIL:
-                    return this.parser.readError();
+                    return this.parser.readError().then((e) => {
+                        throw e;
+                    });
                 default:
-                    return this.parser.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }
