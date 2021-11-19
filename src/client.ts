@@ -1,8 +1,11 @@
 import {
     AdbClientOptions,
     AdbClientOptionsValues,
+    ADB_DEFAULT_PORT,
     CommandConstruct,
     CpOptions,
+    ExecCallback,
+    ExecCallbackWithValue,
     ForwardsObject,
     IAdbDevice,
     InputOptions,
@@ -12,6 +15,7 @@ import {
     LogcatOptions,
     MkDirOptions,
     MvOptions,
+    nodeify,
     ReversesObject,
     RmOption,
     SettingsMode,
@@ -94,6 +98,7 @@ import VersionCommand from './commands/host/version';
 import WaitBootCompleteCommand from './commands/host-trasport/wainbootcomplete';
 import WaitForDeviceCommand from './commands/host/waitfordevice';
 import stringToStreamfrom from 'string-to-stream';
+import { callbackify } from 'util';
 
 export default class AdbClient extends EventEmitter {
     public static readonly defaultOptions: Readonly<AdbClientOptionsValues> =
@@ -114,17 +119,21 @@ export default class AdbClient extends EventEmitter {
             );
     }
 
-    startServer(cb?: (err: Error) => void): Promise<void> {
+    startServer(): Promise<void>;
+    startServer(cb?: (err: null | Error) => void): void;
+    startServer(cb?: (err: null | Error) => void): Promise<void> | void {
         const port = this.options.port;
         const args = port
             ? ['-P', port.toString(), 'start-server']
             : ['start-server'];
-        return new Promise<void>((resolve, reject) => {
-            execFile(this.options.bin, args, (err) => {
-                if (err) return reject(err);
-                else return resolve();
-            });
-        }).nodeify(cb);
+        return nodeify(
+            new Promise<void>((resolve, reject) => {
+                execFile(this.options.bin, args, (err) =>
+                    err ? reject(err) : resolve()
+                );
+            }),
+            cb
+        );
     }
 
     private connection() {
@@ -155,17 +164,22 @@ export default class AdbClient extends EventEmitter {
     }
 
     transport(serial: string): Promise<Connection> {
-        return this.connection().then((conn) => {
-            return new HostTransportCommand(conn).execute(serial).return(conn);
-        });
+        return this.connection().then((conn) =>
+            new HostTransportCommand(conn).execute(serial).then(() => conn)
+        );
     }
 
-    version(cb?: (err: Error, value?: number) => void) {
-        return this.connection()
-            .then((conn) => {
-                return new VersionCommand(conn).execute();
-            })
-            .nodeify(cb);
+    version(): Promise<number>;
+    version(cb?: (err: null | Error, value: number) => void): void;
+    version(
+        cb?: (err: null | Error, value: number) => void
+    ): Promise<number> | void {
+        return nodeify(
+            this.connection().then((conn) =>
+                new VersionCommand(conn).execute()
+            ),
+            cb
+        );
     }
 
     connect(
@@ -175,28 +189,27 @@ export default class AdbClient extends EventEmitter {
     connect(
         host: string,
         port?: number,
-        cb?: (err: Error, value: number) => void
+        cb?: (err: null | Error, value: string) => void
     ): Promise<string>;
     connect(
         host: string,
         port?: any,
-        cb?: (err: Error, value: number) => void
+        cb?: (err: null | Error, value: string) => void
     ) {
         if (typeof port === 'function') {
             cb = port;
             port = undefined;
         }
-        if (host && host.indexOf(':') !== -1) {
-            const tmp = host.split(':', 2);
-            host = tmp[0];
-            port = Number(tmp[1]);
+        if (host.indexOf(':') !== -1) {
+            [host, port] = host.split(':', 2);
         }
-        if (!port) port = 5555;
-        return this.connection()
-            .then((conn) => {
-                return new ConnectCommand(conn).execute(host, port);
-            })
-            .nodeify(cb);
+        port = port || ADB_DEFAULT_PORT;
+        return nodeify(
+            this.connection().then((conn) =>
+                new ConnectCommand(conn).execute(host, port)
+            ),
+            cb
+        );
     }
     disconnect(
         host: string,
@@ -227,33 +240,40 @@ export default class AdbClient extends EventEmitter {
         });
     }
 
-    listDevices(cb?: (err: Error, value: IAdbDevice[]) => void) {
-        return this.connection()
-            .then((conn) => {
-                return new ListDevicesCommand(conn).execute();
-            })
-            .nodeify(cb);
+    listDevices(): Promise<IAdbDevice[]>;
+    listDevices(cb?: ExecCallbackWithValue<IAdbDevice[]>): void;
+    listDevices(
+        cb?: ExecCallbackWithValue<IAdbDevice[]>
+    ): Promise<IAdbDevice[]> | void {
+        return nodeify(
+            this.connection().then((conn) =>
+                new ListDevicesCommand(conn).execute()
+            ),
+            cb
+        );
     }
 
-    trackDevices(cb?: (err: Error, value: Tracker) => void) {
-        return this.connection().then((conn) => {
-            const command = new TrackCommand(conn);
-            const prom = command
-                .execute()
-                .then(() => {
-                    return new Tracker(command, this);
-                })
-                .nodeify(cb);
-            return prom;
-        });
+    trackDevices(): Promise<Tracker>;
+    trackDevices(cb?: ExecCallbackWithValue<Tracker>): void;
+    trackDevices(cb?: ExecCallbackWithValue<Tracker>): Promise<Tracker> | void {
+        return nodeify(
+            this.connection().then((conn) => {
+                const command = new TrackCommand(conn);
+                return command.execute().then(() => new Tracker(command, this));
+            }),
+            cb
+        );
     }
 
-    kill(cb?: (err: Error) => void) {
-        return this.connection()
-            .then((conn) => {
+    kill(): Promise<void>;
+    kill(cb?: ExecCallback): void;
+    kill(cb?: ExecCallback): Promise<void> | void {
+        return nodeify(
+            this.connection().then((conn) => {
                 return new KillCommand(conn).execute();
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
 
     getSerialNo(serial: string, cb?: (err: Error, value: string) => void) {

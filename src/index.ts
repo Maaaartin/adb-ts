@@ -17,6 +17,7 @@ import Command from './command';
 import Connection from './connection';
 import { EventEmitter } from 'events';
 import LogcatEntry from './logcat/entry';
+import { callbackify } from 'util';
 
 export enum Priority {
     DEFAULT = 1,
@@ -42,22 +43,24 @@ export enum Reply {
     QUIT = 'QUIT'
 }
 
-export function decodeLength(length: string) {
+export const ADB_DEFAULT_PORT = 5555;
+
+export const decodeLength = (length: string) => {
     return parseInt(length, 16);
-}
+};
 
-export function encodeLength(length: number) {
+export const encodeLength = (length: number) => {
     return ('0000' + length.toString(16)).slice(-4).toUpperCase();
-}
+};
 
-export function encodeData(data: any) {
+export const encodeData = (data: any) => {
     if (!Buffer.isBuffer(data)) {
         data = Buffer.from(data);
     }
     return Buffer.concat([Buffer.from(encodeLength(data.length)), data]);
-}
+};
 
-export function stringToType(value: string): SimpleType {
+export const stringToType = (value: string): SimpleType => {
     const num = Number(value);
     if (isNaN(num) || value === '') {
         switch (value) {
@@ -75,7 +78,20 @@ export function stringToType(value: string): SimpleType {
     } else {
         return num;
     }
-}
+};
+
+export const nodeify: <T>(
+    promise: Promise<T>,
+    cb: ((err: null | Error, value: T) => void) | void
+) => Promise<T> | void = (promise, cb) => {
+    return cb ? callbackify(() => promise)(cb) : promise;
+};
+
+export type ExecCallback = (err: null | Error) => void;
+export type ExecCallbackWithValue<T = void> = (
+    err: null | Error,
+    value: T
+) => void;
 
 export type DeviceState =
     | 'offline'

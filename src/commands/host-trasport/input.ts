@@ -10,6 +10,6 @@ export default class InputCommand extends TransportCommand {
                 param2,
                 ...args.map((arg) => this.escape(arg))
             )
-            .thenReturn();
+            .then(() => {});
     }
 }
