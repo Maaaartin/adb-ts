@@ -1,21 +1,17 @@
-import { MonkeyCallback, NotConnectedError } from '..';
 import { NetConnectOpts, Socket } from 'net';
-import Reply, { ReplyType } from './reply';
-
+import { MonkeyCallback } from '..';
 import Api from './api';
 import Command from './command';
 import CommandQueue from './commandqueue';
 import Parser from './parser';
+import Reply, { ReplyType } from './reply';
 
 export default class Monkey extends Api {
   public readonly queue: Command[] = [];
   private parser: Parser = new Parser();
-  protected stream?: Socket;
+  protected stream: Socket;
 
-  getStream(): Socket {
-    if (!this.stream) {
-      throw new NotConnectedError();
-    }
+  getStream() {
     return this.stream;
   }
 
@@ -24,26 +20,26 @@ export default class Monkey extends Api {
       for (const command of commands) {
         this.queue.push(new Command(command, cb));
       }
-      this.getStream().write(commands.join('\n') + '\n');
+      this.stream.write(commands.join('\n') + '\n');
     } else {
       this.queue.push(new Command(commands, cb));
-      this.getStream().write('' + commands + '\n');
+      this.stream.write('' + commands + '\n');
     }
     let hadError = true;
     const handler = () => {
       hadError = false;
     };
     const removeListeners = () => {
-      this.getStream().removeListener('data', handler);
-      this.getStream().removeListener('error', handler);
-      this.getStream().removeListener('end', handler);
-      this.getStream().removeListener('finish', handler);
+      this.stream.removeListener('data', handler);
+      this.stream.removeListener('error', handler);
+      this.stream.removeListener('end', handler);
+      this.stream.removeListener('finish', handler);
     };
 
-    this.getStream().on('data', handler);
-    this.getStream().on('error', handler);
-    this.getStream().on('end', handler);
-    this.getStream().on('finish', handler);
+    this.stream?.on('data', handler);
+    this.stream?.on('error', handler);
+    this.stream?.on('end', handler);
+    this.stream?.on('finish', handler);
     setTimeout(() => {
       if (hadError) this.consume(new Reply(ReplyType.ERROR, 'Command failed'));
       removeListeners();
@@ -53,16 +49,16 @@ export default class Monkey extends Api {
   }
 
   protected hook() {
-    this.getStream().on('data', (data) => {
+    this.stream?.on('data', (data) => {
       return this.parser.parse(data);
     });
-    this.getStream().on('error', (err) => {
+    this.stream?.on('error', (err) => {
       return this.emit('error', err);
     });
-    this.getStream().on('end', () => {
+    this.stream?.on('end', () => {
       return this.emit('end');
     });
-    this.getStream().on('finish', () => {
+    this.stream?.on('finish', () => {
       return this.emit('finish');
     });
     this.parser.on('reply', (reply) => {
@@ -79,12 +75,11 @@ export default class Monkey extends Api {
   on(event: string | symbol, listener: (...args: any[]) => void) {
     return super.on(event, listener);
   }
-
   private consume(reply: Reply) {
     const command = this.queue.shift();
     if (command) {
       if (reply.isError()) {
-        command.callback?.(reply.toError(), '', command.command);
+        command.callback?.(reply.toError(), null, command.command);
       } else {
         command.callback?.(null, reply.value, command.command);
       }
@@ -93,21 +88,15 @@ export default class Monkey extends Api {
     }
   }
 
-  connect(options: NetConnectOpts): this;
-  connect(stream: Socket): this;
-  connect(param: Socket | NetConnectOpts) {
-    if (param instanceof Socket) {
-      this.stream = param;
-    } else {
-      this.stream = new Socket(param);
-    }
+  connect(stream: Socket | NetConnectOpts) {
+    this.stream = stream as Socket;
     this.stream.setMaxListeners(100);
     this.hook();
     return this;
   }
 
   end() {
-    this.getStream().end();
+    this.stream?.end();
     return this;
   }
 

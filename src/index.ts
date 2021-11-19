@@ -15,7 +15,6 @@ export { default as Tracker } from './tracker';
 
 import Command from './command';
 import Connection from './connection';
-import { EventEmitter } from 'events';
 import LogcatEntry from './logcat/entry';
 
 export enum Priority {
@@ -227,8 +226,8 @@ export interface CommandConstruct {
 }
 
 export type MonkeyCallback<T = string> = (
-  err: Error | null,
-  value: T | null,
+  err: Error,
+  value?: T,
   command?: string
 ) => void;
 
@@ -287,10 +286,6 @@ export type CpOptions = VerboseFSoption &
     archive?: boolean;
   };
 
-export abstract class StreamHandler extends EventEmitter {
-  abstract end(): Promise<void>;
-}
-
 export class FailError extends Error {
   constructor(message?: string) {
     super();
@@ -324,17 +319,6 @@ export class PrematureEOFError extends Error {
     this.message =
       'Premature end of stream, needed ' + howManyMissing + ' more bytes';
     this.missingBytes = howManyMissing;
-    Error.captureStackTrace(this);
-  }
-}
-
-export class NotConnectedError extends Error {
-  constructor() {
-    super();
-    Object.setPrototypeOf(this, PrematureEOFError.prototype);
-    this.name = 'NotConnectedError';
-    this.message =
-      'Client not connected. `connect` function must be called before use.';
     Error.captureStackTrace(this);
   }
 }

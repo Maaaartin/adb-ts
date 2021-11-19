@@ -1,16 +1,15 @@
-import { AdbError, FailError, Reply } from '.';
-
-import Connection from './connection';
 import { EventEmitter } from 'events';
-import Parser from './parser';
-import Path from 'path';
-import Promise from 'bluebird';
-import PullTransfer from './sync/pulltransfer';
-import PushTransfer from './sync/pushtransfer';
 import { Readable } from 'stream';
-import Stats from './sync/stats';
-import SyncEntry from './sync/entry';
 import fs from 'fs';
+import Connection from './connection';
+import { AdbError, FailError, Reply } from '.';
+import Parser from './parser';
+import SyncEntry from './sync/entry';
+import Stats from './sync/stats';
+import PushTransfer from './sync/pushtransfer';
+import Promise from 'bluebird';
+import Path from 'path';
+import PullTransfer from './sync/pulltransfer';
 
 Promise.config({
   cancellation: true,
@@ -73,37 +72,25 @@ export default class Sync extends EventEmitter {
       readableListener: VoidFunction;
     const writeData = (): Promise<any> => {
       return new Promise((resolve, reject) => {
-        const writeNext = (): Promise<any> => {
-          const chunk = stream.read(SyncMode.DATA_MAX_LENGTH) || stream.read();
-          if (Buffer.isBuffer(chunk)) {
-            this.sendCommandWithLength(Reply.DATA, chunk.length);
-            transfer.push(chunk.length);
-            if (
-              this.connection.write(chunk, (err) => {
-                if (err) {
-                  throw err;
-                } else {
-                  transfer.pop();
-                }
-              })
-            ) {
-              return writeNext();
-            } else {
-              return waitForDrain().then(writeNext);
-            }
-          } else {
-            return Promise.resolve();
-          }
-        };
-        stream.once(
+        stream.on(
           'end',
           (endListener = () => {
             this.sendCommandWithLength(Reply.DONE, timestamp);
             return resolve();
           })
         );
-        stream.once('readable', (readableListener = writeNext));
-        stream.once('error', (errorListener = reject));
+        stream.on(
+          'readable',
+          (readableListener = () => {
+            return writeNext();
+          })
+        );
+        stream.on(
+          'error',
+          (errorListener = (err: Error) => {
+            return reject(err);
+          })
+        );
         this.connection.on(
           'error',
           (connErrorListener = (err) => {
@@ -124,6 +111,23 @@ export default class Sync extends EventEmitter {
           }).finally(() => {
             return this.connection.removeListener('drain', drainListener);
           });
+        };
+        const track = () => {
+          return transfer.pop();
+        };
+        const writeNext = (): Promise<any> => {
+          const chunk = stream.read(SyncMode.DATA_MAX_LENGTH) || stream.read();
+          if (Buffer.isBuffer(chunk)) {
+            this.sendCommandWithLength(Reply.DATA, chunk.length);
+            transfer.push(chunk.length);
+            if (this.connection.write(chunk, track)) {
+              return writeNext();
+            } else {
+              return waitForDrain().then(writeNext);
+            }
+          } else {
+            return Promise.resolve();
+          }
         };
       }).finally(() => {
         stream.removeListener('end', endListener);
@@ -189,7 +193,7 @@ export default class Sync extends EventEmitter {
   public push(
     contents: string | Readable,
     path: string,
-    mode: SyncMode | null = null
+    mode: SyncMode = null
   ) {
     if (typeof contents === 'string') {
       return this.pushFile(contents, path, mode);
