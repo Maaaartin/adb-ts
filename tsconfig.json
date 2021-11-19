@@ -8,12 +8,7 @@
     "esModuleInterop": true,
     "removeComments": false,
     "allowJs": false,
-    "skipLibCheck": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true
+    "skipLibCheck": true
   },
   "include": ["./src"],
   "exclude": ["node_modules"]
