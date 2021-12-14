@@ -14,7 +14,7 @@ import {
     ReversesObject,
     RmOption,
     SettingsMode,
-    SimpleType,
+    PrimitiveType,
     StartActivityOptions,
     StartServiceOptions,
     TouchOptions,
@@ -102,7 +102,7 @@ export default class AdbDevice implements IAdbDevice {
 
     shell(
         command: string | string[],
-        cb?: (err: Error, value: SimpleType) => void
+        cb?: (err: Error, value: PrimitiveType) => void
     ) {
         return this.client.shell(this.id, command, cb);
     }
@@ -303,13 +303,13 @@ export default class AdbDevice implements IAdbDevice {
         return this.client.listSettings(this.id, mode, cb);
     }
 
-    getProp(prop: string, cb?: (err: Error, value: SimpleType) => void) {
+    getProp(prop: string, cb?: (err: Error, value: PrimitiveType) => void) {
         return this.client.getProp(this.id, prop, cb);
     }
 
     setProp(
         prop: string,
-        value: SimpleType,
+        value: PrimitiveType,
         cb?: (err: Error) => void
     ): Promise<void> {
         return this.client.setProp(this.id, prop, value, cb);
@@ -318,7 +318,7 @@ export default class AdbDevice implements IAdbDevice {
     getSetting(
         mode: SettingsMode,
         name: string,
-        cb?: (err: Error, value: SimpleType) => void
+        cb?: (err: Error, value: PrimitiveType) => void
     ) {
         return this.client.getSetting(this.id, mode, name, cb);
     }
@@ -326,7 +326,7 @@ export default class AdbDevice implements IAdbDevice {
     putSetting(
         mode: SettingsMode,
         name: string,
-        value: SimpleType,
+        value: PrimitiveType,
         cb?: (err: Error) => void
     ) {
         return this.client.putSetting(this.id, mode, name, value, cb);
@@ -343,13 +343,13 @@ export default class AdbDevice implements IAdbDevice {
         return this.client.tap(this.id, x, y, source, cb);
     }
 
-    text(text: SimpleType, cb?: (err: Error) => void): Promise<void>;
+    text(text: PrimitiveType, cb?: (err: Error) => void): Promise<void>;
     text(
-        text: SimpleType,
+        text: PrimitiveType,
         source: InputSource,
         cb?: (err: Error) => void
     ): Promise<void>;
-    text(text: SimpleType, source: any, cb?: (err: Error) => void) {
+    text(text: PrimitiveType, source: any, cb?: (err: Error) => void) {
         return this.client.text(this.id, text, source, cb);
     }
 

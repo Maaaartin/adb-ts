@@ -19,13 +19,14 @@ import {
     ReversesObject,
     RmOption,
     SettingsMode,
-    SimpleType,
+    PrimitiveType,
     StartActivityOptions,
     StartServiceOptions,
     TouchOptions,
     TransportType,
     UninstallOptions,
-    WaitForState
+    WaitForState,
+    ExecValue
 } from '.';
 import Sync, { SyncMode } from './sync';
 import { exec, execFile } from 'child_process';
@@ -269,14 +270,17 @@ export default class AdbClient extends EventEmitter {
     kill(cb?: ExecCallback): void;
     kill(cb?: ExecCallback): Promise<void> | void {
         return nodeify(
-            this.connection().then((conn) => {
-                return new KillCommand(conn).execute();
-            }),
+            this.connection().then((conn) => new KillCommand(conn).execute()),
             cb
         );
     }
 
-    getSerialNo(serial: string, cb?: (err: Error, value: string) => void) {
+    getSerialNo(serial: string): Promise<string>;
+    getSerialNo(serial: string, cb?: ExecCallbackWithValue<string>): void;
+    getSerialNo(
+        serial: string,
+        cb?: ExecCallbackWithValue<string>
+    ): Promise<string> | void {
         return this.getProp(
             serial,
             'ro.serialno',
@@ -284,101 +288,156 @@ export default class AdbClient extends EventEmitter {
         );
     }
 
-    getDevicePath(serial: string, cb?: (err: Error, value: string) => void) {
-        return this.connection()
-            .then((conn) => {
-                return new GetDevicePathCommand(conn).execute(serial);
-            })
-            .nodeify(cb);
+    getDevicePath(serial: string): Promise<string>;
+    getDevicePath(serial: string, cb?: ExecCallbackWithValue<string>): void;
+    getDevicePath(
+        serial: string,
+        cb?: ExecCallbackWithValue<string>
+    ): Promise<string> | void {
+        return nodeify(
+            this.connection().then((conn) =>
+                new GetDevicePathCommand(conn).execute(serial)
+            ),
+            cb
+        );
     }
 
+    listProperties(serial: string): Promise<KeyStringObject>;
     listProperties(
         serial: string,
-        cb?: (err: Error, value: KeyStringObject) => void
-    ) {
-        return this.connection()
-            .then((conn) => {
-                return new ListPropertiesCommand(conn).execute(serial);
-            })
-            .nodeify(cb);
+        cb?: ExecCallbackWithValue<KeyStringObject>
+    ): void;
+    listProperties(
+        serial: string,
+        cb?: ExecCallbackWithValue<KeyStringObject>
+    ): Promise<KeyStringObject> | void {
+        return nodeify(
+            this.connection().then((conn) =>
+                new ListPropertiesCommand(conn).execute(serial)
+            ),
+            cb
+        );
     }
 
+    listFeatures(serial: string): Promise<KeyStringObject>;
     listFeatures(
         serial: string,
-        cb?: (err: Error, value: KeyStringObject) => void
-    ) {
-        return this.connection()
-            .then((conn) => {
-                return new ListFeaturesCommand(conn).execute(serial);
-            })
-            .nodeify(cb);
+        cb?: ExecCallbackWithValue<KeyStringObject>
+    ): void;
+    listFeatures(
+        serial: string,
+        cb?: ExecCallbackWithValue<KeyStringObject>
+    ): Promise<KeyStringObject> | void {
+        return nodeify(
+            this.connection().then((conn) =>
+                new ListFeaturesCommand(conn).execute(serial)
+            ),
+            cb
+        );
     }
 
-    listPackages(serial: string, cb?: (err: Error, value: string[]) => void) {
-        return this.connection()
-            .then((conn) => {
-                return new ListPackagesCommand(conn).execute(serial);
-            })
-            .nodeify(cb);
+    listPackages(serial: string): Promise<string[]>;
+    listPackages(serial: string, cb?: ExecCallbackWithValue<string[]>): void;
+    listPackages(
+        serial: string,
+        cb?: ExecCallbackWithValue<string[]>
+    ): Promise<string[]> | void {
+        return nodeify(
+            this.connection().then((conn) =>
+                new ListPackagesCommand(conn).execute(serial)
+            ),
+            cb
+        );
     }
 
+    getIpAddress(serial: string): Promise<string>;
+    getIpAddress(serial: string, cb?: ExecCallbackWithValue<string>): void;
     getIpAddress(
         serial: string,
-        cb?: (err: Error, value: string) => void
-    ): Promise<string | undefined> {
-        return this.connection()
-            .then((conn) => {
-                return new GetIpAddressCommand(conn).execute(serial);
-            })
-            .nodeify(cb);
+        cb?: ExecCallbackWithValue<string>
+    ): Promise<string> | void {
+        return nodeify(
+            this.connection().then((conn) =>
+                new GetIpAddressCommand(conn).execute(serial)
+            ),
+            cb
+        );
     }
 
+    forward(serial: string, local: string, remote: string): Promise<void>;
     forward(
         serial: string,
         local: string,
         remote: string,
-        cb?: (err: Error) => void
-    ) {
-        return this.connection()
-            .then((conn) => {
-                return new ForwardCommand(conn).execute(serial, local, remote);
-            })
-            .nodeify(cb);
+        cb?: ExecCallback
+    ): void;
+    forward(
+        serial: string,
+        local: string,
+        remote: string,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        return nodeify(
+            this.connection().then((conn) =>
+                new ForwardCommand(conn).execute(serial, local, remote)
+            ),
+            cb
+        );
     }
 
+    listForwards(serial: string): Promise<ForwardsObject[]>;
     listForwards(
         serial: string,
-        cb?: (err: Error, value: ForwardsObject[]) => void
-    ) {
-        return this.connection()
-            .then((conn) => {
-                return new ListForwardsCommand(conn).execute(serial);
-            })
-            .nodeify(cb);
+        cb?: ExecCallbackWithValue<ForwardsObject[]>
+    ): void;
+    listForwards(
+        serial: string,
+        cb?: ExecCallbackWithValue<ForwardsObject[]>
+    ): Promise<ForwardsObject[]> | void {
+        return nodeify(
+            this.connection().then((conn) =>
+                new ListForwardsCommand(conn).execute(serial)
+            ),
+            cb
+        );
     }
 
+    reverse(serial: string, local: string, remote: string): Promise<void>;
     reverse(
         serial: string,
         local: string,
         remote: string,
-        cb?: (err: Error) => void
-    ) {
-        return this.connection()
-            .then((conn) => {
-                return new ReverseCommand(conn).execute(serial, local, remote);
-            })
-            .nodeify(cb);
+        cb?: ExecCallback
+    ): void;
+    reverse(
+        serial: string,
+        local: string,
+        remote: string,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        return nodeify(
+            this.connection().then((conn) =>
+                new ReverseCommand(conn).execute(serial, local, remote)
+            ),
+            cb
+        );
     }
 
+    listReverses(serial: string): Promise<ReversesObject[]>;
     listReverses(
         serial: string,
-        cb?: (err: Error, value: ReversesObject[]) => void
-    ) {
-        return this.connection()
-            .then((conn) => {
+        cb?: ExecCallbackWithValue<ReversesObject[]>
+    ): void;
+    listReverses(
+        serial: string,
+        cb?: ExecCallbackWithValue<ReversesObject[]>
+    ): Promise<ReversesObject[]> | void {
+        return nodeify(
+            this.connection().then((conn) => {
                 return new ListReversesCommand(conn).execute(serial);
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
 
     private shellInternal(serial: string, command: string | string[]) {
@@ -387,44 +446,58 @@ export default class AdbClient extends EventEmitter {
         });
     }
 
-    reboot(serial: string, cb?: (err: Error) => void) {
-        return this.connection()
-            .then((conn) => {
-                return new RebootCommand(conn).execute(serial);
-            })
-            .nodeify(cb);
+    reboot(serial: string): Promise<void>;
+    reboot(serial: string, cb?: ExecCallback): void;
+    reboot(serial: string, cb?: ExecCallback): Promise<void> | void {
+        return nodeify(
+            this.connection().then((conn) =>
+                new RebootCommand(conn).execute(serial)
+            ),
+            cb
+        );
     }
 
-    shutdown(serial: string, cb?: (err: Error) => void) {
-        return this.connection()
-            .then((conn) => {
-                return new ShutdownCommand(conn).execute(serial);
-            })
-            .nodeify(cb);
+    shutdown(serial: string): Promise<void>;
+    shutdown(serial: string, cb?: ExecCallback): void;
+    shutdown(serial: string, cb?: ExecCallback): Promise<void> | void {
+        return nodeify(
+            this.connection().then((conn) =>
+                new ShutdownCommand(conn).execute(serial)
+            ),
+            cb
+        );
     }
 
-    remount(serial: string, cb?: (err: Error) => void) {
-        return this.connection()
-            .then((conn) => {
-                return new RemountCommand(conn).execute(serial);
-            })
-            .nodeify(cb);
+    remount(serial: string): Promise<void>;
+    remount(serial: string, cb?: ExecCallback): void;
+    remount(serial: string, cb?: ExecCallback): Promise<void> | void {
+        return nodeify(
+            this.connection().then((conn) =>
+                new RemountCommand(conn).execute(serial)
+            ),
+            cb
+        );
     }
 
-    root(serial: string, cb?: (err: Error) => void) {
-        return this.connection()
-            .then((conn) => {
-                return new RootCommand(conn).execute(serial);
-            })
-            .nodeify(cb);
+    root(serial: string): Promise<void>;
+    root(serial: string, cb?: ExecCallback): void;
+    root(serial: string, cb?: ExecCallback): Promise<void> | void {
+        return nodeify(
+            this.connection().then((conn) =>
+                new RootCommand(conn).execute(serial)
+            ),
+            cb
+        );
     }
 
+    screenshot(serial: string): Promise<Jimp>;
+    screenshot(serial: string, cb?: ExecCallbackWithValue<Jimp>): void;
     screenshot(
         serial: string,
-        cb?: (err: Error, value: Jimp) => void
-    ): Promise<Jimp> {
-        return this.connection()
-            .then((conn) => {
+        cb?: ExecCallbackWithValue<Jimp>
+    ): Promise<Jimp> | void {
+        return nodeify(
+            this.connection().then((conn) => {
                 return new ScreenShotCommand(conn)
                     .execute(serial)
                     .then((transform) => {
@@ -441,8 +514,9 @@ export default class AdbClient extends EventEmitter {
                             transform.on('error', reject);
                         });
                     });
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
 
     openTcp(
@@ -696,18 +770,18 @@ export default class AdbClient extends EventEmitter {
 
     text(
         serial: string,
-        text: SimpleType,
+        text: PrimitiveType,
         cb?: (err: Error) => void
     ): Promise<void>;
     text(
         serial: string,
-        text: SimpleType,
+        text: PrimitiveType,
         source: InputSource,
         cb?: (err: Error) => void
     ): Promise<void>;
     text(
         serial: string,
-        text: SimpleType,
+        text: PrimitiveType,
         source: any,
         cb?: (err: Error) => void
     ) {
@@ -1188,23 +1262,31 @@ export default class AdbClient extends EventEmitter {
             .nodeify(cb);
     }
 
+    setProp(serial: string, prop: string, value: PrimitiveType): Promise<void>;
     setProp(
         serial: string,
         prop: string,
-        value: SimpleType,
-        cb?: (err: Error) => void
-    ): Promise<void> {
-        return this.connection()
-            .then((conn) => {
-                return new SetProp(conn).execute(serial, prop, value);
-            })
-            .nodeify(cb);
+        value: PrimitiveType,
+        cb?: ExecCallback
+    ): void;
+    setProp(
+        serial: string,
+        prop: string,
+        value: PrimitiveType,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        return nodeify(
+            this.connection().then((conn) =>
+                new SetProp(conn).execute(serial, prop, value)
+            ),
+            cb
+        );
     }
 
     getProp(
         serial: string,
         prop: string,
-        cb?: (err: Error, value: SimpleType) => void
+        cb?: (err: Error, value: PrimitiveType) => void
     ) {
         return this.connection()
             .then((conn) => {
@@ -1217,7 +1299,7 @@ export default class AdbClient extends EventEmitter {
         serial: string,
         mode: SettingsMode,
         name: string,
-        value: SimpleType,
+        value: PrimitiveType,
         cb?: (err: Error) => void
     ) {
         return this.connection()
@@ -1243,7 +1325,7 @@ export default class AdbClient extends EventEmitter {
         serial: string,
         mode: SettingsMode,
         name: string,
-        cb?: (err: Error, value: SimpleType) => void
+        cb?: (err: Error, value: PrimitiveType) => void
     ) {
         return this.connection()
             .then((conn) => {
@@ -1255,7 +1337,7 @@ export default class AdbClient extends EventEmitter {
     shell(
         serial: string,
         command: string | string[],
-        cb?: (err: Error, value: SimpleType) => void
+        cb?: (err: Error, value: PrimitiveType) => void
     ) {
         return this.connection()
             .then((conn) => {

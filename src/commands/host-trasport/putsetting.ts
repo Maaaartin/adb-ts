@@ -1,4 +1,4 @@
-import { SettingsMode, SimpleType } from '../..';
+import { SettingsMode, PrimitiveType } from '../..';
 import TransportCommand from '../tranport';
 
 export default class PutSetting extends TransportCommand {
@@ -6,7 +6,7 @@ export default class PutSetting extends TransportCommand {
         serial: string,
         mode: SettingsMode,
         name: string,
-        value: SimpleType
+        value: PrimitiveType
     ) {
         return super
             .execute(

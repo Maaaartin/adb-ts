@@ -60,7 +60,7 @@ export const encodeData = (data: any) => {
     return Buffer.concat([Buffer.from(encodeLength(data.length)), data]);
 };
 
-export const stringToType = (value: string): SimpleType => {
+export const stringToType = (value: string): PrimitiveType => {
     const num = Number(value);
     if (isNaN(num) || value === '') {
         switch (value) {
@@ -88,10 +88,9 @@ export const nodeify: <T>(
 };
 
 export type ExecCallback = (err: null | Error) => void;
-export type ExecCallbackWithValue<T = void> = (
-    err: null | Error,
-    value: T
-) => void;
+export type ExecCallbackWithValue<T> = (err: null | Error, value: T) => void;
+
+export type ExecValue<T = void> = Promise<T> | void;
 
 export type DeviceState =
     | 'offline'
@@ -126,7 +125,7 @@ export type AdbExtraType =
 export type AdbExtra = {
     key: string;
     type: AdbExtraType;
-    value: SimpleType | SimpleType[];
+    value: PrimitiveType | PrimitiveType[];
 };
 export interface StartServiceOptions {
     user?: number | string;
@@ -173,9 +172,9 @@ export interface ForwardsObject extends ReversesObject {
     serial: string;
 }
 
-export type SimpleType = string | boolean | number | null | undefined;
+export type PrimitiveType = string | boolean | number | null | undefined;
 
-export type KeyStringObject = { [key: string]: SimpleType };
+export type KeyStringObject = Record<string, PrimitiveType>;
 
 export interface InstallOptions {
     reinstall?: boolean;
