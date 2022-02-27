@@ -25,13 +25,11 @@ import {
     TouchOptions,
     TransportType,
     UninstallOptions,
-    WaitForState,
-    ExecValue
+    WaitForState
 } from '.';
 import Sync, { SyncMode } from './sync';
 import { exec, execFile } from 'child_process';
 import fs, { Stats } from 'fs';
-
 import AdbDevice from './device';
 import BatteryStatusCommand from './commands/host-trasport/baterrystatus';
 import ClearCommand from './commands/host-trasport/clear';
@@ -69,7 +67,6 @@ import Monkey from './monkey/client';
 import MonkeyCommand from './commands/host-trasport/monkey';
 import MvCommand from './commands/host-trasport/mv';
 import Parser from './parser';
-
 import PullTransfer from './sync/pulltransfer';
 import PushTransfer from './sync/pushtransfer';
 import PutSetting from './commands/host-trasport/putsetting';
@@ -98,9 +95,25 @@ import UsbCommand from './commands/host-trasport/usb';
 import VersionCommand from './commands/host/version';
 import WaitBootCompleteCommand from './commands/host-trasport/wainbootcomplete';
 import WaitForDeviceCommand from './commands/host/waitfordevice';
-import stringToStreamfrom from 'string-to-stream';
-import { callbackify } from 'util';
 
+function buildInputParams(
+    defaultSource: InputSource,
+    source: InputOptions | InputSource | ExecCallback | undefined,
+    cb: ExecCallback | undefined
+): { source: InputSource; cb: ExecCallback | undefined } {
+    if (typeof source === 'function') {
+        cb = source;
+    } else if (typeof source !== 'undefined') {
+        if (typeof source === 'object') {
+            if (typeof source.source !== 'undefined') {
+                defaultSource = source.source;
+            }
+        } else {
+            defaultSource = source;
+        }
+    }
+    return { source: defaultSource, cb };
+}
 export default class AdbClient extends EventEmitter {
     public static readonly defaultOptions: Readonly<AdbClientOptionsValues> =
         Object.freeze({
@@ -519,87 +532,89 @@ export default class AdbClient extends EventEmitter {
         );
     }
 
-    openTcp(
-        serial: string,
-        port: number | string,
-        cb?: (err: Error, value: Connection) => void
-    ): Promise<Connection>;
+    openTcp(serial: string, port: number | string): Promise<Connection>;
     openTcp(
         serial: string,
         port: number | string,
         host?: string,
-        cb?: (err: Error, value: Connection) => void
-    ): Promise<Connection>;
+        cb?: ExecCallbackWithValue<Connection>
+    ): void;
     openTcp(
         serial: string,
         port: number | string,
         host?: any,
-        cb?: (err: Error, value: Connection) => void
-    ): Promise<any> {
-        if (typeof host === 'function') {
-            cb = host;
-            host = undefined;
-        }
-        return this.transport(serial)
-            .then((conn) => {
+        cb?: ExecCallbackWithValue<Connection>
+    ): Promise<Connection> | void {
+        return nodeify(
+            this.transport(serial).then((conn) => {
                 return new TcpCommand(conn).execute(port, host);
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
 
+    roll(serial: string, x: number, y: number): Promise<void>;
     roll(
         serial: string,
         x: number,
         y: number,
-        cb?: (err: Error) => void
+        source: InputSource
     ): Promise<void>;
+    roll(serial: string, x: number, y: number, cb?: ExecCallback): void;
     roll(
         serial: string,
         x: number,
         y: number,
-        source?: InputSource,
-        cb?: (err: Error) => void
-    ): Promise<void>;
+        source: InputSource,
+        cb?: ExecCallback
+    ): void;
     roll(
         serial: string,
         x: number,
         y: number,
-        source: any,
-        cb?: (err: Error) => void
-    ) {
-        if (typeof source === 'function') {
-            cb = source;
-        }
-        source = source || 'trackball';
-        return this.connection()
-            .then((conn) => {
+        source?: InputSource | ExecCallback,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        const { source: _source, cb: _cb } = buildInputParams(
+            'trackball',
+            source,
+            cb
+        );
+
+        return nodeify(
+            this.connection().then((conn) => {
                 return new InputCommand(conn).execute(
                     serial,
-                    source,
+                    _source,
                     'roll',
                     x,
                     y
                 );
-            })
-            .nodeify(cb);
+            }),
+            _cb
+        );
     }
 
-    press(serial: string, cb?: (err: Error) => void): Promise<void>;
+    press(serial: string): Promise<void>;
+    press(serial: string, source: InputSource): Promise<void>;
+    press(serial: string, cb: ExecCallback): void;
+    press(serial: string, source: InputSource, cb: ExecCallback): void;
     press(
         serial: string,
-        source?: InputSource,
-        cb?: (err: Error) => void
-    ): Promise<void>;
-    press(serial: string, source: any, cb?: (err: Error) => void) {
-        if (typeof source === 'function') {
-            cb = source;
-        }
-        source = source || 'trackball';
-        return this.connection()
-            .then((conn) => {
-                return new InputCommand(conn).execute(serial, source, 'press');
-            })
-            .nodeify(cb);
+        source?: InputSource | ExecCallback,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        const { source: _source, cb: _cb } = buildInputParams(
+            'trackball',
+            source,
+            cb
+        );
+        return nodeify(
+            this.connection().then((conn) => {
+                return new InputCommand(conn).execute(serial, _source, 'press');
+            }),
+            _cb
+        );
     }
 
     dragAndDrop(
@@ -607,8 +622,7 @@ export default class AdbClient extends EventEmitter {
         x1: number,
         y1: number,
         x2: number,
-        y2: number,
-        cb?: (err: Error) => void
+        y2: number
     ): Promise<void>;
     dragAndDrop(
         serial: string,
@@ -616,8 +630,7 @@ export default class AdbClient extends EventEmitter {
         y1: number,
         x2: number,
         y2: number,
-        options?: InputOptions & { duration?: number },
-        cb?: (err: Error) => void
+        options: InputOptions & { duration?: number }
     ): Promise<void>;
     dragAndDrop(
         serial: string,
@@ -625,28 +638,50 @@ export default class AdbClient extends EventEmitter {
         y1: number,
         x2: number,
         y2: number,
-        options?: any,
-        cb?: (err: Error) => void
-    ) {
-        if (typeof options === 'function' || !options || !options) {
-            cb = options;
-            options = {};
-        }
-        options.source = options.source || 'touchscreen';
-        return this.connection()
-            .then((conn) => {
+        cb: ExecCallback
+    ): void;
+    dragAndDrop(
+        serial: string,
+        x1: number,
+        y1: number,
+        x2: number,
+        y2: number,
+        options: InputOptions & { duration?: number },
+        cb: ExecCallback
+    ): void;
+    dragAndDrop(
+        serial: string,
+        x1: number,
+        y1: number,
+        x2: number,
+        y2: number,
+        options?: (InputOptions & { duration?: number }) | ExecCallback,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        const { source: _source, cb: _cb } = buildInputParams(
+            'touchscreen',
+            options,
+            cb
+        );
+
+        return nodeify(
+            this.connection().then((conn) => {
                 return new InputCommand(conn).execute(
                     serial,
-                    options.source,
+                    _source,
                     'draganddrop',
                     x1,
                     y1,
                     x2,
                     y2,
-                    options.duration ? options.duration : ''
+                    typeof options === 'object' &&
+                        typeof options.duration === 'number'
+                        ? options.duration.toString()
+                        : ''
                 );
-            })
-            .nodeify(cb);
+            }),
+            _cb
+        );
     }
 
     swipe(
