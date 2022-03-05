@@ -689,8 +689,7 @@ export default class AdbClient extends EventEmitter {
         x1: number,
         y1: number,
         x2: number,
-        y2: number,
-        cb?: (err: Error) => void
+        y2: number
     ): Promise<void>;
     swipe(
         serial: string,
@@ -698,8 +697,7 @@ export default class AdbClient extends EventEmitter {
         y1: number,
         x2: number,
         y2: number,
-        options?: InputOptions & { duration?: number },
-        cb?: (err: Error) => void
+        options: InputOptions & { duration?: number }
     ): Promise<void>;
     swipe(
         serial: string,
@@ -707,133 +705,165 @@ export default class AdbClient extends EventEmitter {
         y1: number,
         x2: number,
         y2: number,
-        options?: any,
-        cb?: (err: Error) => void
-    ) {
-        if (typeof options === 'function' || !options || !options) {
-            cb = options;
-            options = {};
-        }
-        options.source = options.source || 'touchscreen';
-        return this.connection()
-            .then((conn) => {
+        cb: ExecCallback
+    ): void;
+    swipe(
+        serial: string,
+        x1: number,
+        y1: number,
+        x2: number,
+        y2: number,
+        options: InputOptions & { duration?: number },
+        cb: ExecCallback
+    ): void;
+    swipe(
+        serial: string,
+        x1: number,
+        y1: number,
+        x2: number,
+        y2: number,
+        options?: (InputOptions & { duration?: number }) | ExecCallback,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        const { source: _source, cb: _cb } = buildInputParams(
+            'touchscreen',
+            options,
+            cb
+        );
+        return nodeify(
+            this.connection().then((conn) => {
                 return new InputCommand(conn).execute(
                     serial,
-                    options.source,
+                    _source,
                     'swipe',
                     x1,
                     y1,
                     x2,
                     y2,
-                    options.duration ? options.duration : ''
+                    typeof options === 'object' &&
+                        typeof options.duration === 'number'
+                        ? options.duration.toString()
+                        : ''
                 );
-            })
-            .nodeify(cb);
+            }),
+            _cb
+        );
     }
 
+    keyEvent(serial: string, code: KeyCode | number): Promise<void>;
     keyEvent(
         serial: string,
         code: KeyCode | number,
-        cb?: (err: Error) => void
+        options: InputOptions & { longpress?: boolean }
     ): Promise<void>;
+    keyEvent(serial: string, code: KeyCode | number, cb: ExecCallback): void;
     keyEvent(
         serial: string,
         code: KeyCode | number,
-        options?: InputOptions & { longpress?: boolean },
-        cb?: (err: Error) => void
-    ): Promise<void>;
+        options: InputOptions & { longpress?: boolean },
+        cb: ExecCallback
+    ): void;
     keyEvent(
         serial: string,
         code: KeyCode | number,
-        options?: any,
-        cb?: (err: Error) => void
-    ) {
-        if (typeof options === 'function' || !options || !options) {
-            cb = options;
-            options = {};
-        }
-        options.source = options.source || 'keyboard';
-        return this.connection()
-            .then((conn) => {
+        options?: (InputOptions & { longpress?: boolean }) | ExecCallback,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        const { source: _source, cb: _cb } = buildInputParams(
+            'keyboard',
+            options,
+            cb
+        );
+
+        return nodeify(
+            this.connection().then((conn) => {
                 return new InputCommand(conn).execute(
                     serial,
                     'keyevent',
-                    options.source,
+                    _source,
                     code,
-                    options.longpress ? '--longpress' : ''
+                    typeof options === 'object' && options.longpress
+                        ? '--longpress'
+                        : ''
                 );
-            })
-            .nodeify(cb);
+            }),
+            _cb
+        );
     }
 
+    tap(serial: string, x: number, y: number): Promise<void>;
     tap(
         serial: string,
         x: number,
         y: number,
-        cb?: (err: Error) => void
+        source: InputSource
     ): Promise<void>;
+    tap(serial: string, x: number, y: number, cb: ExecCallback): void;
     tap(
         serial: string,
         x: number,
         y: number,
         source: InputSource,
-        cb?: (err: Error) => void
-    ): Promise<void>;
+        cb: ExecCallback
+    ): void;
     tap(
         serial: string,
         x: number,
         y: number,
-        source: any,
-        cb?: (err: Error) => void
-    ) {
-        if (typeof source === 'function') {
-            cb = source;
-        }
-        source = source || 'touchscreen';
-        return this.connection()
-            .then((conn) => {
+        source?: InputSource | ExecCallback,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        const { source: _source, cb: _cb } = buildInputParams(
+            'touchscreen',
+            source,
+            cb
+        );
+
+        return nodeify(
+            this.connection().then((conn) => {
                 return new InputCommand(conn).execute(
                     serial,
-                    source,
+                    _source,
                     'tap',
                     x,
                     y
                 );
-            })
-            .nodeify(cb);
+            }),
+            _cb
+        );
     }
 
+    text(serial: string, text: string): Promise<void>;
+    text(serial: string, text: string, source: InputSource): Promise<void>;
+    text(serial: string, text: string, cb?: ExecCallback): void;
     text(
         serial: string,
-        text: PrimitiveType,
-        cb?: (err: Error) => void
-    ): Promise<void>;
-    text(
-        serial: string,
-        text: PrimitiveType,
+        text: string,
         source: InputSource,
-        cb?: (err: Error) => void
-    ): Promise<void>;
+        cb: ExecCallback
+    ): void;
     text(
         serial: string,
-        text: PrimitiveType,
-        source: any,
-        cb?: (err: Error) => void
-    ) {
-        if (typeof source === 'function') {
-            cb = source;
-        }
-        source = source || 'touchscreen';
-        return this.connection()
-            .then((conn) => {
+        text: string,
+        source?: InputSource | ExecCallback,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        const { source: _source, cb: _cb } = buildInputParams(
+            'touchscreen',
+            source,
+            cb
+        );
+        return nodeify(
+            this.connection().then((conn) => {
                 return new InputCommand(conn).execute(
                     serial,
-                    source,
+                    _source,
                     'text',
                     text
                 );
-            })
-            .nodeify(cb);
+            }),
+            _cb
+        );
     }
 
     openLogcat(
