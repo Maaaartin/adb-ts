@@ -866,28 +866,31 @@ export default class AdbClient extends EventEmitter {
         );
     }
 
+    openLogcat(serial: string): Promise<LogcatReader>;
+    openLogcat(serial: string, options: LogcatOptions): Promise<LogcatReader>;
+    openLogcat(serial: string, cb: ExecCallbackWithValue<LogcatReader>): void;
     openLogcat(
         serial: string,
-        cb?: (err: Error, value: LogcatReader) => void
-    ): Promise<LogcatReader>;
+        options: LogcatOptions,
+        cb: ExecCallbackWithValue<LogcatReader>
+    ): void;
     openLogcat(
         serial: string,
-        options?: LogcatOptions,
-        cb?: (err: Error, value: LogcatReader) => void
-    ): Promise<LogcatReader>;
-    openLogcat(
-        serial: string,
-        options?: any,
-        cb?: (err: Error, value: LogcatReader) => void
-    ) {
-        if (typeof options === 'function' || !options) {
+        options?: ExecCallbackWithValue<LogcatReader> | LogcatOptions,
+        cb?: ExecCallbackWithValue<LogcatReader>
+    ): Promise<LogcatReader> | void {
+        if (typeof options === 'function') {
             cb = options;
             options = undefined;
         }
-        return this.connection()
-            .then((conn) => {
+
+        return nodeify(
+            this.connection().then((conn) => {
                 return new LogcatCommand(conn)
-                    .execute(serial, options)
+                    .execute(
+                        serial,
+                        typeof options === 'object' ? options : undefined
+                    )
                     .then((stream) => {
                         const logCat = Logcat.readStrem(stream, {
                             ...options,
@@ -896,8 +899,9 @@ export default class AdbClient extends EventEmitter {
                         conn.on('error', (err) => logCat.emit('error', err));
                         return logCat;
                     });
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
 
     private syncService(serial: string) {
@@ -906,12 +910,19 @@ export default class AdbClient extends EventEmitter {
         });
     }
 
-    clear(serial: string, pkg: string, cb?: (err: Error) => void) {
-        return this.connection()
-            .then((conn) => {
+    clear(serial: string, pkg: string): Promise<void>;
+    clear(serial: string, pkg: string, cb: ExecCallback): void;
+    clear(
+        serial: string,
+        pkg: string,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        return nodeify(
+            this.connection().then((conn) => {
                 return new ClearCommand(conn).execute(serial, pkg);
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
 
     private installRemote(
@@ -919,79 +930,93 @@ export default class AdbClient extends EventEmitter {
         apk: string,
         options?: InstallOptions,
         args?: string
-    ) {
+    ): Promise<void> {
         return this.connection().then((conn) => {
             return new InstallCommand(conn)
                 .execute(serial, apk, options, args)
                 .then(() => {
                     return this.shellInternal(serial, ['rm', '-f', apk]).then(
                         (stream) => {
-                            return new Parser(stream).readAll().return();
+                            return new Parser(stream).readAll().then(() => {});
                         }
                     );
                 });
         });
     }
 
+    install(serial: string, apk: string | Readable): Promise<void>;
     install(
         serial: string,
         apk: string | Readable,
-        cb?: (err: Error) => void
+        options: InstallOptions
     ): Promise<void>;
     install(
         serial: string,
         apk: string | Readable,
-        options?: InstallOptions,
-        cb?: (err: Error) => void
+        options: InstallOptions,
+        args: string
     ): Promise<void>;
+    install(serial: string, apk: string | Readable, cb: ExecCallback): void;
     install(
         serial: string,
         apk: string | Readable,
-        options?: InstallOptions,
-        args?: string,
-        cb?: (err: Error) => void
-    ): Promise<void>;
+        options: InstallOptions,
+        cb: ExecCallback
+    ): void;
     install(
         serial: string,
         apk: string | Readable,
-        options?: any,
-        args?: any,
-        cb?: (err: Error) => void
-    ): Promise<void> {
-        if (typeof options === 'function' || !options) {
+        options: InstallOptions,
+        args: string,
+        cb: ExecCallback
+    ): void;
+
+    install(
+        serial: string,
+        apk: string | Readable,
+        options?: InstallOptions | ExecCallback,
+        args?: string | ExecCallback,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        let options_: InstallOptions = {},
+            args_: string = '';
+        if (typeof options === 'function') {
             cb = options;
-            options = undefined;
+        } else if (typeof options === 'object') {
+            options_ = options;
         }
         if (typeof args === 'function') {
             cb = args;
-            args = undefined;
+        } else if (typeof args === 'string') {
+            args_ = args;
         }
         const temp = Sync.temp(typeof apk === 'string' ? apk : '_stream.apk');
-        return this.push(serial, apk, temp).then((transfer) => {
-            let errorListener: (err: Error) => void;
-            let endListener: VoidFunction;
-            return new Promise<void>((resolve, reject) => {
-                transfer.on(
-                    'error',
-                    (errorListener = (err) => {
-                        reject(err);
-                    })
-                );
-                transfer.on(
-                    'end',
-                    (endListener = () => {
-                        this.installRemote(serial, temp, options, args)
-                            .then(resolve)
-                            .catch(reject);
-                    })
-                );
-            })
-                .finally(() => {
+        return nodeify(
+            this.push(serial, apk, temp).then((transfer) => {
+                let errorListener: (err: Error) => void;
+                let endListener: VoidFunction;
+                return new Promise<void>((resolve, reject) => {
+                    transfer.on(
+                        'error',
+                        (errorListener = (err) => {
+                            reject(err);
+                        })
+                    );
+                    transfer.on(
+                        'end',
+                        (endListener = () => {
+                            this.installRemote(serial, temp, options_, args_)
+                                .then(resolve)
+                                .catch(reject);
+                        })
+                    );
+                }).finally(() => {
                     transfer.removeListener('error', errorListener);
                     return transfer.removeListener('end', endListener);
-                })
-                .nodeify(cb);
-        });
+                });
+            }),
+            cb
+        );
     }
 
     uninstall(
