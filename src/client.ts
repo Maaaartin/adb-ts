@@ -982,11 +982,13 @@ export default class AdbClient extends EventEmitter {
             args_: string = '';
         if (typeof options === 'function') {
             cb = options;
+            options = undefined;
         } else if (typeof options === 'object') {
             options_ = options;
         }
         if (typeof args === 'function') {
             cb = args;
+            args = undefined;
         } else if (typeof args === 'string') {
             args_ = args;
         }
@@ -1019,116 +1021,148 @@ export default class AdbClient extends EventEmitter {
         );
     }
 
+    uninstall(serial: string, pkg: string): Promise<void>;
+    uninstall(serial: string, pkg: string): Promise<void>;
+    uninstall(serial: string, pkg: string, cb: ExecCallback): void;
     uninstall(
         serial: string,
         pkg: string,
-        cb?: (err: Error) => void
-    ): Promise<void>;
+        options: UninstallOptions,
+        cb: ExecCallback
+    ): void;
     uninstall(
         serial: string,
         pkg: string,
-        options?: UninstallOptions,
-        cb?: (err: Error) => void
-    ): Promise<void>;
-    uninstall(
-        serial: string,
-        pkg: string,
-        options?: any,
-        cb?: (err: Error) => void
-    ) {
-        if (typeof options === 'function' || !options) {
+        options?: ExecCallback | UninstallOptions,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        let options_: UninstallOptions;
+        if (typeof options === 'function') {
             cb = options;
-            options = undefined;
+        } else if (typeof options === 'object') {
+            options_ = options;
         }
-        return this.connection()
-            .then((conn) => {
-                return new UninstallCommand(conn).execute(serial, pkg, options);
-            })
-            .nodeify(cb);
+        return nodeify(
+            this.connection().then((conn) => {
+                return new UninstallCommand(conn).execute(
+                    serial,
+                    pkg,
+                    options_
+                );
+            }),
+            cb
+        );
     }
 
+    isInstalled(serial: string, pkg: string): Promise<boolean>;
     isInstalled(
         serial: string,
         pkg: string,
-        cb?: (err: Error, value: boolean) => void
-    ) {
-        return this.connection()
-            .then((conn) => {
+        cb: ExecCallbackWithValue<boolean>
+    ): void;
+    isInstalled(
+        serial: string,
+        pkg: string,
+        cb?: ExecCallbackWithValue<boolean>
+    ): Promise<boolean> | void {
+        return nodeify(
+            this.connection().then((conn) => {
                 return new IsInstalledCommand(conn).execute(serial, pkg);
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
 
+    startActivity(serial: string, pkg: string, activity: string): Promise<void>;
     startActivity(
         serial: string,
         pkg: string,
         activity: string,
-        cb?: (err: Error) => void
+        options: StartActivityOptions
     ): Promise<void>;
     startActivity(
         serial: string,
         pkg: string,
         activity: string,
-        options?: StartActivityOptions,
-        cb?: (err: Error) => void
-    ): Promise<void>;
+        cb: ExecCallback
+    ): void;
     startActivity(
         serial: string,
         pkg: string,
         activity: string,
-        options?: any,
-        cb?: (err: Error) => void
-    ) {
-        if (typeof options === 'function' || !options) {
+        options: StartActivityOptions,
+        cb: ExecCallback
+    ): void;
+    startActivity(
+        serial: string,
+        pkg: string,
+        activity: string,
+        options?: StartActivityOptions | ExecCallback,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        let options_: StartActivityOptions;
+        if (typeof options === 'function') {
             cb = options;
-            options = undefined;
+        } else if (typeof options === 'object') {
+            options_ = options;
         }
-        return this.connection()
-            .then((conn) => {
+        return nodeify(
+            this.connection().then((conn) => {
                 return new StartActivityCommand(conn).execute(
                     serial,
                     pkg,
                     activity,
-                    options
+                    options_
                 );
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
 
+    startService(serial: string, pkg: string, service: string): Promise<void>;
     startService(
         serial: string,
         pkg: string,
         service: string,
-        cb?: (err: Error) => void
+        options: StartServiceOptions
     ): Promise<void>;
     startService(
         serial: string,
         pkg: string,
         service: string,
-        options?: StartServiceOptions,
-        cb?: (err: Error) => void
-    ): Promise<void>;
+        cb: ExecCallback
+    ): void;
     startService(
         serial: string,
         pkg: string,
         service: string,
-        options?: any,
-        cb?: (err: Error) => void
-    ): Promise<void> {
-        if (typeof options === 'function' || !options) {
+        options: StartServiceOptions,
+        cb: ExecCallback
+    ): void;
+    startService(
+        serial: string,
+        pkg: string,
+        service: string,
+        options?: StartServiceOptions | ExecCallback,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        let options_: StartServiceOptions;
+        if (typeof options === 'function') {
             cb = options;
-            options = undefined;
+        } else if (typeof options === 'object') {
+            options_ = options;
         }
-        return this.connection()
-            .then((conn) => {
+
+        return nodeify(
+            this.connection().then((conn) => {
                 return new StartServiceCommand(conn).execute(
                     serial,
                     pkg,
                     service,
-                    options
+                    options_
                 );
             })
-            .nodeify(cb);
+        );
     }
 
     stat(
