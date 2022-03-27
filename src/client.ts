@@ -1165,47 +1165,65 @@ export default class AdbClient extends EventEmitter {
         );
     }
 
+    stat(serial: string, path: string): Promise<Stats>;
+    stat(serial: string, path: string, cb: ExecCallbackWithValue<Stats>): void;
     stat(
         serial: string,
         path: string,
-        cb?: (err: Error, value: Stats) => void
-    ) {
+        cb?: ExecCallbackWithValue<Stats>
+    ): Promise<Stats> | void {
         process.emitWarning('Use fileStats() function instead', 'Warning');
-        return this.syncService(serial)
-            .then((sync) => {
+        return nodeify(
+            this.syncService(serial).then((sync) => {
                 return sync.stat(path).finally(() => {
                     return sync.end();
                 });
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
 
+    readDir(serial: string, path: string): Promise<SyncEntry[]>;
     readDir(
         serial: string,
         path: string,
-        cb?: (err: Error, value: SyncEntry[]) => void
-    ) {
-        return this.syncService(serial)
-            .then((sync) => {
+        cb: ExecCallbackWithValue<SyncEntry[]>
+    ): void;
+    readDir(
+        serial: string,
+        path: string,
+        cb?: ExecCallbackWithValue<SyncEntry[]>
+    ): Promise<SyncEntry[]> | void {
+        return nodeify(
+            this.syncService(serial).then((sync) => {
                 return sync.readDir(path).finally(() => {
                     return sync.end();
                 });
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
+
+    pull(serial: string, path: string): Promise<PullTransfer>;
+    pull(
+        serial: string,
+        path: string,
+        cb: ExecCallbackWithValue<PullTransfer>
+    ): void;
 
     pull(
         serial: string,
         path: string,
-        cb?: (err: Error, value: PullTransfer) => void
-    ) {
-        return this.syncService(serial)
-            .then((sync) => {
+        cb?: ExecCallbackWithValue<PullTransfer>
+    ): Promise<PullTransfer> | void {
+        return nodeify(
+            this.syncService(serial).then((sync) => {
                 return sync.pull(path).on('end', () => {
                     sync.end();
                 });
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
 
     push(
