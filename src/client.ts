@@ -1229,34 +1229,48 @@ export default class AdbClient extends EventEmitter {
     push(
         serial: string,
         srcPath: string | Readable,
-        destPath: string,
-        cb?: (err: Error, value: PushTransfer) => void
+        destPath: string
     ): Promise<PushTransfer>;
     push(
         serial: string,
         srcPath: string | Readable,
         destPath: string,
-        mode?: SyncMode,
-        cb?: (err: Error, value: PushTransfer) => void
+        mode: SyncMode
     ): Promise<PushTransfer>;
     push(
         serial: string,
         srcPath: string | Readable,
         destPath: string,
-        mode?: any,
-        cb?: (err: Error, value: PushTransfer) => void
-    ) {
+        cb: ExecCallbackWithValue<PushTransfer>
+    ): void;
+    push(
+        serial: string,
+        srcPath: string | Readable,
+        destPath: string,
+        mode: SyncMode,
+        cb: ExecCallbackWithValue<PushTransfer>
+    ): void;
+    push(
+        serial: string,
+        srcPath: string | Readable,
+        destPath: string,
+        mode?: ExecCallbackWithValue<PushTransfer> | SyncMode,
+        cb?: ExecCallbackWithValue<PushTransfer>
+    ): Promise<PushTransfer> | void {
+        let mode_: SyncMode;
         if (typeof mode === 'function') {
             cb = mode;
-            mode = undefined;
+        } else if (typeof mode !== 'undefined') {
+            mode_ = mode;
         }
-        return this.syncService(serial)
-            .then((sync) => {
-                return sync.push(srcPath, destPath, mode).on('end', () => {
+
+        return nodeify(
+            this.syncService(serial).then((sync) => {
+                return sync.push(srcPath, destPath, mode_).on('end', () => {
                     sync.end();
                 });
             })
-            .nodeify(cb);
+        );
     }
 
     tcpip(
