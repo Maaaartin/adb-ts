@@ -1273,29 +1273,34 @@ export default class AdbClient extends EventEmitter {
         );
     }
 
-    tcpip(
-        serial: string,
-        cb?: (err: Error, value: string) => void
-    ): Promise<string>;
+    tcpip(serial: string): Promise<string>;
+    tcpip(serial: string, port: number): Promise<string>;
+    tcpip(serial: string, cb: ExecCallbackWithValue<string>): void;
     tcpip(
         serial: string,
         port: number,
-        cb?: (err: Error, value: string) => void
-    ): Promise<string>;
-    tcpip(serial: string, port: any, cb?: (err: Error, value: string) => void) {
+        cb: ExecCallbackWithValue<string>
+    ): void;
+    tcpip(
+        serial: string,
+        port?: ExecCallbackWithValue<string> | number,
+        cb?: ExecCallbackWithValue<string>
+    ): Promise<string> | void {
+        let port_: number;
         if (typeof port === 'function') {
             cb = port;
-            port = 5555;
+        } else if (typeof port !== 'undefined') {
+            port_ = port;
         }
-        return this.connection()
-            .then((conn) => {
+        return nodeify(
+            this.connection().then((conn) => {
                 return new TcpIpCommand(conn).execute(
                     serial,
-                    port,
+                    port_,
                     this.options.host
                 );
             })
-            .nodeify(cb);
+        );
     }
 
     usb(serial: string, cb?: (err: Error) => void) {
