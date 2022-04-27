@@ -1303,40 +1303,51 @@ export default class AdbClient extends EventEmitter {
         );
     }
 
-    usb(serial: string, cb?: (err: Error) => void) {
-        return this.connection()
-            .then((conn) => {
+    usb(serial: string): Promise<void>;
+    usb(serial: string, cb: ExecCallback): void;
+    usb(serial: string, cb?: ExecCallback): Promise<void> | void {
+        return nodeify(
+            this.connection().then((conn) => {
                 return new UsbCommand(conn).execute(serial);
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
 
-    waitBootComplete(serial: string, cb?: (err: Error) => void) {
-        return this.connection()
-            .then((conn) => {
+    waitBootComplete(serial: string): Promise<void>;
+    waitBootComplete(serial: string, cb: ExecCallback): void;
+    waitBootComplete(serial: string, cb?: ExecCallback): Promise<void> | void {
+        return nodeify(
+            this.connection().then((conn) => {
                 return new WaitBootCompleteCommand(conn).execute(serial);
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
 
+    waitForDevice(transport: TransportType, state: WaitForState): Promise<void>;
     waitForDevice(
-        tranport: TransportType,
+        transport: TransportType,
         state: WaitForState,
-        cb?: (err: Error) => void
-    ) {
-        return this.connection()
-            .then((conn) => {
-                return new WaitForDeviceCommand(conn).execute(tranport, state);
-            })
-            .nodeify(cb);
+        cb?: ExecCallback
+    ): void;
+    waitForDevice(
+        transport: TransportType,
+        state: WaitForState,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        return nodeify(
+            this.connection().then((conn) => {
+                return new WaitForDeviceCommand(conn).execute(transport, state);
+            }),
+            cb
+        );
     }
 
     map<R>(mapper: (device: AdbDevice) => R): Promise<R[]> {
-        return this.listDevices().then((devices) => {
-            return Promise.map(devices, (device) => {
-                return mapper(new AdbDevice(this, device));
-            });
-        });
+        return this.listDevices().then((devices) =>
+            devices.map((device) => mapper(new AdbDevice(this, device)))
+        );
     }
 
     private pushInternal(
@@ -1346,9 +1357,7 @@ export default class AdbClient extends EventEmitter {
     ): Promise<void> {
         return this.push(serial, data, `${dest}`).then((transfer) => {
             return new Promise((resolve, reject) => {
-                transfer.on('end', () => {
-                    return resolve();
-                });
+                transfer.on('end', resolve);
                 transfer.on('error', reject);
             });
         });
