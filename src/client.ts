@@ -1352,7 +1352,7 @@ export default class AdbClient extends EventEmitter {
 
     private pushInternal(
         serial: string,
-        data: any,
+        data: string | Readable,
         dest: string
     ): Promise<void> {
         return this.push(serial, data, `${dest}`).then((transfer) => {
@@ -1366,14 +1366,21 @@ export default class AdbClient extends EventEmitter {
     pushDataToFile(
         serial: string,
         data: string,
+        destPath: string
+    ): Promise<void>;
+    pushDataToFile(
+        serial: string,
+        data: string,
         destPath: string,
-        cb?: (err: Error) => void
-    ) {
-        return this.pushInternal(
-            serial,
-            stringToStreamfrom(data),
-            destPath
-        ).nodeify(cb);
+        cb: ExecCallback
+    ): void;
+    pushDataToFile(
+        serial: string,
+        data: string,
+        destPath: string,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        return nodeify(this.pushInternal(serial, data, destPath), cb);
     }
 
     pushFile(
