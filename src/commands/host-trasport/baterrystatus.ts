@@ -1,10 +1,10 @@
 import TransportParseAllCommand from '../transport-parse-all-command';
 
-import { KeyStringObject, stringToType } from '../..';
+import { PrimitiveDictionary, stringToType } from '../..';
 
 export default class BatteryStatusCommand extends TransportParseAllCommand {
     parse(value: string) {
-        const features: KeyStringObject = {};
+        const features: PrimitiveDictionary = {};
         let match;
         const line = value.split(/\n/);
         for (const item of line) {
@@ -16,7 +16,7 @@ export default class BatteryStatusCommand extends TransportParseAllCommand {
         return features;
     }
 
-    execute(serial: string): Promise<KeyStringObject> {
+    execute(serial: string): Promise<PrimitiveDictionary> {
         return super.execute(serial, 'shell:dumpsys battery');
     }
 }

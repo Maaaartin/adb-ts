@@ -7,7 +7,7 @@ import {
     InputOptions,
     InputSource,
     InstallOptions,
-    KeyStringObject,
+    PrimitiveDictionary,
     LogcatOptions,
     MkDirOptions,
     MvOptions,
@@ -68,11 +68,11 @@ export default class AdbDevice implements IAdbDevice {
         return this.client.getDevicePath(this.id, cb);
     }
 
-    listProperties(cb?: (err: Error, value: KeyStringObject) => void) {
+    listProperties(cb?: (err: Error, value: PrimitiveDictionary) => void) {
         return this.client.listProperties(this.id, cb);
     }
 
-    listFeatures(cb?: (err: Error, value: KeyStringObject) => void) {
+    listFeatures(cb?: (err: Error, value: PrimitiveDictionary) => void) {
         return this.client.listFeatures(this.id, cb);
     }
 
@@ -298,7 +298,7 @@ export default class AdbDevice implements IAdbDevice {
 
     listSettings(
         mode: SettingsMode,
-        cb?: (err: Error, value: KeyStringObject) => void
+        cb?: (err: Error, value: PrimitiveDictionary) => void
     ) {
         return this.client.listSettings(this.id, mode, cb);
     }
@@ -455,7 +455,7 @@ export default class AdbDevice implements IAdbDevice {
         return this.client.execDeviceShell(this.id, cmd, cb);
     }
 
-    batteryStatus(cb?: (err: Error, value: KeyStringObject) => void) {
+    batteryStatus(cb?: (err: Error, value: PrimitiveDictionary) => void) {
         return this.client.batteryStatus(this.id, cb);
     }
 

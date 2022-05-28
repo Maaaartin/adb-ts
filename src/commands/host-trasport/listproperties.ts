@@ -1,9 +1,9 @@
-import { KeyStringObject, stringToType } from '../..';
+import { PrimitiveDictionary, stringToType } from '../..';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
 export default class ListPropertiesCommand extends TransportParseAllCommand {
     protected parse(value: string) {
-        const properties: KeyStringObject = {};
+        const properties: PrimitiveDictionary = {};
         let match;
         const regExp = /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm;
         while ((match = regExp.exec(value))) {
@@ -12,7 +12,7 @@ export default class ListPropertiesCommand extends TransportParseAllCommand {
         return properties;
     }
 
-    execute(serial: string): Promise<KeyStringObject> {
+    execute(serial: string): Promise<PrimitiveDictionary> {
         return super.execute(serial, 'shell:getprop');
     }
 }

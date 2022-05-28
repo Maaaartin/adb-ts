@@ -1,10 +1,10 @@
-import { KeyStringObject, SettingsMode, stringToType } from '../..';
+import { PrimitiveDictionary, SettingsMode, stringToType } from '../..';
 
 import TransportParseAllCommand from '../transport-parse-all-command';
 
 export default class ListSettingsCommand extends TransportParseAllCommand {
     parse(value: string) {
-        const settings: KeyStringObject = {};
+        const settings: PrimitiveDictionary = {};
         let match;
         const regExp = /^([\s\S]*?)=([\s\S]*?)\n/gm;
         while ((match = regExp.exec(value))) {
@@ -12,7 +12,7 @@ export default class ListSettingsCommand extends TransportParseAllCommand {
         }
         return settings;
     }
-    execute(serial: string, mode: SettingsMode): Promise<KeyStringObject> {
+    execute(serial: string, mode: SettingsMode): Promise<PrimitiveDictionary> {
         return super.execute(serial, `shell:settings list ${mode}`);
     }
 }

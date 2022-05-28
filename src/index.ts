@@ -82,7 +82,7 @@ export const stringToType = (value: string): PrimitiveType => {
 
 export const nodeify: <T>(
     promise: Promise<T>,
-    cb: ((err: null | Error, value: T) => void) | void
+    cb: ((err: null | Error, value: T) => void) | undefined
 ) => Promise<T> | void = (promise, cb) => {
     return cb ? callbackify(() => promise)(cb) : promise;
 };
@@ -174,7 +174,7 @@ export interface ForwardsObject extends ReversesObject {
 
 export type PrimitiveType = string | boolean | number | null | undefined;
 
-export type KeyStringObject = Record<string, PrimitiveType>;
+export type PrimitiveDictionary = Record<string, PrimitiveType>;
 
 export interface InstallOptions {
     reinstall?: boolean;
