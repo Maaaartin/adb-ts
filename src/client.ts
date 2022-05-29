@@ -25,7 +25,8 @@ import {
     TouchOptions,
     TransportType,
     UninstallOptions,
-    WaitForState
+    WaitForState,
+    parseOptions
 } from '.';
 import Sync, { SyncMode } from './sync';
 import { exec, execFile } from 'child_process';
@@ -1720,115 +1721,149 @@ export default class AdbClient extends EventEmitter {
         return nodeify(this.execInternal(cmd), cb);
     }
 
+    execDevice(serial: string, cmd: string): Promise<string>;
     execDevice(
         serial: string,
         cmd: string,
-        cb?: (err: Error, value: string) => void
-    ) {
-        return this.execInternal(...['-s', serial, cmd]).nodeify(cb);
+        cb: ExecCallbackWithValue<string>
+    ): void;
+    execDevice(
+        serial: string,
+        cmd: string,
+        cb?: ExecCallbackWithValue<string>
+    ): Promise<string> | void {
+        return nodeify(this.execInternal(...['-s', serial, cmd]), cb);
     }
 
+    execDeviceShell(serial: string, cmd: string): Promise<string>;
     execDeviceShell(
         serial: string,
         cmd: string,
-        cb?: (err: Error, value: string) => void
-    ) {
-        return this.execInternal(...['-s', serial, 'shell', cmd]).nodeify(cb);
+        cb: ExecCallbackWithValue<string>
+    ): void;
+    execDeviceShell(
+        serial: string,
+        cmd: string,
+        cb?: ExecCallbackWithValue<string>
+    ): Promise<string> | void {
+        return nodeify(this.execInternal(...['-s', serial, 'shell', cmd]), cb);
     }
 
+    batteryStatus(serial: string): Promise<PrimitiveDictionary>;
     batteryStatus(
         serial: string,
-        cb?: (err: Error, value: PrimitiveDictionary) => void
-    ) {
-        return this.connection()
-            .then((conn) => {
+        cb: ExecCallbackWithValue<PrimitiveDictionary>
+    ): void;
+    batteryStatus(
+        serial: string,
+        cb?: ExecCallbackWithValue<PrimitiveDictionary>
+    ): Promise<PrimitiveDictionary> | void {
+        return nodeify(
+            this.connection().then((conn) => {
                 return new BatteryStatusCommand(conn).execute(serial);
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
 
+    rm(serial: string, path: string): Promise<string>;
+    rm(serial: string, path: string, options: RmOption): Promise<string>;
+    rm(serial: string, path: string, cb: ExecCallbackWithValue<string>): void;
     rm(
         serial: string,
         path: string,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
+        options: RmOption,
+        cb: ExecCallbackWithValue<string>
+    ): void;
     rm(
         serial: string,
         path: string,
-        options?: RmOption,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
-    rm(
-        serial: string,
-        path: string,
-        options?: any,
-        cb?: (err: Error | null, value: string) => void
+        options?: RmOption | ExecCallbackWithValue<string>,
+        cb?: ExecCallbackWithValue<string>
     ) {
         if (typeof options === 'function' || !options) {
             cb = options;
             options = undefined;
         }
-        return this.connection()
-            .then((conn) => {
-                return new RmCommand(conn).execute(serial, path, options);
-            })
-            .nodeify(cb);
+        const options_: RmOption | undefined = options;
+
+        return nodeify(
+            this.connection().then((conn) => {
+                return new RmCommand(conn).execute(serial, path, options_);
+            }),
+            cb
+        );
     }
 
+    mkdir(serial: string, path: string): Promise<string>;
     mkdir(
         serial: string,
         path: string,
-        cb?: (err: Error | null, value: string) => void
+        options?: MkDirOptions
     ): Promise<string>;
     mkdir(
         serial: string,
         path: string,
-        options?: MkDirOptions,
-        cb?: (err: Error | null, value: string) => void
+        cb: ExecCallbackWithValue<string>
     ): Promise<string>;
     mkdir(
         serial: string,
         path: string,
-        options?: any,
-        cb?: (err: Error | null, value: string) => void
+        options: MkDirOptions,
+        cb: ExecCallbackWithValue<string>
+    ): Promise<string>;
+    mkdir(
+        serial: string,
+        path: string,
+        options?: MkDirOptions | ExecCallbackWithValue<string>,
+        cb?: ExecCallbackWithValue<string>
+    ): Promise<string> | void {
+        if (typeof options === 'function' || !options) {
+            cb = options;
+            options = undefined;
+        }
+        const options_: MkDirOptions | undefined = options;
+        return nodeify(
+            this.connection().then((conn) => {
+                return new MkDirCommand(conn).execute(serial, path, options_);
+            }),
+            cb
+        );
+    }
+
+    touch(serial: string, path: string): Promise<string>;
+    touch(serial: string, path: string, options: TouchOptions): Promise<string>;
+    touch(
+        serial: string,
+        path: string,
+        cb: ExecCallbackWithValue<string>
+    ): void;
+    touch(
+        serial: string,
+        path: string,
+        options: TouchOptions,
+        cb: ExecCallbackWithValue<string>
+    ): void;
+    touch(
+        serial: string,
+        path: string,
+        options?: TouchOptions | ExecCallbackWithValue<string>,
+        cb?: ExecCallbackWithValue<string>
     ) {
         if (typeof options === 'function' || !options) {
             cb = options;
             options = undefined;
         }
-        return this.connection()
-            .then((conn) => {
-                return new MkDirCommand(conn).execute(serial, path, options);
-            })
-            .nodeify(cb);
-    }
-
-    touch(
-        serial: string,
-        path: string,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
-    touch(
-        serial: string,
-        path: string,
-        options?: TouchOptions,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
-    touch(
-        serial: string,
-        path: string,
-        options?: any,
-        cb?: (err: Error | null, value: string) => void
-    ) {
-        if (typeof options === 'function' || !options) {
-            cb = options;
-            options = undefined;
-        }
-        return this.connection()
-            .then((conn) => {
-                return new TouchCommand(conn).execute(serial, path, options);
-            })
-            .nodeify(cb);
+        return nodeify(
+            this.connection().then((conn) => {
+                return new TouchCommand(conn).execute(
+                    serial,
+                    path,
+                    parseOptions(options)
+                );
+            }),
+            cb
+        );
     }
 
     mv(

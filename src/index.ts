@@ -87,6 +87,21 @@ export const nodeify: <T>(
     return cb ? callbackify(() => promise)(cb) : promise;
 };
 
+type NonFunctionPropertyNames<T> = {
+    [K in keyof T]: T[K] extends Function ? never : K;
+}[keyof T];
+
+type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
+
+export const parseOptions = <R extends Record<string, any>>(
+    options: R | undefined
+): NonFunctionProperties<R> | undefined => {
+    if (typeof options === 'function') {
+        return;
+    }
+    return options;
+};
+
 export type ExecCallback = (err: null | Error) => void;
 export type ExecCallbackWithValue<T> = (err: null | Error, value: T) => void;
 
