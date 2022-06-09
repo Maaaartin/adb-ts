@@ -178,7 +178,7 @@ export default class AdbClient extends EventEmitter {
         });
     }
 
-    transport(serial: string): Promise<Connection> {
+    transport(serial: string) {
         return this.connection().then((conn) =>
             new HostTransportCommand(conn).execute(serial).then(() => conn)
         );
@@ -295,11 +295,9 @@ export default class AdbClient extends EventEmitter {
         serial: string,
         cb?: ExecCallbackWithValue<string>
     ): Promise<string> | void {
-        return this.getProp(
-            serial,
-            'ro.serialno',
-            cb && ((e, v) => cb(e, `${v}`))
-        );
+        return cb
+            ? this.getProp(serial, 'ro.serialno', (e, v) => cb(e, `${v}`))
+            : this.getProp(serial, 'ro.serialno').then((v) => `${v}`);
     }
 
     getDevicePath(serial: string): Promise<string>;
@@ -1866,83 +1864,109 @@ export default class AdbClient extends EventEmitter {
         );
     }
 
+    mv(serial: string, srcPath: string, destPath: string): Promise<string>;
     mv(
         serial: string,
         srcPath: string,
         destPath: string,
-        cb?: (err: Error | null, value: string) => void
+        options: MvOptions
     ): Promise<string>;
     mv(
         serial: string,
         srcPath: string,
         destPath: string,
-        options?: MvOptions,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
+        cb: ExecCallbackWithValue<string>
+    ): void;
     mv(
         serial: string,
         srcPath: string,
         destPath: string,
-        options?: any,
-        cb?: (err: Error | null, value: string) => void
-    ) {
+        options: MvOptions,
+        cb: ExecCallbackWithValue<string>
+    ): void;
+    mv(
+        serial: string,
+        srcPath: string,
+        destPath: string,
+        options?: ExecCallbackWithValue<string> | MvOptions,
+        cb?: ExecCallbackWithValue<string>
+    ): Promise<string> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
             options = undefined;
         }
-        return this.connection()
-            .then((conn) => {
+
+        nodeify(
+            this.connection().then((conn) => {
                 return new MvCommand(conn).execute(
                     serial,
                     [srcPath, destPath],
-                    options
+                    parseOptions(options)
                 );
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
 
+    cp(serial: string, srcPath: string, destPath: string): Promise<string>;
     cp(
         serial: string,
         srcPath: string,
         destPath: string,
-        cb?: (err: Error | null, value: string) => void
+        options: CpOptions
     ): Promise<string>;
     cp(
         serial: string,
         srcPath: string,
         destPath: string,
-        options?: CpOptions,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
+        cb: ExecCallbackWithValue<string>
+    ): void;
     cp(
         serial: string,
         srcPath: string,
         destPath: string,
-        options?: any,
-        cb?: (err: Error | null, value: string) => void
-    ) {
+        options: CpOptions,
+        cb: ExecCallbackWithValue<string>
+    ): void;
+    cp(
+        serial: string,
+        srcPath: string,
+        destPath: string,
+        options?: ExecCallbackWithValue<string> | CpOptions,
+        cb?: ExecCallbackWithValue<string>
+    ): Promise<string> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
             options = undefined;
         }
-        return this.connection()
-            .then((conn) => {
+        return nodeify(
+            this.connection().then((conn) => {
                 return new CpCommand(conn).execute(
                     serial,
                     [srcPath, destPath],
-                    options
+                    parseOptions(options)
                 );
-            })
-            .nodeify(cb);
+            }),
+            cb
+        );
     }
 
+    fileStat(serial: string, path: string): Promise<FileStats>;
     fileStat(
         serial: string,
         path: string,
-        cb?: (err: Error | null, value: FileStats) => void
-    ) {
-        return this.connection().then((conn) => {
-            return new FileStatCommand(conn).execute(serial, path).nodeify(cb);
-        });
+        cb: ExecCallbackWithValue<FileStats>
+    ): void;
+    fileStat(
+        serial: string,
+        path: string,
+        cb?: ExecCallbackWithValue<FileStats>
+    ): Promise<FileStats> | void {
+        return nodeify(
+            this.connection().then((conn) => {
+                return new FileStatCommand(conn).execute(serial, path);
+            }),
+            cb
+        );
     }
 }
