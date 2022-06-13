@@ -135,8 +135,8 @@ export default class AdbClient extends EventEmitter {
     }
 
     startServer(): Promise<void>;
-    startServer(cb?: (err: null | Error) => void): void;
-    startServer(cb?: (err: null | Error) => void): Promise<void> | void {
+    startServer(cb: ExecCallback): void;
+    startServer(cb?: ExecCallback): Promise<void> | void {
         const port = this.options.port;
         const args = port
             ? ['-P', port.toString(), 'start-server']
@@ -151,7 +151,7 @@ export default class AdbClient extends EventEmitter {
         );
     }
 
-    private connection() {
+    private connection(): Promise<Connection> {
         let triedStarting = false;
         const connection = new Connection();
         return new Promise<Connection>((resolve, reject) => {
@@ -185,10 +185,8 @@ export default class AdbClient extends EventEmitter {
     }
 
     version(): Promise<number>;
-    version(cb?: (err: null | Error, value: number) => void): void;
-    version(
-        cb?: (err: null | Error, value: number) => void
-    ): Promise<number> | void {
+    version(cb: ExecCallbackWithValue<number>): void;
+    version(cb?: ExecCallbackWithValue<number>): Promise<number> | void {
         return nodeify(
             this.connection().then((conn) =>
                 new VersionCommand(conn).execute()
