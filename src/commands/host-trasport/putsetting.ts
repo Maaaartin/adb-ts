@@ -17,7 +17,7 @@ export default class PutSetting extends TransportCommand {
                 this.escape(value)
             )
             .then(() => {
-                return this.parser.readAll().then((value) => {
+                return this.parser_.readAll().then((value) => {
                     const valueStr = value.toString();
                     if (/failed/.test(valueStr)) {
                         throw new Error(valueStr);

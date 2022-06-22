@@ -7,7 +7,7 @@ export default class TcpIpCommand extends TransportCommand {
         return super.execute(serial, `tcpip:${port}`).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
-                    return this.parser.readAll().then((value) => {
+                    return this.parser_.readAll().then((value) => {
                         const valueStr = value.toString().trim();
                         if (/restarting in/.test(valueStr)) {
                             // needs to wait until the port is really active
@@ -21,11 +21,11 @@ export default class TcpIpCommand extends TransportCommand {
                         }
                     });
                 case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
+                    return this.parser_.readError().then((e) => {
                         throw e;
                     });
                 default:
-                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser_.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

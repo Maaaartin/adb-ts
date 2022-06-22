@@ -8,27 +8,29 @@ export default class ForwardCommand extends Command {
             .then((reply) => {
                 switch (reply) {
                     case Reply.OKAY:
-                        return this.parser.readAscii(4).then((reply) => {
+                        return this.parser_.readAscii(4).then((reply) => {
                             switch (reply) {
                                 case Reply.OKAY:
                                     return;
                                 case Reply.FAIL:
-                                    return this.parser.readError().then((e) => {
-                                        throw e;
-                                    });
+                                    return this.parser_
+                                        .readError()
+                                        .then((e) => {
+                                            throw e;
+                                        });
                                 default:
-                                    throw this.parser.unexpected(
+                                    throw this.parser_.unexpected(
                                         reply,
                                         'OKAY or FAIL'
                                     );
                             }
                         });
                     case Reply.FAIL:
-                        return this.parser.readError().then((e) => {
+                        return this.parser_.readError().then((e) => {
                             throw e;
                         });
                     default:
-                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
+                        throw this.parser_.unexpected(reply, 'OKAY or FAIL');
                 }
             });
     }

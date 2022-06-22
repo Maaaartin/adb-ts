@@ -11,20 +11,20 @@ export default class WaitBootCompleteCommand extends TransportCommand {
             .then((reply) => {
                 switch (reply) {
                     case Reply.OKAY:
-                        return this.parser
+                        return this.parser_
                             .searchLine(/^1$/)
                             .finally(() => {
-                                return this.parser.end();
+                                return this.parser_.end();
                             })
                             .then(() => {
                                 return;
                             });
                     case Reply.FAIL:
-                        return this.parser.readError().then((e) => {
+                        return this.parser_.readError().then((e) => {
                             throw e;
                         });
                     default:
-                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
+                        throw this.parser_.unexpected(reply, 'OKAY or FAIL');
                 }
             });
     }

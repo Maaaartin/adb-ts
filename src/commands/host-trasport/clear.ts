@@ -6,10 +6,10 @@ export default class ClearCommand extends TransportCommand {
         return super.execute(serial, `shell:pm clear ${pkg}`).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
-                    return this.parser
+                    return this.parser_
                         .searchLine(/^(Success|Failed)$/)
                         .finally(() => {
-                            return this.parser.end();
+                            return this.parser_.end();
                         })
                         .then((result) => {
                             switch (result[0]) {
@@ -24,11 +24,11 @@ export default class ClearCommand extends TransportCommand {
                             }
                         });
                 case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
+                    return this.parser_.readError().then((e) => {
                         throw e;
                     });
                 default:
-                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser_.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

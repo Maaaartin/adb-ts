@@ -8,13 +8,13 @@ export default class RawCommand extends TransportCommand {
         return super.execute(serial, ...params).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
-                    return this.connection;
+                    return this.connection_;
                 case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
+                    return this.parser_.readError().then((e) => {
                         throw e;
                     });
                 default:
-                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser_.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

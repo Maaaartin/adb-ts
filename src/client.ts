@@ -26,7 +26,11 @@ import {
     TransportType,
     UninstallOptions,
     WaitForState,
-    parseOptions
+    parseOptions,
+    parsePrimitiveParam,
+    NonFunctionProperties,
+    parseCbParam,
+    parseValueParam
 } from '.';
 import Sync, { SyncMode } from './sync';
 import { exec, execFile } from 'child_process';
@@ -195,66 +199,67 @@ export default class AdbClient extends EventEmitter {
         );
     }
 
+    connect(host: string): Promise<string>;
+    connect(host: string, port: number | string): Promise<string>;
+    connect(host: string, cb: ExecCallbackWithValue<string>): void;
     connect(
         host: string,
-        cb?: (err: Error, value: number) => void
-    ): Promise<string>;
+        port: number | string,
+        cb: ExecCallbackWithValue<string>
+    ): void;
     connect(
         host: string,
-        port?: number,
-        cb?: (err: null | Error, value: string) => void
-    ): Promise<string>;
-    connect(
-        host: string,
-        port?: any,
-        cb?: (err: null | Error, value: string) => void
-    ) {
-        if (typeof port === 'function') {
-            cb = port;
-            port = undefined;
-        }
+        port?: number | string | ExecCallbackWithValue<string>,
+        cb?: ExecCallbackWithValue<string>
+    ): Promise<string> | void {
+        let port_ = parseValueParam(port);
         if (host.indexOf(':') !== -1) {
-            [host, port] = host.split(':', 2);
+            [host, port_] = host.split(':', 2);
         }
-        port = port || ADB_DEFAULT_PORT;
         return nodeify(
             this.connection().then((conn) =>
-                new ConnectCommand(conn).execute(host, port)
+                new ConnectCommand(conn).execute(
+                    host,
+                    parsePrimitiveParam(ADB_DEFAULT_PORT, port_)
+                )
             ),
-            cb
+            parseCbParam(port, cb)
         );
     }
+
+    disconnect(host: string): Promise<string>;
+    disconnect(host: string, port: number | string): Promise<string>;
+    disconnect(host: string, cb: ExecCallbackWithValue<string>): void;
     disconnect(
         host: string,
-        cb?: (err: Error, value: number) => void
-    ): Promise<string>;
+        port: number | string,
+        cb: ExecCallbackWithValue<string>
+    ): void;
     disconnect(
         host: string,
-        port?: number,
-        cb?: (err: Error, value: number) => void
-    ): Promise<string>;
-    disconnect(
-        host: string,
-        port?: any,
-        cb?: (err: Error, value: number) => void
-    ) {
-        if (typeof port === 'function') {
-            cb = port;
-            port = undefined;
-        }
+        port?: ExecCallbackWithValue<string> | number | string,
+        cb?: ExecCallbackWithValue<string>
+    ): Promise<string> | void {
+        let port_ = parseValueParam(port);
         if (host.indexOf(':') !== -1) {
             const tmp = host.split(':', 2);
             host = tmp[0];
-            port = Number(tmp[1]);
+            port_ = Number(tmp[1]);
         }
-        if (!port) port = 5555;
-        return this.connection().then((conn) => {
-            return new DisconnectCommand(conn).execute(host, port);
-        });
+
+        return nodeify(
+            this.connection().then((conn) => {
+                return new DisconnectCommand(conn).execute(
+                    host,
+                    parsePrimitiveParam(ADB_DEFAULT_PORT, port_)
+                );
+            }),
+            parseCbParam(port, cb)
+        );
     }
 
     listDevices(): Promise<IAdbDevice[]>;
-    listDevices(cb?: ExecCallbackWithValue<IAdbDevice[]>): void;
+    listDevices(cb: ExecCallbackWithValue<IAdbDevice[]>): void;
     listDevices(
         cb?: ExecCallbackWithValue<IAdbDevice[]>
     ): Promise<IAdbDevice[]> | void {
@@ -267,7 +272,7 @@ export default class AdbClient extends EventEmitter {
     }
 
     trackDevices(): Promise<Tracker>;
-    trackDevices(cb?: ExecCallbackWithValue<Tracker>): void;
+    trackDevices(cb: ExecCallbackWithValue<Tracker>): void;
     trackDevices(cb?: ExecCallbackWithValue<Tracker>): Promise<Tracker> | void {
         return nodeify(
             this.connection().then((conn) => {
@@ -279,7 +284,7 @@ export default class AdbClient extends EventEmitter {
     }
 
     kill(): Promise<void>;
-    kill(cb?: ExecCallback): void;
+    kill(cb: ExecCallback): void;
     kill(cb?: ExecCallback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => new KillCommand(conn).execute()),
@@ -288,7 +293,7 @@ export default class AdbClient extends EventEmitter {
     }
 
     getSerialNo(serial: string): Promise<string>;
-    getSerialNo(serial: string, cb?: ExecCallbackWithValue<string>): void;
+    getSerialNo(serial: string, cb: ExecCallbackWithValue<string>): void;
     getSerialNo(
         serial: string,
         cb?: ExecCallbackWithValue<string>
@@ -299,7 +304,7 @@ export default class AdbClient extends EventEmitter {
     }
 
     getDevicePath(serial: string): Promise<string>;
-    getDevicePath(serial: string, cb?: ExecCallbackWithValue<string>): void;
+    getDevicePath(serial: string, cb: ExecCallbackWithValue<string>): void;
     getDevicePath(
         serial: string,
         cb?: ExecCallbackWithValue<string>
@@ -315,7 +320,7 @@ export default class AdbClient extends EventEmitter {
     listProperties(serial: string): Promise<PrimitiveDictionary>;
     listProperties(
         serial: string,
-        cb?: ExecCallbackWithValue<PrimitiveDictionary>
+        cb: ExecCallbackWithValue<PrimitiveDictionary>
     ): void;
     listProperties(
         serial: string,
@@ -332,7 +337,7 @@ export default class AdbClient extends EventEmitter {
     listFeatures(serial: string): Promise<PrimitiveDictionary>;
     listFeatures(
         serial: string,
-        cb?: ExecCallbackWithValue<PrimitiveDictionary>
+        cb: ExecCallbackWithValue<PrimitiveDictionary>
     ): void;
     listFeatures(
         serial: string,
@@ -347,7 +352,7 @@ export default class AdbClient extends EventEmitter {
     }
 
     listPackages(serial: string): Promise<string[]>;
-    listPackages(serial: string, cb?: ExecCallbackWithValue<string[]>): void;
+    listPackages(serial: string, cb: ExecCallbackWithValue<string[]>): void;
     listPackages(
         serial: string,
         cb?: ExecCallbackWithValue<string[]>
@@ -361,7 +366,7 @@ export default class AdbClient extends EventEmitter {
     }
 
     getIpAddress(serial: string): Promise<string>;
-    getIpAddress(serial: string, cb?: ExecCallbackWithValue<string>): void;
+    getIpAddress(serial: string, cb: ExecCallbackWithValue<string>): void;
     getIpAddress(
         serial: string,
         cb?: ExecCallbackWithValue<string>

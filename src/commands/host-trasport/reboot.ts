@@ -6,13 +6,13 @@ export default class RebootCommand extends TransportCommand {
         return super.execute(serial, 'reboot:').then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
-                    return this.parser.readAll().then(() => {});
+                    return this.parser_.readAll().then(() => {});
                 case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
+                    return this.parser_.readError().then((e) => {
                         throw e;
                     });
                 default:
-                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser_.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

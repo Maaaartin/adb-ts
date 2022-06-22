@@ -26,7 +26,7 @@ export default class DevicesCommand extends Command {
     }
 
     readDevices() {
-        return this.parser.readValue().then((value) => {
+        return this.parser_.readValue().then((value) => {
             return this.parse(value.toString().trim());
         });
     }
@@ -37,11 +37,11 @@ export default class DevicesCommand extends Command {
                 case Reply.OKAY:
                     return;
                 case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
+                    return this.parser_.readError().then((e) => {
                         throw e;
                     });
                 default:
-                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser_.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

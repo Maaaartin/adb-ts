@@ -6,7 +6,7 @@ export default class ConnectCommand extends Command {
         return super.execute(`host:connect:${host}:${port}`).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
-                    return this.parser.readValue().then((value) => {
+                    return this.parser_.readValue().then((value) => {
                         const regExp = /connected to|already connected/;
                         if (regExp.test(value.toString())) {
                             return host + ':' + port;
@@ -15,11 +15,11 @@ export default class ConnectCommand extends Command {
                         }
                     });
                 case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
+                    return this.parser_.readError().then((e) => {
                         throw e;
                     });
                 default:
-                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser_.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

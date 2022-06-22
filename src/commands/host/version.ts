@@ -6,11 +6,11 @@ export default class VersionCommand extends Command {
         return super.execute('host:version').then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
-                    return this.parser.readValue().then((value) => {
+                    return this.parser_.readValue().then((value) => {
                         return parseInt(value.toString(), 10);
                     });
                 case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
+                    return this.parser_.readError().then((e) => {
                         throw e;
                     });
                 default:

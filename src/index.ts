@@ -91,8 +91,33 @@ type NonFunctionPropertyNames<T> = {
     [K in keyof T]: T[K] extends Function ? never : K;
 }[keyof T];
 
-type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
+export type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
 
+export const parseValueParam = <T extends NonFunctionProperties<T>, R>(
+    param: T | ExecCallbackWithValue<R> | undefined
+): T | undefined => {
+    if (typeof param === 'function') {
+        return;
+    }
+    return param;
+};
+
+export const parseCbParam = <T extends NonFunctionProperties<T>, R>(
+    param: T | ExecCallbackWithValue<R> | undefined,
+    cb: ExecCallbackWithValue<R> | undefined
+): ExecCallbackWithValue<R> | undefined => {
+    if (typeof param === 'function') {
+        return param;
+    }
+    return cb;
+};
+
+export const parsePrimitiveParam = <T>(def: T, param: T | undefined): T => {
+    if (typeof param === 'undefined') {
+        return def;
+    }
+    return param;
+};
 export const parseOptions = <R extends Record<string, any>>(
     options: R | undefined
 ): NonFunctionProperties<R> | undefined => {

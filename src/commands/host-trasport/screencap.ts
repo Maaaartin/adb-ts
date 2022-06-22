@@ -7,14 +7,14 @@ export default class ScreencapCommand extends RawCommand {
         return super
             .execute(serial, 'shell:echo && screencap -p 2>/dev/null')
             .then(() => {
-                return this.parser
+                return this.parser_
                     .readBytes(1)
                     .then((chunk) => {
                         const transform = new LineTransform({
                             autoDetect: true
                         });
                         transform.write(chunk);
-                        this.connection.pipe(transform);
+                        this.connection_.pipe(transform);
                         return transform;
                     })
                     .catch((err) => {
