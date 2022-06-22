@@ -9,16 +9,16 @@ export default class GetIpAddressCommand extends TransportCommand {
             .then((reply) => {
                 switch (reply) {
                     case Reply.OKAY:
-                        return this.parser_.readAll().then((value) => {
+                        return this.parser.readAll().then((value) => {
                             const valueStr = value.toString().trim();
                             return ipRegex().test(valueStr) ? valueStr : '';
                         });
                     case Reply.FAIL:
-                        return this.parser_.readError().then((e) => {
+                        return this.parser.readError().then((e) => {
                             throw e;
                         });
                     default:
-                        throw this.parser_.unexpected(reply, 'OKAY or FAIL');
+                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
             });
     }

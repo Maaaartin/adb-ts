@@ -10,7 +10,7 @@ import PushTransfer from './sync/pushtransfer';
 import { Readable } from 'stream';
 import Stats from './sync/stats';
 import SyncEntry from './sync/entry';
-import fs, { write } from 'fs';
+import fs from 'fs';
 import { promisify } from 'util';
 
 export enum SyncMode {

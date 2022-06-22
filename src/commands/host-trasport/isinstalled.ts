@@ -10,14 +10,14 @@ export default class IsInstalledCommand extends TransportCommand {
             .then((reply) => {
                 switch (reply) {
                     case Reply.OKAY:
-                        return this.parser_
+                        return this.parser
                             .readAscii(8)
                             .then((reply) => {
                                 switch (reply) {
                                     case 'package:':
                                         return true;
                                     default:
-                                        throw this.parser_.unexpected(
+                                        throw this.parser.unexpected(
                                             reply,
                                             'package:'
                                         );
@@ -27,11 +27,11 @@ export default class IsInstalledCommand extends TransportCommand {
                                 return false;
                             });
                     case Reply.FAIL:
-                        return this.parser_.readError().then((e) => {
+                        return this.parser.readError().then((e) => {
                             throw e;
                         });
                     default:
-                        throw this.parser_.unexpected(reply, 'OKAY or FAIL');
+                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
             });
     }

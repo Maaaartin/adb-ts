@@ -6,7 +6,7 @@ export default class UsbCommand extends TransportCommand {
         return super.execute(serial, 'usb:').then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
-                    return this.parser_.readAll().then((value) => {
+                    return this.parser.readAll().then((value) => {
                         const valueStr = value.toString();
                         if (/restarting in/.test(valueStr)) {
                             return;
@@ -15,11 +15,11 @@ export default class UsbCommand extends TransportCommand {
                         }
                     });
                 case Reply.FAIL:
-                    return this.parser_.readError().then((e) => {
+                    return this.parser.readError().then((e) => {
                         throw e;
                     });
                 default:
-                    throw this.parser_.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

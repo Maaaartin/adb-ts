@@ -8,7 +8,7 @@ export default class DisconnectCommand extends Command {
             .then((reply) => {
                 switch (reply) {
                     case Reply.OKAY:
-                        return this.parser_.readValue().then((value) => {
+                        return this.parser.readValue().then((value) => {
                             const regExp = /disconnected/;
                             if (regExp?.test(value.toString())) {
                                 return host + ':' + port;
@@ -17,11 +17,11 @@ export default class DisconnectCommand extends Command {
                             }
                         });
                     case Reply.FAIL:
-                        return this.parser_.readError().then((e) => {
+                        return this.parser.readError().then((e) => {
                             throw e;
                         });
                     default:
-                        throw this.parser_.unexpected(reply, 'OKAY or FAIL');
+                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
             });
     }

@@ -8,13 +8,13 @@ export default class WaitForDeviceCommand extends Command {
             .then((reply) => {
                 switch (reply) {
                     case Reply.OKAY:
-                        return this.parser_.readAscii(4).then(() => {});
+                        return this.parser.readAscii(4).then(() => {});
                     case Reply.FAIL:
-                        return this.parser_.readError().then((e) => {
+                        return this.parser.readError().then((e) => {
                             throw e;
                         });
                     default:
-                        throw this.parser_.unexpected(reply, 'OKAY or FAIL');
+                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
             });
     }

@@ -3,24 +3,16 @@ import { encodeData } from '.';
 import Parser from './parser';
 
 export default abstract class Command implements Command {
-    protected readonly connection_: Connection;
-    protected readonly parser_: Parser;
+    public readonly connection: Connection;
+    public readonly parser: Parser;
     constructor(connection: Connection) {
-        this.connection_ = connection;
-        this.parser_ = new Parser(this.connection_);
-    }
-
-    public get connection() {
-        return this.connection_;
-    }
-
-    public get parser() {
-        return this.parser_;
+        this.connection = connection;
+        this.parser = new Parser(this.connection);
     }
 
     public execute(...args: any[]): Promise<any> {
-        this.connection_.write(encodeData(args.join(' ')));
-        return this.parser_.readAscii(4).then((reply) => {
+        this.connection.write(encodeData(args.join(' ')));
+        return this.parser.readAscii(4).then((reply) => {
             return reply;
         });
     }

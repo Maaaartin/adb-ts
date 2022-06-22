@@ -23,10 +23,7 @@ export default class Tracker extends EventEmitter {
                 }
             })
             .finally(() => {
-                return this.command
-                    .getParser()
-                    .end()
-                    .then(() => this.emit('end'));
+                return this.command.parser.end().then(() => this.emit('end'));
             });
     }
 

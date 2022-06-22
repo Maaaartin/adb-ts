@@ -17,20 +17,20 @@ export default class MonkeyCommand extends TransportCommand {
                             let timeout: NodeJS.Timeout;
                             const resolvePromise = () => {
                                 clearTimeout(timeout);
-                                resolve(this.connection_);
+                                resolve(this.connection);
                             };
-                            this.parser_
+                            this.parser
                                 .searchLine(/^:Monkey:/)
                                 .then(resolvePromise)
                                 .catch(reject);
                             timeout = setTimeout(resolvePromise, 1000);
                         });
                     case Reply.FAIL:
-                        return this.parser_.readError().then((e) => {
+                        return this.parser.readError().then((e) => {
                             throw e;
                         });
                     default:
-                        throw this.parser_.unexpected(reply, 'OKAY or FAIL');
+                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
             });
     }

@@ -114,9 +114,9 @@ export default class StartServiceCommand extends TransportCommand {
         return super.execute(serial, command, args.join(' ')).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
-                    return this.parser_
+                    return this.parser
                         .searchLine(/^Error: (.*)$/)
-                        .finally(() => this.parser_.end())
+                        .finally(() => this.parser.end())
                         .then((match) => {
                             throw new Error(match[1]);
                         })
@@ -128,11 +128,11 @@ export default class StartServiceCommand extends TransportCommand {
                             }
                         });
                 case Reply.FAIL:
-                    return this.parser_.readError().then((e) => {
+                    return this.parser.readError().then((e) => {
                         throw e;
                     });
                 default:
-                    throw this.parser_.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

@@ -7,13 +7,13 @@ export default class SyncCommand extends TransportCommand {
         return super.execute(serial, 'sync:').then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
-                    return new Sync(this.connection_);
+                    return new Sync(this.connection);
                 case Reply.FAIL:
-                    return this.parser_.readError().then((e) => {
+                    return this.parser.readError().then((e) => {
                         throw e;
                     });
                 default:
-                    throw this.parser_.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

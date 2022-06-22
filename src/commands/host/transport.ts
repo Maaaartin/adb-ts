@@ -5,17 +5,17 @@ export default class HostTransportCommand extends Command {
     execute(serial: string) {
         var encoded;
         encoded = encodeData('host:transport:' + serial);
-        this.connection_.write(encoded);
-        return this.parser_.readAscii(4).then((reply) => {
+        this.connection.write(encoded);
+        return this.parser.readAscii(4).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
                     return true;
                 case Reply.FAIL:
-                    return this.parser_.readError().then((e) => {
+                    return this.parser.readError().then((e) => {
                         throw e;
                     });
                 default:
-                    throw this.parser_.unexpected(reply, 'OKAY or FAIL');
+                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
             }
         });
     }

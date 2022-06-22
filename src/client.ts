@@ -127,7 +127,7 @@ export default class AdbClient extends EventEmitter {
             bin: 'adb',
             noAutoStart: false
         });
-    private options: AdbClientOptionsValues;
+    public readonly options: AdbClientOptionsValues;
     constructor(options?: AdbClientOptions) {
         super();
         this.options = Object.entries(options || {})
