@@ -133,7 +133,7 @@ export default class AdbClient extends EventEmitter {
         this.options = Object.entries(options || {})
             .filter(([_key, value]) => typeof value !== 'undefined')
             .reduce(
-                (def, opt) => ({ ...def, ...opt }),
+                (def, [key, value]) => ({ ...def, [key]: value }),
                 AdbClient.defaultOptions
             );
     }
