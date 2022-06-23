@@ -1,4 +1,5 @@
-import { StatsObject, StreamHandler } from '..';
+import { StatsObject } from '..';
+import StreamHandler from '../streamHandler';
 
 export default class PushTransfer extends StreamHandler {
     private readonly stack: number[] = [];

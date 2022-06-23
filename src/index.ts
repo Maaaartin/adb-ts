@@ -345,10 +345,6 @@ export type CpOptions = VerboseFSoption &
         archive?: boolean;
     };
 
-export abstract class StreamHandler extends EventEmitter {
-    abstract end(): Promise<void>;
-}
-
 export class FailError extends Error {
     constructor(message?: string) {
         super();
