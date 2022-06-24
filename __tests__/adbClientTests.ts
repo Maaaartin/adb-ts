@@ -62,4 +62,20 @@ describe('Start server tests', () => {
         const client = new AdbClient();
         expect(client.startServer()).rejects;
     });
+
+    it('Start adb server callback overload', () => {
+        mockExec(null);
+        const client = new AdbClient();
+        client.startServer((err) => {
+            expect(err).toBe(null);
+        });
+    });
+
+    it('Start adb server callback overload error', () => {
+        mockExec(new Error('message'));
+        const client = new AdbClient();
+        client.startServer((err) => {
+            expect(err).toBeInstanceOf(Error);
+        });
+    });
 });

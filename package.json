@@ -28,9 +28,9 @@
     "types": "lib/index.d.ts",
     "private": false,
     "scripts": {
-        "test": "jest",
-        "compile": "tsc",
-        "watch": "tsc -w"
+        "test": "npx jest",
+        "compile": "npx tsc",
+        "watch": "npx tsc -w"
     },
     "devDependencies": {
         "@types/bluebird": "^3.5.33",
