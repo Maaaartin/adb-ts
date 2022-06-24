@@ -26,7 +26,7 @@ describe('Client constructor tests', () => {
 });
 
 describe('Start server tests', () => {
-    it('Start adb server', async () => {
+    const mockExec = (err: ChildProcess.ExecException | null) => {
         jest.spyOn(ChildProcess, 'execFile').mockImplementation(
             (
                 _file: string,
@@ -44,14 +44,22 @@ describe('Start server tests', () => {
                       ) => void)
             ) => {
                 if (typeof cb === 'function') {
-                    cb(null, '', '');
+                    cb(err, '', '');
                 }
                 return new ChildProcessMock();
             }
         );
+    };
 
+    it('Start adb server', () => {
+        mockExec(null);
         const client = new AdbClient();
-
         expect(client.startServer()).resolves;
+    });
+
+    it('Start adb server error', async () => {
+        mockExec(new Error('message'));
+        const client = new AdbClient();
+        expect(client.startServer()).rejects;
     });
 });

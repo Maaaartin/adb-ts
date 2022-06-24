@@ -100,6 +100,7 @@ import UsbCommand from './commands/host-trasport/usb';
 import VersionCommand from './commands/host/version';
 import WaitBootCompleteCommand from './commands/host-trasport/wainbootcomplete';
 import WaitForDeviceCommand from './commands/host/waitfordevice';
+import { promisify } from 'util';
 
 function buildInputParams(
     defaultSource: InputSource,
@@ -145,12 +146,11 @@ export default class AdbClient extends EventEmitter {
         const args = port
             ? ['-P', port.toString(), 'start-server']
             : ['start-server'];
+
         return nodeify(
-            new Promise<void>((resolve, reject) => {
-                execFile(this.options.bin, args, (err) =>
-                    err ? reject(err) : resolve()
-                );
-            }),
+            promisify<void>((cb_) =>
+                execFile(this.options.bin, args, (err) => cb_(err))
+            )(),
             cb
         );
     }
