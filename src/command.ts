@@ -1,6 +1,7 @@
 import Connection from './connection';
-import { encodeData } from '.';
+import { encodeData, Reply } from '.';
 import Parser from './parser';
+import { promisify } from 'util';
 
 export default abstract class Command implements Command {
     public readonly connection: Connection;
@@ -12,9 +13,23 @@ export default abstract class Command implements Command {
 
     public execute(...args: any[]): Promise<any> {
         this.connection.write(encodeData(args.join(' ')));
-        return this.parser.readAscii(4).then((reply) => {
-            return reply;
-        });
+        return this.parser
+            .readAscii(4)
+            .then((reply) => {
+                switch (reply) {
+                    case Reply.OKAY:
+                        return;
+                    case Reply.FAIL:
+                        return this.parser.readError().then((e) => {
+                            throw e;
+                        });
+                    default:
+                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
+                }
+            })
+            .finally(() =>
+                promisify<void>((cb) => this.connection.end(() => cb(null)))()
+            );
     }
 
     escape(arg?: any): string {

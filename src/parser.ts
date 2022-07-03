@@ -1,13 +1,12 @@
 import { PrematureEOFError, UnexpectedDataError, decodeLength } from '.';
-
 import Connection from './connection';
-
 import { Writable } from 'stream';
+import { Socket } from 'net';
 
 export default class Parser {
-    private readonly stream: Connection;
+    private readonly stream: Socket;
     private ended: boolean;
-    constructor(stream: Connection) {
+    constructor(stream: Socket) {
         this.stream = stream;
         this.ended = false;
     }

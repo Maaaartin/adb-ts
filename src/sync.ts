@@ -25,7 +25,7 @@ export default class Sync extends EventEmitter {
     constructor(connection: Connection) {
         super();
         this.connection = connection;
-        this.parser = connection.getParser();
+        this.parser = connection.parser;
     }
 
     public getConnection() {
