@@ -1,12 +1,7 @@
-import { ChildProcessMock } from '../mockery/mockChildProcess';
-import AdbClient from '../lib/client.js';
+import { ChildProcessMock } from '../../mockery/mockChildProcess';
+import AdbClient from '../../lib/client.js';
 import ChildProcess from 'child_process';
 import { BaseEncodingOptions } from 'fs';
-import net from 'net';
-import Parser from '../lib/parser';
-import { promisify } from 'util';
-import Connection from '../lib/connection';
-import { encodeLength } from '../lib';
 
 describe('Client constructor tests', () => {
     it('Create Adb client instance', () => {
@@ -86,57 +81,5 @@ describe('Start server tests', () => {
         client.startServer((err) => {
             expect(err).toBeInstanceOf(Error);
         });
-    });
-});
-
-describe('Transport tests', () => {
-    const mockServer = (epxValue: string) => {
-        return new Promise<net.Server>((resolve, reject) => {
-            const server = new net.Server();
-            server.listen(0, () => {
-                resolve(server);
-            });
-            server.on('connection', async (socket) => {
-                const parser = new Parser(socket);
-                const value = await parser.readValue();
-                if (epxValue === value.toString()) {
-                    socket.write('OKAY');
-                } else {
-                    const err = 'Failure';
-                    const hex = encodeLength(err.length);
-                    socket.write(`FAIL${hex}Failure`);
-                }
-            });
-            server.once('error', reject);
-        });
-    };
-
-    const getPort = (server: net.Server): number => {
-        const info = server.address();
-        if (typeof info === 'string' || info === null) {
-            throw new Error('Could not get server port');
-        }
-        return info.port;
-    };
-
-    it('Test Transport', async () => {
-        let server: net.Server | null = null,
-            connection: Connection | null = null;
-        try {
-            server = await mockServer('host:transport:1234');
-            const port = getPort(server);
-            const client = new AdbClient({ noAutoStart: true, port: port });
-            connection = await client.transport('1234');
-            expect(connection).toBeInstanceOf(Connection);
-        } finally {
-            await promisify<void>((cb) => {
-                if (connection) {
-                    return connection?.end(() => cb(null));
-                }
-                return cb(null);
-            })();
-
-            await promisify<void>((cb) => server?.close(cb))();
-        }
     });
 });
