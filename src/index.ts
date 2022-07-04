@@ -37,7 +37,7 @@ export const encodeLength = (length: number): string => {
     return ('0000' + length.toString(16)).slice(-4).toUpperCase();
 };
 
-export const encodeData = (data: any): Buffer => {
+export const encodeData = (data: Buffer | string): Buffer => {
     if (!Buffer.isBuffer(data)) {
         data = Buffer.from(data);
     }
