@@ -3,7 +3,11 @@ import {
     encodeLength,
     encodeData,
     stringToType,
-    nodeify
+    nodeify,
+    parseCbParam,
+    parseValueParam,
+    parsePrimitiveParam,
+    parseOptions
 } from '../lib/index';
 
 describe('Encode/decode length', () => {
@@ -108,5 +112,86 @@ describe('Nodeify', () => {
             }
         );
         expect(result).toBe(undefined);
+    });
+});
+
+describe('Parse value param', () => {
+    it('undefined', () => {
+        const result = parseValueParam(undefined);
+        expect(result).toBe(undefined);
+    });
+
+    it('function', () => {
+        const result = parseValueParam(() => null);
+        expect(result).toBe(undefined);
+    });
+
+    it('object', () => {
+        const result = parseValueParam({ one: 1 });
+        expect(result).toEqual({ one: 1 });
+    });
+});
+
+describe('Parse cb params', () => {
+    it('undefined/undefined', () => {
+        const result = parseCbParam(undefined, undefined);
+        expect(result).toBe(undefined);
+    });
+
+    it('function/undefined', () => {
+        const result = parseCbParam(() => null, undefined);
+        expect(typeof result).toBe('function');
+    });
+
+    it('object/undefined', () => {
+        const result = parseCbParam({ one: 1 }, undefined);
+        expect(result).toBe(undefined);
+    });
+
+    it('object/function', () => {
+        const result = parseCbParam({ one: 1 }, () => null);
+        expect(typeof result).toBe('function');
+    });
+
+    it('undefined/function', () => {
+        const result = parseCbParam(undefined, () => null);
+        expect(typeof result).toBe('function');
+    });
+
+    it('function/function', () => {
+        const result = parseCbParam(
+            () => 1,
+            () => 2
+        );
+        expect(result?.(null, null)).toBe(1);
+    });
+});
+
+describe('Parse primitive type', () => {
+    it('undefined', () => {
+        const result = parsePrimitiveParam(1, undefined);
+        expect(result).toBe(1);
+    });
+
+    it('non undefined', () => {
+        const result = parsePrimitiveParam(1, 2);
+        expect(result).toBe(2);
+    });
+});
+
+describe('Parse options', () => {
+    it('undefined', () => {
+        const result = parseOptions(undefined);
+        expect(result).toBe(undefined);
+    });
+
+    it('function', () => {
+        const result = parseOptions(() => null);
+        expect(result).toBe(undefined);
+    });
+
+    it('object', () => {
+        const result = parseOptions({ one: 1 });
+        expect(result).toEqual({ one: 1 });
     });
 });
