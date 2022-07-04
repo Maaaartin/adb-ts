@@ -132,7 +132,7 @@ export default class AdbClient extends EventEmitter {
     constructor(options?: AdbClientOptions) {
         super();
         this.options = Object.entries(options || {})
-            .filter(([_key, value]) => typeof value !== 'undefined')
+            .filter(([, value]) => typeof value !== 'undefined')
             .reduce(
                 (def, [key, value]) => ({ ...def, [key]: value }),
                 AdbClient.defaultOptions
@@ -182,7 +182,7 @@ export default class AdbClient extends EventEmitter {
         });
     }
 
-    transport(serial: string) {
+    transport(serial: string): Promise<Connection> {
         return this.connection().then((conn) =>
             new HostTransportCommand(conn).execute(serial).then(() => conn)
         );

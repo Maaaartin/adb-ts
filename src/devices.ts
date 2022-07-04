@@ -1,4 +1,4 @@
-import { DeviceState, IAdbDevice, Reply } from '.';
+import { IAdbDevice, Reply } from '.';
 
 import Command from './command';
 
@@ -19,23 +19,23 @@ export function constructDevice(values: string[]): IAdbDevice {
     };
 }
 
-export default class DevicesCommand extends Command {
-    protected parse(value: string): IAdbDevice[] {
+export default abstract class DevicesCommand extends Command {
+    private parse(value: string): IAdbDevice[] {
         const lines = value.split('\n').filter((l) => l !== '');
         return lines.map((line) => constructDevice(line.split(/\s+/)));
     }
 
-    readDevices() {
+    private readDevices(): Promise<IAdbDevice[]> {
         return this.parser.readValue().then((value) => {
             return this.parse(value.toString().trim());
         });
     }
 
-    execute(command: string): Promise<any> {
-        return super.execute(command).then((reply) => {
+    execute(command: string): Promise<IAdbDevice[]> {
+        return super.execute_(command).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
-                    return;
+                    return this.readDevices();
                 case Reply.FAIL:
                     return this.parser.readError().then((e) => {
                         throw e;
