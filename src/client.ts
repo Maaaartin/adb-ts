@@ -455,7 +455,10 @@ export default class AdbClient extends EventEmitter {
         );
     }
 
-    private shellInternal(serial: string, command: string | string[]) {
+    private shellInternal(
+        serial: string,
+        command: string | string[]
+    ): Promise<Connection> {
         return this.connection().then((conn) => {
             return new ShellRawCommand(conn).execute(serial, command);
         });
@@ -906,7 +909,7 @@ export default class AdbClient extends EventEmitter {
         );
     }
 
-    private syncService(serial: string) {
+    private syncService(serial: string): Promise<Sync> {
         return this.connection().then((conn) => {
             return new SyncCommand(conn).execute(serial);
         });
@@ -981,7 +984,7 @@ export default class AdbClient extends EventEmitter {
         cb?: ExecCallback
     ): Promise<void> | void {
         let options_: InstallOptions = {},
-            args_: string = '';
+            args_ = '';
         if (typeof options === 'function') {
             cb = options;
             options = undefined;
@@ -1002,13 +1005,13 @@ export default class AdbClient extends EventEmitter {
                 return new Promise<void>((resolve, reject) => {
                     transfer.on(
                         'error',
-                        (errorListener = (err) => {
+                        (errorListener = (err): void => {
                             reject(err);
                         })
                     );
                     transfer.on(
                         'end',
-                        (endListener = () => {
+                        (endListener = (): void => {
                             this.installRemote(serial, temp, options_, args_)
                                 .then(resolve)
                                 .catch(reject);
@@ -1781,7 +1784,7 @@ export default class AdbClient extends EventEmitter {
         path: string,
         options?: RmOption | ExecCallbackWithValue<string>,
         cb?: ExecCallbackWithValue<string>
-    ) {
+    ): Promise<string> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
             options = undefined;
@@ -1850,7 +1853,7 @@ export default class AdbClient extends EventEmitter {
         path: string,
         options?: TouchOptions | ExecCallbackWithValue<string>,
         cb?: ExecCallbackWithValue<string>
-    ) {
+    ): Promise<string> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
             options = undefined;

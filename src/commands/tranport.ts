@@ -4,11 +4,11 @@ import { Reply } from '..';
 export default class TransportCommand extends Command {
     execute(serial: string, ...args: any[]): Promise<any> {
         return super
-            .execute('host:transport:'.concat(serial))
+            .execute_('host:transport:'.concat(serial))
             .then((reply: string) => {
                 switch (reply) {
                     case Reply.OKAY:
-                        return super.execute(...args);
+                        return super.execute_(...args);
                     case Reply.FAIL:
                         return this.parser.readError().then((e) => {
                             throw e;

@@ -4,7 +4,7 @@ import TransportCommand from './tranport';
 import Connection from '../connection';
 
 export default class RawCommand extends TransportCommand {
-    execute(serial: string, ...params: any[]): Promise<any> {
+    execute(serial: string, ...params: any[]): Promise<Connection> {
         return super.execute(serial, ...params).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
