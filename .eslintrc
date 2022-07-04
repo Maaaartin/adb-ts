@@ -1,7 +1,8 @@
 {
     "env": {
         "node": true,
-        "es6": true
+        "es6": true,
+        "jest/globals": true
     },
     "parser": "@typescript-eslint/parser", // Specifies the ESLint parser
     "parserOptions": {
@@ -14,6 +15,7 @@
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended"
     ],
+    "plugins": ["jest"],
     "rules": {
         "no-const-assign": "warn",
         "no-this-before-super": "warn",
@@ -24,7 +26,6 @@
         "no-extra-semi": "error",
         "semi": "error",
         "default-case": "error",
-        "plugins": ["jest"],
         "@typescript-eslint/no-unused-vars": [
             "warn",
             {
@@ -40,6 +41,11 @@
             }
         ],
         "@typescript-eslint/ban-types": "off",
-        "@typescript-eslint/no-explicit-any": "off"
+        "@typescript-eslint/no-explicit-any": "off",
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-expect": "error"
     }
 }

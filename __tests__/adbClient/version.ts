@@ -1,35 +1,33 @@
 import AdbClient from '../../lib/client';
-import Connection from '../../lib/connection';
 import { mockServer } from '../../mockery/mockAdbServer';
 
-describe('Transport tests', () => {
+describe('Version tests', () => {
     it('OKAY', async () => {
         const { port, done } = await mockServer({
-            expValue: 'host:transport:1234'
+            expValue: 'host:version',
+            res: '0029'
         });
         try {
             const client = new AdbClient({
                 noAutoStart: true,
                 port
             });
-            const connection = await client.transport('1234');
-            expect(connection).toBeInstanceOf(Connection);
+            const version = await client.version();
+            expect(version).toBe(29);
         } finally {
             await done();
         }
     });
 
     it('FAIL', async () => {
-        const { port, done } = await mockServer({
-            expValue: 'host:transport:1234'
-        });
+        const { port, done } = await mockServer({ expValue: 'host:something' });
         try {
             const client = new AdbClient({
                 noAutoStart: true,
                 port
             });
             try {
-                await client.transport('5678');
+                await client.version();
             } catch (e) {
                 expect(e.message).toBe('Failure');
             }
@@ -40,7 +38,7 @@ describe('Transport tests', () => {
 
     it('unexpected', async () => {
         const { port, done } = await mockServer({
-            expValue: 'host:transport:1234',
+            expValue: 'host:version',
             unexpected: true
         });
         try {
@@ -48,13 +46,8 @@ describe('Transport tests', () => {
                 noAutoStart: true,
                 port
             });
-            try {
-                await client.transport('5678');
-            } catch (e) {
-                expect(e.message).toBe(
-                    "Unexpected 'YOYO', was expecting OKAY or FAIL"
-                );
-            }
+            const version = await client.version();
+            expect(version).toBe(NaN);
         } finally {
             await done();
         }

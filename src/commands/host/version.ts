@@ -2,8 +2,8 @@ import Command from '../../command';
 import { Reply } from '../..';
 
 export default class VersionCommand extends Command {
-    execute() {
-        return super.execute('host:version').then((reply) => {
+    execute(): Promise<number> {
+        return super.execute_('host:version').then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
                     return this.parser.readValue().then((value) => {
