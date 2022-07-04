@@ -26,7 +26,7 @@ export default abstract class Command<T = any> {
             case 'undefined':
                 return '';
             case 'string':
-                return "'" + arg.replace(/'/g, "'\"'\"'") + "'";
+                return "'" + arg.replace(/'/g, `'\"'\"'`) + "'";
             default:
                 return `${arg}`;
         }
@@ -34,12 +34,10 @@ export default abstract class Command<T = any> {
 
     escapeCompat(arg: PrimitiveType): string {
         switch (typeof arg) {
-            case 'undefined':
-                return '';
             case 'string':
                 return '"' + arg.replace(/([$`\\!"])/g, '\\$1') + '"';
             default:
-                return `${arg}`;
+                return this.escape(arg);
         }
     }
 }
