@@ -24,6 +24,7 @@
         "no-extra-semi": "error",
         "semi": "error",
         "default-case": "error",
+        "plugins": ["jest"],
         "@typescript-eslint/no-unused-vars": [
             "warn",
             {

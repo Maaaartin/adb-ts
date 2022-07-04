@@ -1,5 +1,5 @@
 import { ChildProcessMock } from '../../mockery/mockChildProcess';
-import AdbClient from '../../lib/client.js';
+import AdbClient from '../../lib/client';
 import ChildProcess from 'child_process';
 import { BaseEncodingOptions } from 'fs';
 

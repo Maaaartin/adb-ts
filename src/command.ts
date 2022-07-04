@@ -15,15 +15,13 @@ export default abstract class Command<T = any> {
         this.connection.write(encodeData(args.join(' ')));
         return (this.parser.readAscii(4) as Promise<Reply>).finally(
             (): Promise<void> =>
-                promisify<void>((cb): void =>
-                    this.connection.end((): void => cb(null))
-                )()
+                promisify<void>((cb) => this.connection.end(() => cb(null)))()
         );
     }
 
-    public abstract execute(...args: any[]): Promise<T>;
+    public abstract execute(...args: PrimitiveType[]): Promise<T>;
 
-    escape(arg?: any): string {
+    escape(arg: PrimitiveType): string {
         switch (typeof arg) {
             case 'undefined':
                 return '';
@@ -34,7 +32,7 @@ export default abstract class Command<T = any> {
         }
     }
 
-    escapeCompat(arg?: any): string {
+    escapeCompat(arg: PrimitiveType): string {
         switch (typeof arg) {
             case 'undefined':
                 return '';

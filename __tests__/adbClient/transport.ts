@@ -1,4 +1,4 @@
-import AdbClient from '../../lib/client.js';
+import AdbClient from '../../lib/client';
 import net from 'net';
 import Connection from '../../lib/connection';
 import {
