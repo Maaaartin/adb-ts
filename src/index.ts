@@ -45,15 +45,15 @@ export enum Reply {
 
 export const ADB_DEFAULT_PORT = 5555;
 
-export const decodeLength = (length: string) => {
+export const decodeLength = (length: string): number => {
     return parseInt(length, 16);
 };
 
-export const encodeLength = (length: number) => {
+export const encodeLength = (length: number): string => {
     return ('0000' + length.toString(16)).slice(-4).toUpperCase();
 };
 
-export const encodeData = (data: any) => {
+export const encodeData = (data: any): Buffer => {
     if (!Buffer.isBuffer(data)) {
         data = Buffer.from(data);
     }

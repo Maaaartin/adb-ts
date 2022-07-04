@@ -2,11 +2,11 @@ import { Reply } from '../..';
 import Command from '../../command';
 
 export default class HostTransportCommand extends Command {
-    execute(serial: string) {
-        return super.execute('host:transport:' + serial).then((reply) => {
+    execute(serial: string): Promise<void> {
+        return super.execute_('host:transport:' + serial).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
-                    return true;
+                    return;
                 case Reply.FAIL:
                     return this.parser.readError().then((e) => {
                         throw e;
