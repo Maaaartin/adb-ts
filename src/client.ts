@@ -28,7 +28,6 @@ import {
     WaitForState,
     parseOptions,
     parsePrimitiveParam,
-    NonFunctionProperties,
     parseCbParam,
     parseValueParam
 } from '.';
@@ -120,7 +119,7 @@ function buildInputParams(
     }
     return { source: defaultSource, cb };
 }
-export default class AdbClient extends EventEmitter {
+export default class AdbClient {
     public static readonly defaultOptions: Readonly<AdbClientOptionsValues> =
         Object.freeze({
             port: 5037,
@@ -130,7 +129,6 @@ export default class AdbClient extends EventEmitter {
         });
     public readonly options: AdbClientOptionsValues;
     constructor(options?: AdbClientOptions) {
-        super();
         this.options = Object.entries(options || {})
             .filter(([, value]) => typeof value !== 'undefined')
             .reduce(

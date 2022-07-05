@@ -15,7 +15,7 @@ export default abstract class Command<T = any> {
         this.connection.write(encodeData(args.join(' ')));
         return (this.parser.readAscii(4) as Promise<Reply>).finally(
             (): Promise<void> =>
-                promisify<void>((cb) => this.connection.end(() => cb(null)))()
+                promisify<void>((cb) => this.connection._destroy(null, cb))()
         );
     }
 
@@ -26,7 +26,7 @@ export default abstract class Command<T = any> {
             case 'undefined':
                 return '';
             case 'string':
-                return "'" + arg.replace(/'/g, `'\"'\"'`) + "'";
+                return "'" + arg.replace(/'/g, "'\"'\"'") + "'";
             default:
                 return `${arg}`;
         }

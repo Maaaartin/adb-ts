@@ -170,9 +170,9 @@ export interface IAdbDevice {
     id: string;
     state: DeviceState;
     path: string;
-    device: string;
-    model: string;
-    product: string;
+    device?: string;
+    model?: string;
+    product?: string;
     transportId: string;
     transport: TransportType;
 }
@@ -344,8 +344,7 @@ export class UnexpectedDataError extends Error {
     public expected: string;
     constructor(unexpected: string, expected: string) {
         super();
-        // hack
-        Object.setPrototypeOf(this, PrematureEOFError.prototype);
+        Object.setPrototypeOf(this, UnexpectedDataError.prototype);
         this.name = 'UnexpectedDataError';
         this.message = `Unexpected '${unexpected}', was expecting ${expected}`;
         this.unexpected = unexpected;
@@ -369,7 +368,7 @@ export class PrematureEOFError extends Error {
 export class NotConnectedError extends Error {
     constructor() {
         super();
-        Object.setPrototypeOf(this, PrematureEOFError.prototype);
+        Object.setPrototypeOf(this, NotConnectedError.prototype);
         this.name = 'NotConnectedError';
         this.message =
             'Client not connected. `connect` function must be called before use.';
