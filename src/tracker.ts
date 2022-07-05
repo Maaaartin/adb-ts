@@ -1,15 +1,14 @@
 import { EventEmitter } from 'events';
 import { IAdbDevice, PrematureEOFError } from '.';
 import AdbClient from './client';
+import TrackCommand from './commands/host/trackdevices';
 import AdbDevice from './device';
-import DevicesCommand from './devices';
 
 export default class Tracker extends EventEmitter {
-    private readonly command: DevicesCommand;
+    private readonly command: TrackCommand;
     private deviceMap: Record<string, IAdbDevice>;
     private readonly client: AdbClient;
-    private canceled = false;
-    constructor(command: DevicesCommand, client: AdbClient) {
+    constructor(command: TrackCommand, client: AdbClient) {
         super();
         this.command = command;
         this.deviceMap = {};
@@ -17,9 +16,9 @@ export default class Tracker extends EventEmitter {
         this.read()
             .catch((err) => {
                 if (err instanceof PrematureEOFError) {
-                    this.emit('error', new Error('Connection closed'));
+                    return this.emit('error', new Error('Connection closed'));
                 } else {
-                    this.emit('error', err);
+                    return this.emit('error', err);
                 }
             })
             .finally(() => {
@@ -28,20 +27,13 @@ export default class Tracker extends EventEmitter {
     }
 
     private read(): Promise<void> {
-        return this.command
-            .readDevices()
-            .then((list: IAdbDevice[]) => {
-                this.update(list);
-                this.read();
-            })
-            .catch((err) => {
-                if (!this.canceled) {
-                    this.emit('error', err);
-                }
-            });
+        return this.command.readDevices().then((list: IAdbDevice[]) => {
+            this.update(list);
+            return this.read();
+        });
     }
 
-    private update(list: IAdbDevice[]) {
+    private update(list: IAdbDevice[]): void {
         const newMap: Record<string, IAdbDevice> = {};
         for (const d of list) {
             const oldDevice = this.deviceMap[d.id];
@@ -62,16 +54,16 @@ export default class Tracker extends EventEmitter {
         this.deviceMap = newMap;
     }
 
-    public end() {
+    public end(): Promise<void> {
         this.removeAllListeners();
-        this.canceled = true;
+        return this.command.end();
     }
 
     on(event: 'add' | 'change', listener: (device: AdbDevice) => void): this;
     on(event: 'remove', listener: (device: IAdbDevice) => void): this;
     on(event: 'end', listener: () => void): this;
     on(event: 'error', listener: (err: Error) => void): this;
-    on(event: string, listener: (...args: any[]) => void) {
+    on(event: string, listener: (...args: any[]) => void): this {
         return super.on(event, listener);
     }
 }

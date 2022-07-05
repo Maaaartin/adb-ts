@@ -6,16 +6,21 @@ import { promisify } from 'util';
 export default abstract class Command<T = any> {
     public readonly connection: Connection;
     public readonly parser: Parser;
+    protected keepAlive = false;
     constructor(connection: Connection) {
         this.connection = connection;
         this.parser = new Parser(this.connection);
+    }
+
+    protected end(): Promise<void> {
+        return promisify<void>((cb) => this.connection._destroy(null, cb))();
     }
 
     protected execute_(...args: PrimitiveType[]): Promise<Reply> {
         this.connection.write(encodeData(args.join(' ')));
         return (this.parser.readAscii(4) as Promise<Reply>).finally(
             (): Promise<void> =>
-                promisify<void>((cb) => this.connection._destroy(null, cb))()
+                this.keepAlive ? Promise.resolve() : this.end()
         );
     }
 

@@ -43,7 +43,7 @@ export default abstract class DevicesCommand extends Command {
         return lines.map((line) => constructDevice(line.split(/\s+/)));
     }
 
-    private readDevices(): Promise<IAdbDevice[]> {
+    readDevices(): Promise<IAdbDevice[]> {
         return this.parser.readValue().then((value) => {
             return this.parse(value.toString().trim());
         });
