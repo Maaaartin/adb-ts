@@ -16,9 +16,9 @@ export default class Tracker extends EventEmitter {
         this.read()
             .catch((err) => {
                 if (err instanceof PrematureEOFError) {
-                    return this.emit('error', new Error('Connection closed'));
+                    this.emit('error', new Error('Connection closed'));
                 } else {
-                    return this.emit('error', err);
+                    this.emit('error', err);
                 }
             })
             .finally(() => {

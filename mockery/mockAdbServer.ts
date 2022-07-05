@@ -1,6 +1,6 @@
 import net from 'net';
 import Parser from '../lib/parser';
-import { encodeLength } from '../lib';
+import { encodeLength, Reply } from '../lib';
 import { promisify } from 'util';
 
 type MockServerOptions = {
@@ -13,27 +13,31 @@ export const mockServer = async ({
     unexpected = false,
     res = ''
 }: MockServerOptions): Promise<{
-    server: net.Server;
     done: () => Promise<void>;
     port: number;
+    write: (data: string) => void;
 }> => {
+    let socket_: net.Socket | null = null;
+    const write_ = (reply: Reply, data: string): void => {
+        const bytes = encodeLength(data.length);
+        socket_?.write(`${reply}${bytes}${data}`);
+    };
     const server = await new Promise<net.Server>((resolve, reject) => {
         const server_ = new net.Server();
         server_.listen(0, () => {
             resolve(server_);
         });
+
         server_.on('connection', async (socket) => {
+            socket_ = socket;
             const parser = new Parser(socket);
             const value = await parser.readValue();
             if (unexpected) {
                 socket.write('YOYO');
             } else if (expValue === value.toString()) {
-                const bytes = encodeLength(res.length);
-                socket.write(`OKAY${bytes}${res}`);
+                write_(Reply.OKAY, res);
             } else {
-                const err = 'Failure';
-                const bytes = encodeLength(err.length);
-                socket.write(`FAIL${bytes}${err}`);
+                write_(Reply.FAIL, 'Failure');
             }
         });
         server_.once('error', reject);
@@ -41,8 +45,11 @@ export const mockServer = async ({
     const done = (): Promise<void> => {
         return promisify<void>((cb) => server?.close(cb) || cb(null))();
     };
+    const write = (data: string): void => {
+        write_(Reply.OKAY, data);
+    };
     const port = getPort(server);
-    return { server, done, port };
+    return { done, port, write };
 };
 
 export const getPort = (server: net.Server): number => {
