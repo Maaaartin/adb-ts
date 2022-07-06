@@ -1,26 +1,31 @@
-import { DeviceState, IAdbDevice, Reply, UnexpectedDataError } from '.';
-
-import Command from './command';
 import ipRegex from 'ip-regex';
-
-export function constructDevice(values: string[]): IAdbDevice {
-    const throwUnexpected = (): void => {
-        throw new UnexpectedDataError(values.join(' '), 'keys of IAdbDevice');
-    };
-    const [id, state] = values;
-    if (!id || !state) {
-        throwUnexpected();
+import { DeviceState, IAdbDevice, Reply, UnexpectedDataError } from '.';
+import Command from './command';
+const checkValues = ([_1, _2]: [string, string], expected: string[]): void => {
+    if (!_1 || !_2) {
+        throw new UnexpectedDataError(
+            [_1, _2].join(' '),
+            expected.join(' or ')
+        );
     }
-    const propMap = values
-        .slice(2)
-        .reduce<Record<string, string | undefined>>((acc, curr) => {
-            const [key, value] = curr.split(':');
-            if (!key || !value) {
-                throwUnexpected();
-            }
-            acc[key] = value;
-            return acc;
-        }, {});
+};
+
+const parseProps = (values: string[]): Record<string, string | undefined> =>
+    values.slice(2).reduce<Record<string, string | undefined>>((acc, curr) => {
+        const [key, value] = curr.split(':');
+        checkValues(
+            [key, value],
+            ['usb', 'product', 'model', 'device', 'transport_id', 'transport']
+        );
+        acc[key] = value;
+        return acc;
+    }, {});
+
+function constructDevice(values: string[]): IAdbDevice {
+    const [id, state] = values;
+    checkValues([id, state], ['id', 'state']);
+
+    const { usb, product, model, device, transport_id } = parseProps(values);
     return {
         id: id || '',
         state:
@@ -28,11 +33,11 @@ export function constructDevice(values: string[]): IAdbDevice {
                 ? 'emulator'
                 : (state as DeviceState),
         // TODO check path for local connection
-        path: propMap.usb || '',
-        product: propMap.product,
-        model: propMap.model,
-        device: propMap.device,
-        transportId: propMap.transport_id || '',
+        path: usb || '',
+        product: product,
+        model: model,
+        device: device,
+        transportId: transport_id || '',
         transport: ipRegex().test(id) ? 'local' : 'usb'
     };
 }
