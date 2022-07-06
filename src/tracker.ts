@@ -6,7 +6,7 @@ import AdbDevice from './device';
 
 export default class Tracker extends EventEmitter {
     private readonly command: TrackCommand;
-    private deviceMap: Record<string, IAdbDevice> | null;
+    private deviceMap: Map<string, IAdbDevice> | null;
     private readonly client: AdbClient;
     constructor(command: TrackCommand, client: AdbClient) {
         super();
@@ -34,21 +34,29 @@ export default class Tracker extends EventEmitter {
     }
 
     private update(list: IAdbDevice[]): void {
-        const newMap: Record<string, IAdbDevice> = {};
-        for (const d of list) {
-            const oldDevice = this.deviceMap?.[d.id];
+        const newMap = list.reduce((map, d) => {
+            const oldDevice = this.deviceMap?.get(d.id);
+            map.set(d.id, d);
+
             if (oldDevice && d.state !== oldDevice.state) {
                 this.emit('change', new AdbDevice(this.client, d));
-            } else if (this.deviceMap) {
-                this.emit('add', new AdbDevice(this.client, d));
+                return map;
             }
-            newMap[d.id] = d;
-        }
-        for (const d of Object.values(this.deviceMap || {})) {
-            if (!newMap[d.id]) {
+
+            if (this.deviceMap) {
+                this.emit('add', new AdbDevice(this.client, d));
+                return map;
+            }
+
+            return map;
+        }, new Map());
+
+        this.deviceMap?.forEach((d) => {
+            if (!newMap.has(d.id)) {
                 this.emit('remove', d);
             }
-        }
+        });
+
         this.deviceMap = newMap;
     }
 
