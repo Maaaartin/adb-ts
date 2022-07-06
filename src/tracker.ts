@@ -37,10 +37,8 @@ export default class Tracker extends EventEmitter {
         const newMap: Record<string, IAdbDevice> = {};
         for (const d of list) {
             const oldDevice = this.deviceMap?.[d.id];
-            if (oldDevice) {
-                if (d.state !== oldDevice?.state) {
-                    this.emit('change', new AdbDevice(this.client, d));
-                }
+            if (oldDevice && d.state !== oldDevice.state) {
+                this.emit('change', new AdbDevice(this.client, d));
             } else if (this.deviceMap) {
                 this.emit('add', new AdbDevice(this.client, d));
             }

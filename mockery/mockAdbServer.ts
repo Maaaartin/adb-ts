@@ -1,6 +1,6 @@
 import net from 'net';
 import Parser from '../lib/parser';
-import { encodeLength, Reply } from '../lib';
+import { encodeData, Reply } from '../lib';
 import { promisify } from 'util';
 
 type MockServerOptions = {
@@ -16,11 +16,13 @@ export const mockServer = async ({
     done: () => Promise<void>;
     port: number;
     write: (data: string) => void;
+    writeData: (data: string) => void;
 }> => {
     let socket_: net.Socket | null = null;
-    const write_ = (reply: Reply, data: string): void => {
-        const bytes = encodeLength(data.length);
-        socket_?.write(`${reply}${bytes}${data}`);
+    const write_ = (reply: string | null = null, data: string): void => {
+        const encoded = encodeData(data);
+        const toWrite = (reply ?? '').concat(encoded.toString());
+        socket_?.write(toWrite);
     };
     const server = await new Promise<net.Server>((resolve, reject) => {
         const server_ = new net.Server();
@@ -48,8 +50,11 @@ export const mockServer = async ({
     const write = (data: string): void => {
         write_(Reply.OKAY, data);
     };
+    const writeData = (data: string): void => {
+        write_(null, data);
+    };
     const port = getPort(server);
-    return { done, port, write };
+    return { done, port, write, writeData };
 };
 
 export const getPort = (server: net.Server): number => {
