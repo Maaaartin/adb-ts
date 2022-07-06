@@ -13,7 +13,7 @@ export default class Parser {
         let tryRead: () => void,
             errorListener: (err: Error) => void,
             endListener: () => void;
-        return new Promise<Buffer>((resolve, reject: (err: Error) => void) => {
+        return new Promise<Buffer>((resolve, reject) => {
             tryRead = (): void => {
                 if (howMany) {
                     let chunk;

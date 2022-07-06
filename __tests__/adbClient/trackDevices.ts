@@ -92,4 +92,53 @@ describe('Track devices', () => {
             await done();
         }
     });
+
+    it('Error', async () => {
+        const { port, done } = await mockServer({
+            expValue: 'host:track-devices-l',
+            res: 'b137f5dc               unauthorized usb337641472X transport_id:1'
+        });
+
+        try {
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const tracker = await adb.trackDevices();
+            const result = await promisify((cb) => {
+                tracker.on('error', (err) => {
+                    cb(null, err);
+                });
+            })();
+            try {
+                expect(result).toBeInstanceOf(Error);
+            } finally {
+                await tracker.end();
+            }
+        } finally {
+            await done();
+        }
+    });
+
+    it('End', async () => {
+        const { port, done } = await mockServer({
+            expValue: 'host:track-devices-l',
+            res: 'b137f5dc               unauthorized usb337641472X transport_id:1'
+        });
+
+        try {
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const tracker = await adb.trackDevices();
+            const result = await promisify((cb) => {
+                tracker.on('error', () => null);
+                tracker.on('end', () => {
+                    cb(null);
+                });
+            })();
+            try {
+                expect(result).toBe(undefined);
+            } finally {
+                await tracker.end();
+            }
+        } finally {
+            await done();
+        }
+    });
 });
