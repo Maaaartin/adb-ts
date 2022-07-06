@@ -8,7 +8,7 @@ export default class TransportCommand extends Command {
             .then((reply: string) => {
                 switch (reply) {
                     case Reply.OKAY:
-                        return super.execute_(...args);
+                        return this.execute_(...args);
                     case Reply.FAIL:
                         return this.parser.readError().then((e) => {
                             throw e;

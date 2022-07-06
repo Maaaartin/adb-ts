@@ -12,6 +12,18 @@ export default abstract class Command<T = any> {
         this.parser = new Parser(this.connection);
     }
 
+    protected handleReply<T>(reply: Reply, value: T): Promise<T> {
+        switch (reply) {
+            case Reply.OKAY:
+                return Promise.resolve(value);
+            case Reply.FAIL:
+                return this.parser.readError().then((e) => {
+                    throw e;
+                });
+            default:
+                throw this.parser.unexpected(reply, 'OKAY or FAIL');
+        }
+    }
     protected end(): Promise<void> {
         return promisify<void>((cb) => this.connection._destroy(null, cb))();
     }

@@ -3,10 +3,7 @@ import { DeviceState, IAdbDevice, Reply, UnexpectedDataError } from '.';
 import Command from './command';
 const checkValues = ([_1, _2]: [string, string], expected: string[]): void => {
     if (!_1 || !_2) {
-        throw new UnexpectedDataError(
-            [_1, _2].join(' '),
-            expected.join(' or ')
-        );
+        throw new UnexpectedDataError([_1, _2].join(', '), expected.join(', '));
     }
 };
 
@@ -56,7 +53,7 @@ export default abstract class DevicesCommand extends Command {
     }
 
     execute(command: string): Promise<IAdbDevice[]> {
-        return super.execute_(command).then((reply) => {
+        return this.execute_(command).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
                     return this.readOnExecute ? this.readDevices() : [];
