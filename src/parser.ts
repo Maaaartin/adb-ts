@@ -1,5 +1,4 @@
 import { PrematureEOFError, UnexpectedDataError, decodeLength } from '.';
-import Connection from './connection';
 import { Writable } from 'stream';
 import { Socket } from 'net';
 
@@ -15,7 +14,7 @@ export default class Parser {
             errorListener: (err: Error) => void,
             endListener: () => void;
         return new Promise<Buffer>((resolve, reject: (err: Error) => void) => {
-            tryRead = () => {
+            tryRead = (): void => {
                 if (howMany) {
                     let chunk;
                     if ((chunk = this.stream.read(howMany))) {
@@ -34,11 +33,11 @@ export default class Parser {
             };
 
             this.stream.on('readable', tryRead);
-            errorListener = (err: Error) => {
+            errorListener = (err: Error): void => {
                 return reject(err);
             };
             this.stream.on('error', errorListener);
-            endListener = () => {
+            endListener = (): void => {
                 this.ended = true;
                 return reject(new PrematureEOFError(howMany));
             };
@@ -51,12 +50,12 @@ export default class Parser {
         });
     }
 
-    end() {
+    end(): Promise<void> {
         let tryRead: () => void,
             errorListener: (err: Error) => void,
             endListener: () => void;
         return new Promise<void>((resolve, reject) => {
-            tryRead = () => {
+            tryRead = (): void => {
                 while (this.stream.read()) {
                     continue;
                 }
@@ -64,11 +63,11 @@ export default class Parser {
             this.stream.on('readable', () => {
                 tryRead();
             });
-            errorListener = (err) => {
+            errorListener = (err): void => {
                 return reject(err);
             };
             this.stream.on('error', errorListener);
-            endListener = () => {
+            endListener = (): void => {
                 this.ended = true;
                 return resolve();
             };
@@ -85,33 +84,33 @@ export default class Parser {
         });
     }
 
-    readAscii(howMany: number) {
+    readAscii(howMany: number): Promise<string> {
         return this.readBytes(howMany).then((chunk) => {
             return chunk.toString('ascii');
         });
     }
 
-    readValue() {
+    readValue(): Promise<Buffer> {
         return this.readAscii(4).then((value) => {
             const length = decodeLength(value);
             return this.readBytes(length);
         });
     }
 
-    readError() {
+    readError(): Promise<Error> {
         return this.readValue().then((value) => new Error(value.toString()));
     }
 
-    unexpected(data: string, expected: string) {
+    unexpected(data: string, expected: string): UnexpectedDataError {
         return new UnexpectedDataError(data, expected);
     }
 
-    readByteFlow(howMany: number, targetStream: Writable) {
+    readByteFlow(howMany: number, targetStream: Writable): Promise<void> {
         let tryRead: () => void,
             errorListener: (err: Error) => void,
             endListener: () => void;
         return new Promise<void>((resolve, reject) => {
-            tryRead = () => {
+            tryRead = (): void => {
                 let chunk: Buffer;
                 if (howMany) {
                     while (
@@ -131,11 +130,11 @@ export default class Parser {
                     return resolve();
                 }
             };
-            endListener = () => {
+            endListener = (): void => {
                 this.ended = true;
                 return reject(new PrematureEOFError(howMany));
             };
-            errorListener = (err) => {
+            errorListener = (err): void => {
                 return reject(err);
             };
             this.stream.on('readable', tryRead);
@@ -149,7 +148,7 @@ export default class Parser {
         });
     }
 
-    private readUntil(code: number) {
+    private readUntil(code: number): Promise<Buffer> {
         let skipped = Buffer.alloc(0);
         const read = (): Promise<Buffer> => {
             return this.readBytes(1).then((chunk) => {
@@ -164,13 +163,12 @@ export default class Parser {
         return read();
     }
 
-    private readline() {
+    private readline(): Promise<Buffer> {
         return this.readUntil(0x0a).then((line) => {
             if (line[line.length - 1] === 0x0d) {
                 return line.slice(0, -1);
-            } else {
-                return line;
             }
+            return line;
         });
     }
 
@@ -185,13 +183,13 @@ export default class Parser {
         });
     }
 
-    readAll() {
+    readAll(): Promise<Buffer> {
         let tryRead: () => void,
             errorListener: (err: Error) => void,
             endListener: () => void;
         let all = Buffer.alloc(0);
         return new Promise<Buffer>((resolve, reject) => {
-            tryRead = () => {
+            tryRead = (): void => {
                 let chunk;
                 while ((chunk = this.stream.read())) {
                     all = Buffer.concat([all, chunk]);
@@ -201,11 +199,11 @@ export default class Parser {
                 }
             };
             this.stream.on('readable', tryRead);
-            errorListener = (err) => {
+            errorListener = (err): void => {
                 return reject(err);
             };
             this.stream.on('error', errorListener);
-            endListener = () => {
+            endListener = (): void => {
                 this.ended = true;
                 return resolve(all);
             };
