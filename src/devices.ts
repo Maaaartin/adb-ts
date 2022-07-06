@@ -38,6 +38,7 @@ export function constructDevice(values: string[]): IAdbDevice {
 }
 
 export default abstract class DevicesCommand extends Command {
+    protected readOnExecute = true;
     private parse(value: string): IAdbDevice[] {
         const lines = value.split('\n').filter((l) => l !== '');
         return lines.map((line) => constructDevice(line.split(/\s+/)));
@@ -53,7 +54,7 @@ export default abstract class DevicesCommand extends Command {
         return super.execute_(command).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
-                    return this.readDevices();
+                    return this.readOnExecute ? this.readDevices() : [];
                 case Reply.FAIL:
                     return this.parser.readError().then((e) => {
                         throw e;

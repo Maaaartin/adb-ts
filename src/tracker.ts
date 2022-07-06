@@ -6,12 +6,12 @@ import AdbDevice from './device';
 
 export default class Tracker extends EventEmitter {
     private readonly command: TrackCommand;
-    private deviceMap: Record<string, IAdbDevice>;
+    private deviceMap: Record<string, IAdbDevice> | null;
     private readonly client: AdbClient;
     constructor(command: TrackCommand, client: AdbClient) {
         super();
         this.command = command;
-        this.deviceMap = {};
+        this.deviceMap = null;
         this.client = client;
         this.read()
             .catch((err) => {
@@ -36,17 +36,17 @@ export default class Tracker extends EventEmitter {
     private update(list: IAdbDevice[]): void {
         const newMap: Record<string, IAdbDevice> = {};
         for (const d of list) {
-            const oldDevice = this.deviceMap[d.id];
+            const oldDevice = this.deviceMap?.[d.id];
             if (oldDevice) {
                 if (d.state !== oldDevice?.state) {
                     this.emit('change', new AdbDevice(this.client, d));
                 }
-            } else {
+            } else if (this.deviceMap) {
                 this.emit('add', new AdbDevice(this.client, d));
             }
             newMap[d.id] = d;
         }
-        for (const d of Object.values(this.deviceMap)) {
+        for (const d of Object.values(this.deviceMap || {})) {
             if (!newMap[d.id]) {
                 this.emit('remove', d);
             }

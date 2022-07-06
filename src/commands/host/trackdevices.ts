@@ -6,6 +6,7 @@ export default class TrackCommand extends DevicesCommand {
     constructor(connection: Connection) {
         super(connection);
         this.keepAlive = true;
+        this.readOnExecute = false;
     }
     end(): Promise<void> {
         return super.end();

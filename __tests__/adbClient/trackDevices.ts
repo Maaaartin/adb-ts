@@ -32,4 +32,33 @@ describe('Track devices', () => {
             await done();
         }
     });
+
+    it('Remove', async () => {
+        const { port, done, write } = await mockServer({
+            expValue: 'host:track-devices-l',
+            res: 'b137f5dc               unauthorized usb:337641472X transport_id:1'
+        });
+
+        try {
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const tracker = await adb.trackDevices();
+            const result = await promisify((cb) => {
+                tracker.on('remove', (d) => {
+                    cb(null, d);
+                });
+                tracker.on('error', (err) => {
+                    cb(err);
+                });
+
+                write('');
+            })();
+            try {
+                expect(result).toBeInstanceOf(Object);
+            } finally {
+                await tracker.end();
+            }
+        } finally {
+            await done();
+        }
+    });
 });
