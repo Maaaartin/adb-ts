@@ -157,7 +157,6 @@ export default class AdbClient {
         let triedStarting = false;
         const connection = new Connection();
         return new Promise<Connection>((resolve, reject) => {
-            connection.connect(this.options);
             connection.once('connect', () => {
                 return resolve(connection);
             });
@@ -177,6 +176,7 @@ export default class AdbClient {
                     return reject(err);
                 }
             });
+            connection.connect(this.options);
         });
     }
 
@@ -999,7 +999,7 @@ export default class AdbClient {
         return nodeify(
             this.push(serial, apk, temp).then((transfer) => {
                 let errorListener: (err: Error) => void;
-                let endListener: VoidFunction;
+                let endListener: () => void;
                 return new Promise<void>((resolve, reject) => {
                     transfer.on(
                         'error',
@@ -1694,7 +1694,7 @@ export default class AdbClient {
         );
     }
 
-    private execInternal(...args: ReadonlyArray<string>) {
+    private execInternal(...args: ReadonlyArray<string>): Promise<string> {
         return new Promise<string>((resolve, reject) => {
             exec(
                 `${this.options.bin} ${args.join(' ')}`,
