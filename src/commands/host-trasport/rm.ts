@@ -22,7 +22,7 @@ export default class RmCommand extends FileSystemCommand {
         return args;
     }
 
-    getCmd() {
+    get Cmd(): string {
         return 'rm';
     }
 

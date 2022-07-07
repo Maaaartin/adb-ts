@@ -267,6 +267,14 @@ export interface IpConnectConstruct {
     new (connection: Connection): IpConnect;
 }
 
+export interface IAbstractCommand<T> {
+    preExecute: (...args: any[]) => Promise<T>;
+}
+
+export interface ICmd {
+    readonly Cmd: string;
+}
+
 export type MonkeyCallback<T = string> = (
     err: Error | null,
     value: T | null,

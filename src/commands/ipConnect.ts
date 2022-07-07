@@ -1,10 +1,11 @@
+import { ICmd } from '..';
 import Command from '../command';
 
-export default abstract class IpConnect extends Command {
+export default abstract class IpConnect extends Command implements ICmd {
     protected abstract validator(): RegExp;
-    protected abstract cmd(): string;
+    abstract Cmd: string;
     execute(host: string, port: number | string): Promise<string> {
-        return this.execute_(`${this.cmd()}:${host}:${port}`).then(
+        return this.execute_(`${this.Cmd}:${host}:${port}`).then(
             this.handleReply(() => {
                 return this.parser.readValue().then((value) => {
                     const valueStr = value.toString().trim();

@@ -17,7 +17,7 @@ export default class MkDirCommand extends FileSystemCommand {
         return args;
     }
 
-    getCmd() {
+    get Cmd(): string {
         return 'mkdir';
     }
 

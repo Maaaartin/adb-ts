@@ -33,7 +33,7 @@ export default class TouchCommand extends FileSystemCommand {
         }
     }
 
-    getCmd() {
+    get Cmd(): string {
         return 'touch';
     }
 

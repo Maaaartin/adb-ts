@@ -24,7 +24,7 @@ export default class MvCommand extends FileSystemCommand {
         }
     }
 
-    getCmd() {
+    get Cmd(): string {
         return 'mv';
     }
 

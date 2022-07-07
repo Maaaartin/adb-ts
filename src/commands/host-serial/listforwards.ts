@@ -1,7 +1,9 @@
 import { ForwardsObject } from '../..';
 import ParseCommand from '../parse-command';
 
-export default class ListForwardsCommand extends ParseCommand {
+export default class ListForwardsCommand extends ParseCommand<
+    ForwardsObject[]
+> {
     parse(value: string): ForwardsObject[] {
         if (!value) {
             return [];

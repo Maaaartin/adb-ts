@@ -1,8 +1,11 @@
 import Command from '../command';
-import { PrimitiveType, Reply } from '..';
+import { IAbstractCommand, PrimitiveType, Reply } from '..';
 
-export default class ValueCommand extends Command {
-    execute(...params: PrimitiveType[]): Promise<any> {
+export default abstract class ValueCommand
+    extends Command
+    implements IAbstractCommand<string>
+{
+    preExecute(...params: PrimitiveType[]): Promise<string> {
         return this.execute_(...params).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:

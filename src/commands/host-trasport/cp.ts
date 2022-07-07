@@ -61,7 +61,7 @@ export default class CpCommand extends FileSystemCommand {
         }
     }
 
-    getCmd() {
+    get Cmd(): string {
         return 'cp';
     }
 

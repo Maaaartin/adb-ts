@@ -1,7 +1,7 @@
 import IpConnect from '../ipConnect';
 
 export default class Connect extends IpConnect {
-    protected cmd(): string {
+    get Cmd(): string {
         return 'host:connect';
     }
     protected validator(): RegExp {

@@ -1,7 +1,7 @@
 import IpConnect from '../ipConnect';
 
 export default class Disconnect extends IpConnect {
-    protected cmd(): string {
+    get Cmd(): string {
         return 'host:disconnect';
     }
     protected validator(): RegExp {
