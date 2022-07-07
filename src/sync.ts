@@ -1,10 +1,8 @@
 import { AdbError, FailError, Reply } from '.';
-
 import Connection from './connection';
 import { EventEmitter } from 'events';
 import Parser from './parser';
 import Path from 'path';
-
 import PullTransfer from './sync/pulltransfer';
 import PushTransfer from './sync/pushtransfer';
 import { Readable } from 'stream';
@@ -28,25 +26,22 @@ export default class Sync extends EventEmitter {
         this.parser = connection.parser;
     }
 
-    public getConnection() {
-        return this.connection;
-    }
-
-    public static temp(path: string) {
+    public static temp(path: string): string {
         return `/data/local/tmp/${Path.basename(path)}`;
     }
 
-    private enoent(path: string) {
-        const err: AdbError = new Error(
-            "ENOENT, no such file or directory '" + path + "'"
+    private enoent(path: string): Promise<never> {
+        const err = new AdbError(
+            "ENOENT, no such file or directory '" + path + "'",
+            34,
+            'ENOENT',
+            path
         );
-        err.errno = 34;
-        err.code = 'ENOENT';
-        err.path = path;
+
         return Promise.reject(err);
     }
 
-    private readError() {
+    private readError(): Promise<never> {
         return this.parser.readBytes(4).then((length) => {
             return this.parser
                 .readBytes(length.readUInt32LE(0))
@@ -56,20 +51,20 @@ export default class Sync extends EventEmitter {
         });
     }
 
-    private sendCommandWithLength(cmd: Reply, length: number) {
+    private sendCommandWithLength(cmd: Reply, length: number): boolean {
         const payload = Buffer.alloc(cmd.length + 4);
         payload.write(cmd, 0, cmd.length);
         payload.writeUInt32LE(length, cmd.length);
         return this.connection.write(payload);
     }
 
-    private writeData(stream: Readable, timestamp: number) {
+    private writeData(stream: Readable, timestamp: number): PushTransfer {
         const transfer = new PushTransfer();
 
         let connErrorListener: (error?: Error | null) => void,
-            endListener: VoidFunction,
+            endListener: () => void,
             errorListener: (error?: Error | null) => void,
-            readableListener: VoidFunction,
+            readableListener: () => void,
             canceled = false;
         const writeData = (): Promise<any> => {
             return new Promise<void>((resolve, reject) => {
@@ -98,7 +93,7 @@ export default class Sync extends EventEmitter {
                 };
                 stream.once(
                     'end',
-                    (endListener = () => {
+                    (endListener = (): void => {
                         this.sendCommandWithLength(Reply.DONE, timestamp);
                         return resolve();
                     })
@@ -107,18 +102,18 @@ export default class Sync extends EventEmitter {
                 stream.once('error', (errorListener = reject));
                 this.connection.on(
                     'error',
-                    (connErrorListener = (err) => {
+                    (connErrorListener = (err): void => {
                         stream.destroy();
                         this.connection.end();
                         return reject(err);
                     })
                 );
-                const waitForDrain = () => {
-                    let drainListener: VoidFunction;
+                const waitForDrain = (): Promise<void> => {
+                    let drainListener: () => void;
                     return new Promise<void>((resolve) => {
                         this.connection.on(
                             'drain',
-                            (drainListener = () => {
+                            (drainListener = (): void => {
                                 resolve();
                             })
                         );
@@ -139,13 +134,11 @@ export default class Sync extends EventEmitter {
                 );
             });
         };
-        const readReply = () => {
+        const readReply = (): Promise<void> => {
             return this.parser.readAscii(4).then((reply) => {
                 switch (reply) {
                     case Reply.OKAY:
-                        return this.parser.readBytes(4).then(() => {
-                            return null;
-                        });
+                        return this.parser.readBytes(4).then(() => undefined);
                     case Reply.FAIL:
                         return this.readError();
                     default:
@@ -174,7 +167,11 @@ export default class Sync extends EventEmitter {
         return transfer;
     }
 
-    private pushStream(stream: Readable, path: string, mode?: SyncMode | null) {
+    private pushStream(
+        stream: Readable,
+        path: string,
+        mode?: SyncMode | null
+    ): PushTransfer {
         if (mode == null) {
             mode = SyncMode.DEFAULT_CHMOD;
         }
@@ -183,7 +180,11 @@ export default class Sync extends EventEmitter {
         return this.writeData(stream, Math.floor(Date.now() / 1000));
     }
 
-    private pushFile(file: string, path: string, mode?: SyncMode | null) {
+    private pushFile(
+        file: string,
+        path: string,
+        mode?: SyncMode | null
+    ): PushTransfer {
         if (mode === null) {
             mode = SyncMode.DEFAULT_CHMOD;
         }
@@ -195,7 +196,7 @@ export default class Sync extends EventEmitter {
         contents: string | Readable,
         path: string,
         mode: SyncMode | null = null
-    ) {
+    ): PushTransfer {
         if (typeof contents === 'string') {
             return this.pushFile(contents, path, mode);
         } else {
@@ -203,7 +204,7 @@ export default class Sync extends EventEmitter {
         }
     }
 
-    private readData() {
+    private readData(): PullTransfer {
         let canceled = false;
         const transfer = new PullTransfer();
         const readNext = (): Promise<any> => {
@@ -243,12 +244,12 @@ export default class Sync extends EventEmitter {
         return transfer;
     }
 
-    public pull(path: string) {
+    public pull(path: string): PullTransfer {
         this.sendCommandWithArg(Reply.RECV, path);
         return this.readData();
     }
 
-    public readDir(path: string) {
+    public readDir(path: string): Promise<SyncEntry[]> {
         const files: SyncEntry[] = [];
         const readNext = (): Promise<SyncEntry[]> => {
             return this.parser.readAscii(4).then((reply) => {
@@ -299,11 +300,10 @@ export default class Sync extends EventEmitter {
         return readNext();
     }
 
-    public end() {
-        this.connection.end();
-        return this;
+    public end(): Promise<this> {
+        return this.connection.endAsync().then(() => this);
     }
-    public stat(path: string) {
+    public stat(path: string): Promise<Stats> {
         this.sendCommandWithArg(Reply.STAT, path);
         return this.parser.readAscii(4).then((reply) => {
             switch (reply) {
@@ -329,7 +329,7 @@ export default class Sync extends EventEmitter {
         });
     }
 
-    private sendCommandWithArg(cmd: string, arg: string) {
+    private sendCommandWithArg(cmd: string, arg: string): boolean {
         const arglen = Buffer.byteLength(arg, 'utf-8');
         const payload = Buffer.alloc(cmd.length + 4 + arglen);
         let pos = 0;

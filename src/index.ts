@@ -178,12 +178,6 @@ export interface IAdbDevice {
     transport: TransportType;
 }
 
-export interface AdbError extends Error {
-    errno?: number;
-    code?: string;
-    path?: string;
-}
-
 export type StatsObject = {
     bytesTransferred: number;
 };
@@ -377,6 +371,21 @@ export class NotConnectedError extends Error {
         this.name = 'NotConnectedError';
         this.message =
             'Client not connected. `connect` function must be called before use.';
+        Error.captureStackTrace(this);
+    }
+}
+export class AdbError extends Error {
+    errno: number;
+    code: string;
+    path: string;
+    constructor(message: string, errno: number, code: string, path: string) {
+        super();
+        Object.setPrototypeOf(this, AdbError.prototype);
+        this.name = 'AdbError';
+        this.message = message;
+        this.errno = errno;
+        this.code = code;
+        this.path = path;
         Error.captureStackTrace(this);
     }
 }

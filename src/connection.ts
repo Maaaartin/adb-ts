@@ -1,4 +1,5 @@
 import { Socket, SocketConstructorOpts } from 'net';
+import { promisify } from 'util';
 import Parser from './parser';
 export default class Connection extends Socket {
     public readonly parser: Parser;
@@ -9,11 +10,17 @@ export default class Connection extends Socket {
         this.parser = new Parser(this);
     }
 
+    public endAsync(): Promise<void> {
+        return this.endParser().then(() =>
+            promisify<void>((cb) => this.end(() => cb(null)))()
+        );
+    }
+
     get readBytes() {
         return this.parser.readBytes;
     }
 
-    get end_() {
+    get endParser() {
         return this.parser.end;
     }
 
