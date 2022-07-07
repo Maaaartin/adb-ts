@@ -2,6 +2,7 @@ import Command from './command';
 import Connection from './connection';
 import LogcatEntry from './logcat/entry';
 import { callbackify } from 'util';
+import IpConnect from './commands/ipConnect';
 
 export enum Priority {
     DEFAULT = 1,
@@ -266,6 +267,10 @@ export interface InputOptions {
 
 export interface CommandConstruct {
     new (connection: Connection): Command;
+}
+
+export interface IpConnectConstruct {
+    new (connection: Connection): IpConnect;
 }
 
 export type MonkeyCallback<T = string> = (

@@ -29,7 +29,8 @@ import {
     parseOptions,
     parsePrimitiveParam,
     parseCbParam,
-    parseValueParam
+    parseValueParam,
+    IpConnectConstruct
 } from '.';
 import Sync, { SyncMode } from './sync';
 import { exec, execFile } from 'child_process';
@@ -196,6 +197,27 @@ export default class AdbClient {
         );
     }
 
+    private ipConnect(
+        Construct: IpConnectConstruct,
+        host: string,
+        port: number | string | ExecCallbackWithValue<string> | undefined,
+        cb: ExecCallbackWithValue<string> | undefined
+    ): Promise<string> | void {
+        let port_ = parseValueParam(port);
+        if (host.indexOf(':') !== -1) {
+            [host, port_] = host.split(':', 2);
+        }
+        return nodeify(
+            this.connection().then((conn) =>
+                new Construct(conn).execute(
+                    host,
+                    parsePrimitiveParam(ADB_DEFAULT_PORT, port_)
+                )
+            ),
+            parseCbParam(port, cb)
+        );
+    }
+
     connect(host: string): Promise<string>;
     connect(host: string, port: number | string): Promise<string>;
     connect(host: string, cb: ExecCallbackWithValue<string>): void;
@@ -209,19 +231,7 @@ export default class AdbClient {
         port?: number | string | ExecCallbackWithValue<string>,
         cb?: ExecCallbackWithValue<string>
     ): Promise<string> | void {
-        let port_ = parseValueParam(port);
-        if (host.indexOf(':') !== -1) {
-            [host, port_] = host.split(':', 2);
-        }
-        return nodeify(
-            this.connection().then((conn) =>
-                new Connect(conn).execute(
-                    host,
-                    parsePrimitiveParam(ADB_DEFAULT_PORT, port_)
-                )
-            ),
-            parseCbParam(port, cb)
-        );
+        return this.ipConnect(Connect, host, port, cb);
     }
 
     disconnect(host: string): Promise<string>;
@@ -237,22 +247,7 @@ export default class AdbClient {
         port?: ExecCallbackWithValue<string> | number | string,
         cb?: ExecCallbackWithValue<string>
     ): Promise<string> | void {
-        let port_ = parseValueParam(port);
-        if (host.indexOf(':') !== -1) {
-            const tmp = host.split(':', 2);
-            host = tmp[0];
-            port_ = Number(tmp[1]);
-        }
-
-        return nodeify(
-            this.connection().then((conn) => {
-                return new Disconnect(conn).execute(
-                    host,
-                    parsePrimitiveParam(ADB_DEFAULT_PORT, port_)
-                );
-            }),
-            parseCbParam(port, cb)
-        );
+        return this.ipConnect(Disconnect, host, port, cb);
     }
 
     listDevices(): Promise<IAdbDevice[]>;
