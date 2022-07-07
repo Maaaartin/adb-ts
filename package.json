@@ -58,6 +58,7 @@
         "path": "^0.12.7",
         "ping": "^0.4.0",
         "stream": "^0.0.2",
-        "string-to-stream": "^3.0.1"
+        "string-to-stream": "^3.0.1",
+        "util": "^0.12.4"
     }
 }
