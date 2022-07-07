@@ -54,16 +54,12 @@ export default abstract class DevicesCommand extends Command {
 
     execute(command: string): Promise<IAdbDevice[]> {
         return this.execute_(command).then((reply) => {
-            switch (reply) {
-                case Reply.OKAY:
-                    return this.readOnExecute ? this.readDevices() : [];
-                case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
-                        throw e;
-                    });
-                default:
-                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
-            }
+            return this.handleReply(
+                reply,
+                this.readOnExecute
+                    ? (): Promise<IAdbDevice[]> => this.readDevices()
+                    : []
+            );
         });
     }
 }

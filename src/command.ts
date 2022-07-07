@@ -1,5 +1,5 @@
 import Connection from './connection';
-import { encodeData, PrimitiveType, Reply } from '.';
+import { encodeData, NonFunctionProperties, PrimitiveType, Reply } from '.';
 import Parser from './parser';
 import { promisify } from 'util';
 
@@ -12,10 +12,19 @@ export default abstract class Command<T = any> {
         this.parser = new Parser(this.connection);
     }
 
-    protected handleReply<T>(reply: Reply, value: T): Promise<T> {
+    protected handleReply<T>(
+        reply: Reply,
+        resolver: T | (() => T | Promise<T>)
+    ): Promise<T> {
+        const resolverToPromise = (): Promise<T> => {
+            if (typeof resolver === 'function') {
+                return Promise.resolve((resolver as () => T | Promise<T>)());
+            }
+            return Promise.resolve(resolver);
+        };
         switch (reply) {
             case Reply.OKAY:
-                return Promise.resolve(value);
+                return resolverToPromise();
             case Reply.FAIL:
                 return this.parser.readError().then((e) => {
                     throw e;
