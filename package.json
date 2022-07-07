@@ -30,7 +30,8 @@
     "scripts": {
         "test": "npx jest",
         "compile": "npx tsc",
-        "watch": "npx tsc -w"
+        "watch": "npx tsc -w",
+        "lint": "npx eslint src"
     },
     "devDependencies": {
         "@types/bluebird": "^3.5.33",
