@@ -3,9 +3,8 @@ import { Reply, WaitForState, TransportType } from '../..';
 
 export default class WaitForDeviceCommand extends Command {
     execute(tranport: TransportType, state: WaitForState): Promise<void> {
-        return super
-            .execute(`host:wait-for-${tranport}-${state}`)
-            .then((reply) => {
+        return this.execute_(`host:wait-for-${tranport}-${state}`).then(
+            (reply) => {
                 switch (reply) {
                     case Reply.OKAY:
                         return this.parser.readAscii(4).then(() => {});
@@ -16,6 +15,7 @@ export default class WaitForDeviceCommand extends Command {
                     default:
                         throw this.parser.unexpected(reply, 'OKAY or FAIL');
                 }
-            });
+            }
+        );
     }
 }

@@ -1,9 +1,9 @@
 import Command from '../command';
-import { Reply } from '..';
+import { PrimitiveType, Reply } from '..';
 
 export default class ValueCommand extends Command {
-    execute(...params: any[]) {
-        return super.execute(...params).then((reply) => {
+    execute(...params: PrimitiveType[]): Promise<any> {
+        return this.execute_(...params).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
                     return this.parser.readValue().then((value) => {

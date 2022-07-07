@@ -9,10 +9,12 @@ export default class LogcatCommand extends RawCommand {
         if (options?.clear) {
             cmd = 'logcat -c 2>/dev/null && ' + cmd;
         }
-        return super.execute(serial, `shell:echo && ${cmd}`).then((result) => {
-            const transform = new LineTransform({ autoDetect: true });
-            result.pipe(transform);
-            return transform;
-        });
+        return this.preExecute(serial, `shell:echo && ${cmd}`).then(
+            (result) => {
+                const transform = new LineTransform({ autoDetect: true });
+                result.pipe(transform);
+                return transform;
+            }
+        );
     }
 }

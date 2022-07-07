@@ -6,6 +6,6 @@ export default class ShellRawCommand extends RawCommand {
         if (Array.isArray(command)) {
             command = command.map(this.escape).join(' ');
         }
-        return super.execute(serial, 'shell:', command);
+        return this.preExecute(serial, 'shell:', command);
     }
 }

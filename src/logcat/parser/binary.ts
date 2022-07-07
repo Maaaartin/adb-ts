@@ -9,7 +9,7 @@ export default class Binary extends Parser {
         super();
         this.buffer = Buffer.from('');
     }
-    parse(chunk: Buffer) {
+    parse(chunk: Buffer): void {
         this.buffer = Buffer.concat([this.buffer, chunk]);
         while (this.buffer.length > 4) {
             let cursor = 0;
@@ -49,7 +49,7 @@ export default class Binary extends Parser {
         }
     }
 
-    private processEntry(entry: LogcatEntry, data: Buffer) {
+    private processEntry(entry: LogcatEntry, data: Buffer): void {
         entry.setPriority(data[0]);
         let cursor = 1;
         const length = data.length;
@@ -71,7 +71,7 @@ export default class Binary extends Parser {
     on(event: 'entry', listener: (entry: LogcatEntry) => void): this;
     on(event: 'error', listener: (err: Error) => void): this;
     on(event: 'wait' | 'drain', listener: () => void): this;
-    on(event: string | symbol, listener: (...args: any[]) => void) {
+    on(event: string | symbol, listener: (...args: any[]) => void): this {
         return super.on(event, listener);
     }
 }

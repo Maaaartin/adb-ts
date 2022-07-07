@@ -4,13 +4,13 @@ import {
     Reply,
     StartServiceOptions,
     StartActivityOptions,
-    PrematureEOFError
+    PrematureEOFError,
+    UnexpectedDataError
 } from '../..';
 import TransportCommand from '../tranport';
 
-// const { PrematureEOFError } = require('../../constants');
 export default class StartServiceCommand extends TransportCommand {
-    private formatExtraType(type: AdbExtraType) {
+    private formatExtraType(type: AdbExtraType): string {
         switch (type) {
             case 'string':
                 return 's';
@@ -27,10 +27,12 @@ export default class StartServiceCommand extends TransportCommand {
                 return 'u';
             case 'component':
                 return 'cn';
+            default:
+                throw new UnexpectedDataError(type, 'AdbExtraType');
         }
     }
 
-    private formatExtraObject(extra: AdbExtra) {
+    private formatExtraObject(extra: AdbExtra): string[] {
         const args: string[] = [];
         const type = this.formatExtraType(extra.type);
         if (extra.type === 'null') {
@@ -48,11 +50,11 @@ export default class StartServiceCommand extends TransportCommand {
         return args;
     }
 
-    private formatExtras(extras?: AdbExtra | AdbExtra[]) {
+    private formatExtras(extras?: AdbExtra | AdbExtra[]): string[] {
         if (!extras) {
             return [];
         }
-        let result = [];
+        const result = [];
         if (Array.isArray(extras)) {
             for (const item of extras) {
                 result.push(...this.formatExtraObject(item));
@@ -64,7 +66,7 @@ export default class StartServiceCommand extends TransportCommand {
         }
     }
 
-    private intentArgs(options: StartServiceOptions) {
+    private intentArgs(options: StartServiceOptions): string[] {
         const args: string[] = [];
         if (options.extras) {
             args.push(...this.formatExtras(options.extras));
@@ -87,8 +89,11 @@ export default class StartServiceCommand extends TransportCommand {
                 args.push('-c', this.escape(options.category));
             }
         }
-        if (options.flags) {
+
+        if (typeof options.flags === 'string') {
             args.push('-f', this.escape(options.flags));
+        } else if (Array.isArray(options.flags)) {
+            args.push('-f', ...options.flags.map(this.escape));
         }
         return args;
     }
