@@ -1,18 +1,10 @@
-import Command from '../../command';
+import IpConnect from '../ipConnect';
 
-export default class ConnectCommand extends Command {
+export default class Connect extends IpConnect {
+    protected validator(): RegExp {
+        return /connected to|already connected/;
+    }
     execute(host: string, port: number | string): Promise<string> {
-        return this.execute_(`host:connect:${host}:${port}`).then(
-            this.handleReply(() => {
-                return this.parser.readValue().then((value) => {
-                    const regExp = /connected to|already connected/;
-                    const valueStr = value.toString().trim();
-                    if (regExp.test(valueStr)) {
-                        return `${host}:${port}`;
-                    }
-                    throw new Error(valueStr);
-                });
-            })
-        );
+        return super.execute('host:connect', host, port);
     }
 }

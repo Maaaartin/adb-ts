@@ -37,11 +37,10 @@ import fs, { Stats } from 'fs';
 import AdbDevice from './device';
 import BatteryStatusCommand from './commands/host-trasport/baterrystatus';
 import ClearCommand from './commands/host-trasport/clear';
-import ConnectCommand from './commands/host/connect';
+import Connect from './commands/host/connect';
 import Connection from './connection';
 import CpCommand from './commands/host-trasport/cp';
-import DisconnectCommand from './commands/host/disconnect';
-import { EventEmitter } from 'events';
+import Disconnect from './commands/host/disconnect';
 import FileStatCommand from './commands/host-trasport/filestat';
 import FileStats from './filestats';
 import ForwardCommand from './commands/host-serial/forward';
@@ -216,7 +215,7 @@ export default class AdbClient {
         }
         return nodeify(
             this.connection().then((conn) =>
-                new ConnectCommand(conn).execute(
+                new Connect(conn).execute(
                     host,
                     parsePrimitiveParam(ADB_DEFAULT_PORT, port_)
                 )
@@ -247,7 +246,7 @@ export default class AdbClient {
 
         return nodeify(
             this.connection().then((conn) => {
-                return new DisconnectCommand(conn).execute(
+                return new Disconnect(conn).execute(
                     host,
                     parsePrimitiveParam(ADB_DEFAULT_PORT, port_)
                 );
