@@ -1,5 +1,5 @@
 import ipRegex from 'ip-regex';
-import { DeviceState, IAdbDevice, Reply, UnexpectedDataError } from '.';
+import { DeviceState, IAdbDevice, UnexpectedDataError } from '.';
 import Command from './command';
 const checkValues = ([_1, _2]: [string, string], expected: string[]): void => {
     if (!_1 || !_2) {
@@ -53,13 +53,12 @@ export default abstract class DevicesCommand extends Command {
     }
 
     execute(command: string): Promise<IAdbDevice[]> {
-        return this.execute_(command).then((reply) => {
-            return this.handleReply(
-                reply,
+        return this.execute_(command).then(
+            this.handleReply(
                 this.readOnExecute
                     ? (): Promise<IAdbDevice[]> => this.readDevices()
                     : []
-            );
-        });
+            )
+        );
     }
 }

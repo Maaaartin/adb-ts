@@ -1,5 +1,5 @@
 import Connection from './connection';
-import { encodeData, NonFunctionProperties, PrimitiveType, Reply } from '.';
+import { encodeData, PrimitiveType, Reply } from '.';
 import Parser from './parser';
 import { promisify } from 'util';
 
@@ -12,27 +12,34 @@ export default abstract class Command<T = any> {
         this.parser = new Parser(this.connection);
     }
 
-    protected handleReply<T>(
-        reply: Reply,
+    protected handleReply<T = void>(
         resolver: T | (() => T | Promise<T>)
-    ): Promise<T> {
-        const resolverToPromise = (): Promise<T> => {
-            if (typeof resolver === 'function') {
-                return Promise.resolve((resolver as () => T | Promise<T>)());
+    ): (reply: Reply) => Promise<T> {
+        return (reply) => {
+            const resolverToPromise = (): Promise<T> => {
+                if (typeof resolver === 'function') {
+                    return Promise.resolve(
+                        (resolver as () => T | Promise<T>)()
+                    );
+                }
+                return Promise.resolve(resolver);
+            };
+            switch (reply) {
+                case Reply.OKAY:
+                    return resolverToPromise();
+                case Reply.FAIL:
+                    return this.parser.readError().then((e) => {
+                        throw e;
+                    });
+                default:
+                    throw this.parser.unexpected(
+                        reply,
+                        [Reply.OKAY, Reply.FAIL].join(' or ')
+                    );
             }
-            return Promise.resolve(resolver);
         };
-        switch (reply) {
-            case Reply.OKAY:
-                return resolverToPromise();
-            case Reply.FAIL:
-                return this.parser.readError().then((e) => {
-                    throw e;
-                });
-            default:
-                throw this.parser.unexpected(reply, 'OKAY or FAIL');
-        }
     }
+
     protected end(): Promise<void> {
         return promisify<void>((cb) => this.connection._destroy(null, cb))();
     }
