@@ -172,7 +172,7 @@ export default class AdbClient {
                         return connection.connect(this.options);
                     });
                 } else {
-                    connection.end();
+                    connection.destroy();
                     connection.removeAllListeners();
                     return reject(err);
                 }

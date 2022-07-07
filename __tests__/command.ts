@@ -1,6 +1,9 @@
 import MockCommand from '../mockery/mockCommand';
 import Connection from '../lib/connection';
 import Parser from '../lib/parser';
+import { mockServer } from '../mockery/mockAdbServer';
+import { promisify } from 'util';
+import { UnexpectedDataError } from '../lib';
 
 describe('Constructor tests', () => {
     it('Test parser', () => {
@@ -61,5 +64,68 @@ describe('Escape compat tests', () => {
     it('escape bool', () => {
         const result = cmd.escapeCompat(true);
         expect(result).toBe(`${true}`);
+    });
+});
+
+describe('Handle response', () => {
+    const getConnection = (port: number): Promise<Connection> => {
+        return new Promise((resolve, reject) => {
+            const conn = new Connection();
+            conn.once('connect', () => {
+                resolve(conn);
+            });
+            conn.once('error', reject);
+            conn.connect({ port });
+        });
+    };
+    it('OKAY', async () => {
+        const { port, done } = await mockServer({ expValue: 'mock' });
+        const conn = await getConnection(port);
+        try {
+            const cmd = new MockCommand(conn);
+            const result = await cmd.execute();
+            expect(result).toBe(undefined);
+        } finally {
+            await promisify<void>((cb) => conn._destroy(null, cb))();
+            await done();
+        }
+    });
+
+    it('FAIL', async () => {
+        const { port, done } = await mockServer({ expValue: 'wrong value' });
+        const conn = await getConnection(port);
+        try {
+            const cmd = new MockCommand(conn);
+            try {
+                await cmd.execute();
+            } catch (e) {
+                expect(e.message).toBe('Failure');
+            }
+        } finally {
+            await promisify<void>((cb) => conn._destroy(null, cb))();
+            await done();
+        }
+    });
+
+    it('Unexpected', async () => {
+        const { port, done } = await mockServer({
+            expValue: 'mock',
+            unexpected: true
+        });
+        const conn = await getConnection(port);
+        try {
+            const cmd = new MockCommand(conn);
+            try {
+                await cmd.execute();
+            } catch (e) {
+                expect(e).toBeInstanceOf(UnexpectedDataError);
+                expect(e.message).toBe(
+                    "Unexpected 'YOYO', was expecting OKAY or FAIL"
+                );
+            }
+        } finally {
+            await promisify<void>((cb) => conn._destroy(null, cb))();
+            await done();
+        }
     });
 });
