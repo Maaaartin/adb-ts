@@ -2,7 +2,7 @@ import { PrimitiveType, stringToType } from '../..';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
 export default class GetPropertyCommand extends TransportParseAllCommand {
-    parse(value: string) {
+    parse(value: string): PrimitiveType {
         return stringToType(value);
     }
     execute(serial: string, prop: string): Promise<PrimitiveType> {

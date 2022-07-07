@@ -3,7 +3,7 @@ import TransportCommand from './tranport';
 
 export default abstract class TransportParseAllCommand extends TransportCommand {
     protected abstract parse(value: string): any;
-    execute(serial: string, ...args: any[]) {
+    execute(serial: string, ...args: any[]): Promise<any> {
         return super.execute(serial, ...args).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:

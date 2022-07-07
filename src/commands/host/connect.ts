@@ -2,25 +2,18 @@ import { Reply } from '../..';
 import Command from '../../command';
 
 export default class ConnectCommand extends Command {
-    execute(host: string, port: number | string) {
-        return super.execute(`host:connect:${host}:${port}`).then((reply) => {
-            switch (reply) {
-                case Reply.OKAY:
-                    return this.parser.readValue().then((value) => {
-                        const regExp = /connected to|already connected/;
-                        if (regExp.test(value.toString())) {
-                            return host + ':' + port;
-                        } else {
-                            throw new Error(value.toString());
-                        }
-                    });
-                case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
-                        throw e;
-                    });
-                default:
-                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
-            }
-        });
+    execute(host: string, port: number | string): Promise<string> {
+        return this.execute_(`host:connect:${host}:${port}`).then(
+            this.handleReply(() => {
+                return this.parser.readValue().then((value) => {
+                    const regExp = /connected to|already connected/;
+                    const valueStr = value.toString().trim();
+                    if (regExp.test(valueStr)) {
+                        return `${host}:${port}`;
+                    }
+                    throw new Error(valueStr);
+                });
+            })
+        );
     }
 }
