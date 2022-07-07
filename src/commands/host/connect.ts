@@ -1,4 +1,3 @@
-import { Reply } from '../..';
 import Command from '../../command';
 
 export default class ConnectCommand extends Command {
