@@ -44,7 +44,7 @@ export default abstract class Command<T = any> {
         return promisify<void>((cb) => this.connection._destroy(null, cb))();
     }
 
-    protected execute_(...args: PrimitiveType[]): Promise<Reply> {
+    protected initExecute(...args: PrimitiveType[]): Promise<Reply> {
         this.connection.write(encodeData(args.join(' ')));
         return (this.parser.readAscii(4) as Promise<Reply>).finally(
             (): Promise<void> =>

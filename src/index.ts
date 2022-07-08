@@ -267,7 +267,7 @@ export interface IpConnectConstruct {
     new (connection: Connection): IpConnect;
 }
 
-export interface IAbstractCommand<T> {
+export interface IPreExecute<T> {
     preExecute: (...args: any[]) => Promise<T>;
 }
 

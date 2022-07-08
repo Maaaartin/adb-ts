@@ -3,7 +3,7 @@ import { Reply } from '../..';
 
 export default class ForwardCommand extends Command {
     execute(serial: string, local: string, remote: string): Promise<void> {
-        return this.execute_(
+        return this.initExecute(
             `host-serial:${serial}:forward:${local};${remote}`
         ).then((reply) => {
             switch (reply) {

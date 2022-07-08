@@ -3,7 +3,7 @@ import { Reply, WaitForState, TransportType } from '../..';
 
 export default class WaitForDeviceCommand extends Command {
     execute(tranport: TransportType, state: WaitForState): Promise<void> {
-        return this.execute_(`host:wait-for-${tranport}-${state}`).then(
+        return this.initExecute(`host:wait-for-${tranport}-${state}`).then(
             (reply) => {
                 switch (reply) {
                     case Reply.OKAY:

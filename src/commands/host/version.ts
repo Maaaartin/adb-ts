@@ -3,7 +3,7 @@ import { Reply } from '../..';
 
 export default class VersionCommand extends Command {
     execute(): Promise<number> {
-        return this.execute_('host:version').then((reply) => {
+        return this.initExecute('host:version').then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
                     return this.parser.readValue().then((value) => {

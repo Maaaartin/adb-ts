@@ -18,7 +18,7 @@ export default abstract class FileSystemCommand
         options?: Record<string, any>
     ): Promise<string> {
         const pathArr = Array.isArray(path) ? path : [path];
-        return this.execute_(
+        return this.initExecute(
             serial,
             'shell:' + this.Cmd,
             ...this.intentArgs(options),
