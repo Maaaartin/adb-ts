@@ -3,10 +3,10 @@ import { Writable } from 'stream';
 import { Socket } from 'net';
 
 export default class Parser {
-    private readonly stream: Socket;
+    public readonly socket: Socket;
     private ended: boolean;
-    constructor(stream: Socket) {
-        this.stream = stream;
+    constructor(socket: Socket) {
+        this.socket = socket;
         this.ended = false;
     }
     readBytes(howMany: number): Promise<Buffer> {
@@ -17,7 +17,7 @@ export default class Parser {
             tryRead = (): void => {
                 if (howMany) {
                     let chunk;
-                    if ((chunk = this.stream.read(howMany))) {
+                    if ((chunk = this.socket.read(howMany))) {
                         howMany -= chunk.length;
                         if (howMany === 0) {
                             return resolve(chunk);
@@ -32,21 +32,21 @@ export default class Parser {
                 }
             };
 
-            this.stream.on('readable', tryRead);
+            this.socket.on('readable', tryRead);
             errorListener = (err: Error): void => {
                 return reject(err);
             };
-            this.stream.on('error', errorListener);
+            this.socket.on('error', errorListener);
             endListener = (): void => {
                 this.ended = true;
                 return reject(new PrematureEOFError(howMany));
             };
-            this.stream.on('end', endListener);
+            this.socket.on('end', endListener);
             tryRead();
         }).finally(() => {
-            this.stream.removeListener('readable', tryRead);
-            this.stream.removeListener('error', errorListener);
-            return this.stream.removeListener('end', endListener);
+            this.socket.removeListener('readable', tryRead);
+            this.socket.removeListener('error', errorListener);
+            return this.socket.removeListener('end', endListener);
         });
     }
 
@@ -56,31 +56,31 @@ export default class Parser {
             endListener: () => void;
         return new Promise<void>((resolve, reject) => {
             tryRead = (): void => {
-                while (this.stream.read()) {
+                while (this.socket.read()) {
                     continue;
                 }
             };
-            this.stream.on('readable', () => {
+            this.socket.on('readable', () => {
                 tryRead();
             });
             errorListener = (err): void => {
                 return reject(err);
             };
-            this.stream.on('error', errorListener);
+            this.socket.on('error', errorListener);
             endListener = (): void => {
                 this.ended = true;
                 return resolve();
             };
-            this.stream.on('end', endListener);
+            this.socket.on('end', endListener);
             if (this.ended) {
                 return resolve();
             }
-            this.stream.read(0);
-            this.stream.end();
+            this.socket.read(0);
+            this.socket.end();
         }).finally(() => {
-            this.stream.removeListener('readable', tryRead);
-            this.stream.removeListener('error', errorListener);
-            return this.stream.removeListener('end', endListener);
+            this.socket.removeListener('readable', tryRead);
+            this.socket.removeListener('error', errorListener);
+            return this.socket.removeListener('end', endListener);
         });
     }
 
@@ -115,7 +115,7 @@ export default class Parser {
                 if (howMany) {
                     while (
                         (chunk =
-                            this.stream.read(howMany) || this.stream.read())
+                            this.socket.read(howMany) || this.socket.read())
                     ) {
                         howMany -= chunk.length;
                         targetStream.write(chunk);
@@ -137,14 +137,14 @@ export default class Parser {
             errorListener = (err): void => {
                 return reject(err);
             };
-            this.stream.on('readable', tryRead);
-            this.stream.on('error', errorListener);
-            this.stream.on('end', endListener);
+            this.socket.on('readable', tryRead);
+            this.socket.on('error', errorListener);
+            this.socket.on('end', endListener);
             tryRead();
         }).finally(() => {
-            this.stream.removeListener('readable', tryRead);
-            this.stream.removeListener('error', errorListener);
-            return this.stream.removeListener('end', endListener);
+            this.socket.removeListener('readable', tryRead);
+            this.socket.removeListener('error', errorListener);
+            return this.socket.removeListener('end', endListener);
         });
     }
 
@@ -191,27 +191,27 @@ export default class Parser {
         return new Promise<Buffer>((resolve, reject) => {
             tryRead = (): void => {
                 let chunk;
-                while ((chunk = this.stream.read())) {
+                while ((chunk = this.socket.read())) {
                     all = Buffer.concat([all, chunk]);
                 }
                 if (this.ended) {
                     return resolve(all);
                 }
             };
-            this.stream.on('readable', tryRead);
+            this.socket.on('readable', tryRead);
             errorListener = (err): void => {
                 return reject(err);
             };
-            this.stream.on('error', errorListener);
+            this.socket.on('error', errorListener);
             endListener = (): void => {
                 this.ended = true;
                 return resolve(all);
             };
-            this.stream.on('end', endListener);
+            this.socket.on('end', endListener);
         }).finally(() => {
-            this.stream.removeListener('readable', tryRead);
-            this.stream.removeListener('error', errorListener);
-            return this.stream.removeListener('end', endListener);
+            this.socket.removeListener('readable', tryRead);
+            this.socket.removeListener('error', errorListener);
+            return this.socket.removeListener('end', endListener);
         });
     }
 }

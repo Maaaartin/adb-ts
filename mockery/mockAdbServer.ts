@@ -91,3 +91,99 @@ export const endConnections = async (
 ): Promise<void> => {
     await promisify<void>((cb) => server?.close(cb) || cb(null))();
 };
+type Sequence = { cmd: string; res?: string };
+class AdbMock {
+    private server_ = new net.Server();
+    // private socket_: net.Socket | null = null;
+    private parser: Parser | null = null;
+    private seq: Generator<Sequence, void, void>;
+    private unexpected?: boolean;
+
+    private get socket(): net.Socket | null | undefined {
+        return this.parser?.socket;
+    }
+
+    constructor({
+        seq,
+        unexpected
+    }: {
+        seq: Generator<Sequence, void, void>;
+        unexpected?: boolean;
+    }) {
+        this.seq = seq;
+        this.unexpected = unexpected;
+    }
+
+    private writeOkay(data = ''): void {
+        const encoded = encodeData(data);
+        const toWrite = Reply.OKAY.concat(data ? encoded.toString() : '');
+        this.socket?.write(toWrite);
+    }
+
+    private writeFail(): void {
+        const encoded = encodeData('Failure');
+        const toWrite = Reply.FAIL.concat(encoded.toString());
+        this.socket?.write(toWrite);
+    }
+
+    private next(): Sequence | null {
+        const nextSeq = this.seq.next();
+        if (nextSeq.done) {
+            return null;
+        }
+        return nextSeq.value;
+    }
+
+    private connectionHandler(value: string): void {
+        if (this.unexpected) {
+            this.socket?.write('ABCD');
+            return;
+        }
+        const nextSeq = this.next();
+        if (value === nextSeq?.cmd) {
+            return this.writeOkay(nextSeq.res);
+        }
+
+        return this.writeFail();
+    }
+
+    private async readValue(): Promise<string | undefined> {
+        return (await this.parser?.readValue())?.toString();
+    }
+    private handleSequence(): void {
+        this.socket?.on('readable', async () => {
+            for await (const seq of this.seq) {
+                const value = await this.readValue();
+                if (seq.cmd === value) {
+                    this.writeOkay(seq.res);
+                } else {
+                    this.writeFail();
+                }
+            }
+            this.parser?.end();
+        });
+    }
+
+    private hook(): void {
+        this.server_.once('connection', async (socket) => {
+            this.parser = new Parser(socket);
+            const value = (await this.parser.readValue()).toString();
+            this.connectionHandler(value);
+        });
+    }
+
+    start(): Promise<number> {
+        return new Promise((resolve, reject) => {
+            if (!this.server_.listening) {
+                this.server_.once('error', reject);
+                this.server_.listen(() => {
+                    this.hook();
+                    resolve(getPort(this.server_));
+                    this.server_.removeListener('error', reject);
+                });
+            } else {
+                resolve(getPort(this.server_));
+            }
+        });
+    }
+}
