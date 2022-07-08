@@ -1,21 +1,22 @@
 import Command from '../command';
-import { Reply } from '..';
+import { ICmd, IPostExecute, IPreExecute } from '..';
 
-export default class TransportCommand extends Command {
-    execute(serial: string, ...args: any[]): Promise<any> {
-        return super
-            .execute_('host:transport:'.concat(serial))
-            .then((reply: string) => {
-                switch (reply) {
-                    case Reply.OKAY:
-                        return this.execute_(...args);
-                    case Reply.FAIL:
-                        return this.parser.readError().then((e) => {
-                            throw e;
-                        });
-                    default:
-                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
-                }
-            });
+export default abstract class TransportCommand<T>
+    extends Command
+    implements IPreExecute<T>, ICmd, IPostExecute<T>
+{
+    abstract Cmd: string;
+    protected keepAlive = true;
+    protected abstract postExecute(): Promise<T>;
+    preExecute(serial: string): Promise<T> {
+        return this.initExecute('host:transport:'.concat(serial)).then(
+            this.handleReply(() =>
+                this.initExecute(this.Cmd).then(
+                    this.handleReply(() =>
+                        this.postExecute().finally(() => this.end())
+                    )
+                )
+            )
+        );
     }
 }
