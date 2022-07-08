@@ -5,13 +5,19 @@ import { promisify } from 'util';
 
 type MockServerOptions = {
     expValue: string;
+    expValue2?: string;
     unexpected?: boolean;
     res?: string;
+    res2?: string;
+    withEncode?: boolean;
 };
 export const mockServer = async ({
     expValue,
+    expValue2 = '',
     unexpected = false,
-    res = ''
+    res = '',
+    res2 = '',
+    withEncode
 }: MockServerOptions): Promise<{
     done: () => Promise<void>;
     port: number;
@@ -21,9 +27,12 @@ export const mockServer = async ({
     let socket_: net.Socket | null = null;
     const write_ = (reply: string | null = null, data: string): void => {
         const encoded = encodeData(data);
-        const toWrite = (reply ?? '').concat(encoded.toString());
+        const toWrite = (reply ?? '').concat(
+            data || withEncode ? encoded.toString() : ''
+        );
         socket_?.write(toWrite);
     };
+
     const server = await new Promise<net.Server>((resolve, reject) => {
         const server_ = new net.Server();
         server_.listen(0, () => {
@@ -34,6 +43,18 @@ export const mockServer = async ({
             socket_ = socket;
             const parser = new Parser(socket);
             const value = await parser.readValue();
+            if (res2 && expValue2) {
+                socket.on('readable', async () => {
+                    const value2 = await parser.readValue();
+                    if (expValue2 === value2.toString()) {
+                        // write_(Reply.OKAY, res2);
+                        socket.write('OKAY' + res2);
+                        socket.end();
+                    } else {
+                        write_(Reply.FAIL, 'Failure');
+                    }
+                });
+            }
             if (unexpected) {
                 socket.write('YOYO');
             } else if (expValue === value.toString()) {

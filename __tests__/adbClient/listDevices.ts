@@ -139,7 +139,8 @@ describe('List devices', () => {
         const raw = '';
         const { port, done } = await mockServer({
             expValue: 'host:devices-l',
-            res: raw
+            res: raw,
+            withEncode: true
         });
         try {
             const adb = new AdbClient({ noAutoStart: true, port });
