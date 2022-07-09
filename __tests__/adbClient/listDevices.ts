@@ -1,6 +1,6 @@
 import { IAdbDevice, UnexpectedDataError } from '../../lib';
 import AdbClient from '../../lib/client';
-import { AdbMock, mockServer, Sequence } from '../../mockery/mockAdbServer';
+import { AdbMock, mockServer } from '../../mockery/mockAdbServer';
 
 // TODO test emulator and offline
 describe('List devices', () => {
@@ -40,9 +40,7 @@ describe('List devices', () => {
             'b137f5dc               unauthorized usb:337641472X transport_id:1';
 
         const mock = new AdbMock({
-            seq: (function* (): Generator<Sequence, void, void> {
-                yield { cmd: 'host:devices-l', res: raw };
-            })()
+            seq: [{ cmd: 'host:devices-l', res: raw }]
         });
 
         const port = await mock.start();

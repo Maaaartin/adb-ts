@@ -1,7 +1,7 @@
 import Command from '../command';
 import { ICmd, IPostExecute, IPreExecute } from '..';
 
-export default abstract class TransportCommand<T>
+export default abstract class TransportCommand<T = any>
     extends Command
     implements IPreExecute<T>, ICmd, IPostExecute<T>
 {

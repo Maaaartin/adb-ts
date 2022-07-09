@@ -86,10 +86,9 @@ export const getPort = (server: net.Server): number => {
     return info.port;
 };
 
-export type Sequence = { cmd: string; res?: string };
+export type Sequence = { cmd: string; res: string | null; rawRes?: boolean };
 export class AdbMock {
     private server_ = new net.Server();
-    // private socket_: net.Socket | null = null;
     private parser: Parser | null = null;
     private seq: Generator<Sequence, void, void>;
     private unexpected?: boolean;
@@ -102,15 +101,27 @@ export class AdbMock {
         seq,
         unexpected
     }: {
-        seq: Generator<Sequence, void, void>;
+        seq: Sequence[];
         unexpected?: boolean;
     }) {
-        this.seq = seq;
+        this.seq = (function* (): Generator<Sequence, void, void> {
+            for (const s of seq) {
+                yield s;
+            }
+        })();
         this.unexpected = unexpected;
     }
 
-    private writeOkay(data = ''): void {
-        const encoded = encodeData(data);
+    private getPort(): number {
+        const info = this.server_.address();
+        if (typeof info === 'string' || info === null) {
+            throw new Error('Could not get server port');
+        }
+        return info.port;
+    }
+
+    private writeOkay(data: string | null): void {
+        const encoded = encodeData(data || '');
         const toWrite = Reply.OKAY.concat(data ? encoded.toString() : '');
         this.socket?.write(toWrite);
     }
@@ -119,6 +130,10 @@ export class AdbMock {
         const encoded = encodeData('Failure');
         const toWrite = Reply.FAIL.concat(encoded.toString());
         this.socket?.write(toWrite);
+    }
+
+    private writeRaw(data: string | null): void {
+        this.socket?.write(Reply.OKAY.concat(data || ''));
     }
 
     private next(): Sequence | null {
@@ -150,7 +165,11 @@ export class AdbMock {
             for await (const seq of this.seq) {
                 const value = await this.readValue();
                 if (seq.cmd === value) {
-                    this.writeOkay(seq.res);
+                    if (seq.rawRes) {
+                        this.writeRaw(seq.res);
+                    } else {
+                        this.writeOkay(seq.res);
+                    }
                 } else {
                     this.writeFail();
                 }
@@ -177,12 +196,20 @@ export class AdbMock {
             if (!this.server_.listening) {
                 this.server_.once('error', reject);
                 this.server_.listen(() => {
-                    this.hook();
-                    resolve(getPort(this.server_));
-                    this.server_.removeListener('error', reject);
+                    try {
+                        this.hook();
+                        resolve(this.getPort());
+                        this.server_.removeListener('error', reject);
+                    } catch (e) {
+                        reject(e);
+                    }
                 });
             } else {
-                resolve(getPort(this.server_));
+                try {
+                    resolve(this.getPort());
+                } catch (e) {
+                    reject(e);
+                }
             }
         });
     }
