@@ -1,8 +1,7 @@
 import MockCommand from '../mockery/mockCommand';
 import Connection from '../lib/connection';
 import Parser from '../lib/parser';
-import { mockServer } from '../mockery/mockAdbServer';
-import { promisify } from 'util';
+import { AdbMock } from '../mockery/mockAdbServer';
 import { UnexpectedDataError } from '../lib';
 
 describe('Constructor tests', () => {
@@ -79,22 +78,26 @@ describe('Handle response', () => {
         });
     };
     it('OKAY', async () => {
-        const { port, done } = await mockServer({ expValue: 'mock' });
-        const conn = await getConnection(port);
+        const adbMock = new AdbMock({ seq: [{ cmd: 'mock', res: null }] });
         try {
+            const port = await adbMock.start();
+            const conn = await getConnection(port);
             const cmd = new MockCommand(conn);
             const result = await cmd.execute();
             expect(result).toBe(undefined);
         } finally {
-            await promisify<void>((cb) => conn._destroy(null, cb))();
-            await done();
+            await adbMock.end();
         }
     });
 
     it('FAIL', async () => {
-        const { port, done } = await mockServer({ expValue: 'wrong value' });
-        const conn = await getConnection(port);
+        const adbMock = new AdbMock({
+            seq: [{ cmd: 'wrong value', res: null }]
+        });
+
         try {
+            const port = await adbMock.start();
+            const conn = await getConnection(port);
             const cmd = new MockCommand(conn);
             try {
                 await cmd.execute();
@@ -102,30 +105,30 @@ describe('Handle response', () => {
                 expect(e.message).toBe('Failure');
             }
         } finally {
-            await promisify<void>((cb) => conn._destroy(null, cb))();
-            await done();
+            await adbMock.end();
         }
     });
 
     it('Unexpected', async () => {
-        const { port, done } = await mockServer({
-            expValue: 'mock',
+        const adbMock = new AdbMock({
+            seq: [{ cmd: 'mock', res: null }],
             unexpected: true
         });
-        const conn = await getConnection(port);
+
         try {
+            const port = await adbMock.start();
+            const conn = await getConnection(port);
             const cmd = new MockCommand(conn);
             try {
                 await cmd.execute();
             } catch (e) {
                 expect(e).toBeInstanceOf(UnexpectedDataError);
                 expect(e.message).toBe(
-                    "Unexpected 'YOYO', was expecting OKAY or FAIL"
+                    "Unexpected 'ABCD', was expecting OKAY or FAIL"
                 );
             }
         } finally {
-            await promisify<void>((cb) => conn._destroy(null, cb))();
-            await done();
+            await adbMock.end();
         }
     });
 });

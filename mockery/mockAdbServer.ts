@@ -86,7 +86,7 @@ export const getPort = (server: net.Server): number => {
     return info.port;
 };
 
-export type Sequence = { cmd: string; res: string | null; rawRes?: boolean };
+type Sequence = { cmd: string; res: string | null; rawRes?: boolean };
 export class AdbMock {
     private server_ = new net.Server();
     private parser: Parser | null = null;
