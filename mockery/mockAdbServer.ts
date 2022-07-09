@@ -86,13 +86,8 @@ export const getPort = (server: net.Server): number => {
     return info.port;
 };
 
-export const endConnections = async (
-    server: net.Server | null
-): Promise<void> => {
-    await promisify<void>((cb) => server?.close(cb) || cb(null))();
-};
-type Sequence = { cmd: string; res?: string };
-class AdbMock {
+export type Sequence = { cmd: string; res?: string };
+export class AdbMock {
     private server_ = new net.Server();
     // private socket_: net.Socket | null = null;
     private parser: Parser | null = null;
@@ -169,7 +164,12 @@ class AdbMock {
             this.parser = new Parser(socket);
             const value = (await this.parser.readValue()).toString();
             this.connectionHandler(value);
+            this.handleSequence();
         });
+    }
+
+    end(): Promise<void> {
+        return promisify<void>((cb) => this.server_.close(cb) || cb(null))();
     }
 
     start(): Promise<number> {
