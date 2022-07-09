@@ -39,9 +39,7 @@ describe('List devices', () => {
         const raw =
             'b137f5dc               unauthorized usb:337641472X transport_id:1';
 
-        const mock = new AdbMock({
-            seq: [{ cmd: 'host:devices-l', res: raw }]
-        });
+        const mock = new AdbMock([{ cmd: 'host:devices-l', res: raw }]);
 
         const port = await mock.start();
         try {

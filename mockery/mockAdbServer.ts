@@ -86,30 +86,28 @@ export const getPort = (server: net.Server): number => {
     return info.port;
 };
 
-type Sequence = { cmd: string; res: string | null; rawRes?: boolean };
+type Sequence = {
+    cmd: string;
+    res: string | null;
+    rawRes?: boolean;
+    unexpected?: boolean;
+};
 export class AdbMock {
     private server_ = new net.Server();
     private parser: Parser | null = null;
     private seq: Generator<Sequence, void, void>;
-    private unexpected?: boolean;
 
     private get socket(): net.Socket | null | undefined {
         return this.parser?.socket;
     }
 
-    constructor({
-        seq,
-        unexpected
-    }: {
-        seq: Sequence[];
-        unexpected?: boolean;
-    }) {
+    constructor(seq: Sequence | Sequence[]) {
+        seq = Array.isArray(seq) ? seq : [seq];
         this.seq = (function* (): Generator<Sequence, void, void> {
             for (const s of seq) {
                 yield s;
             }
         })();
-        this.unexpected = unexpected;
     }
 
     private getPort(): number {
@@ -145,11 +143,11 @@ export class AdbMock {
     }
 
     private connectionHandler(value: string): void {
-        if (this.unexpected) {
+        const nextSeq = this.next();
+        if (nextSeq?.unexpected) {
             this.socket?.write('ABCD');
             return;
         }
-        const nextSeq = this.next();
         if (value === nextSeq?.cmd) {
             return this.writeOkay(nextSeq.res);
         }
