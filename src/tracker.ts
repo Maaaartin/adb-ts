@@ -61,8 +61,10 @@ export default class Tracker extends EventEmitter {
     }
 
     public end(): Promise<void> {
-        this.removeAllListeners();
-        return this.command.end();
+        this.emit('end');
+        return this.command.end().then(() => {
+            this.removeAllListeners();
+        });
     }
 
     on(event: 'add' | 'change', listener: (device: AdbDevice) => void): this;

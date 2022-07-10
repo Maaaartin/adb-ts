@@ -192,6 +192,11 @@ export class AdbMock {
         return promisify<void>((cb) => this.server_.close(cb) || cb(null))();
     }
 
+    forceWriteData(data: string): void {
+        const encoded = encodeData(data || '');
+        this.socket?.write(encoded);
+    }
+
     forceWrite(data: string): void {
         this.writeOkay(data);
     }
