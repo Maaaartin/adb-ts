@@ -152,6 +152,9 @@ export type AdbExtra = {
     type: AdbExtraType;
     value: PrimitiveType | PrimitiveType[];
 };
+
+export type NonEmptyArray<T> = [T, ...T[]];
+
 export interface StartServiceOptions {
     user?: number | string;
     action?: string;

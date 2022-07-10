@@ -1,6 +1,6 @@
 import net from 'net';
 import Parser from '../lib/parser';
-import { encodeData, Reply } from '../lib';
+import { encodeData, NonEmptyArray, Reply } from '../lib';
 import { promisify } from 'util';
 
 type MockServerOptions = {
@@ -101,7 +101,7 @@ export class AdbMock {
         return this.parser?.socket;
     }
 
-    constructor(seq: Sequence | Sequence[]) {
+    constructor(seq: Sequence | NonEmptyArray<Sequence>) {
         seq = Array.isArray(seq) ? seq : [seq];
         this.seq = (function* (): Generator<Sequence, void, void> {
             for (const s of seq) {
