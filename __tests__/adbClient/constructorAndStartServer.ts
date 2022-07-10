@@ -26,7 +26,7 @@ describe('Client constructor tests', () => {
 });
 
 describe('Start server tests', () => {
-    const mockExec = (err: ChildProcess.ExecException | null) => {
+    const mockExec = (err: ChildProcess.ExecException | null): void => {
         jest.spyOn(ChildProcess, 'execFile').mockImplementation(
             (
                 _file: string,
