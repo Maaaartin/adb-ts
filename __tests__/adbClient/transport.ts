@@ -1,13 +1,12 @@
 import AdbClient from '../../lib/client';
 import Connection from '../../lib/connection';
-import { mockServer } from '../../mockery/mockAdbServer';
+import { AdbMock, mockServer } from '../../mockery/mockAdbServer';
 
 describe('Transport tests', () => {
     it('OKAY', async () => {
-        const { port, done } = await mockServer({
-            expValue: 'host:transport:1234'
-        });
+        const adbMock = new AdbMock({ cmd: 'host:transport:1234', res: null });
         try {
+            const port = await adbMock.start();
             const client = new AdbClient({
                 noAutoStart: true,
                 port
@@ -15,15 +14,14 @@ describe('Transport tests', () => {
             const connection = await client.transport('1234');
             expect(connection).toBeInstanceOf(Connection);
         } finally {
-            await done();
+            await adbMock.end();
         }
     });
 
     it('FAIL', async () => {
-        const { port, done } = await mockServer({
-            expValue: 'host:transport:1234'
-        });
+        const adbMock = new AdbMock({ cmd: 'host:transport:1234', res: null });
         try {
+            const port = await adbMock.start();
             const client = new AdbClient({
                 noAutoStart: true,
                 port
@@ -34,16 +32,18 @@ describe('Transport tests', () => {
                 expect(e.message).toBe('Failure');
             }
         } finally {
-            await done();
+            await adbMock.end();
         }
     });
 
     it('unexpected', async () => {
-        const { port, done } = await mockServer({
-            expValue: 'host:transport:1234',
+        const adbMock = new AdbMock({
+            cmd: 'host:transport:1234',
+            res: null,
             unexpected: true
         });
         try {
+            const port = await adbMock.start();
             const client = new AdbClient({
                 noAutoStart: true,
                 port
@@ -52,11 +52,11 @@ describe('Transport tests', () => {
                 await client.transport('5678');
             } catch (e) {
                 expect(e.message).toBe(
-                    "Unexpected 'YOYO', was expecting OKAY or FAIL"
+                    "Unexpected 'ABCD', was expecting OKAY or FAIL"
                 );
             }
         } finally {
-            await done();
+            await adbMock.end();
         }
     });
 });
