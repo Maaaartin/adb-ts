@@ -1,9 +1,39 @@
 import { promisify } from 'bluebird';
 import AdbClient from '../../lib/client';
 import AdbDevice from '../../lib/device';
-import { mockServer } from '../../mockery/mockAdbServer';
+import { AdbMock, mockServer } from '../../mockery/mockAdbServer';
 
 describe('Track devices', () => {
+    it('Add', async () => {
+        const adbMock = new AdbMock({
+            cmd: 'host:track-devices-l',
+            res: null
+        });
+
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const tracker = await adb.trackDevices();
+            const result = await promisify((cb) => {
+                tracker.on('add', (d) => {
+                    cb(null, d);
+                });
+                tracker.on('error', (err) => {
+                    cb(err);
+                });
+                adbMock.forceWrite(
+                    'b137f5dc               unauthorized usb:337641472X transport_id:1'
+                );
+            })();
+            try {
+                expect(result).toBeInstanceOf(AdbDevice);
+            } finally {
+                await tracker.end();
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
     it('Add', async () => {
         const { port, done, write } = await mockServer({
             expValue: 'host:track-devices-l'

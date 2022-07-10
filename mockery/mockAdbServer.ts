@@ -192,6 +192,10 @@ export class AdbMock {
         return promisify<void>((cb) => this.server_.close(cb) || cb(null))();
     }
 
+    forceWrite(data: string): void {
+        this.writeOkay(data);
+    }
+
     start(): Promise<number> {
         return new Promise((resolve, reject) => {
             if (!this.server_.listening) {

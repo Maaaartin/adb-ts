@@ -1,6 +1,6 @@
 import { IAdbDevice, UnexpectedDataError } from '../../lib';
 import AdbClient from '../../lib/client';
-import { AdbMock, mockServer } from '../../mockery/mockAdbServer';
+import { AdbMock } from '../../mockery/mockAdbServer';
 
 // TODO test emulator and offline
 describe('List devices', () => {
