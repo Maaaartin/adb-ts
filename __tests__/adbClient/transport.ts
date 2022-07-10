@@ -1,6 +1,6 @@
 import AdbClient from '../../lib/client';
 import Connection from '../../lib/connection';
-import { AdbMock, mockServer } from '../../mockery/mockAdbServer';
+import AdbMock from '../../mockery/mockAdbServer';
 
 describe('Transport tests', () => {
     it('OKAY', async () => {

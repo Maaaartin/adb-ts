@@ -3,96 +3,13 @@ import Parser from '../lib/parser';
 import { encodeData, NonEmptyArray, Reply } from '../lib';
 import { promisify } from 'util';
 
-type MockServerOptions = {
-    expValue: string;
-    expValue2?: string;
-    unexpected?: boolean;
-    res?: string;
-    res2?: string;
-    withEncode?: boolean;
-};
-export const mockServer = async ({
-    expValue,
-    expValue2 = '',
-    unexpected = false,
-    res = '',
-    res2 = '',
-    withEncode
-}: MockServerOptions): Promise<{
-    done: () => Promise<void>;
-    port: number;
-    write: (data: string) => void;
-    writeData: (data: string) => void;
-}> => {
-    let socket_: net.Socket | null = null;
-    const write_ = (reply: string | null = null, data: string): void => {
-        const encoded = encodeData(data);
-        const toWrite = (reply ?? '').concat(
-            data || withEncode ? encoded.toString() : ''
-        );
-        socket_?.write(toWrite);
-    };
-
-    const server = await new Promise<net.Server>((resolve, reject) => {
-        const server_ = new net.Server();
-        server_.listen(0, () => {
-            resolve(server_);
-        });
-
-        server_.on('connection', async (socket) => {
-            socket_ = socket;
-            const parser = new Parser(socket);
-            const value = await parser.readValue();
-            if (res2 && expValue2) {
-                socket.on('readable', async () => {
-                    const value2 = await parser.readValue();
-                    if (expValue2 === value2.toString()) {
-                        // write_(Reply.OKAY, res2);
-                        socket.write('OKAY' + res2);
-                        socket.end();
-                    } else {
-                        write_(Reply.FAIL, 'Failure');
-                    }
-                });
-            }
-            if (unexpected) {
-                socket.write('YOYO');
-            } else if (expValue === value.toString()) {
-                write_(Reply.OKAY, res);
-            } else {
-                write_(Reply.FAIL, 'Failure');
-            }
-        });
-        server_.once('error', reject);
-    });
-    const done = (): Promise<void> => {
-        return promisify<void>((cb) => server?.close(cb) || cb(null))();
-    };
-    const write = (data: string): void => {
-        write_(Reply.OKAY, data);
-    };
-    const writeData = (data: string): void => {
-        write_(null, data);
-    };
-    const port = getPort(server);
-    return { done, port, write, writeData };
-};
-
-export const getPort = (server: net.Server): number => {
-    const info = server.address();
-    if (typeof info === 'string' || info === null) {
-        throw new Error('Could not get server port');
-    }
-    return info.port;
-};
-
 type Sequence = {
     cmd: string;
     res: string | null;
     rawRes?: boolean;
     unexpected?: boolean;
 };
-export class AdbMock {
+export default class AdbMock {
     private server_ = new net.Server();
     private parser: Parser | null = null;
     private seq: Generator<Sequence, void, void>;
