@@ -120,7 +120,7 @@ export class AdbMock {
 
     private writeOkay(data: string | null): void {
         const encoded = encodeData(data || '');
-        const toWrite = Reply.OKAY.concat(data ? encoded.toString() : '');
+        const toWrite = Reply.OKAY.concat(encoded.toString());
         this.socket?.write(toWrite);
     }
 
@@ -149,6 +149,9 @@ export class AdbMock {
             return;
         }
         if (value === nextSeq?.cmd) {
+            if (nextSeq.rawRes) {
+                return this.writeRaw(nextSeq.res);
+            }
             return this.writeOkay(nextSeq.res);
         }
 

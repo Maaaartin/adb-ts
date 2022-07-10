@@ -5,44 +5,45 @@ import { AdbMock, mockServer } from '../../mockery/mockAdbServer';
 // TODO test emulator and offline
 describe('List devices', () => {
     it('FAIL', async () => {
-        const { port, done } = await mockServer({
-            expValue: 'fail'
-        });
-
-        const adb = new AdbClient({ port, noAutoStart: true });
+        const adbMock = new AdbMock([{ cmd: 'fail', res: null }]);
         try {
-            await adb.listDevices();
-        } catch (e) {
-            expect(e.message).toBe('Failure');
+            const port = await adbMock.start();
+            const adb = new AdbClient({ port, noAutoStart: true });
+            try {
+                await adb.listDevices();
+            } catch (e) {
+                expect(e.message).toBe('Failure');
+            }
         } finally {
-            await done();
+            await adbMock.end();
         }
     });
 
     it('Unexpected', async () => {
-        const { port, done } = await mockServer({
-            expValue: 'fail',
-            unexpected: true
-        });
-
-        const adb = new AdbClient({ port, noAutoStart: true });
+        const adbMock = new AdbMock([
+            { cmd: 'fail', res: null, unexpected: true }
+        ]);
         try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ port, noAutoStart: true });
             await adb.listDevices();
         } catch (e) {
             expect(e).toBeInstanceOf(UnexpectedDataError);
         } finally {
-            await done();
+            await adbMock.end();
         }
     });
 
     it('Unauthorized', async () => {
-        const raw =
-            'b137f5dc               unauthorized usb:337641472X transport_id:1';
+        const mock = new AdbMock([
+            {
+                cmd: 'host:devices-l',
+                res: 'b137f5dc               unauthorized usb:337641472X transport_id:1'
+            }
+        ]);
 
-        const mock = new AdbMock([{ cmd: 'host:devices-l', res: raw }]);
-
-        const port = await mock.start();
         try {
+            const port = await mock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const devices = await adb.listDevices();
             const expected: IAdbDevice[] = [
@@ -67,11 +68,10 @@ describe('List devices', () => {
                 .concat(
                     'b137f5dd               device usb:337641472Y product:FP4eeb model:FP3 device:FP3 transport_id:2'
                 );
-        const { port, done } = await mockServer({
-            expValue: 'host:devices-l',
-            res: raw
-        });
+
+        const adbMock = new AdbMock([{ cmd: 'host:devices-l', res: raw }]);
         try {
+            const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const devices = await adb.listDevices();
             const expected: IAdbDevice[] = [
@@ -98,56 +98,51 @@ describe('List devices', () => {
             ];
             expect(devices).toEqual(expected);
         } finally {
-            await done();
+            await adbMock.end();
         }
     });
 
     it('Throw error when id or state is invalid', async () => {
-        const raw = 'test ';
-        const { port, done } = await mockServer({
-            expValue: 'host:devices-l',
-            res: raw
-        });
+        const adbMock = new AdbMock([{ cmd: 'host:devices-l', res: 'test' }]);
         try {
+            const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             await adb.listDevices();
         } catch (e) {
             expect(e).toBeInstanceOf(UnexpectedDataError);
         } finally {
-            await done();
+            await adbMock.end();
         }
     });
 
     it('Throw error when properties are invalid', async () => {
-        const raw =
-            'b137f5dc               unauthorized usb337641472X transport_id:1';
-        const { port, done } = await mockServer({
-            expValue: 'host:devices-l',
-            res: raw
+        const adbMock = new AdbMock({
+            cmd: 'host:devices-l',
+            res: 'b137f5dc               unauthorized usb337641472X transport_id:1'
         });
         try {
+            const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             await adb.listDevices();
         } catch (e) {
             expect(e).toBeInstanceOf(UnexpectedDataError);
         } finally {
-            await done();
+            await adbMock.end();
         }
     });
 
     it('No devices', async () => {
-        const raw = '';
-        const { port, done } = await mockServer({
-            expValue: 'host:devices-l',
-            res: raw,
-            withEncode: true
+        const adbMock = new AdbMock({
+            cmd: 'host:devices-l',
+            res: ''
         });
         try {
+            const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const devices = await adb.listDevices();
             expect(devices).toEqual([]);
         } finally {
-            await done();
+            await adbMock.end();
         }
     });
 });

@@ -4,7 +4,7 @@ import AdbClient from '../../lib/client';
 describe('IP address', () => {
     it('OKAY', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null },
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
                 cmd: "shell:ip route | awk '{ print $9 }'",
                 res: '127.0.0.1',
