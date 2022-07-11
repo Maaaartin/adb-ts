@@ -173,7 +173,7 @@ export interface StartActivityOptions extends StartServiceOptions {
 export interface IAdbDevice {
     id: string;
     state: DeviceState;
-    path: string;
+    path?: string;
     device?: string;
     model?: string;
     product?: string;

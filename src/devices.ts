@@ -29,8 +29,7 @@ function constructDevice(values: string[]): IAdbDevice {
             /emulator/.test(id) && state === 'device'
                 ? 'emulator'
                 : (state as DeviceState),
-        // TODO check path for local connection
-        path: usb || '',
+        path: usb,
         product: product,
         model: model,
         device: device,

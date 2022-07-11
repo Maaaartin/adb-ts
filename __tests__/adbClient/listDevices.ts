@@ -2,7 +2,6 @@ import { IAdbDevice, UnexpectedDataError } from '../../lib';
 import AdbClient from '../../lib/client';
 import AdbMock from '../../mockery/mockAdbServer';
 
-// TODO test emulator and offline
 describe('List devices', () => {
     it('FAIL', async () => {
         const adbMock = new AdbMock([{ cmd: 'fail', res: null }]);
