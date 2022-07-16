@@ -51,6 +51,10 @@ export default class AdbMock {
         this.socket?.write(Reply.OKAY.concat(data || ''));
     }
 
+    private writeUnexpected(): void {
+        this.socket?.write('ABCD');
+    }
+
     private next(): Sequence | null {
         const nextSeq = this.seq.next();
         if (nextSeq.done) {
@@ -62,8 +66,7 @@ export default class AdbMock {
     private connectionHandler(value: string): void {
         const nextSeq = this.next();
         if (nextSeq?.unexpected) {
-            this.socket?.write('ABCD');
-            return;
+            return this.writeUnexpected();
         }
         if (value === nextSeq?.cmd) {
             if (nextSeq.rawRes) {
@@ -81,16 +84,20 @@ export default class AdbMock {
     private handleSequence(): void {
         this.socket?.on('readable', async () => {
             for await (const seq of this.seq) {
+                if (seq.unexpected) {
+                    this.writeUnexpected();
+                    continue;
+                }
                 const value = await this.readValue();
                 if (seq.cmd === value) {
                     if (seq.rawRes) {
                         this.writeRaw(seq.res);
-                    } else {
-                        this.writeOkay(seq.res);
+                        continue;
                     }
-                } else {
-                    this.writeFail();
+                    this.writeOkay(seq.res);
+                    continue;
                 }
+                this.writeFail();
             }
             this.parser?.end();
         });
