@@ -19,7 +19,7 @@ describe('Get serial no', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'fail', res: null, rawRes: true },
             { cmd: 'shell:getprop ro.serialno', res: 'test', rawRes: true }
         ]);
         try {

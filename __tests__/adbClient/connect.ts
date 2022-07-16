@@ -54,8 +54,25 @@ describe('Connect', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
                 await adb.connect('127.0.0.1', 4444);
+                fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe('invalid');
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('FAIL', async () => {
+        const adbMock = new AdbMock([{ cmd: 'test', res: 'connected to' }]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.connect('127.0.0.1', 4444);
+                fail('Expected Failure');
+            } catch (e) {
+                expect(e.message).toBe('Failure');
             }
         } finally {
             await adbMock.end();

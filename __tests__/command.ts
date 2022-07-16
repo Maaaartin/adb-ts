@@ -99,6 +99,7 @@ describe('Handle response', () => {
             const cmd = new MockCommand(conn);
             try {
                 await cmd.execute();
+                fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe('Failure');
             }

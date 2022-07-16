@@ -28,6 +28,7 @@ describe('Transport tests', () => {
             });
             try {
                 await client.transport('5678');
+                fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe('Failure');
             }
@@ -50,6 +51,7 @@ describe('Transport tests', () => {
             });
             try {
                 await client.transport('5678');
+                fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe(
                     "Unexpected 'ABCD', was expecting OKAY or FAIL"

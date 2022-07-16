@@ -19,7 +19,7 @@ describe('Version tests', () => {
 
     it('FAIL', async () => {
         const adbMock = new AdbMock({
-            cmd: 'host:version',
+            cmd: 'fail',
             res: 'host:something'
         });
         try {
@@ -30,6 +30,7 @@ describe('Version tests', () => {
             });
             try {
                 await client.version();
+                fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe('Failure');
             }

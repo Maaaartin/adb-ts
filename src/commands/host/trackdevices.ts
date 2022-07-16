@@ -8,9 +8,7 @@ export default class TrackCommand extends DevicesCommand {
         this.keepAlive = true;
         this.readOnExecute = false;
     }
-    end(): Promise<void> {
-        return super.end();
-    }
+
     execute(): Promise<IAdbDevice[]> {
         return super.execute('host:track-devices-l');
     }

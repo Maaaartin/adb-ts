@@ -52,12 +52,18 @@ export default abstract class DevicesCommand extends Command {
     }
 
     execute(command: string): Promise<IAdbDevice[]> {
-        return this.initExecute(command).then(
-            this.handleReply(
-                this.readOnExecute
-                    ? (): Promise<IAdbDevice[]> => this.readDevices()
-                    : []
+        return this.initExecute(command)
+            .then(
+                this.handleReply(
+                    this.readOnExecute
+                        ? (): Promise<IAdbDevice[]> => this.readDevices()
+                        : []
+                )
             )
-        );
+            .catch((err) =>
+                this.end().then(() => {
+                    throw err;
+                })
+            );
     }
 }

@@ -61,4 +61,52 @@ describe('IP address', () => {
             await adbMock.end();
         }
     });
+
+    it('FAIL first response', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'fail', res: null, rawRes: true },
+            {
+                cmd: "shell:ip route | awk '{ print $9 }'",
+                res: '127.0.0.1',
+                rawRes: true
+            }
+        ]);
+
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.getIpAddress('serial');
+                fail('Expected Failure');
+            } catch (e) {
+                expect(e.message).toBe('Failure');
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('FAIL second response', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: 'fail',
+                res: '127.0.0.1',
+                rawRes: true
+            }
+        ]);
+
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.getIpAddress('serial');
+                fail('Expected Failure');
+            } catch (e) {
+                expect(e.message).toBe('Failure');
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
 });

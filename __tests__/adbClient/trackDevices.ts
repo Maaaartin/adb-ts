@@ -206,4 +206,24 @@ describe('Track devices', () => {
             await adbMock.end();
         }
     });
+
+    it('FAIL', async () => {
+        const adbMock = new AdbMock({
+            cmd: 'fail',
+            res: 'b137f5dc               unauthorized usb337641472X transport_id:1'
+        });
+
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.trackDevices();
+                fail('Expected Failure');
+            } catch (e) {
+                expect(e.message).toBe('Failure');
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
 });
