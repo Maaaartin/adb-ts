@@ -45,7 +45,7 @@ export const encodeData = (data: Buffer | string): Buffer => {
     return Buffer.concat([Buffer.from(encodeLength(data.length)), data]);
 };
 
-export const stringToType = (value: string): PrimitiveType => {
+export const stringToType = (value: string): PrimitiveType | Date => {
     const num = Number(value);
     if (!isNaN(num) && value !== '') {
         return num;
@@ -198,9 +198,9 @@ export interface ForwardsObject extends ReversesObject {
     serial: string;
 }
 
-export type PrimitiveType = string | boolean | number | Date | null | undefined;
+export type PrimitiveType = string | boolean | number | null | undefined;
 
-export type PrimitiveDictionary = Record<string, PrimitiveType>;
+export type PrimitiveDictionary = Record<string, PrimitiveType | Date>;
 
 export interface InstallOptions {
     reinstall?: boolean;
@@ -285,6 +285,8 @@ export interface IPostExecute<T> {
 export interface ICmd {
     readonly Cmd: string;
 }
+
+// class
 
 export type MonkeyCallback<T = string> = (
     err: Error | null,

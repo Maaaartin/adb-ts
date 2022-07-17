@@ -7,7 +7,7 @@ export default class ListPropertiesCommand extends TransportParseAllCommand<Prim
     }
     protected parse(value: string): PrimitiveDictionary {
         const properties: PrimitiveDictionary = {};
-        let match;
+        let match: RegExpExecArray | null = null;
         const regExp = /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm;
         while ((match = regExp.exec(value))) {
             properties[match[1]] = stringToType(match[2]);
