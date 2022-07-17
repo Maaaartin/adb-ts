@@ -295,6 +295,11 @@ export default class AdbClient {
             : this.getProp(serial, 'ro.serialno').then((v) => `${v}`);
     }
 
+    /**
+     *
+     * @param serial
+     * @returns {String|'unknown'}
+     */
     getDevicePath(serial: string): Promise<string>;
     getDevicePath(serial: string, cb: ExecCallbackWithValue<string>): void;
     getDevicePath(

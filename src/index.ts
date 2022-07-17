@@ -47,21 +47,25 @@ export const encodeData = (data: Buffer | string): Buffer => {
 
 export const stringToType = (value: string): PrimitiveType => {
     const num = Number(value);
-    if (isNaN(num) || value === '') {
-        switch (value) {
-            case '':
-                return undefined;
-            case 'true':
-                return true;
-            case 'false':
-                return false;
-            case 'null':
-                return null;
-            default:
-                return value;
-        }
-    } else {
+    if (!isNaN(num) && value !== '') {
         return num;
+    }
+    const date = new Date(value);
+    if (!isNaN(date.getMilliseconds())) {
+        return date;
+    }
+
+    switch (value) {
+        case '':
+            return undefined;
+        case 'true':
+            return true;
+        case 'false':
+            return false;
+        case 'null':
+            return null;
+        default:
+            return value;
     }
 };
 
@@ -194,7 +198,7 @@ export interface ForwardsObject extends ReversesObject {
     serial: string;
 }
 
-export type PrimitiveType = string | boolean | number | null | undefined;
+export type PrimitiveType = string | boolean | number | Date | null | undefined;
 
 export type PrimitiveDictionary = Record<string, PrimitiveType>;
 

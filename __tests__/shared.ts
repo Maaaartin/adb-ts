@@ -79,6 +79,11 @@ describe('String to type', () => {
         const result = stringToType('[]');
         expect(result).toBe('[]');
     });
+
+    it('Cast string date as Date', () => {
+        const result = stringToType('Mon Dec 20 15:05:47 UTC 2021');
+        expect(result).toEqual(new Date('Mon Dec 20 15:05:47 UTC 2021'));
+    });
 });
 
 describe('Nodeify', () => {
