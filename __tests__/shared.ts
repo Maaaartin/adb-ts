@@ -7,7 +7,9 @@ import {
     parseCbParam,
     parseValueParam,
     parsePrimitiveParam,
-    parseOptions
+    parseOptions,
+    findMatches,
+    PrimitiveWithDate
 } from '../lib/index';
 
 describe('Encode/decode length', () => {
@@ -67,7 +69,7 @@ describe('String to type', () => {
 
     it('Cast undefined', () => {
         const result = stringToType('');
-        expect(result).toBe(undefined);
+        expect(result).toBe(void 0);
     });
 
     it('Cast string', () => {
@@ -88,13 +90,13 @@ describe('String to type', () => {
 
 describe('Nodeify', () => {
     it('Resolve Promise', async () => {
-        const result = await nodeify(Promise.resolve(null), undefined);
+        const result = await nodeify(Promise.resolve(null), void 0);
         expect(result).toBe(null);
     });
 
     it('Reject Promise', async () => {
         try {
-            await nodeify(Promise.reject(new Error('message')), undefined);
+            await nodeify(Promise.reject(new Error('message')), void 0);
         } catch (e) {
             expect(e.message).toBe('message');
         }
@@ -105,7 +107,7 @@ describe('Nodeify', () => {
             expect(err).toBe(null);
             expect(value).toBe(null);
         });
-        expect(result).toBe(undefined);
+        expect(result).toBe(void 0);
     });
 
     it('Reject Callback', () => {
@@ -113,22 +115,22 @@ describe('Nodeify', () => {
             Promise.reject(new Error('message')),
             (err, value) => {
                 expect(err?.message).toBe('message');
-                expect(value).toBe(undefined);
+                expect(value).toBe(void 0);
             }
         );
-        expect(result).toBe(undefined);
+        expect(result).toBe(void 0);
     });
 });
 
 describe('Parse value param', () => {
     it('undefined', () => {
-        const result = parseValueParam(undefined);
-        expect(result).toBe(undefined);
+        const result = parseValueParam(void 0);
+        expect(result).toBe(void 0);
     });
 
     it('function', () => {
         const result = parseValueParam(() => null);
-        expect(result).toBe(undefined);
+        expect(result).toBe(void 0);
     });
 
     it('object', () => {
@@ -139,18 +141,18 @@ describe('Parse value param', () => {
 
 describe('Parse cb params', () => {
     it('undefined/undefined', () => {
-        const result = parseCbParam(undefined, undefined);
-        expect(result).toBe(undefined);
+        const result = parseCbParam(void 0, void 0);
+        expect(result).toBe(void 0);
     });
 
     it('function/undefined', () => {
-        const result = parseCbParam(() => null, undefined);
+        const result = parseCbParam(() => null, void 0);
         expect(typeof result).toBe('function');
     });
 
     it('object/undefined', () => {
-        const result = parseCbParam({ one: 1 }, undefined);
-        expect(result).toBe(undefined);
+        const result = parseCbParam({ one: 1 }, void 0);
+        expect(result).toBe(void 0);
     });
 
     it('object/function', () => {
@@ -159,7 +161,7 @@ describe('Parse cb params', () => {
     });
 
     it('undefined/function', () => {
-        const result = parseCbParam(undefined, () => null);
+        const result = parseCbParam(void 0, () => null);
         expect(typeof result).toBe('function');
     });
 
@@ -174,7 +176,7 @@ describe('Parse cb params', () => {
 
 describe('Parse primitive type', () => {
     it('undefined', () => {
-        const result = parsePrimitiveParam(1, undefined);
+        const result = parsePrimitiveParam(1, void 0);
         expect(result).toBe(1);
     });
 
@@ -186,17 +188,78 @@ describe('Parse primitive type', () => {
 
 describe('Parse options', () => {
     it('undefined', () => {
-        const result = parseOptions(undefined);
-        expect(result).toBe(undefined);
+        const result = parseOptions(void 0);
+        expect(result).toBe(void 0);
     });
 
     it('function', () => {
         const result = parseOptions(() => null);
-        expect(result).toBe(undefined);
+        expect(result).toBe(void 0);
     });
 
     it('object', () => {
         const result = parseOptions({ one: 1 });
         expect(result).toEqual({ one: 1 });
+    });
+});
+
+describe('Find matches', () => {
+    it('Return array', () => {
+        const result = findMatches(
+            `[one]: [1]
+[two]: [two]
+[three]: [false]
+[four]: [true]
+[five]: [null]
+[six]: [[]]
+[seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]
+[eight]: []`,
+            /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm
+        );
+        expect(result).toEqual([
+            ['one', '1'],
+            ['two', 'two'],
+            ['three', 'false'],
+            ['four', 'true'],
+            ['five', 'null'],
+            ['six', '[]'],
+            [
+                'seven',
+                'Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)'
+            ],
+            ['eight', '']
+        ]);
+    });
+
+    it('Return map', () => {
+        const result = findMatches(
+            `[one]: [1]
+[two]: [two]
+[three]: [false]
+[four]: [true]
+[five]: [null]
+[six]: [[]]
+[seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]
+[eight]: []`,
+            /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm,
+            true
+        );
+        expect(result).toEqual(
+            new Map<string, PrimitiveWithDate>([
+                ['one', 1],
+                ['two', 'two'],
+                ['three', false],
+                ['four', true],
+                ['five', null],
+                ['six', '[]'],
+                [
+                    'seven',
+                    new Date(
+                        'Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)'
+                    )
+                ],
+                ['eight', void 0]
+            ])
+        );
     });
 });

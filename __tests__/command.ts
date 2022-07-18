@@ -20,7 +20,7 @@ describe('Escape tests', () => {
     const connection = new Connection();
     const cmd = new MockCommand(connection);
     it('escape undefined', () => {
-        const result = cmd.escape(undefined);
+        const result = cmd.escape(void 0);
         expect(result).toBe('');
     });
     it('escape string', () => {
@@ -45,7 +45,7 @@ describe('Escape compat tests', () => {
     const connection = new Connection();
     const cmd = new MockCommand(connection);
     it('escape undefined', () => {
-        const result = cmd.escapeCompat(undefined);
+        const result = cmd.escapeCompat(void 0);
         expect(result).toBe('');
     });
     it('escape string', () => {
@@ -84,7 +84,7 @@ describe('Handle response', () => {
             const conn = await getConnection(port);
             const cmd = new MockCommand(conn);
             const result = await cmd.execute();
-            expect(result).toBe(undefined);
+            expect(result).toBe(void 0);
         } finally {
             await adbMock.end();
         }

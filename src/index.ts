@@ -45,7 +45,7 @@ export const encodeData = (data: Buffer | string): Buffer => {
     return Buffer.concat([Buffer.from(encodeLength(data.length)), data]);
 };
 
-export const stringToType = (value: string): PrimitiveType | Date => {
+export const stringToType = (value: string): PrimitiveWithDate => {
     const num = Number(value);
     if (!isNaN(num) && value !== '') {
         return num;
@@ -57,7 +57,7 @@ export const stringToType = (value: string): PrimitiveType | Date => {
 
     switch (value) {
         case '':
-            return undefined;
+            return void 0;
         case 'true':
             return true;
         case 'false':
@@ -116,18 +116,17 @@ export const parseOptions = <R extends Record<string, any>>(
     return options;
 };
 
-// TODO write tests
 export function findMatches(
     value: string,
     regExp: RegExp,
     parse: true
-): Map<string, PrimitiveType | Date>;
+): Map<string, PrimitiveWithDate>;
 export function findMatches(value: string, regExp: RegExp): [string, string][];
 export function findMatches(
     value: string,
     regExp: RegExp,
     parse?: true
-): Map<string, PrimitiveType | Date> | [string, string][] {
+): Map<string, PrimitiveWithDate> | [string, string][] {
     let match: RegExpExecArray | null = null;
     const acc: [string, string][] = [];
     while ((match = regExp.exec(value))) {
@@ -224,7 +223,9 @@ export interface ForwardsObject extends ReversesObject {
 
 export type PrimitiveType = string | boolean | number | null | undefined;
 
-export type PrimitiveDictionary = Record<string, PrimitiveType | Date>;
+export type PrimitiveWithDate = PrimitiveType | Date;
+
+export type PrimitiveDictionary = Record<string, PrimitiveWithDate>;
 
 export interface InstallOptions {
     reinstall?: boolean;

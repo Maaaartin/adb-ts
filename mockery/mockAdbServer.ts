@@ -6,8 +6,8 @@ import { promisify } from 'util';
 type Sequence = {
     cmd: string;
     res: string | null;
-    rawRes?: boolean;
-    unexpected?: boolean;
+    rawRes?: true;
+    unexpected?: true;
 };
 export default class AdbMock {
     private server_ = new net.Server();
