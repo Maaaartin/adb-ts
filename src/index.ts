@@ -116,6 +116,30 @@ export const parseOptions = <R extends Record<string, any>>(
     return options;
 };
 
+// TODO write tests
+export function findMatches(
+    value: string,
+    regExp: RegExp,
+    parse: true
+): Map<string, PrimitiveType | Date>;
+export function findMatches(value: string, regExp: RegExp): [string, string][];
+export function findMatches(
+    value: string,
+    regExp: RegExp,
+    parse?: true
+): Map<string, PrimitiveType | Date> | [string, string][] {
+    let match: RegExpExecArray | null = null;
+    const acc: [string, string][] = [];
+    while ((match = regExp.exec(value))) {
+        acc.push([match[1], match[2]]);
+    }
+    if (!parse) {
+        return acc;
+    }
+
+    return new Map(acc.map(([k, v]) => [k, stringToType(v)]));
+}
+
 export type ExecCallback = (err: null | Error) => void;
 export type ExecCallbackWithValue<T> = (err: null | Error, value: T) => void;
 
@@ -285,8 +309,6 @@ export interface IPostExecute<T> {
 export interface ICmd {
     readonly Cmd: string;
 }
-
-// class
 
 export type MonkeyCallback<T = string> = (
     err: Error | null,

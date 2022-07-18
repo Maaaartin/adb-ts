@@ -1,4 +1,4 @@
-import { PrimitiveDictionary, stringToType } from '../..';
+import { findMatches, PrimitiveDictionary, stringToType } from '../..';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
 export default class ListPropertiesCommand extends TransportParseAllCommand<PrimitiveDictionary> {
@@ -6,13 +6,13 @@ export default class ListPropertiesCommand extends TransportParseAllCommand<Prim
         return 'shell:getprop';
     }
     protected parse(value: string): PrimitiveDictionary {
-        const properties: PrimitiveDictionary = {};
-        let match: RegExpExecArray | null = null;
-        const regExp = /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm;
-        while ((match = regExp.exec(value))) {
-            properties[match[1]] = stringToType(match[2]);
-        }
-        return properties;
+        return findMatches(
+            value,
+            /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm
+        ).reduce<PrimitiveDictionary>((acc, [k, v]) => {
+            acc[k] = stringToType(v);
+            return acc;
+        }, {});
     }
 
     execute(serial: string): Promise<PrimitiveDictionary> {
