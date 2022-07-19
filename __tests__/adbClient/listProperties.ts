@@ -1,5 +1,6 @@
 import AdbMock from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
+import { DataMap } from '../../lib';
 
 describe('List properties', () => {
     it('OKAY', async () => {
@@ -21,17 +22,22 @@ describe('List properties', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.listProperties('serial');
-            expect(result).toEqual({
-                one: 1,
-                two: 'two',
-                three: false,
-                four: true,
-                five: null,
-                six: undefined,
-                seven: new Date(
-                    'Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)'
-                )
-            });
+            expect(result).toEqual(
+                new DataMap([
+                    ['one', 1],
+                    ['two', 'two'],
+                    ['three', false],
+                    ['four', true],
+                    ['five', null],
+                    ['six', void 0],
+                    [
+                        'seven',
+                        new Date(
+                            'Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)'
+                        )
+                    ]
+                ])
+            );
         } finally {
             await adbMock.end();
         }

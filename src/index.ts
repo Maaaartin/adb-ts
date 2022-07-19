@@ -120,13 +120,13 @@ export function findMatches(
     value: string,
     regExp: RegExp,
     parse: true
-): Map<string, PrimitiveWithDate>;
+): DataMap;
 export function findMatches(value: string, regExp: RegExp): [string, string][];
 export function findMatches(
     value: string,
     regExp: RegExp,
     parse?: true
-): Map<string, PrimitiveWithDate> | [string, string][] {
+): DataMap | [string, string][] {
     let match: RegExpExecArray | null = null;
     const acc: [string, string][] = [];
     while ((match = regExp.exec(value))) {
@@ -136,7 +136,7 @@ export function findMatches(
         return acc;
     }
 
-    return new Map(acc.map(([k, v]) => [k, stringToType(v)]));
+    return new DataMap(acc.map(([k, v]) => [k, stringToType(v)]));
 }
 
 export type ExecCallback = (err: null | Error) => void;
@@ -431,5 +431,17 @@ export class AdbError extends Error {
         this.code = code;
         this.path = path;
         Error.captureStackTrace(this);
+    }
+}
+
+export class DataMap extends Map<string, PrimitiveWithDate> {
+    toArray(): [string, PrimitiveWithDate][] {
+        return [...this.entries()];
+    }
+    toObject(): PrimitiveDictionary {
+        return this.toArray().reduce(
+            (obj, [key, val]) => Object.assign(obj, { [key]: val }),
+            {}
+        );
     }
 }

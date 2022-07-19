@@ -1,21 +1,15 @@
-import { findMatches, PrimitiveDictionary, stringToType } from '../..';
+import { DataMap, findMatches } from '../..';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
-export default class ListPropertiesCommand extends TransportParseAllCommand<PrimitiveDictionary> {
+export default class ListPropertiesCommand extends TransportParseAllCommand<DataMap> {
     get Cmd(): string {
         return 'shell:getprop';
     }
-    protected parse(value: string): PrimitiveDictionary {
-        return findMatches(
-            value,
-            /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm
-        ).reduce<PrimitiveDictionary>((acc, [k, v]) => {
-            acc[k] = stringToType(v);
-            return acc;
-        }, {});
+    protected parse(value: string): DataMap {
+        return findMatches(value, /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm, true);
     }
 
-    execute(serial: string): Promise<PrimitiveDictionary> {
+    execute(serial: string): Promise<DataMap> {
         return super.preExecute(serial);
     }
 }
