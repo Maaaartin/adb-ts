@@ -9,7 +9,7 @@ import {
     parsePrimitiveParam,
     parseOptions,
     findMatches,
-    PrimitiveWithDate
+    DataMap
 } from '../lib/index';
 
 describe('Encode/decode length', () => {
@@ -245,7 +245,7 @@ describe('Find matches', () => {
             true
         );
         expect(result).toEqual(
-            new Map<string, PrimitiveWithDate>([
+            new DataMap([
                 ['one', 1],
                 ['two', 'two'],
                 ['three', false],
