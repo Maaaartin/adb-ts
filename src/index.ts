@@ -45,7 +45,7 @@ export const encodeData = (data: Buffer | string): Buffer => {
     return Buffer.concat([Buffer.from(encodeLength(data.length)), data]);
 };
 
-export const stringToType = (value: string): PrimitiveWithDate => {
+export const stringToType = (value = ''): PrimitiveWithDate => {
     const num = Number(value);
     if (!isNaN(num) && value !== '') {
         return num;
@@ -65,7 +65,7 @@ export const stringToType = (value: string): PrimitiveWithDate => {
         case 'null':
             return null;
         default:
-            return value;
+            return `${value}`;
     }
 };
 

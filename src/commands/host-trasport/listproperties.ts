@@ -10,6 +10,6 @@ export default class ListPropertiesCommand extends TransportParseAllCommand<Data
     }
 
     execute(serial: string): Promise<DataMap> {
-        return super.preExecute(serial);
+        return this.preExecute(serial);
     }
 }

@@ -1,19 +1,13 @@
 import TransportParseAllCommand from '../transport-parse-all-command';
+import { DataMap, findMatches } from '../..';
 
-import { PrimitiveDictionary, stringToType } from '../..';
-
-export default class ListFeaturesCommand extends TransportParseAllCommand {
-    parse(value: string) {
-        const features: PrimitiveDictionary = {};
-        let match;
-        const regExp = /^feature:(.*?)(?:=(.*?))?\r?$/gm;
-        while ((match = regExp.exec(value))) {
-            features[match[1]] = stringToType(match[2]) || true;
-        }
-        return features;
+export default class ListFeaturesCommand extends TransportParseAllCommand<DataMap> {
+    Cmd = 'shell:pm list features 2>/dev/null';
+    parse(value: string): DataMap {
+        return findMatches(value, /^feature:(.*?)(?:=(.*?))?\r?$/gm, true);
     }
 
-    execute(serial: string): Promise<PrimitiveDictionary> {
-        return super.execute(serial, 'shell:pm list features 2>/dev/null');
+    execute(serial: string): Promise<DataMap> {
+        return this.preExecute(serial);
     }
 }
