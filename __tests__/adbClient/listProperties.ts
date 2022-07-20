@@ -70,7 +70,7 @@ describe('List properties', () => {
         }
     });
 
-    it('FAIL first response', async () => {
+    it('FAIL second response', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
