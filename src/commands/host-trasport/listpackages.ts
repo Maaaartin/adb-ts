@@ -1,17 +1,15 @@
+import { findMatches } from '../..';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
-export default class ListPackagesCommand extends TransportParseAllCommand {
-    protected parse(value: string) {
-        const packages = [];
-        let match;
-        const regExp = /^package:(.*?)\r?$/gm;
-        while ((match = regExp.exec(value))) {
-            packages.push(match[1]);
-        }
-        return packages;
+export default class ListPackagesCommand extends TransportParseAllCommand<
+    string[]
+> {
+    Cmd = 'shell:pm list packages 2>/dev/null';
+    protected parse(value: string): string[] {
+        return findMatches(value, /^package:(.*?)\r?$/gm).map(([key]) => key);
     }
 
     execute(serial: string): Promise<string[]> {
-        return super.execute(serial, 'shell:pm list packages 2>/dev/null');
+        return this.preExecute(serial);
     }
 }

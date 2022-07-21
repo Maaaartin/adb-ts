@@ -30,7 +30,8 @@ import {
     parsePrimitiveParam,
     parseCbParam,
     parseValueParam,
-    IpConnectConstruct
+    IpConnectConstruct,
+    DataMap
 } from '.';
 import Sync, { SyncMode } from './sync';
 import { exec, execFile } from 'child_process';
@@ -314,15 +315,12 @@ export default class AdbClient {
         );
     }
 
-    listProperties(serial: string): Promise<PrimitiveDictionary>;
+    listProperties(serial: string): Promise<DataMap>;
+    listProperties(serial: string, cb: ExecCallbackWithValue<DataMap>): void;
     listProperties(
         serial: string,
-        cb: ExecCallbackWithValue<PrimitiveDictionary>
-    ): void;
-    listProperties(
-        serial: string,
-        cb?: ExecCallbackWithValue<PrimitiveDictionary>
-    ): Promise<PrimitiveDictionary> | void {
+        cb?: ExecCallbackWithValue<DataMap>
+    ): Promise<DataMap> | void {
         return nodeify(
             this.connection().then((conn) =>
                 new ListPropertiesCommand(conn).execute(serial)
@@ -331,15 +329,12 @@ export default class AdbClient {
         );
     }
 
-    listFeatures(serial: string): Promise<PrimitiveDictionary>;
+    listFeatures(serial: string): Promise<DataMap>;
+    listFeatures(serial: string, cb: ExecCallbackWithValue<DataMap>): void;
     listFeatures(
         serial: string,
-        cb: ExecCallbackWithValue<PrimitiveDictionary>
-    ): void;
-    listFeatures(
-        serial: string,
-        cb?: ExecCallbackWithValue<PrimitiveDictionary>
-    ): Promise<PrimitiveDictionary> | void {
+        cb?: ExecCallbackWithValue<DataMap>
+    ): Promise<DataMap> | void {
         return nodeify(
             this.connection().then((conn) =>
                 new ListFeaturesCommand(conn).execute(serial)
