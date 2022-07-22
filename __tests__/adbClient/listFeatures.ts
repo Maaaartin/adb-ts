@@ -54,6 +54,7 @@ feature:six`,
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
                 await adb.listFeatures('serial');
+                fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe('Failure');
             }
@@ -81,6 +82,7 @@ feature:six`,
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
                 await adb.listFeatures('serial');
+                fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe('Failure');
             }
@@ -113,6 +115,7 @@ feature:six`,
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
                 await adb.listFeatures('serial');
+                fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe(
                     "Unexpected 'ABCD', was expecting OKAY or FAIL"
@@ -147,6 +150,7 @@ feature:six`,
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
                 await adb.listFeatures('serial');
+                fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe(
                     "Unexpected 'ABCD', was expecting OKAY or FAIL"

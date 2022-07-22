@@ -42,6 +42,7 @@ describe('List properties', () => {
             await adbMock.end();
         }
     });
+
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
             { cmd: 'fail', res: null, rawRes: true },
@@ -62,6 +63,7 @@ describe('List properties', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
                 await adb.listProperties('serial');
+                fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe('Failure');
             }
@@ -90,6 +92,7 @@ describe('List properties', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
                 await adb.listProperties('serial');
+                fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe('Failure');
             }
@@ -123,6 +126,7 @@ describe('List properties', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
                 await adb.listProperties('serial');
+                fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe(
                     "Unexpected 'ABCD', was expecting OKAY or FAIL"
@@ -158,6 +162,7 @@ describe('List properties', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
                 await adb.listProperties('serial');
+                fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe(
                     "Unexpected 'ABCD', was expecting OKAY or FAIL"
