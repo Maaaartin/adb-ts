@@ -133,38 +133,15 @@ export function findMatches(
     while ((match = regExp.exec(value))) {
         acc.push(match.slice(1));
     }
-    if (factor === 1) {
-        return new Set(acc.map(([val]) => val));
+    switch (factor) {
+        case 1:
+            return new Set(acc.map(([val]) => val));
+        case 2:
+            return new DataMap(acc.map(([k, v]) => [k, stringToType(v)]));
+        default:
+            return acc;
     }
-    if (factor === 2) {
-        return new DataMap(acc.map(([k, v]) => [k, stringToType(v)]));
-    }
-
-    return acc;
 }
-
-// export function findMatches(
-//     value: string,
-//     regExp: RegExp,
-//     parse: true
-// ): DataMap;
-// export function findMatches(value: string, regExp: RegExp): string[][];
-// export function findMatches(
-//     value: string,
-//     regExp: RegExp,
-//     parse?: true
-// ): DataMap | string[][] {
-//     let match: RegExpExecArray | null = null;
-//     const acc: string[][] = [];
-//     while ((match = regExp.exec(value))) {
-//         acc.push(match.slice(1));
-//     }
-//     if (!parse) {
-//         return acc;
-//     }
-
-//     return new DataMap(acc.map(([k, v]) => [k, stringToType(v)]));
-// }
 
 export type ExecCallback = (err: null | Error) => void;
 export type ExecCallbackWithValue<T> = (err: null | Error, value: T) => void;
