@@ -242,7 +242,7 @@ describe('Find matches', () => {
 [seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]
 [eight]: []`,
             /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm,
-            true
+            2
         );
         expect(result).toEqual(
             new DataMap([
@@ -261,5 +261,53 @@ describe('Find matches', () => {
                 ['eight', void 0]
             ])
         );
+    });
+
+    it('Return set', () => {
+        const result = findMatches(
+            `[one]: [1]
+[two]: [two]
+[three]: [false]
+[four]: [true]
+[five]: [null]
+[six]: [[]]
+[seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]
+[eight]: []`,
+            /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm,
+            1
+        );
+        expect(result).toEqual(
+            new Set([
+                'one',
+                'two',
+                'three',
+                'four',
+                'five',
+                'six',
+                'seven',
+                'eight'
+            ])
+        );
+    });
+});
+
+describe('Data map', () => {
+    it('To object', () => {
+        const map = new DataMap([
+            ['one', 1],
+            ['two', 2]
+        ]);
+        expect(map.toObject()).toEqual({ one: 1, two: 2 });
+    });
+
+    it('To array', () => {
+        const map = new DataMap([
+            ['one', 1],
+            ['two', 2]
+        ]);
+        expect(map.toArray()).toEqual([
+            ['one', 1],
+            ['two', 2]
+        ]);
     });
 });
