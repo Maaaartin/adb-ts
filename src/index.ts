@@ -121,16 +121,16 @@ export function findMatches(
     regExp: RegExp,
     parse: true
 ): DataMap;
-export function findMatches(value: string, regExp: RegExp): [string, string][];
+export function findMatches(value: string, regExp: RegExp): string[][];
 export function findMatches(
     value: string,
     regExp: RegExp,
     parse?: true
-): DataMap | [string, string][] {
+): DataMap | string[][] {
     let match: RegExpExecArray | null = null;
-    const acc: [string, string][] = [];
+    const acc: string[][] = [];
     while ((match = regExp.exec(value))) {
-        acc.push([match[1], match[2]]);
+        acc.push(match.slice(1));
     }
     if (!parse) {
         return acc;

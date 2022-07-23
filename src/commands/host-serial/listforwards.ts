@@ -1,19 +1,17 @@
-import { ForwardsObject } from '../..';
+import { findMatches, ForwardsObject } from '../..';
 import ParseCommand from '../parse-command';
 
 export default class ListForwardsCommand extends ParseCommand<
     ForwardsObject[]
 > {
     parse(value: string): ForwardsObject[] {
-        const line = value.split('\n').filter(Boolean);
-        return line.map((item) => {
-            const tmp = item.split(/\s+/);
-            return {
-                serial: tmp[0] || '',
-                local: tmp[1] || '',
-                remote: tmp[2] || ''
-            };
-        });
+        return findMatches(value, /([^\s]+)\s([^\s]+)\s([^\s]+)/gm).map(
+            ([serial, local, remote]) => ({
+                serial,
+                local,
+                remote
+            })
+        );
     }
 
     execute(serial: string): Promise<ForwardsObject[]> {
