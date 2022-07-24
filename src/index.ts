@@ -46,15 +46,6 @@ export const encodeData = (data: Buffer | string): Buffer => {
 };
 
 export const stringToType = (value = ''): PrimitiveWithDate => {
-    const num = Number(value);
-    if (!isNaN(num) && value !== '') {
-        return num;
-    }
-    const date = new Date(value);
-    if (!isNaN(date.getMilliseconds())) {
-        return date;
-    }
-
     switch (value) {
         case '':
             return void 0;
@@ -64,8 +55,17 @@ export const stringToType = (value = ''): PrimitiveWithDate => {
             return false;
         case 'null':
             return null;
-        default:
+        default: {
+            const num = Number(value);
+            if (!isNaN(num)) {
+                return num;
+            }
+            const date = new Date(value);
+            if (!isNaN(date.getMilliseconds())) {
+                return date;
+            }
             return `${value}`;
+        }
     }
 };
 
