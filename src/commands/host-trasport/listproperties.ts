@@ -6,7 +6,7 @@ export default class ListPropertiesCommand extends TransportParseAllCommand<Data
         return 'shell:getprop';
     }
     protected parse(value: string): DataMap {
-        return findMatches(value, /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm, 2);
+        return findMatches(value, /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm, 'map');
     }
 
     execute(serial: string): Promise<DataMap> {

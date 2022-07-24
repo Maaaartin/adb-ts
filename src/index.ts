@@ -119,24 +119,28 @@ export const parseOptions = <R extends Record<string, any>>(
 export function findMatches(
     value: string,
     regExp: RegExp,
-    factor: 1
+    parseTo: 'set'
 ): Set<string>;
-export function findMatches(value: string, regExp: RegExp, factor: 2): DataMap;
+export function findMatches(
+    value: string,
+    regExp: RegExp,
+    parseTo: 'map'
+): DataMap;
 export function findMatches(value: string, regExp: RegExp): string[][];
 export function findMatches(
     value: string,
     regExp: RegExp,
-    factor?: 1 | 2
+    parseTo?: 'set' | 'map'
 ): DataMap | string[][] | Set<string> {
     let match: RegExpExecArray | null = null;
     const acc: string[][] = [];
     while ((match = regExp.exec(value))) {
         acc.push(match.slice(1));
     }
-    switch (factor) {
-        case 1:
+    switch (parseTo) {
+        case 'set':
             return new Set(acc.map(([val]) => val));
-        case 2:
+        case 'map':
             return new DataMap(acc.map(([k, v]) => [k, stringToType(v)]));
         default:
             return acc;
@@ -216,12 +220,15 @@ export type StatsObject = {
     bytesTransferred: number;
 };
 
-export interface ReversesObject {
+export interface ReversesForwardsBase {
     local: string;
     remote: string;
 }
+export interface ReversesObject extends ReversesForwardsBase {
+    host: string;
+}
 
-export interface ForwardsObject extends ReversesObject {
+export interface ForwardsObject extends ReversesForwardsBase {
     serial: string;
 }
 

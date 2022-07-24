@@ -242,7 +242,7 @@ describe('Find matches', () => {
 [seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]
 [eight]: []`,
             /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm,
-            2
+            'map'
         );
         expect(result).toEqual(
             new DataMap([
@@ -274,7 +274,7 @@ describe('Find matches', () => {
 [seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]
 [eight]: []`,
             /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm,
-            1
+            'set'
         );
         expect(result).toEqual(
             new Set([

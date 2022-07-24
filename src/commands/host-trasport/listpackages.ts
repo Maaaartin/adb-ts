@@ -6,7 +6,7 @@ export default class ListPackagesCommand extends TransportParseAllCommand<
 > {
     Cmd = 'shell:pm list packages 2>/dev/null';
     protected parse(value: string): string[] {
-        return [...findMatches(value, /^package:(.*?)\r?$/gm, 1)];
+        return [...findMatches(value, /^package:(.*?)\r?$/gm, 'set')];
     }
 
     execute(serial: string): Promise<string[]> {
