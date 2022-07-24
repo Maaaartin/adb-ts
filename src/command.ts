@@ -55,7 +55,7 @@ export default abstract class Command<T = any> {
             );
     }
 
-    public abstract execute(...args: PrimitiveType[]): Promise<T>;
+    public abstract execute(...args: any[]): Promise<T>;
 
     escape(arg: PrimitiveType): string {
         switch (typeof arg) {
