@@ -1,19 +1,7 @@
-import { Reply } from '..';
 import TransportCommand from './tranport';
 
-export default class EmptyCommand extends TransportCommand {
-    execute(serial: string, ...params: any[]): Promise<void> {
-        return super.execute(serial, ...params).then((reply) => {
-            switch (reply) {
-                case Reply.OKAY:
-                    return;
-                case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
-                        throw e;
-                    });
-                default:
-                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
-            }
-        });
+export default abstract class EmptyCommand extends TransportCommand<void> {
+    protected postExecute(): Promise<void> {
+        return this.parser.readAll().then(this.handleReply(void 0));
     }
 }

@@ -1,7 +1,9 @@
 import EmptyCommand from '../empty-command';
 
 export default class ReverseCommand extends EmptyCommand {
+    Cmd = 'reverse:forward:';
     execute(serial: string, remote: string, local: string): Promise<void> {
-        return super.execute(serial, `reverse:forward:${remote};${local}`);
+        this.Cmd += `${remote};${local}`;
+        return super.preExecute(serial);
     }
 }

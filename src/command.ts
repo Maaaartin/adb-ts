@@ -14,7 +14,7 @@ export default abstract class Command<T = any> {
 
     protected handleReply<T = void>(
         resolver: T | (() => T | Promise<T>)
-    ): (reply: Reply) => Promise<T> {
+    ): (reply: string | Buffer) => Promise<T> {
         return (reply) => {
             const resolverToPromise = (): Promise<T> => {
                 if (typeof resolver === 'function') {
@@ -24,7 +24,8 @@ export default abstract class Command<T = any> {
                 }
                 return Promise.resolve(resolver);
             };
-            switch (reply) {
+            const replyStr = reply.toString();
+            switch (replyStr) {
                 case Reply.OKAY:
                     return resolverToPromise();
                 case Reply.FAIL:
@@ -33,7 +34,7 @@ export default abstract class Command<T = any> {
                     });
                 default:
                     throw this.parser.unexpected(
-                        reply,
+                        replyStr,
                         [Reply.OKAY, Reply.FAIL].join(' or ')
                     );
             }
@@ -44,12 +45,14 @@ export default abstract class Command<T = any> {
         return promisify<void>((cb) => this.connection._destroy(null, cb))();
     }
 
-    protected initExecute(...args: PrimitiveType[]): Promise<Reply> {
+    protected initExecute(...args: PrimitiveType[]): Promise<string> {
         this.connection.write(encodeData(args.join(' ')));
-        return (this.parser.readAscii(4) as Promise<Reply>).finally(
-            (): Promise<void> =>
-                this.keepAlive ? Promise.resolve() : this.end()
-        );
+        return this.parser
+            .readAscii(4)
+            .finally(
+                (): Promise<void> =>
+                    this.keepAlive ? Promise.resolve() : this.end()
+            );
     }
 
     public abstract execute(...args: PrimitiveType[]): Promise<T>;

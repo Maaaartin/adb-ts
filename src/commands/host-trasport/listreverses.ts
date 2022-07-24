@@ -1,8 +1,12 @@
 import { ReversesObject } from '../..';
 import TransportParseValueCommand from '../transport-parse-value-command';
 
-export default class ListReversesCommand extends TransportParseValueCommand {
-    parse(value: string) {
+export default class ListReversesCommand extends TransportParseValueCommand<
+    ReversesObject[]
+> {
+    Cmd = 'reverse:list-forward';
+
+    parse(value: string): ReversesObject[] {
         const reverses = [];
         const line = value.toString().split('\n');
         for (const item of line) {
@@ -17,6 +21,6 @@ export default class ListReversesCommand extends TransportParseValueCommand {
         return reverses;
     }
     execute(serial: string): Promise<ReversesObject[]> {
-        return super.execute(serial, 'reverse:list-forward');
+        return this.preExecute(serial);
     }
 }
