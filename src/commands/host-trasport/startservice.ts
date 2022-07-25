@@ -7,7 +7,7 @@ import {
     PrematureEOFError,
     UnexpectedDataError
 } from '../..';
-import TransportCommand from '../tranport';
+import TransportCommand from '../transport';
 
 export default class StartServiceCommand extends TransportCommand {
     private formatExtraType(type: AdbExtraType): string {

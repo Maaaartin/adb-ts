@@ -1,4 +1,4 @@
-import TransportCommand from '../tranport';
+import TransportCommand from '../transport';
 
 export default class SetProp extends TransportCommand {
     execute(serial: string, prop: string, value: any): Promise<void> {

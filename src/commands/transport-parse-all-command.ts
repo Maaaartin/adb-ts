@@ -1,4 +1,4 @@
-import TransportCommand from './tranport';
+import TransportCommand from './transport';
 
 export default abstract class TransportParseAllCommand<
     T

@@ -1,4 +1,4 @@
-import TransportCommand from './tranport';
+import TransportCommand from './transport';
 import Connection from '../connection';
 
 export default abstract class RawCommand extends TransportCommand<Connection> {

@@ -1,5 +1,5 @@
 import { Reply } from '../..';
-import TransportCommand from '../tranport';
+import TransportCommand from '../transport';
 import ping from 'ping';
 
 export default class TcpIpCommand extends TransportCommand {

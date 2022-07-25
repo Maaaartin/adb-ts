@@ -1,6 +1,6 @@
 import { Reply } from '../..';
 import Sync from '../../sync';
-import TransportCommand from '../tranport';
+import TransportCommand from '../transport';
 
 export default class SyncCommand extends TransportCommand {
     execute(serial: string) {

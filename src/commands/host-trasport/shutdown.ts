@@ -1,4 +1,4 @@
-import TransportCommand from '../tranport';
+import TransportCommand from '../transport';
 
 export default class ShutdownCommand extends TransportCommand<void> {
     Cmd = 'shell:reboot -p';

@@ -1,7 +1,7 @@
 import { Readable } from 'stream';
 import Connection from '../../connection';
 import { Reply } from '../..';
-import TransportCommand from '../tranport';
+import TransportCommand from '../transport';
 
 export default class IsInstalledCommand extends TransportCommand {
     execute(serial: string, pkg: string | Readable) {

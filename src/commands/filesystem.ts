@@ -1,5 +1,5 @@
 import { ICmd, Reply } from '..';
-import TransportCommand from './tranport';
+import TransportCommand from './transport';
 
 export default abstract class FileSystemCommand
     extends TransportCommand

@@ -1,4 +1,4 @@
-import TransportCommand from '../tranport';
+import TransportCommand from '../transport';
 
 export default class InputCommand extends TransportCommand {
     execute(serial: string, param1: string, param2: string, ...args: any[]) {

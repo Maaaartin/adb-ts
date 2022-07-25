@@ -1,7 +1,7 @@
 import { Reply } from '../..';
 import Connection from '../../connection';
 
-import TransportCommand from '../tranport';
+import TransportCommand from '../transport';
 
 export default class MonkeyCommand extends TransportCommand {
     execute(serial: string, port: number | string): Promise<Connection> {

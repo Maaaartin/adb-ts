@@ -1,5 +1,5 @@
 import { Reply } from '../..';
-import TransportCommand from '../tranport';
+import TransportCommand from '../transport';
 
 export default class UsbCommand extends TransportCommand {
     execute(serial: string) {

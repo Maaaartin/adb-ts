@@ -1,5 +1,5 @@
 import { encodeData, Reply } from '../..';
-import TransportCommand from '../tranport';
+import TransportCommand from '../transport';
 
 export default class TcpCommand extends TransportCommand {
     execute(port: number | string, host?: string) {

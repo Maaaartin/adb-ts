@@ -1,5 +1,5 @@
 import { Reply, UninstallOptions } from '../..';
-import TransportCommand from '../tranport';
+import TransportCommand from '../transport';
 
 export default class UninstallCommand extends TransportCommand {
     execute(serial: string, pkg: string, options?: UninstallOptions) {

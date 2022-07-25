@@ -1,5 +1,5 @@
 import { InstallOptions, Reply } from '../..';
-import TransportCommand from '../tranport';
+import TransportCommand from '../transport';
 
 export default class InstallCommand extends TransportCommand {
     private intentArgs(options?: InstallOptions) {
