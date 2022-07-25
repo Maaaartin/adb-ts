@@ -503,30 +503,15 @@ export default class AdbClient {
         );
     }
 
-    screenshot(serial: string): Promise<Jimp>;
-    screenshot(serial: string, cb?: ExecCallbackWithValue<Jimp>): void;
+    screenshot(serial: string): Promise<Buffer>;
+    screenshot(serial: string, cb?: ExecCallbackWithValue<Buffer>): void;
     screenshot(
         serial: string,
-        cb?: ExecCallbackWithValue<Jimp>
-    ): Promise<Jimp> | void {
+        cb?: ExecCallbackWithValue<Buffer>
+    ): Promise<Buffer> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new ScreenShotCommand(conn)
-                    .execute(serial)
-                    .then((transform) => {
-                        return new Promise<Jimp>((resolve, reject) => {
-                            const bufs: Buffer[] = [];
-                            transform.on('data', (data) => {
-                                bufs.push(data);
-                            });
-                            transform.on('end', () => {
-                                Jimp.read(Buffer.concat(bufs))
-                                    .then(resolve)
-                                    .catch(reject);
-                            });
-                            transform.on('error', reject);
-                        });
-                    });
+                return new ScreenShotCommand(conn).execute(serial);
             }),
             cb
         );
