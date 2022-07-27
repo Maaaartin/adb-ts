@@ -20,8 +20,6 @@ export default class ScreencapCommand extends RawCommand {
                 resolve(Buffer.concat(acc));
             });
             transform.once('error', reject);
-        }).finally(() => {
-            return this.finalize();
         });
     }
     execute(serial: string): Promise<Buffer> {
@@ -35,6 +33,9 @@ export default class ScreencapCommand extends RawCommand {
                     } else {
                         throw err;
                     }
+                })
+                .finally(() => {
+                    return this.finalize();
                 });
         });
     }
