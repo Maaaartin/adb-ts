@@ -1,10 +1,10 @@
-import { Stream, TransformOptions } from 'stream';
+import { Transform, TransformOptions } from 'stream';
 
 interface LineTransformOptions extends TransformOptions {
     autoDetect: boolean;
 }
 
-export default class LineTransform extends Stream.Transform {
+export default class LineTransform extends Transform {
     private savedR: any;
     private autoDetect: boolean;
     private transformNeeded = true;
@@ -15,12 +15,16 @@ export default class LineTransform extends Stream.Transform {
         this.autoDetect = options?.autoDetect || false;
     }
 
-    nullTransform(chunk: Buffer, encoding: BufferEncoding, cb: Function) {
+    nullTransform(
+        chunk: Buffer,
+        encoding: BufferEncoding,
+        cb: () => void
+    ): void {
         this.push(chunk);
         cb();
     }
 
-    _transform(chunk: Buffer, encoding: BufferEncoding, cb: Function) {
+    _transform(chunk: Buffer, encoding: BufferEncoding, cb: () => void): void {
         if (this.autoDetect) {
             if (chunk[0] === 0x0a) {
                 this.transformNeeded = false;
@@ -68,7 +72,7 @@ export default class LineTransform extends Stream.Transform {
         cb();
     }
 
-    _flush(cb: Function) {
+    _flush(cb: () => void): void {
         if (this.savedR) {
             this.push(this.savedR);
         }

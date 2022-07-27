@@ -2,8 +2,10 @@
     "env": {
         "node": true,
         "es6": true,
-        "jest/globals": true
+        "jest/globals": true,
+        "commonjs": true
     },
+    "globals": { "BufferEncoding": true },
     "ignorePatterns": ["lib", "__tests__"],
     "parser": "@typescript-eslint/parser", // Specifies the ESLint parser
     "parserOptions": {
