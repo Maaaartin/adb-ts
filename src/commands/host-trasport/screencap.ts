@@ -23,20 +23,20 @@ export default class ScreencapCommand extends RawCommand {
         });
     }
     execute(serial: string): Promise<Buffer> {
-        return this.preExecute(serial).then(() => {
-            return this.parser
-                .readBytes(1)
-                .then((buffer) => this.transform(buffer))
-                .catch((err) => {
-                    if (err instanceof PrematureEOFError) {
-                        throw new Error('No support for the screencap command');
-                    } else {
-                        throw err;
-                    }
-                })
-                .finally(() => {
-                    return this.finalize();
-                });
-        });
+        return this.preExecute(serial)
+            .then(() => {
+                return this.parser
+                    .readBytes(1)
+                    .then((buffer) => this.transform(buffer));
+            })
+            .catch((err) => {
+                if (err instanceof PrematureEOFError) {
+                    throw new Error('No support for the screencap command');
+                }
+                throw err;
+            })
+            .finally(() => {
+                return this.finalize();
+            });
     }
 }
