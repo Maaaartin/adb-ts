@@ -14,7 +14,7 @@ yarn add adb-ts
 ## API
 
 -   **AdbClient(options?: AdbClientOptions)**
--   **options?** optitional callback function:
+-   **options?** Optional callback function:
     -   `bin: string`: path to adb.exe, if not set, env path is taken
     -   `noAutoStart: boolean`: if false, module will not attempt to start adb server
     -   `host: string`: default `localhost`
@@ -462,7 +462,7 @@ device
 -   **options:**
 -   **user?: number | string**: default `0`
 -   **action?: string**: adds `-a` flag, action
--   **data?: string**: adds `-d` flag, optitional data
+-   **data?: string**: adds `-d` flag, Optional data
 -   **mimeType: boolean**: adds `-t` flag
 -   **category: string | string[]**: adds `-c` flag, string or string array
 
@@ -711,7 +711,7 @@ device.roll(100, 0).then(() => null);
 
 -   **x** Horizontal coordinate
 -   **y** Vertical coordinate
--   **source** Optitional parameter of `InputSource`. Default `trackball`
+-   **source** Optional parameter of `InputSource`. Default `trackball`
 
 Send roll input command to the device shell. Analogous to `adb shell input trackball roll x y` .
 
@@ -723,7 +723,7 @@ Send roll input command to the device shell. Analogous to `adb shell input track
 device.press().then(() => null);
 ```
 
--   **source** Optitional parameter of `InputSource`. Default `trackball`
+-   **source** Optional parameter of `InputSource`. Default `trackball`
 
 Send roll input command to the device shell. Analogous to `adb shell input trackball press` .
 
@@ -739,7 +739,7 @@ device.dragAndDrop(100, 0, 200, 10, { duration: 3000 }).then(() => null);
 -   **y1** Vertical starting coordinate
 -   **x2** Horizontal ending coordinate
 -   **y2** Vertical ending coordinate
--   **options** Optitional parameter of `InputOptions`.
+-   **options** Optional parameter of `InputOptions`.
 
     -   **duration?** Duration of the action in ms.
     -   **source?:** Default `touchscreen` .
@@ -758,7 +758,7 @@ device.swipe(100, 0, 200, 10, { duration: 3000 }).then(() => null);
 -   **y1** Vertical starting coordinate
 -   **x2** Horizontal ending coordinate
 -   **y2** Vertical ending coordinate
--   **options** Optitional parameter of `InputOptions`.
+-   **options** Optional parameter of `InputOptions`.
 
     -   **duration?** Duration of the action in ms.
     -   **source?:** Default `touchscreen` .
@@ -774,7 +774,7 @@ device.keyEvent(KeyCode.KEYCODE_HOME).then(() => null);
 ```
 
 -   **code** Key code number
--   **options** Optitional parameter of `InputOptions`.
+-   **options** Optional parameter of `InputOptions`.
 
     -   **longpress?** Longpress flag `--longpress` .
     -   **source?:** Default `keyboard` .
