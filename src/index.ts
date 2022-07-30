@@ -153,15 +153,16 @@ export function buildInputParams(
     cb: ExecCallback | undefined
 ): { source: InputSource; cb: ExecCallback | undefined } {
     if (typeof source === 'function') {
-        cb = source;
-    } else if (typeof source !== 'undefined') {
-        if (typeof source === 'object') {
-            if (typeof source.source !== 'undefined') {
-                defaultSource = source.source;
-            }
-        } else {
-            defaultSource = source;
-        }
+        return { source: defaultSource, cb: source };
+    }
+    if (typeof source === 'undefined') {
+        return { source: defaultSource, cb };
+    }
+    if (typeof source !== 'object') {
+        return { source, cb };
+    }
+    if (typeof source.source !== 'undefined') {
+        return { source: source.source, cb };
     }
     return { source: defaultSource, cb };
 }
