@@ -521,20 +521,34 @@ export default class AdbClient {
     openTcp(
         serial: string,
         port: number | string,
-        host?: string,
-        cb?: ExecCallbackWithValue<Connection>
+        host: string
+    ): Promise<Connection>;
+    openTcp(
+        serial: string,
+        port: number | string,
+        cb: ExecCallbackWithValue<Connection>
     ): void;
     openTcp(
         serial: string,
         port: number | string,
-        host?: any,
+        host: string,
+        cb: ExecCallbackWithValue<Connection>
+    ): void;
+    openTcp(
+        serial: string,
+        port: number | string,
+        host?: string | ExecCallbackWithValue<Connection>,
         cb?: ExecCallbackWithValue<Connection>
     ): Promise<Connection> | void {
         return nodeify(
-            this.transport(serial).then((conn) => {
-                return new TcpCommand(conn).execute(port, host);
+            this.connection().then((conn) => {
+                return new TcpCommand(conn).execute(
+                    serial,
+                    port,
+                    parseValueParam(host)
+                );
             }),
-            cb
+            parseCbParam(host, cb)
         );
     }
 

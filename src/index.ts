@@ -82,7 +82,7 @@ type NonFunctionPropertyNames<T> = {
 
 export type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
 
-export const parseValueParam = <T extends NonFunctionProperties<T>, R>(
+export const parseValueParam = <T extends NonFunctionProperties<T> | string, R>(
     param: T | ExecCallbackWithValue<R> | undefined
 ): T | undefined => {
     if (typeof param === 'function') {
@@ -91,7 +91,7 @@ export const parseValueParam = <T extends NonFunctionProperties<T>, R>(
     return param;
 };
 
-export const parseCbParam = <T extends NonFunctionProperties<T>, R>(
+export const parseCbParam = <T extends NonFunctionProperties<T> | string, R>(
     param: T | ExecCallbackWithValue<R> | undefined,
     cb: ExecCallbackWithValue<R> | undefined
 ): ExecCallbackWithValue<R> | undefined => {
