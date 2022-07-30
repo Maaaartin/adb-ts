@@ -732,7 +732,7 @@ Send roll input command to the device shell. Analogous to `adb shell input track
 ##### device.dragAndDrop(x1: number, y2: number, x1: number, y2: number, options?: InputOptions & { duration?: number })
 
 ```ts
-device.dragAndDrop(100, 0, 200, 10, { duration: 3000 }).then(() => null);
+device.dragAndDrop(100, 100, 200, 10, { duration: 3000 }).then(() => null);
 ```
 
 -   **x1** Horizontal starting coordinate

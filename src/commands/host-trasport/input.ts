@@ -11,9 +11,10 @@ export default class InputCommand extends TransportCommand<void> {
         param2: string,
         args: PrimitiveType[]
     ): void {
-        this.Cmd += this.escape(param1)
+        args = args.filter((a) => typeof a !== 'undefined');
+        this.Cmd += param1
             .concat(' ')
-            .concat(this.escape(param2))
+            .concat(param2)
             .concat(args.length === 0 ? '' : ' ')
             .concat(args.map(this.escape).join(' '));
     }

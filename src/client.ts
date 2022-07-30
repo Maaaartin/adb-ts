@@ -656,10 +656,7 @@ export default class AdbClient {
                     y1,
                     x2,
                     y2,
-                    typeof options === 'object' &&
-                        typeof options.duration === 'number'
-                        ? options.duration.toString()
-                        : ''
+                    typeof options === 'object' ? options.duration : ''
                 );
             }),
             _cb
@@ -722,10 +719,7 @@ export default class AdbClient {
                     y1,
                     x2,
                     y2,
-                    typeof options === 'object' &&
-                        typeof options.duration === 'number'
-                        ? options.duration.toString()
-                        : ''
+                    typeof options === 'object' ? options.duration : ''
                 );
             }),
             _cb

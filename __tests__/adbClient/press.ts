@@ -11,7 +11,7 @@ describe('Roll', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:input 'trackball' 'press'`,
+                cmd: `shell:input trackball press`,
                 res: null,
                 rawRes: true
             }
@@ -34,7 +34,7 @@ describe('Roll', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:input 'gamepad' 'press'`,
+                cmd: `shell:input gamepad press`,
                 res: null,
                 rawRes: true
             }
@@ -57,7 +57,7 @@ describe('Roll', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:input 'trackball' 'press'`,
+                cmd: `shell:input trackball press`,
                 res: null,
                 rawRes: true
             }
@@ -112,7 +112,7 @@ describe('Roll', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:input 'trackball' 'press'`,
+                cmd: `shell:input trackball press`,
                 res: null,
                 rawRes: true
             }
@@ -141,7 +141,7 @@ describe('Roll', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:input 'trackball' 'press'`,
+                cmd: `shell:input trackball press`,
                 res: null,
                 rawRes: true,
                 unexpected: true
