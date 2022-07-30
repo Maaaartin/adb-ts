@@ -559,13 +559,13 @@ export default class AdbClient {
         y: number,
         source: InputSource
     ): Promise<void>;
-    roll(serial: string, x: number, y: number, cb?: ExecCallback): void;
+    roll(serial: string, x: number, y: number, cb: ExecCallback): void;
     roll(
         serial: string,
         x: number,
         y: number,
         source: InputSource,
-        cb?: ExecCallback
+        cb: ExecCallback
     ): void;
     roll(
         serial: string,
