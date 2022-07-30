@@ -147,6 +147,25 @@ export function findMatches(
     }
 }
 
+export function buildInputParams(
+    defaultSource: InputSource,
+    source: InputOptions | InputSource | ExecCallback | undefined,
+    cb: ExecCallback | undefined
+): { source: InputSource; cb: ExecCallback | undefined } {
+    if (typeof source === 'function') {
+        cb = source;
+    } else if (typeof source !== 'undefined') {
+        if (typeof source === 'object') {
+            if (typeof source.source !== 'undefined') {
+                defaultSource = source.source;
+            }
+        } else {
+            defaultSource = source;
+        }
+    }
+    return { source: defaultSource, cb };
+}
+
 export type ExecCallback = (err: null | Error) => void;
 export type ExecCallbackWithValue<T> = (err: null | Error, value: T) => void;
 

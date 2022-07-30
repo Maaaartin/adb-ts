@@ -31,7 +31,8 @@ import {
     parseCbParam,
     parseValueParam,
     IpConnectConstruct,
-    DataMap
+    DataMap,
+    buildInputParams
 } from '.';
 import Sync, { SyncMode } from './sync';
 import { exec, execFile } from 'child_process';
@@ -102,24 +103,6 @@ import WaitBootCompleteCommand from './commands/host-trasport/wainbootcomplete';
 import WaitForDeviceCommand from './commands/host/waitfordevice';
 import { promisify } from 'util';
 
-function buildInputParams(
-    defaultSource: InputSource,
-    source: InputOptions | InputSource | ExecCallback | undefined,
-    cb: ExecCallback | undefined
-): { source: InputSource; cb: ExecCallback | undefined } {
-    if (typeof source === 'function') {
-        cb = source;
-    } else if (typeof source !== 'undefined') {
-        if (typeof source === 'object') {
-            if (typeof source.source !== 'undefined') {
-                defaultSource = source.source;
-            }
-        } else {
-            defaultSource = source;
-        }
-    }
-    return { source: defaultSource, cb };
-}
 export default class AdbClient {
     public static readonly defaultOptions: Readonly<AdbClientOptionsValues> =
         Object.freeze({
