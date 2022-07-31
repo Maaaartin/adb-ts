@@ -3,6 +3,11 @@ import TransportCommand from '../transport';
 
 export default class InputCommand extends TransportCommand<void> {
     Cmd = 'shell:input ';
+    private withEscape_ = false;
+    public withEscape(): this {
+        this.withEscape_ = true;
+        return this;
+    }
     protected postExecute(): Promise<void> {
         return Promise.resolve();
     }
@@ -11,12 +16,18 @@ export default class InputCommand extends TransportCommand<void> {
         param2: string,
         args: PrimitiveType[]
     ): void {
-        args = args.filter((a) => typeof a !== 'undefined' && a !== '');
-        this.Cmd += param1
-            .concat(' ')
+        const filterInvalid = (a: PrimitiveType): boolean =>
+            typeof a !== 'undefined' && a !== '';
+        const params = ([param1] as PrimitiveType[])
             .concat(param2)
-            .concat(args.length === 0 ? '' : ' ')
-            .concat(args.map(this.escape).join(' '));
+            .filter(filterInvalid)
+            .concat(
+                args
+                    .filter(filterInvalid)
+                    .map((a) => (this.withEscape_ ? this.escape(a) : a))
+            )
+            .join(' ');
+        this.Cmd += params;
     }
     execute(
         serial: string,

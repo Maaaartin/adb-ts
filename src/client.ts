@@ -726,44 +726,52 @@ export default class AdbClient {
         );
     }
 
-    keyEvent(serial: string, code: KeyCode | number): Promise<void>;
+    keyEvent(serial: string, code: KeyCode | KeyCode[]): Promise<void>;
+    keyEvent(serial: string, code: number | number[]): Promise<void>;
+
     keyEvent(
         serial: string,
-        code: KeyCode | number,
-        options: InputOptions & { longpress?: boolean }
+        code: KeyCode | KeyCode[],
+        longpress: true
     ): Promise<void>;
-    keyEvent(serial: string, code: KeyCode | number, cb: ExecCallback): void;
     keyEvent(
         serial: string,
-        code: KeyCode | number,
-        options: InputOptions & { longpress?: boolean },
+        code: number | number[],
+        longpress: true
+    ): Promise<void>;
+
+    keyEvent(serial: string, code: KeyCode | KeyCode[], cb: ExecCallback): void;
+    keyEvent(serial: string, code: number | number[], cb: ExecCallback): void;
+
+    keyEvent(
+        serial: string,
+        code: KeyCode | KeyCode[],
+        longpress: true,
         cb: ExecCallback
     ): void;
     keyEvent(
         serial: string,
-        code: KeyCode | number,
-        options?: (InputOptions & { longpress?: boolean }) | ExecCallback,
+        code: number | number[],
+        longpress: true,
+        cb: ExecCallback
+    ): void;
+
+    keyEvent(
+        serial: string,
+        code: number | number[],
+        longpress?: true | ExecCallback,
         cb?: ExecCallback
     ): Promise<void> | void {
-        const { source: _source, cb: _cb } = buildInputParams(
-            'keyboard',
-            options,
-            cb
-        );
-
         return nodeify(
             this.connection().then((conn) => {
                 return new InputCommand(conn).execute(
                     serial,
                     'keyevent',
-                    _source,
-                    code,
-                    typeof options === 'object' && options.longpress
-                        ? '--longpress'
-                        : ''
+                    longpress === true ? '--longpress' : '',
+                    ...(Array.isArray(code) ? code : [code])
                 );
             }),
-            _cb
+            parseCbParam(longpress, cb)
         );
     }
 

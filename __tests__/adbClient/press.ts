@@ -2,7 +2,7 @@ import AdbMock from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
 import { UnexpectedDataError } from '../../lib';
 
-describe('Roll', () => {
+describe('Press', () => {
     it('OKAY', async () => {
         const adbMock = new AdbMock([
             {
