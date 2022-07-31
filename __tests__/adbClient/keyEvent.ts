@@ -42,7 +42,9 @@ describe('Key event', () => {
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            const result = await adb.keyEvent('serial', 37, true);
+            const result = await adb.keyEvent('serial', 37, {
+                longpress: true
+            });
             expect(result).toBe(void 0);
         } finally {
             await adbMock.end();
@@ -88,7 +90,9 @@ describe('Key event', () => {
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            const result = await adb.keyEvent('serial', [37, 37, 42], true);
+            const result = await adb.keyEvent('serial', [37, 37, 42], {
+                longpress: true
+            });
             expect(result).toBe(void 0);
         } finally {
             await adbMock.end();
