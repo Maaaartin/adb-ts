@@ -151,20 +151,24 @@ export function buildInputParams(
     defaultSource: InputSource,
     source: InputOptions | InputSource | ExecCallback | undefined,
     cb: ExecCallback | undefined
-): { source: InputSource; cb: ExecCallback | undefined } {
+): {
+    source: InputSource;
+    displayId: number | undefined;
+    cb: ExecCallback | undefined;
+} {
     if (typeof source === 'function') {
-        return { source: defaultSource, cb: source };
+        return { source: defaultSource, displayId: undefined, cb: source };
     }
     if (typeof source === 'undefined') {
-        return { source: defaultSource, cb };
+        return { source: defaultSource, displayId: undefined, cb };
     }
     if (typeof source !== 'object') {
-        return { source, cb };
+        return { source, displayId: undefined, cb };
     }
     if (typeof source.source !== 'undefined') {
-        return { source: source.source, cb };
+        return { source: source.source, displayId: source.displayId, cb };
     }
-    return { source: defaultSource, cb };
+    return { source: defaultSource, displayId: undefined, cb };
 }
 
 export type ExecCallback = (err: null | Error) => void;
@@ -320,6 +324,7 @@ export type InputType =
 
 export interface InputOptions {
     source?: InputSource;
+    displayId?: number;
 }
 
 export interface CommandConstruct {

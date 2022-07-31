@@ -315,13 +315,16 @@ describe('Data map', () => {
 
 describe('Build input params', () => {
     it('Source is input options, cb is undefined', () => {
-        const { source, cb } = buildInputParams(
+        const result = buildInputParams(
             'gamepad',
             { source: 'keyboard' },
             undefined
         );
-        expect(source).toBe('keyboard');
-        expect(cb?.toString()).toBe(undefined);
+        expect(Object.entries(result)).toEqual([
+            ['source', 'keyboard'],
+            ['displayId', undefined],
+            ['cb', undefined]
+        ]);
     });
 
     it('Source is input source, cb is undefined', () => {
