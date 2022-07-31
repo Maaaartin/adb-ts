@@ -32,7 +32,8 @@ import {
     parseValueParam,
     IpConnectConstruct,
     DataMap,
-    buildInputParams
+    buildInputParams,
+    NonEmptyArray
 } from '.';
 import Sync, { SyncMode } from './sync';
 import { exec, execFile } from 'child_process';
@@ -726,39 +727,53 @@ export default class AdbClient {
         );
     }
 
-    keyEvent(serial: string, code: KeyCode | KeyCode[]): Promise<void>;
-    keyEvent(serial: string, code: number | number[]): Promise<void>;
+    keyEvent(
+        serial: string,
+        code: KeyCode | NonEmptyArray<KeyCode>
+    ): Promise<void>;
+    keyEvent(
+        serial: string,
+        code: number | NonEmptyArray<number>
+    ): Promise<void>;
 
     keyEvent(
         serial: string,
-        code: KeyCode | KeyCode[],
+        code: KeyCode | NonEmptyArray<KeyCode>,
         longpress: true
     ): Promise<void>;
     keyEvent(
         serial: string,
-        code: number | number[],
+        code: number | NonEmptyArray<number>,
         longpress: true
     ): Promise<void>;
 
-    keyEvent(serial: string, code: KeyCode | KeyCode[], cb: ExecCallback): void;
-    keyEvent(serial: string, code: number | number[], cb: ExecCallback): void;
+    keyEvent(
+        serial: string,
+        code: KeyCode | NonEmptyArray<KeyCode>,
+        cb: ExecCallback
+    ): void;
+    keyEvent(
+        serial: string,
+        code: number | NonEmptyArray<number>,
+        cb: ExecCallback
+    ): void;
 
     keyEvent(
         serial: string,
-        code: KeyCode | KeyCode[],
+        code: KeyCode | NonEmptyArray<KeyCode>,
         longpress: true,
         cb: ExecCallback
     ): void;
     keyEvent(
         serial: string,
-        code: number | number[],
+        code: number | NonEmptyArray<number>,
         longpress: true,
         cb: ExecCallback
     ): void;
 
     keyEvent(
         serial: string,
-        code: number | number[],
+        code: number | NonEmptyArray<number>,
         longpress?: true | ExecCallback,
         cb?: ExecCallback
     ): Promise<void> | void {
