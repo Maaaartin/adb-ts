@@ -51,6 +51,31 @@ describe('Roll', () => {
         }
     });
 
+    it('OKAY with duration parameter undefined', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: `shell:input touchscreen draganddrop 100 200 100 10`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.dragAndDrop('serial', 100, 200, 100, 10, {
+                duration: undefined
+            });
+            expect(result).toBe(void 0);
+        } finally {
+            await adbMock.end();
+        }
+    });
+
     it('OKAY with source and duration parameters', async () => {
         const adbMock = new AdbMock([
             {
