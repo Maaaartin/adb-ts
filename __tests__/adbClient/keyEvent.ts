@@ -11,7 +11,7 @@ describe('Key event', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:input keyevent 37`,
+                cmd: `shell:input keyboard keyevent 37`,
                 res: null,
                 rawRes: true
             }
@@ -34,7 +34,7 @@ describe('Key event', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:input keyevent --longpress 37`,
+                cmd: `shell:input keyboard keyevent --longpress 37`,
                 res: null,
                 rawRes: true
             }
@@ -59,7 +59,7 @@ describe('Key event', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:input keyevent 37 37 42`,
+                cmd: `shell:input keyboard keyevent 37 37 42`,
                 res: null,
                 rawRes: true
             }
@@ -82,7 +82,7 @@ describe('Key event', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:input keyevent --longpress 37 37 42`,
+                cmd: `shell:input keyboard keyevent --longpress 37 37 42`,
                 res: null,
                 rawRes: true
             }
@@ -99,6 +99,31 @@ describe('Key event', () => {
         }
     });
 
+    it('OKAY with source parameter', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: `shell:input gamepad keyevent 37`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.keyEvent('serial', 37, {
+                source: 'gamepad'
+            });
+            expect(result).toBe(void 0);
+        } finally {
+            await adbMock.end();
+        }
+    });
+
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
             {
@@ -107,7 +132,7 @@ describe('Key event', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:input keyevent 37`,
+                cmd: `shell:input keyboard keyevent 37`,
                 res: null,
                 rawRes: true
             }
@@ -162,7 +187,7 @@ describe('Key event', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:input keyevent 37`,
+                cmd: `shell:input keyboard keyevent 37`,
                 res: null,
                 rawRes: true
             }
@@ -191,7 +216,7 @@ describe('Key event', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:input keyevent 37`,
+                cmd: `shell:input keyboard keyevent 37`,
                 res: null,
                 rawRes: true,
                 unexpected: true

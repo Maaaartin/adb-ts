@@ -739,12 +739,12 @@ export default class AdbClient {
     keyEvent(
         serial: string,
         code: KeyCode | NonEmptyArray<KeyCode>,
-        options: InputOptions & { longpress: true }
+        options: InputOptions & { longpress?: true }
     ): Promise<void>;
     keyEvent(
         serial: string,
         code: number | NonEmptyArray<number>,
-        options: InputOptions & { longpress: true }
+        options: InputOptions & { longpress?: true }
     ): Promise<void>;
 
     keyEvent(
@@ -761,26 +761,32 @@ export default class AdbClient {
     keyEvent(
         serial: string,
         code: KeyCode | NonEmptyArray<KeyCode>,
-        options: InputOptions & { longpress: true },
+        options: InputOptions & { longpress?: true },
         cb: ExecCallback
     ): void;
     keyEvent(
         serial: string,
         code: number | NonEmptyArray<number>,
-        options: InputOptions & { longpress: true },
+        options: InputOptions & { longpress?: true },
         cb: ExecCallback
     ): void;
 
     keyEvent(
         serial: string,
         code: number | NonEmptyArray<number>,
-        options?: (InputOptions & { longpress: true }) | ExecCallback,
+        options?: (InputOptions & { longpress?: true }) | ExecCallback,
         cb?: ExecCallback
     ): Promise<void> | void {
+        const { source: _source, cb: _cb } = buildInputParams(
+            'keyboard',
+            options,
+            cb
+        );
         return nodeify(
             this.connection().then((conn) => {
                 return new InputCommand(conn).execute(
                     serial,
+                    _source,
                     'keyevent',
                     typeof options === 'object' && options.longpress
                         ? '--longpress'
@@ -788,7 +794,7 @@ export default class AdbClient {
                     ...(Array.isArray(code) ? code : [code])
                 );
             }),
-            parseCbParam(options, cb)
+            _cb
         );
     }
 

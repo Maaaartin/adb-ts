@@ -1,4 +1,4 @@
-import { PrimitiveType } from '../..';
+import { InputSource, PrimitiveType } from '../..';
 import TransportCommand from '../transport';
 
 export default class InputCommand extends TransportCommand<void> {
@@ -12,14 +12,14 @@ export default class InputCommand extends TransportCommand<void> {
         return Promise.resolve();
     }
     private buildParams(
-        param1: string,
-        param2: string,
+        source: InputSource,
+        command: string,
         args: PrimitiveType[]
     ): void {
         const filterInvalid = (a: PrimitiveType): boolean =>
             typeof a !== 'undefined' && a !== '';
-        const params = ([param1] as PrimitiveType[])
-            .concat(param2)
+        const params = [source as PrimitiveType]
+            .concat(command)
             .filter(filterInvalid)
             .concat(
                 args
@@ -31,11 +31,11 @@ export default class InputCommand extends TransportCommand<void> {
     }
     execute(
         serial: string,
-        param1: string,
-        param2: string,
+        source: InputSource,
+        command: string,
         ...args: PrimitiveType[]
     ): Promise<void> {
-        this.buildParams(param1, param2, args);
+        this.buildParams(source, command, args);
         return this.preExecute(serial);
     }
 }
