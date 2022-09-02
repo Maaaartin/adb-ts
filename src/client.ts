@@ -739,12 +739,12 @@ export default class AdbClient {
     keyEvent(
         serial: string,
         code: KeyCode | NonEmptyArray<KeyCode>,
-        options: InputOptions & { longpress?: true }
+        options: InputOptions & { variant?: 'longpress' | 'doubletap' }
     ): Promise<void>;
     keyEvent(
         serial: string,
         code: number | NonEmptyArray<number>,
-        options: InputOptions & { longpress?: true }
+        options: InputOptions & { variant?: 'longpress' | 'doubletap' }
     ): Promise<void>;
 
     keyEvent(
@@ -761,20 +761,22 @@ export default class AdbClient {
     keyEvent(
         serial: string,
         code: KeyCode | NonEmptyArray<KeyCode>,
-        options: InputOptions & { longpress?: true },
+        options: InputOptions & { variant?: 'longpress' | 'doubletap' },
         cb: ExecCallback
     ): void;
     keyEvent(
         serial: string,
         code: number | NonEmptyArray<number>,
-        options: InputOptions & { longpress?: true },
+        options: InputOptions & { variant?: 'longpress' | 'doubletap' },
         cb: ExecCallback
     ): void;
 
     keyEvent(
         serial: string,
         code: number | NonEmptyArray<number>,
-        options?: (InputOptions & { longpress?: true }) | ExecCallback,
+        options?:
+            | (InputOptions & { variant?: 'longpress' | 'doubletap' })
+            | ExecCallback,
         cb?: ExecCallback
     ): Promise<void> | void {
         const { source: _source, cb: _cb } = buildInputParams(
@@ -788,8 +790,12 @@ export default class AdbClient {
                     serial,
                     _source,
                     'keyevent',
-                    typeof options === 'object' && options.longpress
-                        ? '--longpress'
+                    typeof options === 'object'
+                        ? options.variant === 'longpress'
+                            ? '--longpress'
+                            : options.variant === 'doubletap'
+                            ? '--doubletap'
+                            : ''
                         : '',
                     ...(Array.isArray(code) ? code : [code])
                 );

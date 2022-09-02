@@ -43,7 +43,32 @@ describe('Key event', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.keyEvent('serial', 37, {
-                longpress: true
+                variant: 'longpress'
+            });
+            expect(result).toBe(void 0);
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('OKAY with one input and doubletap', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: `shell:input keyboard keyevent --doubletap 37`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.keyEvent('serial', 37, {
+                variant: 'doubletap'
             });
             expect(result).toBe(void 0);
         } finally {
@@ -91,7 +116,32 @@ describe('Key event', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.keyEvent('serial', [37, 37, 42], {
-                longpress: true
+                variant: 'longpress'
+            });
+            expect(result).toBe(void 0);
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('OKAY with multiple inputs and doubletap', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: `shell:input keyboard keyevent --doubletap 37 37 42`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.keyEvent('serial', [37, 37, 42], {
+                variant: 'doubletap'
             });
             expect(result).toBe(void 0);
         } finally {
