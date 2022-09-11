@@ -848,7 +848,7 @@ export default class AdbClient {
 
     text(serial: string, text: string): Promise<void>;
     text(serial: string, text: string, source: InputSource): Promise<void>;
-    text(serial: string, text: string, cb?: ExecCallback): void;
+    text(serial: string, text: string, cb: ExecCallback): void;
     text(
         serial: string,
         text: string,
@@ -868,12 +868,9 @@ export default class AdbClient {
         );
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn).execute(
-                    serial,
-                    _source,
-                    'text',
-                    text
-                );
+                return new InputCommand(conn)
+                    .withEscape()
+                    .execute(serial, _source, 'text', text);
             }),
             _cb
         );
