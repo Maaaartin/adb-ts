@@ -27,11 +27,11 @@ export default class LogcatReader extends StreamHandler {
         }
     }
 
-    setFilter(filter: (entry: LogcatEntry) => boolean) {
+    setFilter(filter: (entry: LogcatEntry) => boolean): void {
         this.filter = filter;
     }
 
-    hook() {
+    hook(): void {
         if (this.options?.fixLineFeeds) {
             const transform = this.getStream().pipe(new Transform());
             transform.on('data', (data) => {
@@ -63,18 +63,18 @@ export default class LogcatReader extends StreamHandler {
 
     on(event: 'error', listener: (err: Error) => void): this;
     on(event: 'entry', listener: (entry: LogcatEntry) => void): this;
-    on(event: 'finish' | 'end', listener: VoidFunction): this;
-    on(event: string | symbol, listener: (...args: any[]) => void) {
+    on(event: 'finish' | 'end', listener: () => void): this;
+    on(event: string | symbol, listener: (...args: any[]) => void): this {
         return super.on(event, listener);
     }
 
-    connect(stream: Writable) {
+    connect(stream: Writable): this {
         this.stream = stream;
         this.hook();
         return this;
     }
 
-    end() {
+    end(): Promise<void> {
         return new Promise<void>((resolve) => this.getStream().end(resolve));
     }
 }

@@ -907,6 +907,9 @@ export default class AdbClient {
                             fixLineFeeds: false
                         });
                         conn.on('error', (err) => logCat.emit('error', err));
+                        logCat.on('end', () => {
+                            conn.end();
+                        });
                         return logCat;
                     });
             }),
