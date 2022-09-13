@@ -896,22 +896,10 @@ export default class AdbClient {
 
         return nodeify(
             this.connection().then((conn) => {
-                return new LogcatCommand(conn)
-                    .execute(
-                        serial,
-                        typeof options === 'object' ? options : void 0
-                    )
-                    .then((stream) => {
-                        const logCat = Logcat.readStrem(stream, {
-                            ...options,
-                            fixLineFeeds: false
-                        });
-                        conn.on('error', (err) => logCat.emit('error', err));
-                        logCat.on('end', () => {
-                            conn.end();
-                        });
-                        return logCat;
-                    });
+                return new LogcatCommand(conn).execute(
+                    serial,
+                    typeof options === 'object' ? options : void 0
+                );
             }),
             cb
         );
