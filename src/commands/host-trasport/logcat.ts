@@ -2,7 +2,7 @@ import LineTransform from '../../linetransform';
 import RawCommand from '../raw-command';
 
 import { LogcatOptions } from '../..';
-import Logcat from '../../logcat';
+import { readStream } from '../../logcat';
 import LogcatReader from '../../logcat/reader';
 
 export default class LogcatCommand extends RawCommand {
@@ -18,7 +18,7 @@ export default class LogcatCommand extends RawCommand {
             .then((result) => {
                 const stream = new LineTransform({ autoDetect: true });
                 result.pipe(stream);
-                const logCat = Logcat.readStrem(stream, {
+                const logCat = readStream(stream, {
                     ...options,
                     fixLineFeeds: false
                 });
