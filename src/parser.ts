@@ -172,14 +172,17 @@ export default class Parser {
         });
     }
 
-    searchLine(regExp: RegExp): Promise<string[]> {
+    searchLine(regExp: RegExp, retry = true): Promise<RegExpExecArray> {
         return this.readline().then((line) => {
+            const lineStr = line.toString();
             let match;
-            if ((match = regExp.exec(line.toString()))) {
+            if ((match = regExp.exec(lineStr))) {
                 return match;
-            } else {
+            }
+            if (retry) {
                 return this.searchLine(regExp);
             }
+            throw new UnexpectedDataError(lineStr, regExp.toString());
         });
     }
 

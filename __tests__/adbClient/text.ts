@@ -110,12 +110,10 @@ describe('Text', () => {
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            try {
-                await adb.text('serial', 'something');
-                fail('Expected Failure');
-            } catch (e) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await adb.text('serial', 'something');
+            fail('Expected Failure');
+        } catch (e) {
+            expect(e).toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
