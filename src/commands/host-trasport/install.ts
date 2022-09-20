@@ -1,10 +1,29 @@
 import { InstallOptions, Reply } from '../..';
 import TransportCommand from '../transport';
 
-export default class InstallCommand extends TransportCommand {
-    private intentArgs(options?: InstallOptions) {
+export default class InstallCommand extends TransportCommand<void> {
+    Cmd = 'shell:pm install ';
+    private apk = '';
+    protected postExecute(): Promise<void> {
+        return this.parser
+            .searchLine(/^(Success|Failure \[(.*?)\])$/)
+            .then(([, result, code]) => {
+                if (result !== 'Success') {
+                    throw new Error(
+                        `${this.apk} could not be installed [${code}]`
+                    );
+                }
+            })
+            .finally(() => {
+                return this.parser.readAll();
+            });
+    }
+    private intentArgs(options?: InstallOptions): string[] {
         const args: string[] = [];
-        if (!options) return args;
+        if (!options) {
+            return args;
+        }
+
         if (options.reinstall) {
             args.push('-r');
             delete options.reinstall;
@@ -37,44 +56,12 @@ export default class InstallCommand extends TransportCommand {
         apk: string,
         options?: InstallOptions,
         args?: string
-    ) {
-        return super
-            .execute(
-                serial,
-                `shell:pm install`,
-                ...this.intentArgs(options),
-                this.escapeCompat(apk),
-                args || ''
-            )
-            .then((reply) => {
-                switch (reply) {
-                    case Reply.OKAY:
-                        return this.parser
-                            .searchLine(/^(Success|Failure \[(.*?)\])$/)
-                            .then((match) => {
-                                if (match[1] === 'Success') {
-                                    return;
-                                } else {
-                                    const code = match[2];
-                                    const err = new Error(
-                                        apk +
-                                            ' could not be installed [' +
-                                            code +
-                                            ']'
-                                    );
-                                    throw err;
-                                }
-                            })
-                            .finally(() => {
-                                return this.parser.readAll();
-                            });
-                    case Reply.FAIL:
-                        return this.parser.readError().then((e) => {
-                            throw e;
-                        });
-                    default:
-                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
-                }
-            });
+    ): Promise<void> {
+        this.apk = apk;
+        this.Cmd += this.intentArgs(options)
+            .join(' ')
+            .concat(this.escapeCompat(this.apk))
+            .concat(args ? ` ${args}` : '');
+        return this.preExecute(serial);
     }
 }
