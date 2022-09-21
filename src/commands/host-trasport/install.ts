@@ -26,28 +26,20 @@ export default class InstallCommand extends TransportCommand<void> {
 
         if (options.reinstall) {
             args.push('-r');
-            delete options.reinstall;
         }
         if (options.test) {
             args.push('-t');
-            delete options.test;
         }
         if (options.internal) {
             args.push('-f');
-            delete options.internal;
         }
         if (options.allowDowngrade) {
             args.push('-d');
-            delete options.allowDowngrade;
         }
         if (options.grandPermissions) {
             args.push('-g');
-            delete options.grandPermissions;
         }
 
-        for (const item of Object.entries(options)) {
-            args.push(item[0], this.escape(item[1]));
-        }
         return args;
     }
 
