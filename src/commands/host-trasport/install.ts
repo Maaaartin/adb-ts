@@ -1,4 +1,4 @@
-import { InstallOptions, Reply } from '../..';
+import { InstallOptions } from '../..';
 import TransportCommand from '../transport';
 
 export default class InstallCommand extends TransportCommand<void> {
