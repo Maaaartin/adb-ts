@@ -23,7 +23,6 @@ export default class PushTransfer extends StreamHandler {
     }
 
     end(): Promise<void> {
-        this.removeAllListeners();
         this.emit('end');
         return Promise.resolve();
     }

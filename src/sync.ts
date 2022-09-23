@@ -98,7 +98,7 @@ export default class Sync extends EventEmitter {
                         return resolve();
                     })
                 );
-                stream.once('readable', (readableListener = writeNext));
+                stream.on('readable', (readableListener = writeNext));
                 stream.once('error', (errorListener = reject));
                 this.connection.on(
                     'error',
@@ -138,7 +138,9 @@ export default class Sync extends EventEmitter {
             return this.parser.readAscii(4).then((reply) => {
                 switch (reply) {
                     case Reply.OKAY:
-                        return this.parser.readBytes(4).then(() => void 0);
+                        return this.parser.readBytes(4).then(() => {
+                            return void 0;
+                        });
                     case Reply.FAIL:
                         return this.readError();
                     default:
@@ -160,7 +162,9 @@ export default class Sync extends EventEmitter {
                     this.emit('error', err);
                 }
             })
-            .finally(transfer.end);
+            .finally(() => {
+                return transfer.end();
+            });
         transfer.once('cancel', () => {
             canceled = true;
         });
