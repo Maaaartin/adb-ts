@@ -1269,7 +1269,7 @@ export default class AdbClient {
         return nodeify(
             this.syncService(serial).then((sync) => {
                 return sync.push(srcPath, destPath, mode_).on('end', () => {
-                    // sync.end();
+                    sync.end().catch(() => {});
                 });
             }),
             cb

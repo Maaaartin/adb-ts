@@ -18,7 +18,7 @@ export default class InstallCommand extends TransportCommand<void> {
                 }
             })
             .finally(() => {
-                return this.parser.readAll();
+                return this.parser.readAll().then(() => super.end());
             });
     }
     private intentArgs(options?: InstallOptions): string[] {

@@ -111,12 +111,14 @@ export default class Sync extends EventEmitter {
                 const waitForDrain = (): Promise<void> => {
                     let drainListener: () => void;
                     return new Promise<void>((resolve) => {
-                        this.connection.on(
-                            'drain',
-                            (drainListener = (): void => {
-                                resolve();
-                            })
-                        );
+                        if (!drainListener) {
+                            this.connection.on(
+                                'drain',
+                                (drainListener = (): void => {
+                                    resolve();
+                                })
+                            );
+                        }
                     }).finally(() => {
                         return this.connection.removeListener(
                             'drain',
