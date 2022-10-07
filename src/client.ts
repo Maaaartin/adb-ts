@@ -999,13 +999,13 @@ export default class AdbClient {
                 let errorListener: (err: Error) => void;
                 let endListener: () => void;
                 return new Promise<void>((resolve, reject) => {
-                    transfer.on(
+                    transfer.once(
                         'error',
                         (errorListener = (err): void => {
                             reject(err);
                         })
                     );
-                    transfer.on(
+                    transfer.once(
                         'end',
                         (endListener = (): void => {
                             this.installRemote(serial, temp, options_, args_)
@@ -1269,7 +1269,7 @@ export default class AdbClient {
         return nodeify(
             this.syncService(serial).then((sync) => {
                 return sync.push(srcPath, destPath, mode_).on('end', () => {
-                    sync.end().catch(() => {});
+                    sync.end();
                 });
             }),
             cb

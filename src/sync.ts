@@ -98,9 +98,15 @@ export default class Sync extends EventEmitter {
                         return resolve();
                     })
                 );
-                stream.on('readable', (readableListener = writeNext));
-                stream.once('error', (errorListener = reject));
-                this.connection.on(
+                stream.on(
+                    'readable',
+                    (readableListener = (): Promise<any> => writeNext())
+                );
+                stream.once(
+                    'error',
+                    (errorListener = (err): void => reject(err))
+                );
+                this.connection.once(
                     'error',
                     (connErrorListener = (err): void => {
                         stream.destroy();
@@ -109,21 +115,11 @@ export default class Sync extends EventEmitter {
                     })
                 );
                 const waitForDrain = (): Promise<void> => {
-                    let drainListener: () => void;
                     return new Promise<void>((resolve) => {
-                        if (!drainListener) {
-                            this.connection.on(
-                                'drain',
-                                (drainListener = (): void => {
-                                    resolve();
-                                })
-                            );
-                        }
-                    }).finally(() => {
-                        return this.connection.removeListener(
-                            'drain',
-                            drainListener
-                        );
+                        this.connection.removeAllListeners('drain');
+                        this.connection.once('drain', (): void => {
+                            resolve();
+                        });
                     });
                 };
             }).finally(() => {
@@ -306,8 +302,8 @@ export default class Sync extends EventEmitter {
         return readNext();
     }
 
-    public end(): Promise<this> {
-        return this.connection.endAsync().then(() => this);
+    public end(): void {
+        return this.connection.end();
     }
     public stat(path: string): Promise<Stats> {
         this.sendCommandWithArg(Reply.STAT, path);
