@@ -2,8 +2,8 @@ import AdbMock from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
 import { UnexpectedDataError } from '../../lib';
 
-describe('Uninstall', () => {
-    it('OKAY', async () => {
+describe('Is installed', () => {
+    it('OKAY returning true', async () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
@@ -11,16 +11,69 @@ describe('Uninstall', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:pm uninstall com.package`,
-                res: 'Success\n',
+                cmd: `shell:pm path com.package 2>/dev/null`,
+                res: 'package:\n',
                 rawRes: true
             }
         ]);
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            const result = await adb.uninstall('serial', 'com.package');
-            expect(result).toBe(void 0);
+            const result = await adb.isInstalled('serial', 'com.package');
+            expect(result).toBe(true);
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('OKAY returning false', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: `shell:pm path com.package 2>/dev/null`,
+                res: 'fail:\n',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.isInstalled('serial', 'com.package');
+            expect(result).toBe(false);
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('OKAY unexpected input', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: `shell:pm path com.package 2>/dev/null`,
+                res: 'badValue\n',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.isInstalled('serial', 'com.package');
+                fail('Expected Failure');
+            } catch (e) {
+                expect(e).toBeInstanceOf(UnexpectedDataError);
+                expect(e.message).toBe(
+                    "Unexpected 'badValue', was expecting package:"
+                );
+            }
         } finally {
             await adbMock.end();
         }
@@ -34,8 +87,8 @@ describe('Uninstall', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:pm uninstall com.package`,
-                res: 'Success\n',
+                cmd: `shell:pm path com.package 2>/dev/null`,
+                res: 'package:\n',
                 rawRes: true
             }
         ]);
@@ -43,7 +96,7 @@ describe('Uninstall', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
-                await adb.uninstall('serial', 'com.package');
+                await adb.isInstalled('serial', 'com.package');
                 fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe('Failure');
@@ -62,7 +115,7 @@ describe('Uninstall', () => {
             },
             {
                 cmd: `fail`,
-                res: 'Success\n',
+                res: 'package:\n',
                 rawRes: true
             }
         ]);
@@ -70,7 +123,7 @@ describe('Uninstall', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
-                await adb.uninstall('serial', 'com.package');
+                await adb.isInstalled('serial', 'com.package');
                 fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe('Failure');
@@ -89,8 +142,8 @@ describe('Uninstall', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:pm uninstall com.package`,
-                res: 'Success\n',
+                cmd: `shell:pm path com.package 2>/dev/null`,
+                res: 'package:\n',
                 rawRes: true
             }
         ]);
@@ -98,7 +151,7 @@ describe('Uninstall', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
-                await adb.uninstall('serial', 'com.package');
+                await adb.isInstalled('serial', 'com.package');
                 fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe(
@@ -118,8 +171,8 @@ describe('Uninstall', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:pm uninstall com.package`,
-                res: 'Success\n',
+                cmd: `shell:pm path com.package 2>/dev/null`,
+                res: 'package:\n',
                 rawRes: true,
                 unexpected: true
             }
@@ -128,7 +181,7 @@ describe('Uninstall', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
-                await adb.uninstall('serial', 'com.package');
+                await adb.isInstalled('serial', 'com.package');
                 fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe(
