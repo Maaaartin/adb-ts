@@ -3,7 +3,7 @@ import AdbClient from '../../lib/client';
 import { UnexpectedDataError } from '../../lib';
 
 describe('Uninstall', () => {
-    it('OKAY', async () => {
+    it('OKAY with Success response', async () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
@@ -13,6 +13,52 @@ describe('Uninstall', () => {
             {
                 cmd: `shell:pm uninstall com.package`,
                 res: 'Success\n',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.uninstall('serial', 'com.package');
+            expect(result).toBe(void 0);
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('OKAY with Failure response', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: `shell:pm uninstall com.package`,
+                res: 'Failure\n',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.uninstall('serial', 'com.package');
+            expect(result).toBe(void 0);
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('OKAY with Unknown package: response', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: `shell:pm uninstall com.package`,
+                res: 'Unknown package:\n',
                 rawRes: true
             }
         ]);
