@@ -3,7 +3,7 @@ export { default as Command } from './command';
 export { default as EmptyCommand } from './commands/empty-command';
 export { default as ParseCommand } from './commands/parse-command';
 export { default as RawCommand } from './commands/raw-command';
-export { default as TransportCommand } from './commands/tranport';
+export { default as TransportCommand } from './commands/transport';
 export { default as TransportParseAllCommand } from './commands/transport-parse-all-command';
 export { default as TransportParseValueCommand } from './commands/transport-parse-value-command';
 export { default as ValueCommand } from './commands/value-command';

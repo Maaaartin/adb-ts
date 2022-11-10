@@ -1,5 +1,5 @@
 import { Reply } from '..';
-import TransportCommand from './tranport';
+import TransportCommand from './transport';
 
 export default abstract class FileSystemCommand extends TransportCommand {
   protected abstract intentArgs(options?: Record<string, any>): string[];
