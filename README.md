@@ -286,15 +286,17 @@ Lists all reversed connections. Analogous to `adb reverse --list` .
 
 - Returns: `Promise<ReversesObject[]>`
 
-##### device.shell(command: string | string[], cb?: (err: Error, value: string) => void)
+##### device.shell(command: string | string[], cb?: (err: Error, value: SimpleType) => void)
 
 ```ts
-device.shell('ip route').then((value: string) => console.log(value));
+device.shell('ip route').then((value: SimpleType) => console.log(value));
 ```
 
 Executes a shell command on the device. Analogous to `adb shell 'command'` ;
 
-- Returns: `Promise<string>` output
+Parses the output to native type.
+
+- Returns: `Promise<SimpleType>` output
 
 ##### device.reboot(cb?: (err: Error) => void)
 

@@ -370,7 +370,7 @@ export default class AdbClient extends EventEmitter {
     });
   }
 
-  reboot(serial: string, cb?: (err: Error) => void) {
+  reboot(serial: string, cb?: (err: Error) => void): Promise<void> {
     return this.connection()
       .then((conn) => {
         return new RebootCommand(conn).execute(serial);
@@ -378,7 +378,7 @@ export default class AdbClient extends EventEmitter {
       .nodeify(cb);
   }
 
-  shutdown(serial: string, cb?: (err: Error) => void) {
+  shutdown(serial: string, cb?: (err: Error) => void): Promise<void> {
     return this.connection()
       .then((conn) => {
         return new ShutdownCommand(conn).execute(serial);
@@ -386,7 +386,7 @@ export default class AdbClient extends EventEmitter {
       .nodeify(cb);
   }
 
-  remount(serial: string, cb?: (err: Error) => void) {
+  remount(serial: string, cb?: (err: Error) => void): Promise<void> {
     return this.connection()
       .then((conn) => {
         return new RemountCommand(conn).execute(serial);
@@ -394,7 +394,7 @@ export default class AdbClient extends EventEmitter {
       .nodeify(cb);
   }
 
-  root(serial: string, cb?: (err: Error) => void) {
+  root(serial: string, cb?: (err: Error) => void): Promise<void> {
     return this.connection()
       .then((conn) => {
         return new RootCommand(conn).execute(serial);
@@ -440,7 +440,7 @@ export default class AdbClient extends EventEmitter {
     port: number | string,
     host?: any,
     cb?: (err: Error, value: Connection) => void
-  ): Promise<any> {
+  ): Promise<Connection> {
     if (typeof host === 'function') {
       cb = host;
       host = undefined;
@@ -702,7 +702,7 @@ export default class AdbClient extends EventEmitter {
     serial: string,
     options?: any,
     cb?: (err: Error, value: LogcatReader) => void
-  ) {
+  ): Promise<LogcatReader> {
     if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
@@ -729,7 +729,7 @@ export default class AdbClient extends EventEmitter {
     });
   }
 
-  clear(serial: string, pkg: string, cb?: (err: Error) => void) {
+  clear(serial: string, pkg: string, cb?: (err: Error) => void): Promise<void> {
     return this.connection()
       .then((conn) => {
         return new ClearCommand(conn).execute(serial, pkg);
@@ -833,7 +833,7 @@ export default class AdbClient extends EventEmitter {
     pkg: string,
     options?: any,
     cb?: (err: Error) => void
-  ) {
+  ): Promise<void> {
     if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
@@ -1204,7 +1204,7 @@ export default class AdbClient extends EventEmitter {
     serial: string,
     command: string | string[],
     cb?: (err: Error, value: SimpleType) => void
-  ) {
+  ): Promise<SimpleType> {
     return this.connection()
       .then((conn) => {
         return new ShellCommand(conn).execute(serial, command);
