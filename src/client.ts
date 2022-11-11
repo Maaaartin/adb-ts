@@ -849,7 +849,7 @@ export default class AdbClient extends EventEmitter {
     serial: string,
     pkg: string,
     cb?: (err: Error, value: boolean) => void
-  ) {
+  ): Promise<boolean> {
     return this.connection()
       .then((conn) => {
         return new IsInstalledCommand(conn).execute(serial, pkg);

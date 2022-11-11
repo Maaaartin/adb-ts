@@ -444,7 +444,7 @@ Tells if a package is installed or not.
 
 - Returns: `Promise<boolean>`
 
-#### device. startService(pkg: string, service: string, options?: any, cb?: (err: Error) => void)
+#### device.startService(pkg: string, service: string, options?: any, cb?: (err: Error) => void)
 
 ```ts
 device
@@ -946,7 +946,7 @@ Updates access and modification times of file specified by `path` parameter. Ana
 
 - Returns: `Promise<string>`
 
-##### device. mv(srcPath: string, destDir, options?: MvOptions, cb?: (err: Error | null, value: string) => void)
+##### device.mv(srcPath: string, destDir, options?: MvOptions, cb?: (err: Error | null, value: string) => void)
 
 ```ts
 device.mv('/sdcard/file', '/sdcard/some-dir').then(() => null);
