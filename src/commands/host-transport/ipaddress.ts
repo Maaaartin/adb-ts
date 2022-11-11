@@ -4,7 +4,7 @@ import { Reply } from '../..';
 import TransportCommand from '../transport';
 
 export default class GetIpAddressCommand extends TransportCommand {
-  execute(serial: string): Promise<string | undefined> {
+  execute(serial: string): Promise<string | null> {
     return super
       .execute(serial, "shell:ip route | awk '{ print $9 }'")
       .then((reply) => {
@@ -12,7 +12,7 @@ export default class GetIpAddressCommand extends TransportCommand {
           case Reply.OKAY:
             return this.parser.readAll().then((value) => {
               const valueStr = value.toString().trim();
-              return ipRegex().test(valueStr) ? valueStr : undefined;
+              return ipRegex().test(valueStr) ? valueStr : null;
             });
           case Reply.FAIL:
             return this.parser.readError();

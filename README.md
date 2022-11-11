@@ -218,13 +218,13 @@ Gets the installed packages. Analogous to `adb shell pm list packages` .
 ##### device.getIpAddress(serial: string)
 
 ```ts
-device.getIpAddress(cb?: (err: Error, value?: string) => void)
-    .then((ipadd?: string) => console.log(ipadd));
+device.getIpAddress(cb?: (err: Error, value: string | null) => void)
+    .then((ipadd: string | null) => console.log(ipadd));
 ```
 
-Gets the the ip address of default wlan interface. If device has no ip address assigned, returns `undefined` .
+Gets the the ip address of default wlan interface. If device has no ip address assigned, returns `null` .
 
-- Returns: `Promise<string | undefined>`
+- Returns: `Promise<string | null>`
 
 ##### device.forward(serial: string, local: string, remote: string)
 
@@ -244,7 +244,7 @@ Forwards socket connections from the ADB server host (local) to the device (remo
   - `dev:<character device name>`
 - **remote** The remote endpoint on the device.
 
-* Returns: `Promise<void>`
+- Returns: `Promise<void>`
 
 ##### device.listForwards(cb?: (err: Error, value: ForwardsObject[]) => void)
 
@@ -274,7 +274,7 @@ Reverses socket connections from the device (remote) to the ADB server host (loc
   - `dev:<character device name>`
 - **local** The local endpoint on the ADB host.
 
-* Returns: `Promise<void>`
+- Returns: `Promise<void>`
 
 ##### device.listReverses(cb?: (err: Error, value: ReversesObject[]) => void)
 
@@ -409,7 +409,7 @@ device.install('path-to-apk', { test: true }).then(() => null);
 
   command
 
-* **args?: string**:
+- **args?: string**:
 
   - e.g. `--fastdeploy` flag
 
@@ -464,9 +464,9 @@ device
 - **mimeType: boolean**: adds `-t` flag
 - **category: string | string[]**: adds `-c` flag, string or string array
 
-* **flags: AdbFlag | AdbFlag[]** values: `'-f' | '-d' | '-e' | '-g' | '-k' | '-s' | '-t' | '-3' | '-i' | '-u'`
+- **flags: AdbFlag | AdbFlag[]** values: `'-f' | '-d' | '-e' | '-g' | '-k' | '-s' | '-t' | '-3' | '-i' | '-u'`
 
-* **extras: AdbExtra | AdbExtra[]**
+- **extras: AdbExtra | AdbExtra[]**
 
 `AdbExtra` is an object:
 `key: string`
@@ -699,7 +699,7 @@ Gets the device features. Analogous to `adb shell am force-stop <package>` .
 
 #### Input methods
 
-Note: for multiple input it is more efficient to use [ `Monkey` ](https://github.com/Maaaartin/adb-ts#adb-monkey).
+Note: for multiple input it is more efficient to use [`Monkey`](https://github.com/Maaaartin/adb-ts#adb-monkey).
 
 ##### device.roll(x: number, y: number, source: InputSource = 'trackball')
 
@@ -856,7 +856,7 @@ device.openMonkey().then((monkey: Monkey) => {
 });
 ```
 
-Establishes a new monkey connection on port `1080` . For more see [ `Monkey` ](https://github.com/Maaaartin/adb-ts#adb-monkey).
+Establishes a new monkey connection on port `1080` . For more see [`Monkey`](https://github.com/Maaaartin/adb-ts#adb-monkey).
 
 - Returns: `Promise<Monkey>`
 

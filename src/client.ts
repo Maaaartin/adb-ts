@@ -162,14 +162,18 @@ export default class AdbClient extends EventEmitter {
 
   connect(
     host: string,
-    cb?: (err: Error, value: number) => void
+    cb?: (err: Error, value: string) => void
   ): Promise<string>;
   connect(
     host: string,
     port?: number,
-    cb?: (err: Error, value: number) => void
+    cb?: (err: Error, value: string) => void
   ): Promise<string>;
-  connect(host: string, port?: any, cb?: (err: Error, value: number) => void) {
+  connect(
+    host: string,
+    port?: any,
+    cb?: (err: Error, value: string) => void
+  ): Promise<string> {
     if (typeof port === 'function') {
       cb = port;
       port = undefined;
@@ -188,18 +192,18 @@ export default class AdbClient extends EventEmitter {
   }
   disconnect(
     host: string,
-    cb?: (err: Error, value: number) => void
+    cb?: (err: Error, value: string) => void
   ): Promise<string>;
   disconnect(
     host: string,
     port?: number,
-    cb?: (err: Error, value: number) => void
+    cb?: (err: Error, value: string) => void
   ): Promise<string>;
   disconnect(
     host: string,
     port?: any,
-    cb?: (err: Error, value: number) => void
-  ) {
+    cb?: (err: Error, value: string) => void
+  ): Promise<string> {
     if (typeof port === 'function') {
       cb = port;
       port = undefined;
@@ -215,7 +219,9 @@ export default class AdbClient extends EventEmitter {
     });
   }
 
-  listDevices(cb?: (err: Error, value: IAdbDevice[]) => void) {
+  listDevices(
+    cb?: (err: Error, value: IAdbDevice[]) => void
+  ): Promise<IAdbDevice[]> {
     return this.connection()
       .then((conn) => {
         return new ListDevicesCommand(conn).execute();
@@ -223,7 +229,7 @@ export default class AdbClient extends EventEmitter {
       .nodeify(cb);
   }
 
-  trackDevices(cb?: (err: Error, value: Tracker) => void) {
+  trackDevices(cb?: (err: Error, value: Tracker) => void): Promise<Tracker> {
     return this.connection().then((conn) => {
       const command = new TrackCommand(conn);
       const prom = command
@@ -236,7 +242,7 @@ export default class AdbClient extends EventEmitter {
     });
   }
 
-  kill(cb?: (err: Error) => void) {
+  kill(cb?: (err: Error) => void): Promise<void> {
     return this.connection()
       .then((conn) => {
         return new KillCommand(conn).execute();
@@ -244,11 +250,21 @@ export default class AdbClient extends EventEmitter {
       .nodeify(cb);
   }
 
-  getSerialNo(serial: string, cb?: (err: Error, value: string) => void) {
-    return this.getProp(serial, 'ro.serialno', cb);
+  getSerialNo(
+    serial: string,
+    cb?: (err: Error, value: string) => void
+  ): Promise<string> {
+    return this.getProp(
+      serial,
+      'ro.serialno',
+      cb ? (err, value) => cb(err, String(value)) : undefined
+    ).then(String);
   }
 
-  getDevicePath(serial: string, cb?: (err: Error, value: string) => void) {
+  getDevicePath(
+    serial: string,
+    cb?: (err: Error, value: string) => void
+  ): Promise<string> {
     return this.connection()
       .then((conn) => {
         return new GetDevicePathCommand(conn).execute(serial);
@@ -259,7 +275,7 @@ export default class AdbClient extends EventEmitter {
   listProperties(
     serial: string,
     cb?: (err: Error, value: KeyStringObject) => void
-  ) {
+  ): Promise<KeyStringObject> {
     return this.connection()
       .then((conn) => {
         return new ListPropertiesCommand(conn).execute(serial);
@@ -270,7 +286,7 @@ export default class AdbClient extends EventEmitter {
   listFeatures(
     serial: string,
     cb?: (err: Error, value: KeyStringObject) => void
-  ) {
+  ): Promise<KeyStringObject> {
     return this.connection()
       .then((conn) => {
         return new ListFeaturesCommand(conn).execute(serial);
@@ -278,7 +294,10 @@ export default class AdbClient extends EventEmitter {
       .nodeify(cb);
   }
 
-  listPackages(serial: string, cb?: (err: Error, value: string[]) => void) {
+  listPackages(
+    serial: string,
+    cb?: (err: Error, value: string[]) => void
+  ): Promise<string[]> {
     return this.connection()
       .then((conn) => {
         return new ListPackagesCommand(conn).execute(serial);
@@ -288,8 +307,8 @@ export default class AdbClient extends EventEmitter {
 
   getIpAddress(
     serial: string,
-    cb?: (err: Error, value: string) => void
-  ): Promise<string | undefined> {
+    cb?: (err: Error, value: string | null) => void
+  ): Promise<string | null> {
     return this.connection()
       .then((conn) => {
         return new GetIpAddressCommand(conn).execute(serial);
@@ -302,7 +321,7 @@ export default class AdbClient extends EventEmitter {
     local: string,
     remote: string,
     cb?: (err: Error) => void
-  ) {
+  ): Promise<void> {
     return this.connection()
       .then((conn) => {
         return new ForwardCommand(conn).execute(serial, local, remote);
@@ -313,7 +332,7 @@ export default class AdbClient extends EventEmitter {
   listForwards(
     serial: string,
     cb?: (err: Error, value: ForwardsObject[]) => void
-  ) {
+  ): Promise<ForwardsObject[]> {
     return this.connection()
       .then((conn) => {
         return new ListForwardsCommand(conn).execute(serial);
@@ -326,7 +345,7 @@ export default class AdbClient extends EventEmitter {
     local: string,
     remote: string,
     cb?: (err: Error) => void
-  ) {
+  ): Promise<void> {
     return this.connection()
       .then((conn) => {
         return new ReverseCommand(conn).execute(serial, local, remote);
@@ -337,7 +356,7 @@ export default class AdbClient extends EventEmitter {
   listReverses(
     serial: string,
     cb?: (err: Error, value: ReversesObject[]) => void
-  ) {
+  ): Promise<ReversesObject[]> {
     return this.connection()
       .then((conn) => {
         return new ListReversesCommand(conn).execute(serial);
