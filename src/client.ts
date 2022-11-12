@@ -876,7 +876,7 @@ export default class AdbClient extends EventEmitter {
     activity: string,
     options?: any,
     cb?: (err: Error) => void
-  ) {
+  ): Promise<void> {
     if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
@@ -912,7 +912,7 @@ export default class AdbClient extends EventEmitter {
     service: string,
     options?: any,
     cb?: (err: Error) => void
-  ) {
+  ): Promise<void> {
     if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
@@ -929,7 +929,11 @@ export default class AdbClient extends EventEmitter {
       .nodeify(cb);
   }
 
-  stat(serial: string, path: string, cb?: (err: Error, value: Stats) => void) {
+  stat(
+    serial: string,
+    path: string,
+    cb?: (err: Error, value: Stats) => void
+  ): Promise<Stats> {
     process.emitWarning('Use fileStats() function instead', 'Warning');
     return this.syncService(serial)
       .then((sync) => {
@@ -944,7 +948,7 @@ export default class AdbClient extends EventEmitter {
     serial: string,
     path: string,
     cb?: (err: Error, value: SyncEntry[]) => void
-  ) {
+  ): Promise<SyncEntry[]> {
     return this.syncService(serial)
       .then((sync) => {
         return sync.readDir(path).finally(() => {
@@ -958,7 +962,7 @@ export default class AdbClient extends EventEmitter {
     serial: string,
     path: string,
     cb?: (err: Error, value: PullTransfer) => void
-  ) {
+  ): Promise<PullTransfer> {
     return this.syncService(serial)
       .then((sync) => {
         return sync.pull(path).on('end', () => {
@@ -1085,7 +1089,7 @@ export default class AdbClient extends EventEmitter {
     srcPath: string,
     destPath: string,
     cb?: (err: Error) => void
-  ) {
+  ): Promise<void> {
     return this.pushInternal(serial, srcPath, destPath).nodeify(cb);
   }
 

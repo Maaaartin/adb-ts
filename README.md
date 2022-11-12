@@ -444,7 +444,7 @@ Tells if a package is installed or not.
 
 - Returns: `Promise<boolean>`
 
-#### device.startService(pkg: string, service: string, options?: any, cb?: (err: Error) => void)
+#### device.startService(pkg: string, service: string, options?: StartServiceOptions, cb?: (err: Error) => void)
 
 ```ts
 device
@@ -456,7 +456,7 @@ device
       type: 'string',
     },
   })
-  .then((result: boolean) => console.log(result));
+  .then(() => null);
 ```
 
 - **options:**
@@ -486,7 +486,7 @@ Starts a new activity with options. Extras data type needs to be defined separat
 ```ts
 device
   .startActivity('com.some.package', 'SomeActivity', { debug: true })
-  .then((result: boolean) => console.log(result));
+  .then(() => null);
 ```
 
 - **debug: boolean**: adds `-D` flag, enables debugging
@@ -498,7 +498,7 @@ Starts a new activity with options.
 
 - Returns: `Promise<void>`
 
-#### device.stat(cb?: (err: Error, value: Stats) => void)
+#### device.stat(path: string, cb?: (err: Error, value: Stats) => void)
 
 ```ts
 device.stat('/path/on/device').then((value: Stats) => {});
@@ -519,7 +519,7 @@ Note, the path should start with a slash.
 
 - Returns: `Promise<SyncEntry[]>`.
 
-### File handling methods
+### File system methods
 
 #### device.pull(cb?: (err: Error, value: PullTransfer) => void)
 
@@ -548,7 +548,7 @@ device.pullFile('/path/on/device', 'output.txt').then(() => null);
 - **srcPath: string**: path to file on the device to be read
 - **destPath: boolean**: path to desired output file on the host
 
-Wraps `pull()` method, reads the content of file on the device to a file on the PC.
+Wraps `pull()` method, reads the content of file on the device to a file on the machine.
 
 - Returns: `Promise<void>`
 
@@ -566,7 +566,7 @@ Wraps `pull()` method, reads the file content and resolves with the output.
 
 - Returns: `Promise<string>`.
 
-#### device.push(destPath: string, mode?: SyncMode, cb?: (err: Error, value: PushTransfer) => void)
+#### device.push( srcPath: string | Readable, destPath: string, mode?: SyncMode, cb?: (err: Error, value: PushTransfer) => void)
 
 ```ts
 device.push('path-to-src', '/path/on/device').then((transfer: PushTransfer) => {
