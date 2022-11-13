@@ -152,7 +152,7 @@ export default class AdbClient extends EventEmitter {
     });
   }
 
-  version(cb?: (err: Error, value?: number) => void) {
+  version(cb?: (err: Error, value?: number) => void): Promise<number> {
     return this.connection()
       .then((conn) => {
         return new VersionCommand(conn).execute();
@@ -190,6 +190,7 @@ export default class AdbClient extends EventEmitter {
       })
       .nodeify(cb);
   }
+
   disconnect(
     host: string,
     cb?: (err: Error, value: string) => void
@@ -214,9 +215,11 @@ export default class AdbClient extends EventEmitter {
       port = Number(tmp[1]);
     }
     if (!port) port = 5555;
-    return this.connection().then((conn) => {
-      return new DisconnectCommand(conn).execute(host, port);
-    });
+    return this.connection()
+      .then((conn) => {
+        return new DisconnectCommand(conn).execute(host, port);
+      })
+      .nodeify(cb);
   }
 
   listDevices(
@@ -991,7 +994,7 @@ export default class AdbClient extends EventEmitter {
     destPath: string,
     mode?: any,
     cb?: (err: Error, value: PushTransfer) => void
-  ) {
+  ): Promise<PushTransfer> {
     if (typeof mode === 'function') {
       cb = mode;
       mode = undefined;
@@ -1014,7 +1017,11 @@ export default class AdbClient extends EventEmitter {
     port: number,
     cb?: (err: Error, value: string) => void
   ): Promise<string>;
-  tcpip(serial: string, port: any, cb?: (err: Error, value: string) => void) {
+  tcpip(
+    serial: string,
+    port: any,
+    cb?: (err: Error, value: string) => void
+  ): Promise<string> {
     if (typeof port === 'function') {
       cb = port;
       port = 5555;
@@ -1299,7 +1306,7 @@ export default class AdbClient extends EventEmitter {
     serial: string,
     cmd: string,
     cb?: (err: Error, value: string) => void
-  ) {
+  ): Promise<string> {
     return this.execInternal(...['-s', serial, cmd]).nodeify(cb);
   }
 
