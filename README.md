@@ -155,7 +155,7 @@ adb.custom<number>(MyCommand).then((value) => {
 });
 ```
 
-Execute method `ParseCommand` instance will call overriden `parse` method.
+Execute method `ParseCommand` instance will call overridden `parse` method.
 Execute method `RawCommand` resolves with socket connection to the adb server.
 Custom Transport command to be executed on a particular device:
 
@@ -638,6 +638,20 @@ adb.trackDevices((err, tracker) => {
 ```
 
 Waits until the device has finished booting.
+
+- Returns: `Promise<void>`
+
+##### device.waitForDevice(transport: TransportType, state: WaitForState, cb?: (err: Error) => void)
+
+```ts
+adb.trackDevices((err, tracker) => {
+  tracker.on('add', (device) => {
+    device.waitForDevice().then(() => {});
+  });
+});
+```
+
+Waits until the device is recognized by adb.
 
 - Returns: `Promise<void>`
 
@@ -1230,7 +1244,7 @@ Closes the current monkey session and allows a new session to connect.
 monkey.getAmCurrentAction((err, value, command) => {});
 ```
 
-Shorcut for `get('am.current.action', cb)` .
+Shortcut for `get('am.current.action', cb)` .
 
 - Returns: `Monkey`
 
@@ -1250,7 +1264,7 @@ Shortcut for `get('am.current.categories', cb)` .
 monkey.getAmCurrentCompClass((err, value, command) => {});
 ```
 
-Shorcut for `get('am.current.comp.class', cb)` .
+Shortcut for `get('am.current.comp.class', cb)` .
 
 - Returns: `Monkey`
 
@@ -1260,7 +1274,7 @@ Shorcut for `get('am.current.comp.class', cb)` .
 monkey.getAmCurrentCompPackage((err, value, command) => {});
 ```
 
-Shorcut for `get('am.current.comp.package', cb)` .
+Shortcut for `get('am.current.comp.package', cb)` .
 
 - Returns: `Monkey`
 
@@ -1270,7 +1284,7 @@ Shorcut for `get('am.current.comp.package', cb)` .
 monkey.getAmCurrentData((err, value, command) => {});
 ```
 
-Shorcut for `get('am.current.data', cb)` .
+Shortcut for `get('am.current.data', cb)` .
 
 - Returns: `Monkey`
 
@@ -1280,7 +1294,7 @@ Shorcut for `get('am.current.data', cb)` .
 monkey.getAmCurrentPackage((err, value, command) => {});
 ```
 
-Shorcut for `get('am.current.package', cb)` .
+Shortcut for `get('am.current.package', cb)` .
 
 - Returns: `Monkey`
 
@@ -1290,7 +1304,7 @@ Shorcut for `get('am.current.package', cb)` .
 monkey.getBuildBoard((err, value, command) => {});
 ```
 
-Shorcut for `get('build.board', cb)` .
+Shortcut for `get('build.board', cb)` .
 
 - Returns: `Monkey`
 
@@ -1300,7 +1314,7 @@ Shorcut for `get('build.board', cb)` .
 monkey.getBuildBrand((err, value, command) => {});
 ```
 
-Shorcut for `get('build.brand', cb)` .
+Shortcut for `get('build.brand', cb)` .
 
 - Returns: `Monkey`
 
@@ -1310,7 +1324,7 @@ Shorcut for `get('build.brand', cb)` .
 monkey.getBuildCpuAbi((err, value, command) => {});
 ```
 
-Shorcut for `get('build.cpu_abi', cb)` .
+Shortcut for `get('build.cpu_abi', cb)` .
 
 - Returns: `Monkey`
 
@@ -1320,7 +1334,7 @@ Shorcut for `get('build.cpu_abi', cb)` .
 monkey.getBuildDevice((err, value, command) => {});
 ```
 
-Shorcut for `get('build.display', cb)` .
+Shortcut for `get('build.display', cb)` .
 
 - Returns: `Monkey`
 
@@ -1330,7 +1344,7 @@ Shorcut for `get('build.display', cb)` .
 monkey.getBuildFingerprint((err, value, command) => {});
 ```
 
-Shorcut for `get('build.fingerprint', cb)` .
+Shortcut for `get('build.fingerprint', cb)` .
 
 - Returns: `Monkey`
 
@@ -1340,7 +1354,7 @@ Shorcut for `get('build.fingerprint', cb)` .
 monkey.getBuildHost((err, value, command) => {});
 ```
 
-Shorcut for `get('build.host', cb)` .
+Shortcut for `get('build.host', cb)` .
 
 - Returns: `Monkey`
 
@@ -1350,7 +1364,7 @@ Shorcut for `get('build.host', cb)` .
 monkey.getBuildId((err, value, command) => {});
 ```
 
-Shorcut for `get('build.id', cb)` .
+Shortcut for `get('build.id', cb)` .
 
 - Returns: `Monkey`
 
@@ -1360,7 +1374,7 @@ Shorcut for `get('build.id', cb)` .
 monkey.getBuildManufacturer((err, value, command) => {});
 ```
 
-Shorcut for `get('build.manufacturer', cb)` .
+Shortcut for `get('build.manufacturer', cb)` .
 
 - Returns: `Monkey`
 
@@ -1370,7 +1384,7 @@ Shorcut for `get('build.manufacturer', cb)` .
 monkey.getBuildModel((err, value, command) => {});
 ```
 
-Shorcut for `get('build.model', cb)` .
+Shortcut for `get('build.model', cb)` .
 
 - Returns: `Monkey`
 
@@ -1380,7 +1394,7 @@ Shorcut for `get('build.model', cb)` .
 monkey.getBuildProduct((err, value, command) => {});
 ```
 
-Shorcut for `get('build.product', cb)` .
+Shortcut for `get('build.product', cb)` .
 
 - Returns: `Monkey`
 
@@ -1390,7 +1404,7 @@ Shorcut for `get('build.product', cb)` .
 monkey.getBuildTags((err, value, command) => {});
 ```
 
-Shorcut for `get('build.tags', cb)` .
+Shortcut for `get('build.tags', cb)` .
 
 - Returns: `Monkey`
 
@@ -1400,7 +1414,7 @@ Shorcut for `get('build.tags', cb)` .
 monkey.getBuildType((err, value, command) => {});
 ```
 
-Shorcut for `get('build.type', cb)` .
+Shortcut for `get('build.type', cb)` .
 
 - Returns: `Monkey`
 
@@ -1410,7 +1424,7 @@ Shorcut for `get('build.type', cb)` .
 monkey.getBuildUser((err, value, command) => {});
 ```
 
-Shorcut for `get('build.user', cb)` .
+Shortcut for `get('build.user', cb)` .
 
 - Returns: `Monkey`
 
@@ -1420,7 +1434,7 @@ Shorcut for `get('build.user', cb)` .
 monkey.getBuildVersionCodename((err, value, command) => {});
 ```
 
-Shorcut for `get('build.version.codename', cb)` .
+Shortcut for `get('build.version.codename', cb)` .
 
 - Returns: `Monkey`
 
@@ -1430,7 +1444,7 @@ Shorcut for `get('build.version.codename', cb)` .
 monkey.getBuildVersionIncremental((err, value, command) => {});
 ```
 
-Shorcut for `get('build.version.incremental', cb)` .
+Shortcut for `get('build.version.incremental', cb)` .
 
 - Returns: `Monkey`
 
@@ -1440,7 +1454,7 @@ Shorcut for `get('build.version.incremental', cb)` .
 monkey.getBuildVersionRelease((err, value, command) => {});
 ```
 
-Shorcut for `get('build.version.release', cb)` .
+Shortcut for `get('build.version.release', cb)` .
 
 - Returns: `Monkey`
 
@@ -1450,7 +1464,7 @@ Shorcut for `get('build.version.release', cb)` .
 monkey.getBuildVersionSdk((err, value, command) => {});
 ```
 
-Shorcut for `get('build.version.sdk', cb)` .
+Shortcut for `get('build.version.sdk', cb)` .
 
 - Returns: `Monkey`
 
@@ -1460,7 +1474,7 @@ Shorcut for `get('build.version.sdk', cb)` .
 monkey.getClockMillis((err, value, command) => {});
 ```
 
-Shorcut for `get('clock.millis', cb)` .
+Shortcut for `get('clock.millis', cb)` .
 
 - Returns: `Monkey`
 
@@ -1470,7 +1484,7 @@ Shorcut for `get('clock.millis', cb)` .
 monkey.getClockRealtime((err, value, command) => {});
 ```
 
-Shorcut for `get('clock.realtime', cb)` .
+Shortcut for `get('clock.realtime', cb)` .
 
 - Returns: `Monkey`
 
@@ -1480,7 +1494,7 @@ Shorcut for `get('clock.realtime', cb)` .
 monkey.getClockUptime((err, value, command) => {});
 ```
 
-Shorcut for `get('clock.uptime', cb)` .
+Shortcut for `get('clock.uptime', cb)` .
 
 - Returns: `Monkey`
 
@@ -1490,7 +1504,7 @@ Shorcut for `get('clock.uptime', cb)` .
 monkey.getDisplayDensity((err, value, command) => {});
 ```
 
-Shorcut for `get('display.density', cb)` .
+Shortcut for `get('display.density', cb)` .
 
 - Returns: `Monkey`
 
@@ -1500,7 +1514,7 @@ Shorcut for `get('display.density', cb)` .
 monkey.getDisplayHeight((err, value, command) => {});
 ```
 
-Shorcut for `get('display.height', cb)` .
+Shortcut for `get('display.height', cb)` .
 
 - Returns: `Monkey`
 
@@ -1510,6 +1524,6 @@ Shorcut for `get('display.height', cb)` .
 monkey.getDisplayWidth((err, value, command) => {});
 ```
 
-Shorcut for `get('display.width', cb)` .
+Shortcut for `get('display.width', cb)` .
 
 - Returns: `Monkey`

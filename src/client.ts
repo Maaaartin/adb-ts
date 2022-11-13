@@ -471,7 +471,7 @@ export default class AdbClient extends EventEmitter {
     y: number,
     source: any,
     cb?: (err: Error) => void
-  ) {
+  ): Promise<void> {
     if (typeof source === 'function') {
       cb = source;
     }
@@ -489,7 +489,7 @@ export default class AdbClient extends EventEmitter {
     source?: InputSource,
     cb?: (err: Error) => void
   ): Promise<void>;
-  press(serial: string, source: any, cb?: (err: Error) => void) {
+  press(serial: string, source: any, cb?: (err: Error) => void): Promise<void> {
     if (typeof source === 'function') {
       cb = source;
     }
@@ -526,7 +526,7 @@ export default class AdbClient extends EventEmitter {
     y2: number,
     options?: any,
     cb?: (err: Error) => void
-  ) {
+  ): Promise<void> {
     if (typeof options === 'function' || !options || !options) {
       cb = options;
       options = {};
@@ -573,7 +573,7 @@ export default class AdbClient extends EventEmitter {
     y2: number,
     options?: any,
     cb?: (err: Error) => void
-  ) {
+  ): Promise<void> {
     if (typeof options === 'function' || !options || !options) {
       cb = options;
       options = {};
@@ -611,7 +611,7 @@ export default class AdbClient extends EventEmitter {
     code: KeyCode | number,
     options?: any,
     cb?: (err: Error) => void
-  ) {
+  ): Promise<void> {
     if (typeof options === 'function' || !options || !options) {
       cb = options;
       options = {};
@@ -649,7 +649,7 @@ export default class AdbClient extends EventEmitter {
     y: number,
     source: any,
     cb?: (err: Error) => void
-  ) {
+  ): Promise<void> {
     if (typeof source === 'function') {
       cb = source;
     }
@@ -677,7 +677,7 @@ export default class AdbClient extends EventEmitter {
     text: SimpleType,
     source: any,
     cb?: (err: Error) => void
-  ) {
+  ): Promise<void> {
     if (typeof source === 'function') {
       cb = source;
     }
@@ -1026,7 +1026,7 @@ export default class AdbClient extends EventEmitter {
       .nodeify(cb);
   }
 
-  usb(serial: string, cb?: (err: Error) => void) {
+  usb(serial: string, cb?: (err: Error) => void): Promise<void> {
     return this.connection()
       .then((conn) => {
         return new UsbCommand(conn).execute(serial);
@@ -1034,7 +1034,7 @@ export default class AdbClient extends EventEmitter {
       .nodeify(cb);
   }
 
-  waitBootComplete(serial: string, cb?: (err: Error) => void) {
+  waitBootComplete(serial: string, cb?: (err: Error) => void): Promise<void> {
     return this.connection()
       .then((conn) => {
         return new WaitBootCompleteCommand(conn).execute(serial);
@@ -1046,7 +1046,7 @@ export default class AdbClient extends EventEmitter {
     transport: TransportType,
     state: WaitForState,
     cb?: (err: Error) => void
-  ) {
+  ): Promise<void> {
     return this.connection()
       .then((conn) => {
         return new WaitForDeviceCommand(conn).execute(transport, state);
@@ -1078,7 +1078,7 @@ export default class AdbClient extends EventEmitter {
     data: string,
     destPath: string,
     cb?: (err: Error) => void
-  ) {
+  ): Promise<void> {
     return this.pushInternal(serial, stringToStream(data), destPath).nodeify(
       cb
     );
@@ -1157,7 +1157,7 @@ export default class AdbClient extends EventEmitter {
     serial: string,
     prop: string,
     cb?: (err: Error, value: SimpleType) => void
-  ) {
+  ): Promise<SimpleType> {
     return this.connection()
       .then((conn) => {
         return new GetPropertyCommand(conn).execute(serial, prop);
@@ -1171,7 +1171,7 @@ export default class AdbClient extends EventEmitter {
     name: string,
     value: SimpleType,
     cb?: (err: Error) => void
-  ) {
+  ): Promise<void> {
     return this.connection()
       .then((conn) => {
         return new PutSetting(conn).execute(serial, mode, name, value);
@@ -1183,7 +1183,7 @@ export default class AdbClient extends EventEmitter {
     serial: string,
     mode: SettingsMode,
     cb?: (err: Error, value: KeyStringObject) => void
-  ) {
+  ): Promise<KeyStringObject> {
     return this.connection()
       .then((conn) => {
         return new ListSettingsCommand(conn).execute(serial, mode);
@@ -1196,7 +1196,7 @@ export default class AdbClient extends EventEmitter {
     mode: SettingsMode,
     name: string,
     cb?: (err: Error, value: SimpleType) => void
-  ) {
+  ): Promise<SimpleType> {
     return this.connection()
       .then((conn) => {
         return new GetSetting(conn).execute(serial, mode, name);
@@ -1239,7 +1239,10 @@ export default class AdbClient extends EventEmitter {
       .nodeify(cb);
   }
 
-  openMonkey(serial: string, cb?: (err: Error, value: Monkey) => void) {
+  openMonkey(
+    serial: string,
+    cb?: (err: Error, value: Monkey) => void
+  ): Promise<Monkey> {
     const tryConnect = (times: number): Promise<Monkey> => {
       return this.openTcp(serial, 1080)
         .then((stream) => {
@@ -1269,8 +1272,12 @@ export default class AdbClient extends EventEmitter {
       .nodeify(cb);
   }
 
-  killApp(serial: string, pkg: string, cb?: (err: Error) => void) {
-    this.shell(serial, `am force-stop ${pkg}`).return().nodeify(cb);
+  killApp(
+    serial: string,
+    pkg: string,
+    cb?: (err: Error) => void
+  ): Promise<void> {
+    return this.shell(serial, `am force-stop ${pkg}`).return().nodeify(cb);
   }
 
   private execInternal(...args: ReadonlyArray<string>) {
@@ -1284,7 +1291,7 @@ export default class AdbClient extends EventEmitter {
     });
   }
 
-  exec(cmd: string, cb?: (err: Error, value: string) => void) {
+  exec(cmd: string, cb?: (err: Error, value: string) => void): Promise<string> {
     return this.execInternal(cmd).nodeify(cb);
   }
 
@@ -1300,14 +1307,14 @@ export default class AdbClient extends EventEmitter {
     serial: string,
     cmd: string,
     cb?: (err: Error, value: string) => void
-  ) {
+  ): Promise<string> {
     return this.execInternal(...['-s', serial, 'shell', cmd]).nodeify(cb);
   }
 
   batteryStatus(
     serial: string,
     cb?: (err: Error, value: KeyStringObject) => void
-  ) {
+  ): Promise<KeyStringObject> {
     return this.connection()
       .then((conn) => {
         return new BatteryStatusCommand(conn).execute(serial);
@@ -1331,7 +1338,7 @@ export default class AdbClient extends EventEmitter {
     path: string,
     options?: any,
     cb?: (err: Error | null, value: string) => void
-  ) {
+  ): Promise<string> {
     if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
@@ -1359,7 +1366,7 @@ export default class AdbClient extends EventEmitter {
     path: string,
     options?: any,
     cb?: (err: Error | null, value: string) => void
-  ) {
+  ): Promise<string> {
     if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
@@ -1387,7 +1394,7 @@ export default class AdbClient extends EventEmitter {
     path: string,
     options?: any,
     cb?: (err: Error | null, value: string) => void
-  ) {
+  ): Promise<string> {
     if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
@@ -1418,7 +1425,7 @@ export default class AdbClient extends EventEmitter {
     destPath: string,
     options?: any,
     cb?: (err: Error | null, value: string) => void
-  ) {
+  ): Promise<string> {
     if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
@@ -1453,7 +1460,7 @@ export default class AdbClient extends EventEmitter {
     destPath: string,
     options?: any,
     cb?: (err: Error | null, value: string) => void
-  ) {
+  ): Promise<string> {
     if (typeof options === 'function' || !options) {
       cb = options;
       options = undefined;
@@ -1473,7 +1480,7 @@ export default class AdbClient extends EventEmitter {
     serial: string,
     path: string,
     cb?: (err: Error | null, value: FileStats) => void
-  ) {
+  ): Promise<FileStats> {
     return this.connection().then((conn) => {
       return new FileStatCommand(conn).execute(serial, path).nodeify(cb);
     });
