@@ -184,18 +184,6 @@ export type DeviceState =
     | 'recovery'
     | 'no permissions';
 
-export type AdbFlag =
-    | '-f'
-    | '-d'
-    | '-e'
-    | '-g'
-    | '-k'
-    | '-s'
-    | '-t'
-    | '-3'
-    | '-i'
-    | '-u';
-
 export type AdbExtraType =
     | 'string'
     | 'null'
@@ -220,7 +208,7 @@ export interface StartServiceOptions {
     data?: string;
     mimeType?: string;
     category?: string | string[];
-    flags?: AdbFlag | AdbFlag[];
+    flags?: number;
     extras?: AdbExtra | AdbExtra[];
 }
 

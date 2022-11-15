@@ -103,10 +103,8 @@ export default class StartServiceCommand extends TransportCommand<void> {
             }
         }
 
-        if (typeof options.flags === 'string') {
+        if (typeof options.flags === 'number') {
             args.push('-f', this.escape(options.flags));
-        } else if (Array.isArray(options.flags)) {
-            args.push('-f', ...options.flags.map(this.escape));
         }
         return args;
     }
