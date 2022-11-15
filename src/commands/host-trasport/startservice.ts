@@ -1,7 +1,6 @@
 import {
     AdbExtra,
     AdbExtraType,
-    Reply,
     StartServiceOptions,
     StartActivityOptions,
     PrematureEOFError,
@@ -9,7 +8,21 @@ import {
 } from '../..';
 import TransportCommand from '../transport';
 
-export default class StartServiceCommand extends TransportCommand {
+export default class StartServiceCommand extends TransportCommand<void> {
+    Cmd = 'shell:am startservice ';
+    protected postExecute(): Promise<void> {
+        return this.parser
+            .searchLine(/^Error: (.*)$/)
+            .finally(() => this.parser.end())
+            .then(([, errMsg]) => {
+                throw new Error(errMsg);
+            })
+            .catch((err) => {
+                if (!(err instanceof PrematureEOFError)) {
+                    throw err;
+                }
+            });
+    }
     private formatExtraType(type: AdbExtraType): string {
         switch (type) {
             case 'string':
@@ -115,30 +128,8 @@ export default class StartServiceCommand extends TransportCommand {
         }
         args.push('-n', this.escape(`${pkg}/.${service}`));
         args.push('--user', this.escape(options.user || 0));
-        command = command || 'shell:am startservice ';
-        return super.execute(serial, command, args.join(' ')).then((reply) => {
-            switch (reply) {
-                case Reply.OKAY:
-                    return this.parser
-                        .searchLine(/^Error: (.*)$/)
-                        .finally(() => this.parser.end())
-                        .then((match) => {
-                            throw new Error(match[1]);
-                        })
-                        .catch((err) => {
-                            if (err instanceof PrematureEOFError) {
-                                return;
-                            } else {
-                                throw err;
-                            }
-                        });
-                case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
-                        throw e;
-                    });
-                default:
-                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
-            }
-        });
+        this.Cmd = (command || this.Cmd).concat(args.join(' '));
+
+        return super.preExecute(serial);
     }
 }
