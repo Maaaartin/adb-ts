@@ -169,4 +169,28 @@ describe('Start service', () => {
             await adbMock.end();
         }
     });
+
+    it('OKAY with flags', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:am startservice -f 0 -n 'com.my.app/.Service' --user 0`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.startService(
+                'serial',
+                'com.my.app',
+                'Service',
+                { flags: 0 }
+            );
+            expect(result).toBe(undefined);
+        } finally {
+            await adbMock.end();
+        }
+    });
 });
