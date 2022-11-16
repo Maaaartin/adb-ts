@@ -55,7 +55,7 @@ export default class StartServiceCommand extends TransportCommand<void> {
         } else if (Array.isArray(extra.value)) {
             args.push('--e' + type + 'a');
             args.push(this.escape(extra.key));
-            args.push(this.escape(extra.value.join(',')));
+            args.push(extra.value.map(this.escape).join(','));
         } else {
             args.push('--e' + type);
             args.push(this.escape(extra.key));
