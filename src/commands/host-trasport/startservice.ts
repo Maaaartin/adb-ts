@@ -34,8 +34,9 @@ export default class StartServiceCommand extends TransportCommand<void> {
             case 'int':
                 return 'i';
             case 'long':
-            case 'float':
                 return 'l';
+            case 'float':
+                return 'f';
             case 'uri':
                 return 'u';
             case 'component':

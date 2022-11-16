@@ -194,11 +194,31 @@ export type AdbExtraType =
     | 'uri'
     | 'component';
 
-export type AdbExtra = {
-    key: string;
-    type: AdbExtraType;
-    value: PrimitiveType | PrimitiveType[];
-};
+export type AdbExtra =
+    | {
+          key: string;
+          type: 'null';
+      }
+    | {
+          key: string;
+          type: 'bool';
+          value: boolean;
+      }
+    | {
+          key: string;
+          type: 'int' | 'long' | 'float';
+          value: number | number[];
+      }
+    | {
+          key: string;
+          type: 'string';
+          value: string | string[];
+      }
+    | {
+          key: string;
+          type: 'component' | 'uri';
+          value: string;
+      };
 
 export type NonEmptyArray<T> = [T, ...T[]];
 
