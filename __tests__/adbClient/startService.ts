@@ -439,4 +439,101 @@ describe('Start service', () => {
             await adbMock.end();
         }
     });
+
+    it('OKAY with uri extra', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:am startservice --eu 'key' 'uri' -n 'com.my.app/.Service' --user 0`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.startService(
+                'serial',
+                'com.my.app',
+                'Service',
+                {
+                    extras: {
+                        key: 'key',
+                        type: 'uri',
+                        value: 'uri'
+                    }
+                }
+            );
+            expect(result).toBe(undefined);
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('OKAY with component', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:am startservice --ecn 'key' 'component' -n 'com.my.app/.Service' --user 0`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.startService(
+                'serial',
+                'com.my.app',
+                'Service',
+                {
+                    extras: {
+                        key: 'key',
+                        type: 'component',
+                        value: 'component'
+                    }
+                }
+            );
+            expect(result).toBe(undefined);
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('OKAY with extras array', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:am startservice --es 'key' 'string' --ei 'key2' 0 -n 'com.my.app/.Service' --user 0`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.startService(
+                'serial',
+                'com.my.app',
+                'Service',
+                {
+                    extras: [
+                        {
+                            key: 'key',
+                            type: 'string',
+                            value: 'string'
+                        },
+                        {
+                            key: 'key2',
+                            type: 'int',
+                            value: 0
+                        }
+                    ]
+                }
+            );
+            expect(result).toBe(undefined);
+        } finally {
+            await adbMock.end();
+        }
+    });
 });
