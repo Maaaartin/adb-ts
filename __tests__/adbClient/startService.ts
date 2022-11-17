@@ -385,4 +385,58 @@ describe('Start service', () => {
             await adbMock.end();
         }
     });
+
+    it('OKAY with string extra single value', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:am startservice --es 'key' 'string' -n 'com.my.app/.Service' --user 0`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.startService(
+                'serial',
+                'com.my.app',
+                'Service',
+                { extras: { key: 'key', type: 'string', value: 'string' } }
+            );
+            expect(result).toBe(undefined);
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('OKAY with string extra array value', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:am startservice --esa 'key' 'string1','string2' -n 'com.my.app/.Service' --user 0`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.startService(
+                'serial',
+                'com.my.app',
+                'Service',
+                {
+                    extras: {
+                        key: 'key',
+                        type: 'string',
+                        value: ['string1', 'string2']
+                    }
+                }
+            );
+            expect(result).toBe(undefined);
+        } finally {
+            await adbMock.end();
+        }
+    });
 });
