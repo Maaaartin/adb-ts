@@ -1169,24 +1169,6 @@ export default class AdbClient {
         );
     }
 
-    stat(serial: string, path: string): Promise<Stats>;
-    stat(serial: string, path: string, cb: ExecCallbackWithValue<Stats>): void;
-    stat(
-        serial: string,
-        path: string,
-        cb?: ExecCallbackWithValue<Stats>
-    ): Promise<Stats> | void {
-        process.emitWarning('Use fileStats() function instead', 'Warning');
-        return nodeify(
-            this.syncService(serial).then((sync) => {
-                return sync.stat(path).finally(() => {
-                    return sync.end();
-                });
-            }),
-            cb
-        );
-    }
-
     readDir(serial: string, path: string): Promise<SyncEntry[]>;
     readDir(
         serial: string,

@@ -305,31 +305,6 @@ export default class Sync extends EventEmitter {
     public end(): void {
         return this.connection.end();
     }
-    public stat(path: string): Promise<Stats> {
-        this.sendCommandWithArg(Reply.STAT, path);
-        return this.parser.readAscii(4).then((reply) => {
-            switch (reply) {
-                case Reply.STAT:
-                    return this.parser.readBytes(12).then((stat) => {
-                        const mode = stat.readUInt32LE(0);
-                        const size = stat.readUInt32LE(4);
-                        const mtime = stat.readUInt32LE(8);
-                        if (mode === 0) {
-                            return this.enoent(path);
-                        } else {
-                            return new Stats(mode, size, mtime);
-                        }
-                    });
-                case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
-                        throw e;
-                    });
-
-                default:
-                    throw this.parser.unexpected(reply, 'STAT or FAIL');
-            }
-        });
-    }
 
     private sendCommandWithArg(cmd: string, arg: string): boolean {
         const arglen = Buffer.byteLength(arg, 'utf-8');
