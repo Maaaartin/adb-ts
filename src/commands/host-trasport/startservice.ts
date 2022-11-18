@@ -131,8 +131,7 @@ export default class StartServiceCommand extends TransportCommand<void> {
         serial: string,
         pkg: string,
         service: string,
-        options?: StartServiceOptions,
-        command?: string
+        options?: StartServiceOptions
     ): Promise<void> {
         options = options || {};
         const args = this.intentArgs(options);
@@ -144,7 +143,7 @@ export default class StartServiceCommand extends TransportCommand<void> {
         }
         args.push('-n', this.escape(`${pkg}/.${service}`));
         args.push('--user', this.escape(options.user || 0));
-        this.Cmd = (command || this.Cmd).concat(args.join(' '));
+        this.Cmd = this.Cmd.concat(args.join(' '));
 
         return super.preExecute(serial);
     }
