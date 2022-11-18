@@ -47,67 +47,84 @@ export default class StartServiceCommand extends TransportCommand<void> {
     }
 
     private formatExtraObject(extra: AdbExtra): string[] {
-        const args: string[] = [];
         const type = this.formatExtraType(extra.type);
         if (extra.type === 'null') {
-            args.push('--e' + type);
-            args.push(this.escape(extra.key));
-        } else if (Array.isArray(extra.value)) {
-            args.push('--e' + type + 'a');
-            args.push(this.escape(extra.key));
-            args.push(extra.value.map(this.escape).join(','));
-        } else {
-            args.push('--e' + type);
-            args.push(this.escape(extra.key));
-            args.push(this.escape(extra.value));
+            return ['--e' + type, this.escape(extra.key)];
         }
-        return args;
+        if (Array.isArray(extra.value)) {
+            return [
+                '--e' + type + 'a',
+                this.escape(extra.key),
+                extra.value.map(this.escape).join(',')
+            ];
+        }
+        return ['--e' + type, this.escape(extra.key), this.escape(extra.value)];
     }
 
     private formatExtras(extras?: AdbExtra | AdbExtra[]): string[] {
-        if (!extras) {
-            return [];
-        }
-        const result = [];
-        if (Array.isArray(extras)) {
-            for (const item of extras) {
-                result.push(...this.formatExtraObject(item));
-            }
-            return result;
-        } else {
-            result.push(...this.formatExtraObject(extras));
-            return result;
-        }
+        const extrasArr: AdbExtra[] = Array.isArray(extras)
+            ? extras
+            : extras
+            ? [extras]
+            : [];
+
+        return extrasArr.reduce<string[]>(
+            (res, ext) => [...res, ...this.formatExtraObject(ext)],
+            []
+        );
     }
 
+    private keyToFlag(k: keyof StartServiceOptions): string {
+        switch (k) {
+            case 'action':
+                return '-a';
+            case 'data':
+                return '-d';
+            case 'mimeType':
+                return '-t';
+            case 'category':
+                return '-c';
+            case 'flags':
+                return '-f';
+            default:
+                throw new UnexpectedDataError(k, 'keyof StartServiceOptions');
+        }
+    }
     private intentArgs(options: StartServiceOptions): string[] {
-        const args: string[] = [];
-        if (options.extras) {
-            args.push(...this.formatExtras(options.extras));
-        }
-        if (options.action) {
-            args.push('-a', this.escape(options.action));
-        }
-        if (options.data) {
-            args.push('-d', this.escape(options.data));
-        }
-        if (options.mimeType) {
-            args.push('-t', this.escape(options.mimeType));
-        }
-        if (options.category) {
-            if (Array.isArray(options.category)) {
-                options.category.forEach((category) => {
-                    return args.push('-c', this.escape(category));
-                });
-            } else {
-                args.push('-c', this.escape(options.category));
+        return Object.entries(options).reduce<string[]>((args, [k, v]) => {
+            if (typeof v === 'undefined') {
+                return [...args];
             }
-        }
+            const k_ = k as keyof StartServiceOptions;
 
-        if (typeof options.flags === 'number') {
-            args.push('-f', this.escape(options.flags));
-        }
-        return args;
+            switch (k_) {
+                case 'extras':
+                    return [...args, ...this.formatExtras(options.extras)];
+
+                case 'action':
+                case 'data':
+                case 'mimeType':
+                case 'flags':
+                    return [
+                        ...args,
+                        this.keyToFlag(k_),
+                        this.escape(options[k_])
+                    ];
+                case 'category':
+                    return [
+                        ...args,
+                        ...(Array.isArray(options.category)
+                            ? options.category
+                            : [options.category]
+                        ).map((cat) =>
+                            [this.keyToFlag(k_), this.escape(cat)].join(' ')
+                        )
+                    ];
+
+                default:
+                    return [...args];
+            }
+        }, []);
     }
 
     execute(

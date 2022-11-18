@@ -98,6 +98,30 @@ describe('Start service', () => {
         }
     });
 
+    it('OKAY with data set to undefined', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:am startservice -n 'com.my.app/.Service' --user 0`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.startService(
+                'serial',
+                'com.my.app',
+                'Service',
+                { data: undefined }
+            );
+            expect(result).toBe(undefined);
+        } finally {
+            await adbMock.end();
+        }
+    });
+
     it('OKAY with mime type', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
