@@ -2,7 +2,6 @@ import {
     AdbExtra,
     AdbExtraType,
     StartServiceOptions,
-    StartActivityOptions,
     PrematureEOFError,
     UnexpectedDataError
 } from '../..';
@@ -90,7 +89,7 @@ export default class StartServiceCommand extends TransportCommand<void> {
                 throw new UnexpectedDataError(k, 'keyof StartServiceOptions');
         }
     }
-    private intentArgs(options: StartServiceOptions): string[] {
+    protected intentArgs(options: StartServiceOptions): string[] {
         return Object.entries(options).reduce<string[]>((args, [k, v]) => {
             if (typeof v === 'undefined') {
                 return [...args];
@@ -131,19 +130,17 @@ export default class StartServiceCommand extends TransportCommand<void> {
         serial: string,
         pkg: string,
         service: string,
-        options?: StartServiceOptions
+        options: StartServiceOptions = {}
     ): Promise<void> {
-        options = options || {};
-        const args = this.intentArgs(options);
-        if ((options as StartActivityOptions).debug) {
-            args.push('-D');
-        }
-        if ((options as StartActivityOptions).wait) {
-            args.push('-W');
-        }
-        args.push('-n', this.escape(`${pkg}/.${service}`));
-        args.push('--user', this.escape(options.user || 0));
-        this.Cmd = this.Cmd.concat(args.join(' '));
+        this.Cmd = this.Cmd.concat(
+            [
+                ...this.intentArgs(options),
+                '-n',
+                this.escape(`${pkg}/.${service}`),
+                '--user',
+                this.escape(options.user || 0)
+            ].join(' ')
+        );
 
         return super.preExecute(serial);
     }

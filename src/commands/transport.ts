@@ -5,7 +5,7 @@ export default abstract class TransportCommand<T>
     extends Command
     implements IPreExecute<T>, ICmd, IPostExecute<T>
 {
-    abstract Cmd: string;
+    abstract readonly Cmd: string;
     protected keepAlive = true;
     protected abstract postExecute(): Promise<T>;
     preExecute(serial: string): Promise<T> {
