@@ -1,6 +1,7 @@
 import AdbMock from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
 import SyncEntry from '../../lib/sync/entry';
+import { UnexpectedDataError } from '../../lib';
 
 describe('Read dir', () => {
     test('DENT', async () => {
@@ -88,6 +89,32 @@ describe('Read dir', () => {
             fail('Expected failure');
         } catch (e) {
             expect(e).toEqual(new Error('Err'));
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    test('FAIL', async () => {
+        const buff = Buffer.from([
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0
+        ]);
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: 'sync:',
+                res: 'ABCD',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            await adb.readDir('serial', '/');
+            fail('Expected failure');
+        } catch (e) {
+            expect(e).toEqual(
+                new UnexpectedDataError('ABCD', 'DENT, DONE or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
