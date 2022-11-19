@@ -235,13 +235,16 @@ export default class Sync extends EventEmitter {
         readNext()
             .catch((err) => {
                 if (canceled) {
-                    return promisify(this.connection.end)();
-                } else {
-                    transfer.emit('error', err);
-                    return Promise.resolve();
+                    return promisify<void>((cb) =>
+                        this.connection.end(() => cb(null))
+                    )();
                 }
+                transfer.emit('error', err);
+                return;
             })
-            .finally(() => promisify(transfer.end)());
+            .finally(() => {
+                return promisify((cb) => transfer.end(cb))();
+            });
         transfer.once('cancel', () => (canceled = true));
         return transfer;
     }
