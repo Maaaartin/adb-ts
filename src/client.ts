@@ -1260,32 +1260,25 @@ export default class AdbClient {
         );
     }
 
-    tcpip(serial: string): Promise<string>;
-    tcpip(serial: string, port: number): Promise<string>;
-    tcpip(serial: string, cb: ExecCallbackWithValue<string>): void;
+    tcpip(serial: string): Promise<void>;
+    tcpip(serial: string, port: number): Promise<void>;
+    tcpip(serial: string, cb: ExecCallback): void;
+    tcpip(serial: string, port: number, cb: ExecCallback): void;
     tcpip(
         serial: string,
-        port: number,
-        cb: ExecCallbackWithValue<string>
-    ): void;
-    tcpip(
-        serial: string,
-        port?: ExecCallbackWithValue<string> | number,
-        cb?: ExecCallbackWithValue<string>
-    ): Promise<string> | void {
-        let port_: number;
+        port?: ExecCallback | number,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        let port_ = 5555;
         if (typeof port === 'function') {
             cb = port;
-        } else if (typeof port !== 'undefined') {
+        } else if (typeof port === 'number') {
             port_ = port;
         }
+
         return nodeify(
             this.connection().then((conn) => {
-                return new TcpIpCommand(conn).execute(
-                    serial,
-                    port_,
-                    this.options.host
-                );
+                return new TcpIpCommand(conn).execute(serial, port_);
             }),
             cb
         );

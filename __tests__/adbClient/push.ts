@@ -1,7 +1,7 @@
 import AdbMock from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
 import { promisify } from 'util';
-import { FailError } from '../../lib';
+import { FailError, UnexpectedDataError } from '../../lib';
 import { Readable } from 'stream';
 
 describe('Push tests', () => {
@@ -71,6 +71,46 @@ describe('Push tests', () => {
                 fail('Expected failure');
             } catch (e) {
                 expect(e).toEqual(new FailError('Error'));
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    test('Unexpected error', async () => {
+        const buff = Buffer.from([5, 0, 0, 0]);
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: 'sync:',
+                res: 'ABCD' + buff.toString() + 'Error',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await promisify<void>(async (cb) => {
+                    const transfer = await adb.push(
+                        'serial',
+                        Readable.from(Buffer.from([1, 0, 0, 0])),
+                        '/sdcard'
+                    );
+
+                    transfer.on('error', (err) => {
+                        return cb(err);
+                    });
+
+                    transfer.on('end', () => {
+                        cb(null);
+                    });
+                })();
+                fail('Expected failure');
+            } catch (e) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('ABCD', 'OKAY or FAIL')
+                );
             }
         } finally {
             await adbMock.end();
