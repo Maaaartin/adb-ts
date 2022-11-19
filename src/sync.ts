@@ -1,4 +1,4 @@
-import { AdbError, FailError, Reply } from '.';
+import { FailError, Reply } from '.';
 import Connection from './connection';
 import { EventEmitter } from 'events';
 import Parser from './parser';
@@ -135,22 +135,21 @@ export default class Sync extends EventEmitter {
                 }
             });
         };
-        writeData().catch((err) => {
-            if (canceled) {
-                return promisify(this.connection.end)();
-            }
-            transfer.emit('error', err);
-            return;
-        });
-        readReply()
+        writeData()
+            .then(readReply)
             .catch((err) => {
                 if (canceled) {
-                    this.emit('error', err);
+                    return promisify<void>((cb) =>
+                        this.connection.end(() => cb(null))
+                    )();
                 }
+                transfer.emit('error', err);
+                return;
             })
             .finally(() => {
                 return transfer.end();
             });
+
         transfer.once('cancel', () => {
             canceled = true;
         });

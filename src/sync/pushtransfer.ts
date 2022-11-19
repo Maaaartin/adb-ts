@@ -8,7 +8,6 @@ export default class PushTransfer extends StreamHandler {
     };
 
     cancel(): void {
-        this.removeAllListeners();
         this.emit('cancel');
     }
 
