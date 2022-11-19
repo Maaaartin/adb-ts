@@ -30,17 +30,6 @@ export default class Sync extends EventEmitter {
         return `/data/local/tmp/${Path.basename(path)}`;
     }
 
-    private enoent(path: string): Promise<never> {
-        const err = new AdbError(
-            "ENOENT, no such file or directory '" + path + "'",
-            34,
-            'ENOENT',
-            path
-        );
-
-        return Promise.reject(err);
-    }
-
     private readError(): Promise<never> {
         return this.parser.readBytes(4).then((length) => {
             return this.parser
@@ -149,10 +138,9 @@ export default class Sync extends EventEmitter {
         writeData().catch((err) => {
             if (canceled) {
                 return promisify(this.connection.end)();
-            } else {
-                transfer.emit('error', err);
-                return Promise.resolve();
             }
+            transfer.emit('error', err);
+            return;
         });
         readReply()
             .catch((err) => {
