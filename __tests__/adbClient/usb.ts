@@ -36,6 +36,7 @@ describe('Usb', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
                 await adb.usb('serial');
+                fail('Expected failure');
             } catch (e) {
                 expect(e).toEqual(new FailError('error'));
             }

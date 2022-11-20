@@ -55,6 +55,7 @@ describe('Tcpip', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
                 await adb.tcpip('serial');
+                fail('Expected failure');
             } catch (e) {
                 expect(e).toEqual(new FailError('error'));
             }

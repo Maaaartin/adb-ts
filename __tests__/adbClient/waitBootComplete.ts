@@ -36,6 +36,7 @@ describe('Wait boot complete', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
                 await adb.waitBootComplete('serial');
+                fail('Expected failure');
             } catch (e) {
                 expect(e).toBeInstanceOf(PrematureEOFError);
             }
