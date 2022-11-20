@@ -5,23 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "TS-Node",
             "type": "node",
             "request": "launch",
-            "runtimeExecutable": "node",
-            "runtimeArgs": [
-                "--trace-warnings",
-                "--nolazy",
-                "-r",
-                "ts-node/register/transpile-only"
+            "name": "Jest: current file",
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": [
+                "${fileBasenameNoExtension}",
+                "--config",
+                "jest.config.js"
             ],
-            "args": ["script.ts"],
-            "cwd": "${workspaceRoot}",
-            "internalConsoleOptions": "openOnSessionStart",
-            "skipFiles": ["<node_internals>/**", "node_modules/**"],
-            "env": {
-                "NODE_ENV": "development"
-            }
+            "console": "integratedTerminal"
         }
     ]
 }
