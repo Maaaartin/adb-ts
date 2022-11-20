@@ -1,21 +1,21 @@
 import AdbMock from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
-import { FailError } from '../../lib';
+import { FailError, PrematureEOFError } from '../../lib';
 
-describe('Usb', () => {
-    it('OKAY', async () => {
+describe('Wait boot complete', () => {
+    it('OKAY with default port', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `usb:`,
-                res: 'restarting in',
+                cmd: 'shell:while getprop sys.boot_completed 2>/dev/null; do sleep 1; done',
+                res: '2\n1\n',
                 rawRes: true
             }
         ]);
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            const result = await adb.usb('serial');
+            const result = await adb.waitBootComplete('serial');
             expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
@@ -26,8 +26,8 @@ describe('Usb', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `usb:`,
-                res: 'error',
+                cmd: 'shell:while getprop sys.boot_completed 2>/dev/null; do sleep 1; done',
+                res: '2\n3\n',
                 rawRes: true
             }
         ]);
@@ -35,9 +35,9 @@ describe('Usb', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
-                await adb.usb('serial');
+                await adb.waitBootComplete('serial');
             } catch (e) {
-                expect(e).toEqual(new FailError('error'));
+                expect(e).toBeInstanceOf(PrematureEOFError);
             }
         } finally {
             await adbMock.end();

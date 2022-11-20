@@ -100,7 +100,7 @@ import Tracker from './tracker';
 import UninstallCommand from './commands/host-trasport/uninstall';
 import UsbCommand from './commands/host-trasport/usb';
 import VersionCommand from './commands/host/version';
-import WaitBootCompleteCommand from './commands/host-trasport/wainbootcomplete';
+import WaitBootCompleteCommand from './commands/host-trasport/waitbootcomplete';
 import WaitForDeviceCommand from './commands/host/waitfordevice';
 import { promisify } from 'util';
 
