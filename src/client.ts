@@ -1307,13 +1307,13 @@ export default class AdbClient {
         );
     }
 
-    waitForDevice(transport: WaitForType, state: WaitForState): Promise<void>;
-    waitForDevice(
+    waitFor(transport: WaitForType, state: WaitForState): Promise<void>;
+    waitFor(
         transport: WaitForType,
         state: WaitForState,
         cb?: ExecCallback
     ): void;
-    waitForDevice(
+    waitFor(
         transport: WaitForType,
         state: WaitForState,
         cb?: ExecCallback
