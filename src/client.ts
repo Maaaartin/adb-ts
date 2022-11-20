@@ -33,11 +33,12 @@ import {
     IpConnectConstruct,
     DataMap,
     buildInputParams,
-    NonEmptyArray
+    NonEmptyArray,
+    WaitForType
 } from '.';
 import Sync, { SyncMode } from './sync';
 import { exec, execFile } from 'child_process';
-import fs, { Stats } from 'fs';
+import fs from 'fs';
 import AdbDevice from './device';
 import BatteryStatusCommand from './commands/host-trasport/baterrystatus';
 import ClearCommand from './commands/host-trasport/clear';
@@ -101,7 +102,7 @@ import UninstallCommand from './commands/host-trasport/uninstall';
 import UsbCommand from './commands/host-trasport/usb';
 import VersionCommand from './commands/host/version';
 import WaitBootCompleteCommand from './commands/host-trasport/waitbootcomplete';
-import WaitForDeviceCommand from './commands/host/waitfordevice';
+import WaitFor from './commands/host/waitFor';
 import { promisify } from 'util';
 
 export default class AdbClient {
@@ -1306,20 +1307,20 @@ export default class AdbClient {
         );
     }
 
-    waitForDevice(transport: TransportType, state: WaitForState): Promise<void>;
+    waitForDevice(transport: WaitForType, state: WaitForState): Promise<void>;
     waitForDevice(
-        transport: TransportType,
+        transport: WaitForType,
         state: WaitForState,
         cb?: ExecCallback
     ): void;
     waitForDevice(
-        transport: TransportType,
+        transport: WaitForType,
         state: WaitForState,
         cb?: ExecCallback
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new WaitForDeviceCommand(conn).execute(transport, state);
+                return new WaitFor(conn).execute(transport, state);
             }),
             cb
         );

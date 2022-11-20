@@ -303,9 +303,17 @@ export interface LogcatReaderOptions {
     filter?: (entry: LogcatEntry) => boolean;
 }
 
-export type TransportType = 'usb' | 'local'; // | 'any' - impossible state
+export type TransportType = 'usb' | 'local';
 
-export type WaitForState = 'device' | 'recovery' | 'sideload' | 'bootloader';
+export type WaitForType = TransportType | 'any';
+
+export type WaitForState =
+    | 'device'
+    | 'recovery'
+    | 'rescue'
+    | 'sideload'
+    | 'bootloader'
+    | 'disconnect';
 
 export type SettingsMode = 'system' | 'global' | 'secure';
 
