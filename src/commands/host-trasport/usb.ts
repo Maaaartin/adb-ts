@@ -1,26 +1,8 @@
-import { Reply } from '../..';
-import TransportCommand from '../transport';
+import RestartConnection from '../restartConnection';
 
-export default class UsbCommand extends TransportCommand {
-    execute(serial: string) {
-        return super.execute(serial, 'usb:').then((reply) => {
-            switch (reply) {
-                case Reply.OKAY:
-                    return this.parser.readAll().then((value) => {
-                        const valueStr = value.toString();
-                        if (/restarting in/.test(valueStr)) {
-                            return;
-                        } else {
-                            throw new Error(valueStr.trim());
-                        }
-                    });
-                case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
-                        throw e;
-                    });
-                default:
-                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
-            }
-        });
+export default class UsbCommand extends RestartConnection {
+    Cmd = 'usb:';
+    execute(serial: string): Promise<void> {
+        return this.preExecute(serial);
     }
 }

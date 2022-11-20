@@ -1,16 +1,8 @@
-import { FailError } from '../..';
-import TransportCommand from '../transport';
+import RestartConnection from '../restartConnection';
 
-export default class TcpIpCommand extends TransportCommand<void> {
+export default class TcpIpCommand extends RestartConnection {
     Cmd = 'tcpip:';
-    protected postExecute(): Promise<void> {
-        return this.parser.readAll().then((value) => {
-            const valueStr = value.toString().trim();
-            if (!/restarting in/.test(valueStr)) {
-                throw new FailError(valueStr || 'No error message');
-            }
-        });
-    }
+
     execute(serial: string, port: number | string): Promise<void> {
         this.Cmd += `${port}`;
         return this.preExecute(serial);
