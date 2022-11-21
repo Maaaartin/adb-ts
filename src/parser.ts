@@ -1,6 +1,7 @@
 import { PrematureEOFError, UnexpectedDataError, decodeLength } from '.';
 import { Writable } from 'stream';
 import { Socket } from 'net';
+import T from 'timers/promises';
 
 export default class Parser {
     public readonly socket: Socket;
@@ -98,7 +99,10 @@ export default class Parser {
     }
 
     readError(): Promise<Error> {
-        return this.readValue().then((value) => new Error(value.toString()));
+        return Promise.race([
+            T.setTimeout(1000).then(() => new Error('Could not read error')),
+            this.readValue().then((value) => new Error(value.toString()))
+        ]);
     }
 
     unexpected(data: string, expected: string): UnexpectedDataError {

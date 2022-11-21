@@ -1,6 +1,6 @@
 import AdbMock from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
-import { FailError, PrematureEOFError } from '../../lib';
+import { FailError, PrematureEOFError, UnexpectedDataError } from '../../lib';
 
 describe('Wait for', () => {
     it('OKAY with any type', async () => {
@@ -163,6 +163,52 @@ describe('Wait for', () => {
                 fail('Expected failure');
             } catch (e) {
                 expect(e).toEqual(new Error('Err'));
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('FAIL second response with missing error data', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: `host:wait-for-any-disconnect`,
+                res: 'FAIL',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.waitFor('any', 'disconnect');
+                fail('Expected failure');
+            } catch (e) {
+                expect(e).toEqual(new Error('Could not read error'));
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Unexpected second response', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: `host:wait-for-any-disconnect`,
+                res: 'ABCD',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.waitFor('any', 'disconnect');
+                fail('Expected failure');
+            } catch (e) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('ABCD', 'OKAY or FAIL')
+                );
             }
         } finally {
             await adbMock.end();

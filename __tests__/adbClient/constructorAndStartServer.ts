@@ -1,7 +1,7 @@
 import { ChildProcessMock } from '../../mockery/mockChildProcess';
 import AdbClient from '../../lib/client';
 import ChildProcess from 'child_process';
-import { BaseEncodingOptions } from 'fs';
+import { EncodingOption } from 'fs';
 
 describe('Client constructor tests', () => {
     it('Create Adb client instance', () => {
@@ -33,7 +33,7 @@ describe('Start server tests', () => {
                 _args: ReadonlyArray<string> | undefined | null,
                 cb:
                     | (
-                          | (BaseEncodingOptions & ChildProcess.ExecFileOptions)
+                          | (EncodingOption & ChildProcess.ExecFileOptions)
                           | undefined
                           | null
                       )
