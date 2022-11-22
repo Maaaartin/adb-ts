@@ -100,7 +100,9 @@ export default class Parser {
 
     readError(): Promise<Error> {
         return Promise.race([
-            T.setTimeout(1000).then(() => new Error('Could not read error')),
+            T.setTimeout(1000, new Error('Could not read error'), {
+                ref: false
+            }),
             this.readValue().then((value) => new Error(value.toString()))
         ]);
     }
