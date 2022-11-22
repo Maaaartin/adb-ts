@@ -1347,22 +1347,31 @@ export default class AdbClient {
 
     pushDataToFile(
         serial: string,
-        data: string,
+        data: string | Buffer | Readable,
         destPath: string
     ): Promise<void>;
     pushDataToFile(
         serial: string,
-        data: string,
+        data: string | Buffer | Readable,
         destPath: string,
         cb: ExecCallback
     ): void;
     pushDataToFile(
         serial: string,
-        data: string,
+        data: string | Buffer | Readable,
         destPath: string,
         cb?: ExecCallback
     ): Promise<void> | void {
-        return nodeify(this.pushInternal(serial, data, destPath), cb);
+        return nodeify(
+            this.pushInternal(
+                serial,
+                Readable.from(
+                    typeof data === 'string' ? Buffer.from(data, 'utf-8') : data
+                ),
+                destPath
+            ),
+            cb
+        );
     }
 
     pushFile(serial: string, srcPath: string, destPath: string): Promise<void>;
