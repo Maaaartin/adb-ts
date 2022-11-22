@@ -293,7 +293,7 @@ export default class Sync extends EventEmitter {
     }
 
     public end(): void {
-        return this.connection.end();
+        this.connection.end();
     }
 
     private sendCommandWithArg(cmd: string, arg: string): boolean {
