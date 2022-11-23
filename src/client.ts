@@ -1390,24 +1390,24 @@ export default class AdbClient {
         return nodeify(this.pushInternal(serial, srcPath, destPath), cb);
     }
 
-    pullDataFromFile(serial: string, srcPath: string): Promise<string>;
+    pullDataFromFile(serial: string, srcPath: string): Promise<Buffer>;
     pullDataFromFile(
         serial: string,
         srcPath: string,
-        cb: ExecCallbackWithValue<string>
+        cb: ExecCallbackWithValue<Buffer>
     ): void;
     pullDataFromFile(
         serial: string,
         srcPath: string,
-        cb?: ExecCallbackWithValue<string>
-    ): Promise<string> | void {
+        cb?: ExecCallbackWithValue<Buffer>
+    ): Promise<Buffer> | void {
         return nodeify(
             this.pull(serial, `${srcPath}`).then(
-                (transfer: PullTransfer): Promise<string> => {
+                (transfer: PullTransfer): Promise<Buffer> => {
                     return new Promise((resolve, reject) => {
-                        let data = '';
+                        let data = Buffer.alloc(0);
                         transfer.on('data', (chunk) => {
-                            data += chunk.toString();
+                            data = Buffer.concat([data, chunk]);
                         });
                         transfer.on('end', () => {
                             resolve(data);
@@ -1437,16 +1437,15 @@ export default class AdbClient {
             this.pull(serial, `${srcPath}`).then(
                 (transfer: PullTransfer): Promise<void> => {
                     return new Promise((resolve, reject) => {
-                        // data is piped only when in case there is no error
-                        let hadError = false;
                         transfer.once('readable', () => {
-                            if (!hadError) {
-                                transfer.pipe(fs.createWriteStream(destPath));
-                            }
+                            transfer.pipe(fs.createWriteStream(destPath));
                         });
-                        transfer.once('end', resolve);
+                        transfer.once('end', () => {
+                            transfer.removeAllListeners();
+                            resolve();
+                        });
                         transfer.once('error', (err) => {
-                            hadError = true;
+                            transfer.removeAllListeners();
                             reject(err);
                         });
                     });
