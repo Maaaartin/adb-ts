@@ -5,7 +5,7 @@ export default class SetProp extends TransportCommand<void> {
     protected postExecute(): Promise<void> {
         return this.parser.readAll().then((value) => {
             const valueStr = value.toString();
-            if (/failed/.test(valueStr)) {
+            if (/failed/i.test(valueStr)) {
                 throw new Error(valueStr);
             }
         });
