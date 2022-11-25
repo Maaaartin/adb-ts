@@ -1,8 +1,17 @@
 import AdbMock from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
 import { FailError, UnexpectedDataError } from '../../lib';
+import fs, { WriteStream } from 'fs';
+import { WritableMock } from 'stream-mock';
+import { Writable } from 'stream';
 
-describe('Pull data from file tests', () => {
+beforeEach(() => {
+    jest.spyOn(fs, 'createWriteStream').mockImplementation(() => {
+        return new WritableMock() as Writable as WriteStream;
+    });
+});
+
+describe('Pull file tests', () => {
     test('OKAY', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
@@ -16,8 +25,10 @@ describe('Pull data from file tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            const result = await adb.pullDataFromFile('serial', '/file');
-            expect(result).toEqual(Buffer.from('data', 'utf-8'));
+            const result = await adb.pullFile('serial', '/file', '/file');
+            expect(result).toBe(undefined);
+        } catch (e) {
+            console.log(e.message);
         } finally {
             await adbMock.end();
         }
@@ -37,7 +48,7 @@ describe('Pull data from file tests', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
-                await adb.pullDataFromFile('serial', '/file');
+                await adb.pullFile('serial', '/file', '/file');
                 fail('Expected failure');
             } catch (e) {
                 expect(e).toEqual(new FailError('data'));
@@ -61,7 +72,7 @@ describe('Pull data from file tests', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
-                await adb.pullDataFromFile('serial', '/file');
+                await adb.pullFile('serial', '/file', '/file');
                 fail('Expected failure');
             } catch (e) {
                 expect(e).toEqual(

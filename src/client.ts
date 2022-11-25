@@ -1441,11 +1441,11 @@ export default class AdbClient {
                             transfer.pipe(fs.createWriteStream(destPath));
                         });
                         transfer.once('end', () => {
-                            transfer.removeAllListeners();
+                            transfer.removeAllListeners('readable');
                             resolve();
                         });
                         transfer.once('error', (err) => {
-                            transfer.removeAllListeners();
+                            transfer.removeAllListeners('readable');
                             reject(err);
                         });
                     });
