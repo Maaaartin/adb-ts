@@ -10,6 +10,6 @@ export default class GetPropertyCommand extends TransportParseAllCommand<Propert
     }
     execute(serial: string, prop: string): Promise<PropertyValue> {
         this.Cmd += prop;
-        return super.preExecute(serial);
+        return this.preExecute(serial);
     }
 }

@@ -142,6 +142,6 @@ export default class StartServiceCommand extends TransportCommand<void> {
             ].join(' ')
         );
 
-        return super.preExecute(serial);
+        return this.preExecute(serial);
     }
 }

@@ -7,6 +7,6 @@ export default class ReverseCommand extends TransportParseAllCommand<void> {
     Cmd = 'reverse:forward:';
     execute(serial: string, remote: string, local: string): Promise<void> {
         this.Cmd += `${remote};${local}`;
-        return super.preExecute(serial);
+        return this.preExecute(serial);
     }
 }
