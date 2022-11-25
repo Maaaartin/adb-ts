@@ -23,7 +23,6 @@ import {
     StartActivityOptions,
     StartServiceOptions,
     TouchOptions,
-    TransportType,
     UninstallOptions,
     WaitForState,
     parseOptions,
@@ -34,7 +33,8 @@ import {
     DataMap,
     buildInputParams,
     NonEmptyArray,
-    WaitForType
+    WaitForType,
+    PrimitiveWithDate
 } from '.';
 import Sync, { SyncMode } from './sync';
 import { exec, execFile } from 'child_process';
@@ -1434,7 +1434,7 @@ export default class AdbClient {
         cb?: ExecCallback
     ): Promise<void> | void {
         return nodeify(
-            this.pull(serial, `${srcPath}`).then(
+            this.pull(serial, srcPath).then(
                 (transfer: PullTransfer): Promise<void> => {
                     return new Promise((resolve, reject) => {
                         transfer.once('readable', () => {
@@ -1476,17 +1476,17 @@ export default class AdbClient {
         );
     }
 
-    getProp(serial: string, prop: string): Promise<PrimitiveType>;
+    getProp(serial: string, prop: string): Promise<PrimitiveWithDate>;
     getProp(
         serial: string,
         prop: string,
-        cb: ExecCallbackWithValue<PrimitiveType>
+        cb: ExecCallbackWithValue<PrimitiveWithDate>
     ): void;
     getProp(
         serial: string,
         prop: string,
-        cb?: ExecCallbackWithValue<PrimitiveType>
-    ): Promise<PrimitiveType> | void {
+        cb?: ExecCallbackWithValue<PrimitiveWithDate>
+    ): Promise<PrimitiveWithDate> | void {
         return nodeify(
             this.connection().then((conn) => {
                 return new GetPropertyCommand(conn).execute(serial, prop);

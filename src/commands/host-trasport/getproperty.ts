@@ -1,19 +1,14 @@
-import { PrimitiveType, stringToType } from '../..';
+import { stringToType } from '../..';
+import { PrimitiveWithDate } from './../..';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
-export default class GetPropertyCommand extends TransportParseAllCommand<PrimitiveType> {
-    private cmd = 'shell:getprop ';
-    get Cmd(): string {
-        return this.cmd;
-    }
-    private set Cmd(value: string) {
-        this.cmd = value;
-    }
+export default class GetPropertyCommand extends TransportParseAllCommand<PrimitiveWithDate> {
+    Cmd = 'shell:getprop ';
 
-    parse(value: string): PrimitiveType {
+    parse(value: string): PrimitiveWithDate {
         return stringToType(value);
     }
-    execute(serial: string, prop: string): Promise<PrimitiveType> {
+    execute(serial: string, prop: string): Promise<PrimitiveWithDate> {
         this.Cmd += prop;
         return super.preExecute(serial);
     }

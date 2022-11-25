@@ -46,26 +46,18 @@ export const encodeData = (data: Buffer | string): Buffer => {
 };
 
 export const stringToType = (value = ''): PrimitiveWithDate => {
-    switch (value) {
-        case '':
-            return void 0;
-        case 'true':
-            return true;
-        case 'false':
-            return false;
-        case 'null':
-            return null;
-        default: {
-            const num = Number(value);
-            if (!isNaN(num)) {
-                return num;
-            }
-            const date = new Date(value);
-            if (!isNaN(date.getMilliseconds())) {
-                return date;
-            }
-            return `${value}`;
+    try {
+        const parsed = JSON.parse(value);
+        if (typeof parsed === 'object' && parsed !== null) {
+            return value;
         }
+        return parsed;
+    } catch {
+        const date = new Date(value);
+        if (!isNaN(date.getMilliseconds())) {
+            return date;
+        }
+        return String(value) || undefined;
     }
 };
 
