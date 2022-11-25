@@ -34,7 +34,7 @@ import {
     buildInputParams,
     NonEmptyArray,
     WaitForType,
-    PrimitiveWithDate
+    PropertyValue
 } from '.';
 import Sync, { SyncMode } from './sync';
 import { exec, execFile } from 'child_process';
@@ -57,7 +57,6 @@ import HostTransportCommand from './commands/host/transport';
 import InputCommand from './commands/host-trasport/input';
 import InstallCommand from './commands/host-trasport/install';
 import IsInstalledCommand from './commands/host-trasport/isinstalled';
-import Jimp from 'jimp';
 import { KeyCode } from './keycode';
 import KillCommand from './commands/host/kill';
 import ListDevicesCommand from './commands/host/listdevices';
@@ -1476,17 +1475,17 @@ export default class AdbClient {
         );
     }
 
-    getProp(serial: string, prop: string): Promise<PrimitiveWithDate>;
+    getProp(serial: string, prop: string): Promise<PropertyValue>;
     getProp(
         serial: string,
         prop: string,
-        cb: ExecCallbackWithValue<PrimitiveWithDate>
+        cb: ExecCallbackWithValue<PropertyValue>
     ): void;
     getProp(
         serial: string,
         prop: string,
-        cb?: ExecCallbackWithValue<PrimitiveWithDate>
-    ): Promise<PrimitiveWithDate> | void {
+        cb?: ExecCallbackWithValue<PropertyValue>
+    ): Promise<PropertyValue> | void {
         return nodeify(
             this.connection().then((conn) => {
                 return new GetPropertyCommand(conn).execute(serial, prop);

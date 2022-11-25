@@ -87,6 +87,12 @@ describe('String to type', () => {
         const result = stringToType('Mon Dec 20 15:05:47 UTC 2021');
         expect(result).toEqual(new Date('Mon Dec 20 15:05:47 UTC 2021'));
     });
+
+    it('Cast iso date as Date', () => {
+        const date = new Date();
+        const result = stringToType(date.toISOString());
+        expect(result).toEqual(date);
+    });
 });
 
 describe('Nodeify', () => {

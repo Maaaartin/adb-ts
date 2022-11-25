@@ -45,7 +45,7 @@ export const encodeData = (data: Buffer | string): Buffer => {
     return Buffer.concat([Buffer.from(encodeLength(data.length)), data]);
 };
 
-export const stringToType = (value = ''): PrimitiveWithDate => {
+export const stringToType = (value = ''): PropertyValue => {
     try {
         const parsed = JSON.parse(value);
         if (typeof parsed === 'object' && parsed !== null) {
@@ -258,9 +258,9 @@ export interface ForwardsObject extends ReversesForwardsBase {
 
 export type PrimitiveType = string | boolean | number | null | undefined;
 
-export type PrimitiveWithDate = PrimitiveType | Date;
+export type PropertyValue = PrimitiveType | Date;
 
-export type PrimitiveDictionary = Record<string, PrimitiveWithDate>;
+export type PrimitiveDictionary = Record<string, PropertyValue>;
 
 export interface InstallOptions {
     reinstall?: boolean;
@@ -478,8 +478,8 @@ export class AdbError extends Error {
     }
 }
 
-export class DataMap extends Map<string, PrimitiveWithDate> {
-    toArray(): [string, PrimitiveWithDate][] {
+export class DataMap extends Map<string, PropertyValue> {
+    toArray(): [string, PropertyValue][] {
         return [...this.entries()];
     }
     toObject(): PrimitiveDictionary {
