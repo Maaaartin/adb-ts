@@ -4427,6 +4427,11 @@ static-extend@^0.1.1:
     define-property "^0.2.5"
     object-copy "^0.1.0"
 
+stream-mock@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/stream-mock/-/stream-mock-2.0.5.tgz#c99d24bd6dbb0eaa57cf6ffefdb064150747826e"
+  integrity sha512-dx9skT8QYjwLsal+MhGHr4UtgS49brw851C/oTixmhCi4Ip+/qnZmhV1qOcznYYAED6gYKmKea+jjza4/wjpSg==
+
 stream@^0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/stream/-/stream-0.0.2.tgz#7f5363f057f6592c5595f00bc80a27f5cec1f0ef"
