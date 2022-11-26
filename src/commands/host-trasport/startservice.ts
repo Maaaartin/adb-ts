@@ -60,17 +60,11 @@ export default class StartServiceCommand extends TransportCommand<void> {
         return ['--e' + type, this.escape(extra.key), this.escape(extra.value)];
     }
 
-    private formatExtras(extras?: AdbExtra | AdbExtra[]): string[] {
-        const extrasArr: AdbExtra[] = Array.isArray(extras)
-            ? extras
-            : extras
-            ? [extras]
-            : [];
-
-        return extrasArr.reduce<string[]>(
-            (res, ext) => [...res, ...this.formatExtraObject(ext)],
-            []
-        );
+    private formatExtras(extras: AdbExtra | AdbExtra[] = []): string[] {
+        return [extras]
+            .flat()
+            .map((ext) => this.formatExtraObject(ext))
+            .flat();
     }
 
     private keyToFlag(k: keyof StartServiceOptions): string {
