@@ -21,7 +21,7 @@ describe('Escape tests', () => {
     const cmd = new MockCommand(connection);
     it('escape undefined', () => {
         const result = cmd.escape(void 0);
-        expect(result).toBe('');
+        expect(result).toBe("''");
     });
     it('escape string', () => {
         const result = cmd.escape("'test'");
@@ -46,7 +46,7 @@ describe('Escape compat tests', () => {
     const cmd = new MockCommand(connection);
     it('escape undefined', () => {
         const result = cmd.escapeCompat(void 0);
-        expect(result).toBe('');
+        expect(result).toBe("''");
     });
     it('escape string', () => {
         const result = cmd.escapeCompat('"test"');

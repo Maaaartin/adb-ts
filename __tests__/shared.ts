@@ -78,6 +78,16 @@ describe('String to type', () => {
         expect(result).toBe('test');
     });
 
+    it('Cast single quotation marks', () => {
+        const result = stringToType("'test'");
+        expect(result).toBe("'test'");
+    });
+
+    it('Cast double quotation marks', () => {
+        const result = stringToType('"test"');
+        expect(result).toBe('"test"');
+    });
+
     it('Cast array as string', () => {
         const result = stringToType('[]');
         expect(result).toBe('[]');

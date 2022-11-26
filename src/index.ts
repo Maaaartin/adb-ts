@@ -51,7 +51,7 @@ export const stringToType = (value = ''): PropertyValue => {
         if (typeof parsed === 'object' && parsed !== null) {
             return value;
         }
-        return parsed;
+        return typeof parsed === 'string' ? value : parsed;
     } catch {
         const date = new Date(value);
         if (!isNaN(date.getMilliseconds())) {

@@ -60,7 +60,7 @@ export default abstract class Command<T = any> {
     escape(arg: PrimitiveType): string {
         switch (typeof arg) {
             case 'undefined':
-                return '';
+                return "''";
             case 'string':
                 return "'" + arg.replace(/'/g, "'\"'\"'") + "'";
             default:
