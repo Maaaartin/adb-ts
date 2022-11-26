@@ -1,19 +1,12 @@
-import { PrimitiveDictionary, SettingsMode, stringToType } from '../..';
-
+import { DataMap, findMatches, SettingsMode } from '../..';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
-export default class ListSettingsCommand extends TransportParseAllCommand<PrimitiveDictionary> {
+export default class ListSettingsCommand extends TransportParseAllCommand<DataMap> {
     Cmd = 'shell:settings list ';
-    parse(value: string): PrimitiveDictionary {
-        const settings: PrimitiveDictionary = {};
-        let match;
-        const regExp = /^([\s\S]*?)=([\s\S]*?)\n/gm;
-        while ((match = regExp.exec(value))) {
-            settings[match[1]] = stringToType(match[2]);
-        }
-        return settings;
+    parse(value: string): DataMap {
+        return findMatches(value, /^([\s\S]*?)=([\s\S]*?)\n/gm, 'map');
     }
-    execute(serial: string, mode: SettingsMode): Promise<PrimitiveDictionary> {
+    execute(serial: string, mode: SettingsMode): Promise<DataMap> {
         this.Cmd += mode;
         return this.preExecute(serial);
     }

@@ -136,7 +136,7 @@ export function findMatches(
         case 'set':
             return new Set(acc.map(([val]) => val));
         case 'map':
-            return new DataMap(acc.map(([k, v]) => [k, stringToType(v)]));
+            return new Map(acc.map(([k, v]) => [k, stringToType(v)]));
         default:
             return acc;
     }
@@ -419,6 +419,8 @@ export type CpOptions = VerboseFSoption &
         archive?: boolean;
     };
 
+export type DataMap = Map<string, PropertyValue>;
+
 export class FailError extends Error {
     constructor(message?: string) {
         super();
@@ -478,17 +480,5 @@ export class AdbError extends Error {
         this.code = code;
         this.path = path;
         Error.captureStackTrace(this);
-    }
-}
-
-export class DataMap extends Map<string, PropertyValue> {
-    toArray(): [string, PropertyValue][] {
-        return [...this.entries()];
-    }
-    toObject(): PrimitiveDictionary {
-        return this.toArray().reduce(
-            (obj, [key, val]) => Object.assign(obj, { [key]: val }),
-            {}
-        );
     }
 }
