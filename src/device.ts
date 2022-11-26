@@ -25,7 +25,6 @@ import {
 import AdbClient from './client';
 import Connection from './connection';
 import FileStats from './filestats';
-import Jimp from 'jimp';
 import { KeyCode } from './keycode';
 import LogcatReader from './logcat/reader';
 import Monkey from './monkey/client';
