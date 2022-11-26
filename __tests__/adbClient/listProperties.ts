@@ -29,7 +29,7 @@ describe('List properties', () => {
                     ['three', false],
                     ['four', true],
                     ['five', null],
-                    ['six', void 0],
+                    ['six', undefined],
                     [
                         'seven',
                         new Date(

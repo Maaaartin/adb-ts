@@ -126,7 +126,7 @@ export default class Sync extends EventEmitter {
                 switch (reply) {
                     case Reply.OKAY:
                         return this.parser.readBytes(4).then(() => {
-                            return void 0;
+                            return undefined;
                         });
                     case Reply.FAIL:
                         return this.readError();

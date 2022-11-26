@@ -6,7 +6,7 @@ export default class ForwardCommand extends Command<void> {
             `host-serial:${serial}:forward:${local};${remote}`
         ).then(
             this.handleReply(() =>
-                this.parser.readAscii(4).then(this.handleReply(void 0))
+                this.parser.readAscii(4).then(this.handleReply(undefined))
             )
         );
     }

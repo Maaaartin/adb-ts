@@ -7,7 +7,7 @@ export default class MkDirCommand extends FileSystemCommand {
         if (!options) {
             return args;
         }
-        if (options.mode !== void 0) {
+        if (options.mode !== undefined) {
             args.push('-m', options.mode.toString());
         }
         if (options.parent) {

@@ -19,7 +19,7 @@ describe('Forward tests', () => {
                 'tcp:9222',
                 'localabstract:chrome_devtools_remote'
             );
-            expect(result).toBe(void 0);
+            expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
         }

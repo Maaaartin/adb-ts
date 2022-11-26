@@ -20,7 +20,7 @@ describe('Clear', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.clear('serial', 'com.something');
-            expect(result).toBe(void 0);
+            expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
         }

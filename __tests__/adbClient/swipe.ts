@@ -20,7 +20,7 @@ describe('Swipe', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.swipe('serial', 100, 200, 100, 10);
-            expect(result).toBe(void 0);
+            expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
         }
@@ -45,7 +45,7 @@ describe('Swipe', () => {
             const result = await adb.swipe('serial', 100, 200, 100, 10, {
                 source: 'gamepad'
             });
-            expect(result).toBe(void 0);
+            expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
         }
@@ -70,7 +70,7 @@ describe('Swipe', () => {
             const result = await adb.swipe('serial', 100, 200, 100, 10, {
                 source: undefined
             });
-            expect(result).toBe(void 0);
+            expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
         }
@@ -95,7 +95,7 @@ describe('Swipe', () => {
             const result = await adb.swipe('serial', 100, 200, 100, 10, {
                 duration: undefined
             });
-            expect(result).toBe(void 0);
+            expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
         }
@@ -121,7 +121,7 @@ describe('Swipe', () => {
                 source: 'gamepad',
                 duration: 3000
             });
-            expect(result).toBe(void 0);
+            expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
         }

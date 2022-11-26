@@ -892,14 +892,14 @@ export default class AdbClient {
     ): Promise<LogcatReader> | void {
         if (typeof options === 'function') {
             cb = options;
-            options = void 0;
+            options = undefined;
         }
 
         return nodeify(
             this.connection().then((conn) => {
                 return new LogcatCommand(conn).execute(
                     serial,
-                    typeof options === 'object' ? options : void 0
+                    typeof options === 'object' ? options : undefined
                 );
             }),
             cb
@@ -985,13 +985,13 @@ export default class AdbClient {
             args_ = '';
         if (typeof options === 'function') {
             cb = options;
-            options = void 0;
+            options = undefined;
         } else if (typeof options === 'object') {
             options_ = options;
         }
         if (typeof args === 'function') {
             cb = args;
-            args = void 0;
+            args = undefined;
         } else if (typeof args === 'string') {
             args_ = args;
         }
@@ -1768,7 +1768,7 @@ export default class AdbClient {
     ): Promise<string> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
-            options = void 0;
+            options = undefined;
         }
         const options_: RmOption | undefined = options;
 
@@ -1805,7 +1805,7 @@ export default class AdbClient {
     ): Promise<string> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
-            options = void 0;
+            options = undefined;
         }
         const options_: MkDirOptions | undefined = options;
         return nodeify(
@@ -1837,7 +1837,7 @@ export default class AdbClient {
     ): Promise<string> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
-            options = void 0;
+            options = undefined;
         }
         return nodeify(
             this.connection().then((conn) => {
@@ -1880,7 +1880,7 @@ export default class AdbClient {
     ): Promise<string> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
-            options = void 0;
+            options = undefined;
         }
 
         nodeify(
@@ -1924,7 +1924,7 @@ export default class AdbClient {
     ): Promise<string> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
-            options = void 0;
+            options = undefined;
         }
         return nodeify(
             this.connection().then((conn) => {

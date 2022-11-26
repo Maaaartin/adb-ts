@@ -20,7 +20,7 @@ describe('Reverse', () => {
                 'localabstract:chrome_devtools_remote',
                 'tcp:9222'
             );
-            expect(result).toBe(void 0);
+            expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
         }

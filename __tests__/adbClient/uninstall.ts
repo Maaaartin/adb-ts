@@ -20,7 +20,7 @@ describe('Uninstall', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.uninstall('serial', 'com.package');
-            expect(result).toBe(void 0);
+            expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
         }
@@ -43,7 +43,7 @@ describe('Uninstall', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.uninstall('serial', 'com.package');
-            expect(result).toBe(void 0);
+            expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
         }
@@ -66,7 +66,7 @@ describe('Uninstall', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.uninstall('serial', 'com.package');
-            expect(result).toBe(void 0);
+            expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
         }
