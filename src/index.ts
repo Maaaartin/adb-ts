@@ -48,10 +48,13 @@ export const encodeData = (data: Buffer | string): Buffer => {
 export const stringToType = (value = ''): PropertyValue => {
     try {
         const parsed = JSON.parse(value);
-        if (typeof parsed === 'object' && parsed !== null) {
+        if (
+            typeof parsed === 'string' ||
+            (typeof parsed === 'object' && parsed !== null)
+        ) {
             return value;
         }
-        return typeof parsed === 'string' ? value : parsed;
+        return parsed;
     } catch {
         const date = new Date(value);
         if (!isNaN(date.getMilliseconds())) {
