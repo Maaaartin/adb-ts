@@ -561,6 +561,29 @@ describe('Start service', () => {
         }
     });
 
+    it('Read error message', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:am startservice -n 'com.my.app/.Service' --user 0`,
+                res: 'Error: message\n',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.startService('serial', 'com.my.app', 'Service');
+                fail('Expected failure');
+            } catch (e) {
+                expect(e).toEqual(new Error('message'));
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
             { cmd: 'fail', res: null, rawRes: true },

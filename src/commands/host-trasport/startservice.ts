@@ -13,14 +13,17 @@ export default class StartServiceCommand extends TransportCommand<void> {
         return this.parser
             .searchLine(/^Error: (.*)$/)
             .finally(() => this.parser.end())
-            .then(([, errMsg]) => {
-                throw new Error(errMsg);
-            })
-            .catch((err) => {
-                if (!(err instanceof PrematureEOFError)) {
+            .then(
+                ([, errMsg]) => {
+                    throw new Error(errMsg);
+                },
+                (err) => {
+                    if (err instanceof PrematureEOFError) {
+                        return;
+                    }
                     throw err;
                 }
-            });
+            );
     }
     private formatExtraType(type: AdbExtraType): string {
         switch (type) {
