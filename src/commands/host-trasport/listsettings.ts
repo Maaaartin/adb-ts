@@ -2,8 +2,9 @@ import { PrimitiveDictionary, SettingsMode, stringToType } from '../..';
 
 import TransportParseAllCommand from '../transport-parse-all-command';
 
-export default class ListSettingsCommand extends TransportParseAllCommand {
-    parse(value: string) {
+export default class ListSettingsCommand extends TransportParseAllCommand<PrimitiveDictionary> {
+    Cmd = 'shell:settings list ';
+    parse(value: string): PrimitiveDictionary {
         const settings: PrimitiveDictionary = {};
         let match;
         const regExp = /^([\s\S]*?)=([\s\S]*?)\n/gm;
@@ -13,6 +14,7 @@ export default class ListSettingsCommand extends TransportParseAllCommand {
         return settings;
     }
     execute(serial: string, mode: SettingsMode): Promise<PrimitiveDictionary> {
-        return super.execute(serial, `shell:settings list ${mode}`);
+        this.Cmd += mode;
+        return this.preExecute(serial);
     }
 }
