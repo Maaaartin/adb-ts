@@ -9,8 +9,8 @@ import {
     parsePrimitiveParam,
     parseOptions,
     findMatches,
-    DataMap,
-    buildInputParams
+    buildInputParams,
+    PropertyValue
 } from '../lib/index';
 
 describe('Encode/decode length', () => {
@@ -262,7 +262,7 @@ describe('Find matches', () => {
             'map'
         );
         expect(result).toEqual(
-            new DataMap([
+            new Map<string, PropertyValue>([
                 ['one', 1],
                 ['two', 'two'],
                 ['three', false],
@@ -305,27 +305,6 @@ describe('Find matches', () => {
                 'eight'
             ])
         );
-    });
-});
-
-describe('Data map', () => {
-    it('To object', () => {
-        const map = new DataMap([
-            ['one', 1],
-            ['two', 2]
-        ]);
-        expect(map.toObject()).toEqual({ one: 1, two: 2 });
-    });
-
-    it('To array', () => {
-        const map = new DataMap([
-            ['one', 1],
-            ['two', 2]
-        ]);
-        expect(map.toArray()).toEqual([
-            ['one', 1],
-            ['two', 2]
-        ]);
     });
 });
 

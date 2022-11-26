@@ -1,6 +1,6 @@
 import AdbMock from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
-import { DataMap } from '../../lib';
+import { PropertyValue } from '../../lib';
 
 describe('List properties', () => {
     it('OKAY', async () => {
@@ -23,7 +23,7 @@ describe('List properties', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.listProperties('serial');
             expect(result).toEqual(
-                new DataMap([
+                new Map<string, PropertyValue>([
                     ['one', 1],
                     ['two', 'two'],
                     ['three', false],
