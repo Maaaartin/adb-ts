@@ -1522,20 +1522,17 @@ export default class AdbClient {
         );
     }
 
-    listSettings(
-        serial: string,
-        mode: SettingsMode
-    ): Promise<PrimitiveDictionary>;
+    listSettings(serial: string, mode: SettingsMode): Promise<DataMap>;
     listSettings(
         serial: string,
         mode: SettingsMode,
-        cb: ExecCallbackWithValue<PrimitiveDictionary>
+        cb: ExecCallbackWithValue<DataMap>
     ): void;
     listSettings(
         serial: string,
         mode: SettingsMode,
-        cb?: ExecCallbackWithValue<PrimitiveDictionary>
-    ): Promise<PrimitiveDictionary> | void {
+        cb?: ExecCallbackWithValue<DataMap>
+    ): Promise<DataMap> | void {
         return nodeify(
             this.connection().then((conn) => {
                 return new ListSettingsCommand(conn).execute(serial, mode);
