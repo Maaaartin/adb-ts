@@ -2,12 +2,12 @@ import AdbMock from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
 import { UnexpectedDataError } from '../../lib';
 
-describe('Set prop tests', () => {
+describe('Put setting tests', () => {
     it('OKAY with empty string', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop 'prop' ''`,
+                cmd: `shell:settings put system 'setting' ''`,
                 res: null,
                 rawRes: true
             }
@@ -15,7 +15,12 @@ describe('Set prop tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            const result = await adb.setProp('serial', 'prop', '');
+            const result = await adb.putSetting(
+                'serial',
+                'system',
+                'setting',
+                ''
+            );
             expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
@@ -26,7 +31,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop 'prop' ''"'"'text'"'"''`,
+                cmd: `shell:settings put system 'setting' ''"'"'text'"'"''`,
                 res: null,
                 rawRes: true
             }
@@ -34,7 +39,12 @@ describe('Set prop tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            const result = await adb.setProp('serial', 'prop', `'text'`);
+            const result = await adb.putSetting(
+                'serial',
+                'system',
+                'setting',
+                `'text'`
+            );
             expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
@@ -45,7 +55,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop 'prop' '"text"'`,
+                cmd: `shell:settings put system 'setting' '"text"'`,
                 res: null,
                 rawRes: true
             }
@@ -53,26 +63,12 @@ describe('Set prop tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            const result = await adb.setProp('serial', 'prop', `"text"`);
-            expect(result).toBe(undefined);
-        } finally {
-            await adbMock.end();
-        }
-    });
-
-    it('OKAY with boolean value', async () => {
-        const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
-            {
-                cmd: `shell:setprop 'prop' false`,
-                res: null,
-                rawRes: true
-            }
-        ]);
-        try {
-            const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
-            const result = await adb.setProp('serial', 'prop', false);
+            const result = await adb.putSetting(
+                'serial',
+                'system',
+                'setting',
+                `"text"`
+            );
             expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
@@ -83,7 +79,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop 'prop' ''`,
+                cmd: `shell:settings put system 'setting' ''`,
                 res: null,
                 rawRes: true
             }
@@ -91,7 +87,36 @@ describe('Set prop tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            const result = await adb.setProp('serial', 'prop', undefined);
+            const result = await adb.putSetting(
+                'serial',
+                'system',
+                'setting',
+                undefined
+            );
+            expect(result).toBe(undefined);
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('OKAY with boolean value', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:settings put system 'setting' false`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.putSetting(
+                'serial',
+                'system',
+                'setting',
+                false
+            );
             expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
@@ -102,7 +127,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop 'prop' 0`,
+                cmd: `shell:settings put system 'setting' 0`,
                 res: null,
                 rawRes: true
             }
@@ -110,7 +135,12 @@ describe('Set prop tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            const result = await adb.setProp('serial', 'prop', 0);
+            const result = await adb.putSetting(
+                'serial',
+                'system',
+                'setting',
+                0
+            );
             expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
@@ -121,7 +151,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop 'prop' 0.1`,
+                cmd: `shell:settings put system 'setting' 0.1`,
                 res: null,
                 rawRes: true
             }
@@ -129,7 +159,12 @@ describe('Set prop tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            const result = await adb.setProp('serial', 'prop', 0.1);
+            const result = await adb.putSetting(
+                'serial',
+                'system',
+                'setting',
+                0.1
+            );
             expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
@@ -140,7 +175,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop 'prop' ''`,
+                cmd: `shell:settings put system 'setting' ''`,
                 res: ' \r\n\t ',
                 rawRes: true
             }
@@ -148,7 +183,12 @@ describe('Set prop tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            const result = await adb.setProp('serial', 'prop', undefined);
+            const result = await adb.putSetting(
+                'serial',
+                'system',
+                'setting',
+                undefined
+            );
             expect(result).toBe(undefined);
         } finally {
             await adbMock.end();
@@ -159,7 +199,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop 'prop' ''`,
+                cmd: `shell:settings put system 'setting' ''`,
                 res: 'Failed',
                 rawRes: true
             }
@@ -168,7 +208,7 @@ describe('Set prop tests', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
-                await adb.setProp('serial', 'prop', undefined);
+                await adb.putSetting('serial', 'system', 'setting', undefined);
                 fail('Expected failure');
             } catch (e) {
                 expect(e).toEqual(new Error('Failed'));
@@ -182,7 +222,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'fail', res: null, rawRes: true },
             {
-                cmd: `shell:setprop 'prop' ''`,
+                cmd: `shell:settings put system 'setting' ''`,
                 res: null,
                 rawRes: true
             }
@@ -191,7 +231,7 @@ describe('Set prop tests', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
-                await adb.setProp('serial', 'prop', '');
+                await adb.putSetting('serial', 'system', 'setting', '');
                 fail('Expected Failure');
             } catch (e) {
                 expect(e).toEqual(new Error('Failure'));
@@ -214,7 +254,7 @@ describe('Set prop tests', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
-                await adb.setProp('serial', 'prop', '');
+                await adb.putSetting('serial', 'system', 'setting', '');
                 fail('Expected Failure');
             } catch (e) {
                 expect(e).toEqual(new Error('Failure'));
@@ -233,7 +273,7 @@ describe('Set prop tests', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:setprop 'prop' ''`,
+                cmd: `shell:settings put system 'setting' ''`,
                 res: null,
                 rawRes: true
             }
@@ -242,7 +282,7 @@ describe('Set prop tests', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
-                await adb.setProp('serial', 'prop', '');
+                await adb.putSetting('serial', 'system', 'setting', '');
                 fail('Expected Failure');
             } catch (e) {
                 expect(e).toEqual(
@@ -262,7 +302,7 @@ describe('Set prop tests', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:setprop 'prop' ''`,
+                cmd: `shell:settings put system 'setting' ''`,
                 res: null,
                 rawRes: true,
                 unexpected: true
@@ -272,7 +312,7 @@ describe('Set prop tests', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
-                await adb.setProp('serial', 'prop', '');
+                await adb.putSetting('serial', 'system', 'setting', '');
                 fail('Expected Failure');
             } catch (e) {
                 expect(e).toEqual(
