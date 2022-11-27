@@ -1,8 +1,10 @@
-import { SettingsMode, PrimitiveType, stringToType } from '../..';
+import { SettingsMode, stringToType, PropertyValue } from '../..';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
-export default class GetSetting extends TransportParseAllCommand {
-    protected parse(value: string) {
+export default class GetSetting extends TransportParseAllCommand<PropertyValue> {
+    Cmd = 'shell:settings get ';
+
+    protected parse(value: string): PropertyValue {
         return stringToType(value);
     }
 
@@ -10,7 +12,8 @@ export default class GetSetting extends TransportParseAllCommand {
         serial: string,
         mode: SettingsMode,
         name: string
-    ): Promise<PrimitiveType> {
-        return super.execute(serial, 'shell:settings get', mode, name);
+    ): Promise<PropertyValue> {
+        this.Cmd += [mode, this.escape(name)].join(' ');
+        return this.preExecute(serial);
     }
 }

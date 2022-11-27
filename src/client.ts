@@ -1545,19 +1545,19 @@ export default class AdbClient {
         serial: string,
         mode: SettingsMode,
         name: string
-    ): Promise<PrimitiveType>;
+    ): Promise<PropertyValue>;
     getSetting(
         serial: string,
         mode: SettingsMode,
         name: string,
-        cb: ExecCallbackWithValue<PrimitiveType>
+        cb: ExecCallbackWithValue<PropertyValue>
     ): void;
     getSetting(
         serial: string,
         mode: SettingsMode,
         name: string,
-        cb?: ExecCallbackWithValue<PrimitiveType>
-    ): Promise<PrimitiveType> | void {
+        cb?: ExecCallbackWithValue<PropertyValue>
+    ): Promise<PropertyValue> | void {
         return nodeify(
             this.connection().then((conn) => {
                 return new GetSetting(conn).execute(serial, mode, name);

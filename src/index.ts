@@ -60,7 +60,7 @@ export const stringToType = (value = ''): PropertyValue => {
         if (!isNaN(date.getMilliseconds())) {
             return date;
         }
-        return String(value) || undefined;
+        return value || undefined;
     }
 };
 

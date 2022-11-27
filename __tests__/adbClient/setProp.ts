@@ -7,7 +7,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop prop ''`,
+                cmd: `shell:setprop 'prop' ''`,
                 res: null,
                 rawRes: true
             }
@@ -26,7 +26,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop prop ''"'"'text'"'"''`,
+                cmd: `shell:setprop 'prop' ''"'"'text'"'"''`,
                 res: null,
                 rawRes: true
             }
@@ -45,7 +45,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop prop '"text"'`,
+                cmd: `shell:setprop 'prop' '"text"'`,
                 res: null,
                 rawRes: true
             }
@@ -64,7 +64,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop prop ''`,
+                cmd: `shell:setprop 'prop' ''`,
                 res: null,
                 rawRes: true
             }
@@ -83,7 +83,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop prop false`,
+                cmd: `shell:setprop 'prop' false`,
                 res: null,
                 rawRes: true
             }
@@ -102,7 +102,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop prop ''`,
+                cmd: `shell:setprop 'prop' ''`,
                 res: null,
                 rawRes: true
             }
@@ -121,7 +121,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop prop 0`,
+                cmd: `shell:setprop 'prop' 0`,
                 res: null,
                 rawRes: true
             }
@@ -140,7 +140,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop prop 0.1`,
+                cmd: `shell:setprop 'prop' 0.1`,
                 res: null,
                 rawRes: true
             }
@@ -159,7 +159,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop prop ''`,
+                cmd: `shell:setprop 'prop' ''`,
                 res: ' \r\n\t ',
                 rawRes: true
             }
@@ -178,7 +178,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:setprop prop ''`,
+                cmd: `shell:setprop 'prop' ''`,
                 res: 'Failed',
                 rawRes: true
             }
@@ -201,7 +201,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'fail', res: null, rawRes: true },
             {
-                cmd: `shell:setprop prop ''`,
+                cmd: `shell:setprop 'prop' ''`,
                 res: null,
                 rawRes: true
             }
@@ -252,7 +252,7 @@ describe('Set prop tests', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:setprop prop ''`,
+                cmd: `shell:setprop 'prop' ''`,
                 res: null,
                 rawRes: true
             }
@@ -281,7 +281,7 @@ describe('Set prop tests', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:setprop prop ''`,
+                cmd: `shell:setprop 'prop' ''`,
                 res: null,
                 rawRes: true,
                 unexpected: true

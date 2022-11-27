@@ -11,7 +11,7 @@ export default class SetProp extends TransportCommand<void> {
         });
     }
     execute(serial: string, prop: string, value: any): Promise<void> {
-        this.Cmd += `${prop} ${this.escape(value)}`;
+        this.Cmd += [prop, value].map((v) => this.escape(v)).join(' ');
         return this.preExecute(serial);
     }
 }

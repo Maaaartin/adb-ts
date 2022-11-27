@@ -6,7 +6,7 @@ export default class PutSetting extends TransportCommand<void> {
     protected postExecute(): Promise<void> {
         return this.parser.readAll().then((value) => {
             const valueStr = value.toString();
-            if (/failed/.test(valueStr)) {
+            if (!/^\s*$/.test(valueStr)) {
                 throw new Error(valueStr);
             }
         });
@@ -17,7 +17,7 @@ export default class PutSetting extends TransportCommand<void> {
         name: string,
         value: PrimitiveType
     ): Promise<void> {
-        this.Cmd += [mode, name, this.escape(value)].join(' ');
+        this.Cmd += [mode, this.escape(name), this.escape(value)].join(' ');
         return this.preExecute(serial);
     }
 }
