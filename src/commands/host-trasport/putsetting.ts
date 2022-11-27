@@ -1,16 +1,14 @@
 import { SettingsMode, PrimitiveType } from '../..';
-import TransportCommand from '../transport';
+import TransportParseAllCommand from '../transport-parse-all-command';
 
-export default class PutSetting extends TransportCommand<void> {
+export default class PutSetting extends TransportParseAllCommand<void> {
     Cmd = 'shell:settings put ';
-    protected postExecute(): Promise<void> {
-        return this.parser.readAll().then((value) => {
-            const valueStr = value.toString();
-            if (!/^\s*$/.test(valueStr)) {
-                throw new Error(valueStr);
-            }
-        });
+    protected parse(value: string): void {
+        if (!/^\s*$/.test(value)) {
+            throw new Error(value);
+        }
     }
+
     execute(
         serial: string,
         mode: SettingsMode,

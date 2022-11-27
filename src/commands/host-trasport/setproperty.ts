@@ -1,14 +1,11 @@
-import TransportCommand from '../transport';
+import TransportParseAllCommand from '../transport-parse-all-command';
 
-export default class SetProp extends TransportCommand<void> {
+export default class SetProp extends TransportParseAllCommand<void> {
     Cmd = 'shell:setprop ';
-    protected postExecute(): Promise<void> {
-        return this.parser.readAll().then((value) => {
-            const valueStr = value.toString();
-            if (!/^\s*$/.test(valueStr)) {
-                throw new Error(valueStr);
-            }
-        });
+    protected parse(value: string): void {
+        if (!/^\s*$/.test(value)) {
+            throw new Error(value);
+        }
     }
     execute(serial: string, prop: string, value: any): Promise<void> {
         this.Cmd += [prop, value].map((v) => this.escape(v)).join(' ');
