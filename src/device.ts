@@ -28,7 +28,6 @@ import FileStats from './filestats';
 import { KeyCode } from './keycode';
 import LogcatReader from './logcat/reader';
 import Monkey from './monkey/client';
-
 import PullTransfer from './sync/pulltransfer';
 import PushTransfer from './sync/pushtransfer';
 import { Readable } from 'stream';
@@ -39,10 +38,10 @@ import { SyncMode } from './sync';
 export default class AdbDevice implements IAdbDevice {
     id: string;
     state: DeviceState;
-    path: string;
-    device: string;
-    model: string;
-    product: string;
+    path: string | undefined;
+    device: string | undefined;
+    model: string | undefined;
+    product: string | undefined;
     transportId: string;
     transport: TransportType;
     private client: AdbClient;
