@@ -5,7 +5,7 @@ export default class ListSettingsCommand extends TransportParseAllCommand<DataMa
     Cmd = 'shell:settings list ';
 
     parse(value: string): DataMap {
-        return findMatches(value, /^([\s\S]*?)=([\s\S]*?)\n/gm, 'map');
+        return findMatches(value, /^([\s\S]*?)=([\s\S]*?)$/gm, 'map');
     }
 
     execute(serial: string, mode: SettingsMode): Promise<DataMap> {
