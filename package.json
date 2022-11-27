@@ -1,6 +1,6 @@
 {
   "name": "adb-ts",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A Node.js library for ADB",
   "keywords": [
     "adb",
