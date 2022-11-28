@@ -1566,17 +1566,17 @@ export default class AdbClient {
         );
     }
 
-    shell(serial: string, command: string): Promise<PrimitiveType>;
+    shell(serial: string, command: string): Promise<string>;
     shell(
         serial: string,
         command: string,
-        cb: ExecCallbackWithValue<PrimitiveType>
+        cb: ExecCallbackWithValue<string>
     ): void;
     shell(
         serial: string,
         command: string,
-        cb?: ExecCallbackWithValue<PrimitiveType>
-    ): Promise<PrimitiveType> | void {
+        cb?: ExecCallbackWithValue<string>
+    ): Promise<string> | void {
         return nodeify(
             this.connection().then((conn) => {
                 return new ShellCommand(conn).execute(serial, command);

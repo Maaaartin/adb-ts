@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { ShellExecError, FailError } from '../..';
+import { ShellExecError } from '../..';
 import TransportCommand from '../transport';
 
 export default class ShellCommand extends TransportCommand<string> {
@@ -12,7 +12,7 @@ export default class ShellCommand extends TransportCommand<string> {
             const valueStr = value.toString();
             if (valueStr.includes(this.uuid)) {
                 throw new ShellExecError(
-                    valueStr.replace(this.uuid, ''),
+                    valueStr.replace(this.uuid, '').trim(),
                     this.command
                 );
             }
@@ -25,6 +25,7 @@ export default class ShellCommand extends TransportCommand<string> {
         this.Cmd += [`(${command})`, '||', 'echo', this.escape(this.uuid)].join(
             ' '
         );
+        console.log(this.Cmd);
         return this.preExecute(serial);
     }
 }
