@@ -1,3 +1,4 @@
+import { UnexpectedDataError } from '../../lib';
 import AdbClient from '../../lib/client';
 import Connection from '../../lib/connection';
 import AdbMock from '../../mockery/mockAdbServer';
@@ -13,6 +14,7 @@ describe('Transport tests', () => {
             });
             const connection = await client.transport('1234');
             expect(connection).toBeInstanceOf(Connection);
+            connection.end();
         } finally {
             await adbMock.end();
         }
@@ -30,7 +32,7 @@ describe('Transport tests', () => {
                 await client.transport('5678');
                 fail('Expected Failure');
             } catch (e) {
-                expect(e.message).toBe('Failure');
+                expect(e).toEqual(new Error('Failure'));
             }
         } finally {
             await adbMock.end();
@@ -53,8 +55,8 @@ describe('Transport tests', () => {
                 await client.transport('5678');
                 fail('Expected Failure');
             } catch (e) {
-                expect(e.message).toBe(
-                    "Unexpected 'ABCD', was expecting OKAY or FAIL"
+                expect(e).toEqual(
+                    new UnexpectedDataError('ABCD', 'OKAY or FAIL')
                 );
             }
         } finally {

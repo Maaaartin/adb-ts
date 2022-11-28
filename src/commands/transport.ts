@@ -14,15 +14,15 @@ export default abstract class TransportCommand<T>
                 this.handleReply(() => {
                     return this.initExecute(this.Cmd).then(
                         this.handleReply(() => {
-                            return this.postExecute().finally(() => {
-                                return this.end();
+                            return this.postExecute().catch((err) => {
+                                return this.end().then(() => {
+                                    throw err;
+                                });
                             });
                         })
                     );
                 })
             )
-            .finally(() => {
-                this.end();
-            });
+            .finally(() => this.end());
     }
 }
