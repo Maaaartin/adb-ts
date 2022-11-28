@@ -103,6 +103,7 @@ import VersionCommand from './commands/host/version';
 import WaitBootCompleteCommand from './commands/host-trasport/waitbootcomplete';
 import WaitFor from './commands/host/waitFor';
 import { promisify } from 'util';
+import T from 'timers/promises';
 
 export default class AdbClient {
     public static readonly defaultOptions: Readonly<AdbClientOptionsValues> =
@@ -1638,12 +1639,9 @@ export default class AdbClient {
                 })
                 .catch((err) => {
                     if ((times -= 1)) {
-                        return new Promise((resolve) =>
-                            setTimeout(resolve, 100)
-                        ).then(() => tryConnect(times));
-                    } else {
-                        throw err;
+                        return T.setTimeout(100).then(() => tryConnect(times));
                     }
+                    throw err;
                 });
         };
         return nodeify(
