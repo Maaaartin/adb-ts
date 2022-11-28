@@ -1,22 +1,27 @@
 import crypto from 'crypto';
-import { FailError } from '../..';
+import { ShellExecError, FailError } from '../..';
 import TransportCommand from '../transport';
 
 export default class ShellCommand extends TransportCommand<string> {
     Cmd = 'shell:';
-    private uuid = crypto.randomUUID();
+    private readonly uuid = crypto.randomUUID();
+    private command = '';
 
     protected postExecute(): Promise<string> {
         return this.parser.readAll().then((value) => {
             const valueStr = value.toString();
             if (valueStr.includes(this.uuid)) {
-                throw new FailError(valueStr.replace(this.uuid, ''));
+                throw new ShellExecError(
+                    valueStr.replace(this.uuid, ''),
+                    this.command
+                );
             }
             return valueStr;
         });
     }
 
     execute(serial: string, command: string): Promise<string> {
+        this.command = command;
         this.Cmd += [`(${command})`, '||', 'echo', this.escape(this.uuid)].join(
             ' '
         );

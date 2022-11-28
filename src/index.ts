@@ -482,3 +482,15 @@ export class AdbError extends Error {
         Error.captureStackTrace(this);
     }
 }
+
+export class ShellExecError extends Error {
+    command: string;
+    constructor(message: string, cmd: string) {
+        super();
+        Object.setPrototypeOf(this, ShellExecError.prototype);
+        this.name = 'ShellExecError';
+        this.message = message;
+        this.command = cmd;
+        Error.captureStackTrace(this);
+    }
+}
