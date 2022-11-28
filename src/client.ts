@@ -1585,6 +1585,7 @@ export default class AdbClient {
         );
     }
 
+    // TODO remove?
     custom<T>(CustomCommand: CommandConstruct): Promise<T>;
     custom<T>(
         CustomCommand: CommandConstruct,

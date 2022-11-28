@@ -1,7 +1,9 @@
 import { Reply } from '../..';
 import Command from '../../command';
 
+// TODO replace with transport?
 export default class HostTransportCommand extends Command {
+    protected keepAlive = true;
     execute(serial: string): Promise<void> {
         return this.initExecute('host:transport:' + serial).then((reply) => {
             switch (reply) {
