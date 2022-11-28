@@ -51,6 +51,7 @@
     "dependencies": {
         "bluebird": "^3.7.2",
         "child_process": "^1.0.2",
+        "crypto": "^1.0.1",
         "fs": "^0.0.1-security",
         "ip-regex": "^4.2.0",
         "moment": "^2.29.1",

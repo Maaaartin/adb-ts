@@ -1566,15 +1566,15 @@ export default class AdbClient {
         );
     }
 
-    shell(serial: string, command: string | string[]): Promise<PrimitiveType>;
+    shell(serial: string, command: string): Promise<PrimitiveType>;
     shell(
         serial: string,
-        command: string | string[],
+        command: string,
         cb: ExecCallbackWithValue<PrimitiveType>
     ): void;
     shell(
         serial: string,
-        command: string | string[],
+        command: string,
         cb?: ExecCallbackWithValue<PrimitiveType>
     ): Promise<PrimitiveType> | void {
         return nodeify(

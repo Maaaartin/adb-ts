@@ -424,7 +424,7 @@ export type DataMap = Map<string, PropertyValue>;
 export class FailError extends Error {
     constructor(message?: string) {
         super();
-        Object.setPrototypeOf(this, PrematureEOFError.prototype);
+        Object.setPrototypeOf(this, FailError.prototype);
         this.name = 'FailError';
         this.message = `Failure: ${message}`;
         Error.captureStackTrace(this);
