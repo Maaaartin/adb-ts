@@ -25,7 +25,6 @@ export default class ShellCommand extends TransportCommand<string> {
         this.Cmd += [`(${command})`, '||', 'echo', this.escape(this.uuid)].join(
             ' '
         );
-        console.log(this.Cmd);
         return this.preExecute(serial);
     }
 }
