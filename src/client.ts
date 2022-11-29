@@ -1649,10 +1649,10 @@ export default class AdbClient {
                 .then((transport) => {
                     return new MonkeyCommand(transport).execute(serial, 1080);
                 })
-                .then((out) => {
+                .then((conn) => {
                     return tryConnect(20).then((monkey) => {
                         return monkey.once('end', () => {
-                            return out.end();
+                            return conn.end();
                         });
                     });
                 }),
