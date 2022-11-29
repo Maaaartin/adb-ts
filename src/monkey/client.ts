@@ -10,6 +10,7 @@ export default class Monkey extends Api {
     public readonly queue: Command[] = [];
     private parser: Parser = new Parser();
     protected stream?: Socket;
+    private hadError = true;
 
     getStream(): Socket {
         if (!this.stream) {
@@ -28,28 +29,27 @@ export default class Monkey extends Api {
             this.queue.push(new Command(commands, cb));
             this.getStream().write('' + commands + '\n');
         }
-        let hadError = true;
-        const handler = (): void => {
-            hadError = false;
-        };
-        const removeListeners = (): void => {
-            this.getStream().removeListener('data', handler);
-            // this.getStream().removeListener('error', handler);
-            this.getStream().removeListener('end', handler);
-            this.getStream().removeListener('finish', handler);
-        };
 
-        this.getStream().on('data', handler);
-        // this.getStream().on('error', handler);
-        this.getStream().on('end', handler);
-        this.getStream().on('finish', handler);
         setTimeout(() => {
-            if (hadError)
+            if (this.hadError) {
                 this.consume(new Reply(ReplyType.ERROR, 'Command failed'));
-            removeListeners();
+            }
         }, 100);
 
         return this;
+    }
+
+    // TODO can be simplified?
+    private hookResultListeners(): void {
+        const events = ['data', 'end', 'finish'] as const;
+        const handler = (): void => {
+            this.hadError = false;
+            events.forEach((ev) =>
+                this.getStream().removeListener(ev, handler)
+            );
+        };
+
+        events.forEach((ev) => this.getStream().on(ev, handler));
     }
 
     protected hook(): void {
@@ -71,6 +71,7 @@ export default class Monkey extends Api {
         this.parser.on('error', (err) => {
             return this.emit('error', err);
         });
+        this.hookResultListeners();
     }
 
     on(event: 'error', listener: (err: Error) => void): this;
@@ -89,8 +90,9 @@ export default class Monkey extends Api {
         }
 
         if (reply.isError()) {
-            return command.callback?.(reply.toError(), '', command.command);
+            return command.callback?.(reply.toError(), null, command.command);
         }
+
         command.callback?.(null, reply.value, command.command);
     }
 
@@ -102,8 +104,7 @@ export default class Monkey extends Api {
         } else {
             this.stream = new Socket(param);
         }
-        // TODO remove?
-        this.stream.setMaxListeners(100);
+
         this.hook();
         return this;
     }
