@@ -1,7 +1,6 @@
 import { MonkeyCallback, NotConnectedError } from '..';
 import { NetConnectOpts, Socket } from 'net';
 import Reply, { ReplyType } from './reply';
-
 import Api from './api';
 import Command from './command';
 import CommandQueue from './commandqueue';
@@ -19,7 +18,7 @@ export default class Monkey extends Api {
         return this.stream;
     }
 
-    send(commands: string[] | string, cb: MonkeyCallback) {
+    send(commands: string[] | string, cb: MonkeyCallback): this {
         if (Array.isArray(commands)) {
             for (const command of commands) {
                 this.queue.push(new Command(command, cb));
@@ -30,18 +29,18 @@ export default class Monkey extends Api {
             this.getStream().write('' + commands + '\n');
         }
         let hadError = true;
-        const handler = () => {
+        const handler = (): void => {
             hadError = false;
         };
-        const removeListeners = () => {
+        const removeListeners = (): void => {
             this.getStream().removeListener('data', handler);
-            this.getStream().removeListener('error', handler);
+            // this.getStream().removeListener('error', handler);
             this.getStream().removeListener('end', handler);
             this.getStream().removeListener('finish', handler);
         };
 
         this.getStream().on('data', handler);
-        this.getStream().on('error', handler);
+        // this.getStream().on('error', handler);
         this.getStream().on('end', handler);
         this.getStream().on('finish', handler);
         setTimeout(() => {
@@ -53,7 +52,7 @@ export default class Monkey extends Api {
         return this;
     }
 
-    protected hook() {
+    protected hook(): void {
         this.getStream().on('data', (data) => {
             return this.parser.parse(data);
         });
@@ -75,46 +74,46 @@ export default class Monkey extends Api {
     }
 
     on(event: 'error', listener: (err: Error) => void): this;
-    on(event: 'end', listener: VoidFunction): this;
-    on(event: 'finish', listener: VoidFunction): this;
-    on(event: string | symbol, listener: (...args: any[]) => void) {
+    on(event: 'end', listener: () => void): this;
+    on(event: 'finish', listener: () => void): this;
+    on(event: string | symbol, listener: (...args: any[]) => void): this {
         return super.on(event, listener);
     }
 
-    private consume(reply: Reply) {
+    private consume(reply: Reply): void {
         const command = this.queue.shift();
-        if (command) {
-            if (reply.isError()) {
-                command.callback?.(reply.toError(), '', command.command);
-            } else {
-                command.callback?.(null, reply.value, command.command);
-            }
-        } else {
+        if (!command) {
             throw new Error(
                 'Command queue depleted, but replies still coming in'
             );
         }
+
+        if (reply.isError()) {
+            return command.callback?.(reply.toError(), '', command.command);
+        }
+        command.callback?.(null, reply.value, command.command);
     }
 
     connect(options: NetConnectOpts): this;
     connect(stream: Socket): this;
-    connect(param: Socket | NetConnectOpts) {
+    connect(param: Socket | NetConnectOpts): this {
         if (param instanceof Socket) {
             this.stream = param;
         } else {
             this.stream = new Socket(param);
         }
+        // TODO remove?
         this.stream.setMaxListeners(100);
         this.hook();
         return this;
     }
 
-    end() {
+    end(): this {
         this.getStream().end();
         return this;
     }
 
-    commandQueue() {
+    commandQueue(): CommandQueue {
         return new CommandQueue(this);
     }
 }
