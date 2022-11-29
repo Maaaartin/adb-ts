@@ -16,7 +16,7 @@ export default class Multi extends Api {
         super();
         this.client = client;
 
-        this.collector = (err, result, cmd) => {
+        this.collector = (err, result, cmd): void => {
             if (err) {
                 this.errors.push(`${cmd}: ${err.message}`);
             }
@@ -26,7 +26,7 @@ export default class Multi extends Api {
         };
     }
 
-    private maybeFinish() {
+    private maybeFinish(): void {
         if (!this.counter) {
             if (this.errors.length) {
                 setImmediate(() => {
@@ -40,19 +40,19 @@ export default class Multi extends Api {
         }
     }
 
-    private forbidReuse() {
+    private forbidReuse(): void {
         if (this.sent) {
             throw new Error('Reuse not supported');
         }
     }
 
-    send(command: string) {
+    send(command: string): this {
         this.forbidReuse();
         this.commands.push(new Command(command, this.collector));
         return this;
     }
 
-    execute(cb: (err: Error | null, data?: string[]) => void) {
+    execute(cb: (err: Error | null, data?: string[]) => void): void {
         this.forbidReuse();
         this.counter = this.commands.length;
         this.sent = true;
