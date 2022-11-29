@@ -10,11 +10,11 @@ export default class Reply {
         this.type = type;
         this.value = value;
     }
-    isError() {
+    isError(): this is ReplyType.ERROR {
         return this.type === ReplyType.ERROR;
     }
 
-    toError() {
+    toError(): Error {
         if (!this.isError()) {
             throw new Error('toError() cannot be called for non-errors');
         }
