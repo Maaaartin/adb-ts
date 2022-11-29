@@ -1,12 +1,11 @@
 import Reply, { ReplyType } from './reply';
-
 import { EventEmitter } from 'events';
 
 export default class Parser extends EventEmitter {
     private column = 0;
     private buffer = Buffer.from('');
 
-    parse(chunk: Buffer) {
+    parse(chunk: Buffer): void {
         this.buffer = Buffer.concat([this.buffer, chunk]);
         while (this.column < this.buffer.length) {
             if (this.buffer[this.column] === 0x0a) {
@@ -23,7 +22,7 @@ export default class Parser extends EventEmitter {
         }
     }
 
-    private parseLine(line: Buffer) {
+    private parseLine(line: Buffer): void {
         switch (line[0]) {
             case 0x4f:
                 if (line.length === 2) {
@@ -53,10 +52,10 @@ export default class Parser extends EventEmitter {
         }
     }
 
-    on(event: 'wait' | 'drain', listener: VoidFunction): this;
+    on(event: 'wait' | 'drain', listener: () => void): this;
     on(event: 'reply', listener: (reply: Reply) => void): this;
     on(event: 'error', listener: (error: Error) => void): this;
-    on(event: string | symbol, listener: (...args: any[]) => void) {
+    on(event: string | symbol, listener: (...args: any[]) => void): this {
         return super.on(event, listener);
     }
 }
