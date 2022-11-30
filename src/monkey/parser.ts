@@ -1,4 +1,4 @@
-import Reply, { ReplyType } from './reply';
+import { Reply, OkReply, ErrReply } from './reply';
 import { EventEmitter } from 'events';
 
 export default class Parser extends EventEmitter {
@@ -26,22 +26,16 @@ export default class Parser extends EventEmitter {
         switch (line[0]) {
             case 0x4f:
                 if (line.length === 2) {
-                    this.emit('reply', new Reply(ReplyType.OK, ''));
+                    this.emit('reply', new OkReply(null));
                 } else {
-                    this.emit(
-                        'reply',
-                        new Reply(ReplyType.OK, line.toString('ascii', 3))
-                    );
+                    this.emit('reply', new OkReply(line.toString('ascii', 3)));
                 }
                 break;
             case 0x45:
                 if (line.length === 5) {
-                    this.emit('reply', new Reply(ReplyType.ERROR, ''));
+                    this.emit('reply', new ErrReply(null));
                 } else {
-                    this.emit(
-                        'reply',
-                        new Reply(ReplyType.ERROR, line.toString('ascii', 6))
-                    );
+                    this.emit('reply', new ErrReply(line.toString('ascii', 6)));
                 }
                 break;
             default:

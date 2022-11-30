@@ -1,23 +1,40 @@
-export enum ReplyType {
+enum ReplyType {
     ERROR = 'ERROR',
     OK = 'OK'
 }
 
-export default class Reply {
-    public type: ReplyType;
-    public value: string;
-    constructor(type: ReplyType, value: string) {
-        this.type = type;
+export abstract class Reply {
+    type: ReplyType;
+    value: string | null;
+
+    abstract isError(): this is ErrReply;
+}
+
+export class OkReply extends Reply {
+    type = ReplyType.OK;
+    value: string | null;
+    constructor(value: string | null) {
+        super();
         this.value = value;
     }
-    isError(): this is ReplyType.ERROR {
-        return this.type === ReplyType.ERROR;
+
+    isError(): this is ErrReply {
+        return false;
+    }
+}
+
+export class ErrReply extends Reply {
+    type = ReplyType.ERROR;
+    constructor(value: string | null) {
+        super();
+        this.value = value;
+    }
+
+    isError(): this is ErrReply {
+        return true;
     }
 
     toError(): Error {
-        if (!this.isError()) {
-            throw new Error('toError() cannot be called for non-errors');
-        }
         return new Error(this.value);
     }
 }

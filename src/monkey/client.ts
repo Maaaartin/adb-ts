@@ -1,6 +1,6 @@
 import { MonkeyCallback, NotConnectedError } from '..';
 import { NetConnectOpts, Socket } from 'net';
-import Reply, { ReplyType } from './reply';
+import { Reply, ErrReply } from './reply';
 import Api from './api';
 import Command from './command';
 import CommandQueue from './commandqueue';
@@ -32,7 +32,7 @@ export default class Monkey extends Api {
 
         setTimeout(() => {
             if (this.hadError) {
-                this.consume(new Reply(ReplyType.ERROR, 'Command failed'));
+                this.consume(new ErrReply('Command failed'));
             }
         }, 100);
 
