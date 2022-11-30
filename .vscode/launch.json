@@ -14,7 +14,10 @@
                 "--config",
                 "jest.config.js"
             ],
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "windows": {
+                "program": "${workspaceFolder}/node_modules/jest/bin/jest"
+            }
         }
     ]
 }
