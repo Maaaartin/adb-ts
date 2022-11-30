@@ -41,7 +41,7 @@ export default class Parser extends EventEmitter {
             default:
                 this.emit(
                     'error',
-                    new SyntaxError("Unparseable line '" + line + "'")
+                    new SyntaxError("Unparsable line '" + line + "'")
                 );
         }
     }
