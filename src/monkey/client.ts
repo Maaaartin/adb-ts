@@ -39,30 +39,20 @@ export default class Monkey extends Api {
         return this;
     }
 
-    // TODO can be simplified?
-    private hookResultListeners(): void {
-        const events = ['data', 'end', 'finish'] as const;
-        const handler = (): void => {
-            this.hadError = false;
-            events.forEach((ev) =>
-                this.getStream().removeListener(ev, handler)
-            );
-        };
-
-        events.forEach((ev) => this.getStream().on(ev, handler));
-    }
-
     protected hook(): void {
         this.getStream().on('data', (data) => {
+            this.hadError = false;
             return this.parser.parse(data);
         });
         this.getStream().on('error', (err) => {
             return this.emit('error', err);
         });
         this.getStream().on('end', () => {
+            this.hadError = false;
             return this.emit('end');
         });
         this.getStream().on('finish', () => {
+            this.hadError = false;
             return this.emit('finish');
         });
         this.parser.on('reply', (reply) => {
@@ -71,7 +61,6 @@ export default class Monkey extends Api {
         this.parser.on('error', (err) => {
             return this.emit('error', err);
         });
-        this.hookResultListeners();
     }
 
     on(event: 'error', listener: (err: Error) => void): this;
