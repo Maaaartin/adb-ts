@@ -1,7 +1,7 @@
 import { UnexpectedDataError } from '../../lib';
 import AdbClient from '../../lib/client';
 import Connection from '../../lib/connection';
-import AdbMock from '../../mockery/mockAdbServer';
+import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Transport tests', () => {
     it('OKAY', async () => {

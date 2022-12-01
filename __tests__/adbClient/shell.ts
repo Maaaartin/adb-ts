@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import { ShellExecError, UnexpectedDataError } from '../../lib';
 import AdbClient from '../../lib/client';
-import AdbMock from '../../mockery/mockAdbServer';
+import { AdbMock } from '../../mockery/mockAdbServer';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {

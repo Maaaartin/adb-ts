@@ -2,7 +2,7 @@ import { promisify } from 'bluebird';
 import AdbClient from '../../lib/client';
 // TODO fix errors and revert
 // import AdbDevice from '../../lib/device';
-import AdbMock from '../../mockery/mockAdbServer';
+import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Track devices', () => {
     // it('Add', async () => {

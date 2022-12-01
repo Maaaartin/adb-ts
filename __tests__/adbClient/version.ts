@@ -1,5 +1,5 @@
 import AdbClient from '../../lib/client';
-import AdbMock from '../../mockery/mockAdbServer';
+import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Version tests', () => {
     it('OKAY', async () => {

@@ -1,4 +1,4 @@
-import AdbMock from '../../mockery/mockAdbServer';
+import { AdbMock } from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
 import { FailError, UnexpectedDataError } from '../../lib';
 import fs, { WriteStream } from 'fs';
@@ -27,8 +27,6 @@ describe('Pull file tests', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.pullFile('serial', '/file', '/file');
             expect(result).toBe(undefined);
-        } catch (e) {
-            console.log(e.message);
         } finally {
             await adbMock.end();
         }

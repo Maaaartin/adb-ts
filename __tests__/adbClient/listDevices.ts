@@ -1,6 +1,6 @@
 import { IAdbDevice, UnexpectedDataError } from '../../lib';
 import AdbClient from '../../lib/client';
-import AdbMock from '../../mockery/mockAdbServer';
+import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('List devices', () => {
     it('FAIL', async () => {

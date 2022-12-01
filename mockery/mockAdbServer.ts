@@ -2,6 +2,7 @@ import net from 'net';
 import Parser from '../lib/parser';
 import { encodeData, NonEmptyArray, Reply } from '../lib';
 import { promisify } from 'util';
+import { setTimeout } from 'timers';
 
 type Sequence = {
     cmd: string;
@@ -9,12 +10,12 @@ type Sequence = {
     rawRes?: true;
     unexpected?: true;
 };
-export default class AdbMock {
-    private server_ = new net.Server();
-    private parser: Parser | null = null;
-    private seq: Generator<Sequence, void, void>;
+export class AdbMock {
+    protected server_ = new net.Server();
+    protected parser: Parser | null = null;
+    protected seq: Generator<Sequence, void, void>;
 
-    private get socket(): net.Socket | null | undefined {
+    protected get socket(): net.Socket | null | undefined {
         return this.parser?.socket;
     }
 
@@ -27,7 +28,7 @@ export default class AdbMock {
         })();
     }
 
-    private getPort(): number {
+    protected getPort(): number {
         const info = this.server_.address();
         if (typeof info === 'string' || info === null) {
             throw new Error('Could not get server port');
@@ -35,27 +36,27 @@ export default class AdbMock {
         return info.port;
     }
 
-    private writeOkay(data: string | null): void {
+    protected writeOkay(data: string | null): void {
         const encoded = encodeData(data || '');
         const toWrite = Reply.OKAY.concat(encoded.toString());
         this.socket?.write(toWrite);
     }
 
-    private writeFail(): void {
+    protected writeFail(): void {
         const encoded = encodeData('Failure');
         const toWrite = Reply.FAIL.concat(encoded.toString());
         this.socket?.write(toWrite);
     }
 
-    private writeRaw(data: string | null): void {
+    protected writeRaw(data: string | null): void {
         this.socket?.write(Reply.OKAY.concat(data || ''));
     }
 
-    private writeUnexpected(): void {
+    protected writeUnexpected(): void {
         this.socket?.write('ABCD');
     }
 
-    private next(): Sequence | null {
+    protected next(): Sequence | null {
         const nextSeq = this.seq.next();
         if (nextSeq.done) {
             return null;
@@ -63,7 +64,7 @@ export default class AdbMock {
         return nextSeq.value;
     }
 
-    private connectionHandler(value: string): void {
+    protected connectionHandler(value: string): void {
         const nextSeq = this.next();
         if (nextSeq?.unexpected) {
             return this.writeUnexpected();
@@ -78,11 +79,12 @@ export default class AdbMock {
         return this.writeFail();
     }
 
-    private async readValue(): Promise<string | undefined> {
+    protected async readValue(): Promise<string | undefined> {
         return (await this.parser?.readValue())?.toString();
     }
-    private handleSequence(): void {
-        this.socket?.on('readable', async () => {
+
+    protected handleSequence(): void {
+        this.socket?.once('readable', async () => {
             for await (const seq of this.seq) {
                 if (seq.unexpected) {
                     this.writeUnexpected();
@@ -97,17 +99,19 @@ export default class AdbMock {
                     this.writeOkay(seq.res);
                     continue;
                 }
+
                 this.writeFail();
             }
             this.parser?.end();
         });
     }
 
-    private hook(): void {
-        this.server_.once('connection', async (socket) => {
+    protected hook(): void {
+        this.server_.on('connection', async (socket) => {
             this.parser = new Parser(socket);
             const value = (await this.parser.readValue()).toString();
             this.connectionHandler(value);
+
             this.handleSequence();
         });
     }
@@ -146,5 +150,47 @@ export default class AdbMock {
                 }
             }
         });
+    }
+}
+
+export class AdbMockDouble extends AdbMock {
+    protected timeout?: NodeJS.Timeout;
+    private runner(): void {
+        setImmediate(async () => {
+            this.timeout = setTimeout(() => {
+                this.runner();
+            }, 500);
+            const seq = this.next();
+            if (!seq) {
+                clearTimeout(this.timeout);
+                this.parser?.end();
+                return;
+            }
+            if (seq.unexpected) {
+                this.writeUnexpected();
+                return;
+            }
+            const value = await this.readValue();
+            if (seq.cmd === value) {
+                if (seq.rawRes) {
+                    this.writeRaw(seq.res);
+                    return;
+                }
+                this.writeOkay(seq.res);
+                return;
+            }
+
+            this.writeFail();
+        });
+        clearTimeout(this.timeout);
+    }
+
+    protected handleSequence(): void {
+        this.socket?.once('readable', this.runner.bind(this));
+    }
+
+    end(): Promise<void> {
+        clearTimeout(this.timeout);
+        return super.end();
     }
 }
