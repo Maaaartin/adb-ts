@@ -83,24 +83,28 @@ export class AdbMock {
         return (await this.parser?.readValue())?.toString();
     }
 
+    protected async readableHandler(seq: Sequence): Promise<void> {
+        if (seq.unexpected) {
+            this.writeUnexpected();
+            return;
+        }
+        const value = await this.readValue();
+        if (seq.cmd === value) {
+            if (seq.rawRes) {
+                this.writeRaw(seq.res);
+                return;
+            }
+            this.writeOkay(seq.res);
+            return;
+        }
+
+        this.writeFail();
+    }
+
     protected handleSequence(): void {
         this.socket?.once('readable', async () => {
             for await (const seq of this.seq) {
-                if (seq.unexpected) {
-                    this.writeUnexpected();
-                    continue;
-                }
-                const value = await this.readValue();
-                if (seq.cmd === value) {
-                    if (seq.rawRes) {
-                        this.writeRaw(seq.res);
-                        continue;
-                    }
-                    this.writeOkay(seq.res);
-                    continue;
-                }
-
-                this.writeFail();
+                await this.readableHandler(seq);
             }
             this.parser?.end();
         });
@@ -166,27 +170,13 @@ export class AdbMockDouble extends AdbMock {
                 this.parser?.end();
                 return;
             }
-            if (seq.unexpected) {
-                this.writeUnexpected();
-                return;
-            }
-            const value = await this.readValue();
-            if (seq.cmd === value) {
-                if (seq.rawRes) {
-                    this.writeRaw(seq.res);
-                    return;
-                }
-                this.writeOkay(seq.res);
-                return;
-            }
-
-            this.writeFail();
+            this.readableHandler(seq);
         });
         clearTimeout(this.timeout);
     }
 
     protected handleSequence(): void {
-        this.socket?.once('readable', this.runner.bind(this));
+        this.socket?.on('readable', this.runner.bind(this));
     }
 
     end(): Promise<void> {
