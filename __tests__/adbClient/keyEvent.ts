@@ -250,7 +250,7 @@ describe('Key event', () => {
                 fail('Expected Failure');
             } catch (e) {
                 expect(e).toEqual(
-                    new UnexpectedDataError('ABCD', 'OKAY or FAIL')
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
             }
         } finally {
@@ -280,7 +280,7 @@ describe('Key event', () => {
                 fail('Expected Failure');
             } catch (e) {
                 expect(e).toEqual(
-                    new UnexpectedDataError('ABCD', 'OKAY or FAIL')
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
             }
         } finally {

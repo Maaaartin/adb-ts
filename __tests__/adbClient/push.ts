@@ -83,7 +83,7 @@ describe('Push tests', () => {
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
                 cmd: 'sync:',
-                res: 'ABCD' + buff.toString() + 'Error',
+                res: 'UNEX' + buff.toString() + 'Error',
                 rawRes: true
             }
         ]);
@@ -109,7 +109,7 @@ describe('Push tests', () => {
                 fail('Expected failure');
             } catch (e) {
                 expect(e).toEqual(
-                    new UnexpectedDataError('ABCD', 'OKAY or FAIL')
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
             }
         } finally {

@@ -106,7 +106,7 @@ describe('Push data to file', () => {
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
                 cmd: 'sync:',
-                res: 'ABCD' + buff.toString() + 'Error',
+                res: 'UNEX' + buff.toString() + 'Error',
                 rawRes: true
             }
         ]);
@@ -122,7 +122,7 @@ describe('Push data to file', () => {
                 fail('Expected failure');
             } catch (e) {
                 expect(e).toEqual(
-                    new UnexpectedDataError('ABCD', 'OKAY or FAIL')
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
             }
         } finally {

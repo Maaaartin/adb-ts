@@ -15,7 +15,7 @@ export class AdbMock {
     protected parser: Parser | null = null;
     protected seq: Generator<Sequence, void, void>;
 
-    protected get socket(): net.Socket | null | undefined {
+    protected get socket(): net.Socket | undefined {
         return this.parser?.socket;
     }
 
@@ -52,8 +52,8 @@ export class AdbMock {
         this.socket?.write(Reply.OKAY.concat(data || ''));
     }
 
-    protected writeUnexpected(): void {
-        this.socket?.write('ABCD');
+    protected writeUnexpected(msg = 'UNEX'): void {
+        this.socket?.write(msg);
     }
 
     protected next(): Sequence | null {
@@ -83,7 +83,7 @@ export class AdbMock {
         return (await this.parser?.readValue())?.toString();
     }
 
-    protected async readableHandler(seq: Sequence): Promise<void> {
+    protected async writeResponse(seq: Sequence): Promise<void> {
         if (seq.unexpected) {
             this.writeUnexpected();
             return;
@@ -101,10 +101,10 @@ export class AdbMock {
         this.writeFail();
     }
 
-    protected handleSequence(): void {
+    protected readableHandler(): void {
         this.socket?.once('readable', async () => {
             for await (const seq of this.seq) {
-                await this.readableHandler(seq);
+                await this.writeResponse(seq);
             }
             this.parser?.end();
         });
@@ -115,8 +115,7 @@ export class AdbMock {
             this.parser = new Parser(socket);
             const value = (await this.parser.readValue()).toString();
             this.connectionHandler(value);
-
-            this.handleSequence();
+            this.readableHandler();
         });
     }
 
@@ -170,12 +169,12 @@ export class AdbMockDouble extends AdbMock {
                 this.parser?.end();
                 return;
             }
-            this.readableHandler(seq);
+            this.writeResponse(seq);
         });
         clearTimeout(this.timeout);
     }
 
-    protected handleSequence(): void {
+    protected readableHandler(): void {
         this.socket?.on('readable', this.runner.bind(this));
     }
 

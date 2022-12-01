@@ -118,7 +118,7 @@ feature:six`,
                 fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe(
-                    "Unexpected 'ABCD', was expecting OKAY or FAIL"
+                    "Unexpected 'UNEX', was expecting OKAY or FAIL"
                 );
             }
         } finally {
@@ -153,7 +153,7 @@ feature:six`,
                 fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe(
-                    "Unexpected 'ABCD', was expecting OKAY or FAIL"
+                    "Unexpected 'UNEX', was expecting OKAY or FAIL"
                 );
             }
         } finally {

@@ -120,7 +120,7 @@ describe('Shell tests', () => {
                 fail('Expected failure');
             } catch (e) {
                 expect(e).toEqual(
-                    new UnexpectedDataError('ABCD', 'OKAY or FAIL')
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
             }
         } finally {
@@ -150,7 +150,7 @@ describe('Shell tests', () => {
                 fail('Expected failure');
             } catch (e) {
                 expect(e).toEqual(
-                    new UnexpectedDataError('ABCD', 'OKAY or FAIL')
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
             }
         } finally {

@@ -149,7 +149,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
                 fail('Expected Failure');
             } catch (e) {
                 expect(e).toEqual(
-                    new UnexpectedDataError('ABCD', 'OKAY or FAIL')
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
             }
         } finally {
@@ -184,7 +184,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
                 fail('Expected Failure');
             } catch (e) {
                 expect(e).toEqual(
-                    new UnexpectedDataError('ABCD', 'OKAY or FAIL')
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
             }
         } finally {

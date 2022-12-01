@@ -97,7 +97,7 @@ package:four`,
                 fail('Expected Failure');
             } catch (e) {
                 expect(e).toEqual(
-                    new Error("Unexpected 'ABCD', was expecting OKAY or FAIL")
+                    new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );
             }
         } finally {
@@ -129,7 +129,7 @@ package:four`,
                 fail('Expected Failure');
             } catch (e) {
                 expect(e).toEqual(
-                    new Error("Unexpected 'ABCD', was expecting OKAY or FAIL")
+                    new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );
             }
         } finally {

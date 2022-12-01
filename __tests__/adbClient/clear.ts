@@ -152,7 +152,7 @@ describe('Clear', () => {
             await adb.clear('serial', 'com.something');
             fail('Expected Failure');
         } catch (e) {
-            expect(e).toEqual(new UnexpectedDataError('ABCD', 'OKAY or FAIL'));
+            expect(e).toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

@@ -87,7 +87,7 @@ serial tcp:9223 localabstract:chrome_devtools_remote`
             } catch (e) {
                 expect(e).toBeInstanceOf(UnexpectedDataError);
                 expect(e).toEqual(
-                    new Error("Unexpected 'ABCD', was expecting OKAY or FAIL")
+                    new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );
             }
         } finally {

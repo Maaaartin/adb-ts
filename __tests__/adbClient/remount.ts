@@ -130,7 +130,7 @@ describe('Remount', () => {
                 fail('Expected Failure');
             } catch (e) {
                 expect(e).toEqual(
-                    new Error("Unexpected 'ABCD', was expecting OKAY or FAIL")
+                    new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );
             }
         } finally {
@@ -155,7 +155,7 @@ describe('Remount', () => {
                 fail('Expected Failure');
             } catch (e) {
                 expect(e).toEqual(
-                    new Error("Unexpected 'ABCD', was expecting OKAY or FAIL")
+                    new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );
             }
         } finally {

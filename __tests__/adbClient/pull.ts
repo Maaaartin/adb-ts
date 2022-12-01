@@ -74,7 +74,7 @@ describe('Pull tests', () => {
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
                 cmd: 'sync:',
-                res: 'ABCD' + buff.toString() + 'data',
+                res: 'UNEX' + buff.toString() + 'data',
                 rawRes: true
             }
         ]);
@@ -96,7 +96,7 @@ describe('Pull tests', () => {
                 fail('Expected failure');
             } catch (e) {
                 expect(e).toEqual(
-                    new UnexpectedDataError('ABCD', 'DATA, DONE or FAIL')
+                    new UnexpectedDataError('UNEX', 'DATA, DONE or FAIL')
                 );
             }
         } finally {

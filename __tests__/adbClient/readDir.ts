@@ -102,7 +102,7 @@ describe('Read dir', () => {
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
                 cmd: 'sync:',
-                res: 'ABCD',
+                res: 'UNEX',
                 rawRes: true
             }
         ]);
@@ -113,7 +113,7 @@ describe('Read dir', () => {
             fail('Expected failure');
         } catch (e) {
             expect(e).toEqual(
-                new UnexpectedDataError('ABCD', 'DENT, DONE or FAIL')
+                new UnexpectedDataError('UNEX', 'DENT, DONE or FAIL')
             );
         } finally {
             await adbMock.end();

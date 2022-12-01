@@ -73,7 +73,7 @@ describe('Forward tests', () => {
             } catch (e) {
                 expect(e).toBeInstanceOf(UnexpectedDataError);
                 expect(e).toEqual(
-                    new Error("Unexpected 'ABCD', was expecting OKAY or FAIL")
+                    new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );
             }
         } finally {

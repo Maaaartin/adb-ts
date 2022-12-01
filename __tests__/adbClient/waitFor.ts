@@ -195,7 +195,7 @@ describe('Wait for', () => {
         const adbMock = new AdbMock([
             {
                 cmd: `host:wait-for-any-disconnect`,
-                res: 'ABCD',
+                res: 'UNEX',
                 rawRes: true
             }
         ]);
@@ -207,7 +207,7 @@ describe('Wait for', () => {
                 fail('Expected failure');
             } catch (e) {
                 expect(e).toEqual(
-                    new UnexpectedDataError('ABCD', 'OKAY or FAIL')
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
             }
         } finally {

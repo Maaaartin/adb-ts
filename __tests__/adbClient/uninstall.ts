@@ -148,7 +148,7 @@ describe('Uninstall', () => {
                 fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe(
-                    "Unexpected 'ABCD', was expecting OKAY or FAIL"
+                    "Unexpected 'UNEX', was expecting OKAY or FAIL"
                 );
             }
         } finally {
@@ -178,7 +178,7 @@ describe('Uninstall', () => {
                 fail('Expected Failure');
             } catch (e) {
                 expect(e.message).toBe(
-                    "Unexpected 'ABCD', was expecting OKAY or FAIL"
+                    "Unexpected 'UNEX', was expecting OKAY or FAIL"
                 );
             }
         } finally {
