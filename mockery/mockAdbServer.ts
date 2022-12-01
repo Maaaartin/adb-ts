@@ -13,19 +13,14 @@ type Sequence = {
 export class AdbMock {
     protected server_ = new net.Server();
     protected parser: Parser | null = null;
-    protected seq: Generator<Sequence, void, void>;
+    protected seq: Sequence[];
 
     protected get socket(): net.Socket | undefined {
         return this.parser?.socket;
     }
 
     constructor(seq: Sequence | NonEmptyArray<Sequence>) {
-        seq = Array.isArray(seq) ? seq : [seq];
-        this.seq = (function* (): Generator<Sequence, void, void> {
-            for (const s of seq) {
-                yield s;
-            }
-        })();
+        this.seq = Array.isArray(seq) ? seq : [seq];
     }
 
     protected getPort(): number {
@@ -57,11 +52,7 @@ export class AdbMock {
     }
 
     protected next(): Sequence | null {
-        const nextSeq = this.seq.next();
-        if (nextSeq.done) {
-            return null;
-        }
-        return nextSeq.value;
+        return this.seq.shift() || null;
     }
 
     protected connectionHandler(value: string): void {
