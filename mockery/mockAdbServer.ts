@@ -66,29 +66,22 @@ export class AdbMock {
 
     protected connectionHandler(value: string): void {
         const nextSeq = this.next();
-        if (nextSeq?.unexpected) {
-            return this.writeUnexpected();
+        if (!nextSeq) {
+            return this.writeFail();
         }
-        if (value === nextSeq?.cmd) {
-            if (nextSeq.rawRes) {
-                return this.writeRaw(nextSeq.res);
-            }
-            return this.writeOkay(nextSeq.res);
-        }
-
-        return this.writeFail();
+        this.writeResponse(nextSeq, value);
     }
 
     protected async readValue(): Promise<string | undefined> {
         return (await this.parser?.readValue())?.toString();
     }
 
-    protected async writeResponse(seq: Sequence): Promise<void> {
+    protected writeResponse(seq: Sequence, value: string | undefined): void {
         if (seq.unexpected) {
             this.writeUnexpected();
             return;
         }
-        const value = await this.readValue();
+
         if (seq.cmd === value) {
             if (seq.rawRes) {
                 this.writeRaw(seq.res);
@@ -104,7 +97,7 @@ export class AdbMock {
     protected readableHandler(): void {
         this.socket?.once('readable', async () => {
             for await (const seq of this.seq) {
-                await this.writeResponse(seq);
+                this.writeResponse(seq, await this.readValue());
             }
             this.parser?.end();
         });
@@ -169,7 +162,7 @@ export class AdbMockDouble extends AdbMock {
                 this.parser?.end();
                 return;
             }
-            this.writeResponse(seq);
+            this.writeResponse(seq, await this.readValue());
         });
         clearTimeout(this.timeout);
     }
