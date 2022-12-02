@@ -33,7 +33,7 @@ describe('Open Monkey tests', () => {
             { cmd: 'fail', res: null, rawRes: true },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port ${1080} -v`,
+                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
                 res: ':Monkey:\n',
                 rawRes: true
             },

@@ -2,7 +2,6 @@ import net from 'net';
 import Parser from '../lib/parser';
 import { encodeData, NonEmptyArray, Reply } from '../lib';
 import { promisify } from 'util';
-import { setTimeout } from 'timers';
 
 type Sequence = {
     cmd: string;
@@ -153,9 +152,9 @@ export class AdbMockDouble extends AdbMock {
                 this.parser?.end();
                 return;
             }
+            clearTimeout(this.timeout);
             this.writeResponse(seq, await this.readValue());
         });
-        clearTimeout(this.timeout);
     }
 
     protected readableHandler(): void {
