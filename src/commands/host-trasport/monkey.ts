@@ -14,6 +14,10 @@ export default class MonkeyCommand extends TransportCommand<Connection> {
 
     execute(serial: string, port: number | string): Promise<Connection> {
         this.Cmd += [port, '-v'].join(' ');
-        return this.preExecute(serial);
+        return this.preExecute(serial).catch((err) => {
+            return super.end().then(() => {
+                throw err;
+            });
+        });
     }
 }

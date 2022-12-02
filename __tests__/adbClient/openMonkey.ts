@@ -51,4 +51,28 @@ describe('Open Monkey tests', () => {
             await adbMock.end();
         }
     });
+
+    test('FAIL second response', async () => {
+        const adbMock = new AdbMockDouble([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'fail', res: null, rawRes: true },
+            {
+                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
+                res: ':Monkey:\n',
+                rawRes: true
+            },
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'tcp:1080', res: null, rawRes: true }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            await adb.openMonkey('serial');
+            fail('Expected Failure');
+        } catch (e) {
+            expect(e).toEqual(new Error('Failure'));
+        } finally {
+            await adbMock.end();
+        }
+    });
 });
