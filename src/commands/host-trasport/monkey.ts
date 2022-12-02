@@ -8,16 +8,16 @@ export default class MonkeyCommand extends TransportCommand<Connection> {
             return this.connection;
         });
     }
-    protected end(): Promise<void> {
+
+    endConnection(): Promise<void> {
         return Promise.resolve();
     }
 
     execute(serial: string, port: number | string): Promise<Connection> {
         this.Cmd += [port, '-v'].join(' ');
         return this.preExecute(serial).catch((err) => {
-            return super.end().then(() => {
-                throw err;
-            });
+            super.endConnection();
+            throw err;
         });
     }
 }

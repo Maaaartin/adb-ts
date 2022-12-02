@@ -1,7 +1,6 @@
 import Connection from './connection';
 import { encodeData, PrimitiveType, Reply } from '.';
 import Parser from './parser';
-import { promisify } from 'util';
 
 export default abstract class Command<T = any> {
     public readonly connection: Connection;
@@ -41,18 +40,15 @@ export default abstract class Command<T = any> {
         };
     }
 
-    protected end(): Promise<void> {
-        return promisify<void>((cb) => this.connection._destroy(null, cb))();
+    endConnection(): void {
+        this.connection.destroy();
     }
 
     protected initExecute(...args: PrimitiveType[]): Promise<string> {
         this.connection.write(encodeData(args.join(' ')));
         return this.parser
             .readAscii(4)
-            .finally(
-                (): Promise<void> =>
-                    this.keepAlive ? Promise.resolve() : this.end()
-            );
+            .finally(() => !this.keepAlive && this.endConnection());
     }
 
     public abstract execute(...args: any[]): Promise<T>;

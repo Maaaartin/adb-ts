@@ -19,7 +19,7 @@ export default abstract class IpConnect extends Command implements ICmd {
                 })
             )
             .finally(() => {
-                return this.end();
+                this.endConnection();
             });
     }
 }

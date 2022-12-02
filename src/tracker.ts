@@ -60,11 +60,10 @@ export default class Tracker extends EventEmitter {
         this.deviceMap = newMap;
     }
 
-    public end(): Promise<void> {
+    public end(): void {
         this.emit('end');
-        return this.command.end().then(() => {
-            this.removeAllListeners();
-        });
+        this.command.endConnection();
+        setImmediate(() => this.removeAllListeners());
     }
 
     on(event: 'add' | 'change', listener: (device: AdbDevice) => void): this;

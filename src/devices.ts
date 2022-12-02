@@ -60,10 +60,9 @@ export default abstract class DevicesCommand extends Command {
                         : []
                 )
             )
-            .catch((err) =>
-                this.end().then(() => {
-                    throw err;
-                })
-            );
+            .catch((err) => {
+                this.endConnection();
+                throw err;
+            });
     }
 }

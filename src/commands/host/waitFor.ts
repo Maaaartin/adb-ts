@@ -10,6 +10,8 @@ export default class WaitFor extends Command {
                     this.parser.readAscii(4).then(this.handleReply(undefined))
                 )
             )
-            .finally(() => this.end());
+            .finally(() => {
+                this.endConnection();
+            });
     }
 }
