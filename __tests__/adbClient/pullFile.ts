@@ -2,12 +2,12 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
 import { FailError, UnexpectedDataError } from '../../lib';
 import fs, { WriteStream } from 'fs';
-import { WritableMock } from 'stream-mock';
+import { BufferWritableMock } from 'stream-mock';
 import { Writable } from 'stream';
 
 beforeEach(() => {
     jest.spyOn(fs, 'createWriteStream').mockImplementation(() => {
-        return new WritableMock() as Writable as WriteStream;
+        return new BufferWritableMock() as Writable as WriteStream;
     });
 });
 
