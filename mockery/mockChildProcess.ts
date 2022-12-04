@@ -25,7 +25,7 @@ export class ChildProcessMock implements ChildProcess {
     signalCode!: NodeJS.Signals | null;
     spawnargs!: string[];
     spawnfile!: string;
-    kill(signal?: number | NodeJS.Signals | undefined): boolean {
+    kill(): boolean {
         throw new Error('Method not implemented.');
     }
     send(
@@ -43,12 +43,7 @@ export class ChildProcessMock implements ChildProcess {
         options?: MessageOptions | undefined,
         callback?: ((error: Error | null) => void) | undefined
     ): boolean;
-    send(
-        message: unknown,
-        sendHandle?: unknown,
-        options?: unknown,
-        callback?: unknown
-    ): boolean {
+    send(): boolean {
         throw new Error('Method not implemented.');
     }
     disconnect(): void {
@@ -75,10 +70,10 @@ export class ChildProcessMock implements ChildProcess {
         event: 'message',
         listener: (message: Serializable, sendHandle: SendHandle) => void
     ): this;
-    addListener(event: unknown, listener: unknown): this {
+    addListener(): this {
         throw new Error('Method not implemented.');
     }
-    emit(event: string | symbol, ...args: any[]): boolean;
+    emit(): boolean;
     emit(
         event: 'close',
         code: number | null,
@@ -96,12 +91,7 @@ export class ChildProcessMock implements ChildProcess {
         message: Serializable,
         sendHandle: SendHandle
     ): boolean;
-    emit(
-        event: unknown,
-        message?: unknown,
-        sendHandle?: unknown,
-        ...rest: unknown[]
-    ): boolean {
+    emit(): boolean {
         throw new Error('Method not implemented.');
     }
     on(event: string, listener: (...args: any[]) => void): this;
@@ -119,7 +109,7 @@ export class ChildProcessMock implements ChildProcess {
         event: 'message',
         listener: (message: Serializable, sendHandle: SendHandle) => void
     ): this;
-    on(event: unknown, listener: unknown): this {
+    on(): this {
         throw new Error('Method not implemented.');
     }
     once(event: string, listener: (...args: any[]) => void): this;
@@ -137,7 +127,7 @@ export class ChildProcessMock implements ChildProcess {
         event: 'message',
         listener: (message: Serializable, sendHandle: SendHandle) => void
     ): this;
-    once(event: unknown, listener: unknown): this {
+    once(): this {
         throw new Error('Method not implemented.');
     }
     prependListener(event: string, listener: (...args: any[]) => void): this;
@@ -155,7 +145,7 @@ export class ChildProcessMock implements ChildProcess {
         event: 'message',
         listener: (message: Serializable, sendHandle: SendHandle) => void
     ): this;
-    prependListener(event: unknown, listener: unknown): this {
+    prependListener(): this {
         throw new Error('Method not implemented.');
     }
     prependOnceListener(
@@ -176,34 +166,31 @@ export class ChildProcessMock implements ChildProcess {
         event: 'message',
         listener: (message: Serializable, sendHandle: SendHandle) => void
     ): this;
-    prependOnceListener(event: unknown, listener: unknown): this {
+    prependOnceListener(): this {
         throw new Error('Method not implemented.');
     }
-    removeListener(
-        event: string | symbol,
-        listener: (...args: any[]) => void
-    ): this {
+    removeListener(): this {
         throw new Error('Method not implemented.');
     }
-    off(event: string | symbol, listener: (...args: any[]) => void): this {
+    off(): this {
         throw new Error('Method not implemented.');
     }
-    removeAllListeners(event?: string | symbol | undefined): this {
+    removeAllListeners(): this {
         throw new Error('Method not implemented.');
     }
-    setMaxListeners(n: number): this {
+    setMaxListeners(): this {
         throw new Error('Method not implemented.');
     }
     getMaxListeners(): number {
         throw new Error('Method not implemented.');
     }
-    listeners(event: string | symbol): Function[] {
+    listeners(): Function[] {
         throw new Error('Method not implemented.');
     }
-    rawListeners(event: string | symbol): Function[] {
+    rawListeners(): Function[] {
         throw new Error('Method not implemented.');
     }
-    listenerCount(event: string | symbol): number {
+    listenerCount(): number {
         throw new Error('Method not implemented.');
     }
     eventNames(): (string | symbol)[] {

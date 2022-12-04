@@ -30,7 +30,7 @@
     "scripts": {
         "test": "npx jest",
         "compile": "npx tsc",
-        "watch": "npx tsc -w",
+        "watch": "rm -rf lib && npx tsc -w",
         "lint": "npx eslint src"
     },
     "devDependencies": {
@@ -38,7 +38,6 @@
         "@types/jest": "^26.0.19",
         "@types/node": "^18.11.9",
         "@typescript-eslint/eslint-plugin": "^5.30.4",
-        "@typescript-eslint/parser": "3",
         "dotenv": "^8.2.0",
         "eslint": "^8.19.0",
         "eslint-plugin-jest": "^26.5.3",
@@ -49,6 +48,7 @@
         "typescript": "^4.1.3"
     },
     "dependencies": {
+        "@typescript-eslint/parser": "^5.45.0",
         "bluebird": "^3.7.2",
         "child_process": "^1.0.2",
         "crypto": "^1.0.1",

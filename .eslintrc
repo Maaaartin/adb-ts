@@ -5,15 +5,15 @@
         "jest/globals": true,
         "commonjs": true
     },
-    "globals": { "BufferEncoding": true },
+    "globals": { "BufferEncoding": true, "NodeJS": true },
     "ignorePatterns": ["lib", "__tests__"],
-    "parser": "@typescript-eslint/parser@3", // Specifies the ESLint parser
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 2020, // Allows for the parsing of modern ECMAScript features
-        "sourceType": "module" // Allows for the use of imports
+        "ecmaVersion": 2020,
+        "sourceType": "module"
     },
     "extends": [
-        "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+        "plugin:@typescript-eslint/recommended",
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended"
