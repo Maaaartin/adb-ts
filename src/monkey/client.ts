@@ -1,5 +1,5 @@
 import { MonkeyCallback, NotConnectedError } from '..';
-import { NetConnectOpts, Socket } from 'net';
+import { Socket } from 'net';
 import { Reply, ErrReply } from './reply';
 import Api from './api';
 import Command from './command';
@@ -85,15 +85,8 @@ export default class Monkey extends Api {
         command.callback?.(null, reply.value, command.command);
     }
 
-    connect(options: NetConnectOpts): this;
-    connect(stream: Socket): this;
-    connect(param: Socket | NetConnectOpts): this {
-        if (param instanceof Socket) {
-            this.stream_ = param;
-        } else {
-            this.stream_ = new Socket(param);
-        }
-
+    connect(param: Socket): this {
+        this.stream_ = param;
         this.hook();
         return this;
     }
