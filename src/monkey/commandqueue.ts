@@ -66,6 +66,6 @@ export default class Multi extends Api {
         }
         parts.push('');
         this.commands = [];
-        this.client.getStream().write(parts.join('\n'));
+        this.client.stream.write(parts.join('\n'));
     }
 }

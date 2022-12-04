@@ -9,14 +9,14 @@ import Parser from './parser';
 export default class Monkey extends Api {
     public readonly queue: Command[] = [];
     private parser: Parser = new Parser();
-    protected stream?: Socket;
+    protected stream_?: Socket;
     private hadError = true;
 
-    getStream(): Socket {
-        if (!this.stream) {
+    get stream(): Socket {
+        if (!this.stream_) {
             throw new NotConnectedError();
         }
-        return this.stream;
+        return this.stream_;
     }
 
     send(commands: string[] | string, cb: MonkeyCallback): this {
@@ -24,10 +24,10 @@ export default class Monkey extends Api {
             for (const command of commands) {
                 this.queue.push(new Command(command, cb));
             }
-            this.getStream().write(commands.join('\n') + '\n');
+            this.stream.write(commands.join('\n') + '\n');
         } else {
             this.queue.push(new Command(commands, cb));
-            this.getStream().write('' + commands + '\n');
+            this.stream.write('' + commands + '\n');
         }
 
         setTimeout(() => {
@@ -40,18 +40,18 @@ export default class Monkey extends Api {
     }
 
     protected hook(): void {
-        this.getStream().on('data', (data) => {
+        this.stream.on('data', (data) => {
             this.hadError = false;
             return this.parser.parse(data);
         });
-        this.getStream().on('error', (err) => {
+        this.stream.on('error', (err) => {
             return this.emit('error', err);
         });
-        this.getStream().on('end', () => {
+        this.stream.on('end', () => {
             this.hadError = false;
             return this.emit('end');
         });
-        this.getStream().on('finish', () => {
+        this.stream.on('finish', () => {
             this.hadError = false;
             return this.emit('finish');
         });
@@ -89,9 +89,9 @@ export default class Monkey extends Api {
     connect(stream: Socket): this;
     connect(param: Socket | NetConnectOpts): this {
         if (param instanceof Socket) {
-            this.stream = param;
+            this.stream_ = param;
         } else {
-            this.stream = new Socket(param);
+            this.stream_ = new Socket(param);
         }
 
         this.hook();
@@ -99,7 +99,7 @@ export default class Monkey extends Api {
     }
 
     end(): this {
-        this.getStream().end();
+        this.stream.end();
         return this;
     }
 

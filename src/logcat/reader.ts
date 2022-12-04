@@ -10,7 +10,7 @@ import { Writable } from 'stream';
 export default class LogcatReader extends StreamHandler {
     private filter?: (entry: LogcatEntry) => boolean;
     private parser: LogcatParser;
-    private stream?: Writable;
+    private stream_?: Writable;
     private options?: LogcatReaderOptions;
     constructor(options?: LogcatReaderOptions) {
         super();
@@ -19,9 +19,9 @@ export default class LogcatReader extends StreamHandler {
         this.parser = new Binary();
     }
 
-    private getStream(): Writable {
-        if (this.stream) {
-            return this.stream;
+    private get stream(): Writable {
+        if (this.stream_) {
+            return this.stream_;
         } else {
             throw new NotConnectedError();
         }
@@ -33,22 +33,22 @@ export default class LogcatReader extends StreamHandler {
 
     hook(): void {
         if (this.options?.fixLineFeeds) {
-            const transform = this.getStream().pipe(new Transform());
+            const transform = this.stream.pipe(new Transform());
             transform.on('data', (data) => {
                 return this.parser.parse(data);
             });
         } else {
-            this.getStream().on('data', (data) => {
+            this.stream.on('data', (data) => {
                 return this.parser.parse(data);
             });
         }
-        this.getStream().on('error', (err) => {
+        this.stream.on('error', (err) => {
             this.emit('error', err);
         });
-        this.getStream().on('end', () => {
+        this.stream.on('end', () => {
             this.emit('end');
         });
-        this.getStream().on('finish', () => {
+        this.stream.on('finish', () => {
             this.emit('finish');
         });
         this.parser.on('entry', (entry: LogcatEntry) => {
@@ -69,12 +69,12 @@ export default class LogcatReader extends StreamHandler {
     }
 
     connect(stream: Writable): this {
-        this.stream = stream;
+        this.stream_ = stream;
         this.hook();
         return this;
     }
 
     end(): Promise<void> {
-        return new Promise<void>((resolve) => this.getStream().end(resolve));
+        return new Promise<void>((resolve) => this.stream.end(resolve));
     }
 }
