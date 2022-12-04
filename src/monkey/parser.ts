@@ -15,11 +15,6 @@ export default class Parser extends EventEmitter {
             }
             this.column += 1;
         }
-        if (this.buffer.length) {
-            this.emit('wait');
-        } else {
-            this.emit('drain');
-        }
     }
 
     private parseLine(line: Buffer): void {
@@ -46,7 +41,6 @@ export default class Parser extends EventEmitter {
         }
     }
 
-    on(event: 'wait' | 'drain', listener: () => void): this;
     on(event: 'reply', listener: (reply: Reply) => void): this;
     on(event: 'error', listener: (error: Error) => void): this;
     on(event: string | symbol, listener: (...args: any[]) => void): this {
