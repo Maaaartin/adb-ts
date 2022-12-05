@@ -6,11 +6,12 @@ export default class Parser extends EventEmitter {
     private buffer = Buffer.from('');
 
     parse(chunk: Buffer): void {
-        this.buffer = Buffer.concat([this.buffer, chunk]);
+        this.buffer = Buffer.concat([chunk]);
+
         while (this.column < this.buffer.length) {
             if (this.buffer[this.column] === 0x0a) {
-                this.parseLine(this.buffer.slice(0, this.column));
-                this.buffer = this.buffer.slice(this.column + 1);
+                this.parseLine(this.buffer.subarray(0, this.column));
+                this.buffer = this.buffer.subarray(this.column + 1);
                 this.column = 0;
             }
             this.column += 1;
@@ -22,17 +23,19 @@ export default class Parser extends EventEmitter {
             case 0x4f:
                 if (line.length === 2) {
                     this.emit('reply', new OkReply(null));
-                } else {
-                    this.emit('reply', new OkReply(line.toString('ascii', 3)));
+                    return;
                 }
-                break;
+                this.emit('reply', new OkReply(line.toString('ascii', 3)));
+                return;
+
             case 0x45:
                 if (line.length === 5) {
                     this.emit('reply', new ErrReply(null));
-                } else {
-                    this.emit('reply', new ErrReply(line.toString('ascii', 6)));
+                    return;
                 }
-                break;
+                this.emit('reply', new ErrReply(line.toString('ascii', 6)));
+                return;
+
             default:
                 this.emit(
                     'error',
