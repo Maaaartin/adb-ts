@@ -72,4 +72,22 @@ describe('Commands', () => {
             done();
         });
     });
+
+    it('Should emit error when replies are still coming', async (done) => {
+        const monkeyMock = new MonkeyMock([{ status: 'OK', reply: 'value' }]);
+
+        const port = await monkeyMock.start();
+        const monkey = new Monkey();
+
+        monkey.connect(new Socket().connect({ port, host: 'localhost' }));
+        monkey.on('error', (err) => {
+            monkeyMock.end();
+            expect(err).toEqual(
+                new Error('Command queue depleted, but replies still coming in')
+            );
+            done();
+        });
+        monkey.send('test', () => {});
+        monkey.queue.splice(0, monkey.queue.length);
+    });
 });
