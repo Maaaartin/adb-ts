@@ -1,6 +1,6 @@
 import net from 'net';
 
-type MonkeyReply = { status: 'OK' | 'ERROR'; reply: string };
+type MonkeyReply = { status: 'OK' | 'ERROR'; reply: string; timeout?: number };
 
 export default class MonkeyMock {
     private replies_: MonkeyReply[] = [];
@@ -14,17 +14,20 @@ export default class MonkeyMock {
         this.server_.close();
     }
 
-    private buildReply(): string {
-        return this.replies_
-            .map((reply) => `${reply.status}:${reply.reply}`)
-            .join('\n')
-            .concat('\n');
+    private buildReply(reply: MonkeyReply): string {
+        return `${reply.status}:${reply.reply}\n`;
     }
 
     private hook(): void {
         this.server_.on('connection', (socket) => {
             socket.on('data', () => {
-                socket.write(this.buildReply());
+                const reply = this.replies_.shift();
+                if (!reply) {
+                    return;
+                }
+                setTimeout(() => {
+                    socket.write(this.buildReply(reply));
+                }, reply.timeout);
             });
         });
     }

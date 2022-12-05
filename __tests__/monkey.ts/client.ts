@@ -53,4 +53,23 @@ describe('Commands', () => {
             done();
         });
     });
+
+    it('Should make command fail', async (done) => {
+        const monkeyMock = new MonkeyMock([
+            { status: 'OK', reply: 'value', timeout: 300 }
+        ]);
+
+        const port = await monkeyMock.start();
+        const monkey = new Monkey();
+
+        monkey.connect(new Socket().connect({ port, host: 'localhost' }));
+        monkey.send('test', (err, value, command) => {
+            monkey.end();
+            monkeyMock.end();
+            expect(err).toEqual(new Error('Command failed'));
+            expect(value).toBeNull();
+            expect(command).toBe('test');
+            done();
+        });
+    });
 });
