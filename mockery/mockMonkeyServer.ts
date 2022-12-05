@@ -18,9 +18,10 @@ export default class MonkeyMock {
         return `${reply.status}:${reply.reply}\n`;
     }
 
-    private hook(): void {
-        this.server_.on('connection', (socket) => {
-            socket.on('data', () => {
+    private respond(data: string, socket: net.Socket): void {
+        data.split('\n')
+            .filter(Boolean)
+            .forEach(() => {
                 const reply = this.replies_.shift();
                 if (!reply) {
                     return;
@@ -28,6 +29,13 @@ export default class MonkeyMock {
                 setTimeout(() => {
                     socket.write(this.buildReply(reply));
                 }, reply.timeout);
+            });
+    }
+
+    private hook(): void {
+        this.server_.on('connection', (socket) => {
+            socket.on('data', (data) => {
+                this.respond(data.toString(), socket);
             });
         });
     }

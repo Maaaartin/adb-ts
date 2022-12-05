@@ -54,6 +54,30 @@ describe('Commands', () => {
         });
     });
 
+    it('Should send multiple commands', async (done) => {
+        const monkeyMock = new MonkeyMock([
+            { status: 'OK', reply: 'value' },
+            { status: 'OK', reply: 'value' }
+        ]);
+        const port = await monkeyMock.start();
+        const monkey = new Monkey();
+
+        monkey.connect(new Socket().connect({ port, host: 'localhost' }));
+
+        const commands = ['test1', 'test2'];
+        monkey.send(commands, (err, value, command) => {
+            const cmd = commands.shift();
+            if (commands.length === 0) {
+                monkey.end();
+                monkeyMock.end();
+                done();
+            }
+            expect(err).toBeNull();
+            expect(value).toBe('value');
+            expect(command).toBe(cmd);
+        });
+    });
+
     it('Should make command fail', async (done) => {
         const monkeyMock = new MonkeyMock([
             { status: 'OK', reply: 'value', timeout: 300 }
