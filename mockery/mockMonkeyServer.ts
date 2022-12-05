@@ -1,12 +1,16 @@
 import net from 'net';
 
-export class MonkeyMock {
+export default class MonkeyMock {
     private server_ = net.createServer();
+
+    end(): void {
+        this.server_.close();
+    }
 
     private hook(): void {
         this.server_.on('connection', (socket) => {
-            socket.on('data', (data) => {
-                const value = data.toString();
+            socket.on('data', () => {
+                socket.write('OK:value\n');
             });
         });
     }

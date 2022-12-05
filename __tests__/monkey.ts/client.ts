@@ -1,5 +1,6 @@
-import Monkey from '../../lib/monkey/client';
 import { Socket } from 'net';
+import MonkeyMock from '../../mockery/mockMonkeyServer';
+import Monkey from '../../lib/monkey/client';
 
 describe('Monkey client tests', () => {
     it('Create monkey instance', () => {
@@ -32,5 +33,24 @@ describe('Events', () => {
             done();
         });
         monkey.stream.emit('finish');
+    });
+});
+
+describe('Commands', () => {
+    it('Should send command', async (done) => {
+        const monkeyMock = new MonkeyMock();
+
+        const port = await monkeyMock.start();
+        const monkey = new Monkey();
+
+        monkey.connect(new Socket().connect({ port, host: 'localhost' }));
+        monkey.send('test', (err, value, command) => {
+            monkey.end();
+            monkeyMock.end();
+            expect(err).toBeNull();
+            expect(value).toBe('value');
+            expect(command).toBe('test');
+            done();
+        });
     });
 });
