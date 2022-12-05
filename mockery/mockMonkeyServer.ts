@@ -1,16 +1,30 @@
 import net from 'net';
 
+type MonkeyReply = { status: 'OK' | 'ERROR'; reply: string };
+
 export default class MonkeyMock {
+    private replies_: MonkeyReply[] = [];
     private server_ = net.createServer();
+
+    constructor(replies: MonkeyReply[]) {
+        this.replies_ = replies;
+    }
 
     end(): void {
         this.server_.close();
     }
 
+    private buildReply(): string {
+        return this.replies_
+            .map((reply) => `${reply.status}:${reply.reply}`)
+            .join('\n')
+            .concat('\n');
+    }
+
     private hook(): void {
         this.server_.on('connection', (socket) => {
             socket.on('data', () => {
-                socket.write('OK:value\n');
+                socket.write(this.buildReply());
             });
         });
     }

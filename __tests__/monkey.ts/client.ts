@@ -38,7 +38,7 @@ describe('Events', () => {
 
 describe('Commands', () => {
     it('Should send command', async (done) => {
-        const monkeyMock = new MonkeyMock();
+        const monkeyMock = new MonkeyMock([{ status: 'OK', reply: 'value' }]);
 
         const port = await monkeyMock.start();
         const monkey = new Monkey();
