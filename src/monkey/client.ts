@@ -20,15 +20,10 @@ export default class Monkey extends Api {
     }
 
     send(commands: string[] | string, cb: MonkeyCallback): this {
-        if (Array.isArray(commands)) {
-            for (const command of commands) {
-                this.queue.push(new Command(command, cb));
-            }
-            this.stream.write(commands.join('\n') + '\n');
-        } else {
-            this.queue.push(new Command(commands, cb));
-            this.stream.write('' + commands + '\n');
-        }
+        [commands].flat().forEach((command) => {
+            this.queue.push(new Command(command, cb));
+            this.stream.write(command + '\n');
+        });
 
         setTimeout(() => {
             if (this.hadError) {
