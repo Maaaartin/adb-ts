@@ -4,8 +4,8 @@ enum ReplyType {
 }
 
 export abstract class Reply {
-    type: ReplyType;
-    value: string | null;
+    abstract type: ReplyType;
+    abstract value: string | null;
 
     abstract isError(): this is ErrReply;
 }
@@ -25,6 +25,7 @@ export class OkReply extends Reply {
 
 export class ErrReply extends Reply {
     type = ReplyType.ERROR;
+    value: string | null;
     constructor(value: string | null) {
         super();
         this.value = value;
