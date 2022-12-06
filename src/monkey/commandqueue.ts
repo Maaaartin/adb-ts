@@ -1,33 +1,33 @@
 import Api from './api';
 import Command from './command';
 import Monkey from './client';
-import { MonkeyCallback } from '..';
 
 export default class Multi extends Api {
     private client: Monkey;
     private commands: Command[] = [];
     private replies: (string | null)[] = [];
     private errors: string[] = [];
-    private counter = 0;
     private sent = false;
     private callback?: (err: Error | null, data: (string | null)[]) => void;
-    private collector: MonkeyCallback;
     constructor(client: Monkey) {
         super();
         this.client = client;
+    }
 
-        this.collector = (err, result, cmd): void => {
-            if (err) {
-                this.errors.push(`${cmd}: ${err.message}`);
-            }
-            this.replies.push(result || null);
-            this.counter -= 1;
-            return this.maybeFinish();
-        };
+    private collector(
+        err: Error | null,
+        value: string | null,
+        command: string
+    ): void {
+        if (err) {
+            this.errors.push(`${command}: ${err.message}`);
+        }
+        this.replies.push(value || null);
+        return this.maybeFinish();
     }
 
     private maybeFinish(): void {
-        if (!this.counter) {
+        if (this.client.queue.length === 0) {
             if (this.errors.length) {
                 setImmediate(() => {
                     this.callback?.(new Error(this.errors.join(', ')), []);
@@ -48,24 +48,22 @@ export default class Multi extends Api {
 
     send(command: string): this {
         this.forbidReuse();
-        this.commands.push(new Command(command, this.collector));
+        this.commands.push(new Command(command, this.collector.bind(this)));
         return this;
     }
 
     execute(cb: (err: Error | null, data: (string | null)[]) => void): void {
         this.forbidReuse();
-        this.counter = this.commands.length;
         this.sent = true;
         this.callback = cb;
-        if (!this.counter) {
-            return;
+        if (!this.commands.length) {
+            throw new Error('No commands to execute');
         }
-        const parts = [];
-        for (const command of this.commands) {
-            this.client.queue.push(command);
-            parts.push(command.command);
-        }
-        parts.push('');
+        const parts = this.commands.map((cmd) => {
+            this.client.queue.push(cmd);
+            return cmd.command;
+        });
+
         this.commands = [];
         this.client.stream.write(parts.join('\n'));
     }

@@ -361,7 +361,7 @@ export interface ICmd {
 export type MonkeyCallback<T = string> = (
     err: Error | null,
     value: T | null,
-    command?: string
+    command: string
 ) => void;
 
 type ForceFSOption = { force?: boolean };

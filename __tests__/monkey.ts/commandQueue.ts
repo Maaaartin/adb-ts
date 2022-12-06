@@ -93,4 +93,18 @@ describe('Monkey command queue tests', () => {
             monkeyMock.end();
         });
     });
+
+    it('Should throw when no commands are passed', async () => {
+        const monkeyMock = new MonkeyMock([]);
+        const port = await monkeyMock.start();
+        const monkey = new Monkey().connect(new Socket().connect({ port }));
+        const queue = monkey.commandQueue();
+
+        expect(() => queue.execute(() => {})).toThrowError(
+            new Error('No commands to execute')
+        );
+        monkey.end(() => {
+            monkeyMock.end();
+        });
+    });
 });

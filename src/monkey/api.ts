@@ -62,14 +62,15 @@ export default abstract class Api extends EventEmitter {
     }
 
     list(cb?: MonkeyCallback<string[]>): this {
-        return this.send('listvar', (err, vars) => {
+        const cmd = 'listvar';
+        return this.send(cmd, (err, vars) => {
             if (err) {
-                return cb?.(err, null);
+                return cb?.(err, null, cmd);
             }
             if (err) {
-                return cb?.(err, null);
+                return cb?.(err, null, cmd);
             }
-            return cb?.(null, vars?.trim().split(/\s+/g) || null);
+            return cb?.(null, vars?.trim().split(/\s+/g) || null, cmd);
         });
     }
 
