@@ -1,11 +1,12 @@
 import Api from './api';
-import Command from './command';
+import { BaseCommand, Command, ParsableCommand } from './command';
 import Monkey from './client';
+import { MonkeyCallback } from '..';
 
 export default class Multi extends Api {
     private client: Monkey;
-    private commands: Command[] = [];
-    private replies: (string | null)[] = [];
+    private commands: BaseCommand<any>[] = [];
+    private replies: any[] = [];
     private errors: string[] = [];
     private sent = false;
     private callback?: (err: Error | null, data: (string | null)[]) => void;
@@ -16,7 +17,7 @@ export default class Multi extends Api {
 
     private collector(
         err: Error | null,
-        value: string | null,
+        value: any | null,
         command: string
     ): void {
         if (err) {
@@ -46,10 +47,30 @@ export default class Multi extends Api {
         }
     }
 
-    send(command: string): this {
+    private sendInternal(cmdConstruct: () => BaseCommand<any>): this {
         this.forbidReuse();
-        this.commands.push(new Command(command, this.collector.bind(this)));
+        this.commands.push(cmdConstruct());
         return this;
+    }
+
+    sendAndParse<T>(
+        command: string,
+        _cb: MonkeyCallback<T>,
+        parser: (data: string | null) => T
+    ): this {
+        return this.sendInternal(() => {
+            return new ParsableCommand(
+                command,
+                this.collector.bind(this),
+                parser
+            );
+        });
+    }
+
+    send(command: string): this {
+        return this.sendInternal(() => {
+            return new Command(command, this.collector.bind(this));
+        });
     }
 
     execute(cb: (err: Error | null, data: (string | null)[]) => void): void {

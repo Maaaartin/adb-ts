@@ -1,10 +1,32 @@
 import { MonkeyCallback } from '..';
 
-export default class Command {
-    public command: string;
-    public callback: MonkeyCallback;
-    constructor(command: string, callback: MonkeyCallback) {
+export abstract class BaseCommand<T> {
+    public readonly command: string;
+    public readonly callback: MonkeyCallback<T>;
+    constructor(command: string, callback: MonkeyCallback<T>) {
         this.callback = callback;
         this.command = command;
+    }
+    abstract isParsable(): this is ParsableCommand<T>;
+}
+
+export class Command extends BaseCommand<string> {
+    isParsable(): this is ParsableCommand<string> {
+        return false;
+    }
+}
+
+export class ParsableCommand<T> extends BaseCommand<T> {
+    isParsable(): this is ParsableCommand<T> {
+        return true;
+    }
+    public readonly parser: (data: string | null) => T;
+    constructor(
+        command: string,
+        callback: MonkeyCallback<T>,
+        parser: (data: string | null) => T
+    ) {
+        super(command, callback);
+        this.parser = parser;
     }
 }

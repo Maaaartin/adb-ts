@@ -7,6 +7,11 @@ export default abstract class Api extends EventEmitter {
         commands: string[] | string,
         cb?: MonkeyCallback
     ): this;
+    public abstract sendAndParse<T>(
+        commands: string[] | string,
+        cb?: MonkeyCallback<T>,
+        parser?: (data: string | null) => T
+    ): this;
     // TODO types for emitter
     keyDown(keyCode: KeyCode | number, cb?: MonkeyCallback): this {
         return this.send('key down ' + keyCode, cb);
@@ -63,14 +68,8 @@ export default abstract class Api extends EventEmitter {
 
     list(cb?: MonkeyCallback<string[]>): this {
         const cmd = 'listvar';
-        return this.send(cmd, (err, vars) => {
-            if (err) {
-                return cb?.(err, null, cmd);
-            }
-            if (err) {
-                return cb?.(err, null, cmd);
-            }
-            return cb?.(null, vars?.trim().split(/\s+/g) || null, cmd);
+        return this.sendAndParse(cmd, cb, (vars) => {
+            return vars?.trim().split(/\s+/g) || [];
         });
     }
 

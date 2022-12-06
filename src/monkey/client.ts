@@ -2,12 +2,12 @@ import { MonkeyCallback, NotConnectedError } from '..';
 import { Socket } from 'net';
 import { Reply, ErrReply } from './reply';
 import Api from './api';
-import Command from './command';
+import { BaseCommand, Command, ParsableCommand } from './command';
 import CommandQueue from './commandqueue';
 import Parser from './parser';
 
 export default class Monkey extends Api {
-    public readonly queue: Command[] = [];
+    public readonly queue: BaseCommand<any>[] = [];
     private parser: Parser = new Parser();
     protected stream_?: Socket;
     private timeout?: NodeJS.Timeout;
@@ -19,9 +19,12 @@ export default class Monkey extends Api {
         return this.stream_;
     }
 
-    send(commands: string[] | string, cb: MonkeyCallback): this {
+    private sendInternal(
+        commands: string[] | string,
+        cmdConstruct: (cmd: string) => BaseCommand<any>
+    ): this {
         [commands].flat().forEach((command) => {
-            this.queue.push(new Command(command, cb));
+            this.queue.push(cmdConstruct(command));
             this.stream.write(command + '\n');
         });
 
@@ -30,6 +33,21 @@ export default class Monkey extends Api {
         }, 500);
 
         return this;
+    }
+
+    sendAndParse<T>(
+        commands: string | string[],
+        cb: MonkeyCallback<T>,
+        parser: (data: string | null) => T
+    ): this {
+        return this.sendInternal(
+            commands,
+            (cmd) => new ParsableCommand(cmd, cb, parser)
+        );
+    }
+
+    send(commands: string[] | string, cb: MonkeyCallback): this {
+        return this.sendInternal(commands, (cmd) => new Command(cmd, cb));
     }
 
     protected hook(): void {
@@ -79,6 +97,13 @@ export default class Monkey extends Api {
             return command.callback?.(reply.toError(), null, command.command);
         }
 
+        if (command.isParsable()) {
+            return command.callback?.(
+                null,
+                command.parser(reply.value),
+                command.command
+            );
+        }
         command.callback?.(null, reply.value, command.command);
     }
 
