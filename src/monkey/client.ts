@@ -89,8 +89,9 @@ export default class Monkey extends Api {
         return this;
     }
 
-    end(): this {
-        this.stream.end();
+    end(cb?: () => void): this {
+        this.stream.end(cb);
+
         return this;
     }
 
