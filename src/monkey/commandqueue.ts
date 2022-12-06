@@ -73,19 +73,29 @@ export default class Multi extends Api {
         });
     }
 
+    private getCommands(): string {
+        return this.commands
+            .map((cmd) => cmd.command)
+            .join('\n')
+            .concat('\n');
+    }
+
+    private pushCommands(): void {
+        this.commands.forEach((cmd) => {
+            this.client.queue.push(cmd);
+        });
+    }
+
     execute(cb: (err: Error | null, data: (string | null)[]) => void): void {
         this.forbidReuse();
         this.sent = true;
         this.callback = cb;
-        if (!this.commands.length) {
+        if (this.commands.length === 0) {
             throw new Error('No commands to execute');
         }
-        const parts = this.commands.map((cmd) => {
-            this.client.queue.push(cmd);
-            return cmd.command;
-        });
-
+        const commands = this.getCommands();
+        this.pushCommands();
         this.commands = [];
-        this.client.stream.write(parts.join('\n'));
+        this.client.stream.write(commands);
     }
 }

@@ -12,19 +12,19 @@ describe('Monkey command queue tests', () => {
         ]);
         const port = await monkeyMock.start();
         const monkey = new Monkey().connect(new Socket().connect({ port }));
-        monkey
-            .commandQueue()
-            .type('test')
-            .sleep(5)
-            .type('test')
-            .getBuildDevice()
-            .execute((err, values) => {
-                expect(err).toBeNull();
-                expect(values).toEqual([null, null, null, 'test']);
-                monkeyMock.end();
-                monkey.end();
-                done();
-            });
+        const queue = monkey.commandQueue();
+        queue.type('test').sleep(5).type('test').getBuildDevice();
+
+        expect(queue['getCommands']()).toEqual(
+            'type test\nsleep 5\ntype test\ngetvar build.device\n'
+        );
+        queue.execute((err, values) => {
+            expect(err).toBeNull();
+            expect(values).toEqual([null, null, null, 'test']);
+            monkeyMock.end();
+            monkey.end();
+            done();
+        });
     });
 
     it('Should execute with error', async (done) => {
