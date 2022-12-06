@@ -36,6 +36,6 @@ export class ErrReply extends Reply {
     }
 
     toError(): Error {
-        return new Error(this.value);
+        return new Error(this.value || 'Unknown error');
     }
 }
