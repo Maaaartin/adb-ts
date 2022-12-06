@@ -6,11 +6,11 @@ import { MonkeyCallback } from '..';
 export default class Multi extends Api {
     private client: Monkey;
     private commands: Command[] = [];
-    private replies: string[] = [];
+    private replies: (string | null)[] = [];
     private errors: string[] = [];
     private counter = 0;
     private sent = false;
-    private callback?: (err: Error | null, data?: string[]) => void;
+    private callback?: (err: Error | null, data: (string | null)[]) => void;
     private collector: MonkeyCallback;
     constructor(client: Monkey) {
         super();
@@ -20,7 +20,7 @@ export default class Multi extends Api {
             if (err) {
                 this.errors.push(`${cmd}: ${err.message}`);
             }
-            this.replies.push(result || '');
+            this.replies.push(result || null);
             this.counter -= 1;
             return this.maybeFinish();
         };
@@ -30,7 +30,7 @@ export default class Multi extends Api {
         if (!this.counter) {
             if (this.errors.length) {
                 setImmediate(() => {
-                    this.callback?.(new Error(this.errors.join(', ')));
+                    this.callback?.(new Error(this.errors.join(', ')), []);
                 });
             } else {
                 setImmediate(() => {
@@ -52,13 +52,14 @@ export default class Multi extends Api {
         return this;
     }
 
-    execute(cb: (err: Error | null, data?: string[]) => void): void {
+    execute(cb: (err: Error | null, data: (string | null)[]) => void): void {
         this.forbidReuse();
         this.counter = this.commands.length;
         this.sent = true;
         this.callback = cb;
-        if (!this.counter) return;
-
+        if (!this.counter) {
+            return;
+        }
         const parts = [];
         for (const command of this.commands) {
             this.client.queue.push(command);
