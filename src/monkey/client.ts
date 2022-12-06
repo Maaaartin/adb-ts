@@ -10,7 +10,7 @@ export default class Monkey extends Api {
     public readonly queue: Command[] = [];
     private parser: Parser = new Parser();
     protected stream_?: Socket;
-    private hadError = true;
+    private timeout?: NodeJS.Timeout;
 
     get stream(): Socket {
         if (!this.stream_) {
@@ -25,29 +25,28 @@ export default class Monkey extends Api {
             this.stream.write(command + '\n');
         });
 
-        setTimeout(() => {
-            if (this.hadError) {
-                this.consume(new ErrReply('Command failed'));
-            }
-        }, 100);
+        this.timeout = setTimeout(() => {
+            this.consume(new ErrReply('Command failed'));
+        }, 500);
 
         return this;
     }
 
     protected hook(): void {
         this.stream.on('data', (data) => {
-            this.hadError = false;
+            clearTimeout(this.timeout);
             return this.parser.parse(data);
         });
         this.stream.on('error', (err) => {
+            clearTimeout(this.timeout);
             return this.emit('error', err);
         });
         this.stream.on('end', () => {
-            this.hadError = false;
+            clearTimeout(this.timeout);
             return this.emit('end');
         });
         this.stream.on('finish', () => {
-            this.hadError = false;
+            clearTimeout(this.timeout);
             return this.emit('finish');
         });
         this.parser.on('reply', (reply) => {
@@ -90,8 +89,8 @@ export default class Monkey extends Api {
     }
 
     end(cb?: () => void): this {
+        clearTimeout(this.timeout);
         this.stream.end(cb);
-
         return this;
     }
 
