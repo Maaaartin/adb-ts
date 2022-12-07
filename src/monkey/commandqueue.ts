@@ -9,7 +9,7 @@ export default class Multi extends Api {
     private replies: any[] = [];
     private errors: string[] = [];
     private sent = false;
-    private callback?: (err: Error | null, data: (string | null)[]) => void;
+    private callback?: (err: Error | null, data: any[]) => void;
     constructor(client: Monkey) {
         super();
         this.client = client;
@@ -53,10 +53,10 @@ export default class Multi extends Api {
         return this;
     }
 
-    sendAndParse<T>(
+    sendAndParse(
         command: string,
-        _cb: MonkeyCallback<T>,
-        parser: (data: string | null) => T
+        _cb: MonkeyCallback<any>,
+        parser: (data: any) => any
     ): this {
         return this.sendInternal(() => {
             return new ParsableCommand(
@@ -86,7 +86,7 @@ export default class Multi extends Api {
         });
     }
 
-    execute(cb: (err: Error | null, data: (string | null)[]) => void): void {
+    execute(cb: (err: Error | null, data: any[]) => void): void {
         this.forbidReuse();
         this.sent = true;
         this.callback = cb;
