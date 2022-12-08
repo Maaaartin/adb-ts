@@ -98,7 +98,7 @@ export default abstract class Api extends EventEmitter {
     }
 
     getAmCurrentCategories(cb?: MonkeyCallback<string[] | null>): this {
-        return this.sendAndParse('am.current.categories', cb, (cat) => {
+        return this.sendAndParse('getvar am.current.categories', cb, (cat) => {
             return cat?.trim().split(/\s+/g) || null;
         });
     }
