@@ -358,7 +358,7 @@ export interface ICmd {
     readonly Cmd: string;
 }
 
-export type MonkeyCallback<T = string> = (
+export type MonkeyCallback<T = null> = (
     err: Error | null,
     value: T | null,
     command: string

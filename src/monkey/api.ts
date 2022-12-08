@@ -67,14 +67,14 @@ export default abstract class Api extends EventEmitter {
         }
     }
 
-    list(cb?: MonkeyCallback<string[]>): this {
+    list(cb?: MonkeyCallback<string[] | null>): this {
         const cmd = 'listvar';
         return this.sendAndParse(cmd, cb, (vars) => {
-            return vars?.trim().split(/\s+/g) || [];
+            return vars?.trim().split(/\s+/g) || null;
         });
     }
 
-    get(name: string, cb?: MonkeyCallback): this {
+    get(name: string, cb?: MonkeyCallback<any>): this {
         return this.send('getvar ' + name, cb);
     }
 
@@ -90,27 +90,32 @@ export default abstract class Api extends EventEmitter {
         return this.send('done', cb);
     }
 
-    getAmCurrentAction(cb?: MonkeyCallback): this {
+    // am.  note that the current activity information isn't valid
+    // until the first activity gets launched after the monkey has
+    // been started.
+    getAmCurrentAction(cb?: MonkeyCallback<string | null>): this {
         return this.get('am.current.action', cb);
     }
 
-    getAmCurrentCategories(cb?: MonkeyCallback): this {
-        return this.get('am.current.categories', cb);
+    getAmCurrentCategories(cb?: MonkeyCallback<string[] | null>): this {
+        return this.sendAndParse('am.current.categories', cb, (cat) => {
+            return cat?.trim().split(/\s+/g) || null;
+        });
     }
 
-    getAmCurrentCompClass(cb?: MonkeyCallback): this {
+    getAmCurrentCompClass(cb?: MonkeyCallback<string | null>): this {
         return this.get('am.current.comp.class', cb);
     }
 
-    getAmCurrentCompPackage(cb?: MonkeyCallback): this {
+    getAmCurrentCompPackage(cb?: MonkeyCallback<string | null>): this {
         return this.get('am.current.comp.package', cb);
     }
 
-    getAmCurrentData(cb?: MonkeyCallback): this {
+    getAmCurrentData(cb?: MonkeyCallback<string | null>): this {
         return this.get('am.current.data', cb);
     }
 
-    getAmCurrentPackage(cb?: MonkeyCallback): this {
+    getAmCurrentPackage(cb?: MonkeyCallback<string | null>): this {
         return this.get('am.current.package', cb);
     }
 
