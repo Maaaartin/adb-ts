@@ -1,4 +1,5 @@
 import Monkey from '../../lib/monkey/client';
+import MonkeyMock from '../../mockery/mockMonkey';
 
 const getApiMethods = (obj: any): string[] => {
     if (obj === null) {
@@ -70,5 +71,17 @@ describe('Monkey command queue tests', () => {
         const monkey = new Monkey();
 
         expect(getApiMethods(monkey)).toEqual(expectedMethods);
+    });
+});
+
+describe('Key up tests', () => {
+    it('Should execute without error', (done) => {
+        const monkey = new MonkeyMock({ status: 'OK', reply: null });
+        monkey.keyUp(4, (err, reply, command) => {
+            expect(err).toBeNull();
+            expect(reply).toBeNull();
+            expect(command).toEqual('key up 4');
+            done();
+        });
     });
 });
