@@ -71,7 +71,7 @@ export default abstract class Api extends EventEmitter {
         });
     }
 
-    get(name: string, cb?: MonkeyCallback<any>): this {
+    get(name: string, cb?: MonkeyCallback<string | null>): this {
         return this.send('getvar ' + name, cb);
     }
 
@@ -116,76 +116,80 @@ export default abstract class Api extends EventEmitter {
         return this.get('am.current.package', cb);
     }
 
-    getBuildBoard(cb?: MonkeyCallback): this {
+    getBuildBoard(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.board', cb);
     }
 
-    getBuildBrand(cb?: MonkeyCallback): this {
+    getBuildBrand(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.brand', cb);
     }
 
-    getBuildCpuAbi(cb?: MonkeyCallback): this {
+    getBuildCpuAbi(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.cpu_abi', cb);
     }
 
-    getBuildDevice(cb?: MonkeyCallback): this {
+    getBuildDevice(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.device', cb);
     }
 
-    getBuildDisplay(cb?: MonkeyCallback): this {
+    getBuildDisplay(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.display', cb);
     }
 
-    getBuildFingerprint(cb?: MonkeyCallback): this {
+    getBuildFingerprint(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.fingerprint', cb);
     }
 
-    getBuildHost(cb?: MonkeyCallback): this {
+    getBuildHost(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.host', cb);
     }
 
-    getBuildId(cb?: MonkeyCallback): this {
+    getBuildId(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.id', cb);
     }
 
-    getBuildManufacturer(cb?: MonkeyCallback): this {
+    getBuildManufacturer(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.manufacturer', cb);
     }
 
-    getBuildModel(cb?: MonkeyCallback): this {
+    getBuildModel(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.model', cb);
     }
 
-    getBuildProduct(cb?: MonkeyCallback): this {
+    getBuildProduct(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.product', cb);
     }
 
-    getBuildTags(cb?: MonkeyCallback): this {
-        return this.get('build.tags', cb);
+    getBuildTags(cb?: MonkeyCallback<string[] | null>): this {
+        return this.sendAndParse('getvar build.tags', cb, (tags) => {
+            return tags?.split(',') || null;
+        });
     }
 
-    getBuildType(cb?: MonkeyCallback): this {
+    getBuildType(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.type', cb);
     }
 
-    getBuildUser(cb?: MonkeyCallback): this {
+    getBuildUser(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.user', cb);
     }
 
-    getBuildVersionCodename(cb?: MonkeyCallback): this {
+    getBuildVersionCodename(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.version.codename', cb);
     }
 
-    getBuildVersionIncremental(cb?: MonkeyCallback): this {
+    getBuildVersionIncremental(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.version.incremental', cb);
     }
 
-    getBuildVersionRelease(cb?: MonkeyCallback): this {
+    getBuildVersionRelease(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.version.release', cb);
     }
 
-    getBuildVersionSdk(cb?: MonkeyCallback): this {
-        return this.get('build.version.sdk', cb);
+    getBuildVersionSdk(cb?: MonkeyCallback<number | null>): this {
+        return this.sendAndParse('getvar build.version.sdk', cb, (val) =>
+            val ? parseInt(val) : null
+        );
     }
 
     getClockMillis(cb?: MonkeyCallback): this {

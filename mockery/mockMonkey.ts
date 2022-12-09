@@ -21,10 +21,19 @@ export default class MonkeyMock extends Api {
         return this;
     }
     sendAndParse<T>(
-        commands: string | string[],
+        command: string,
         cb?: MonkeyCallback<T> | undefined,
-        parser?: ((data: string | null) => T) | undefined
+        parser?: (data: string | null) => T
     ): this {
-        throw new Error('Method not implemented.');
+        if (this.reply_.isError()) {
+            cb?.(
+                new Error(this.reply_.value || 'Unknown error'),
+                null,
+                command
+            );
+        } else {
+            cb?.(null, parser?.(this.reply_.value) || null, command);
+        }
+        return this;
     }
 }
