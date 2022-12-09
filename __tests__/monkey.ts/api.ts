@@ -1,5 +1,5 @@
 // @ts-nocheck
-import Monkey from '../../lib/monkey/client';
+
 import { OkReply, ErrReply } from '../../lib/monkey/reply';
 import MonkeyMock from '../../mockery/mockMonkey';
 
@@ -135,6 +135,24 @@ const buildMethods = {
     }
 };
 
+const clockMethods = {
+    getClockMillis: {
+        cmd: 'getvar clock.millis',
+        response: '1234',
+        parsed: 1234
+    },
+    getClockRealtime: {
+        cmd: 'getvar clock.realtime',
+        response: '1234',
+        parsed: 1234
+    },
+    getClockUptime: {
+        cmd: 'getvar clock.uptime',
+        response: '1234',
+        parsed: 1234
+    }
+};
+
 describe('Void OK tests', () => {
     Object.entries(voidMethods).forEach(([method, { cmd, params }]) => {
         it(`Should execute ${method} without error`, (done) => {
@@ -219,3 +237,4 @@ const runTests = (name: string, methods: Record<string, any>) => {
 
 runTests('Am', amMethods);
 runTests('Build', buildMethods);
+runTests('Clock', clockMethods);

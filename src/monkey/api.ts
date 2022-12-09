@@ -10,6 +10,43 @@ export default abstract class Api extends EventEmitter {
         cb?: MonkeyCallback<T>,
         parser?: (data: string | null) => T
     ): this;
+    private getAndParse(
+        command: string,
+        parser: { type: 'number' },
+        cb?: MonkeyCallback<number | null>
+    ): this;
+    private getAndParse(
+        command: string,
+        parser: {
+            type: 'stringArray';
+            splitter: string | RegExp;
+        },
+        cb?: MonkeyCallback<string[] | null>
+    ): this;
+    private getAndParse(
+        command: string,
+        parser:
+            | {
+                  type: 'stringArray';
+                  splitter: string | RegExp;
+              }
+            | { type: 'number' },
+        cb?: MonkeyCallback<number | null> | MonkeyCallback<string[] | null>
+    ): this {
+        return this.sendAndParse(
+            'getvar ' + command,
+            cb as MonkeyCallback<number | string[] | null>,
+            (data) => {
+                if (!data) {
+                    return null;
+                }
+                if (parser.type === 'number') {
+                    return parseInt(data);
+                }
+                return data.split(parser.splitter);
+            }
+        );
+    }
     // TODO types for emitter
     keyDown(keyCode: KeyCode | number, cb?: MonkeyCallback): this {
         return this.send('key down ' + keyCode, cb);
@@ -65,10 +102,7 @@ export default abstract class Api extends EventEmitter {
     }
 
     list(cb?: MonkeyCallback<string[] | null>): this {
-        const cmd = 'listvar';
-        return this.sendAndParse(cmd, cb, (vars) => {
-            return vars?.trim().split(/\s+/g) || null;
-        });
+        return this.sendAndParse('listvar', cb);
     }
 
     get(name: string, cb?: MonkeyCallback<string | null>): this {
@@ -95,9 +129,11 @@ export default abstract class Api extends EventEmitter {
     }
 
     getAmCurrentCategories(cb?: MonkeyCallback<string[] | null>): this {
-        return this.sendAndParse('getvar am.current.categories', cb, (cat) => {
-            return cat?.trim().split(/\s+/g) || null;
-        });
+        return this.getAndParse(
+            'am.current.categories',
+            { type: 'stringArray', splitter: /\s+/g },
+            cb
+        );
     }
 
     getAmCurrentCompClass(cb?: MonkeyCallback<string | null>): this {
@@ -161,9 +197,11 @@ export default abstract class Api extends EventEmitter {
     }
 
     getBuildTags(cb?: MonkeyCallback<string[] | null>): this {
-        return this.sendAndParse('getvar build.tags', cb, (tags) => {
-            return tags?.split(',') || null;
-        });
+        return this.getAndParse(
+            'build.tags',
+            { type: 'stringArray', splitter: ',' },
+            cb
+        );
     }
 
     getBuildType(cb?: MonkeyCallback<string | null>): this {
@@ -187,21 +225,19 @@ export default abstract class Api extends EventEmitter {
     }
 
     getBuildVersionSdk(cb?: MonkeyCallback<number | null>): this {
-        return this.sendAndParse('getvar build.version.sdk', cb, (val) =>
-            val ? parseInt(val) : null
-        );
+        return this.getAndParse('build.version.sdk', { type: 'number' }, cb);
     }
 
-    getClockMillis(cb?: MonkeyCallback): this {
-        return this.get('clock.millis', cb);
+    getClockMillis(cb?: MonkeyCallback<number | null>): this {
+        return this.getAndParse('clock.millis', { type: 'number' }, cb);
     }
 
-    getClockRealtime(cb?: MonkeyCallback): this {
-        return this.get('clock.realtime', cb);
+    getClockRealtime(cb?: MonkeyCallback<number | null>): this {
+        return this.getAndParse('clock.realtime', { type: 'number' }, cb);
     }
 
-    getClockUptime(cb?: MonkeyCallback): this {
-        return this.get('clock.uptime', cb);
+    getClockUptime(cb?: MonkeyCallback<number | null>): this {
+        return this.getAndParse('clock.uptime', { type: 'number' }, cb);
     }
 
     getDisplayDensity(cb?: MonkeyCallback): this {
