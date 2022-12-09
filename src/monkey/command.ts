@@ -10,8 +10,8 @@ export abstract class BaseCommand<T> {
     abstract isParsable(): this is ParsableCommand<T>;
 }
 
-export class Command extends BaseCommand<string> {
-    isParsable(): this is ParsableCommand<string> {
+export class Command extends BaseCommand<null> {
+    isParsable(): this is ParsableCommand<null> {
         return false;
     }
 }

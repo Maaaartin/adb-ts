@@ -1,16 +1,23 @@
 import { MonkeyCallback } from '../lib';
 import Api from '../lib/monkey/api';
-
-type MonkeyReply = { status: 'OK' | 'ERROR'; reply: any };
+import { Reply } from '../lib/monkey/reply';
 
 export default class MonkeyMock extends Api {
-    private reply_: MonkeyReply | null = null;
-    constructor(reply: MonkeyReply | null) {
+    private reply_: Reply;
+    constructor(reply: Reply) {
         super();
         this.reply_ = reply;
     }
     send(command: string, cb?: MonkeyCallback<any> | undefined): this {
-        cb?.(null, this.reply_?.reply, command);
+        if (this.reply_.isError()) {
+            cb?.(
+                new Error(this.reply_.value || 'Unknown error'),
+                null,
+                command
+            );
+        } else {
+            cb?.(null, this.reply_.value, command);
+        }
         return this;
     }
     sendAndParse<T>(

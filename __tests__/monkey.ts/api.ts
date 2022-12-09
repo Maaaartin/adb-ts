@@ -1,4 +1,6 @@
+// @ts-nocheck
 import Monkey from '../../lib/monkey/client';
+import { OkReply, ErrReply } from '../../lib/monkey/reply';
 import MonkeyMock from '../../mockery/mockMonkey';
 
 const getApiMethods = (obj: any): string[] => {
@@ -16,72 +18,96 @@ const getApiMethods = (obj: any): string[] => {
     return getApiMethods(Object.getPrototypeOf(obj));
 };
 
-const expectedMethods = [
-    'keyDown',
-    'keyUp',
-    'touchDown',
-    'touchUp',
-    'touchMove',
-    'trackball',
-    'flipOpen',
-    'flipClose',
-    'wake',
-    'tap',
-    'press',
-    'type',
-    'list',
-    'get',
-    'sleep',
-    'quit',
-    'done',
-    'getAmCurrentAction',
-    'getAmCurrentCategories',
-    'getAmCurrentCompClass',
-    'getAmCurrentCompPackage',
-    'getAmCurrentData',
-    'getAmCurrentPackage',
-    'getBuildBoard',
-    'getBuildBrand',
-    'getBuildCpuAbi',
-    'getBuildDevice',
-    'getBuildDisplay',
-    'getBuildFingerprint',
-    'getBuildHost',
-    'getBuildId',
-    'getBuildManufacturer',
-    'getBuildModel',
-    'getBuildProduct',
-    'getBuildTags',
-    'getBuildType',
-    'getBuildUser',
-    'getBuildVersionCodename',
-    'getBuildVersionIncremental',
-    'getBuildVersionRelease',
-    'getBuildVersionSdk',
-    'getClockMillis',
-    'getClockRealtime',
-    'getClockUptime',
-    'getDisplayDensity',
-    'getDisplayHeight',
-    'getDisplayWidth'
-];
+const voidMethods = {
+    keyDown: { cmd: 'key down', params: [4] },
+    keyUp: { cmd: 'key up', params: [4] },
+    touchDown: { cmd: 'touch down', params: [4, 3] },
+    touchUp: { cmd: 'touch up', params: [4, 3] },
+    touchMove: { cmd: 'touch move', params: [4, 3] },
+    trackball: { cmd: 'trackball', params: [4, 3] },
+    flipOpen: { cmd: 'flip open', params: null },
+    flipClose: { cmd: 'flip close', params: null },
+    wake: { cmd: 'wake', params: null },
+    tap: { cmd: 'tap', params: [3, 4] },
+    press: { cmd: 'press', params: [3] },
+    // TODO type with quotes
+    type: { cmd: 'type', params: ['test'] },
+    // list: {},
+    // get: {},
+    sleep: { cmd: 'sleep', params: [5] },
+    quit: { cmd: 'quit', params: null },
+    done: { cmd: 'done', params: null }
+    // getAmCurrentAction: {},
+    // getAmCurrentCategories: {},
+    // getAmCurrentCompClass: {},
+    // getAmCurrentCompPackage: {},
+    // getAmCurrentData: {},
+    // getAmCurrentPackage: {},
+    // getBuildBoard: {},
+    // getBuildBrand: {},
+    // getBuildCpuAbi: {},
+    // getBuildDevice: {},
+    // getBuildDisplay: {},
+    // getBuildFingerprint: {},
+    // getBuildHost: {},
+    // getBuildId: {},
+    // getBuildManufacturer: {},
+    // getBuildModel: {},
+    // getBuildProduct: {},
+    // getBuildTags: {},
+    // getBuildType: {},
+    // getBuildUser: {},
+    // getBuildVersionCodename: {},
+    // getBuildVersionIncremental: {},
+    // getBuildVersionRelease: {},
+    // getBuildVersionSdk: {},
+    // getClockMillis: {},
+    // getClockRealtime: {},
+    // getClockUptime: {},
+    // getDisplayDensity: {},
+    // getDisplayHeight: {},
+    // getDisplayWidth: {}
+};
 
-describe('Monkey command queue tests', () => {
-    it('Should execute without error', () => {
-        const monkey = new Monkey();
-
-        expect(getApiMethods(monkey)).toEqual(expectedMethods);
+describe('Void OK tests', () => {
+    Object.entries(voidMethods).forEach(([method, { cmd, params }]) => {
+        it(`Should execute ${method} without error`, (done) => {
+            const monkey = new MonkeyMock(new OkReply(null));
+            const cb = (err: Error | null, reply: any, command: string) => {
+                expect(err).toBeNull();
+                expect(reply).toBeNull();
+                expect(command).toEqual(
+                    params ? `${cmd} ${params.join(' ')}` : cmd
+                );
+                done();
+            };
+            if (params) {
+                monkey[method](...params, cb);
+            } else {
+                monkey[method](cb);
+            }
+        });
     });
 });
 
-describe('Key up tests', () => {
-    it('Should execute without error', (done) => {
-        const monkey = new MonkeyMock({ status: 'OK', reply: null });
-        monkey.keyUp(4, (err, reply, command) => {
-            expect(err).toBeNull();
-            expect(reply).toBeNull();
-            expect(command).toEqual('key up 4');
-            done();
+describe('Void Error tests', () => {
+    Object.entries(voidMethods).forEach(([method, { cmd, params }]) => {
+        it(`Should execute ${method} with error`, (done) => {
+            const monkey = new MonkeyMock(new ErrReply('error'));
+            const cb = (err: Error | null, reply: any, command: string) => {
+                expect(err).toEqual(new Error('error'));
+                expect(reply).toBeNull();
+                expect(command).toEqual(
+                    params ? `${cmd} ${params.join(' ')}` : cmd
+                );
+                done();
+            };
+
+            if (params) {
+                monkey[method](...params, cb);
+            } else {
+                monkey[method](cb);
+            }
         });
     });
 });
