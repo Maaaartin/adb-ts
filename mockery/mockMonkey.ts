@@ -4,6 +4,7 @@ import { Reply } from '../lib/monkey/reply';
 
 export default class MonkeyMock extends Api {
     private reply_: Reply;
+
     constructor(reply: Reply) {
         super();
         this.reply_ = reply;

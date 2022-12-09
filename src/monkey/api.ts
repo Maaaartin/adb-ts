@@ -102,7 +102,9 @@ export default abstract class Api extends EventEmitter {
     }
 
     list(cb?: MonkeyCallback<string[] | null>): this {
-        return this.sendAndParse('listvar', cb);
+        return this.sendAndParse('listvar', cb, (vars) => {
+            return vars?.trim().split(/\s+/g) || null;
+        });
     }
 
     get(name: string, cb?: MonkeyCallback<string | null>): this {

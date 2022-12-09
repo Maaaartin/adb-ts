@@ -30,43 +30,27 @@ const voidMethods = {
     wake: { cmd: 'wake', params: null },
     tap: { cmd: 'tap', params: [3, 4] },
     press: { cmd: 'press', params: [3] },
-    // TODO type with quotes
     type: { cmd: 'type', params: ['test'] },
-    // list: {},
-    // get: {},
     sleep: { cmd: 'sleep', params: [5] },
     quit: { cmd: 'quit', params: null },
     done: { cmd: 'done', params: null }
-    // getAmCurrentAction: {},
-    // getAmCurrentCategories: {},
-    // getAmCurrentCompClass: {},
-    // getAmCurrentCompPackage: {},
-    // getAmCurrentData: {},
-    // getAmCurrentPackage: {},
-    // getBuildBoard: {},
-    // getBuildBrand: {},
-    // getBuildCpuAbi: {},
-    // getBuildDevice: {},
-    // getBuildDisplay: {},
-    // getBuildFingerprint: {},
-    // getBuildHost: {},
-    // getBuildId: {},
-    // getBuildManufacturer: {},
-    // getBuildModel: {},
-    // getBuildProduct: {},
-    // getBuildTags: {},
-    // getBuildType: {},
-    // getBuildUser: {},
-    // getBuildVersionCodename: {},
-    // getBuildVersionIncremental: {},
-    // getBuildVersionRelease: {},
-    // getBuildVersionSdk: {},
-    // getClockMillis: {},
-    // getClockRealtime: {},
-    // getClockUptime: {},
-    // getDisplayDensity: {},
-    // getDisplayHeight: {},
-    // getDisplayWidth: {}
+};
+
+const specialCaseMethods = {
+    // type with quotes
+    type: {
+        cmd: 'type',
+        params: ['"test"'],
+        response: null,
+        escaped: 'type \\"test\\"'
+    },
+    list: {
+        cmd: 'listvar',
+        params: null,
+        response: 'var1 var2',
+        parsed: ['var1', 'var2']
+    },
+    get: { cmd: 'getvar', params: ['test'], response: 'value' }
 };
 
 const amMethods = {
@@ -171,49 +155,111 @@ const displayMethods = {
     }
 };
 
-describe('Void OK tests', () => {
-    Object.entries(voidMethods).forEach(([method, { cmd, params }]) => {
-        it(`Should execute ${method} without error`, (done) => {
-            const monkey = new MonkeyMock(new OkReply(null));
-            const cb = (err: Error | null, reply: any, command: string) => {
-                expect(err).toBeNull();
-                expect(reply).toBeNull();
-                expect(command).toEqual(
-                    params ? `${cmd} ${params.join(' ')}` : cmd
-                );
-                done();
-            };
-            if (params) {
-                monkey[method](...params, cb);
-            } else {
-                monkey[method](cb);
-            }
+const runVoidTests = (methods: Record<string, any>) => {
+    describe('Void OK tests', () => {
+        Object.entries(methods).forEach(([method, { cmd, params }]) => {
+            it(`Should execute ${method} without error`, (done) => {
+                const monkey = new MonkeyMock(new OkReply(null));
+                const cb = (err: Error | null, reply: any, command: string) => {
+                    expect(err).toBeNull();
+                    expect(reply).toBeNull();
+                    expect(command).toEqual(
+                        params ? `${cmd} ${params.join(' ')}` : cmd
+                    );
+                    done();
+                };
+                if (params) {
+                    monkey[method](...params, cb);
+                } else {
+                    monkey[method](cb);
+                }
+            });
         });
     });
-});
 
-describe('Void Error tests', () => {
-    Object.entries(voidMethods).forEach(([method, { cmd, params }]) => {
-        it(`Should execute ${method} with error`, (done) => {
-            const monkey = new MonkeyMock(new ErrReply('error'));
-            const cb = (err: Error | null, reply: any, command: string) => {
-                expect(err).toEqual(new Error('error'));
-                expect(reply).toBeNull();
-                expect(command).toEqual(
-                    params ? `${cmd} ${params.join(' ')}` : cmd
-                );
-                done();
-            };
+    describe('Void Error tests', () => {
+        Object.entries(methods).forEach(([method, { cmd, params }]) => {
+            it(`Should execute ${method} with error`, (done) => {
+                const monkey = new MonkeyMock(new ErrReply('error'));
+                const cb = (err: Error | null, reply: any, command: string) => {
+                    expect(err).toEqual(new Error('error'));
+                    expect(reply).toBeNull();
+                    expect(command).toEqual(
+                        params ? `${cmd} ${params.join(' ')}` : cmd
+                    );
+                    done();
+                };
 
-            if (params) {
-                monkey[method](...params, cb);
-            } else {
-                monkey[method](cb);
-            }
+                if (params) {
+                    monkey[method](...params, cb);
+                } else {
+                    monkey[method](cb);
+                }
+            });
         });
     });
-});
-const runTests = (name: string, methods: Record<string, any>) => {
+};
+
+const runSpecialCaseMethods = (methods: Record<string, any>) => {
+    describe('Special case OK tests', () => {
+        Object.entries(methods).forEach(
+            ([method, { cmd, params, response, parsed, escaped }]) => {
+                it(`Should execute ${method} without error`, (done) => {
+                    const monkey = new MonkeyMock(new OkReply(response));
+                    const cb = (
+                        err: Error | null,
+                        reply: any,
+                        command: string
+                    ) => {
+                        expect(err).toBeNull();
+                        expect(reply).toEqual(parsed || response);
+                        expect(command).toEqual(
+                            escaped ||
+                                (params ? `${cmd} ${params.join(' ')}` : cmd)
+                        );
+                        done();
+                    };
+                    if (params) {
+                        monkey[method](...params, cb);
+                    } else {
+                        monkey[method](cb);
+                    }
+                });
+            }
+        );
+    });
+
+    describe('Special case Error tests', () => {
+        Object.entries(methods).forEach(
+            ([method, { cmd, params, escaped }]) => {
+                it(`Should execute ${method} with error`, (done) => {
+                    const monkey = new MonkeyMock(new ErrReply('error'));
+                    const cb = (
+                        err: Error | null,
+                        reply: any,
+                        command: string
+                    ) => {
+                        expect(err).toEqual(new Error('error'));
+                        expect(reply).toBeNull();
+                        expect(command).toEqual(
+                            escaped ||
+                                (params ? `${cmd} ${params.join(' ')}` : cmd)
+                        );
+                        done();
+                    };
+
+                    if (params) {
+                        monkey[method](...params, cb);
+                    } else {
+                        monkey[method](cb);
+                    }
+                });
+            }
+        );
+    });
+};
+
+const runSubcommandTests = (name: string, methods: Record<string, any>) => {
     describe(`Am ${name} tests`, () => {
         Object.entries(methods).forEach(
             ([method, { cmd, response, parsed }]) => {
@@ -253,7 +299,11 @@ const runTests = (name: string, methods: Record<string, any>) => {
     });
 };
 
-runTests('Am', amMethods);
-runTests('Build', buildMethods);
-runTests('Clock', clockMethods);
-runTests('Display', displayMethods);
+runVoidTests(voidMethods);
+
+runSpecialCaseMethods(specialCaseMethods);
+
+runSubcommandTests('Am', amMethods);
+runSubcommandTests('Build', buildMethods);
+runSubcommandTests('Clock', clockMethods);
+runSubcommandTests('Display', displayMethods);
