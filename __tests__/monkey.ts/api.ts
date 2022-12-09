@@ -153,6 +153,24 @@ const clockMethods = {
     }
 };
 
+const displayMethods = {
+    getDisplayDensity: {
+        cmd: 'getvar display.density',
+        response: '1.125',
+        parsed: 1.125
+    },
+    getDisplayHeight: {
+        cmd: 'getvar display.height',
+        response: '1234',
+        parsed: 1234
+    },
+    getDisplayWidth: {
+        cmd: 'getvar display.width',
+        response: '1234',
+        parsed: 1234
+    }
+};
+
 describe('Void OK tests', () => {
     Object.entries(voidMethods).forEach(([method, { cmd, params }]) => {
         it(`Should execute ${method} without error`, (done) => {
@@ -238,3 +256,4 @@ const runTests = (name: string, methods: Record<string, any>) => {
 runTests('Am', amMethods);
 runTests('Build', buildMethods);
 runTests('Clock', clockMethods);
+runTests('Display', displayMethods);

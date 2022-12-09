@@ -41,7 +41,7 @@ export default abstract class Api extends EventEmitter {
                     return null;
                 }
                 if (parser.type === 'number') {
-                    return parseInt(data);
+                    return parseFloat(data);
                 }
                 return data.split(parser.splitter);
             }
@@ -240,15 +240,15 @@ export default abstract class Api extends EventEmitter {
         return this.getAndParse('clock.uptime', { type: 'number' }, cb);
     }
 
-    getDisplayDensity(cb?: MonkeyCallback): this {
-        return this.get('display.density', cb);
+    getDisplayDensity(cb?: MonkeyCallback<number | null>): this {
+        return this.getAndParse('display.density', { type: 'number' }, cb);
     }
 
-    getDisplayHeight(cb?: MonkeyCallback): this {
-        return this.get('display.height', cb);
+    getDisplayHeight(cb?: MonkeyCallback<number | null>): this {
+        return this.getAndParse('display.height', { type: 'number' }, cb);
     }
 
-    getDisplayWidth(cb?: MonkeyCallback): this {
-        return this.get('display.width', cb);
+    getDisplayWidth(cb?: MonkeyCallback<number | null>): this {
+        return this.getAndParse('display.width', { type: 'number' }, cb);
     }
 }
