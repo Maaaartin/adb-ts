@@ -1,22 +1,5 @@
-// @ts-nocheck
-
 import { OkReply, ErrReply } from '../../lib/monkey/reply';
 import MonkeyMock from '../../mockery/mockMonkey';
-
-const getApiMethods = (obj: any): string[] => {
-    if (obj === null) {
-        throw new Error('No methods found');
-    }
-    if (obj.constructor.name === 'Api') {
-        const parentMethods = new Set(
-            Object.getOwnPropertyNames(Object.getPrototypeOf(obj))
-        );
-        return Object.getOwnPropertyNames(obj).filter(
-            (method) => !parentMethods.has(method)
-        );
-    }
-    return getApiMethods(Object.getPrototypeOf(obj));
-};
 
 const voidMethods = {
     keyDown: { cmd: 'key down', params: [4] },
@@ -169,9 +152,9 @@ const runVoidTests = (methods: Record<string, any>) => {
                     done();
                 };
                 if (params) {
-                    monkey[method](...params, cb);
+                    (monkey as any)[method](...params, cb);
                 } else {
-                    monkey[method](cb);
+                    (monkey as any)[method](cb);
                 }
             });
         });
@@ -191,9 +174,9 @@ const runVoidTests = (methods: Record<string, any>) => {
                 };
 
                 if (params) {
-                    monkey[method](...params, cb);
+                    (monkey as any)[method](...params, cb);
                 } else {
-                    monkey[method](cb);
+                    (monkey as any)[method](cb);
                 }
             });
         });
@@ -220,9 +203,9 @@ const runSpecialCaseMethods = (methods: Record<string, any>) => {
                         done();
                     };
                     if (params) {
-                        monkey[method](...params, cb);
+                        (monkey as any)[method](...params, cb);
                     } else {
-                        monkey[method](cb);
+                        (monkey as any)[method](cb);
                     }
                 });
             }
@@ -249,9 +232,9 @@ const runSpecialCaseMethods = (methods: Record<string, any>) => {
                     };
 
                     if (params) {
-                        monkey[method](...params, cb);
+                        (monkey as any)[method](...params, cb);
                     } else {
-                        monkey[method](cb);
+                        (monkey as any)[method](cb);
                     }
                 });
             }
@@ -276,7 +259,7 @@ const runSubcommandTests = (name: string, methods: Record<string, any>) => {
                         done();
                     };
 
-                    monkey[method](cb);
+                    (monkey as any)[method](cb);
                 });
             }
         );
@@ -293,7 +276,7 @@ const runSubcommandTests = (name: string, methods: Record<string, any>) => {
                     done();
                 };
 
-                monkey[method](cb);
+                (monkey as any)[method](cb);
             });
         });
     });
