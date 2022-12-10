@@ -76,8 +76,7 @@ export default class Monkey extends Api {
     }
 
     on(event: 'error', listener: (err: Error) => void): this;
-    on(event: 'end', listener: () => void): this;
-    on(event: 'finish', listener: () => void): this;
+    on(event: 'end' | 'finish' | 'close', listener: () => void): this;
     on(event: string | symbol, listener: (...args: any[]) => void): this {
         return super.on(event, listener);
     }

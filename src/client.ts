@@ -1644,26 +1644,48 @@ export default class AdbClient {
                     throw err;
                 });
         };
-        return nodeify(
-            this.transport(serial)
+
+        const establishConnection = (attempts: number): Promise<Monkey> => {
+            const tryConnectHandler = (
+                conn: Connection,
+                monkey: Monkey
+            ): Promise<Monkey> => {
+                return T.setTimeout(100).then(() => {
+                    const hookMonkey = (): Promise<Monkey> => {
+                        return Promise.resolve(
+                            monkey.once('end', () => {
+                                return conn.end();
+                            })
+                        );
+                    };
+                    if (monkey.stream.readyState === 'closed') {
+                        conn.end();
+
+                        // if attempts fail, return monkey anyway
+                        return attempts === 0
+                            ? hookMonkey()
+                            : establishConnection(attempts - 1);
+                    }
+                    return hookMonkey();
+                });
+            };
+            return this.transport(serial)
                 .then((transport) => {
                     return new MonkeyCommand(transport).execute(serial, 1080);
                 })
                 .then((conn) => {
                     return tryConnect(20).then(
                         (monkey) => {
-                            return monkey.once('end', () => {
-                                return conn.end();
-                            });
+                            return tryConnectHandler(conn, monkey);
                         },
                         (err) => {
                             conn.end();
                             throw err;
                         }
                     );
-                }),
-            cb
-        );
+                });
+        };
+        return nodeify(establishConnection(3), cb);
     }
 
     killApp(serial: string, pkg: string): Promise<void>;
