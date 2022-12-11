@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { ShellExecError, UnexpectedDataError } from '../../lib';
+import { AdbExecError, UnexpectedDataError } from '../../lib';
 import AdbClient from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
@@ -45,7 +45,7 @@ describe('Shell tests', () => {
                 await adb.shell('serial', 'cmd');
                 fail('Expected failure');
             } catch (e) {
-                expect(e).toEqual(new ShellExecError('message', 'cmd'));
+                expect(e).toEqual(new AdbExecError('message', 'cmd'));
             }
         } finally {
             await adbMock.end();

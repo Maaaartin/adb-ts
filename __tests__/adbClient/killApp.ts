@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { ShellExecError, UnexpectedDataError } from '../../lib';
+import { AdbExecError, UnexpectedDataError } from '../../lib';
 import AdbClient from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
@@ -45,7 +45,7 @@ describe('Kill app OKAY tests', () => {
                 await adb.killApp('serial', 'package');
                 fail('Expected failure');
             } catch (e) {
-                expect(e).toEqual(new ShellExecError('message', 'package'));
+                expect(e).toEqual(new AdbExecError('message', 'package'));
             }
         } finally {
             await adbMock.end();

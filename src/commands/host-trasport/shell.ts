@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { ShellExecError } from '../..';
+import { AdbExecError } from '../..';
 import TransportCommand from '../transport';
 
 export default class ShellCommand extends TransportCommand<string> {
@@ -11,7 +11,7 @@ export default class ShellCommand extends TransportCommand<string> {
         return this.parser.readAll().then((value) => {
             const valueStr = value.toString();
             if (valueStr.includes(this.uuid)) {
-                throw new ShellExecError(
+                throw new AdbExecError(
                     valueStr.replace(this.uuid, '').trim(),
                     this.command
                 );

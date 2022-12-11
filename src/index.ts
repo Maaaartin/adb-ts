@@ -483,12 +483,12 @@ export class AdbError extends Error {
     }
 }
 
-export class ShellExecError extends Error {
+export class AdbExecError extends Error {
     command: string;
     constructor(message: string, cmd: string) {
         super();
-        Object.setPrototypeOf(this, ShellExecError.prototype);
-        this.name = 'ShellExecError';
+        Object.setPrototypeOf(this, AdbExecError.prototype);
+        this.name = 'AdbExecError';
         this.message = message;
         this.command = cmd;
         Error.captureStackTrace(this);

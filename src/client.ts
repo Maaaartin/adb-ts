@@ -34,7 +34,8 @@ import {
     buildInputParams,
     NonEmptyArray,
     WaitForType,
-    PropertyValue
+    PropertyValue,
+    AdbExecError
 } from '.';
 import Sync, { SyncMode } from './sync';
 import { exec, execFile } from 'child_process';
@@ -1703,15 +1704,19 @@ export default class AdbClient {
 
     private execInternal(...args: ReadonlyArray<string>): Promise<string> {
         return new Promise<string>((resolve, reject) => {
-            execFile(`${this.options.bin}`, args, (err, stdout, stderr) => {
+            execFile(this.options.bin, args, (err, stdout, stderr) => {
                 if (err) {
                     return reject(err);
                 }
-                if (stderr) {
-                    return reject(new Error(stderr.trim()));
+                if (stderr && !stdout) {
+                    return reject(
+                        new AdbExecError(stderr.trim(), args.join(' '))
+                    );
                 }
                 if (/Error/.test(stdout)) {
-                    return reject(new Error(stdout.trim()));
+                    return reject(
+                        new AdbExecError(stdout.trim(), args.join(' '))
+                    );
                 }
                 return resolve(stdout);
             });
