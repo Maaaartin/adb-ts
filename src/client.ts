@@ -1760,15 +1760,12 @@ export default class AdbClient {
         return nodeify(this.execInternal(...['-s', serial, 'shell', cmd]), cb);
     }
 
-    batteryStatus(serial: string): Promise<PrimitiveDictionary>;
+    batteryStatus(serial: string): Promise<DataMap>;
+    batteryStatus(serial: string, cb: ExecCallbackWithValue<DataMap>): void;
     batteryStatus(
         serial: string,
-        cb: ExecCallbackWithValue<PrimitiveDictionary>
-    ): void;
-    batteryStatus(
-        serial: string,
-        cb?: ExecCallbackWithValue<PrimitiveDictionary>
-    ): Promise<PrimitiveDictionary> | void {
+        cb?: ExecCallbackWithValue<DataMap>
+    ): Promise<DataMap> | void {
         return nodeify(
             this.connection().then((conn) => {
                 return new BatteryStatusCommand(conn).execute(serial);
