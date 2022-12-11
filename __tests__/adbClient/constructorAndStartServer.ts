@@ -1,7 +1,5 @@
-import { ChildProcessMock } from '../../mockery/mockChildProcess';
 import AdbClient from '../../lib/client';
-import ChildProcess from 'child_process';
-import { EncodingOption } from 'fs';
+import { mockExec } from '../../mockery/execMock';
 
 describe('Client constructor tests', () => {
     it('Create Adb client instance', () => {
@@ -26,31 +24,6 @@ describe('Client constructor tests', () => {
 });
 
 describe('Start server tests', () => {
-    const mockExec = (err: ChildProcess.ExecException | null): void => {
-        jest.spyOn(ChildProcess, 'execFile').mockImplementation(
-            (
-                _file: string,
-                _args: ReadonlyArray<string> | undefined | null,
-                cb:
-                    | (
-                          | (EncodingOption & ChildProcess.ExecFileOptions)
-                          | undefined
-                          | null
-                      )
-                    | ((
-                          error: ChildProcess.ExecException | null,
-                          stdout: string,
-                          stderr: string
-                      ) => void)
-            ) => {
-                if (typeof cb === 'function') {
-                    cb(err, '', '');
-                }
-                return new ChildProcessMock();
-            }
-        );
-    };
-
     it('Start adb server', () => {
         mockExec(null);
         const client = new AdbClient();
