@@ -367,11 +367,11 @@ export type MonkeyCallback<T = null> = (
 type ForceFSOption = { force?: boolean };
 type InteractiveFSOption = { interactive?: boolean };
 type NoClobberFSOption = { noClobber?: boolean };
-type VerboseFSoption = { verbose?: boolean };
+export type VerboseFSoption = { verbose?: boolean };
 type SymlinkFSoption = { symlink?: boolean };
 type RecursiveFSOption = { recursive?: boolean };
 
-export type RmOption = ForceFSOption & InteractiveFSOption & RecursiveFSOption;
+export type RmOptions = ForceFSOption & InteractiveFSOption & RecursiveFSOption;
 
 export type MkDirOptions = VerboseFSoption &
     InputOptions &

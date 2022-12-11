@@ -12,7 +12,7 @@ import {
     MkDirOptions,
     MvOptions,
     ReversesObject,
-    RmOption,
+    RmOptions,
     SettingsMode,
     PrimitiveType,
     StartActivityOptions,
@@ -463,7 +463,7 @@ export default class AdbDevice implements IAdbDevice {
     ): Promise<string>;
     rm(
         path: string,
-        options?: RmOption,
+        options?: RmOptions,
         cb?: (err: Error | null, value: string) => void
     ): Promise<string>;
     rm(

@@ -17,7 +17,7 @@ import {
     MvOptions,
     nodeify,
     ReversesObject,
-    RmOption,
+    RmOptions,
     SettingsMode,
     PrimitiveType,
     StartActivityOptions,
@@ -1775,25 +1775,25 @@ export default class AdbClient {
     }
 
     rm(serial: string, path: string): Promise<string>;
-    rm(serial: string, path: string, options: RmOption): Promise<string>;
+    rm(serial: string, path: string, options: RmOptions): Promise<string>;
     rm(serial: string, path: string, cb: ExecCallbackWithValue<string>): void;
     rm(
         serial: string,
         path: string,
-        options: RmOption,
+        options: RmOptions,
         cb: ExecCallbackWithValue<string>
     ): void;
     rm(
         serial: string,
         path: string,
-        options?: RmOption | ExecCallbackWithValue<string>,
+        options?: RmOptions | ExecCallbackWithValue<string>,
         cb?: ExecCallbackWithValue<string>
     ): Promise<string> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
             options = undefined;
         }
-        const options_: RmOption | undefined = options;
+        const options_: RmOptions | undefined = options;
 
         return nodeify(
             this.connection().then((conn) => {
