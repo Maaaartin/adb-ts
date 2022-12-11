@@ -1703,21 +1703,18 @@ export default class AdbClient {
 
     private execInternal(...args: ReadonlyArray<string>): Promise<string> {
         return new Promise<string>((resolve, reject) => {
-            exec(
-                `${this.options.bin} ${args.join(' ')}`,
-                (err, stdout, stderr) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    if (stderr) {
-                        return reject(new Error(stderr.trim()));
-                    }
-                    if (/Error/.test(stdout)) {
-                        return reject(new Error(stdout.trim()));
-                    }
-                    return resolve(stdout);
+            execFile(`${this.options.bin}`, args, (err, stdout, stderr) => {
+                if (err) {
+                    return reject(err);
                 }
-            );
+                if (stderr) {
+                    return reject(new Error(stderr.trim()));
+                }
+                if (/Error/.test(stdout)) {
+                    return reject(new Error(stdout.trim()));
+                }
+                return resolve(stdout);
+            });
         });
     }
 
