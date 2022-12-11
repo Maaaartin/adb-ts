@@ -9,7 +9,7 @@ import Parser from './parser';
 export default class Monkey extends Api {
     public readonly queue: BaseCommand<any>[] = [];
     private parser: Parser = new Parser();
-    protected stream_?: Socket;
+    private stream_?: Socket;
     private timeout?: NodeJS.Timeout;
 
     get stream(): Socket {
