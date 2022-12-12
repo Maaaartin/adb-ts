@@ -1811,29 +1811,29 @@ export default class AdbClient {
         );
     }
 
-    mkdir(serial: string, path: string): Promise<string>;
+    mkdir(serial: string, path: string): Promise<string | void>;
     mkdir(
         serial: string,
         path: string,
         options?: MkDirOptions
-    ): Promise<string>;
+    ): Promise<string | void>;
     mkdir(
         serial: string,
         path: string,
-        cb: ExecCallbackWithValue<string>
-    ): Promise<string>;
+        cb: ExecCallbackWithValue<string | void>
+    ): void;
     mkdir(
         serial: string,
         path: string,
         options: MkDirOptions,
-        cb: ExecCallbackWithValue<string>
-    ): Promise<string>;
+        cb: ExecCallbackWithValue<string | void>
+    ): void;
     mkdir(
         serial: string,
         path: string,
-        options?: MkDirOptions | ExecCallbackWithValue<string>,
-        cb?: ExecCallbackWithValue<string>
-    ): Promise<string> | void {
+        options?: MkDirOptions | ExecCallbackWithValue<string | void>,
+        cb?: ExecCallbackWithValue<string | void>
+    ): Promise<string | void> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
             options = undefined;

@@ -2,7 +2,8 @@ import { MkDirOptions } from '../..';
 import FileSystemCommand from '../filesystem';
 
 export default class MkDirCommand extends FileSystemCommand {
-    intentArgs(options?: MkDirOptions) {
+    Cmd = 'mkdir';
+    intentArgs(options?: MkDirOptions): string[] {
         const args: string[] = [];
         if (!options) {
             return args;
@@ -13,15 +14,18 @@ export default class MkDirCommand extends FileSystemCommand {
         if (options.parent) {
             args.push('-p');
         }
+        if (options.verbose) {
+            args.push('-v');
+        }
 
         return args;
     }
 
-    get Cmd(): string {
-        return 'mkdir';
-    }
-
-    execute(serial: string, path: string, options?: MkDirOptions) {
+    execute(
+        serial: string,
+        path: string,
+        options?: MkDirOptions
+    ): Promise<string | void> {
         return super.execute(serial, path, options);
     }
 }

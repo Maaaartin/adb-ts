@@ -370,9 +370,8 @@ type RecursiveFSOption = { recursive?: boolean };
 export type RmOptions = ForceFSOption & RecursiveFSOption & VerboseFSoption;
 
 export type MkDirOptions = VerboseFSoption &
-    InputOptions &
     ForceFSOption & {
-        mode?: number;
+        mode?: number | string;
         parent?: boolean;
     };
 
