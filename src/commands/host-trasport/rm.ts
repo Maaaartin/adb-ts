@@ -10,21 +10,32 @@ export default class RmCommand extends FileSystemCommand {
         }
         if (options.force) {
             args.push('-f');
-            delete options.force;
         }
 
         if (options.recursive) {
             args.push('-rR');
-            delete options.recursive;
         }
 
-        for (const item of Object.entries(options)) {
-            args.push(item[0], this.escape(item[1]));
+        if (options.interactive) {
+            args.push('-i');
         }
+
+        if (options.verbose) {
+            args.push('-v');
+        }
+
         return args;
     }
 
-    execute(serial: string, path: string, options?: RmOptions): Promise<void> {
-        return super.execute(serial, path, options).then(() => {});
+    execute(
+        serial: string,
+        path: string,
+        options?: RmOptions
+    ): Promise<string | void> {
+        return super.execute(serial, path, options).then((value) => {
+            if (options?.verbose) {
+                return value;
+            }
+        });
     }
 }

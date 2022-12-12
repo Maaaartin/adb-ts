@@ -1774,21 +1774,29 @@ export default class AdbClient {
         );
     }
 
-    rm(serial: string, path: string): Promise<string>;
-    rm(serial: string, path: string, options: RmOptions): Promise<string>;
-    rm(serial: string, path: string, cb: ExecCallbackWithValue<string>): void;
+    rm(serial: string, path: string): Promise<string | void>;
     rm(
         serial: string,
         path: string,
-        options: RmOptions,
-        cb: ExecCallbackWithValue<string>
+        options: RmOptions
+    ): Promise<string | void>;
+    rm(
+        serial: string,
+        path: string,
+        cb: ExecCallbackWithValue<string | void>
     ): void;
     rm(
         serial: string,
         path: string,
-        options?: RmOptions | ExecCallbackWithValue<string>,
-        cb?: ExecCallbackWithValue<string>
-    ): Promise<string> | void {
+        options: RmOptions,
+        cb: ExecCallbackWithValue<string | void>
+    ): void;
+    rm(
+        serial: string,
+        path: string,
+        options?: RmOptions | ExecCallbackWithValue<string | void>,
+        cb?: ExecCallbackWithValue<string | void>
+    ): Promise<string | void> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
             options = undefined;

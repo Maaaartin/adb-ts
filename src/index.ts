@@ -367,7 +367,10 @@ export type VerboseFSoption = { verbose?: boolean };
 type SymlinkFSoption = { symlink?: boolean };
 type RecursiveFSOption = { recursive?: boolean };
 
-export type RmOptions = ForceFSOption & InteractiveFSOption & RecursiveFSOption;
+export type RmOptions = ForceFSOption &
+    InteractiveFSOption &
+    RecursiveFSOption &
+    VerboseFSoption;
 
 export type MkDirOptions = VerboseFSoption &
     InputOptions &
