@@ -16,10 +16,6 @@ export default class RmCommand extends FileSystemCommand {
             args.push('-rR');
         }
 
-        if (options.interactive) {
-            args.push('-i');
-        }
-
         if (options.verbose) {
             args.push('-v');
         }
@@ -32,10 +28,6 @@ export default class RmCommand extends FileSystemCommand {
         path: string,
         options?: RmOptions
     ): Promise<string | void> {
-        return super.execute(serial, path, options).then((value) => {
-            if (options?.verbose) {
-                return value;
-            }
-        });
+        return super.execute(serial, path, options);
     }
 }
