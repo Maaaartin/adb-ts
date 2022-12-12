@@ -1,9 +1,9 @@
 import Command from '../command';
-import { ICmd, IPostExecute, IPreExecute } from '..';
+import { ICmd, IPreExecute } from '..';
 
 export default abstract class TransportCommand<T>
     extends Command
-    implements IPreExecute<T>, ICmd, IPostExecute<T>
+    implements IPreExecute<T>, ICmd
 {
     abstract readonly Cmd: string;
     protected keepAlive = true;

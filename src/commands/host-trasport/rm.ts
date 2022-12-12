@@ -2,7 +2,8 @@ import { RmOptions } from '../../index';
 import FileSystemCommand from '../filesystem';
 
 export default class RmCommand extends FileSystemCommand {
-    intentArgs(options?: RmOptions) {
+    Cmd = 'rm';
+    intentArgs(options?: RmOptions): string[] {
         const args: string[] = [];
         if (!options) {
             return args;
@@ -11,6 +12,7 @@ export default class RmCommand extends FileSystemCommand {
             args.push('-f');
             delete options.force;
         }
+
         if (options.recursive) {
             args.push('-rR');
             delete options.recursive;
@@ -22,11 +24,7 @@ export default class RmCommand extends FileSystemCommand {
         return args;
     }
 
-    get Cmd(): string {
-        return 'rm';
-    }
-
-    execute(serial: string, path: string, options?: RmOptions) {
-        return super.execute(serial, path, options);
+    execute(serial: string, path: string, options?: RmOptions): Promise<void> {
+        return super.execute(serial, path, options).then(() => {});
     }
 }

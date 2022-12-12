@@ -1,42 +1,29 @@
-import { ICmd, VerboseFSoption } from '..';
-import TransportCommand from './transport';
+import { VerboseFSoption } from '..';
+import ExecCommand from './execCommand';
 
-export default abstract class FileSystemCommand
-    extends TransportCommand<string>
-    implements ICmd
-{
+export default abstract class FileSystemCommand extends ExecCommand<
+    string | void
+> {
     protected abstract intentArgs(options?: Record<string, any>): string[];
     protected options?: Record<string, any>;
-    abstract Cmd: string;
-    private isError(value: string): boolean {
-        const split = value.split(':');
-        const err = split[split.length - 1];
-        return /No/.test(err) || /denied/.test(err);
-    }
-    postExecute(): Promise<string> {
-        return this.parser.readAll().then((value) => {
-            const valueStr = value.toString().trim();
-            if (this.isError(valueStr)) {
-                throw new Error(valueStr);
-            }
-            if ((this.options as VerboseFSoption | undefined)?.verbose) {
-                return valueStr;
-            }
-            return '';
-        });
+
+    parse(value: string): string | void {
+        if ((this.options as VerboseFSoption | void)?.verbose) {
+            return value;
+        }
     }
 
     execute(
         serial: string,
         path: string | string[],
         options?: Record<string, any>
-    ): Promise<string> {
+    ): Promise<string | void> {
         const pathArr = Array.isArray(path) ? path : [path];
-        this.Cmd = [
-            'shell:' + this.Cmd,
-            ...this.intentArgs(options),
-            ...pathArr
-        ].join(' ');
+
+        this.Cmd = [this.Cmd, ...this.intentArgs(options), ...pathArr].join(
+            ' '
+        );
+
         this.options = options;
         return this.preExecute(serial);
     }

@@ -350,10 +350,6 @@ export interface IPreExecute<T> {
     preExecute: (...args: any[]) => Promise<T>;
 }
 
-export interface IPostExecute<T> {
-    preExecute: (...args: any[]) => Promise<T>;
-}
-
 export interface ICmd {
     readonly Cmd: string;
 }
