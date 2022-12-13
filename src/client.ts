@@ -1894,7 +1894,7 @@ export default class AdbClient {
             options = undefined;
         }
 
-        nodeify(
+        return nodeify(
             this.connection().then((conn) => {
                 return new MvCommand(conn).execute(
                     serial,
