@@ -361,19 +361,16 @@ export type MonkeyCallback<T = null> = (
 ) => void;
 
 type ForceFSOption = { force?: boolean };
-type InteractiveFSOption = { interactive?: boolean };
 type NoClobberFSOption = { noClobber?: boolean };
-export type VerboseFSoption = { verbose?: boolean };
 type SymlinkFSoption = { symlink?: boolean };
 type RecursiveFSOption = { recursive?: boolean };
 
-export type RmOptions = ForceFSOption & RecursiveFSOption & VerboseFSoption;
+export type RmOptions = ForceFSOption & RecursiveFSOption;
 
-export type MkDirOptions = VerboseFSoption &
-    ForceFSOption & {
-        mode?: number | string;
-        parent?: boolean;
-    };
+export type MkDirOptions = ForceFSOption & {
+    mode?: number | string;
+    parent?: boolean;
+};
 
 export type TouchOptions = SymlinkFSoption & {
     aTime?: boolean;
@@ -384,10 +381,7 @@ export type TouchOptions = SymlinkFSoption & {
     reference?: string;
 };
 
-export type MvOptions = NoClobberFSOption &
-    VerboseFSoption &
-    ForceFSOption &
-    InteractiveFSOption;
+export type MvOptions = NoClobberFSOption & ForceFSOption;
 
 export type PreserveOptions = {
     mode?: boolean;
@@ -398,10 +392,8 @@ export type PreserveOptions = {
     all?: boolean;
 };
 
-export type CpOptions = VerboseFSoption &
-    NoClobberFSOption &
+export type CpOptions = NoClobberFSOption &
     SymlinkFSoption &
-    InteractiveFSOption &
     RecursiveFSOption & {
         hardLink?: boolean;
         noDereference?: boolean;

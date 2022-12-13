@@ -2,7 +2,7 @@ import ExecCommand from '../execCommand';
 
 export default class ShellCommand extends ExecCommand<string> {
     public Cmd = '';
-    protected parse(value: string): string {
+    protected cast(value: string): string {
         return value;
     }
 

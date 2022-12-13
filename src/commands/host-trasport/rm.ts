@@ -16,18 +16,10 @@ export default class RmCommand extends FileSystemCommand {
             args.push('-rR');
         }
 
-        if (options.verbose) {
-            args.push('-v');
-        }
-
         return args;
     }
 
-    execute(
-        serial: string,
-        path: string,
-        options?: RmOptions
-    ): Promise<string | void> {
+    execute(serial: string, path: string, options?: RmOptions): Promise<void> {
         return super.execute(serial, path, options);
     }
 }

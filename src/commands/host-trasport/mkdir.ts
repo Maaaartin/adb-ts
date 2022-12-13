@@ -14,9 +14,6 @@ export default class MkDirCommand extends FileSystemCommand {
         if (options.parent) {
             args.push('-p');
         }
-        if (options.verbose) {
-            args.push('-v');
-        }
 
         return args;
     }
@@ -25,7 +22,7 @@ export default class MkDirCommand extends FileSystemCommand {
         serial: string,
         path: string,
         options?: MkDirOptions
-    ): Promise<string | void> {
+    ): Promise<void> {
         return super.execute(serial, path, options);
     }
 }

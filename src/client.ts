@@ -1774,29 +1774,21 @@ export default class AdbClient {
         );
     }
 
-    rm(serial: string, path: string): Promise<string | void>;
-    rm(
-        serial: string,
-        path: string,
-        options: RmOptions
-    ): Promise<string | void>;
-    rm(
-        serial: string,
-        path: string,
-        cb: ExecCallbackWithValue<string | void>
-    ): void;
+    rm(serial: string, path: string): Promise<void>;
+    rm(serial: string, path: string, options: RmOptions): Promise<void>;
+    rm(serial: string, path: string, cb: ExecCallback): void;
     rm(
         serial: string,
         path: string,
         options: RmOptions,
-        cb: ExecCallbackWithValue<string | void>
+        cb: ExecCallback
     ): void;
     rm(
         serial: string,
         path: string,
-        options?: RmOptions | ExecCallbackWithValue<string | void>,
-        cb?: ExecCallbackWithValue<string | void>
-    ): Promise<string | void> | void {
+        options?: RmOptions | ExecCallback,
+        cb?: ExecCallback
+    ): Promise<void> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
             options = undefined;
@@ -1811,29 +1803,21 @@ export default class AdbClient {
         );
     }
 
-    mkdir(serial: string, path: string): Promise<string | void>;
-    mkdir(
-        serial: string,
-        path: string,
-        options?: MkDirOptions
-    ): Promise<string | void>;
-    mkdir(
-        serial: string,
-        path: string,
-        cb: ExecCallbackWithValue<string | void>
-    ): void;
+    mkdir(serial: string, path: string): Promise<void>;
+    mkdir(serial: string, path: string, options?: MkDirOptions): Promise<void>;
+    mkdir(serial: string, path: string, cb: ExecCallback): void;
     mkdir(
         serial: string,
         path: string,
         options: MkDirOptions,
-        cb: ExecCallbackWithValue<string | void>
+        cb: ExecCallback
     ): void;
     mkdir(
         serial: string,
         path: string,
-        options?: MkDirOptions | ExecCallbackWithValue<string | void>,
-        cb?: ExecCallbackWithValue<string | void>
-    ): Promise<string | void> | void {
+        options?: MkDirOptions | ExecCallback,
+        cb?: ExecCallback
+    ): Promise<void> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
             options = undefined;
@@ -1847,25 +1831,21 @@ export default class AdbClient {
         );
     }
 
-    touch(serial: string, path: string): Promise<string>;
-    touch(serial: string, path: string, options: TouchOptions): Promise<string>;
-    touch(
-        serial: string,
-        path: string,
-        cb: ExecCallbackWithValue<string>
-    ): void;
+    touch(serial: string, path: string): Promise<void>;
+    touch(serial: string, path: string, options: TouchOptions): Promise<void>;
+    touch(serial: string, path: string, cb: ExecCallback): void;
     touch(
         serial: string,
         path: string,
         options: TouchOptions,
-        cb: ExecCallbackWithValue<string>
+        cb: ExecCallback
     ): void;
     touch(
         serial: string,
         path: string,
-        options?: TouchOptions | ExecCallbackWithValue<string>,
-        cb?: ExecCallbackWithValue<string>
-    ): Promise<string> | void {
+        options?: TouchOptions | ExecCallback,
+        cb?: ExecCallback
+    ): Promise<void> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
             options = undefined;
@@ -1882,33 +1862,33 @@ export default class AdbClient {
         );
     }
 
-    mv(serial: string, srcPath: string, destPath: string): Promise<string>;
+    mv(serial: string, srcPath: string, destPath: string): Promise<void>;
     mv(
         serial: string,
         srcPath: string,
         destPath: string,
         options: MvOptions
-    ): Promise<string>;
+    ): Promise<void>;
     mv(
         serial: string,
         srcPath: string,
         destPath: string,
-        cb: ExecCallbackWithValue<string>
+        cb: ExecCallback
     ): void;
     mv(
         serial: string,
         srcPath: string,
         destPath: string,
         options: MvOptions,
-        cb: ExecCallbackWithValue<string>
+        cb: ExecCallback
     ): void;
     mv(
         serial: string,
         srcPath: string,
         destPath: string,
-        options?: ExecCallbackWithValue<string> | MvOptions,
-        cb?: ExecCallbackWithValue<string>
-    ): Promise<string> | void {
+        options?: ExecCallback | MvOptions,
+        cb?: ExecCallback
+    ): Promise<void> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
             options = undefined;

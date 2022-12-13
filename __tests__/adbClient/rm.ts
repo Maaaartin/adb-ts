@@ -33,7 +33,7 @@ describe('Rm OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(rm -f -rR -v /file) || echo '123456'`,
+                cmd: `shell:(rm -f -rR /file) || echo '123456'`,
                 res: 'data',
                 rawRes: true
             }
@@ -43,10 +43,9 @@ describe('Rm OKAY tests', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.rm('serial', '/file', {
                 force: true,
-                recursive: true,
-                verbose: true
+                recursive: true
             });
-            expect(result).toBe('data');
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }

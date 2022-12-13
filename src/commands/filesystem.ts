@@ -1,23 +1,16 @@
-import { VerboseFSoption } from '..';
 import ExecCommand from './execCommand';
 
-export default abstract class FileSystemCommand extends ExecCommand<
-    string | void
-> {
+export default abstract class FileSystemCommand extends ExecCommand<void> {
     protected abstract intentArgs(options?: Record<string, any>): string[];
     protected options?: Record<string, any>;
 
-    parse(value: string): string | void {
-        if ((this.options as VerboseFSoption | void)?.verbose) {
-            return value;
-        }
-    }
+    cast(): void {}
 
     execute(
         serial: string,
         path: string | string[],
         options?: Record<string, any>
-    ): Promise<string | void> {
+    ): Promise<void> {
         const pathArr = Array.isArray(path) ? path : [path];
 
         this.Cmd = [this.Cmd, ...this.intentArgs(options), ...pathArr].join(

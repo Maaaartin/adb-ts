@@ -2,11 +2,13 @@ import crypto from 'crypto';
 import { AdbExecError } from '../';
 import TransportCommand from './transport';
 
-export default abstract class ShellCommand<T> extends TransportCommand<T> {
+export default abstract class ShellCommand<
+    T extends void | string
+> extends TransportCommand<T> {
     public abstract Cmd: string;
     private readonly uuid = crypto.randomUUID();
     private rawCmd = '';
-    protected abstract parse(value: string): T;
+    protected abstract cast(value: string): T;
 
     postExecute(): Promise<T> {
         return this.parser.readAll().then((value) => {
@@ -17,7 +19,7 @@ export default abstract class ShellCommand<T> extends TransportCommand<T> {
                     this.rawCmd
                 );
             }
-            return this.parse(valueStr);
+            return this.cast(valueStr);
         });
     }
 

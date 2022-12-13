@@ -33,7 +33,7 @@ describe('Mkdir OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(mkdir -m 'x' -p -v /dir) || echo '123456'`,
+                cmd: `shell:(mkdir -m 'x' -p /dir) || echo '123456'`,
                 res: 'data',
                 rawRes: true
             }
@@ -43,10 +43,9 @@ describe('Mkdir OKAY tests', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.mkdir('serial', '/dir', {
                 mode: 'x',
-                parent: true,
-                verbose: true
+                parent: true
             });
-            expect(result).toBe('data');
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
