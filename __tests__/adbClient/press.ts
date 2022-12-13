@@ -20,7 +20,7 @@ describe('Press', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.press('serial');
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -43,7 +43,7 @@ describe('Press', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.press('serial', 'gamepad');
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }

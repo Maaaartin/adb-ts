@@ -23,7 +23,7 @@ describe('Mkdir OKAY tests', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.mkdir('serial', '/dir');
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }

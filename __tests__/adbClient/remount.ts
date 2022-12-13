@@ -11,7 +11,7 @@ describe('Remount', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.remount('serial');
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }

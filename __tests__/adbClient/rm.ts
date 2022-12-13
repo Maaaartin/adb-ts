@@ -23,7 +23,7 @@ describe('Rm OKAY tests', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.rm('serial', '/file');
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }

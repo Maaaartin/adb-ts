@@ -16,7 +16,7 @@ describe('Wait boot complete', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.waitBootComplete('serial');
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }

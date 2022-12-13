@@ -44,7 +44,7 @@ describe('Start server tests', () => {
         mockExec(null);
         const client = new AdbClient();
         client.startServer((err) => {
-            expect(err).toBe(null);
+            expect(err).toBeNull();
         });
     });
 

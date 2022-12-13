@@ -21,7 +21,7 @@ describe('Put setting tests', () => {
                 'setting',
                 ''
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -45,7 +45,7 @@ describe('Put setting tests', () => {
                 'setting',
                 `'text'`
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -69,7 +69,7 @@ describe('Put setting tests', () => {
                 'setting',
                 `"text"`
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -93,7 +93,7 @@ describe('Put setting tests', () => {
                 'setting',
                 undefined
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -117,7 +117,7 @@ describe('Put setting tests', () => {
                 'setting',
                 false
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -141,7 +141,7 @@ describe('Put setting tests', () => {
                 'setting',
                 0
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -165,7 +165,7 @@ describe('Put setting tests', () => {
                 'setting',
                 0.1
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -189,7 +189,7 @@ describe('Put setting tests', () => {
                 'setting',
                 undefined
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }

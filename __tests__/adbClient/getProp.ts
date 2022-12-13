@@ -73,7 +73,7 @@ describe('Gep prop tests', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.getProp('serial', 'prop');
-            expect(result).toBe(null);
+            expect(result).toBeNull();
         } finally {
             await adbMock.end();
         }

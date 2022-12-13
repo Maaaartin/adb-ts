@@ -18,7 +18,7 @@ describe('Push data to file', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.pushDataToFile('serial', 'data', 'dest');
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -42,7 +42,7 @@ describe('Push data to file', () => {
                 Buffer.from('data', 'utf-8'),
                 'dest'
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -66,7 +66,7 @@ describe('Push data to file', () => {
                 Readable.from('data'),
                 'dest'
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }

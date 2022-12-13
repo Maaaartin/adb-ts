@@ -20,7 +20,7 @@ describe('Key event', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.keyEvent('serial', 37);
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -45,7 +45,7 @@ describe('Key event', () => {
             const result = await adb.keyEvent('serial', 37, {
                 variant: 'longpress'
             });
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -70,7 +70,7 @@ describe('Key event', () => {
             const result = await adb.keyEvent('serial', 37, {
                 variant: 'doubletap'
             });
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -93,7 +93,7 @@ describe('Key event', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.keyEvent('serial', [37, 37, 42]);
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -118,7 +118,7 @@ describe('Key event', () => {
             const result = await adb.keyEvent('serial', [37, 37, 42], {
                 variant: 'longpress'
             });
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -143,7 +143,7 @@ describe('Key event', () => {
             const result = await adb.keyEvent('serial', [37, 37, 42], {
                 variant: 'doubletap'
             });
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -168,7 +168,7 @@ describe('Key event', () => {
             const result = await adb.keyEvent('serial', 37, {
                 source: 'gamepad'
             });
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }

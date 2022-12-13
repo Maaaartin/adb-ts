@@ -84,7 +84,7 @@ describe('Handle response', () => {
             const conn = await getConnection(port);
             const cmd = new MockCommand(conn);
             const result = await cmd.execute();
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }

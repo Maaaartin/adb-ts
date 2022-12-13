@@ -33,7 +33,7 @@ describe('Push tests', () => {
                     cb(null);
                 });
             })();
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -146,7 +146,7 @@ describe('Push tests', () => {
                     return cb(err);
                 });
             })();
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }

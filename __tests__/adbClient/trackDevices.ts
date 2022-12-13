@@ -140,7 +140,7 @@ describe('Track devices', () => {
                 });
             })();
             try {
-                expect(result).toBe(undefined);
+                expect(result).toBeUndefined();
             } finally {
                 await tracker.end();
             }
@@ -169,7 +169,7 @@ describe('Track devices', () => {
                 await tracker.end();
             })();
             try {
-                expect(result).toBe(undefined);
+                expect(result).toBeUndefined();
             } finally {
                 await tracker.end();
             }

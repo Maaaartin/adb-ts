@@ -65,12 +65,12 @@ describe('String to type', () => {
 
     it('Cast null', () => {
         const result = stringToType('null');
-        expect(result).toBe(null);
+        expect(result).toBeNull();
     });
 
     it('Cast undefined', () => {
         const result = stringToType('');
-        expect(result).toBe(undefined);
+        expect(result).toBeUndefined();
     });
 
     it('Cast string', () => {
@@ -108,7 +108,7 @@ describe('String to type', () => {
 describe('Nodeify', () => {
     it('Resolve Promise', async () => {
         const result = await nodeify(Promise.resolve(null), undefined);
-        expect(result).toBe(null);
+        expect(result).toBeNull();
     });
 
     it('Reject Promise', async () => {
@@ -121,10 +121,10 @@ describe('Nodeify', () => {
 
     it('Resolve Callback', () => {
         const result = nodeify(Promise.resolve(null), (err, value) => {
-            expect(err).toBe(null);
-            expect(value).toBe(null);
+            expect(err).toBeNull();
+            expect(value).toBeNull();
         });
-        expect(result).toBe(undefined);
+        expect(result).toBeUndefined();
     });
 
     it('Reject Callback', () => {
@@ -132,22 +132,22 @@ describe('Nodeify', () => {
             Promise.reject(new Error('message')),
             (err, value) => {
                 expect(err?.message).toBe('message');
-                expect(value).toBe(undefined);
+                expect(value).toBeUndefined();
             }
         );
-        expect(result).toBe(undefined);
+        expect(result).toBeUndefined();
     });
 });
 
 describe('Parse value param', () => {
     it('undefined', () => {
         const result = parseValueParam(undefined);
-        expect(result).toBe(undefined);
+        expect(result).toBeUndefined();
     });
 
     it('function', () => {
         const result = parseValueParam(() => null);
-        expect(result).toBe(undefined);
+        expect(result).toBeUndefined();
     });
 
     it('object', () => {
@@ -159,7 +159,7 @@ describe('Parse value param', () => {
 describe('Parse cb params', () => {
     it('undefined/undefined', () => {
         const result = parseCbParam(undefined, undefined);
-        expect(result).toBe(undefined);
+        expect(result).toBeUndefined();
     });
 
     it('function/undefined', () => {
@@ -169,7 +169,7 @@ describe('Parse cb params', () => {
 
     it('object/undefined', () => {
         const result = parseCbParam({ one: 1 }, undefined);
-        expect(result).toBe(undefined);
+        expect(result).toBeUndefined();
     });
 
     it('object/function', () => {
@@ -206,12 +206,12 @@ describe('Parse primitive type', () => {
 describe('Parse options', () => {
     it('undefined', () => {
         const result = parseOptions(undefined);
-        expect(result).toBe(undefined);
+        expect(result).toBeUndefined();
     });
 
     it('function', () => {
         const result = parseOptions(() => null);
-        expect(result).toBe(undefined);
+        expect(result).toBeUndefined();
     });
 
     it('object', () => {
@@ -329,7 +329,7 @@ describe('Build input params', () => {
             undefined
         );
         expect(source).toBe('keyboard');
-        expect(cb?.toString()).toBe(undefined);
+        expect(cb?.toString()).toBeUndefined();
     });
 
     it('Source is function, cb is undefined', () => {
@@ -345,7 +345,7 @@ describe('Build input params', () => {
             undefined
         );
         expect(source).toBe('gamepad');
-        expect(cb?.toString()).toBe(undefined);
+        expect(cb?.toString()).toBeUndefined();
     });
 
     it('Source is input options, cb is function', () => {
@@ -387,6 +387,6 @@ describe('Build input params', () => {
     it('Source is empty object', () => {
         const { source, cb } = buildInputParams('gamepad', {}, undefined);
         expect(source).toBe('gamepad');
-        expect(cb?.toString()).toBe(undefined);
+        expect(cb?.toString()).toBeUndefined();
     });
 });

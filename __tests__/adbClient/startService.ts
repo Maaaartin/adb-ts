@@ -20,7 +20,7 @@ describe('Start service', () => {
                 'com.my.app',
                 'Service'
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -44,7 +44,7 @@ describe('Start service', () => {
                 'Service',
                 { user: 1 }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -68,7 +68,7 @@ describe('Start service', () => {
                 'Service',
                 { action: 'action' }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -92,7 +92,7 @@ describe('Start service', () => {
                 'Service',
                 { data: 'data' }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -116,7 +116,7 @@ describe('Start service', () => {
                 'Service',
                 { data: undefined }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -140,7 +140,7 @@ describe('Start service', () => {
                 'Service',
                 { mimeType: 'type' }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -164,7 +164,7 @@ describe('Start service', () => {
                 'Service',
                 { category: 'category' }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -188,7 +188,7 @@ describe('Start service', () => {
                 'Service',
                 { category: ['category1', 'category2'] }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -212,7 +212,7 @@ describe('Start service', () => {
                 'Service',
                 { flags: 0 }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -236,7 +236,7 @@ describe('Start service', () => {
                 'Service',
                 { extras: { key: 'key', type: 'null' } }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -260,7 +260,7 @@ describe('Start service', () => {
                 'Service',
                 { extras: { key: 'key', type: 'bool', value: true } }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -284,7 +284,7 @@ describe('Start service', () => {
                 'Service',
                 { extras: { key: 'key', type: 'int', value: 0 } }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -308,7 +308,7 @@ describe('Start service', () => {
                 'Service',
                 { extras: { key: 'key', type: 'int', value: [0, 1] } }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -332,7 +332,7 @@ describe('Start service', () => {
                 'Service',
                 { extras: { key: 'key', type: 'float', value: 0 } }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -356,7 +356,7 @@ describe('Start service', () => {
                 'Service',
                 { extras: { key: 'key', type: 'float', value: [0, 1] } }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -380,7 +380,7 @@ describe('Start service', () => {
                 'Service',
                 { extras: { key: 'key', type: 'long', value: 0 } }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -404,7 +404,7 @@ describe('Start service', () => {
                 'Service',
                 { extras: { key: 'key', type: 'long', value: [0, 1] } }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -428,7 +428,7 @@ describe('Start service', () => {
                 'Service',
                 { extras: { key: 'key', type: 'string', value: 'string' } }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -458,7 +458,7 @@ describe('Start service', () => {
                     }
                 }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -488,7 +488,7 @@ describe('Start service', () => {
                     }
                 }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -518,7 +518,7 @@ describe('Start service', () => {
                     }
                 }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -555,7 +555,7 @@ describe('Start service', () => {
                     ]
                 }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }

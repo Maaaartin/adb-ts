@@ -20,7 +20,7 @@ describe('Start activity', () => {
                 'com.my.app',
                 'Activity'
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -44,7 +44,7 @@ describe('Start activity', () => {
                 'Activity',
                 { debug: true }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
@@ -68,7 +68,7 @@ describe('Start activity', () => {
                 'Activity',
                 { wait: true }
             );
-            expect(result).toBe(undefined);
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
