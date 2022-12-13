@@ -404,6 +404,7 @@ export type CpOptions = NoClobberFSOption &
         delFirst?: boolean;
         delDest?: boolean;
         archive?: boolean;
+        update?: boolean;
     };
 
 export type DataMap = Map<string, PropertyValue>;

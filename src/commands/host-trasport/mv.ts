@@ -20,7 +20,7 @@ export default class MvCommand extends FileSystemCommand {
 
     execute(
         serial: string,
-        paths: string[],
+        paths: [string, string],
         options?: MvOptions
     ): Promise<void> {
         return super.execute(serial, paths, options);

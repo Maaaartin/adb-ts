@@ -1906,33 +1906,33 @@ export default class AdbClient {
         );
     }
 
-    cp(serial: string, srcPath: string, destPath: string): Promise<string>;
+    cp(serial: string, srcPath: string, destPath: string): Promise<void>;
     cp(
         serial: string,
         srcPath: string,
         destPath: string,
         options: CpOptions
-    ): Promise<string>;
+    ): Promise<void>;
     cp(
         serial: string,
         srcPath: string,
         destPath: string,
-        cb: ExecCallbackWithValue<string>
+        cb: ExecCallback
     ): void;
     cp(
         serial: string,
         srcPath: string,
         destPath: string,
         options: CpOptions,
-        cb: ExecCallbackWithValue<string>
+        cb: ExecCallback
     ): void;
     cp(
         serial: string,
         srcPath: string,
         destPath: string,
-        options?: ExecCallbackWithValue<string> | CpOptions,
-        cb?: ExecCallbackWithValue<string>
-    ): Promise<string> | void {
+        options?: ExecCallback | CpOptions,
+        cb?: ExecCallback
+    ): Promise<void> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
             options = undefined;
