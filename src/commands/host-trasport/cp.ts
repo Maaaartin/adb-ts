@@ -38,14 +38,17 @@ export default class CpCommand extends FileSystemCommand {
             if (options.noDereference) {
                 args.push('-d');
             }
-            if (options.preserve) {
-                const params = options.preserve.all
-                    ? ['a']
-                    : Object.entries(options.preserve)
-                          .filter(([key, value]) => key !== 'all' && value)
-                          .map(([key]) => key[0]);
-                args.push(`--preserve=${params.join('')}`);
+            if (options.preserveTimestamps) {
+                args.push('-p');
             }
+        }
+        if (options.preserve) {
+            const params = options.preserve.all
+                ? ['a']
+                : Object.entries(options.preserve)
+                      .filter(([key, value]) => key !== 'all' && value)
+                      .map(([key]) => key[0]);
+            args.push(`--preserve=${params.join('')}`);
         }
         if (options.delFirst) {
             args.push('-F');
@@ -56,9 +59,7 @@ export default class CpCommand extends FileSystemCommand {
         if (options.update) {
             args.push('-u');
         }
-        if (options.preserveTimestamps) {
-            args.push('-p');
-        }
+
         if (options.copyToTarget) {
             args.push('-t');
         }
