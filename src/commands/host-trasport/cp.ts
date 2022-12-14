@@ -40,7 +40,7 @@ export default class CpCommand extends FileSystemCommand {
             }
             if (options.preserve) {
                 const params = options.preserve.all
-                    ? ['all']
+                    ? ['a']
                     : Object.entries(options.preserve)
                           .filter(([key, value]) => key !== 'all' && value)
                           .map(([key]) => key[0]);
@@ -52,6 +52,15 @@ export default class CpCommand extends FileSystemCommand {
         }
         if (options.delDest) {
             args.push('-f');
+        }
+        if (options.update) {
+            args.push('-u');
+        }
+        if (options.preserveTimestamps) {
+            args.push('-p');
+        }
+        if (options.copyToTarget) {
+            args.push('-t');
         }
         return args;
     }

@@ -405,6 +405,8 @@ export type CpOptions = NoClobberFSOption &
         delDest?: boolean;
         archive?: boolean;
         update?: boolean;
+        preserveTimestamps?: boolean;
+        copyToTarget?: boolean;
     };
 
 export type DataMap = Map<string, PropertyValue>;
