@@ -1,8 +1,9 @@
 import FileStats, { IFileStats } from '../../filestats';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
-export default class FileStatCommand extends TransportParseAllCommand {
-    protected parse(value: string) {
+export default class FileStatCommand extends TransportParseAllCommand<FileStats> {
+    Cmd = 'shell:stat -c ';
+    protected parse(value: string): FileStats {
         const props = value.split('\\_');
         if (props.length === 1) {
             throw new Error(value.trim());
@@ -71,10 +72,7 @@ export default class FileStatCommand extends TransportParseAllCommand {
             'z',
             'Z'
         ];
-        return super.execute(
-            serial,
-            `shell:stat -c "%${flags.join('\\_%')}"`,
-            path
-        );
+        this.Cmd += `"%${flags.join('\\_%')}" ${path}}`;
+        return this.preExecute(serial);
     }
 }

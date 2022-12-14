@@ -67,7 +67,6 @@ import ListPackagesCommand from './commands/host-trasport/listpackages';
 import ListPropertiesCommand from './commands/host-trasport/listproperties';
 import ListReversesCommand from './commands/host-trasport/listreverses';
 import ListSettingsCommand from './commands/host-trasport/listsettings';
-import Logcat from './logcat';
 import LogcatCommand from './commands/host-trasport/logcat';
 import LogcatReader from './logcat/reader';
 import MkDirCommand from './commands/host-trasport/mkdir';
