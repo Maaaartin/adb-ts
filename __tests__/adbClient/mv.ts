@@ -10,24 +10,24 @@ beforeAll(() => {
 });
 
 describe('Mv OKAY tests', () => {
-    // it('Should execute without parameters', async () => {
-    //     const adbMock = new AdbMock([
-    //         { cmd: 'host:transport:serial', res: null, rawRes: true },
-    //         {
-    //             cmd: `shell:(mv /file /other) || echo '123456'`,
-    //             res: null,
-    //             rawRes: true
-    //         }
-    //     ]);
-    //     try {
-    //         const port = await adbMock.start();
-    //         const adb = new AdbClient({ noAutoStart: true, port });
-    //         const result = await adb.mv('serial', '/file', 'other');
-    //         expect(result).toBeUndefined();
-    //     } finally {
-    //         await adbMock.end();
-    //     }
-    // });
+    it('Should execute without parameters', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:(mv /file /other) || echo '123456'`,
+                res: 'data',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.mv('serial', '/file', '/other');
+            expect(result).toBeUndefined();
+        } finally {
+            await adbMock.end();
+        }
+    });
 
     it('Should execute with parameters', async () => {
         const adbMock = new AdbMock([
