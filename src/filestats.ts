@@ -52,31 +52,31 @@ export default class FileStats extends Stats implements IFileStats {
         Object.assign(this, props);
     }
 
-    isSocket() {
+    isSocket(): boolean {
         return /socket/.test(this.type);
     }
 
-    isFIFO() {
+    isFIFO(): boolean {
         return /fifo/.test(this.type);
     }
 
-    isSymbolicLink() {
+    isSymbolicLink(): boolean {
         return /link/.test(this.type);
     }
 
-    isCharacterDevice() {
+    isCharacterDevice(): boolean {
         return /character/.test(this.type);
     }
 
-    isBlockDevice() {
+    isBlockDevice(): boolean {
         return /block/.test(this.type);
     }
 
-    isDirectory() {
+    isDirectory(): boolean {
         return /directory/.test(this.type);
     }
 
-    isFile() {
+    isFile(): boolean {
         return /file/.test(this.type);
     }
 }

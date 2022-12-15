@@ -72,7 +72,7 @@ export default class FileStatCommand extends TransportParseAllCommand<FileStats>
             'z',
             'Z'
         ];
-        this.Cmd += `"%${flags.join('\\_%')}" ${path}}`;
+        this.Cmd += `"%${flags.join('\\_%')}" ${path}`;
         return this.preExecute(serial);
     }
 }
