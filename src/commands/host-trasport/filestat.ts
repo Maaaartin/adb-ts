@@ -5,9 +5,10 @@ export default class FileStatCommand extends TransportParseAllCommand<FileStats>
     Cmd = 'shell:stat -c ';
     protected parse(value: string): FileStats {
         const props = value.split('\\_');
-        if (props.length === 1) {
+        if (props.length <= 1) {
             throw new Error(value.trim());
         }
+
         const parsed: IFileStats = {
             abits: parseInt(props[0], 8),
             aflags: props[1],
