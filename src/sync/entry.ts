@@ -6,8 +6,4 @@ export default class SyncEntry extends Stats {
         super(mode, size, mtime);
         this.name = name;
     }
-
-    toString() {
-        return this.name;
-    }
 }

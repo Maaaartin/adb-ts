@@ -109,7 +109,11 @@ export default class AdbDevice implements IAdbDevice {
         );
     }
 
-    forward(local: string, remote: string, cb?: ExecCallback) {
+    forward(
+        local: string,
+        remote: string,
+        cb?: ExecCallback
+    ): Promise<void> | void {
         return this.client.forward(
             this.id,
             local,
@@ -339,28 +343,76 @@ export default class AdbDevice implements IAdbDevice {
         );
     }
 
-    readDir(path: string, cb?: (err: Error, value: SyncEntry[]) => void) {
-        return this.client.readDir(this.id, path, cb);
+    readDir(
+        path: string,
+        cb?: ExecCallbackWithValue<SyncEntry[]>
+    ): Promise<SyncEntry[]> | void {
+        return this.client.readDir(
+            this.id,
+            path,
+            cb as NonNullable<ExecCallbackWithValue<SyncEntry[]>>
+        );
     }
 
-    pushDataToFile(data: string, destPath: string, cb?: ExecCallback) {
-        return this.client.pushDataToFile(this.id, data, destPath, cb);
+    pushDataToFile(
+        data: string,
+        destPath: string,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        return this.client.pushDataToFile(
+            this.id,
+            data,
+            destPath,
+            cb as NonNullable<ExecCallback>
+        );
     }
 
-    pushFile(srcPath: string, destPath: string, cb?: ExecCallback) {
-        return this.client.pushFile(this.id, srcPath, destPath, cb);
+    pushFile(
+        srcPath: string,
+        destPath: string,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        return this.client.pushFile(
+            this.id,
+            srcPath,
+            destPath,
+            cb as NonNullable<ExecCallback>
+        );
     }
 
-    pullDataFromFile(srcPath: string, cb?: ExecCallbackWithValue<string>) {
-        return this.client.pullDataFromFile(this.id, srcPath, cb);
+    pullDataFromFile(
+        srcPath: string,
+        cb?: ExecCallbackWithValue<Buffer>
+    ): Promise<Buffer> | void {
+        return this.client.pullDataFromFile(
+            this.id,
+            srcPath,
+            cb as NonNullable<ExecCallbackWithValue<Buffer>>
+        );
     }
 
-    pullFile(srcPath: string, destPath: string, cb?: ExecCallback) {
-        return this.client.pullFile(this.id, srcPath, destPath, cb);
+    pullFile(
+        srcPath: string,
+        destPath: string,
+        cb?: ExecCallback
+    ): Promise<void> | void {
+        return this.client.pullFile(
+            this.id,
+            srcPath,
+            destPath,
+            cb as NonNullable<ExecCallback>
+        );
     }
 
-    pull(path: string, cb?: (err: Error, value: PullTransfer) => void) {
-        return this.client.pull(this.id, path, cb);
+    pull(
+        path: string,
+        cb?: ExecCallbackWithValue<PullTransfer>
+    ): Promise<PullTransfer> | void {
+        return this.client.pull(
+            this.id,
+            path,
+            cb as NonNullable<ExecCallbackWithValue<PullTransfer>>
+        );
     }
 
     push(
