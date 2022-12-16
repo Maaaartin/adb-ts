@@ -1,6 +1,6 @@
 import { Stats } from 'fs';
 
-export interface IFileStats {
+export interface IFileStat {
     abits: number;
     aflags: string;
     atime: Date;
@@ -30,7 +30,7 @@ export interface IFileStats {
     uname: string;
 }
 
-export default class FileStats extends Stats implements IFileStats {
+export default class FileStat extends Stats implements IFileStat {
     abits!: number;
     aflags!: string;
     allModeBits!: number;
@@ -47,7 +47,7 @@ export default class FileStats extends Stats implements IFileStats {
     seccon!: string;
     type!: string;
     uname!: string;
-    constructor(props: IFileStats) {
+    constructor(props: IFileStat) {
         super();
         Object.assign(this, props);
     }

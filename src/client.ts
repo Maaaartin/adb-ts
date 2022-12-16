@@ -48,7 +48,7 @@ import Connection from './connection';
 import CpCommand from './commands/host-trasport/cp';
 import Disconnect from './commands/host/disconnect';
 import FileStatCommand from './commands/host-trasport/filestat';
-import FileStats from './filestats';
+import FileStat from './filestats';
 import ForwardCommand from './commands/host-serial/forward';
 import GetDevicePathCommand from './commands/host-serial/getdevicepath';
 import GetIpAddressCommand from './commands/host-trasport/ipaddress';
@@ -1948,17 +1948,17 @@ export default class AdbClient {
         );
     }
 
-    fileStat(serial: string, path: string): Promise<FileStats>;
+    fileStat(serial: string, path: string): Promise<FileStat>;
     fileStat(
         serial: string,
         path: string,
-        cb: ExecCallbackWithValue<FileStats>
+        cb: ExecCallbackWithValue<FileStat>
     ): void;
     fileStat(
         serial: string,
         path: string,
-        cb?: ExecCallbackWithValue<FileStats>
-    ): Promise<FileStats> | void {
+        cb?: ExecCallbackWithValue<FileStat>
+    ): Promise<FileStat> | void {
         return nodeify(
             this.connection().then((conn) => {
                 return new FileStatCommand(conn).execute(serial, path);

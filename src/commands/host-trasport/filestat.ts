@@ -1,15 +1,15 @@
-import FileStats, { IFileStats } from '../../filestats';
+import FileStat, { IFileStat } from '../../filestats';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
-export default class FileStatCommand extends TransportParseAllCommand<FileStats> {
+export default class FileStatCommand extends TransportParseAllCommand<FileStat> {
     Cmd = 'shell:stat -c ';
-    protected parse(value: string): FileStats {
+    protected parse(value: string): FileStat {
         const props = value.split('\\_');
         if (props.length <= 1) {
             throw new Error(value.trim());
         }
 
-        const parsed: IFileStats = {
+        const parsed: IFileStat = {
             abits: parseInt(props[0], 8),
             aflags: props[1],
             blocks: Number(props[2]),
@@ -39,10 +39,10 @@ export default class FileStatCommand extends TransportParseAllCommand<FileStats>
             ctimeMs: Number(props[27])
         };
 
-        return new FileStats(parsed);
+        return new FileStat(parsed);
     }
 
-    execute(serial: string, path: string): Promise<FileStats> {
+    execute(serial: string, path: string): Promise<FileStat> {
         const flags = [
             'a',
             'A',

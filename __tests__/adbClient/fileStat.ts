@@ -1,4 +1,5 @@
 import AdbClient from '../../lib/client';
+import FileStats from '../../lib/filestats';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('File stat tests', () => {
@@ -14,8 +15,35 @@ describe('File stat tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            await adb.fileStat('serial', '/file');
-            expect(undefined).toBeUndefined();
+            const result = await adb.fileStat('serial', '/file');
+            expect(result).toBeInstanceOf(FileStats);
+            expect(result.abits).toBe(432);
+            expect(result.aflags).toBe('-rw-rw----');
+            expect(result.blocks).toBe(8);
+            expect(result.bytes).toBe(512);
+            expect(result.seccon).toBe('u:object_r:fuse:s0');
+            expect(result.dev).toBe(80);
+            expect(result.mode).toBe(33200);
+            expect(result.type).toBe('regular empty file');
+            expect(result.gid).toBe(1023);
+            expect(result.gname).toBe('media_rw');
+            expect(result.nlink).toBe(1);
+            expect(result.ino).toBe(303154);
+            expect(result.moutpoint).toBe('/storage/emulated');
+            expect(result.name).toBe('/sdcard/file');
+            expect(result.lname).toBe('/sdcard/file');
+            expect(result.blksize).toBe(4096);
+            expect(result.size).toBe(0);
+            expect(result.dTypeMajor).toBe(0);
+            expect(result.dTypeMinor).toBe(0);
+            expect(result.uid).toBe(10145);
+            expect(result.uname).toBe('u0_a145');
+            expect(result.atime).toEqual(new Date('2022-12-15T15:40:46.871Z'));
+            expect(result.atimeMs).toBe(1671118846);
+            expect(result.mtime).toEqual(new Date('2022-12-15T15:40:46.871Z'));
+            expect(result.mtimeMs).toBe(1671118846);
+            expect(result.ctime).toEqual(new Date('2022-12-15T20:33:17.585Z'));
+            expect(result.ctimeMs).toBe(1671136397);
         } finally {
             await adbMock.end();
         }
