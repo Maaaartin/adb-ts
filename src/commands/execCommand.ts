@@ -29,7 +29,6 @@ export default abstract class ShellCommand<T> extends TransportCommand<T> {
             'echo',
             this.escape(this.uuid)
         ].join(' ');
-        console.log(this.Cmd);
         return super.preExecute(serial);
     }
 }

@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { AdbExecError } from '../../lib';
+import { AdbExecError, UnexpectedDataError } from '../../lib';
 import AdbClient from '../../lib/client';
 import FileStats from '../../lib/filestats';
 import { AdbMock } from '../../mockery/mockAdbServer';
@@ -75,6 +75,116 @@ describe('File stat OKAY tests', () => {
                 `stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file`
             );
             expect(e).toBeInstanceOf(AdbExecError);
+        } finally {
+            await adbMock.end();
+        }
+    });
+});
+
+describe('File stat FAIL tests', () => {
+    it('First response should FAIL', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'fail', res: null, rawRes: true },
+            {
+                cmd: `shell:(stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file) || echo '123456'`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.fileStat('serial', '/file');
+                fail('Expected Failure');
+            } catch (e) {
+                expect(e).toEqual(new Error('Failure'));
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Second response should FAIL', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `fail`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.fileStat('serial', '/file');
+                fail('Expected Failure');
+            } catch (e) {
+                expect(e).toEqual(new Error('Failure'));
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+});
+
+describe('File stat unexpected tests', () => {
+    it('Should throw unexpected error for first response', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true,
+                unexpected: true
+            },
+            {
+                cmd: `shell:(stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file) || echo '123456'`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.fileStat('serial', '/file');
+                fail('Expected Failure');
+            } catch (e) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+                );
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Should throw unexpected error for second response', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: `shell:(stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file) || echo '123456'`,
+                res: null,
+                rawRes: true,
+                unexpected: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.fileStat('serial', '/file');
+                fail('Expected Failure');
+            } catch (e) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+                );
+            }
         } finally {
             await adbMock.end();
         }
