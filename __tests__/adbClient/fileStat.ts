@@ -9,7 +9,7 @@ beforeAll(() => {
         return '123456';
     });
 });
-describe('File stat tests', () => {
+describe('File stat OKAY tests', () => {
     it('Should execute successfully', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },

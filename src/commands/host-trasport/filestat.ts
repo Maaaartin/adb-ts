@@ -5,9 +5,6 @@ export default class FileStatCommand extends ExecCommand<FileStat> {
     Cmd = 'stat -c ';
     protected cast(value: string): FileStat {
         const props = value.split('\\_');
-        if (props.length <= 1) {
-            throw new Error(value.trim());
-        }
 
         const parsed: IFileStat = {
             abits: parseInt(props[0], 8),

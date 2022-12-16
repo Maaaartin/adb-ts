@@ -149,7 +149,7 @@ describe('Mv unexpected tests', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
-                const thing = await adb.mv('serial', '/file', '/other');
+                await adb.mv('serial', '/file', '/other');
                 fail('Expected Failure');
             } catch (e) {
                 expect(e).toEqual(
