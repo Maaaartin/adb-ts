@@ -364,7 +364,7 @@ export default class AdbClient {
         serial: string,
         local: string,
         remote: string,
-        cb?: ExecCallback
+        cb: ExecCallback
     ): void;
     forward(
         serial: string,
@@ -383,7 +383,7 @@ export default class AdbClient {
     listForwards(serial: string): Promise<ForwardsObject[]>;
     listForwards(
         serial: string,
-        cb?: ExecCallbackWithValue<ForwardsObject[]>
+        cb: ExecCallbackWithValue<ForwardsObject[]>
     ): void;
     listForwards(
         serial: string,
@@ -402,7 +402,7 @@ export default class AdbClient {
         serial: string,
         local: string,
         remote: string,
-        cb?: ExecCallback
+        cb: ExecCallback
     ): void;
     reverse(
         serial: string,
@@ -421,7 +421,7 @@ export default class AdbClient {
     listReverses(serial: string): Promise<ReversesObject[]>;
     listReverses(
         serial: string,
-        cb?: ExecCallbackWithValue<ReversesObject[]>
+        cb: ExecCallbackWithValue<ReversesObject[]>
     ): void;
     listReverses(
         serial: string,
@@ -445,7 +445,7 @@ export default class AdbClient {
     }
 
     reboot(serial: string): Promise<void>;
-    reboot(serial: string, cb?: ExecCallback): void;
+    reboot(serial: string, cb: ExecCallback): void;
     reboot(serial: string, cb?: ExecCallback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
@@ -456,7 +456,7 @@ export default class AdbClient {
     }
 
     shutdown(serial: string): Promise<void>;
-    shutdown(serial: string, cb?: ExecCallback): void;
+    shutdown(serial: string, cb: ExecCallback): void;
     shutdown(serial: string, cb?: ExecCallback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
@@ -467,7 +467,7 @@ export default class AdbClient {
     }
 
     remount(serial: string): Promise<void>;
-    remount(serial: string, cb?: ExecCallback): void;
+    remount(serial: string, cb: ExecCallback): void;
     remount(serial: string, cb?: ExecCallback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
@@ -478,7 +478,7 @@ export default class AdbClient {
     }
 
     root(serial: string): Promise<void>;
-    root(serial: string, cb?: ExecCallback): void;
+    root(serial: string, cb: ExecCallback): void;
     root(serial: string, cb?: ExecCallback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
@@ -489,7 +489,7 @@ export default class AdbClient {
     }
 
     screenshot(serial: string): Promise<Buffer>;
-    screenshot(serial: string, cb?: ExecCallbackWithValue<Buffer>): void;
+    screenshot(serial: string, cb: ExecCallbackWithValue<Buffer>): void;
     screenshot(
         serial: string,
         cb?: ExecCallbackWithValue<Buffer>
