@@ -1,9 +1,9 @@
 import FileStat, { IFileStat } from '../../filestats';
-import TransportParseAllCommand from '../transport-parse-all-command';
+import ExecCommand from '../execCommand';
 
-export default class FileStatCommand extends TransportParseAllCommand<FileStat> {
-    Cmd = 'shell:stat -c ';
-    protected parse(value: string): FileStat {
+export default class FileStatCommand extends ExecCommand<FileStat> {
+    Cmd = 'stat -c ';
+    protected cast(value: string): FileStat {
         const props = value.split('\\_');
         if (props.length <= 1) {
             throw new Error(value.trim());

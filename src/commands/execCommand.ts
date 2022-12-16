@@ -2,9 +2,7 @@ import crypto from 'crypto';
 import { AdbExecError } from '../';
 import TransportCommand from './transport';
 
-export default abstract class ShellCommand<
-    T extends void | string
-> extends TransportCommand<T> {
+export default abstract class ShellCommand<T> extends TransportCommand<T> {
     public abstract Cmd: string;
     private readonly uuid = crypto.randomUUID();
     private rawCmd = '';
@@ -31,7 +29,7 @@ export default abstract class ShellCommand<
             'echo',
             this.escape(this.uuid)
         ].join(' ');
-
+        console.log(this.Cmd);
         return super.preExecute(serial);
     }
 }
