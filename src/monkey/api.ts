@@ -47,7 +47,7 @@ export default abstract class Api extends EventEmitter {
             }
         );
     }
-    // TODO types for emitter
+
     keyDown(keyCode: KeyCode | number, cb?: MonkeyCallback): this {
         return this.send('key down ' + keyCode, cb);
     }
