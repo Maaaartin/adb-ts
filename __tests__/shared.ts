@@ -114,7 +114,7 @@ describe('Nodeify', () => {
     it('Reject Promise', async () => {
         try {
             await nodeify(Promise.reject(new Error('message')), undefined);
-        } catch (e) {
+        } catch (e: any) {
             expect(e.message).toBe('message');
         }
     });

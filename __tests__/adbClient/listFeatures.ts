@@ -55,7 +55,7 @@ feature:six`,
             try {
                 await adb.listFeatures('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {
@@ -83,7 +83,7 @@ feature:six`,
             try {
                 await adb.listFeatures('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {
@@ -116,7 +116,7 @@ feature:six`,
             try {
                 await adb.listFeatures('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe(
                     "Unexpected 'UNEX', was expecting OKAY or FAIL"
                 );
@@ -151,7 +151,7 @@ feature:six`,
             try {
                 await adb.listFeatures('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe(
                     "Unexpected 'UNEX', was expecting OKAY or FAIL"
                 );

@@ -168,7 +168,7 @@ describe('Cp FAIL tests', () => {
             try {
                 await adb.cp('serial', '/file', '/other');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -191,7 +191,7 @@ describe('Cp FAIL tests', () => {
             try {
                 await adb.cp('serial', '/file', '/other');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -221,7 +221,7 @@ describe('Cp unexpected tests', () => {
             try {
                 await adb.cp('serial', '/file', '/other');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -251,7 +251,7 @@ describe('Cp unexpected tests', () => {
             try {
                 await adb.mv('serial', '/file', '/other');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

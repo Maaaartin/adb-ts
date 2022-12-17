@@ -28,7 +28,7 @@ describe('Reboot', () => {
             try {
                 await adb.reboot('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -47,7 +47,7 @@ describe('Reboot', () => {
             try {
                 await adb.reboot('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -71,7 +71,7 @@ describe('Reboot', () => {
             try {
                 await adb.reboot('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );
@@ -96,7 +96,7 @@ describe('Reboot', () => {
             try {
                 await adb.reboot('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );

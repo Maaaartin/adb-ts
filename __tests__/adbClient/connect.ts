@@ -55,7 +55,7 @@ describe('Connect', () => {
             try {
                 await adb.connect('127.0.0.1', 4444);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('invalid');
             }
         } finally {
@@ -71,7 +71,7 @@ describe('Connect', () => {
             try {
                 await adb.connect('127.0.0.1', 4444);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {

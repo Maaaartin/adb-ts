@@ -23,7 +23,7 @@ describe('Exec device shell tests', () => {
         const adb = new AdbClient({ noAutoStart: true });
         try {
             await adb.execDeviceShell('serial', 'cmd');
-        } catch (e) {
+        } catch (e: any) {
             expect(e.message).toBe('message');
             expect(e.command).toBe('-s serial shell cmd');
             expect(e).toBeInstanceOf(AdbExecError);
@@ -35,7 +35,7 @@ describe('Exec device shell tests', () => {
         const adb = new AdbClient({ noAutoStart: true });
         try {
             await adb.execDeviceShell('serial', 'cmd');
-        } catch (e) {
+        } catch (e: any) {
             expect(e.message).toBe('Error: message');
             expect(e.command).toBe('-s serial shell cmd');
             expect(e).toBeInstanceOf(AdbExecError);

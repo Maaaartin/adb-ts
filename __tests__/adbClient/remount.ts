@@ -28,7 +28,7 @@ describe('Remount', () => {
             try {
                 await adb.remount('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Not running as root'));
             }
         } finally {
@@ -47,7 +47,7 @@ describe('Remount', () => {
             try {
                 await adb.remount('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('inaccessible'));
             }
         } finally {
@@ -66,7 +66,7 @@ describe('Remount', () => {
             try {
                 await adb.remount('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('not found'));
             }
         } finally {
@@ -85,7 +85,7 @@ describe('Remount', () => {
             try {
                 await adb.remount('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -104,7 +104,7 @@ describe('Remount', () => {
             try {
                 await adb.remount('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -128,7 +128,7 @@ describe('Remount', () => {
             try {
                 await adb.remount('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );
@@ -153,7 +153,7 @@ describe('Remount', () => {
             try {
                 await adb.remount('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );

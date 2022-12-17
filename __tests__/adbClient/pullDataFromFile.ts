@@ -39,7 +39,7 @@ describe('Pull data from file tests', () => {
             try {
                 await adb.pullDataFromFile('serial', '/file');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new FailError('data'));
             }
         } finally {
@@ -63,7 +63,7 @@ describe('Pull data from file tests', () => {
             try {
                 await adb.pullDataFromFile('serial', '/file');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'DATA, DONE or FAIL')
                 );

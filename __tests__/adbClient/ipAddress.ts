@@ -78,7 +78,7 @@ describe('IP address', () => {
             try {
                 await adb.getIpAddress('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {
@@ -102,7 +102,7 @@ describe('IP address', () => {
             try {
                 await adb.getIpAddress('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {

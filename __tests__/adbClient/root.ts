@@ -28,7 +28,7 @@ describe('Root', () => {
             try {
                 await adb.root('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('invalid'));
             }
         } finally {
@@ -47,7 +47,7 @@ describe('Root', () => {
             try {
                 await adb.root('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -66,7 +66,7 @@ describe('Root', () => {
             try {
                 await adb.root('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -90,7 +90,7 @@ describe('Root', () => {
             try {
                 await adb.root('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );
@@ -115,7 +115,7 @@ describe('Root', () => {
             try {
                 await adb.root('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );

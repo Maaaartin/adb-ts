@@ -37,7 +37,7 @@ describe('Wait boot complete', () => {
             try {
                 await adb.waitBootComplete('serial');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toBeInstanceOf(PrematureEOFError);
             }
         } finally {

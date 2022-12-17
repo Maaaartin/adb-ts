@@ -69,7 +69,7 @@ describe('Push tests', () => {
                     });
                 })();
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new FailError('Error'));
             }
         } finally {
@@ -107,7 +107,7 @@ describe('Push tests', () => {
                     });
                 })();
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

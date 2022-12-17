@@ -44,7 +44,7 @@ describe('Shell tests', () => {
             try {
                 await adb.shell('serial', 'cmd');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new AdbExecError('message', 'cmd'));
             }
         } finally {
@@ -67,7 +67,7 @@ describe('Shell tests', () => {
             try {
                 await adb.shell('serial', 'cmd');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -90,7 +90,7 @@ describe('Shell tests', () => {
             try {
                 await adb.shell('serial', 'cmd');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -118,7 +118,7 @@ describe('Shell tests', () => {
             try {
                 await adb.shell('serial', 'cmd');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -148,7 +148,7 @@ describe('Shell tests', () => {
             try {
                 await adb.shell('serial', 'cmd');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

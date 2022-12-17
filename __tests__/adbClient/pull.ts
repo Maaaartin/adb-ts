@@ -60,7 +60,7 @@ describe('Pull tests', () => {
                     });
                 })();
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new FailError('data'));
             }
         } finally {
@@ -94,7 +94,7 @@ describe('Pull tests', () => {
                     });
                 })();
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'DATA, DONE or FAIL')
                 );

@@ -28,7 +28,7 @@ describe('Shutdown', () => {
             try {
                 await adb.shutdown('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -47,7 +47,7 @@ describe('Shutdown', () => {
             try {
                 await adb.shutdown('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -71,7 +71,7 @@ describe('Shutdown', () => {
             try {
                 await adb.shutdown('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );
@@ -101,7 +101,7 @@ describe('Shutdown', () => {
             try {
                 await adb.shutdown('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );

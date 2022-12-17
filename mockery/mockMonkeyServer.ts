@@ -57,14 +57,14 @@ export default class MonkeyMock {
                         this.hook();
                         resolve(this.getPort());
                         this.server_.removeListener('error', reject);
-                    } catch (e) {
+                    } catch (e: any) {
                         reject(e);
                     }
                 });
             } else {
                 try {
                     resolve(this.getPort());
-                } catch (e) {
+                } catch (e: any) {
                     reject(e);
                 }
             }

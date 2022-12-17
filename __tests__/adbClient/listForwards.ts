@@ -62,7 +62,7 @@ serial tcp:9223 localabstract:chrome_devtools_remote`
             try {
                 await adb.listForwards('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -84,7 +84,7 @@ serial tcp:9223 localabstract:chrome_devtools_remote`
             try {
                 await adb.listForwards('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toBeInstanceOf(UnexpectedDataError);
                 expect(e).toEqual(
                     new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")

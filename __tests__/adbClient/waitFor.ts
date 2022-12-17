@@ -139,7 +139,7 @@ describe('Wait for', () => {
             try {
                 await adb.waitFor('any', 'disconnect');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -161,7 +161,7 @@ describe('Wait for', () => {
             try {
                 await adb.waitFor('any', 'disconnect');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Err'));
             }
         } finally {
@@ -183,7 +183,7 @@ describe('Wait for', () => {
             try {
                 await adb.waitFor('any', 'disconnect');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Could not read error'));
             }
         } finally {
@@ -205,7 +205,7 @@ describe('Wait for', () => {
             try {
                 await adb.waitFor('any', 'disconnect');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

@@ -146,7 +146,7 @@ describe('Drag and drop', () => {
             try {
                 await adb.dragAndDrop('serial', 100, 200, 100, 10);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -173,7 +173,7 @@ describe('Drag and drop', () => {
             try {
                 await adb.dragAndDrop('serial', 100, 200, 100, 10);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -201,7 +201,7 @@ describe('Drag and drop', () => {
             try {
                 await adb.dragAndDrop('serial', 100, 200, 100, 10);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -231,7 +231,7 @@ describe('Drag and drop', () => {
             try {
                 await adb.dragAndDrop('serial', 100, 200, 100, 10);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

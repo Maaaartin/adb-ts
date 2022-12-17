@@ -210,7 +210,7 @@ describe('Put setting tests', () => {
             try {
                 await adb.putSetting('serial', 'system', 'setting', undefined);
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failed'));
             }
         } finally {
@@ -233,7 +233,7 @@ describe('Put setting tests', () => {
             try {
                 await adb.putSetting('serial', 'system', 'setting', '');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -256,7 +256,7 @@ describe('Put setting tests', () => {
             try {
                 await adb.putSetting('serial', 'system', 'setting', '');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -284,7 +284,7 @@ describe('Put setting tests', () => {
             try {
                 await adb.putSetting('serial', 'system', 'setting', '');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -314,7 +314,7 @@ describe('Put setting tests', () => {
             try {
                 await adb.putSetting('serial', 'system', 'setting', '');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

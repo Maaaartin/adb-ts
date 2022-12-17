@@ -43,7 +43,7 @@ describe('Forward tests', () => {
                     'localabstract:chrome_devtools_remote'
                 );
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -70,7 +70,7 @@ describe('Forward tests', () => {
                     'localabstract:chrome_devtools_remote'
                 );
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toBeInstanceOf(UnexpectedDataError);
                 expect(e).toEqual(
                     new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")

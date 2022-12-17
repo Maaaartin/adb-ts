@@ -37,7 +37,7 @@ describe('Events', () => {
 });
 
 describe('Commands', () => {
-    it('Should send command', async (done) => {
+    it('Should send command', async () => {
         const monkeyMock = new MonkeyMock([{ status: 'OK', reply: 'value' }]);
 
         const port = await monkeyMock.start();
@@ -50,11 +50,10 @@ describe('Commands', () => {
             expect(err).toBeNull();
             expect(value).toBe('value');
             expect(command).toBe('test');
-            done();
         });
     });
 
-    it('Should send multiple commands', async (done) => {
+    it('Should send multiple commands', async () => {
         const monkeyMock = new MonkeyMock([
             { status: 'OK', reply: 'value' },
             { status: 'OK', reply: 'value' }
@@ -70,7 +69,6 @@ describe('Commands', () => {
             if (commands.length === 0) {
                 monkey.end();
                 monkeyMock.end();
-                done();
             }
             expect(err).toBeNull();
             expect(value).toBe('value');
@@ -78,7 +76,7 @@ describe('Commands', () => {
         });
     });
 
-    it('Should make command fail', async (done) => {
+    it('Should make command fail', async () => {
         const monkeyMock = new MonkeyMock([
             { status: 'OK', reply: 'value', timeout: 600 }
         ]);
@@ -93,11 +91,10 @@ describe('Commands', () => {
             expect(err).toEqual(new Error('Command failed'));
             expect(value).toBeNull();
             expect(command).toBe('test');
-            done();
         });
     });
 
-    it('Should emit error when replies are still coming', async (done) => {
+    it('Should emit error when replies are still coming', async () => {
         const monkeyMock = new MonkeyMock([{ status: 'OK', reply: 'value' }]);
 
         const port = await monkeyMock.start();
@@ -109,7 +106,6 @@ describe('Commands', () => {
             expect(err).toEqual(
                 new Error('Command queue depleted, but replies still coming in')
             );
-            done();
         });
         monkey.send('test', () => {});
         monkey.queue.splice(0, monkey.queue.length);

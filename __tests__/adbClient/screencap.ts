@@ -37,7 +37,7 @@ describe('Screencap', () => {
                 const adb = new AdbClient({ noAutoStart: true, port });
                 await adb.screenshot('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -60,7 +60,7 @@ describe('Screencap', () => {
                 const adb = new AdbClient({ noAutoStart: true, port });
                 await adb.screenshot('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -88,7 +88,7 @@ describe('Screencap', () => {
                 const adb = new AdbClient({ noAutoStart: true, port });
                 await adb.screenshot('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -118,7 +118,7 @@ describe('Screencap', () => {
                 const adb = new AdbClient({ noAutoStart: true, port });
                 await adb.screenshot('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

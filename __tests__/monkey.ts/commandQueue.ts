@@ -3,7 +3,7 @@ import MonkeyMock from '../../mockery/mockMonkeyServer';
 import Monkey from '../../lib/monkey/client';
 
 describe('Monkey command queue tests', () => {
-    it('Should execute without error', async (done) => {
+    it('Should execute without error', async () => {
         const monkeyMock = new MonkeyMock([
             { status: 'OK', reply: '' },
             { status: 'OK', reply: '' },
@@ -23,11 +23,10 @@ describe('Monkey command queue tests', () => {
             expect(values).toEqual([null, null, null, 'test']);
             monkeyMock.end();
             monkey.end();
-            done();
         });
     });
 
-    it('Should execute with error', async (done) => {
+    it('Should execute with error', async () => {
         const monkeyMock = new MonkeyMock([
             { status: 'OK', reply: '' },
             { status: 'ERROR', reply: 'error1' },
@@ -49,11 +48,10 @@ describe('Monkey command queue tests', () => {
                 expect(values).toEqual([]);
                 monkeyMock.end();
                 monkey.end();
-                done();
             });
     });
 
-    it('Should execute with error', async (done) => {
+    it('Should execute with error', async () => {
         const monkeyMock = new MonkeyMock([
             { status: 'OK', reply: '' },
             { status: 'ERROR', reply: 'error1' },
@@ -75,7 +73,6 @@ describe('Monkey command queue tests', () => {
                 expect(values).toEqual([]);
                 monkeyMock.end();
                 monkey.end();
-                done();
             });
     });
 

@@ -193,7 +193,7 @@ describe('Key event', () => {
             try {
                 await adb.keyEvent('serial', 37);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -220,7 +220,7 @@ describe('Key event', () => {
             try {
                 await adb.keyEvent('serial', 37);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -248,7 +248,7 @@ describe('Key event', () => {
             try {
                 await adb.keyEvent('serial', 37);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -278,7 +278,7 @@ describe('Key event', () => {
             try {
                 await adb.keyEvent('serial', 37);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

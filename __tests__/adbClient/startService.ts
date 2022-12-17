@@ -576,7 +576,7 @@ describe('Start service', () => {
             try {
                 await adb.startService('serial', 'com.my.app', 'Service');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('message'));
             }
         } finally {
@@ -599,7 +599,7 @@ describe('Start service', () => {
             try {
                 await adb.startService('serial', 'com.my.app', 'Service');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -622,7 +622,7 @@ describe('Start service', () => {
             try {
                 await adb.startService('serial', 'com.my.app', 'Service');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -650,7 +650,7 @@ describe('Start service', () => {
             try {
                 await adb.startService('serial', 'com.my.app', 'Service');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -680,7 +680,7 @@ describe('Start service', () => {
             try {
                 await adb.startService('serial', 'com.my.app', 'Service');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

@@ -28,7 +28,7 @@ describe('Get serial no', () => {
             try {
                 await adb.getSerialNo('fail');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {
@@ -47,7 +47,7 @@ describe('Get serial no', () => {
             try {
                 await adb.getSerialNo('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {
@@ -71,7 +71,7 @@ describe('Get serial no', () => {
             try {
                 await adb.getSerialNo('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe(
                     "Unexpected 'UNEX', was expecting OKAY or FAIL"
                 );
@@ -101,7 +101,7 @@ describe('Get serial no', () => {
             try {
                 await adb.getSerialNo('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe(
                     "Unexpected 'UNEX', was expecting OKAY or FAIL"
                 );

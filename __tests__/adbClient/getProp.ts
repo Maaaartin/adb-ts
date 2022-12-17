@@ -133,7 +133,7 @@ describe('Gep prop tests', () => {
             try {
                 await adb.getProp('serial', 'prop');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -156,7 +156,7 @@ describe('Gep prop tests', () => {
             try {
                 await adb.getProp('serial', 'prop');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -184,7 +184,7 @@ describe('Gep prop tests', () => {
             try {
                 await adb.getProp('serial', 'prop');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -214,7 +214,7 @@ describe('Gep prop tests', () => {
             try {
                 await adb.getProp('serial', 'prop');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

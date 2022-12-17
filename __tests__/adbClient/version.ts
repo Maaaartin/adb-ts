@@ -31,7 +31,7 @@ describe('Version tests', () => {
             try {
                 await client.version();
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {

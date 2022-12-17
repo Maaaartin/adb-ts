@@ -68,7 +68,7 @@ describe('Rm FAIL tests', () => {
             try {
                 await adb.rm('serial', '/file');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -91,7 +91,7 @@ describe('Rm FAIL tests', () => {
             try {
                 await adb.rm('serial', '/file');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -121,7 +121,7 @@ describe('Rm unexpected tests', () => {
             try {
                 await adb.rm('serial', '/file');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -151,7 +151,7 @@ describe('Rm unexpected tests', () => {
             try {
                 await adb.rm('serial', '/file');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

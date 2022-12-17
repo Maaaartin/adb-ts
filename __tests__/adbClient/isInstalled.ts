@@ -68,7 +68,7 @@ describe('Is installed', () => {
             try {
                 await adb.isInstalled('serial', 'com.package');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toBeInstanceOf(UnexpectedDataError);
                 expect(e.message).toBe(
                     "Unexpected 'badValue', was expecting package:"
@@ -98,7 +98,7 @@ describe('Is installed', () => {
             try {
                 await adb.isInstalled('serial', 'com.package');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {
@@ -125,7 +125,7 @@ describe('Is installed', () => {
             try {
                 await adb.isInstalled('serial', 'com.package');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {
@@ -153,7 +153,7 @@ describe('Is installed', () => {
             try {
                 await adb.isInstalled('serial', 'com.package');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe(
                     "Unexpected 'UNEX', was expecting OKAY or FAIL"
                 );
@@ -183,7 +183,7 @@ describe('Is installed', () => {
             try {
                 await adb.isInstalled('serial', 'com.package');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe(
                     "Unexpected 'UNEX', was expecting OKAY or FAIL"
                 );

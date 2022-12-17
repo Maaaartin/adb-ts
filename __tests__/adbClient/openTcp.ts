@@ -69,7 +69,7 @@ describe('Open TCP', () => {
             try {
                 await adb.openTcp('serial', 5555);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -96,7 +96,7 @@ describe('Open TCP', () => {
             try {
                 await adb.openTcp('serial', 5555);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -124,7 +124,7 @@ describe('Open TCP', () => {
             try {
                 await adb.openTcp('serial', 5555);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -154,7 +154,7 @@ describe('Open TCP', () => {
             try {
                 await adb.openTcp('serial', 5555);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

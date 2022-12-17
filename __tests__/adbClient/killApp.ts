@@ -44,7 +44,7 @@ describe('Kill app OKAY tests', () => {
             try {
                 await adb.killApp('serial', 'package');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new AdbExecError('message', 'package'));
             }
         } finally {
@@ -69,7 +69,7 @@ describe('Kill app FAIL tests', () => {
             try {
                 await adb.killApp('serial', 'package');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -92,7 +92,7 @@ describe('Kill app FAIL tests', () => {
             try {
                 await adb.killApp('serial', 'package');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -122,7 +122,7 @@ describe('Kill app unexpected response tests', () => {
             try {
                 await adb.killApp('serial', 'package');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -148,7 +148,7 @@ describe('Kill app unexpected response tests', () => {
             try {
                 await adb.killApp('serial', 'package');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

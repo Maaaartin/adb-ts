@@ -112,7 +112,7 @@ describe('Text', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             await adb.text('serial', 'something');
             fail('Expected Failure');
-        } catch (e) {
+        } catch (e: any) {
             expect(e).toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
@@ -138,7 +138,7 @@ describe('Text', () => {
             try {
                 await adb.text('serial', 'something');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -166,7 +166,7 @@ describe('Text', () => {
             try {
                 await adb.text('serial', 'something');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -196,7 +196,7 @@ describe('Text', () => {
             try {
                 await adb.text('serial', 'something');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

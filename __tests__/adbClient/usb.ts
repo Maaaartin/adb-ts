@@ -37,7 +37,7 @@ describe('Usb', () => {
             try {
                 await adb.usb('serial');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new FailError('error'));
             }
         } finally {

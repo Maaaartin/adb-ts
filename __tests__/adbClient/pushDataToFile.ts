@@ -92,7 +92,7 @@ describe('Push data to file', () => {
                     'dest'
                 );
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new FailError('Error'));
             }
         } finally {
@@ -120,7 +120,7 @@ describe('Push data to file', () => {
                     'dest'
                 );
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

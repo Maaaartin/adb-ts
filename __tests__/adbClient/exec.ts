@@ -23,7 +23,7 @@ describe('Exec tests', () => {
         const adb = new AdbClient({ noAutoStart: true });
         try {
             await adb.exec('cmd');
-        } catch (e) {
+        } catch (e: any) {
             expect(e.message).toBe('message');
             expect(e.command).toBe('cmd');
             expect(e).toBeInstanceOf(AdbExecError);
@@ -35,7 +35,7 @@ describe('Exec tests', () => {
         const adb = new AdbClient({ noAutoStart: true });
         try {
             await adb.exec('cmd');
-        } catch (e) {
+        } catch (e: any) {
             expect(e.message).toBe('Error: message');
             expect(e.command).toBe('cmd');
             expect(e).toBeInstanceOf(AdbExecError);

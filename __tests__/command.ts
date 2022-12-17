@@ -100,7 +100,7 @@ describe('Handle response', () => {
             try {
                 await cmd.execute();
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {
@@ -121,7 +121,7 @@ describe('Handle response', () => {
             const cmd = new MockCommand(conn);
             try {
                 await cmd.execute();
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toBeInstanceOf(UnexpectedDataError);
                 expect(e.message).toBe(
                     "Unexpected 'UNEX', was expecting OKAY or FAIL"

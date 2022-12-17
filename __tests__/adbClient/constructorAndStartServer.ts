@@ -35,7 +35,7 @@ describe('Start server tests', () => {
             mockExec(new Error('message'));
             const client = new AdbClient();
             await client.startServer();
-        } catch (e) {
+        } catch (e: any) {
             expect(e.message).toBe('message');
         }
     });

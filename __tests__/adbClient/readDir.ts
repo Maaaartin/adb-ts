@@ -87,7 +87,7 @@ describe('Read dir', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             await adb.readDir('serial', '/');
             fail('Expected failure');
-        } catch (e) {
+        } catch (e: any) {
             expect(e).toEqual(new Error('Err'));
         } finally {
             await adbMock.end();
@@ -111,7 +111,7 @@ describe('Read dir', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             await adb.readDir('serial', '/');
             fail('Expected failure');
-        } catch (e) {
+        } catch (e: any) {
             expect(e).toEqual(
                 new UnexpectedDataError('UNEX', 'DENT, DONE or FAIL')
             );

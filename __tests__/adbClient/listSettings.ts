@@ -84,7 +84,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
             try {
                 await adb.listSettings('serial', 'system');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -113,7 +113,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
             try {
                 await adb.listSettings('serial', 'system');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -147,7 +147,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
             try {
                 await adb.listSettings('serial', 'system');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -182,7 +182,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
             try {
                 await adb.listSettings('serial', 'system');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

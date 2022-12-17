@@ -189,7 +189,7 @@ describe('Track devices', () => {
             try {
                 await adb.trackDevices();
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {

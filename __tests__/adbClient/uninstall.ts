@@ -91,7 +91,7 @@ describe('Uninstall', () => {
             try {
                 await adb.uninstall('serial', 'com.package');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {
@@ -118,7 +118,7 @@ describe('Uninstall', () => {
             try {
                 await adb.uninstall('serial', 'com.package');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {
@@ -146,7 +146,7 @@ describe('Uninstall', () => {
             try {
                 await adb.uninstall('serial', 'com.package');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe(
                     "Unexpected 'UNEX', was expecting OKAY or FAIL"
                 );
@@ -176,7 +176,7 @@ describe('Uninstall', () => {
             try {
                 await adb.uninstall('serial', 'com.package');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe(
                     "Unexpected 'UNEX', was expecting OKAY or FAIL"
                 );

@@ -68,7 +68,7 @@ describe('Mkdir FAIL tests', () => {
             try {
                 await adb.mkdir('serial', '/dir');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -91,7 +91,7 @@ describe('Mkdir FAIL tests', () => {
             try {
                 await adb.mkdir('serial', '/dir');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -121,7 +121,7 @@ describe('Mkdir unexpected tests', () => {
             try {
                 await adb.mkdir('serial', '/dir');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -151,7 +151,7 @@ describe('Mkdir unexpected tests', () => {
             try {
                 await adb.mkdir('serial', '/dir');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

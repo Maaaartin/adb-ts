@@ -68,7 +68,7 @@ describe('Roll', () => {
             try {
                 await adb.roll('serial', 100, 0);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -95,7 +95,7 @@ describe('Roll', () => {
             try {
                 await adb.roll('serial', 100, 0);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -123,7 +123,7 @@ describe('Roll', () => {
             try {
                 await adb.roll('serial', 100, 0);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -153,7 +153,7 @@ describe('Roll', () => {
             try {
                 await adb.roll('serial', 100, 0);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

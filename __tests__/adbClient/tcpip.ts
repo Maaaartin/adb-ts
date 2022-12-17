@@ -56,7 +56,7 @@ describe('Tcpip', () => {
             try {
                 await adb.tcpip('serial');
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new FailError('error'));
             }
         } finally {

@@ -48,7 +48,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
             try {
                 await adb.listReverses('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -71,7 +71,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
             try {
                 await adb.listReverses('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -99,7 +99,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
             try {
                 await adb.listReverses('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -129,7 +129,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`,
             try {
                 await adb.listReverses('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

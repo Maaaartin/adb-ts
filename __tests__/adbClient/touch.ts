@@ -157,7 +157,7 @@ describe('Touch FAIL tests', () => {
             try {
                 await adb.touch('serial', '/file');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -180,7 +180,7 @@ describe('Touch FAIL tests', () => {
             try {
                 await adb.touch('serial', '/file');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -210,7 +210,7 @@ describe('Touch unexpected tests', () => {
             try {
                 await adb.touch('serial', '/file');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -240,7 +240,7 @@ describe('Touch unexpected tests', () => {
             try {
                 await adb.touch('serial', '/file');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

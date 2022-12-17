@@ -24,7 +24,7 @@ describe('Get device path', () => {
             try {
                 await adb.getDevicePath('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {

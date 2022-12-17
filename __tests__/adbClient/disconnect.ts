@@ -66,7 +66,7 @@ describe('Disconnect', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             try {
                 await adb.disconnect('127.0.0.1', 4444);
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('invalid');
             }
         } finally {
@@ -87,7 +87,7 @@ describe('Disconnect', () => {
             try {
                 await adb.disconnect('127.0.0.1', 4444);
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {

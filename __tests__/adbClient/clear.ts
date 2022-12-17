@@ -43,7 +43,7 @@ describe('Clear', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             await adb.clear('serial', 'com.something');
-        } catch (e) {
+        } catch (e: any) {
             expect(e.message).toBe(
                 `Package 'com.something' could not be cleared`
             );
@@ -69,7 +69,7 @@ describe('Clear', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             await adb.clear('serial', 'com.something');
-        } catch (e) {
+        } catch (e: any) {
             expect(e).toBeInstanceOf(UnexpectedDataError);
             expect(e.message).toBe(
                 `Unexpected 'Something', was expecting /^(Success|Failed)$/`
@@ -98,7 +98,7 @@ describe('Clear', () => {
 
             await adb.clear('serial', 'com.something');
             fail('Expected Failure');
-        } catch (e) {
+        } catch (e: any) {
             expect(e).toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
@@ -124,7 +124,7 @@ describe('Clear', () => {
 
             await adb.clear('serial', 'com.something');
             fail('Expected Failure');
-        } catch (e) {
+        } catch (e: any) {
             expect(e).toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
@@ -151,7 +151,7 @@ describe('Clear', () => {
 
             await adb.clear('serial', 'com.something');
             fail('Expected Failure');
-        } catch (e) {
+        } catch (e: any) {
             expect(e).toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();

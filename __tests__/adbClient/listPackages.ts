@@ -40,7 +40,7 @@ package:four`,
             try {
                 await adb.listPackages('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -65,7 +65,7 @@ package:four`,
             try {
                 await adb.listPackages('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -95,7 +95,7 @@ package:four`,
             try {
                 await adb.listPackages('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );
@@ -127,7 +127,7 @@ package:four`,
             try {
                 await adb.listPackages('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
                 );

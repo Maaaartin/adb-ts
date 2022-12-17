@@ -170,7 +170,7 @@ describe('Set prop tests', () => {
             try {
                 await adb.setProp('serial', 'prop', undefined);
                 fail('Expected failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failed'));
             }
         } finally {
@@ -193,7 +193,7 @@ describe('Set prop tests', () => {
             try {
                 await adb.setProp('serial', 'prop', '');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -216,7 +216,7 @@ describe('Set prop tests', () => {
             try {
                 await adb.setProp('serial', 'prop', '');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -244,7 +244,7 @@ describe('Set prop tests', () => {
             try {
                 await adb.setProp('serial', 'prop', '');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -274,7 +274,7 @@ describe('Set prop tests', () => {
             try {
                 await adb.setProp('serial', 'prop', '');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

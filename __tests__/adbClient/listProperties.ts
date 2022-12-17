@@ -64,7 +64,7 @@ describe('List properties', () => {
             try {
                 await adb.listProperties('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {
@@ -93,7 +93,7 @@ describe('List properties', () => {
             try {
                 await adb.listProperties('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe('Failure');
             }
         } finally {
@@ -127,7 +127,7 @@ describe('List properties', () => {
             try {
                 await adb.listProperties('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe(
                     "Unexpected 'UNEX', was expecting OKAY or FAIL"
                 );
@@ -163,7 +163,7 @@ describe('List properties', () => {
             try {
                 await adb.listProperties('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e.message).toBe(
                     "Unexpected 'UNEX', was expecting OKAY or FAIL"
                 );

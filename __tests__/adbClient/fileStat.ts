@@ -69,7 +69,7 @@ describe('File stat OKAY tests', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             await adb.fileStat('serial', '/file');
-        } catch (e) {
+        } catch (e: any) {
             expect(e.message).toBe('message');
             expect(e.command).toBe(
                 `stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file`
@@ -97,7 +97,7 @@ describe('File stat FAIL tests', () => {
             try {
                 await adb.fileStat('serial', '/file');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -120,7 +120,7 @@ describe('File stat FAIL tests', () => {
             try {
                 await adb.fileStat('serial', '/file');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(new Error('Failure'));
             }
         } finally {
@@ -150,7 +150,7 @@ describe('File stat unexpected tests', () => {
             try {
                 await adb.fileStat('serial', '/file');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -180,7 +180,7 @@ describe('File stat unexpected tests', () => {
             try {
                 await adb.fileStat('serial', '/file');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );

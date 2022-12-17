@@ -45,7 +45,7 @@ describe('Open Monkey tests', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             await adb.openMonkey('serial');
             fail('Expected Failure');
-        } catch (e) {
+        } catch (e: any) {
             expect(e).toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
@@ -69,7 +69,7 @@ describe('Open Monkey tests', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             await adb.openMonkey('serial');
             fail('Expected Failure');
-        } catch (e) {
+        } catch (e: any) {
             expect(e).toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
@@ -93,7 +93,7 @@ describe('Open Monkey tests', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             await adb.openMonkey('serial');
             fail('Expected Failure');
-        } catch (e) {
+        } catch (e: any) {
             expect(e).toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
@@ -117,7 +117,7 @@ describe('Open Monkey tests', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             await adb.openMonkey('serial');
             fail('Expected Failure');
-        } catch (e) {
+        } catch (e: any) {
             expect(e).toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
@@ -141,7 +141,7 @@ describe('Open Monkey tests', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             await adb.openMonkey('serial');
             fail('Expected Failure');
-        } catch (e) {
+        } catch (e: any) {
             expect(e).toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
@@ -172,7 +172,7 @@ describe('Open Monkey tests', () => {
             try {
                 await adb.openMonkey('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -210,7 +210,7 @@ describe('Open Monkey tests', () => {
             try {
                 await adb.openMonkey('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -244,7 +244,7 @@ describe('Open Monkey tests', () => {
             try {
                 await adb.openMonkey('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -282,7 +282,7 @@ describe('Open Monkey tests', () => {
             try {
                 await adb.openMonkey('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
@@ -324,7 +324,7 @@ describe('Open Monkey tests', () => {
             try {
                 await adb.openMonkey('serial');
                 fail('Expected Failure');
-            } catch (e) {
+            } catch (e: any) {
                 expect(e).toEqual(
                     new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
