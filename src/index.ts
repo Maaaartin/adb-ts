@@ -148,22 +148,21 @@ export function buildInputParams(
     cb: ExecCallback | undefined
 ): {
     source: InputSource;
-    displayId: number | undefined;
     cb: ExecCallback | undefined;
 } {
     if (typeof source === 'function') {
-        return { source: defaultSource, displayId: undefined, cb: source };
+        return { source: defaultSource, cb: source };
     }
     if (typeof source === 'undefined') {
-        return { source: defaultSource, displayId: undefined, cb };
+        return { source: defaultSource, cb };
     }
     if (typeof source !== 'object') {
-        return { source, displayId: undefined, cb };
+        return { source, cb };
     }
     if (typeof source.source !== 'undefined') {
-        return { source: source.source, displayId: source.displayId, cb };
+        return { source: source.source, cb };
     }
-    return { source: defaultSource, displayId: undefined, cb };
+    return { source: defaultSource, cb };
 }
 
 export type ExecCallback = (err: null | Error) => void;
@@ -217,7 +216,7 @@ export type AdbExtra =
 
 export type NonEmptyArray<T> = [T, ...T[]];
 
-export interface StartServiceOptions {
+export type StartServiceOptions = {
     user?: number | string;
     action?: string;
     data?: string;
@@ -225,12 +224,12 @@ export interface StartServiceOptions {
     category?: string | string[];
     flags?: number;
     extras?: AdbExtra | AdbExtra[];
-}
+};
 
-export interface StartActivityOptions extends StartServiceOptions {
+export type StartActivityOptions = StartServiceOptions & {
     debug?: boolean;
     wait?: boolean;
-}
+};
 
 export interface IAdbDevice {
     id: string;
@@ -247,17 +246,17 @@ export type StatsObject = {
     bytesTransferred: number;
 };
 
-export interface ReversesForwardsBase {
+export type ReversesForwardsBase = {
     local: string;
     remote: string;
-}
-export interface ReversesObject extends ReversesForwardsBase {
+};
+export type ReversesObject = ReversesForwardsBase & {
     host: string;
-}
+};
 
-export interface ForwardsObject extends ReversesForwardsBase {
+export type ForwardsObject = ReversesForwardsBase & {
     serial: string;
-}
+};
 
 export type PrimitiveType = string | boolean | number | null | undefined;
 
@@ -265,18 +264,18 @@ export type PropertyValue = PrimitiveType | Date;
 
 export type PrimitiveDictionary = Record<string, PropertyValue>;
 
-export interface InstallOptions {
+export type InstallOptions = {
     reinstall?: boolean;
     test?: boolean;
     internal?: boolean;
     allowDowngrade?: boolean;
     grandPermissions?: boolean;
     [key: string]: any;
-}
+};
 
-export interface UninstallOptions {
+export type UninstallOptions = {
     keepCache?: boolean;
-}
+};
 export type AdbClientOptionsValues = {
     port: number;
     bin: string;
@@ -288,15 +287,15 @@ export type AdbClientOptions = {
     [K in keyof AdbClientOptionsValues]?: AdbClientOptionsValues[K];
 };
 
-export interface LogcatOptions {
+export type LogcatOptions = {
     clear?: boolean;
     filter?: (entry: LogcatEntry) => boolean;
-}
+};
 
-export interface LogcatReaderOptions {
+export type LogcatReaderOptions = {
     fixLineFeeds?: boolean;
     filter?: (entry: LogcatEntry) => boolean;
-}
+};
 
 export type TransportType = 'usb' | 'local';
 
@@ -333,9 +332,8 @@ export type InputType =
     | 'press'
     | 'roll';
 
-export type InputOptions = {
+type InputOptions = {
     source?: InputSource;
-    displayId?: number;
 };
 
 export type KeyEventOptions = InputOptions & {

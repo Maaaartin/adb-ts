@@ -730,7 +730,7 @@ export default class AdbClient {
             _cb
         );
     }
-    // TODO add display id
+
     keyEvent(
         serial: string,
         code: KeyCode | NonEmptyArray<KeyCode>

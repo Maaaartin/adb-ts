@@ -5,7 +5,7 @@ export default class ShellRawCommand extends RawCommand {
     Cmd = 'shell:';
     execute(serial: string, command: string | string[]): Promise<Connection> {
         if (Array.isArray(command)) {
-            command = command.map(this.escape).join(' ');
+            command = command.map((cmd) => this.escape(cmd)).join(' ');
         }
         this.Cmd += command;
         return this.preExecute(serial);

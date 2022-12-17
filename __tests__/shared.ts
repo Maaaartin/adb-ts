@@ -317,7 +317,6 @@ describe('Build input params', () => {
         );
         expect(Object.entries(result)).toEqual([
             ['source', 'keyboard'],
-            ['displayId', undefined],
             ['cb', undefined]
         ]);
     });

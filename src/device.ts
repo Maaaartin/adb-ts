@@ -4,7 +4,6 @@ import {
     DeviceState,
     ForwardsObject,
     IAdbDevice,
-    InputOptions,
     InputSource,
     InstallOptions,
     LogcatOptions,
@@ -13,7 +12,7 @@ import {
     ReversesObject,
     RmOptions,
     SettingsMode,
-    PrimitiveType as PrimitiveValue,
+    PrimitiveType,
     StartActivityOptions,
     StartServiceOptions,
     TouchOptions,
@@ -153,7 +152,7 @@ export default class AdbDevice implements IAdbDevice {
         return this.client.install(
             this.id,
             apk,
-            options as InputOptions,
+            options as InstallOptions,
             args as string
         );
     }
@@ -244,7 +243,7 @@ export default class AdbDevice implements IAdbDevice {
         return this.client.getProp(this.id, prop);
     }
 
-    setProp(prop: string, value: PrimitiveValue): Promise<void> {
+    setProp(prop: string, value: PrimitiveType): Promise<void> {
         return this.client.setProp(this.id, prop, value);
     }
 
@@ -255,7 +254,7 @@ export default class AdbDevice implements IAdbDevice {
     putSetting(
         mode: SettingsMode,
         name: string,
-        value: PrimitiveValue
+        value: PrimitiveType
     ): Promise<void> {
         return this.client.putSetting(this.id, mode, name, value);
     }

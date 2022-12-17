@@ -57,7 +57,9 @@ export default class StartServiceCommand extends TransportCommand<void> {
             return [
                 '--e' + type + 'a',
                 this.escape(extra.key),
-                extra.value.map(this.escape).join(',')
+                (extra.value as (string | number)[])
+                    .map((val) => this.escape(val))
+                    .join(',')
             ];
         }
         return ['--e' + type, this.escape(extra.key), this.escape(extra.value)];
