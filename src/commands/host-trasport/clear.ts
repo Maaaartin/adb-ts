@@ -1,4 +1,3 @@
-import { UnexpectedDataError } from '../..';
 import TransportCommand from '../transport';
 
 export default class ClearCommand extends TransportCommand<void> {

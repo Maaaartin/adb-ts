@@ -16,31 +16,32 @@ export default class LogcatEntry {
         this.message = '';
     }
 
-    setDate(date: Date) {
+    // TODO remove these
+    setDate(date: Date): void {
         this.date = date;
     }
 
-    setPid(pid: number) {
+    setPid(pid: number): void {
         this.pid = pid;
     }
 
-    setTid(tid: number) {
+    setTid(tid: number): void {
         this.tid = tid;
     }
 
-    setPriority(priority: Priority) {
+    setPriority(priority: Priority): void {
         this.priority = priority;
     }
 
-    setTag(tag: string) {
+    setTag(tag: string): void {
         this.tag = tag;
     }
 
-    setMessage(message: string) {
+    setMessage(message: string): void {
         this.message = message;
     }
 
-    toBinary() {
+    toBinary(): Buffer {
         let length = 20;
         length += 1;
         length += this.tag.length;

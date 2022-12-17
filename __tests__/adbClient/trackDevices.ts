@@ -1,4 +1,4 @@
-import { promisify } from 'bluebird';
+import { promisify } from 'util';
 import AdbClient from '../../lib/client';
 import AdbDevice from '../../lib/device';
 import { AdbMock } from '../../mockery/mockAdbServer';
@@ -19,7 +19,7 @@ describe('Track devices', () => {
                     cb(null, d);
                 });
                 tracker.on('error', (err) => {
-                    cb(err);
+                    cb(err, undefined);
                 });
                 adbMock.forceWrite(
                     'b137f5dc               unauthorized usb:337641472X transport_id:1'
@@ -50,7 +50,7 @@ describe('Track devices', () => {
                     cb(null, d);
                 });
                 tracker.on('error', (err) => {
-                    cb(err);
+                    cb(err, null);
                 });
 
                 adbMock.forceWrite('');
@@ -135,7 +135,7 @@ describe('Track devices', () => {
             const result = await promisify((cb) => {
                 tracker.on('error', () => null);
                 tracker.on('end', () => {
-                    cb(null);
+                    cb(null, undefined);
                 });
             })();
             try {
@@ -163,7 +163,7 @@ describe('Track devices', () => {
                     return null;
                 });
                 tracker.on('end', () => {
-                    cb(null);
+                    cb(null, undefined);
                 });
                 await tracker.end();
             })();

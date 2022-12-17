@@ -1,9 +1,9 @@
-import { Stream } from 'stream';
+import Stream from 'stream';
 
 export default class Transform extends Stream.Transform {
     private savedR: Buffer | null = null;
 
-    _transform(chunk: Buffer, encoding: BufferEncoding, cb: VoidFunction) {
+    _transform(chunk: Buffer, _encoding: BufferEncoding, cb: () => void): void {
         let lo = 0;
         let hi = 0;
         if (this.savedR) {

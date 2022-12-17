@@ -6,7 +6,7 @@ export default class PullTransfer extends PassThrough {
         bytesTransferred: 0
     };
 
-    cancel() {
+    cancel(): void {
         this.emit('cancel');
     }
 

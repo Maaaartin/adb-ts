@@ -55,6 +55,7 @@ export default class Binary extends Parser {
         const length = data.length;
         while (cursor < length) {
             if (data[cursor] === 0) {
+                // TODO write test and rewrite deprecated method
                 entry.setTag(data.slice(1, cursor).toString());
                 entry.setMessage(data.slice(cursor + 1, length - 1).toString());
                 this.emit('entry', entry);
