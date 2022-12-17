@@ -1,14 +1,14 @@
-import { DataMap, findMatches, SettingsMode } from '../..';
+import { PropertyMap, findMatches, SettingsMode } from '../..';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
-export default class ListSettingsCommand extends TransportParseAllCommand<DataMap> {
+export default class ListSettingsCommand extends TransportParseAllCommand<PropertyMap> {
     Cmd = 'shell:settings list ';
 
-    parse(value: string): DataMap {
+    parse(value: string): PropertyMap {
         return findMatches(value, /^([\s\S]*?)=([\s\S]*?)$/gm, 'map');
     }
 
-    execute(serial: string, mode: SettingsMode): Promise<DataMap> {
+    execute(serial: string, mode: SettingsMode): Promise<PropertyMap> {
         this.Cmd += mode;
         return this.preExecute(serial);
     }

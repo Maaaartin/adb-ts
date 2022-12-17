@@ -120,13 +120,13 @@ export function findMatches(
     value: string,
     regExp: RegExp,
     parseTo: 'map'
-): DataMap;
+): PropertyMap;
 export function findMatches(value: string, regExp: RegExp): string[][];
 export function findMatches(
     value: string,
     regExp: RegExp,
     parseTo?: 'set' | 'map'
-): DataMap | string[][] | Set<string> {
+): PropertyMap | string[][] | Set<string> {
     let match: RegExpExecArray | null = null;
     const acc: string[][] = [];
     while ((match = regExp.exec(value))) {
@@ -333,10 +333,16 @@ export type InputType =
     | 'press'
     | 'roll';
 
-export interface InputOptions {
+export type InputOptions = {
     source?: InputSource;
     displayId?: number;
-}
+};
+
+export type KeyEventOptions = InputOptions & {
+    variant?: 'longpress' | 'doubletap';
+};
+
+export type InputDurationOptions = InputOptions & { duration?: number };
 
 export interface CommandConstruct {
     new (connection: Connection): Command;
@@ -409,7 +415,7 @@ export type CpOptions = NoClobberFSOption &
         copyToTarget?: boolean;
     };
 
-export type DataMap = Map<string, PropertyValue>;
+export type PropertyMap = Map<string, PropertyValue>;
 
 export class FailError extends Error {
     constructor(message?: string) {

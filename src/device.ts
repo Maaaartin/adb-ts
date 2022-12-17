@@ -7,22 +7,23 @@ import {
     InputOptions,
     InputSource,
     InstallOptions,
-    PrimitiveDictionary,
     LogcatOptions,
     MkDirOptions,
     MvOptions,
     ReversesObject,
     RmOptions,
     SettingsMode,
-    PrimitiveType,
+    PrimitiveType as PrimitiveValue,
     StartActivityOptions,
     StartServiceOptions,
     TouchOptions,
     TransportType,
     UninstallOptions,
-    DataMap,
+    PropertyMap,
     ExecCallbackWithValue,
-    ExecCallback
+    PropertyValue,
+    KeyEventOptions,
+    InputDurationOptions
 } from '.';
 
 import AdbClient from './client';
@@ -68,11 +69,11 @@ export default class AdbDevice implements IAdbDevice {
         return this.client.getDevicePath(this.id);
     }
 
-    listProperties(): Promise<DataMap> {
+    listProperties(): Promise<PropertyMap> {
         return this.client.listProperties(this.id);
     }
 
-    listFeatures(): Promise<DataMap> {
+    listFeatures(): Promise<PropertyMap> {
         return this.client.listFeatures(this.id);
     }
 
@@ -235,71 +236,40 @@ export default class AdbDevice implements IAdbDevice {
         return this.client.waitBootComplete(this.id);
     }
 
-    listSettings(
-        mode: SettingsMode,
-        cb?: ExecCallbackWithValue<PrimitiveDictionary>
-    ) {
-        return this.client.listSettings(this.id, mode, cb);
+    listSettings(mode: SettingsMode): Promise<PropertyMap> {
+        return this.client.listSettings(this.id, mode);
     }
 
-    getProp(prop: string, cb?: (err: Error, value: PrimitiveType) => void) {
-        return this.client.getProp(this.id, prop, cb);
+    getProp(prop: string): Promise<PropertyValue> {
+        return this.client.getProp(this.id, prop);
     }
 
-    setProp(
-        prop: string,
-        value: PrimitiveType,
-        cb?: ExecCallback
-    ): Promise<void> {
-        return this.client.setProp(this.id, prop, value, cb);
+    setProp(prop: string, value: PrimitiveValue): Promise<void> {
+        return this.client.setProp(this.id, prop, value);
     }
 
-    getSetting(
-        mode: SettingsMode,
-        name: string,
-        cb?: (err: Error, value: PrimitiveType) => void
-    ) {
-        return this.client.getSetting(this.id, mode, name, cb);
+    getSetting(mode: SettingsMode, name: string): Promise<PropertyValue> {
+        return this.client.getSetting(this.id, mode, name);
     }
 
     putSetting(
         mode: SettingsMode,
         name: string,
-        value: PrimitiveType,
-        cb?: ExecCallback
-    ) {
-        return this.client.putSetting(this.id, mode, name, value, cb);
+        value: PrimitiveValue
+    ): Promise<void> {
+        return this.client.putSetting(this.id, mode, name, value);
     }
 
-    tap(x: number, y: number, cb?: ExecCallback): Promise<void>;
-    tap(
-        x: number,
-        y: number,
-        source: InputSource,
-        cb?: ExecCallback
-    ): Promise<void>;
-    tap(x: number, y: number, source: any, cb?: ExecCallback) {
-        return this.client.tap(this.id, x, y, source, cb);
+    tap(x: number, y: number, source?: InputSource): Promise<void> {
+        return this.client.tap(this.id, x, y, source as InputSource);
     }
 
-    text(text: PrimitiveType, cb?: ExecCallback): Promise<void>;
-    text(
-        text: PrimitiveType,
-        source: InputSource,
-        cb?: ExecCallback
-    ): Promise<void>;
-    text(text: PrimitiveType, source: any, cb?: ExecCallback) {
-        return this.client.text(this.id, text, source, cb);
+    text(text: string, source?: InputSource): Promise<void> {
+        return this.client.text(this.id, text, source as InputSource);
     }
 
-    keyEvent(code: KeyCode | number, cb?: ExecCallback): Promise<void>;
-    keyEvent(
-        code: KeyCode | number,
-        options?: InputOptions & { longpress?: boolean },
-        cb?: ExecCallback
-    ): Promise<void>;
-    keyEvent(code: KeyCode | number, options?: any, cb?: ExecCallback) {
-        return this.client.keyEvent(this.id, code, options, cb);
+    keyEvent(code: KeyCode | number, options?: KeyEventOptions): Promise<void> {
+        return this.client.keyEvent(this.id, code, options as KeyEventOptions);
     }
 
     swipe(
@@ -307,25 +277,16 @@ export default class AdbDevice implements IAdbDevice {
         y1: number,
         x2: number,
         y2: number,
-        cb?: ExecCallback
-    ): Promise<void>;
-    swipe(
-        x1: number,
-        y1: number,
-        x2: number,
-        y2: number,
-        options?: InputOptions & { duration?: number },
-        cb?: ExecCallback
-    ): Promise<void>;
-    swipe(
-        x1: number,
-        y1: number,
-        x2: number,
-        y2: number,
-        options?: any,
-        cb?: ExecCallback
-    ) {
-        return this.client.swipe(this.id, x1, y1, x2, y2, options, cb);
+        options?: InputDurationOptions
+    ): Promise<void> {
+        return this.client.swipe(
+            this.id,
+            x1,
+            y1,
+            x2,
+            y2,
+            options as InputDurationOptions
+        );
     }
 
     dragAndDrop(
@@ -333,163 +294,71 @@ export default class AdbDevice implements IAdbDevice {
         y1: number,
         x2: number,
         y2: number,
-        cb?: ExecCallback
-    ): Promise<void>;
-    dragAndDrop(
-        x1: number,
-        y1: number,
-        x2: number,
-        y2: number,
-        options?: InputOptions & { duration?: number },
-        cb?: ExecCallback
-    ): Promise<void>;
-    dragAndDrop(
-        x1: number,
-        y1: number,
-        x2: number,
-        y2: number,
-        options?: any,
-        cb?: ExecCallback
-    ) {
-        return this.client.dragAndDrop(this.id, x1, y1, x2, y2, options, cb);
+        options?: InputDurationOptions
+    ): Promise<void> {
+        return this.client.dragAndDrop(
+            this.id,
+            x1,
+            y1,
+            x2,
+            y2,
+            options as InputDurationOptions
+        );
     }
 
-    press(cb?: ExecCallback): Promise<void>;
-    press(source?: InputSource, cb?: ExecCallback): Promise<void>;
-    press(source: any, cb?: ExecCallback) {
-        return this.client.press(this.id, source, cb);
+    press(source?: InputSource): Promise<void> {
+        return this.client.press(this.id, source as InputSource);
     }
 
-    roll(x: number, y: number, cb?: ExecCallback): Promise<void>;
-    roll(
-        x: number,
-        y: number,
-        source?: InputSource,
-        cb?: ExecCallback
-    ): Promise<void>;
-    roll(x: number, y: number, source: any, cb?: ExecCallback) {
-        return this.client.roll(this.id, x, y, source, cb);
+    roll(x: number, y: number, source?: InputSource): Promise<void> {
+        return this.client.roll(this.id, x, y, source as InputSource);
     }
 
-    custom<T>(
-        CustomCommand: CommandConstruct,
-        cb?: (err: Error, value: T) => void
-    ) {
-        return this.client.customTransport<T>(CustomCommand, this.id, cb);
+    custom<T>(CustomCommand: CommandConstruct): Promise<T> {
+        return this.client.customTransport<T>(CustomCommand, this.id);
     }
 
-    openMonkey(cb?: (err: Error, value: Monkey) => void) {
-        return this.client.openMonkey(this.id, cb);
+    openMonkey(): Promise<Monkey> {
+        return this.client.openMonkey(this.id);
     }
 
-    killApp(pkg: string, cb?: ExecCallback) {
-        return this.client.killApp(this.id, pkg, cb);
+    killApp(pkg: string): Promise<void> {
+        return this.client.killApp(this.id, pkg);
     }
 
-    exec(cmd: string, cb?: ExecCallbackWithValue<string>) {
-        return this.client.execDevice(this.id, cmd, cb);
+    exec(cmd: string): Promise<string> {
+        return this.client.execDevice(this.id, cmd);
     }
 
-    execShell(cmd: string, cb?: ExecCallbackWithValue<string>) {
-        return this.client.execDeviceShell(this.id, cmd, cb);
+    execShell(cmd: string): Promise<string> {
+        return this.client.execDeviceShell(this.id, cmd);
     }
 
-    batteryStatus(cb?: ExecCallbackWithValue<PrimitiveDictionary>) {
-        return this.client.batteryStatus(this.id, cb);
+    batteryStatus(): Promise<PropertyMap> {
+        return this.client.batteryStatus(this.id);
     }
 
-    rm(
-        path: string,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
-    rm(
-        path: string,
-        options?: RmOptions,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
-    rm(
-        path: string,
-        options?: any,
-        cb?: (err: Error | null, value: string) => void
-    ) {
-        return this.client.rm(this.id, path, options, cb);
+    rm(path: string, options?: RmOptions): Promise<void> {
+        return this.client.rm(this.id, path, options as RmOptions);
     }
 
-    mkdir(
-        path: string,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
-    mkdir(
-        path: string,
-        options?: MkDirOptions,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
-    mkdir(
-        path: string,
-        options?: any,
-        cb?: (err: Error | null, value: string) => void
-    ) {
-        return this.client.mkdir(this.id, path, options, cb);
+    mkdir(path: string, options?: MkDirOptions): Promise<void> {
+        return this.client.mkdir(this.id, path, options);
     }
 
-    touch(
-        path: string,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
-    touch(
-        path: string,
-        options?: TouchOptions,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
-    touch(
-        path: string,
-        options?: any,
-        cb?: (err: Error | null, value: string) => void
-    ) {
-        return this.client.touch(this.id, path, options, cb);
+    touch(path: string, options?: TouchOptions): Promise<void> {
+        return this.client.touch(this.id, path, options as TouchOptions);
     }
 
-    mv(
-        srcPath: string,
-        destPath: string,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
-    mv(
-        srcPath: string,
-        destPath: string,
-        options?: MvOptions,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
-    mv(
-        srcPath: string,
-        destPath: string,
-        options?: any,
-        cb?: (err: Error | null, value: string) => void
-    ) {
-        return this.client.mv(this.id, srcPath, destPath, options, cb);
+    mv(srcPath: string, destPath: string, options?: MvOptions): Promise<void> {
+        return this.client.mv(this.id, srcPath, destPath, options as MvOptions);
     }
 
-    cp(
-        srcPath: string,
-        destPath: string,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
-    cp(
-        srcPath: string,
-        destPath: string,
-        options?: CpOptions,
-        cb?: (err: Error | null, value: string) => void
-    ): Promise<string>;
-    cp(
-        srcPath: string,
-        destPath: string,
-        options?: any,
-        cb?: (err: Error | null, value: string) => void
-    ) {
-        return this.client.cp(this.id, srcPath, destPath, options, cb);
+    cp(srcPath: string, destPath: string, options?: CpOptions): Promise<void> {
+        return this.client.cp(this.id, srcPath, destPath, options as CpOptions);
     }
 
-    fileStat(path: string, cb?: (err: Error | null, value: FileStat) => void) {
-        return this.client.fileStat(this.id, path, cb);
+    fileStat(path: string): Promise<FileStat> {
+        return this.client.fileStat(this.id, path);
     }
 }

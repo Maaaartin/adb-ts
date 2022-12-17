@@ -1,13 +1,13 @@
 import TransportParseAllCommand from '../transport-parse-all-command';
-import { DataMap, findMatches } from '../..';
+import { PropertyMap, findMatches } from '../..';
 
-export default class ListFeaturesCommand extends TransportParseAllCommand<DataMap> {
+export default class ListFeaturesCommand extends TransportParseAllCommand<PropertyMap> {
     Cmd = 'shell:pm list features 2>/dev/null';
-    parse(value: string): DataMap {
+    parse(value: string): PropertyMap {
         return findMatches(value, /^feature:(.*?)(?:=(.*?))?\r?$/gm, 'map');
     }
 
-    execute(serial: string): Promise<DataMap> {
+    execute(serial: string): Promise<PropertyMap> {
         return this.preExecute(serial);
     }
 }

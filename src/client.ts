@@ -1,6 +1,7 @@
 import {
     AdbClientOptions,
     AdbClientOptionsValues,
+    InputDurationOptions,
     ADB_DEFAULT_PORT,
     CommandConstruct,
     CpOptions,
@@ -8,10 +9,9 @@ import {
     ExecCallbackWithValue,
     ForwardsObject,
     IAdbDevice,
-    InputOptions,
     InputSource,
     InstallOptions,
-    PrimitiveDictionary,
+    KeyEventOptions,
     LogcatOptions,
     MkDirOptions,
     MvOptions,
@@ -30,7 +30,7 @@ import {
     parseCbParam,
     parseValueParam,
     IpConnectConstruct,
-    DataMap,
+    PropertyMap,
     buildInputParams,
     NonEmptyArray,
     WaitForType,
@@ -38,7 +38,7 @@ import {
     AdbExecError
 } from '.';
 import Sync, { SyncMode } from './sync';
-import { exec, execFile } from 'child_process';
+import { execFile } from 'child_process';
 import fs from 'fs';
 import AdbDevice from './device';
 import BatteryStatusCommand from './commands/host-trasport/baterrystatus';
@@ -300,12 +300,15 @@ export default class AdbClient {
         );
     }
 
-    listProperties(serial: string): Promise<DataMap>;
-    listProperties(serial: string, cb: ExecCallbackWithValue<DataMap>): void;
+    listProperties(serial: string): Promise<PropertyMap>;
     listProperties(
         serial: string,
-        cb?: ExecCallbackWithValue<DataMap>
-    ): Promise<DataMap> | void {
+        cb: ExecCallbackWithValue<PropertyMap>
+    ): void;
+    listProperties(
+        serial: string,
+        cb?: ExecCallbackWithValue<PropertyMap>
+    ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) =>
                 new ListPropertiesCommand(conn).execute(serial)
@@ -314,12 +317,12 @@ export default class AdbClient {
         );
     }
 
-    listFeatures(serial: string): Promise<DataMap>;
-    listFeatures(serial: string, cb: ExecCallbackWithValue<DataMap>): void;
+    listFeatures(serial: string): Promise<PropertyMap>;
+    listFeatures(serial: string, cb: ExecCallbackWithValue<PropertyMap>): void;
     listFeatures(
         serial: string,
-        cb?: ExecCallbackWithValue<DataMap>
-    ): Promise<DataMap> | void {
+        cb?: ExecCallbackWithValue<PropertyMap>
+    ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) =>
                 new ListFeaturesCommand(conn).execute(serial)
@@ -614,7 +617,7 @@ export default class AdbClient {
         y1: number,
         x2: number,
         y2: number,
-        options: InputOptions & { duration?: number }
+        options: InputDurationOptions
     ): Promise<void>;
     dragAndDrop(
         serial: string,
@@ -630,7 +633,7 @@ export default class AdbClient {
         y1: number,
         x2: number,
         y2: number,
-        options: InputOptions & { duration?: number },
+        options: InputDurationOptions,
         cb: ExecCallback
     ): void;
     dragAndDrop(
@@ -639,7 +642,7 @@ export default class AdbClient {
         y1: number,
         x2: number,
         y2: number,
-        options?: (InputOptions & { duration?: number }) | ExecCallback,
+        options?: InputDurationOptions | ExecCallback,
         cb?: ExecCallback
     ): Promise<void> | void {
         const { source: _source, cb: _cb } = buildInputParams(
@@ -678,7 +681,7 @@ export default class AdbClient {
         y1: number,
         x2: number,
         y2: number,
-        options: InputOptions & { duration?: number }
+        options: InputDurationOptions
     ): Promise<void>;
     swipe(
         serial: string,
@@ -694,7 +697,7 @@ export default class AdbClient {
         y1: number,
         x2: number,
         y2: number,
-        options: InputOptions & { duration?: number },
+        options: InputDurationOptions,
         cb: ExecCallback
     ): void;
     swipe(
@@ -703,7 +706,7 @@ export default class AdbClient {
         y1: number,
         x2: number,
         y2: number,
-        options?: (InputOptions & { duration?: number }) | ExecCallback,
+        options?: InputDurationOptions | ExecCallback,
         cb?: ExecCallback
     ): Promise<void> | void {
         const { source: _source, cb: _cb } = buildInputParams(
@@ -740,12 +743,12 @@ export default class AdbClient {
     keyEvent(
         serial: string,
         code: KeyCode | NonEmptyArray<KeyCode>,
-        options: InputOptions & { variant?: 'longpress' | 'doubletap' }
+        options: KeyEventOptions
     ): Promise<void>;
     keyEvent(
         serial: string,
         code: number | NonEmptyArray<number>,
-        options: InputOptions & { variant?: 'longpress' | 'doubletap' }
+        options: KeyEventOptions
     ): Promise<void>;
 
     keyEvent(
@@ -762,22 +765,20 @@ export default class AdbClient {
     keyEvent(
         serial: string,
         code: KeyCode | NonEmptyArray<KeyCode>,
-        options: InputOptions & { variant?: 'longpress' | 'doubletap' },
+        options: KeyEventOptions,
         cb: ExecCallback
     ): void;
     keyEvent(
         serial: string,
         code: number | NonEmptyArray<number>,
-        options: InputOptions & { variant?: 'longpress' | 'doubletap' },
+        options: KeyEventOptions,
         cb: ExecCallback
     ): void;
 
     keyEvent(
         serial: string,
         code: number | NonEmptyArray<number>,
-        options?:
-            | (InputOptions & { variant?: 'longpress' | 'doubletap' })
-            | ExecCallback,
+        options?: KeyEventOptions | ExecCallback,
         cb?: ExecCallback
     ): Promise<void> | void {
         const { source: _source, cb: _cb } = buildInputParams(
@@ -1527,17 +1528,17 @@ export default class AdbClient {
         );
     }
 
-    listSettings(serial: string, mode: SettingsMode): Promise<DataMap>;
+    listSettings(serial: string, mode: SettingsMode): Promise<PropertyMap>;
     listSettings(
         serial: string,
         mode: SettingsMode,
-        cb: ExecCallbackWithValue<DataMap>
+        cb: ExecCallbackWithValue<PropertyMap>
     ): void;
     listSettings(
         serial: string,
         mode: SettingsMode,
-        cb?: ExecCallbackWithValue<DataMap>
-    ): Promise<DataMap> | void {
+        cb?: ExecCallbackWithValue<PropertyMap>
+    ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) => {
                 return new ListSettingsCommand(conn).execute(serial, mode);
@@ -1763,12 +1764,12 @@ export default class AdbClient {
         return nodeify(this.execInternal(...['-s', serial, 'shell', cmd]), cb);
     }
 
-    batteryStatus(serial: string): Promise<DataMap>;
-    batteryStatus(serial: string, cb: ExecCallbackWithValue<DataMap>): void;
+    batteryStatus(serial: string): Promise<PropertyMap>;
+    batteryStatus(serial: string, cb: ExecCallbackWithValue<PropertyMap>): void;
     batteryStatus(
         serial: string,
-        cb?: ExecCallbackWithValue<DataMap>
-    ): Promise<DataMap> | void {
+        cb?: ExecCallbackWithValue<PropertyMap>
+    ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) => {
                 return new BatteryStatusCommand(conn).execute(serial);
