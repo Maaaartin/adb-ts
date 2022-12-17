@@ -34,7 +34,6 @@ import Monkey from './monkey/client';
 import PullTransfer from './sync/pulltransfer';
 import PushTransfer from './sync/pushtransfer';
 import { Readable } from 'stream';
-import Stats from './sync/stats';
 import SyncEntry from './sync/entry';
 import { SyncMode } from './sync';
 
@@ -61,390 +60,179 @@ export default class AdbDevice implements IAdbDevice {
         this.client = client;
     }
 
-    getSerialNo(cb?: ExecCallbackWithValue<string>): Promise<string> | void {
-        return this.client.getSerialNo(
-            this.id,
-            cb as NonNullable<ExecCallbackWithValue<string>>
-        );
+    getSerialNo(): Promise<string> {
+        return this.client.getSerialNo(this.id);
     }
 
-    getDevicePath(cb?: ExecCallbackWithValue<string>): Promise<string> | void {
-        return this.client.getDevicePath(
-            this.id,
-            cb as NonNullable<ExecCallbackWithValue<string>>
-        );
+    getDevicePath(): Promise<string> {
+        return this.client.getDevicePath(this.id);
     }
 
-    listProperties(
-        cb?: ExecCallbackWithValue<DataMap>
-    ): Promise<DataMap> | void {
-        return this.client.listProperties(
-            this.id,
-            cb as NonNullable<ExecCallbackWithValue<DataMap>>
-        );
+    listProperties(): Promise<DataMap> {
+        return this.client.listProperties(this.id);
     }
 
-    listFeatures(cb?: ExecCallbackWithValue<DataMap>): Promise<DataMap> | void {
-        return this.client.listFeatures(
-            this.id,
-            cb as NonNullable<ExecCallbackWithValue<DataMap>>
-        );
+    listFeatures(): Promise<DataMap> {
+        return this.client.listFeatures(this.id);
     }
 
-    listPackages(
-        cb?: ExecCallbackWithValue<string[]>
-    ): Promise<string[]> | void {
-        return this.client.listPackages(
-            this.id,
-            cb as NonNullable<ExecCallbackWithValue<string[]>>
-        );
+    listPackages(): Promise<string[]> {
+        return this.client.listPackages(this.id);
     }
 
-    getIpAddress(
-        cb?: ExecCallbackWithValue<string | string[] | null>
-    ): Promise<string | string[] | null> | void {
-        return this.client.getIpAddress(
-            this.id,
-            cb as NonNullable<ExecCallbackWithValue<string | string[] | null>>
-        );
+    getIpAddress(): Promise<string | string[] | null> {
+        return this.client.getIpAddress(this.id);
     }
 
-    forward(
-        local: string,
-        remote: string,
-        cb?: ExecCallback
-    ): Promise<void> | void {
-        return this.client.forward(
-            this.id,
-            local,
-            remote,
-            cb as NonNullable<ExecCallback>
-        );
+    forward(local: string, remote: string): Promise<void> {
+        return this.client.forward(this.id, local, remote);
     }
 
-    listForwards(
-        cb?: ExecCallbackWithValue<ForwardsObject[]>
-    ): Promise<ForwardsObject[]> | void {
-        return this.client.listForwards(
-            this.id,
-            cb as NonNullable<ExecCallbackWithValue<ForwardsObject[]>>
-        );
+    listForwards(): Promise<ForwardsObject[]> {
+        return this.client.listForwards(this.id);
     }
 
-    reverse(
-        local: string,
-        remote: string,
-        cb?: ExecCallback
-    ): Promise<void> | void {
-        return this.client.reverse(
-            this.id,
-            local,
-            remote,
-            cb as NonNullable<ExecCallback>
-        );
+    reverse(local: string, remote: string): Promise<void> {
+        return this.client.reverse(this.id, local, remote);
     }
 
-    listReverses(
-        cb?: ExecCallbackWithValue<ReversesObject[]>
-    ): Promise<ReversesObject[]> | void {
-        return this.client.listReverses(
-            this.id,
-            cb as NonNullable<ExecCallbackWithValue<ReversesObject[]>>
-        );
+    listReverses(): Promise<ReversesObject[]> {
+        return this.client.listReverses(this.id);
     }
 
-    shell(
-        command: string,
-        cb?: ExecCallbackWithValue<string>
-    ): Promise<string> | void {
-        return this.client.shell(
-            this.id,
-            command,
-            cb as NonNullable<ExecCallbackWithValue<string>>
-        );
+    shell(command: string): Promise<string> {
+        return this.client.shell(this.id, command);
     }
 
-    reboot(cb?: ExecCallback): Promise<void> | void {
-        return this.client.reboot(this.id, cb as NonNullable<ExecCallback>);
+    reboot(): Promise<void> {
+        return this.client.reboot(this.id);
     }
 
-    shutdown(cb?: ExecCallback): Promise<void> | void {
-        return this.client.shutdown(this.id, cb as NonNullable<ExecCallback>);
+    shutdown(): Promise<void> {
+        return this.client.shutdown(this.id);
     }
 
-    remount(cb?: ExecCallback): Promise<void> | void {
-        return this.client.remount(this.id, cb as NonNullable<ExecCallback>);
+    remount(): Promise<void> {
+        return this.client.remount(this.id);
     }
 
-    root(cb?: ExecCallback): Promise<void> | void {
-        return this.client.root(this.id, cb as NonNullable<ExecCallback>);
+    root(): Promise<void> {
+        return this.client.root(this.id);
     }
 
-    screenshot(cb?: ExecCallbackWithValue<Buffer>): Promise<Buffer> | void {
-        return this.client.screenshot(
-            this.id,
-            cb as NonNullable<ExecCallbackWithValue<Buffer>>
-        );
+    screenshot(): Promise<Buffer> {
+        return this.client.screenshot(this.id);
     }
 
-    openTcp(
-        port: number | string,
-        cb?: ExecCallbackWithValue<Connection>
-    ): Promise<Connection> | void;
-    openTcp(
-        port: number | string,
-        host?: string,
-        cb?: ExecCallbackWithValue<Connection>
-    ): Promise<Connection> | void;
-    openTcp(
-        port: number | string,
-        host?: any,
-        cb?: ExecCallbackWithValue<Connection>
-    ): Promise<Connection> | void {
-        return this.client.openTcp(
-            this.id,
-            port,
-            host,
-            cb as NonNullable<ExecCallbackWithValue<Connection>>
-        );
+    openTcp(port: number | string, host?: string): Promise<Connection> {
+        return this.client.openTcp(this.id, port, host as string);
     }
 
-    openLogcat(
-        cb?: ExecCallbackWithValue<LogcatReader>
-    ): Promise<LogcatReader> | void;
-    openLogcat(
-        options?: LogcatOptions,
-        cb?: ExecCallbackWithValue<LogcatReader>
-    ): Promise<LogcatReader> | void;
-    openLogcat(
-        options?: any,
-        cb?: ExecCallbackWithValue<LogcatReader>
-    ): Promise<LogcatReader> | void {
-        return this.client.openLogcat(
-            this.id,
-            options,
-            cb as NonNullable<ExecCallbackWithValue<LogcatReader>>
-        );
+    openLogcat(options?: LogcatOptions): Promise<LogcatReader> {
+        return this.client.openLogcat(this.id, options as LogcatOptions);
     }
 
-    clear(pkg: string, cb?: ExecCallback): Promise<void> | void {
-        return this.client.clear(this.id, pkg, cb as NonNullable<ExecCallback>);
+    clear(pkg: string): Promise<void> {
+        return this.client.clear(this.id, pkg);
     }
 
-    install(apk: string | Readable, cb?: ExecCallback): Promise<void> | void;
+    install(apk: string | Readable): Promise<void>;
+    install(apk: string | Readable, options?: InstallOptions): Promise<void>;
     install(
         apk: string | Readable,
         options?: InstallOptions,
-        cb?: ExecCallback
-    ): Promise<void> | void;
+        args?: string
+    ): Promise<void>;
     install(
         apk: string | Readable,
         options?: InstallOptions,
-        args?: string,
-        cb?: ExecCallback
-    ): Promise<void> | void;
-    install(
-        apk: string | Readable,
-        options?: InstallOptions | ExecCallback,
-        args?: string | ExecCallback,
-        cb?: ExecCallback
-    ): Promise<void> | void {
+        args?: string
+    ): Promise<void> {
         // TODO double check type cast
         return this.client.install(
             this.id,
             apk,
             options as InputOptions,
-            args as string,
-            cb as NonNullable<ExecCallback>
+            args as string
         );
     }
 
-    uninstall(pkg: string, cb?: ExecCallback): Promise<void> | void;
-    uninstall(
-        pkg: string,
-        options?: UninstallOptions,
-        cb?: ExecCallback
-    ): Promise<void> | void;
-    uninstall(
-        pkg: string,
-        options?: UninstallOptions | ExecCallback,
-        cb?: ExecCallback
-    ): Promise<void> | void {
-        return this.client.uninstall(
-            this.id,
-            pkg,
-            options as UninstallOptions,
-            cb as NonNullable<ExecCallback>
-        );
+    uninstall(pkg: string, options?: UninstallOptions): Promise<void> {
+        return this.client.uninstall(this.id, pkg, options as UninstallOptions);
     }
 
-    isInstalled(
-        pkg: string,
-        cb?: ExecCallbackWithValue<boolean>
-    ): Promise<boolean> | void {
-        return this.client.isInstalled(
-            this.id,
-            pkg,
-            cb as NonNullable<ExecCallbackWithValue<boolean>>
-        );
+    isInstalled(pkg: string): Promise<boolean> {
+        return this.client.isInstalled(this.id, pkg);
     }
 
     startActivity(
         pkg: string,
         activity: string,
-        cb?: ExecCallback
-    ): Promise<void> | void;
-    startActivity(
-        pkg: string,
-        activity: string,
-        options?: StartActivityOptions,
-        cb?: ExecCallback
-    ): Promise<void> | void;
-    startActivity(
-        pkg: string,
-        activity: string,
-        options?: StartActivityOptions | ExecCallback,
-        cb?: ExecCallback
-    ): Promise<void> | void {
-        // TODO check casting
+        options?: StartActivityOptions
+    ): Promise<void> {
         return this.client.startActivity(
             this.id,
             pkg,
             activity,
-            options as StartActivityOptions,
-            cb as NonNullable<ExecCallback>
+            options as StartActivityOptions
         );
     }
 
     startService(
         pkg: string,
         service: string,
-        cb?: ExecCallback
-    ): Promise<void> | void;
-    startService(
-        pkg: string,
-        service: string,
-        options?: StartServiceOptions,
-        cb?: ExecCallback
-    ): Promise<void> | void;
-    startService(
-        pkg: string,
-        service: string,
-        options?: StartServiceOptions | ExecCallback,
-        cb?: ExecCallback
-    ): Promise<void> | void {
-        // TODO check casting
+        options?: StartServiceOptions
+    ): Promise<void> {
         return this.client.startService(
             this.id,
             pkg,
             service,
-            options as StartActivityOptions,
-            cb as NonNullable<ExecCallback>
+            options as StartActivityOptions
         );
     }
 
-    readDir(
-        path: string,
-        cb?: ExecCallbackWithValue<SyncEntry[]>
-    ): Promise<SyncEntry[]> | void {
-        return this.client.readDir(
-            this.id,
-            path,
-            cb as NonNullable<ExecCallbackWithValue<SyncEntry[]>>
-        );
+    readDir(path: string): Promise<SyncEntry[]> {
+        return this.client.readDir(this.id, path);
     }
 
-    pushDataToFile(
-        data: string,
-        destPath: string,
-        cb?: ExecCallback
-    ): Promise<void> | void {
-        return this.client.pushDataToFile(
-            this.id,
-            data,
-            destPath,
-            cb as NonNullable<ExecCallback>
-        );
+    pushDataToFile(data: string, destPath: string): Promise<void> {
+        return this.client.pushDataToFile(this.id, data, destPath);
     }
 
-    pushFile(
-        srcPath: string,
-        destPath: string,
-        cb?: ExecCallback
-    ): Promise<void> | void {
-        return this.client.pushFile(
-            this.id,
-            srcPath,
-            destPath,
-            cb as NonNullable<ExecCallback>
-        );
+    pushFile(srcPath: string, destPath: string): Promise<void> {
+        return this.client.pushFile(this.id, srcPath, destPath);
     }
 
-    pullDataFromFile(
-        srcPath: string,
-        cb?: ExecCallbackWithValue<Buffer>
-    ): Promise<Buffer> | void {
-        return this.client.pullDataFromFile(
-            this.id,
-            srcPath,
-            cb as NonNullable<ExecCallbackWithValue<Buffer>>
-        );
+    pullDataFromFile(srcPath: string): Promise<Buffer> {
+        return this.client.pullDataFromFile(this.id, srcPath);
     }
 
-    pullFile(
-        srcPath: string,
-        destPath: string,
-        cb?: ExecCallback
-    ): Promise<void> | void {
-        return this.client.pullFile(
-            this.id,
-            srcPath,
-            destPath,
-            cb as NonNullable<ExecCallback>
-        );
+    pullFile(srcPath: string, destPath: string): Promise<void> {
+        return this.client.pullFile(this.id, srcPath, destPath);
     }
 
-    pull(
-        path: string,
-        cb?: ExecCallbackWithValue<PullTransfer>
-    ): Promise<PullTransfer> | void {
-        return this.client.pull(
-            this.id,
-            path,
-            cb as NonNullable<ExecCallbackWithValue<PullTransfer>>
-        );
+    pull(path: string): Promise<PullTransfer> {
+        return this.client.pull(this.id, path);
     }
 
     push(
         srcPath: string | Readable,
         destPath: string,
-        cb?: (err: Error, value: PushTransfer) => void
-    ): Promise<PushTransfer>;
-    push(
-        srcPath: string | Readable,
-        destPath: string,
-        mode?: SyncMode,
-        cb?: (err: Error, value: PushTransfer) => void
-    ): Promise<PushTransfer>;
-    push(
-        srcPath: string | Readable,
-        destPath: string,
-        mode?: any,
-        cb?: (err: Error, value: PushTransfer) => void
-    ) {
-        return this.client.push(this.id, srcPath, destPath, mode, cb);
+        mode?: SyncMode | ExecCallbackWithValue<PushTransfer>
+    ): Promise<PushTransfer> {
+        return this.client.push(this.id, srcPath, destPath, mode as SyncMode);
     }
 
-    tcpip(port = 5555, cb?: ExecCallbackWithValue<string>) {
-        return this.client.tcpip(this.id, port, cb);
+    tcpip(port = 5555): Promise<void> {
+        return this.client.tcpip(this.id, port);
     }
 
-    usb(cb?: ExecCallback) {
-        return this.client.usb(this.id, cb);
+    usb(): Promise<void> {
+        return this.client.usb(this.id);
     }
 
-    waitBootComplete(cb?: ExecCallback) {
-        return this.client.waitBootComplete(this.id, cb);
+    waitBootComplete(): Promise<void> {
+        return this.client.waitBootComplete(this.id);
     }
 
     listSettings(

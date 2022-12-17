@@ -1026,7 +1026,11 @@ export default class AdbClient {
     }
 
     uninstall(serial: string, pkg: string): Promise<void>;
-    uninstall(serial: string, pkg: string): Promise<void>;
+    uninstall(
+        serial: string,
+        pkg: string,
+        options: UninstallOptions
+    ): Promise<void>;
     uninstall(serial: string, pkg: string, cb: ExecCallback): void;
     uninstall(
         serial: string,
