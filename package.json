@@ -9,7 +9,7 @@
         "adb-ts",
         "monkey",
         "adb-monkey",
-        "logacat",
+        "logcat",
         "adb-logcat",
         "android"
     ],
