@@ -32,6 +32,7 @@ export default class LogcatReader extends StreamHandler {
     }
 
     hook(): void {
+        // TODO remove?
         if (this.options?.fixLineFeeds) {
             const transform = this.stream.pipe(new Transform());
             transform.on('data', (data) => {
