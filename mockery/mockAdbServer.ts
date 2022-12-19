@@ -5,7 +5,7 @@ import { promisify } from 'util';
 
 type Sequence = {
     cmd: string;
-    res: string | null;
+    res: string | Buffer | null;
     rawRes?: true;
     unexpected?: true;
 };
@@ -30,7 +30,7 @@ export class AdbMock {
         return info.port;
     }
 
-    protected writeOkay(data: string | null): void {
+    protected writeOkay(data: string | Buffer | null): void {
         const encoded = encodeData(data || '');
         const toWrite = Reply.OKAY.concat(encoded.toString());
         this.socket?.write(toWrite);
@@ -42,8 +42,10 @@ export class AdbMock {
         this.socket?.write(toWrite);
     }
 
-    protected writeRaw(data: string | null): void {
-        this.socket?.write(Reply.OKAY.concat(data || ''));
+    protected writeRaw(data: string | Buffer | null): void {
+        this.socket?.write(
+            Buffer.concat([Buffer.from(Reply.OKAY), Buffer.from(data || '')])
+        );
     }
 
     protected writeUnexpected(msg = 'UNEX'): void {
