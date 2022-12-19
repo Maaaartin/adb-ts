@@ -18,9 +18,10 @@ export default class LogcatCommand extends RawCommand {
                 const stream = new LineTransform({ autoDetect: true });
                 result.pipe(stream);
                 logCat = readStream(stream, {
-                    ...options,
+                    filter: options?.filter,
                     fixLineFeeds: false
                 });
+                // TODO not needed?
                 this.connection.on('error', (err) =>
                     logCat?.emit('error', err)
                 );
