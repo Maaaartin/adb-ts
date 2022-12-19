@@ -75,7 +75,7 @@ export default class LogcatReader extends StreamHandler {
         return this;
     }
 
-    end(): Promise<void> {
-        return new Promise<void>((resolve) => this.stream.end(resolve));
+    end(): void {
+        this.stream.end();
     }
 }

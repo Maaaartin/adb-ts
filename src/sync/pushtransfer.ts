@@ -21,9 +21,8 @@ export default class PushTransfer extends StreamHandler {
         this.emit('progress', this.stats);
     }
 
-    end(): Promise<void> {
+    end(): void {
         this.emit('end');
-        return Promise.resolve();
     }
 
     on(event: 'error', listener: (err: Error) => void): this;
