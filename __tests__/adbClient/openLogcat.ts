@@ -1,7 +1,7 @@
-import AdbClient from '../../src/client';
+import AdbClient from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { promisify } from 'util';
-import LogcatEntry from '../../src/logcat/entry';
+import LogcatEntry from '../../lib/logcat/entry';
 
 describe('Open logcat OKAY tests', () => {
     it('Should read logs', async () => {
