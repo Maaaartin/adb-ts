@@ -21,7 +21,6 @@ export default class LogcatCommand extends RawCommand {
                     filter: options?.filter,
                     fixLineFeeds: false
                 });
-                // TODO not needed?
                 this.connection.on('error', (err) =>
                     logCat?.emit('error', err)
                 );
@@ -31,6 +30,7 @@ export default class LogcatCommand extends RawCommand {
                 return logCat;
             })
             .catch((err) => {
+                this.connection.end();
                 logCat?.end();
                 throw err;
             });

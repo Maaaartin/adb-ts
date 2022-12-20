@@ -878,7 +878,6 @@ export default class AdbClient {
         );
     }
 
-    // manual test
     openLogcat(serial: string): Promise<LogcatReader>;
     openLogcat(serial: string, options: LogcatOptions): Promise<LogcatReader>;
     openLogcat(serial: string, cb: ExecCallbackWithValue<LogcatReader>): void;

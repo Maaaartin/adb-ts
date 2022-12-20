@@ -2,6 +2,7 @@ import AdbClient from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { promisify } from 'util';
 import LogcatEntry from '../../lib/logcat/entry';
+import { UnexpectedDataError } from '../../lib';
 
 const logCatRes = Buffer.from([
     0, 0, 66, 0, 28, 0, 212, 0, 0, 0, 212, 0, 0, 0, 32, 109, 160, 99, 108, 188,
@@ -73,6 +74,112 @@ describe('Open logcat OKAY tests', () => {
             })();
             expect(result).toEqual(expectedEntry);
             logcat.end();
+        } finally {
+            await adbMock.end();
+        }
+    });
+});
+
+describe('Open logcat FAIL tests', () => {
+    it('Should fail first response', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'fail', res: null, rawRes: true },
+            {
+                cmd: `shell:echo && logcat -B *:I 2>/dev/null`,
+                res: logCatRes,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.openLogcat('serial');
+            } catch (e) {
+                expect(e).toEqual(new Error('Failure'));
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Should second first response', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `fail`,
+                res: logCatRes,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.openLogcat('serial');
+            } catch (e) {
+                expect(e).toEqual(new Error('Failure'));
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+});
+
+describe('Open logcat unexpected error tests', () => {
+    it('Should receive unexpected first response', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true,
+                unexpected: true
+            },
+            {
+                cmd: `shell:echo && logcat -B *:I 2>/dev/null`,
+                res: logCatRes,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.openLogcat('serial');
+            } catch (e) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+                );
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Should receive unexpected second response', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: `shell:echo && logcat -B *:I 2>/dev/null`,
+                res: logCatRes,
+                rawRes: true,
+                unexpected: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.openLogcat('serial');
+            } catch (e) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+                );
+            }
         } finally {
             await adbMock.end();
         }
