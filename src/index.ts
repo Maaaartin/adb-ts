@@ -293,7 +293,6 @@ export type LogcatOptions = {
 };
 
 export type LogcatReaderOptions = {
-    fixLineFeeds?: boolean;
     filter?: (entry: LogcatEntry) => boolean;
 };
 

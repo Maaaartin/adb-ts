@@ -3,18 +3,14 @@ import StreamHandler from '../streamHandler';
 import Binary from './parser/binary';
 import LogcatEntry from './entry';
 import LogcatParser from './parser';
-
-import Transform from './transform';
 import { Writable } from 'stream';
 
 export default class LogcatReader extends StreamHandler {
     private filter?: (entry: LogcatEntry) => boolean;
     private parser: LogcatParser;
     private stream_?: Writable;
-    private options?: LogcatReaderOptions;
     constructor(options?: LogcatReaderOptions) {
         super();
-        this.options = options;
         this.filter = options?.filter;
         this.parser = new Binary();
     }
@@ -32,17 +28,10 @@ export default class LogcatReader extends StreamHandler {
     }
 
     hook(): void {
-        // TODO remove?
-        if (this.options?.fixLineFeeds) {
-            const transform = this.stream.pipe(new Transform());
-            transform.on('data', (data) => {
-                return this.parser.parse(data);
-            });
-        } else {
-            this.stream.on('data', (data) => {
-                return this.parser.parse(data);
-            });
-        }
+        this.stream.on('data', (data) => {
+            this.parser.parse(data);
+        });
+
         this.stream.on('error', (err) => {
             this.emit('error', err);
         });
