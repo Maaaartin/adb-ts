@@ -25,7 +25,7 @@ export default class LogcatCommand extends RawCommand {
                     logCat?.emit('error', err)
                 );
                 logCat.on('end', () => {
-                    this.finalize();
+                    this.connection.end();
                 });
                 return logCat;
             })

@@ -36,7 +36,7 @@ export default class ScreencapCommand extends RawCommand {
                 throw err;
             })
             .finally(() => {
-                return this.finalize();
+                return this.connection.end();
             });
     }
 }

@@ -11,7 +11,7 @@ export default class TcpCommand extends RawCommand {
     ): Promise<Connection> {
         this.Cmd += host ? host + ':' + port : port;
         return this.preExecute(serial).catch((err) => {
-            this.finalize();
+            this.connection.end();
             throw err;
         });
     }
