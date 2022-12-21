@@ -1,4 +1,4 @@
-import { MonkeyCallback } from '../lib';
+import { MonkeyCallback } from '../lib/util/types';
 import Api from '../lib/monkey/api';
 import { Reply } from '../lib/monkey/reply';
 

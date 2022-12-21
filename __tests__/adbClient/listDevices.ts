@@ -1,4 +1,4 @@
-import { IAdbDevice } from '../../lib';
+import { IAdbDevice } from '../../lib/util/types';
 import { UnexpectedDataError } from '../../lib/util/errors';
 import AdbClient from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';

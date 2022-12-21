@@ -1,6 +1,7 @@
 import net from 'net';
 import Parser from '../lib/parser';
-import { encodeData, NonEmptyArray, Reply } from '../lib';
+import { NonEmptyArray, Reply } from '../lib/util/types';
+import { encodeData } from '../lib/util/functions';
 import { promisify } from 'util';
 
 type Sequence = {

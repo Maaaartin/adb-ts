@@ -9,9 +9,9 @@ import {
     parsePrimitiveParam,
     parseOptions,
     findMatches,
-    buildInputParams,
-    PropertyValue
-} from '../lib/index';
+    buildInputParams
+} from '../lib/util/functions';
+import { PropertyValue } from '../lib/util/types';
 
 describe('Encode/decode length', () => {
     it('Decode length', () => {

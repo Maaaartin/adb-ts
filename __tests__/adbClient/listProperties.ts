@@ -1,6 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
-import { PropertyValue } from '../../lib';
+import { PropertyValue } from '../../lib/util/types';
 
 describe('List properties', () => {
     it('OKAY', async () => {
