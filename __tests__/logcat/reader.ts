@@ -53,12 +53,12 @@ describe('Logcat reader tests', () => {
             expect(err).toEqual(
                 (() => {
                     const entry = new LogcatEntry();
-                    entry.setDate(new Date(2));
-                    entry.setPid(10);
-                    entry.setTid(10);
-                    entry.setPriority(5);
-                    entry.setTag('tag');
-                    entry.setMessage('message');
+                    entry.date = new Date(2);
+                    entry.pid = 10;
+                    entry.tid = 10;
+                    entry.priority = 5;
+                    entry.tag = 'tag';
+                    entry.message = 'message';
                     return entry;
                 })()
             );
@@ -68,12 +68,12 @@ describe('Logcat reader tests', () => {
             'entry',
             (() => {
                 const entry = new LogcatEntry();
-                entry.setDate(new Date(2));
-                entry.setPid(10);
-                entry.setTid(10);
-                entry.setPriority(5);
-                entry.setTag('tag');
-                entry.setMessage('message');
+                entry.date = new Date(2);
+                entry.pid = 10;
+                entry.tid = 10;
+                entry.priority = 5;
+                entry.tag = 'tag';
+                entry.message = 'message';
                 return entry;
             })()
         );
@@ -88,12 +88,12 @@ describe('Logcat reader tests', () => {
             expect(err).toEqual(
                 (() => {
                     const entry = new LogcatEntry();
-                    entry.setDate(new Date(2));
-                    entry.setPid(10);
-                    entry.setTid(10);
-                    entry.setPriority(5);
-                    entry.setTag('tag');
-                    entry.setMessage('message');
+                    entry.date = new Date(2);
+                    entry.pid = 10;
+                    entry.tid = 10;
+                    entry.priority = 5;
+                    entry.tag = 'tag';
+                    entry.message = 'message';
                     return entry;
                 })()
             );
@@ -103,12 +103,12 @@ describe('Logcat reader tests', () => {
             'entry',
             (() => {
                 const entry = new LogcatEntry();
-                entry.setDate(new Date(2));
-                entry.setPid(10);
-                entry.setTid(10);
-                entry.setPriority(5);
-                entry.setTag('tag');
-                entry.setMessage('something');
+                entry.date = new Date(2);
+                entry.pid = 10;
+                entry.tid = 10;
+                entry.priority = 5;
+                entry.tag = 'tag';
+                entry.message = 'something';
                 return entry;
             })()
         );
@@ -116,12 +116,12 @@ describe('Logcat reader tests', () => {
             'entry',
             (() => {
                 const entry = new LogcatEntry();
-                entry.setDate(new Date(2));
-                entry.setPid(10);
-                entry.setTid(10);
-                entry.setPriority(5);
-                entry.setTag('tag');
-                entry.setMessage('message');
+                entry.date = new Date(2);
+                entry.pid = 10;
+                entry.tid = 10;
+                entry.priority = 5;
+                entry.tag = 'tag';
+                entry.message = 'message';
                 return entry;
             })()
         );

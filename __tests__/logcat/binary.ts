@@ -16,20 +16,20 @@ const logCatRes = Buffer.from([
     0, 0, 5, 97, 117, 100
 ]);
 const entry1 = new LogcatEntry();
-entry1.setDate(new Date('2022-12-19T13:54:40.804Z'));
-entry1.setMessage('Using psi monitors for memory pressure detection');
-entry1.setPid(212);
-entry1.setPriority(4);
-entry1.setTag('lowmemorykiller');
-entry1.setTid(212);
+entry1.date = new Date('2022-12-19T13:54:40.804Z');
+entry1.message = 'Using psi monitors for memory pressure detection';
+entry1.pid = 212;
+entry1.priority = 4;
+entry1.tag = 'lowmemorykiller';
+entry1.tid = 212;
 
 const entry2 = new LogcatEntry();
-entry2.setDate(new Date('2022-12-19T13:54:40.808Z'));
-entry2.setMessage('Process polling is supported');
-entry2.setPid(212);
-entry2.setPriority(4);
-entry2.setTag('lowmemorykiller');
-entry2.setTid(212);
+entry2.date = new Date('2022-12-19T13:54:40.808Z');
+entry2.message = 'Process polling is supported';
+entry2.pid = 212;
+entry2.priority = 4;
+entry2.tag = 'lowmemorykiller';
+entry2.tid = 212;
 
 describe('Binary parser tests', () => {
     it('Should emit entries', (done) => {

@@ -19,14 +19,6 @@ const logCatRes = Buffer.from([
     0, 12, 4, 0, 0, 5, 97, 117, 100
 ]);
 
-const expectedEntry = new LogcatEntry();
-expectedEntry.setDate(new Date('2022-12-19T13:54:40.804Z'));
-expectedEntry.setMessage('Using psi monitors for memory pressure detection');
-expectedEntry.setPid(212);
-expectedEntry.setPriority(4);
-expectedEntry.setTag('lowmemorykiller');
-expectedEntry.setTid(212);
-
 describe('Open logcat OKAY tests', () => {
     it('Should read logs', async () => {
         const adbMock = new AdbMock([

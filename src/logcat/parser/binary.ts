@@ -27,14 +27,14 @@ export default class Binary extends Parser {
                 break;
             }
             const entry = new LogcatEntry();
-            entry.setPid(this.buffer.readInt32LE(cursor));
+            entry.pid = this.buffer.readInt32LE(cursor);
             cursor += 4;
-            entry.setTid(this.buffer.readInt32LE(cursor));
+            entry.tid = this.buffer.readInt32LE(cursor);
             cursor += 4;
             const sec = this.buffer.readInt32LE(cursor);
             cursor += 4;
             const nsec = this.buffer.readInt32LE(cursor);
-            entry.setDate(new Date(sec * 1000 + nsec / 1000000));
+            entry.date = new Date(sec * 1000 + nsec / 1000000);
             cursor += 4;
             cursor = headerSize;
             const data = this.buffer.subarray(cursor, cursor + length);
@@ -50,15 +50,15 @@ export default class Binary extends Parser {
     }
 
     private processEntry(entry: LogcatEntry, data: Buffer): void {
-        entry.setPriority(data[0]);
+        entry.priority = data[0];
         let cursor = 1;
         const length = data.length;
         while (cursor < length) {
             if (data[cursor] === 0) {
-                entry.setTag(data.subarray(1, cursor).toString());
-                entry.setMessage(
-                    data.subarray(cursor + 1, length - 1).toString()
-                );
+                entry.tag = data.subarray(1, cursor).toString();
+                entry.message = data
+                    .subarray(cursor + 1, length - 1)
+                    .toString();
                 this.emit('entry', entry);
                 return;
             }
