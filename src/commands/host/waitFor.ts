@@ -1,5 +1,5 @@
 import Command from '../../command';
-import { WaitForState, WaitForType } from '../..';
+import { WaitForState, WaitForType } from '../../util/types';
 
 export default class WaitFor extends Command {
     protected keepAlive = true;

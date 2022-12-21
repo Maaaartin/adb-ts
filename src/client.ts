@@ -14,7 +14,6 @@ import {
     LogcatOptions,
     MkDirOptions,
     MvOptions,
-    nodeify,
     ReversesObject,
     RmOptions,
     SettingsMode,
@@ -24,17 +23,20 @@ import {
     TouchOptions,
     UninstallOptions,
     WaitForState,
-    parseOptions,
-    parsePrimitiveParam,
-    parseCbParam,
-    parseValueParam,
     IpConnectConstruct,
     PropertyMap,
-    buildInputParams,
     NonEmptyArray,
     WaitForType,
     PropertyValue
-} from '.';
+} from './util/types';
+import {
+    parseOptions,
+    parsePrimitiveParam,
+    parseCbParam,
+    buildInputParams,
+    parseValueParam,
+    nodeify
+} from './util/functions';
 import { AdbExecError } from './util/errors';
 import Sync, { SyncMode } from './sync';
 import { execFile } from 'child_process';

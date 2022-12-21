@@ -1,5 +1,5 @@
 import { Writable } from 'stream';
-import { LogcatReaderOptions } from '..';
+import { LogcatReaderOptions } from '../util/types';
 import { default as Reader } from './reader';
 
 export function readStream(

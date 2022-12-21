@@ -1,4 +1,5 @@
-import { SettingsMode, stringToType, PropertyValue } from '../..';
+import { stringToType } from '../../util/functions';
+import { PropertyValue, SettingsMode } from '../../util/types';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
 export default class GetSetting extends TransportParseAllCommand<PropertyValue> {

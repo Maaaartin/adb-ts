@@ -1,4 +1,5 @@
-import { PropertyMap, findMatches, SettingsMode } from '../..';
+import { findMatches } from '../../util/functions';
+import { PropertyMap, SettingsMode } from '../../util/types';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
 export default class ListSettingsCommand extends TransportParseAllCommand<PropertyMap> {

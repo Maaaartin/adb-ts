@@ -1,4 +1,4 @@
-import { decodeLength } from '.';
+import { decodeLength } from './util//functions';
 import { PrematureEOFError, UnexpectedDataError } from './util/errors';
 import { Writable } from 'stream';
 import { Socket } from 'net';

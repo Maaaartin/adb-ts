@@ -1,5 +1,5 @@
-import { AdbExtra, AdbExtraType, StartServiceOptions } from '../..';
 import { PrematureEOFError, UnexpectedDataError } from '../../util/errors';
+import { AdbExtra, AdbExtraType, StartServiceOptions } from '../../util/types';
 import TransportCommand from '../transport';
 
 export default class StartServiceCommand extends TransportCommand<void> {

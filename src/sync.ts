@@ -1,4 +1,4 @@
-import { Reply } from '.';
+import { Reply } from './util/types';
 import { FailError } from './util/errors';
 import Connection from './connection';
 import { EventEmitter } from 'events';

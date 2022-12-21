@@ -1,4 +1,4 @@
-import { InputSource, PrimitiveType } from '../..';
+import { InputSource, PrimitiveType } from '../../util/types';
 import TransportCommand from '../transport';
 
 export default class InputCommand extends TransportCommand<void> {

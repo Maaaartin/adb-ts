@@ -1,4 +1,4 @@
-import { MkDirOptions } from '../..';
+import { MkDirOptions } from '../../util/types';
 import FileSystemCommand from '../filesystem';
 
 export default class MkDirCommand extends FileSystemCommand {

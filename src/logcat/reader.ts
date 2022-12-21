@@ -1,10 +1,10 @@
-import { LogcatReaderOptions } from '..';
 import { NotConnectedError } from '../util/errors';
 import StreamHandler from '../streamHandler';
 import Binary from './parser/binary';
 import LogcatEntry from './entry';
 import LogcatParser from './parser';
 import { Writable } from 'stream';
+import { LogcatReaderOptions } from '../util/types';
 
 export default class LogcatReader extends StreamHandler {
     private filter?: (entry: LogcatEntry) => boolean;

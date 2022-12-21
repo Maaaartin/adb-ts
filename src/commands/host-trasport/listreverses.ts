@@ -1,4 +1,5 @@
-import { findMatches, ReversesObject } from '../..';
+import { findMatches } from '../../util/functions';
+import { ReversesObject } from '../../util/types';
 import TransportParseValueCommand from '../transport-parse-value-command';
 
 export default class ListReversesCommand extends TransportParseValueCommand<

@@ -1,4 +1,4 @@
-import { SettingsMode, PrimitiveType } from '../..';
+import { PrimitiveType, SettingsMode } from '../../util/types';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
 export default class PutSetting extends TransportParseAllCommand<void> {

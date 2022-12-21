@@ -1,4 +1,4 @@
-import { MonkeyCallback } from '..';
+import { MonkeyCallback } from '../util/types';
 import { NotConnectedError } from '../util/errors';
 import { Socket } from 'net';
 import { Reply, ErrReply } from './reply';

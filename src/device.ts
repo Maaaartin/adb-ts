@@ -23,7 +23,7 @@ import {
     PropertyValue,
     KeyEventOptions,
     InputDurationOptions
-} from '.';
+} from './util/types';
 
 import AdbClient from './client';
 import Connection from './connection';

@@ -1,7 +1,7 @@
 import Api from './api';
 import { BaseCommand, Command, ParsableCommand } from './command';
 import Monkey from './client';
-import { MonkeyCallback } from '..';
+import { MonkeyCallback } from '../util//types';
 
 export default class Multi extends Api {
     private client: Monkey;

@@ -1,5 +1,5 @@
-import { stringToType } from '../..';
-import { PropertyValue } from './../..';
+import { stringToType } from '../../util/functions';
+import { PropertyValue } from '../../util/types';
 import TransportParseAllCommand from '../transport-parse-all-command';
 
 export default class GetPropertyCommand extends TransportParseAllCommand<PropertyValue> {

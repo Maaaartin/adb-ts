@@ -1,8 +1,8 @@
 import LineTransform from '../../linetransform';
 import RawCommand from '../raw-command';
-import { LogcatOptions } from '../..';
 import { readStream } from '../../logcat';
 import LogcatReader from '../../logcat/reader';
+import { LogcatOptions } from '../../util/types';
 
 export default class LogcatCommand extends RawCommand {
     Cmd = 'shell:echo && ';
