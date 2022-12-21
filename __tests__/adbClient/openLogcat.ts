@@ -1,8 +1,8 @@
 import AdbClient from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { promisify } from 'util';
 import LogcatEntry from '../../lib/logcat/entry';
 import { UnexpectedDataError } from '../../lib';
+import LogcatReader from '../../lib/logcat/reader';
 
 const logCatRes = Buffer.from([
     0, 0, 66, 0, 28, 0, 212, 0, 0, 0, 212, 0, 0, 0, 32, 109, 160, 99, 108, 188,
@@ -40,15 +40,8 @@ describe('Open logcat OKAY tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            const logcat = await adb.openLogcat('serial');
-            const result = await promisify<LogcatEntry>((cb) => {
-                logcat.on('entry', (entry) => {
-                    cb(null, entry);
-                });
-            })();
-
-            expect(result).toEqual(expectedEntry);
-            logcat.end();
+            const result = await adb.openLogcat('serial');
+            expect(result).toBeInstanceOf(LogcatReader);
         } finally {
             await adbMock.end();
         }
@@ -66,14 +59,8 @@ describe('Open logcat OKAY tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
-            const logcat = await adb.openLogcat('serial', { clear: true });
-            const result = await promisify<LogcatEntry>((cb) => {
-                logcat.on('entry', (entry) => {
-                    cb(null, entry);
-                });
-            })();
-            expect(result).toEqual(expectedEntry);
-            logcat.end();
+            const result = await adb.openLogcat('serial', { clear: true });
+            expect(result).toBeInstanceOf(LogcatReader);
         } finally {
             await adbMock.end();
         }

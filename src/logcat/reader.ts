@@ -43,8 +43,12 @@ export default class LogcatReader extends StreamHandler {
         });
         this.parser.on('entry', (entry: LogcatEntry) => {
             if (this.filter) {
-                if (this.filter(entry)) this.emit('entry', entry);
-            } else this.emit('entry', entry);
+                if (this.filter(entry)) {
+                    this.emit('entry', entry);
+                }
+            } else {
+                this.emit('entry', entry);
+            }
         });
         this.parser.on('error', (err) => {
             this.emit('error', err);
