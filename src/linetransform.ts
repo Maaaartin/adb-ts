@@ -36,7 +36,7 @@ export default class LineTransform extends Transform {
         }
         if (this.skipBytes) {
             const skip = Math.min(chunk.length, this.skipBytes);
-            chunk = chunk.slice(skip);
+            chunk = chunk.subarray(skip);
             this.skipBytes -= skip;
         }
         if (!chunk.length) {
@@ -57,17 +57,17 @@ export default class LineTransform extends Transform {
         while (hi <= last) {
             if (chunk[hi] === 0x0d) {
                 if (hi === last) {
-                    this.savedR = chunk.slice(last);
+                    this.savedR = chunk.subarray(last);
                     break;
                 } else if (chunk[hi + 1] === 0x0a) {
-                    this.push(chunk.slice(lo, hi));
+                    this.push(chunk.subarray(lo, hi));
                     lo = hi + 1;
                 }
             }
             hi += 1;
         }
         if (hi !== lo) {
-            this.push(chunk.slice(lo, hi));
+            this.push(chunk.subarray(lo, hi));
         }
         cb();
     }

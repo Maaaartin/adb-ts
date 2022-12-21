@@ -30,10 +30,11 @@ entry2.setPid(212);
 entry2.setPriority(4);
 entry2.setTag('lowmemorykiller');
 entry2.setTid(212);
-const entryPool = [entry1, entry2];
+
 describe('Binary parser tests', () => {
-    it('Parse entries', (done) => {
+    it('Should emit entries', (done) => {
         const parser = new Binary();
+        const entryPool = [entry1, entry2];
         parser.on('entry', (entry) => {
             expect(entry).toEqual(entryPool.shift());
             if (entryPool.length === 0) {
@@ -42,5 +43,37 @@ describe('Binary parser tests', () => {
         });
 
         parser.parse(logCatRes);
+    });
+
+    it('Should emit wait', (done) => {
+        const parser = new Binary();
+        parser.on('wait', () => {
+            done();
+        });
+        parser.parse(logCatRes);
+    });
+
+    it('Should emit drain', (done) => {
+        const parser = new Binary();
+        parser.on('drain', () => {
+            done();
+        });
+        parser.parse(Buffer.from([]));
+    });
+
+    it('Should emit error', (done) => {
+        const parser = new Binary();
+        parser.on('error', (err) => {
+            expect(err).toEqual(
+                new Error(
+                    `Unprocessable entry data '${Buffer.from(
+                        new Array(257).fill(1)
+                    )}'`
+                )
+            );
+            done();
+        });
+
+        parser.parse(Buffer.from([...new Array(300).fill(1)]));
     });
 });

@@ -172,7 +172,7 @@ export default class Parser {
     private readline(): Promise<Buffer> {
         return this.readUntil(0x0a).then((line) => {
             if (line[line.length - 1] === 0x0d) {
-                return line.slice(0, -1);
+                return line.subarray(0, -1);
             }
             return line;
         });

@@ -7,7 +7,7 @@ export default class Binary extends Parser {
     private readonly HEADER_SIZE_MAX = 100;
     constructor() {
         super();
-        this.buffer = Buffer.from('');
+        this.buffer = Buffer.from([]);
     }
     parse(chunk: Buffer): void {
         this.buffer = Buffer.concat([this.buffer, chunk]);
@@ -37,9 +37,9 @@ export default class Binary extends Parser {
             entry.setDate(new Date(sec * 1000 + nsec / 1000000));
             cursor += 4;
             cursor = headerSize;
-            const data = this.buffer.slice(cursor, cursor + length);
+            const data = this.buffer.subarray(cursor, cursor + length);
             cursor += length;
-            this.buffer = this.buffer.slice(cursor);
+            this.buffer = this.buffer.subarray(cursor);
             this.processEntry(entry, data);
         }
         if (this.buffer.length) {
@@ -55,9 +55,10 @@ export default class Binary extends Parser {
         const length = data.length;
         while (cursor < length) {
             if (data[cursor] === 0) {
-                // TODO write test and rewrite deprecated method
-                entry.setTag(data.slice(1, cursor).toString());
-                entry.setMessage(data.slice(cursor + 1, length - 1).toString());
+                entry.setTag(data.subarray(1, cursor).toString());
+                entry.setMessage(
+                    data.subarray(cursor + 1, length - 1).toString()
+                );
                 this.emit('entry', entry);
                 return;
             }
