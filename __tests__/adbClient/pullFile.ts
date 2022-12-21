@@ -1,6 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
-import { FailError, UnexpectedDataError } from '../../lib';
+import { FailError, UnexpectedDataError } from '../../lib/util/errors';
 import fs, { WriteStream } from 'fs';
 import { BufferWritableMock } from 'stream-mock';
 import { Writable } from 'stream';

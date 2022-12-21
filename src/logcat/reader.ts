@@ -1,4 +1,5 @@
-import { LogcatReaderOptions, NotConnectedError } from '..';
+import { LogcatReaderOptions } from '..';
+import { NotConnectedError } from '../util/errors';
 import StreamHandler from '../streamHandler';
 import Binary from './parser/binary';
 import LogcatEntry from './entry';

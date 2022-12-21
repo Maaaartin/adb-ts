@@ -1,4 +1,4 @@
-import { PrematureEOFError } from '../..';
+import { PrematureEOFError } from '../../util/errors';
 import LineTransform from '../../linetransform';
 import RawCommand from '../raw-command';
 

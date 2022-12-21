@@ -1,5 +1,6 @@
 import ipRegex from 'ip-regex';
-import { DeviceState, IAdbDevice, UnexpectedDataError } from '.';
+import { DeviceState, IAdbDevice } from '.';
+import { UnexpectedDataError } from './util/errors';
 import Command from './command';
 const checkValues = ([_1, _2]: [string, string], expected: string[]): void => {
     if (!_1 || !_2) {

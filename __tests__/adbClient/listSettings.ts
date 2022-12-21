@@ -1,7 +1,7 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
 import { PropertyValue } from '../../lib';
-import { UnexpectedDataError } from '../../lib';
+import { UnexpectedDataError } from '../../lib/util/errors';
 
 describe('List settings tests', () => {
     it('OKAY', async () => {

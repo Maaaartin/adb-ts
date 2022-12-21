@@ -1,6 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
-import { UnexpectedDataError } from '../../lib';
+import { UnexpectedDataError } from '../../lib/util/errors';
 
 describe('Set prop tests', () => {
     it('OKAY with empty string', async () => {

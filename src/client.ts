@@ -2,7 +2,6 @@ import {
     AdbClientOptions,
     AdbClientOptionsValues,
     InputDurationOptions,
-    ADB_DEFAULT_PORT,
     CommandConstruct,
     CpOptions,
     ExecCallback,
@@ -34,9 +33,9 @@ import {
     buildInputParams,
     NonEmptyArray,
     WaitForType,
-    PropertyValue,
-    AdbExecError
+    PropertyValue
 } from '.';
+import { AdbExecError } from './util/errors';
 import Sync, { SyncMode } from './sync';
 import { execFile } from 'child_process';
 import fs from 'fs';
@@ -105,6 +104,7 @@ import WaitFor from './commands/host/waitFor';
 import { promisify } from 'util';
 import T from 'timers/promises';
 
+const ADB_DEFAULT_PORT = 5555;
 export default class AdbClient {
     public static readonly defaultOptions: Readonly<AdbClientOptionsValues> =
         Object.freeze({

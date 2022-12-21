@@ -1,6 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
-import { FailError, PrematureEOFError } from '../../lib';
+import { PrematureEOFError } from '../../lib/util/errors';
 
 describe('Wait boot complete', () => {
     it('OKAY with default port', async () => {

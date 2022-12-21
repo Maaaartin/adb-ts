@@ -1,5 +1,5 @@
 import AdbClient from '../../lib/client';
-import { AdbExecError } from '../../lib';
+import { AdbExecError } from '../../lib/util/errors';
 import { mockExec } from '../../mockery/execMock';
 
 describe('Exec device shell tests', () => {

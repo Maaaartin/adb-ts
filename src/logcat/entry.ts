@@ -1,4 +1,4 @@
-import { Priority } from '..';
+import { Priority } from './priority';
 
 export default class LogcatEntry {
     public date: Date;

@@ -2,7 +2,7 @@ import MockCommand from '../mockery/mockCommand';
 import Connection from '../lib/connection';
 import Parser from '../lib/parser';
 import { AdbMock } from '../mockery/mockAdbServer';
-import { UnexpectedDataError } from '../lib';
+import { UnexpectedDataError } from '../lib/util/errors';
 
 describe('Constructor tests', () => {
     it('Test parser', () => {

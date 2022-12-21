@@ -1,6 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
-import { FailError, PrematureEOFError, UnexpectedDataError } from '../../lib';
+import { UnexpectedDataError } from '../../lib/util/errors';
 
 describe('Wait for', () => {
     it('OKAY with any type', async () => {

@@ -1,6 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import AdbClient from '../../lib/client';
-import { FailError } from '../../lib';
+import { FailError } from '../../lib/util/errors';
 
 describe('Usb', () => {
     it('OKAY', async () => {

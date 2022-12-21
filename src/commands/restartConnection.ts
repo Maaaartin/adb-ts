@@ -1,4 +1,4 @@
-import { FailError } from '..';
+import { FailError } from '../util/errors';
 import TransportCommand from './transport';
 
 export default abstract class RestartConnection extends TransportCommand<void> {
