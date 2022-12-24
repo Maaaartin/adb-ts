@@ -9,9 +9,7 @@ export default class MonkeyCommand extends TransportCommand<Connection> {
         });
     }
 
-    endConnection(): Promise<void> {
-        return Promise.resolve();
-    }
+    endConnection(): void {}
 
     execute(serial: string, port: number | string): Promise<Connection> {
         this.Cmd += [port, '-v'].join(' ');

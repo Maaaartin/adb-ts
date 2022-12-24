@@ -3,9 +3,7 @@ import TransportCommand from '../transport';
 
 export default class SyncCommand extends TransportCommand<Sync> {
     Cmd = 'sync:';
-    endConnection(): Promise<void> {
-        return Promise.resolve();
-    }
+    endConnection(): void {}
     protected postExecute(): Promise<Sync> {
         return Promise.resolve(new Sync(this.connection));
     }
