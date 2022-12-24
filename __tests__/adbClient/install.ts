@@ -1,7 +1,6 @@
-import { AdbMock, AdbMockMulti } from '../../mockery/mockAdbServer';
-import AdbClient from '../../src/client';
-import { promisify } from 'util';
-import { FailError, UnexpectedDataError } from '../../src/util/errors';
+import { AdbMockMulti } from '../../mockery/mockAdbServer';
+import AdbClient from '../../lib/client';
+import { UnexpectedDataError } from '../../lib/util/errors';
 import { Readable } from 'stream';
 
 describe('Install OKAY tests', () => {
@@ -384,6 +383,310 @@ describe('Install FAIL tests', () => {
                 fail('Expected error');
             } catch (e) {
                 expect(e).toEqual(new Error('Failure'));
+            }
+        } finally {
+            adbMock.end();
+        }
+    });
+});
+
+describe('Install unexpected test', () => {
+    it('Should have unexpected error on first response', async () => {
+        const buff = Buffer.from([4, 0, 0, 0]);
+        const adbMock = new AdbMockMulti([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true,
+                unexpected: true
+            },
+            {
+                cmd: 'sync:',
+                res: 'OKAY' + buff.toString(),
+                rawRes: true,
+                end: true
+            },
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
+                res: 'Success\n',
+                rawRes: true,
+                end: true
+            },
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                res: '123',
+                rawRes: true,
+                end: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.install(
+                    'serial',
+                    Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
+                );
+                fail('Expected error');
+            } catch (e) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+                );
+            }
+        } finally {
+            adbMock.end();
+        }
+    });
+
+    it('Should have unexpected error on second response', async () => {
+        const buff = Buffer.from([4, 0, 0, 0]);
+        const adbMock = new AdbMockMulti([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: 'sync:',
+                res: 'OKAY' + buff.toString(),
+                rawRes: true,
+                end: true,
+                unexpected: true
+            },
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
+                res: 'Success\n',
+                rawRes: true,
+                end: true
+            },
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                res: '123',
+                rawRes: true,
+                end: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.install(
+                    'serial',
+                    Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
+                );
+                fail('Expected error');
+            } catch (e) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+                );
+            }
+        } finally {
+            adbMock.end();
+        }
+    });
+
+    it('Should have unexpected error on third response', async () => {
+        const buff = Buffer.from([4, 0, 0, 0]);
+        const adbMock = new AdbMockMulti([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: 'sync:',
+                res: 'OKAY' + buff.toString(),
+                rawRes: true,
+                end: true
+            },
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true,
+                unexpected: true
+            },
+            {
+                cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
+                res: 'Success\n',
+                rawRes: true,
+                end: true
+            },
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                res: '123',
+                rawRes: true,
+                end: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.install(
+                    'serial',
+                    Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
+                );
+                fail('Expected error');
+            } catch (e) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+                );
+            }
+        } finally {
+            adbMock.end();
+        }
+    });
+
+    it('Should have unexpected error on fourth response', async () => {
+        const buff = Buffer.from([4, 0, 0, 0]);
+        const adbMock = new AdbMockMulti([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: 'sync:',
+                res: 'OKAY' + buff.toString(),
+                rawRes: true,
+                end: true
+            },
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
+                res: 'Success\n',
+                rawRes: true,
+                end: true,
+                unexpected: true
+            },
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                res: '123',
+                rawRes: true,
+                end: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.install(
+                    'serial',
+                    Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
+                );
+                fail('Expected error');
+            } catch (e) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+                );
+            }
+        } finally {
+            adbMock.end();
+        }
+    });
+
+    it('Should have unexpected error on fifth response', async () => {
+        const buff = Buffer.from([4, 0, 0, 0]);
+        const adbMock = new AdbMockMulti([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: 'sync:',
+                res: 'OKAY' + buff.toString(),
+                rawRes: true,
+                end: true
+            },
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
+                res: 'Success\n',
+                rawRes: true,
+                end: true
+            },
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true,
+                unexpected: true
+            },
+            {
+                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                res: '123',
+                rawRes: true,
+                end: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.install(
+                    'serial',
+                    Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
+                );
+                fail('Expected error');
+            } catch (e) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+                );
+            }
+        } finally {
+            adbMock.end();
+        }
+    });
+
+    it('Should have unexpected error on sixth response', async () => {
+        const buff = Buffer.from([4, 0, 0, 0]);
+        const adbMock = new AdbMockMulti([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: 'sync:',
+                res: 'OKAY' + buff.toString(),
+                rawRes: true,
+                end: true
+            },
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
+                res: 'Success\n',
+                rawRes: true,
+                end: true
+            },
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                res: '123',
+                rawRes: true,
+                end: true,
+                unexpected: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.install(
+                    'serial',
+                    Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
+                );
+                fail('Expected error');
+            } catch (e) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+                );
             }
         } finally {
             adbMock.end();
