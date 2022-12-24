@@ -142,27 +142,26 @@ export default class AdbClient {
     }
 
     private connection(): Promise<Connection> {
-        let triedStarting = false;
-        const connection = new Connection();
         return new Promise<Connection>((resolve, reject) => {
+            let triedStarting = false;
+            const connection = new Connection();
             connection.once('connect', () => {
                 return resolve(connection);
             });
-            connection.on('error', (err: any) => {
+            connection.on('error', (err: Error) => {
                 if (
-                    err.code === 'ECONNREFUSED' &&
+                    (err as any).code === 'ECONNREFUSED' &&
                     !triedStarting &&
-                    !this.options?.noAutoStart
+                    !this.options.noAutoStart
                 ) {
                     triedStarting = true;
-                    return this.startServer().then(() => {
-                        return connection.connect(this.options);
-                    });
-                } else {
-                    connection.destroy();
-                    connection.removeAllListeners();
-                    return reject(err);
+                    return this.startServer().then(() =>
+                        connection.connect(this.options)
+                    );
                 }
+                connection.destroy();
+                connection.removeAllListeners();
+                return reject(err);
             });
             connection.connect(this.options);
         });
@@ -283,11 +282,6 @@ export default class AdbClient {
             : this.getProp(serial, 'ro.serialno').then((v) => `${v}`);
     }
 
-    /**
-     *
-     * @param serial
-     * @returns {String|'unknown'}
-     */
     getDevicePath(serial: string): Promise<string>;
     getDevicePath(serial: string, cb: ExecCallbackWithValue<string>): void;
     getDevicePath(
@@ -1306,6 +1300,7 @@ export default class AdbClient {
         );
     }
 
+    // TODO write test
     waitBootComplete(serial: string): Promise<void>;
     waitBootComplete(serial: string, cb: ExecCallback): void;
     waitBootComplete(serial: string, cb?: ExecCallback): Promise<void> | void {
@@ -1336,6 +1331,7 @@ export default class AdbClient {
         );
     }
 
+    // TODO write test
     map<R>(mapper: (device: AdbDevice) => R): Promise<R[]> {
         return this.listDevices().then((devices) =>
             devices.map((device) => mapper(new AdbDevice(this, device)))
@@ -1552,6 +1548,7 @@ export default class AdbClient {
         );
     }
 
+    // TODO write test
     getSetting(
         serial: string,
         mode: SettingsMode,
@@ -1596,7 +1593,7 @@ export default class AdbClient {
         );
     }
 
-    // TODO remove?
+    // TODO write test
     custom<T>(CustomCommand: CommandConstruct): Promise<T>;
     custom<T>(
         CustomCommand: CommandConstruct,
