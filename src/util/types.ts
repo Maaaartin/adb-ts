@@ -121,7 +121,6 @@ export type InstallOptions = {
     internal?: boolean;
     allowDowngrade?: boolean;
     grandPermissions?: boolean;
-    [key: string]: any;
 };
 
 export type UninstallOptions = {

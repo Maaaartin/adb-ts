@@ -90,4 +90,51 @@ describe('Install OKAY tests', () => {
             adbMock.end();
         }
     });
+
+    it('Should install with options and Success response', async () => {
+        const buff = Buffer.from([4, 0, 0, 0]);
+        const adbMock = new AdbMockMulti([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: 'sync:',
+                res: 'OKAY' + buff.toString(),
+                rawRes: true,
+                end: true
+            },
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:pm install -r -t -f -d -g "/data/local/tmp/_stream.apk" args`,
+                res: 'Success\n',
+                rawRes: true,
+                end: true
+            },
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                res: '123',
+                rawRes: true,
+                end: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+
+            const result = await adb.install(
+                'serial',
+                Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0])),
+                {
+                    reinstall: true,
+                    test: true,
+                    internal: true,
+                    allowDowngrade: true,
+                    grandPermissions: true
+                },
+                'args'
+            );
+            expect(result).toBeUndefined();
+        } finally {
+            adbMock.end();
+        }
+    });
 });

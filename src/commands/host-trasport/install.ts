@@ -53,10 +53,14 @@ export default class InstallCommand extends TransportCommand<void> {
         args?: string
     ): Promise<void> {
         this.apk = apk;
-        this.Cmd += this.intentArgs(options)
-            .join(' ')
-            .concat(this.escapeCompat(this.apk))
-            .concat(args ? ` ${args}` : '');
+        this.Cmd += [
+            ...this.intentArgs(options),
+            this.escapeCompat(this.apk),
+            args
+        ]
+            .filter(Boolean)
+            .join(' ');
+
         return this.preExecute(serial);
     }
 }
