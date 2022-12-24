@@ -10,6 +10,14 @@ type Sequence = {
     rawRes?: true;
     unexpected?: true;
 };
+
+type SequenceWithIndex = {
+    cmd: string;
+    res: string | Buffer | null;
+    rawRes?: true;
+    unexpected?: true;
+    end?: boolean;
+};
 export class AdbMock {
     protected server_ = new net.Server();
     protected parser: Parser | null = null;
@@ -57,7 +65,10 @@ export class AdbMock {
         return this.seq.shift() || null;
     }
 
-    protected connectionHandler(value: string): void {
+    protected async connectionHandler(socket: net.Socket): Promise<void> {
+        this.parser = new Parser(socket);
+        const value = (await this.parser.readValue()).toString();
+        this.readableHandler();
         const nextSeq = this.next();
         if (!nextSeq) {
             return this.writeFail();
@@ -98,10 +109,7 @@ export class AdbMock {
 
     protected hook(): void {
         this.server_.on('connection', async (socket) => {
-            this.parser = new Parser(socket);
-            const value = (await this.parser.readValue()).toString();
-            this.connectionHandler(value);
-            this.readableHandler();
+            this.connectionHandler(socket);
         });
     }
 
@@ -142,21 +150,30 @@ export class AdbMock {
     }
 }
 
-export class AdbMockDouble extends AdbMock {
+export class AdbMockMulti extends AdbMock {
     protected timeout?: NodeJS.Timeout;
+    constructor(seq: SequenceWithIndex | NonEmptyArray<SequenceWithIndex>) {
+        super(seq);
+    }
+
     private runner(): void {
         setImmediate(async () => {
             this.timeout = setTimeout(() => {
                 this.runner();
             }, 500);
-            const seq = this.next();
+            const seq = this.next() as SequenceWithIndex | null;
             if (!seq) {
                 clearTimeout(this.timeout);
                 this.parser?.end();
                 return;
             }
+
             clearTimeout(this.timeout);
             this.writeResponse(seq, await this.readValue());
+            if (seq.end) {
+                this.socket?.removeAllListeners('readable');
+                this.socket?.end();
+            }
         });
     }
 

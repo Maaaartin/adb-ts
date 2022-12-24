@@ -942,14 +942,18 @@ export default class AdbClient {
                 .then(() => {
                     return this.shellInternal(serial, ['rm', '-f', apk]).then(
                         (stream) => {
-                            return new Parser(stream).readAll().then(() => {});
+                            return new Parser(stream)
+                                .readAll()
+                                .then(() => {})
+                                .finally(() => {
+                                    stream.end();
+                                });
                         }
                     );
                 });
         });
     }
 
-    // manual test
     install(serial: string, apk: string | Readable): Promise<void>;
     install(
         serial: string,
@@ -1020,7 +1024,7 @@ export default class AdbClient {
                     );
                 }).finally(() => {
                     transfer.removeListener('error', errorListener);
-                    return transfer.removeListener('end', endListener);
+                    transfer.removeListener('end', endListener);
                 });
             }),
             cb
