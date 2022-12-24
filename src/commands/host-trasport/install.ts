@@ -61,6 +61,9 @@ export default class InstallCommand extends TransportCommand<void> {
             .filter(Boolean)
             .join(' ');
 
-        return this.preExecute(serial);
+        return this.preExecute(serial).catch((err) => {
+            super.endConnection();
+            throw err;
+        });
     }
 }
