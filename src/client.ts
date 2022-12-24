@@ -1300,7 +1300,6 @@ export default class AdbClient {
         );
     }
 
-    // TODO write test
     waitBootComplete(serial: string): Promise<void>;
     waitBootComplete(serial: string, cb: ExecCallback): void;
     waitBootComplete(serial: string, cb?: ExecCallback): Promise<void> | void {
@@ -1331,7 +1330,6 @@ export default class AdbClient {
         );
     }
 
-    // TODO write test
     map<R>(mapper: (device: AdbDevice) => R): Promise<R[]> {
         return this.listDevices().then((devices) =>
             devices.map((device) => mapper(new AdbDevice(this, device)))
