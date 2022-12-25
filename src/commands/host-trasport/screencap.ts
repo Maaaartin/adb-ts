@@ -1,8 +1,13 @@
 import { PrematureEOFError } from '../../util/errors';
 import LineTransform from '../../linetransform';
-import RawCommand from '../raw-command';
+import TransportCommand from '../transport';
 
-export default class ScreencapCommand extends RawCommand {
+export default class ScreencapCommand extends TransportCommand<Buffer> {
+    protected postExecute(): Promise<Buffer> {
+        return this.parser
+            .readBytes(1)
+            .then((buffer) => this.transform(buffer));
+    }
     Cmd = 'shell:echo && screencap -p 2>/dev/null';
 
     private transform(buffer: Buffer): Promise<Buffer> {
@@ -24,11 +29,7 @@ export default class ScreencapCommand extends RawCommand {
     }
     execute(serial: string): Promise<Buffer> {
         return this.preExecute(serial)
-            .then(() => {
-                return this.parser
-                    .readBytes(1)
-                    .then((buffer) => this.transform(buffer));
-            })
+
             .catch((err) => {
                 if (err instanceof PrematureEOFError) {
                     throw new Error('No support for the screencap command');
@@ -36,7 +37,7 @@ export default class ScreencapCommand extends RawCommand {
                 throw err;
             })
             .finally(() => {
-                return this.connection.end();
+                return this.endConnection();
             });
     }
 }

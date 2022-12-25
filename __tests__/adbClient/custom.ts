@@ -3,8 +3,8 @@ import Command from '../../lib/command';
 import AdbClient from '../../lib/client';
 
 class TestCmd extends Command {
-    public execute(): Promise<null> {
-        return this.initExecute('').then(this.handleReply(null));
+    public execute(arg: string): Promise<null> {
+        return this.initExecute(arg).then(this.handleReply(null));
     }
 }
 
@@ -12,7 +12,7 @@ describe('Custom command tests', () => {
     it('Should execute command', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: '',
+                cmd: 'test',
                 res: null,
                 rawRes: true
             }
@@ -20,7 +20,7 @@ describe('Custom command tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new AdbClient({ port, noAutoStart: true });
-            const result = await adb.custom(TestCmd);
+            const result = await adb.custom(TestCmd, 'test');
             expect(result).toBeNull();
         } finally {
             adbMock.end();

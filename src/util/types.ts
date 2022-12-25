@@ -1,5 +1,6 @@
 import Command from '../command';
 import IpConnect from '../commands/ipConnect';
+import TransportCommand from '../commands/transport';
 import Connection from '../connection';
 import LogcatEntry from '../logcat/entry';
 
@@ -193,6 +194,10 @@ export type InputDurationOptions = InputOptions & { duration?: number };
 
 export interface CommandConstruct {
     new (connection: Connection): Command;
+}
+
+export interface TransportCommandConstruct<T> {
+    new (connection: Connection): TransportCommand<T>;
 }
 
 export interface IpConnectConstruct {

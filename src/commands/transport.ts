@@ -7,6 +7,7 @@ export default abstract class TransportCommand<T>
 {
     abstract readonly Cmd: string;
     protected keepAlive = true;
+    abstract execute(serial: string, ...args: any[]): Promise<T>;
     protected abstract postExecute(): Promise<T>;
     preExecute(serial: string): Promise<T> {
         return this.initExecute('host:transport:'.concat(serial))

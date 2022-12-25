@@ -1,5 +1,5 @@
 import {
-    CommandConstruct,
+    TransportCommandConstruct,
     CpOptions,
     DeviceState,
     ForwardsObject,
@@ -313,7 +313,7 @@ export default class AdbDevice implements IAdbDevice {
         return this.client.roll(this.id, x, y, source as InputSource);
     }
 
-    custom<T>(CustomCommand: CommandConstruct): Promise<T> {
+    custom<T>(CustomCommand: TransportCommandConstruct<T>): Promise<T> {
         return this.client.customTransport<T>(CustomCommand, this.id);
     }
 

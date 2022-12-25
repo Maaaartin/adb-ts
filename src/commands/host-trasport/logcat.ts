@@ -1,10 +1,24 @@
 import LineTransform from '../../linetransform';
-import RawCommand from '../raw-command';
 import { readStream } from '../../logcat';
 import LogcatReader from '../../logcat/reader';
 import { LogcatOptions } from '../../util/types';
+import TransportCommand from '../transport';
 
-export default class LogcatCommand extends RawCommand {
+export default class LogcatCommand extends TransportCommand<LogcatReader> {
+    private logCat: LogcatReader | null = null;
+    private options?: LogcatOptions | null;
+    protected postExecute(): Promise<LogcatReader> {
+        const stream = new LineTransform({ autoDetect: true });
+        this.connection.pipe(stream);
+        this.logCat = readStream(stream, {
+            filter: this.options?.filter
+        });
+        this.connection.on('error', (err) => this.logCat?.emit('error', err));
+        this.logCat.on('end', () => {
+            this.endConnection();
+        });
+        return Promise.resolve(this.logCat);
+    }
     Cmd = 'shell:echo && ';
     execute(serial: string, options?: LogcatOptions): Promise<LogcatReader> {
         let cmd = 'logcat -B *:I 2>/dev/null';
@@ -12,26 +26,12 @@ export default class LogcatCommand extends RawCommand {
             cmd = 'logcat -c 2>/dev/null && ' + cmd;
         }
         this.Cmd += cmd;
-        let logCat: LogcatReader | null = null;
-        return this.preExecute(serial)
-            .then((result) => {
-                const stream = new LineTransform({ autoDetect: true });
-                result.pipe(stream);
-                logCat = readStream(stream, {
-                    filter: options?.filter
-                });
-                this.connection.on('error', (err) =>
-                    logCat?.emit('error', err)
-                );
-                logCat.on('end', () => {
-                    this.connection.end();
-                });
-                return logCat;
-            })
-            .catch((err) => {
-                this.connection.end();
-                logCat?.end();
-                throw err;
-            });
+        this.options = options;
+
+        return this.preExecute(serial).catch((err) => {
+            this.endConnection();
+            this.logCat?.end();
+            throw err;
+        });
     }
 }

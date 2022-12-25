@@ -27,7 +27,8 @@ import {
     PropertyMap,
     NonEmptyArray,
     WaitForType,
-    PropertyValue
+    PropertyValue,
+    TransportCommandConstruct
 } from './util/types';
 import {
     parseOptions,
@@ -1591,43 +1592,20 @@ export default class AdbClient {
     }
 
     // TODO write test
-    custom<T>(CustomCommand: CommandConstruct): Promise<T>;
-    custom<T>(
-        CustomCommand: CommandConstruct,
-        cb: ExecCallbackWithValue<T>
-    ): void;
-    custom<T>(
-        CustomCommand: CommandConstruct,
-        cb?: ExecCallbackWithValue<T>
-    ): Promise<T> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new CustomCommand(conn).execute();
-            }),
-            cb
-        );
+    custom<T>(CustomCommand: CommandConstruct, ...args: any[]): Promise<T> {
+        return this.connection().then((conn) => {
+            return new CustomCommand(conn).execute(...args);
+        });
     }
 
     customTransport<T>(
-        CustomCommand: CommandConstruct,
-        serial: string
-    ): Promise<T>;
-    customTransport<T>(
-        CustomCommand: CommandConstruct,
+        CustomCommand: TransportCommandConstruct<T>,
         serial: string,
-        cb: ExecCallbackWithValue<T>
-    ): void;
-    customTransport<T>(
-        CustomCommand: CommandConstruct,
-        serial: string,
-        cb?: ExecCallbackWithValue<T>
-    ): Promise<T> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new CustomCommand(conn).execute(serial);
-            }),
-            cb
-        );
+        ...args: any[]
+    ): Promise<T> {
+        return this.connection().then((conn) => {
+            return new CustomCommand(conn).execute(serial, ...args);
+        });
     }
 
     openMonkey(serial: string): Promise<Monkey>;
