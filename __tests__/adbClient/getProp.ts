@@ -84,7 +84,7 @@ describe('Gep prop tests', () => {
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
                 cmd: 'shell:getprop prop',
-                res: `string\n`,
+                res: `\n`,
                 rawRes: true
             }
         ]);
@@ -92,13 +92,13 @@ describe('Gep prop tests', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.getProp('serial', 'prop');
-            expect(result).toBe('string');
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
     });
 
-    it('OKAY with data value', async () => {
+    it('OKAY with date value', async () => {
         const date = new Date();
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
