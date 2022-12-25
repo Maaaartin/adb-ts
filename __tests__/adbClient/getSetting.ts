@@ -1,4 +1,5 @@
 import AdbClient from '../../lib/client';
+import { UnexpectedDataError } from '../../lib/util/errors';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Get setting OKAY tests', () => {
@@ -112,6 +113,116 @@ describe('Get setting OKAY tests', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.getSetting('serial', 'system', 'prop');
             expect(result).toEqual(date);
+        } finally {
+            await adbMock.end();
+        }
+    });
+});
+
+describe('Get setting FAIL tests', () => {
+    it('Should fail first response', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'fail', res: null, rawRes: true },
+            {
+                cmd: `shell:settings get system 'prop'`,
+                res: `\n`,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.getSetting('serial', 'system', 'prop');
+                fail('Expected Failure');
+            } catch (e) {
+                expect(e).toEqual(new Error('Failure'));
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Should second first response', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `fail`,
+                res: `\n`,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.getSetting('serial', 'system', 'prop');
+                fail('Expected Failure');
+            } catch (e) {
+                expect(e).toEqual(new Error('Failure'));
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+});
+
+describe('Get setting unexpected response tests', () => {
+    it('Should have unexpected first response', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true,
+                unexpected: true
+            },
+            {
+                cmd: `shell:settings get system 'prop'`,
+                res: `\n`,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.getSetting('serial', 'system', 'prop');
+                fail('Expected Failure');
+            } catch (e) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+                );
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Should have unexpected second response', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: `shell:settings get system 'prop'`,
+                res: `\n`,
+                rawRes: true,
+                unexpected: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            try {
+                await adb.getSetting('serial', 'system', 'prop');
+                fail('Expected Failure');
+            } catch (e) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+                );
+            }
         } finally {
             await adbMock.end();
         }

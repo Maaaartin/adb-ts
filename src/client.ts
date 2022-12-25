@@ -1546,7 +1546,6 @@ export default class AdbClient {
         );
     }
 
-    // TODO write test
     getSetting(
         serial: string,
         mode: SettingsMode,
