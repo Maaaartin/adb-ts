@@ -9,7 +9,7 @@ describe('Open Monkey tests', () => {
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port ${1080} -v`,
+                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
                 res: ':Monkey:\n',
                 rawRes: true
             },
@@ -158,7 +158,7 @@ describe('Open Monkey tests', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port ${1080} -v`,
+                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
                 res: ':Monkey:\n',
                 rawRes: true
             },
@@ -196,7 +196,7 @@ describe('Open Monkey tests', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port ${1080} -v`,
+                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
                 res: ':Monkey:\n',
                 rawRes: true
             },
@@ -229,7 +229,7 @@ describe('Open Monkey tests', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port ${1080} -v`,
+                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
                 res: ':Monkey:\n',
                 rawRes: true,
                 unexpected: true
@@ -263,7 +263,7 @@ describe('Open Monkey tests', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port ${1080} -v`,
+                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
                 res: ':Monkey:\n',
                 rawRes: true
             },
@@ -301,7 +301,7 @@ describe('Open Monkey tests', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port ${1080} -v`,
+                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
                 res: ':Monkey:\n',
                 rawRes: true
             },

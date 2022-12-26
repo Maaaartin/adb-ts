@@ -151,24 +151,18 @@ export class AdbMock {
 }
 
 export class AdbMockMulti extends AdbMock {
-    protected timeout?: NodeJS.Timeout;
     constructor(seq: SequenceWithIndex | NonEmptyArray<SequenceWithIndex>) {
         super(seq);
     }
 
     private runner(): void {
         setImmediate(async () => {
-            this.timeout = setTimeout(() => {
-                this.runner();
-            }, 500);
             const seq = this.next() as SequenceWithIndex | null;
             if (!seq) {
-                clearTimeout(this.timeout);
                 this.parser?.end();
                 return;
             }
 
-            clearTimeout(this.timeout);
             this.writeResponse(seq, await this.readValue());
             if (seq.end) {
                 this.socket?.removeAllListeners('readable');
@@ -179,10 +173,5 @@ export class AdbMockMulti extends AdbMock {
 
     protected readableHandler(): void {
         this.socket?.on('readable', this.runner.bind(this));
-    }
-
-    end(): Promise<void> {
-        clearTimeout(this.timeout);
-        return super.end();
     }
 }
