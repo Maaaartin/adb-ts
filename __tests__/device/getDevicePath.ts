@@ -3,7 +3,7 @@ import AdbDevice from '../../lib/device';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Get device path tests', () => {
-    it('Should get serial no', async () => {
+    it('Should get device path', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host-serial:serial:get-devpath', res: 'usb:336592896X' }
         ]);
