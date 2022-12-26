@@ -1591,7 +1591,6 @@ export default class AdbClient {
         );
     }
 
-    // TODO write test
     custom<T>(CustomCommand: CommandConstruct, ...args: any[]): Promise<T> {
         return this.connection().then((conn) => {
             return new CustomCommand(conn).execute(...args);

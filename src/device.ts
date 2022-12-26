@@ -24,7 +24,6 @@ import {
     KeyEventOptions,
     InputDurationOptions
 } from './util/types';
-
 import AdbClient from './client';
 import Connection from './connection';
 import FileStat from './filestats';
