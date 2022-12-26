@@ -37,14 +37,14 @@ import SyncEntry from './sync/entry';
 import { SyncMode } from './sync';
 
 export default class AdbDevice implements IAdbDevice {
-    id: string;
-    state: DeviceState;
-    path: string | undefined;
-    device: string | undefined;
-    model: string | undefined;
-    product: string | undefined;
-    transportId: string;
-    transport: TransportType;
+    readonly id: string;
+    readonly state: DeviceState;
+    readonly path: string | undefined;
+    readonly device: string | undefined;
+    readonly model: string | undefined;
+    readonly product: string | undefined;
+    readonly transportId: string;
+    readonly transport: TransportType;
     private client: AdbClient;
 
     constructor(client: AdbClient, props: IAdbDevice) {
