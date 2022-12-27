@@ -1,5 +1,4 @@
 import { Readable } from 'stream';
-import AdbClient from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { getDevice } from '../../mockery/testDevice';
 
