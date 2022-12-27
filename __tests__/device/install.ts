@@ -39,7 +39,7 @@ describe('Install tests', () => {
         }
     });
 
-    it('Should fail installation when getting Failed response', async () => {
+    it('Should fail installation when getting Failure response', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMockMulti([
             { cmd: 'host:transport:serial', res: null, rawRes: true },

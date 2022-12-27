@@ -147,7 +147,6 @@ export default class AdbDevice implements IAdbDevice {
         options?: InstallOptions,
         args?: string
     ): Promise<void> {
-        // TODO double check type cast
         return this.client.install(
             this.id,
             apk,

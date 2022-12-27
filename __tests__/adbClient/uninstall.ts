@@ -25,6 +25,31 @@ describe('Uninstall', () => {
         }
     });
 
+    it('OKAY with Success response and options', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:transport:serial',
+                res: null,
+                rawRes: true
+            },
+            {
+                cmd: `shell:pm uninstall -k com.package`,
+                res: 'Success\n',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const result = await adb.uninstall('serial', 'com.package', {
+                keepCache: true
+            });
+            expect(result).toBeUndefined();
+        } finally {
+            await adbMock.end();
+        }
+    });
+
     it('OKAY with Failure response', async () => {
         const adbMock = new AdbMock([
             {
