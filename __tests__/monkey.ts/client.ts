@@ -78,7 +78,7 @@ describe('Commands', () => {
 
     it('Should make command fail', async () => {
         const monkeyMock = new MonkeyMock([
-            { status: 'OK', reply: 'value', timeout: 600 }
+            { status: 'OK', reply: 'value', timeout: 1000 }
         ]);
 
         const port = await monkeyMock.start();
