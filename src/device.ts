@@ -193,7 +193,10 @@ export default class AdbDevice implements IAdbDevice {
         return this.client.readDir(this.id, path);
     }
 
-    pushDataToFile(data: string, destPath: string): Promise<void> {
+    pushDataToFile(
+        data: string | Buffer | Readable,
+        destPath: string
+    ): Promise<void> {
         return this.client.pushDataToFile(this.id, data, destPath);
     }
 

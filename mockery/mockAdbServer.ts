@@ -114,7 +114,7 @@ export class AdbMock {
     }
 
     end(): Promise<void> {
-        return promisify<void>((cb) => this.server_.close(cb) || cb(null))();
+        return promisify<void>((cb) => this.server_.close(cb))();
     }
 
     forceWriteData(data: string): void {
