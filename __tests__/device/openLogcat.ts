@@ -1,4 +1,3 @@
-import Connection from '../../lib/connection';
 import LogcatReader from '../../lib/logcat/reader';
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { getDevice } from '../../mockery/testDevice';
