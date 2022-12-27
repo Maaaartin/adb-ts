@@ -31,7 +31,7 @@
         "test": "npx jest",
         "compile": "npx tsc",
         "watch": "rm -rf lib && npx tsc -w",
-        "lint": "npx eslint src"
+        "lint": "npx eslint ."
     },
     "devDependencies": {
         "@types/jest": "^29.2.4",
