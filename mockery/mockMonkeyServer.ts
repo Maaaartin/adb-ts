@@ -1,6 +1,6 @@
 import net from 'net';
 
-type MonkeyReply = { status: 'OK' | 'ERROR'; reply: string; timeout?: number };
+type MonkeyReply = { status: 'OK' | 'ERROR'; reply: string };
 
 export default class MonkeyMock {
     private replies_: MonkeyReply[] = [];
@@ -26,9 +26,8 @@ export default class MonkeyMock {
                 if (!reply) {
                     return;
                 }
-                setTimeout(() => {
-                    socket.write(this.buildReply(reply));
-                }, reply.timeout);
+
+                socket.write(this.buildReply(reply));
             });
     }
 

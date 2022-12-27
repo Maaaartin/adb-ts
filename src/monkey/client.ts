@@ -85,7 +85,6 @@ export default class Monkey extends Api {
     private consume(reply: Reply): void {
         const command = this.queue.shift();
         if (!command) {
-            this.end();
             this.emit(
                 'error',
                 new Error('Command queue depleted, but replies still coming in')

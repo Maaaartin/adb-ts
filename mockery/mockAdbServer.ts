@@ -167,6 +167,7 @@ export class AdbMockMulti extends AdbMock {
             if (seq.end) {
                 this.socket?.removeAllListeners('readable');
                 this.socket?.end();
+                this.parser?.end();
             }
         });
     }

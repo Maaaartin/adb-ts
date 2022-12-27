@@ -1,4 +1,5 @@
 import { Socket } from 'net';
+import { promisify } from 'util';
 import MonkeyMock from '../../mockery/mockMonkeyServer';
 import Monkey from '../../lib/monkey/client';
 
@@ -77,21 +78,22 @@ describe('Commands', () => {
     });
 
     it('Should make command fail', async () => {
-        const monkeyMock = new MonkeyMock([
-            { status: 'OK', reply: 'value', timeout: 2000 }
-        ]);
+        const monkeyMock = new MonkeyMock([]);
 
         const port = await monkeyMock.start();
         const monkey = new Monkey();
 
         monkey.connect(new Socket().connect({ port, host: 'localhost' }));
-        monkey.send('test', (err, value, command) => {
-            monkey.end();
-            monkeyMock.end();
-            expect(err).toEqual(new Error('Command failed'));
-            expect(value).toBeNull();
-            expect(command).toBe('test');
-        });
+        const [err, value, command] = await promisify<any[]>((cb) => {
+            monkey.send('test', (err, value, command) => {
+                return cb(null, [err, value, command]);
+            });
+        })();
+        monkey.end();
+        monkeyMock.end();
+        expect(err).toEqual(new Error('Command failed'));
+        expect(value).toBeNull();
+        expect(command).toBe('test');
     });
 
     it('Should emit error when replies are still coming', async () => {
@@ -103,6 +105,7 @@ describe('Commands', () => {
         monkey.connect(new Socket().connect({ port, host: 'localhost' }));
         monkey.on('error', (err) => {
             monkeyMock.end();
+            monkey.end();
             expect(err).toEqual(
                 new Error('Command queue depleted, but replies still coming in')
             );
