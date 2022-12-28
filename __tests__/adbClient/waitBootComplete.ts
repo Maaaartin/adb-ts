@@ -3,7 +3,7 @@ import AdbClient from '../../lib/client';
 import { PrematureEOFError } from '../../lib/util/errors';
 
 describe('Wait boot complete', () => {
-    it('OKAY with default port', async () => {
+    it('OKAY with matching response', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
