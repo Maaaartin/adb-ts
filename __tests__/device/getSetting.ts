@@ -1,8 +1,8 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { getDevice } from '../../mockery/testDevice';
 
-describe('Get prop tests', () => {
-    it('Should get prop', async () => {
+describe('Get setting tests', () => {
+    it('Should setting prop', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
