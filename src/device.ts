@@ -22,7 +22,8 @@ import {
     ExecCallbackWithValue,
     PropertyValue,
     KeyEventOptions,
-    InputDurationOptions
+    InputDurationOptions,
+    NonEmptyArray
 } from './util/types';
 import AdbClient from './client';
 import Connection from './connection';
@@ -268,7 +269,10 @@ export default class AdbDevice implements IAdbDevice {
         return this.client.text(this.id, text, source as InputSource);
     }
 
-    keyEvent(code: KeyCode | number, options?: KeyEventOptions): Promise<void> {
+    keyEvent(
+        code: KeyCode | number | NonEmptyArray<number | KeyCode>,
+        options?: KeyEventOptions
+    ): Promise<void> {
         return this.client.keyEvent(this.id, code, options as KeyEventOptions);
     }
 
