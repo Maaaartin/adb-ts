@@ -8,8 +8,8 @@ beforeAll(() => {
     });
 });
 
-describe('Device rm tests', () => {
-    it('Should run rm command without options', async () => {
+describe('Device mkdir tests', () => {
+    it('Should run mkdir command without options', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
@@ -27,7 +27,7 @@ describe('Device rm tests', () => {
         }
     });
 
-    it('Should run rm command with options', async () => {
+    it('Should run mkdir command with options', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
