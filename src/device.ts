@@ -318,8 +318,11 @@ export default class AdbDevice implements IAdbDevice {
         return this.client.roll(this.id, x, y, source as InputSource);
     }
 
-    custom<T>(CustomCommand: TransportCommandConstruct<T>): Promise<T> {
-        return this.client.customTransport<T>(CustomCommand, this.id);
+    custom<T>(
+        CustomCommand: TransportCommandConstruct<T>,
+        ...args: any[]
+    ): Promise<T> {
+        return this.client.customTransport<T>(CustomCommand, this.id, args);
     }
 
     openMonkey(): Promise<Monkey> {
