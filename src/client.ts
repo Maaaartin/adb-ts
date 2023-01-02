@@ -1,3 +1,7 @@
+/**
+ * @module AdbClient
+ */
+
 import {
     AdbClientOptions,
     AdbClientOptionsValues,
@@ -116,10 +120,11 @@ const DEFAULT_OPTIONS: Readonly<AdbClientOptionsValues> = Object.freeze({
 });
 
 export class AdbClient {
+    /** @ignore */
     private options: AdbClientOptionsValues;
 
     /**
-     * @see {AdbClientOptions}
+     * @param {AdbClientOptions} options see {@link Types.AdbClientOptions} for more details
      */
     constructor(options?: AdbClientOptions) {
         this.options = Object.entries(options || {})
@@ -130,6 +135,9 @@ export class AdbClient {
             );
     }
 
+    /**
+     * Starts adb server if not running
+     */
     startServer(): Promise<void>;
     startServer(cb: ExecCallback): void;
     startServer(cb?: ExecCallback): Promise<void> | void {

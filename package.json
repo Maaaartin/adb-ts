@@ -32,7 +32,7 @@
         "compile": "npx tsc",
         "watch": "rm -rf lib && npx tsc -w",
         "lint": "npx eslint .",
-        "docs": "npx typedoc --emit docs --out docs src/client.ts src/util/types.ts"
+        "docs": "npx typedoc --readme none --out docs src/client.ts src/util/types.ts"
     },
     "devDependencies": {
         "@types/jest": "^29.2.4",
