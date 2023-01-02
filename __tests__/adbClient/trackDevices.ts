@@ -1,5 +1,5 @@
 import { promisify } from 'util';
-import AdbClient from '../../lib/client';
+import { AdbClient } from '../../lib/client';
 import AdbDevice from '../../lib/device';
 import { AdbMock } from '../../mockery/mockAdbServer';
 

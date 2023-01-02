@@ -1,6 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import Command from '../../lib/command';
-import AdbClient from '../../lib/client';
+import { AdbClient } from '../../lib/client';
 
 class TestCmd extends Command {
     public execute(arg: string): Promise<null> {

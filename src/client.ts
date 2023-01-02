@@ -114,9 +114,13 @@ const DEFAULT_OPTIONS: Readonly<AdbClientOptionsValues> = Object.freeze({
     bin: 'adb',
     noAutoStart: false
 });
-export default class AdbClient {
+
+export class AdbClient {
     private options: AdbClientOptionsValues;
 
+    /**
+     * @see {AdbClientOptions}
+     */
     constructor(options?: AdbClientOptions) {
         this.options = Object.entries(options || {})
             .filter(([, value]) => typeof value !== 'undefined')

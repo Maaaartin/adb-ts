@@ -1,4 +1,4 @@
-import AdbClient from '../../lib/client';
+import { AdbClient } from '../../lib/client';
 import { AdbExecError } from '../../lib/util/errors';
 import { mockExec } from '../../mockery/execMock';
 

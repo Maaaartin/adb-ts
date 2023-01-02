@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { UnexpectedDataError } from '../../lib/util/errors';
-import AdbClient from '../../lib/client';
+import { AdbClient } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 beforeAll(() => {

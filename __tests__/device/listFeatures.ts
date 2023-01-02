@@ -1,4 +1,4 @@
-import AdbClient from '../../lib/client';
+import { AdbClient } from '../../lib/client';
 import AdbDevice from '../../lib/device';
 import { PropertyValue } from '../../lib/util/types';
 import { AdbMock } from '../../mockery/mockAdbServer';

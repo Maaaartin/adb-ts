@@ -1,4 +1,4 @@
-import AdbClient from '../lib/client';
+import { AdbClient } from '../lib/client';
 import AdbDevice from '../lib/device';
 
 export const getDevice = (port: number): AdbDevice => {

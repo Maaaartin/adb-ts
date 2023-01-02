@@ -1,4 +1,4 @@
-import AdbClient from '../../lib/client';
+import { AdbClient } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util/errors';
 import { AdbMock } from '../../mockery/mockAdbServer';
 

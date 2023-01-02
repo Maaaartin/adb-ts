@@ -1,4 +1,4 @@
-import AdbClient from '../../lib/client';
+import { AdbClient } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Get serial no', () => {

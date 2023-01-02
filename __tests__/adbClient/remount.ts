@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import AdbClient from '../../lib/client';
+import { AdbClient } from '../../lib/client';
 
 describe('Remount', () => {
     it('OKAY', async () => {

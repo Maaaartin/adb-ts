@@ -1,4 +1,4 @@
-import AdbClient from '../../lib/client';
+import { AdbClient } from '../../lib/client';
 import SyncEntry from '../../lib/sync/entry';
 import { AdbMock } from '../../mockery/mockAdbServer';
 

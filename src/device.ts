@@ -25,7 +25,7 @@ import {
     InputDurationOptions,
     NonEmptyArray
 } from './util/types';
-import AdbClient from './client';
+import { AdbClient } from './client';
 import Connection from './connection';
 import FileStat from './filestats';
 import { KeyCode } from './keycode';

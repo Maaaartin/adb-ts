@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import { IAdbDevice } from './util/types';
 import { PrematureEOFError } from './util/errors';
-import AdbClient from './client';
+import { AdbClient } from './client';
 import TrackCommand from './commands/host/trackdevices';
 import AdbDevice from './device';
 

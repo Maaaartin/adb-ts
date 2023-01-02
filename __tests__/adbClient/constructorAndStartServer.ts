@@ -1,4 +1,4 @@
-import AdbClient from '../../lib/client';
+import { AdbClient } from '../../lib/client';
 import { mockExec } from '../../mockery/execMock';
 
 describe('Client constructor tests', () => {

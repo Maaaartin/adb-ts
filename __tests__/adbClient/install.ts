@@ -1,5 +1,5 @@
 import { AdbMockMulti } from '../../mockery/mockAdbServer';
-import AdbClient from '../../lib/client';
+import { AdbClient } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util/errors';
 import { Readable } from 'stream';
 

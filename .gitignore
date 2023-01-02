@@ -105,3 +105,4 @@ dist
 lib
 script.ts
 *.apk
+docs/
