@@ -108,21 +108,21 @@ import { promisify } from 'util';
 import T from 'timers/promises';
 
 const ADB_DEFAULT_PORT = 5555;
+const DEFAULT_OPTIONS: Readonly<AdbClientOptionsValues> = Object.freeze({
+    port: 5037,
+    host: 'localhost',
+    bin: 'adb',
+    noAutoStart: false
+});
 export default class AdbClient {
-    public static readonly defaultOptions: Readonly<AdbClientOptionsValues> =
-        Object.freeze({
-            port: 5037,
-            host: 'localhost',
-            bin: 'adb',
-            noAutoStart: false
-        });
-    public readonly options: AdbClientOptionsValues;
+    private options: AdbClientOptionsValues;
+
     constructor(options?: AdbClientOptions) {
         this.options = Object.entries(options || {})
             .filter(([, value]) => typeof value !== 'undefined')
             .reduce(
                 (def, [key, value]) => ({ ...def, [key]: value }),
-                AdbClient.defaultOptions
+                DEFAULT_OPTIONS
             );
     }
 

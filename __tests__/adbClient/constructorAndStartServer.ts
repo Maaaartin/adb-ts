@@ -4,7 +4,7 @@ import { mockExec } from '../../mockery/execMock';
 describe('Client constructor tests', () => {
     it('Create Adb client instance', () => {
         const client = new AdbClient();
-        expect(client.options).toEqual({
+        expect((client as any).options).toEqual({
             port: 5037,
             host: 'localhost',
             bin: 'adb',
@@ -14,7 +14,7 @@ describe('Client constructor tests', () => {
 
     it('Create Adb client instance with options', () => {
         const client = new AdbClient({ bin: undefined, port: 5036 });
-        expect(client.options).toEqual({
+        expect((client as any).options).toEqual({
             port: 5036,
             host: 'localhost',
             bin: 'adb',
