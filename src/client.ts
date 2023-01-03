@@ -455,6 +455,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Reverses socket connections from the device (remote) to the ADB server host (local).
+     * Analogous to `adb reverse <remote> <local>`.
+     */
     reverse(serial: string, local: string, remote: string): Promise<void>;
     reverse(
         serial: string,
@@ -476,6 +480,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Lists all reversed connections.
+     * Analogous to `adb reverse --list`.
+     */
     listReverses(serial: string): Promise<ReversesObject[]>;
     listReverses(
         serial: string,
@@ -493,6 +501,7 @@ export class AdbClient {
         );
     }
 
+    /** @ignore */
     private shellInternal(
         serial: string,
         command: string | string[]
@@ -502,6 +511,10 @@ export class AdbClient {
         });
     }
 
+    /**
+     * Reboots the device.
+     * Analogous to `adb reboot`.
+     */
     reboot(serial: string): Promise<void>;
     reboot(serial: string, cb: ExecCallback): void;
     reboot(serial: string, cb?: ExecCallback): Promise<void> | void {
@@ -513,6 +526,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Shuts the device down.
+     * Analogous to `adb reboot -p`.
+     */
     shutdown(serial: string): Promise<void>;
     shutdown(serial: string, cb: ExecCallback): void;
     shutdown(serial: string, cb?: ExecCallback): Promise<void> | void {
@@ -524,6 +541,11 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Attempts to remount the `/system` partition in read-write mode.
+     * Can be done on a rooted device. Analogous to `adb remount`.
+     * Analogous to `adb remount`
+     */
     remount(serial: string): Promise<void>;
     remount(serial: string, cb: ExecCallback): void;
     remount(serial: string, cb?: ExecCallback): Promise<void> | void {
@@ -535,6 +557,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Attempts to which the device to the root mode.
+     * Analogous to `adb root`.
+     */
     root(serial: string): Promise<void>;
     root(serial: string, cb: ExecCallback): void;
     root(serial: string, cb?: ExecCallback): Promise<void> | void {
@@ -546,6 +572,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Takes a screenshot on the specified device.
+     * Analogous to `adb shell screencap -p`.
+     */
     screenshot(serial: string): Promise<Buffer>;
     screenshot(serial: string, cb: ExecCallbackWithValue<Buffer>): void;
     screenshot(
