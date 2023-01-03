@@ -1,7 +1,3 @@
-/**
- * @module Tracker
- */
-
 import { EventEmitter } from 'events';
 import { IAdbDevice } from './util/types';
 import { PrematureEOFError } from './util/errors';

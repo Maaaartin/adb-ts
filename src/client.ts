@@ -1,7 +1,3 @@
-/**
- * @module AdbClient
- */
-
 import {
     AdbClientOptions,
     AdbClientOptionsValues,
