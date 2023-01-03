@@ -132,7 +132,7 @@ export class AdbClient {
     }
 
     /**
-     * Starts adb server if not running
+     * Starts adb server if not running.
      */
     startServer(): Promise<void>;
     startServer(cb: ExecCallback): void;
@@ -184,7 +184,7 @@ export class AdbClient {
     }
 
     /**
-     * Gets the adb server version
+     * Gets the adb server version.
      */
     version(): Promise<number>;
     version(cb: ExecCallbackWithValue<number>): void;
@@ -219,7 +219,7 @@ export class AdbClient {
     }
 
     /**
-     * Connects to device over local network
+     * Connects to device over local network.
      */
     connect(host: string): Promise<string>;
     connect(host: string, port: number | string): Promise<string>;
@@ -238,7 +238,7 @@ export class AdbClient {
     }
 
     /**
-     * Disconnects from the given device
+     * Disconnects from the given device.
      */
     disconnect(host: string): Promise<string>;
     disconnect(host: string, port: number | string): Promise<string>;
@@ -257,7 +257,7 @@ export class AdbClient {
     }
 
     /**
-     * Gets the list of currently connected devices and emulators
+     * Gets the list of currently connected devices and emulators.
      */
     listDevices(): Promise<IAdbDevice[]>;
     listDevices(cb: ExecCallbackWithValue<IAdbDevice[]>): void;
@@ -272,6 +272,9 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Tracks connection status of devices.
+     */
     trackDevices(): Promise<Tracker>;
     trackDevices(cb: ExecCallbackWithValue<Tracker>): void;
     trackDevices(cb?: ExecCallbackWithValue<Tracker>): Promise<Tracker> | void {
@@ -284,6 +287,9 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Kills the adb server.
+     */
     kill(): Promise<void>;
     kill(cb: ExecCallback): void;
     kill(cb?: ExecCallback): Promise<void> | void {
@@ -293,6 +299,11 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Gets the serial number of the device.
+     * Meant for getting serial number of local devices.
+     * Analogous to `adb shell getprop ro.serialno`.
+     */
     getSerialNo(serial: string): Promise<string>;
     getSerialNo(serial: string, cb: ExecCallbackWithValue<string>): void;
     getSerialNo(
@@ -304,6 +315,9 @@ export class AdbClient {
             : this.getProp(serial, 'ro.serialno').then((v) => `${v}`);
     }
 
+    /**
+     * Gets the device path of the device identified by the device.
+     */
     getDevicePath(serial: string): Promise<string>;
     getDevicePath(serial: string, cb: ExecCallbackWithValue<string>): void;
     getDevicePath(
@@ -318,6 +332,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Lists properties of the device.
+     * Analogous to `adb shell getprop`.
+     */
     listProperties(serial: string): Promise<PropertyMap>;
     listProperties(
         serial: string,
@@ -335,6 +353,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Lists features of the device.
+     * Analogous to `adb shell pm list features`.
+     */
     listFeatures(serial: string): Promise<PropertyMap>;
     listFeatures(serial: string, cb: ExecCallbackWithValue<PropertyMap>): void;
     listFeatures(
@@ -349,6 +371,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Lists installed packages.
+     * Analogous to `adb shell pm list packages`.
+     */
     listPackages(serial: string): Promise<string[]>;
     listPackages(serial: string, cb: ExecCallbackWithValue<string[]>): void;
     listPackages(
@@ -363,6 +389,9 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Gets the the ip address of default wlan interface.
+     */
     getIpAddress(serial: string): Promise<string | string[] | null>;
     getIpAddress(
         serial: string,
@@ -380,6 +409,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Forwards socket connections from the ADB server host (local) to the device (remote).
+     * Analogous to `adb forward <local> <remote>`.
+     */
     forward(serial: string, local: string, remote: string): Promise<void>;
     forward(
         serial: string,
@@ -401,6 +434,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Lists all forwarded connections.
+     * Analogous to `adb forward --list`.
+     */
     listForwards(serial: string): Promise<ForwardsObject[]>;
     listForwards(
         serial: string,
