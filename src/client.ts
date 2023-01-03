@@ -102,7 +102,7 @@ import TcpCommand from './commands/host-trasport/tcp';
 import TcpIpCommand from './commands/host-trasport/tcpip';
 import TouchCommand from './commands/host-trasport/touch';
 import TrackCommand from './commands/host/trackdevices';
-import Tracker from './tracker';
+import { Tracker } from './tracker';
 import UninstallCommand from './commands/host-trasport/uninstall';
 import UsbCommand from './commands/host-trasport/usb';
 import VersionCommand from './commands/host/version';
@@ -154,6 +154,7 @@ export class AdbClient {
         );
     }
 
+    /** @ignore */
     private connection(): Promise<Connection> {
         return new Promise<Connection>((resolve, reject) => {
             let triedStarting = false;
@@ -186,6 +187,9 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Gets the adb server version
+     */
     version(): Promise<number>;
     version(cb: ExecCallbackWithValue<number>): void;
     version(cb?: ExecCallbackWithValue<number>): Promise<number> | void {
@@ -218,6 +222,9 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Connects to device over local network
+     */
     connect(host: string): Promise<string>;
     connect(host: string, port: number | string): Promise<string>;
     connect(host: string, cb: ExecCallbackWithValue<string>): void;
@@ -234,6 +241,9 @@ export class AdbClient {
         return this.ipConnect(Connect, host, port, cb);
     }
 
+    /**
+     * Disconnects from the given device
+     */
     disconnect(host: string): Promise<string>;
     disconnect(host: string, port: number | string): Promise<string>;
     disconnect(host: string, cb: ExecCallbackWithValue<string>): void;
@@ -250,6 +260,9 @@ export class AdbClient {
         return this.ipConnect(Disconnect, host, port, cb);
     }
 
+    /**
+     * Gets the list of currently connected devices and emulators
+     */
     listDevices(): Promise<IAdbDevice[]>;
     listDevices(cb: ExecCallbackWithValue<IAdbDevice[]>): void;
     listDevices(
