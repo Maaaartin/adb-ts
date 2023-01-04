@@ -122,10 +122,25 @@ export type PropertyValue = PrimitiveType | Date;
 export type PrimitiveDictionary = Record<string, PropertyValue>;
 
 export type InstallOptions = {
+    /**
+     * Adds `-r` flag to the install command.
+     */
     reinstall?: boolean;
+    /**
+     * Adds `-t` flag to the install command.
+     */
     test?: boolean;
+    /**
+     * Adds `-f` flag to the install command.
+     */
     internal?: boolean;
+    /**
+     * Adds `-d` flag to the install command.
+     */
     allowDowngrade?: boolean;
+    /**
+     * Adds `-g` flag to the install command.
+     */
     grandPermissions?: boolean;
 };
 

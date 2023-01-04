@@ -1018,7 +1018,7 @@ export class AdbClient {
     /**
      * Opens logcat.
      * Analogous to `adb logcat`.
-     * @see {@link AdbTs.LogcatReader} and {@link AdbTs.LogcatOptions} for more details.
+     * @see {@link AdbTs.LogcatReader} and {@link LogcatOptions} for more details.
      */
     openLogcat(serial: string): Promise<LogcatReader>;
     openLogcat(serial: string, options: LogcatOptions): Promise<LogcatReader>;
@@ -1049,12 +1049,17 @@ export class AdbClient {
         );
     }
 
+    /** @ignore */
     private syncService(serial: string): Promise<Sync> {
         return this.connection().then((conn) => {
             return new SyncCommand(conn).execute(serial);
         });
     }
 
+    /**
+     * Deletes all data associated with a package from the device.
+     * Analogous to `adb shell pm clear <pkg>`.
+     */
     clear(serial: string, pkg: string): Promise<void>;
     clear(serial: string, pkg: string, cb: ExecCallback): void;
     clear(
@@ -1070,6 +1075,7 @@ export class AdbClient {
         );
     }
 
+    /** @ignore */
     private installRemote(
         serial: string,
         apk: string,
@@ -1094,6 +1100,10 @@ export class AdbClient {
         });
     }
 
+    /**
+     * Installs an apk to the device.
+     * Analogous to `adb install <pkg>`.
+     */
     install(serial: string, apk: string | Readable): Promise<void>;
     install(
         serial: string,
