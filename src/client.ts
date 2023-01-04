@@ -120,7 +120,7 @@ export class AdbClient {
     private options: AdbClientOptionsValues;
 
     /**
-     * @param {AdbClientOptions} options see {@link Types.AdbClientOptions} for more details
+     * @param {AdbClientOptions} options see {@link AdbClientOptions} for more details
      */
     constructor(options?: AdbClientOptions) {
         this.options = Object.entries(options || {})
@@ -590,6 +590,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Opens a direct TCP connection to specified port on the device.
+     * Analogous to `adb tcp <port>:<host>`.
+     */
     openTcp(serial: string, port: number | string): Promise<Connection>;
     openTcp(
         serial: string,
@@ -625,6 +629,13 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Sends roll input command to the device shell.
+     * Analogous to `adb shell input trackball roll x y`.
+     * Default input source is `trackball`.
+     * @param x Horizontal coordinate.
+     * @param y Vertical coordinate.
+     */
     roll(serial: string, x: number, y: number): Promise<void>;
     roll(
         serial: string,
@@ -667,6 +678,11 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Sends roll input command to the device shell.
+     * Analogous to `adb shell input trackball press`.
+     * Default input source is `trackball`.
+     */
     press(serial: string): Promise<void>;
     press(serial: string, source: InputSource): Promise<void>;
     press(serial: string, cb: ExecCallback): void;
@@ -689,6 +705,15 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Sends draganddrop input command to the device shell.
+     * Analogous to `adb shell input touchscreen draganddrop x1 y1 x2 y2`.
+     * Default input source is `touchscreen`.
+     * @param x1 Horizontal starting coordinate.
+     * @param y1 Vertical starting coordinate.
+     * @param x2 Horizontal ending coordinate.
+     * @param y2 Vertical ending coordinate.
+     */
     dragAndDrop(
         serial: string,
         x1: number,
