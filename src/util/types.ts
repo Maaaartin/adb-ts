@@ -1,3 +1,6 @@
+/**
+ * @module AdbTs
+ */
 import Command from '../command';
 import IpConnect from '../commands/ipConnect';
 import TransportCommand from '../commands/transport';

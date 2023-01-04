@@ -1,3 +1,6 @@
+/**
+ * @module AdbTs
+ */
 import { NotConnectedError } from '../util/errors';
 import StreamHandler from '../streamHandler';
 import { Binary } from './parser/binary';

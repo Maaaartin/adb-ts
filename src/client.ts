@@ -120,7 +120,7 @@ export class AdbClient {
     private options: AdbClientOptionsValues;
 
     /**
-     * @param {AdbClientOptions} options see {@link AdbClientOptions} for more details
+     * @param {AdbClientOptions} options see {@link AdbTs.AdbClientOptions} for more details
      */
     constructor(options?: AdbClientOptions) {
         this.options = Object.entries(options || {})
@@ -1018,7 +1018,7 @@ export class AdbClient {
     /**
      * Opens logcat.
      * Analogous to `adb logcat`.
-     * @see {@link LogcatReader}
+     * @see {@link AdbTs.LogcatReader} and {@link AdbTs.LogcatOptions} for more details.
      */
     openLogcat(serial: string): Promise<LogcatReader>;
     openLogcat(serial: string, options: LogcatOptions): Promise<LogcatReader>;
