@@ -70,7 +70,7 @@ import ListPropertiesCommand from './commands/host-trasport/listproperties';
 import ListReversesCommand from './commands/host-trasport/listreverses';
 import ListSettingsCommand from './commands/host-trasport/listsettings';
 import LogcatCommand from './commands/host-trasport/logcat';
-import LogcatReader from './logcat/reader';
+import { LogcatReader } from './logcat/reader';
 import MkDirCommand from './commands/host-trasport/mkdir';
 import Monkey from './monkey/client';
 import MonkeyCommand from './commands/host-trasport/monkey';
@@ -924,7 +924,7 @@ export class AdbClient {
                             ? '--doubletap'
                             : ''
                         : '',
-                    ...(Array.isArray(code) ? code : [code])
+                    ...[code].flat()
                 );
             }),
             _cb
@@ -980,6 +980,11 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Sends text input command to the device shell.
+     * Analogous to `adb shell input touchscreen text '<text>'`.
+     * Default input source is `touchscreen`.
+     */
     text(serial: string, text: string): Promise<void>;
     text(serial: string, text: string, source: InputSource): Promise<void>;
     text(serial: string, text: string, cb: ExecCallback): void;
@@ -1010,6 +1015,11 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Opens logcat.
+     * Analogous to `adb logcat`.
+     * @see {@link LogcatReader}
+     */
     openLogcat(serial: string): Promise<LogcatReader>;
     openLogcat(serial: string, options: LogcatOptions): Promise<LogcatReader>;
     openLogcat(serial: string, cb: ExecCallbackWithValue<LogcatReader>): void;

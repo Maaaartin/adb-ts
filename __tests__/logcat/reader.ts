@@ -1,10 +1,10 @@
 import { Writable } from 'stream';
-import Reader from '../../lib/logcat/reader';
+import { LogcatReader } from '../../lib/logcat/reader';
 import LogcatEntry from '../../lib/logcat/entry';
 
 describe('Logcat reader tests', () => {
     it('Should emit error when stream gets error event', (done) => {
-        const reader = new Reader();
+        const reader = new LogcatReader();
         const stream = new Writable();
         reader.connect(stream);
         reader.on('error', (err) => {
@@ -15,7 +15,7 @@ describe('Logcat reader tests', () => {
     });
 
     it('Should emit end when stream gets end event', (done) => {
-        const reader = new Reader();
+        const reader = new LogcatReader();
         const stream = new Writable();
         reader.connect(stream);
         reader.on('end', () => {
@@ -25,7 +25,7 @@ describe('Logcat reader tests', () => {
     });
 
     it('Should emit finish when stream gets finish event', (done) => {
-        const reader = new Reader();
+        const reader = new LogcatReader();
         const stream = new Writable();
         reader.connect(stream);
         reader.on('finish', () => {
@@ -35,7 +35,7 @@ describe('Logcat reader tests', () => {
     });
 
     it('Should emit error when parser gets error event', (done) => {
-        const reader = new Reader();
+        const reader = new LogcatReader();
 
         reader.connect(new Writable());
         reader.on('error', (err) => {
@@ -46,7 +46,7 @@ describe('Logcat reader tests', () => {
     });
 
     it('Should emit entry when parser gets entry event', (done) => {
-        const reader = new Reader();
+        const reader = new LogcatReader();
 
         reader.connect(new Writable());
         reader.on('entry', (err) => {
@@ -80,7 +80,7 @@ describe('Logcat reader tests', () => {
     });
 
     it('Should emit entry with filter when parser gets entry event', (done) => {
-        const reader = new Reader();
+        const reader = new LogcatReader();
 
         reader.connect(new Writable());
         reader.setFilter((ent) => ent.message === 'message');

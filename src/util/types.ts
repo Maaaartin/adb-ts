@@ -158,9 +158,17 @@ export type AdbClientOptions = {
 
 export type LogcatOptions = {
     clear?: boolean;
+    /**
+     * e.g. `(entry) =>
+            entry.message.includes('some string') &&
+            entry.prioritiy >= Priority.FATAL`
+     */
     filter?: (entry: LogcatEntry) => boolean;
 };
 
+/**
+ * @see {@link LogcatOptions}
+ */
 export type LogcatReaderOptions = {
     filter?: (entry: LogcatEntry) => boolean;
 };

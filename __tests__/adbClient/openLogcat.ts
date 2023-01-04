@@ -1,8 +1,7 @@
 import { AdbClient } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
-import LogcatEntry from '../../lib/logcat/entry';
 import { UnexpectedDataError } from '../../lib/util/errors';
-import LogcatReader from '../../lib/logcat/reader';
+import { LogcatReader } from '../../lib/logcat/reader';
 
 const logCatRes = Buffer.from([
     0, 0, 66, 0, 28, 0, 212, 0, 0, 0, 212, 0, 0, 0, 32, 109, 160, 99, 108, 188,

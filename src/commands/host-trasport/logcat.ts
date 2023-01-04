@@ -1,6 +1,6 @@
 import LineTransform from '../../linetransform';
 import { readStream } from '../../logcat';
-import LogcatReader from '../../logcat/reader';
+import { LogcatReader } from '../../logcat/reader';
 import { LogcatOptions } from '../../util/types';
 import TransportCommand from '../transport';
 

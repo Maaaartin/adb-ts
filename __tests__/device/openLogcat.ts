@@ -1,4 +1,4 @@
-import LogcatReader from '../../lib/logcat/reader';
+import { LogcatReader } from '../../lib/logcat/reader';
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { getDevice } from '../../mockery/testDevice';
 

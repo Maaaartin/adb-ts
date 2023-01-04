@@ -6,7 +6,7 @@ import LogcatParser from './parser';
 import { Writable } from 'stream';
 import { LogcatReaderOptions } from '../util/types';
 
-export default class LogcatReader extends StreamHandler {
+export class LogcatReader extends StreamHandler {
     private filter?: (entry: LogcatEntry) => boolean;
     private parser: LogcatParser;
     private stream_?: Writable;
