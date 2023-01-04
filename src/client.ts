@@ -778,6 +778,15 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Sends swipe input command to the device shell.
+     * Analogous to `adb shell input touchscreen swipe x1 y1 x2 y2`.
+     * Default input source is `touchscreen`.
+     * @param x1 Horizontal starting coordinate.
+     * @param y1 Vertical starting coordinate.
+     * @param x2 Horizontal ending coordinate.
+     * @param y2 Vertical ending coordinate.
+     */
     swipe(
         serial: string,
         x1: number,
@@ -841,6 +850,12 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Sends keyevent input command to the device shell.
+     * Analogous to `adb shell input keyboard keyevent <code>`.
+     * Default input source is `keyboard`.
+     * @param code Key code to send.
+     */
     keyEvent(
         serial: string,
         code: KeyCode | NonEmptyArray<KeyCode>
@@ -916,6 +931,13 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Sends tap input command to the device shell.
+     * Analogous to `adb shell input touchscreen tap <x> <y>`.
+     * Default input source is `touchscreen`.
+     * @param x Horizontal coordinate.
+     * @param y Vertical coordinate.
+     */
     tap(serial: string, x: number, y: number): Promise<void>;
     tap(
         serial: string,

@@ -208,7 +208,12 @@ export type KeyEventOptions = InputOptions & {
     variant?: 'longpress' | 'doubletap';
 };
 
-export type InputDurationOptions = InputOptions & { duration?: number };
+/**
+ * Duration in milliseconds.
+ */
+export type InputDurationOptions = InputOptions & {
+    duration?: number;
+};
 
 export interface CommandConstruct {
     new (connection: Connection): Command;
