@@ -1,6 +1,6 @@
 import { Writable } from 'stream';
 import { LogcatReader } from '../../lib/logcat/reader';
-import LogcatEntry from '../../lib/logcat/entry';
+import { LogcatEntry } from '../../lib/logcat/entry';
 
 describe('Logcat reader tests', () => {
     it('Should emit error when stream gets error event', (done) => {

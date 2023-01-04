@@ -1,8 +1,8 @@
 import { NotConnectedError } from '../util/errors';
 import StreamHandler from '../streamHandler';
-import Binary from './parser/binary';
-import LogcatEntry from './entry';
-import LogcatParser from './parser';
+import { Binary } from './parser/binary';
+import { LogcatEntry } from './entry';
+import { Parser as LogcatParser } from './parser';
 import { Writable } from 'stream';
 import { LogcatReaderOptions } from '../util/types';
 

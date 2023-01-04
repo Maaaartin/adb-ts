@@ -1,7 +1,7 @@
-import LogcatEntry from '../entry';
-import Parser from '../parser';
+import { LogcatEntry } from '../entry';
+import { Parser } from '../parser';
 
-export default class Binary extends Parser {
+export class Binary extends Parser {
     private buffer: Buffer;
     private readonly HEADER_SIZE_V1 = 20;
     private readonly HEADER_SIZE_MAX = 100;

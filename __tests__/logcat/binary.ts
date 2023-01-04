@@ -1,5 +1,5 @@
-import Binary from '../../lib/logcat/parser/binary';
-import LogcatEntry from '../../lib/logcat/entry';
+import { Binary } from '../../lib/logcat/parser/binary';
+import { LogcatEntry } from '../../lib/logcat/entry';
 
 const logCatRes = Buffer.from([
     66, 0, 28, 0, 212, 0, 0, 0, 212, 0, 0, 0, 32, 109, 160, 99, 108, 188, 242,

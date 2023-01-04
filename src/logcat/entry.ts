@@ -1,6 +1,6 @@
 import { Priority } from './priority';
 
-export default class LogcatEntry {
+export class LogcatEntry {
     public date: Date;
     public pid: number;
     public tid: number;
