@@ -1,5 +1,5 @@
 import { AdbClient } from '../../lib/client';
-import AdbDevice from '../../lib/device';
+import { AdbDevice } from '../../lib/device';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Get device path tests', () => {

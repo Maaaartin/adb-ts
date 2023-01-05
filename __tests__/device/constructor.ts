@@ -1,5 +1,5 @@
 import { AdbClient } from '../../lib/client';
-import AdbDevice from '../../lib/device';
+import { AdbDevice } from '../../lib/device';
 
 describe('Adb device constructor tests', () => {
     it('should have the correct properties', () => {

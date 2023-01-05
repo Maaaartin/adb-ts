@@ -42,7 +42,7 @@ import { AdbExecError } from './util/errors';
 import Sync, { SyncMode } from './sync';
 import { execFile } from 'child_process';
 import fs from 'fs';
-import AdbDevice from './device';
+import { AdbDevice } from './device';
 import BatteryStatusCommand from './commands/host-trasport/baterrystatus';
 import ClearCommand from './commands/host-trasport/clear';
 import Connect from './commands/host/connect';
@@ -1451,6 +1451,9 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Connects to device over local network.
+     */
     tcpip(serial: string): Promise<void>;
     tcpip(serial: string, port: number): Promise<void>;
     tcpip(serial: string, cb: ExecCallback): void;
@@ -1475,6 +1478,9 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Sets the device transport back to usb.
+     */
     usb(serial: string): Promise<void>;
     usb(serial: string, cb: ExecCallback): void;
     usb(serial: string, cb?: ExecCallback): Promise<void> | void {
@@ -1486,6 +1492,9 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Waits until the device has finished booting.
+     */
     waitBootComplete(serial: string): Promise<void>;
     waitBootComplete(serial: string, cb: ExecCallback): void;
     waitBootComplete(serial: string, cb?: ExecCallback): Promise<void> | void {
@@ -1497,6 +1506,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Waits until the device is in the given state.
+     * Analogous to `adb wait-for-<transport>-<state>`.
+     */
     waitFor(transport: WaitForType, state: WaitForState): Promise<void>;
     waitFor(
         transport: WaitForType,
@@ -1516,6 +1529,9 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Maps through all connected devices.
+     */
     map<R>(mapper: (device: AdbDevice) => R): Promise<R[]> {
         return this.listDevices().then((devices) =>
             devices.map((device) => mapper(new AdbDevice(this, device)))

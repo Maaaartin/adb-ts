@@ -37,7 +37,7 @@ import { Readable } from 'stream';
 import SyncEntry from './sync/entry';
 import { SyncMode } from './sync';
 
-export default class AdbDevice implements IAdbDevice {
+export class AdbDevice implements IAdbDevice {
     readonly id: string;
     readonly state: DeviceState;
     readonly path: string | undefined;

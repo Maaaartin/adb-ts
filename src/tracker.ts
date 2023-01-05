@@ -3,7 +3,7 @@ import { IAdbDevice } from './util/types';
 import { PrematureEOFError } from './util/errors';
 import { AdbClient } from './client';
 import TrackCommand from './commands/host/trackdevices';
-import AdbDevice from './device';
+import { AdbDevice } from './device';
 
 export class Tracker extends EventEmitter {
     private readonly command: TrackCommand;

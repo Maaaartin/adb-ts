@@ -1,7 +1,7 @@
 import { AdbClient } from '../../lib/client';
 import { IAdbDevice } from '../../lib/util/types';
 import { AdbMock } from '../../mockery/mockAdbServer';
-import AdbDevice from '../../lib/device';
+import { AdbDevice } from '../../lib/device';
 import { UnexpectedDataError } from '../../lib/util/errors';
 
 describe('Map tests', () => {

@@ -1,5 +1,5 @@
 import { AdbClient } from '../lib/client';
-import AdbDevice from '../lib/device';
+import { AdbDevice } from '../lib/device';
 
 export const getDevice = (port: number): AdbDevice => {
     return new AdbDevice(new AdbClient({ noAutoStart: true, port }), {
