@@ -76,8 +76,8 @@ import Monkey from './monkey/client';
 import MonkeyCommand from './commands/host-trasport/monkey';
 import MvCommand from './commands/host-trasport/mv';
 import Parser from './parser';
-import PullTransfer from './sync/pulltransfer';
-import PushTransfer from './sync/pushtransfer';
+import { PullTransfer } from './sync/pulltransfer';
+import { PushTransfer } from './sync/pushtransfer';
 import PutSetting from './commands/host-trasport/putsetting';
 import { Readable } from 'stream';
 import RebootCommand from './commands/host-trasport/reboot';
@@ -1110,6 +1110,9 @@ export class AdbClient {
         apk: string | Readable,
         options: InstallOptions
     ): Promise<void>;
+    /**
+     * @param args Extra arguments. E.g. `--fastdeploy` flag.
+     */
     install(
         serial: string,
         apk: string | Readable,
@@ -1181,6 +1184,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Uninstalls a package from the device.
+     * Analogous to `adb uninstall`.
+     */
     uninstall(serial: string, pkg: string): Promise<void>;
     uninstall(
         serial: string,
@@ -1218,6 +1225,9 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Tells if a package is installed or not.
+     */
     isInstalled(serial: string, pkg: string): Promise<boolean>;
     isInstalled(
         serial: string,
@@ -1237,6 +1247,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Starts a new activity with options.
+     * Analogous to `adb shell am start <pkg./activity>`.
+     */
     startActivity(serial: string, pkg: string, activity: string): Promise<void>;
     startActivity(
         serial: string,
@@ -1283,6 +1297,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Starts a new service with options.
+     * Analogous to `adb shell am startservice <pkg> <service>`.
+     */
     startService(serial: string, pkg: string, service: string): Promise<void>;
     startService(
         serial: string,
@@ -1330,6 +1348,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Reads given directory.
+     * The path should start with `/`.
+     */
     readDir(serial: string, path: string): Promise<SyncEntry[]>;
     readDir(
         serial: string,
@@ -1351,6 +1373,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Gets a PullTransfer instance.
+     * @see {@link PullTransfer}
+     */
     pull(serial: string, path: string): Promise<PullTransfer>;
     pull(
         serial: string,
@@ -1373,6 +1399,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Gets a PushTransfer instance.
+     * @see {@link PushTransfer}
+     */
     push(
         serial: string,
         srcPath: string | Readable,

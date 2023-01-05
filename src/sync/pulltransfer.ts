@@ -1,7 +1,7 @@
 import { PassThrough } from 'stream';
 import { StatsObject } from '../util/types';
 
-export default class PullTransfer extends PassThrough {
+export class PullTransfer extends PassThrough {
     private readonly stats: StatsObject = {
         bytesTransferred: 0
     };

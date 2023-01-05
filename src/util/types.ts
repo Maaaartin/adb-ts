@@ -72,20 +72,41 @@ export type AdbExtra =
 
 export type NonEmptyArray<T> = [T, ...T[]];
 
-export type StartServiceOptions = {
+export interface StartServiceOptions {
+    /**
+     * default `0`
+     */
     user?: number | string;
+    /**
+     * Adds `-a` flag.
+     */
     action?: string;
+    /**
+     * Adds `-D` flag.
+     */
     data?: string;
+    /**
+     * Adds `-t` flag.
+     */
     mimeType?: string;
+    /**
+     * Adds `-c` flag.
+     */
     category?: string | string[];
     flags?: number;
     extras?: AdbExtra | AdbExtra[];
-};
+}
 
-export type StartActivityOptions = StartServiceOptions & {
+export interface StartActivityOptions extends StartServiceOptions {
+    /**
+     * Adds `-D` flag.
+     */
     debug?: boolean;
+    /**
+     * Adds `-W` flag.
+     */
     wait?: boolean;
-};
+}
 
 export interface IAdbDevice {
     id: string;
@@ -145,6 +166,9 @@ export type InstallOptions = {
 };
 
 export type UninstallOptions = {
+    /**
+     * Adds `-k` flag to the install command.
+     */
     keepCache?: boolean;
 };
 
