@@ -30,7 +30,7 @@ export interface IFileStat {
     uname: string;
 }
 
-export default class FileStat extends Stats implements IFileStat {
+export class FileStat extends Stats implements IFileStat {
     abits: number;
     aflags: string;
     atime: Date;

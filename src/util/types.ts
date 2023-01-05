@@ -291,28 +291,75 @@ export type MonkeyCallback<T = null> = (
     command: string
 ) => void;
 
-type ForceFSOption = { force?: boolean };
-type NoClobberFSOption = { noClobber?: boolean };
-type SymlinkFSoption = { symlink?: boolean };
-type RecursiveFSOption = { recursive?: boolean };
+export interface ForceFSOption {
+    /**
+     * Adds `-f` flag.
+     */
+    force?: boolean;
+}
+export interface NoClobberFSOption {
+    /**
+     * Adds `-n` flag.
+     * No override.
+     */
+    noClobber?: boolean;
+}
+export interface SymlinkFSoption {
+    /**
+     * Adds `-s` flag.
+     * Creates symlink.
+     */
+    symlink?: boolean;
+}
+export interface RecursiveFSOption {
+    /**
+     * Adds `-r` flag.
+     */
+    recursive?: boolean;
+}
 
-export type RmOptions = ForceFSOption & RecursiveFSOption;
+export interface RmOptions extends ForceFSOption, RecursiveFSOption {}
 
-export type MkDirOptions = ForceFSOption & {
+export interface MkDirOptions extends ForceFSOption {
+    /**
+     * Adds `-m <value>` flag. Sets access mode
+     */
     mode?: number | string;
+    /**
+     * Adds `-p` flag.
+     * Creates parent directory if needed.
+     */
     parent?: boolean;
-};
+}
 
-export type TouchOptions = SymlinkFSoption & {
+export interface TouchOptions extends SymlinkFSoption {
+    /**
+     * Adds `-a` flag. Changes access time.
+     */
     aTime?: boolean;
+    /**
+     * Adds `-m` flag. Changes modification time.
+     */
     mTime?: boolean;
+    /**
+     * Adds `-m` flag. Does not create file. Does not create file.
+     */
     noCreate?: boolean;
+    /**
+     * Adds `-d <date>` flag.
+     */
     date?: Date | string;
+    /**
+     * Adds `-t <time>` flag.
+     */
     time?: Date | string;
+    /**
+     * Adds `-r <reference>` flag.
+     */
     reference?: string;
-};
+}
 
-export type MvOptions = NoClobberFSOption & ForceFSOption;
+export interface MvOptions extends NoClobberFSOption, ForceFSOption {}
 
 export type PreserveOptions = {
     mode?: boolean;
@@ -320,24 +367,65 @@ export type PreserveOptions = {
     timestamps?: boolean;
     context?: boolean;
     xattr?: boolean;
+    /**
+     * All of other options.
+     */
     all?: boolean;
 };
 
-export type CpOptions = NoClobberFSOption &
-    SymlinkFSoption &
-    RecursiveFSOption & {
-        hardLink?: boolean;
-        noDereference?: boolean;
-        noFollowSymlinks?: boolean;
-        followAllSymlinks?: boolean;
-        followListedSymlinks?: boolean;
-        preserve?: PreserveOptions;
-        delFirst?: boolean;
-        delDest?: boolean;
-        archive?: boolean;
-        update?: boolean;
-        preserveTimestamps?: boolean;
-        copyToTarget?: boolean;
-    };
+export interface CpOptions
+    extends NoClobberFSOption,
+        SymlinkFSoption,
+        RecursiveFSOption {
+    /**
+     * Adds `-l` flag.
+     */
+    hardLink?: boolean;
+    /**
+     * Adds `-d` flag.
+     */
+    noDereference?: boolean;
+    /**
+     * Adds `-P` flag.
+     */
+    noFollowSymlinks?: boolean;
+    /**
+     * Adds `-L` flag.
+     */
+    followAllSymlinks?: boolean;
+    /**
+     * Adds `-H` flag.
+     */
+    followListedSymlinks?: boolean;
+    /**
+     * Adds `--preserve=[ATTRIBUTES]`.
+     */
+    preserve?: PreserveOptions;
+    /**
+     * Adds `-F` flag.
+     */
+    delFirst?: boolean;
+    /**
+     * Adds `-f` flag.
+     */
+    delDest?: boolean;
+    /**
+     * Adds `-a` flag.
+     * Same as `-dpr`, if specified, `noDereference`, `preserve` and `recursive` attributes are ignored
+     */
+    archive?: boolean;
+    /**
+     * Adds `-u` flag.
+     */
+    update?: boolean;
+    /**
+     * Adds `-p` flag.
+     */
+    preserveTimestamps?: boolean;
+    /**
+     * Adds `-t` flag.
+     */
+    copyToTarget?: boolean;
+}
 
 export type PropertyMap = Map<string, PropertyValue>;

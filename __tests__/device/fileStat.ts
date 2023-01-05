@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { AdbExecError } from '../../lib/util/errors';
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { getDevice } from '../../mockery/testDevice';
-import FileStats from '../../lib/filestats';
+import { FileStat } from '../../lib/filestats';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
@@ -23,7 +23,7 @@ describe('Device file stat tests', () => {
         try {
             const port = await adbMock.start();
             const result = await getDevice(port).fileStat('/file');
-            expect(result).toBeInstanceOf(FileStats);
+            expect(result).toBeInstanceOf(FileStat);
             expect(result.abits).toBe(432);
             expect(result.aflags).toBe('-rw-rw----');
             expect(result.blocks).toBe(8);

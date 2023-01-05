@@ -50,7 +50,7 @@ import Connection from './connection';
 import CpCommand from './commands/host-trasport/cp';
 import Disconnect from './commands/host/disconnect';
 import FileStatCommand from './commands/host-trasport/filestat';
-import FileStat from './filestats';
+import { FileStat } from './filestats';
 import ForwardCommand from './commands/host-serial/forward';
 import GetDevicePathCommand from './commands/host-serial/getdevicepath';
 import GetIpAddressCommand from './commands/host-trasport/ipaddress';
@@ -1943,6 +1943,10 @@ export class AdbClient {
         return nodeify(establishConnection(3), cb);
     }
 
+    /**
+     * Force stops given package.
+     * Analogous to `adb shell am force-stop <package>`.
+     */
     killApp(serial: string, pkg: string): Promise<void>;
     killApp(serial: string, pkg: string, cb: ExecCallback): void;
     killApp(
@@ -1977,6 +1981,9 @@ export class AdbClient {
         });
     }
 
+    /**
+     * Executes a given command via adb console interface.
+     */
     exec(cmd: string): Promise<string>;
     exec(cmd: string, cb: ExecCallbackWithValue<string>): void;
     exec(
@@ -1986,6 +1993,10 @@ export class AdbClient {
         return nodeify(this.execInternal(cmd), cb);
     }
 
+    /**
+     * Executes a given command on specific device via adb console interface.
+     *  Analogous to `adb -s <serial> <command>`.
+     */
     execDevice(serial: string, cmd: string): Promise<string>;
     execDevice(
         serial: string,
@@ -2000,6 +2011,10 @@ export class AdbClient {
         return nodeify(this.execInternal(...['-s', serial, cmd]), cb);
     }
 
+    /**
+     * Executes a given command on specific device shell via adb console interface.
+     * Analogous to `adb -s <serial> shell <command>` .
+     */
     execDeviceShell(serial: string, cmd: string): Promise<string>;
     execDeviceShell(
         serial: string,
@@ -2014,6 +2029,10 @@ export class AdbClient {
         return nodeify(this.execInternal(...['-s', serial, 'shell', cmd]), cb);
     }
 
+    /**
+     * Retrieves current battery status.
+     * Analogous to `adb -s <serial> shell dumpsys battery` .
+     */
     batteryStatus(serial: string): Promise<PropertyMap>;
     batteryStatus(serial: string, cb: ExecCallbackWithValue<PropertyMap>): void;
     batteryStatus(
@@ -2028,6 +2047,9 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Removes file/folder specified by `path` parameter. Analogous to `adb shell rm <path>`.
+     */
     rm(serial: string, path: string): Promise<void>;
     rm(serial: string, path: string, options: RmOptions): Promise<void>;
     rm(serial: string, path: string, cb: ExecCallback): void;
@@ -2057,6 +2079,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Creates directory specified by `path` parameter.
+     * Analogous to `adb shell mkdir <path>`.
+     */
     mkdir(serial: string, path: string): Promise<void>;
     mkdir(serial: string, path: string, options?: MkDirOptions): Promise<void>;
     mkdir(serial: string, path: string, cb: ExecCallback): void;
@@ -2085,6 +2111,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Updates access and modification times of file specified by `path` parameter, or creates a new file.
+     * Analogous to `adb shell touch <filename>` .
+     */
     touch(serial: string, path: string): Promise<void>;
     touch(serial: string, path: string, options: TouchOptions): Promise<void>;
     touch(serial: string, path: string, cb: ExecCallback): void;
@@ -2116,6 +2146,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Moves data with `srcPath` to `destPath` parameter.
+     * Analogous to `adb shell mv <src> <dest>`.
+     */
     mv(serial: string, srcPath: string, destPath: string): Promise<void>;
     mv(
         serial: string,
@@ -2160,6 +2194,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Copies data with `srcPath` to `destPath` parameter.
+     * Analogous to `adb shell cp <src> <dest>`.
+     */
     cp(serial: string, srcPath: string, destPath: string): Promise<void>;
     cp(
         serial: string,
@@ -2203,6 +2241,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Gets file stats for specified path.
+     * Analogous to `adb stat <filepath>`.
+     */
     fileStat(serial: string, path: string): Promise<FileStat>;
     fileStat(
         serial: string,

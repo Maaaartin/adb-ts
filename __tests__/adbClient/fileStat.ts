@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import { AdbExecError, UnexpectedDataError } from '../../lib/util/errors';
 import { AdbClient } from '../../lib/client';
-import FileStats from '../../lib/filestats';
+import { FileStat } from '../../lib/filestats';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 beforeAll(() => {
@@ -23,7 +23,7 @@ describe('File stat OKAY tests', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.fileStat('serial', '/file');
-            expect(result).toBeInstanceOf(FileStats);
+            expect(result).toBeInstanceOf(FileStat);
             expect(result.abits).toBe(432);
             expect(result.aflags).toBe('-rw-rw----');
             expect(result.blocks).toBe(8);

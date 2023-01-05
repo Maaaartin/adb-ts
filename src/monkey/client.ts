@@ -4,7 +4,7 @@ import { Socket } from 'net';
 import { Reply, ErrReply } from './reply';
 import Api from './api';
 import { BaseCommand, Command, ParsableCommand } from './command';
-import CommandQueue from './commandqueue';
+import { CommandQueue } from './commandqueue';
 import Parser from './parser';
 
 export class Monkey extends Api {
@@ -124,7 +124,7 @@ export class Monkey extends Api {
     }
 
     /**
-     * Allows to executed commands in a queue.
+     * Allows executing commands in a queue.
      * @example
      * monkey
      *      .commandQueue()

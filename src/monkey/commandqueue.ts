@@ -3,7 +3,7 @@ import { BaseCommand, Command, ParsableCommand } from './command';
 import { Monkey } from './client';
 import { MonkeyCallback } from '../util//types';
 
-export default class Multi extends Api {
+export class CommandQueue extends Api {
     private client: Monkey;
     private commands: BaseCommand<any>[] = [];
     private replies: any[] = [];
