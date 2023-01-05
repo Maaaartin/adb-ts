@@ -151,7 +151,7 @@ export enum KeyCode {
     /** Key code constant: Enter key. */
     KEYCODE_ENTER = 66,
     /** Key code constant: Backspace key.
-     * Deletes characters before the insertion po , unlike {@link #KEYCODE_FORWARD_DEL}. */
+     * Deletes characters before the insertion po , unlike `KEYCODE_FORWARD_DEL`. */
     KEYCODE_DEL = 67,
     /** Key code constant: '`' (backtick) key. */
     KEYCODE_GRAVE = 68,
@@ -175,8 +175,8 @@ export enum KeyCode {
     KEYCODE_AT = 77,
     /** Key code constant: Number modifier key.
      * Used to enter numeric symbols.
-     * This key is not Num Lock , it is more like {@link #KEYCODE_ALT_LEFT} and is
-     *  erpreted as an ALT key by {@link android.text.method.MetaKeyKeyListener}. */
+     * This key is not Num Lock , it is more like `KEYCODE_ALT_LEFT` and is
+     *  interpreted as an ALT key by `android.text.method.MetaKeyKeyListener`. */
     KEYCODE_NUM = 78,
     /** Key code constant: Headset Hook key.
      * Used to hang up calls and stop media. */
@@ -205,7 +205,7 @@ export enum KeyCode {
     /** Key code constant: Fast Forward media key. */
     KEYCODE_MEDIA_FAST_FORWARD = 90,
     /** Key code constant: Mute key.
-     * Mutes the microphone, unlike {@link #KEYCODE_VOLUME_MUTE}. */
+     * Mutes the microphone, unlike `KEYCODE_VOLUME_MUTE`. */
     KEYCODE_MUTE = 91,
     /** Key code constant: Page Up key. */
     KEYCODE_PAGE_UP = 92,
@@ -277,7 +277,7 @@ export enum KeyCode {
     /** Key code constant: Escape key. */
     KEYCODE_ESCAPE = 111,
     /** Key code constant: Forward Delete key.
-     * Deletes characters ahead of the insertion po , unlike {@link #KEYCODE_DEL}. */
+     * Deletes characters ahead of the insertion po , unlike `KEYCODE_DEL`. */
     KEYCODE_FORWARD_DEL = 112,
     /** Key code constant: Left Control modifier key. */
     KEYCODE_CTRL_LEFT = 113,
@@ -309,7 +309,7 @@ export enum KeyCode {
      * Toggles insert / overwrite edit mode. */
     KEYCODE_INSERT = 124,
     /** Key code constant: Forward key.
-     * Navigates forward in the history stack.  Complement of {@link #KEYCODE_BACK}. */
+     * Navigates forward in the history stack.  Complement of `KEYCODE_BACK`. */
     KEYCODE_FORWARD = 125,
     /** Key code constant: Play media key. */
     KEYCODE_MEDIA_PLAY = 126,
@@ -348,7 +348,7 @@ export enum KeyCode {
     /** Key code constant: F12 key. */
     KEYCODE_F12 = 142,
     /** Key code constant: Num Lock key.
-     * This is the Num Lock key , it is different from {@link #KEYCODE_NUM}.
+     * This is the Num Lock key , it is different from `KEYCODE_NUM`.
      * This key alters the behavior of other keys on the numeric keypad. */
     KEYCODE_NUM_LOCK = 143,
     /** Key code constant: Numeric keypad '0' key. */
@@ -392,7 +392,7 @@ export enum KeyCode {
     /** Key code constant: Numeric keypad ')' key. */
     KEYCODE_NUMPAD_RIGHT_PAREN = 163,
     /** Key code constant: Volume Mute key.
-     * Mutes the speaker, unlike {@link #KEYCODE_MUTE}.
+     * Mutes the speaker, unlike `KEYCODE_MUTE`.
      * This key should normally be implemented as a toggle such that the first press
      * mutes the speaker and the second press restores the original volume. */
     KEYCODE_VOLUME_MUTE = 164,
@@ -551,11 +551,11 @@ export enum KeyCode {
      * Switches the audio tracks. */
     KEYCODE_MEDIA_AUDIO_TRACK = 222,
     /** Key code constant: Sleep key.
-     * Puts the device to sleep.  Behaves somewhat like {@link #KEYCODE_POWER} but it
+     * Puts the device to sleep.  Behaves somewhat like `KEYCODE_POWER` but it
      * has no effect if the device is already asleep. */
     KEYCODE_SLEEP = 223,
     /** Key code constant: Wakeup key.
-     * Wakes up the device.  Behaves somewhat like {@link #KEYCODE_POWER} but it
+     * Wakes up the device.  Behaves somewhat like `KEYCODE_POWER` but it
      * has no effect if the device is already awake. */
     KEYCODE_WAKEUP = 224,
     /** Key code constant: Pairing key.
@@ -725,6 +725,6 @@ export enum KeyCode {
     /** Key code constant: Consumed by the system for navigation right */
     KEYCODE_SYSTEM_NAVIGATION_RIGHT = 283,
     /** Key code constant: Show all apps
-     * @hide */
+     */
     KEYCODE_ALL_APPS = 284
 }
