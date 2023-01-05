@@ -603,7 +603,7 @@ device
 -   **data: string**: string to be written
 -   **destPath: string**: path to file on the device
 
-Wraps `push()` method, provides API for quick data writting.
+Wraps `push()` method, provides API for quick data writing.
 
 -   Returns: `Promise<void>`
 

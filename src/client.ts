@@ -72,7 +72,7 @@ import ListSettingsCommand from './commands/host-trasport/listsettings';
 import LogcatCommand from './commands/host-trasport/logcat';
 import { LogcatReader } from './logcat/reader';
 import MkDirCommand from './commands/host-trasport/mkdir';
-import Monkey from './monkey/client';
+import { Monkey } from './monkey/client';
 import MonkeyCommand from './commands/host-trasport/monkey';
 import MvCommand from './commands/host-trasport/mv';
 import Parser from './parser';
@@ -1532,12 +1532,13 @@ export class AdbClient {
     /**
      * Maps through all connected devices.
      */
-    map<R>(mapper: (device: AdbDevice) => R): Promise<R[]> {
+    map<T>(mapper: (device: AdbDevice) => T): Promise<T[]> {
         return this.listDevices().then((devices) =>
             devices.map((device) => mapper(new AdbDevice(this, device)))
         );
     }
 
+    /** @ignore */
     private pushInternal(
         serial: string,
         data: string | Readable,
@@ -1551,6 +1552,9 @@ export class AdbClient {
         });
     }
 
+    /**
+     * Wraps {@link push} method, provides API for quick data writing.
+     */
     pushDataToFile(
         serial: string,
         data: string | Buffer | Readable,
@@ -1580,6 +1584,9 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Wraps {@link push} method, reads the content of file on the host to a file on the device.
+     */
     pushFile(serial: string, srcPath: string, destPath: string): Promise<void>;
     pushFile(
         serial: string,
@@ -1596,6 +1603,9 @@ export class AdbClient {
         return nodeify(this.pushInternal(serial, srcPath, destPath), cb);
     }
 
+    /**
+     * Wraps {@link pull} method, reads the file content and resolves with the output.
+     */
     pullDataFromFile(serial: string, srcPath: string): Promise<Buffer>;
     pullDataFromFile(
         serial: string,
@@ -1626,6 +1636,9 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Wraps {@link pull} method, reads the content of file on the device to a file on the PC.
+     */
     pullFile(serial: string, srcPath: string, destPath: string): Promise<void>;
     pullFile(
         serial: string,
@@ -1661,6 +1674,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Sets property on the device.
+     * Analogues to `adb shell setprop <prop> <value>`.
+     */
     setProp(serial: string, prop: string, value: PrimitiveType): Promise<void>;
     setProp(
         serial: string,
@@ -1682,6 +1699,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Gets property from the device.
+     * Analogues to `adb shell getprop <prop>`.
+     */
     getProp(serial: string, prop: string): Promise<PropertyValue>;
     getProp(
         serial: string,
@@ -1701,6 +1722,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Puts setting on the device.
+     * Analogues to `adb shell settings put <mode> <name> <value>`.
+     */
     putSetting(
         serial: string,
         mode: SettingsMode,
@@ -1729,6 +1754,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Lists settings of the device.
+     * Analogues to `adb shell settings list <mode>`.
+     */
     listSettings(serial: string, mode: SettingsMode): Promise<PropertyMap>;
     listSettings(
         serial: string,
@@ -1748,6 +1777,10 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Gets setting from the device.
+     * Analogues to `adb shell settings get <mode> <name>`.
+     */
     getSetting(
         serial: string,
         mode: SettingsMode,
@@ -1773,6 +1806,9 @@ export class AdbClient {
         );
     }
 
+    /**
+     * Executes a given shell command via adb console interface. Analogous to `adb -s <serial> shell <command>`.
+     */
     shell(serial: string, command: string): Promise<string>;
     shell(
         serial: string,
@@ -1791,13 +1827,47 @@ export class AdbClient {
             cb
         );
     }
-
+    /**
+     * Enables to execute any custom command.
+     * Provided parameter has to extend the {@link Command} class.
+     * @example
+     * class MyCommand extends Command {
+     *       execute() {
+     *          return super.execute('host:version').then((reply) => {
+     *              switch (reply) {
+     *                  case Reply.OKAY:
+     *                      return this.parser.readValue().then((value) => {
+     *                          return parseInt(value.toString(), 10);
+     *                      });
+     *                  case Reply.FAIL:
+     *                      return this.parser.readError().then((e) => {
+     *                          throw e;
+     *                      });
+     *                  default:
+     *                      return parseInt(reply, 10);
+     *              }
+     *          });
+     *      }
+     *  }
+     */
     custom<T>(CustomCommand: CommandConstruct, ...args: any[]): Promise<T> {
         return this.connection().then((conn) => {
             return new CustomCommand(conn).execute(...args);
         });
     }
 
+    /**
+     * Enables to execute any custom transport command.
+     * Provided parameter has to extend the {@link TransportCommand} class.
+     * @example
+     * class MyCommand extends TransportCommand<number> {
+     *       execute() {
+     *          return super.execute('host:version').then((reply) => {
+     *              // ...
+     *          });
+     *      }
+     *  }
+     */
     customTransport<T>(
         CustomCommand: TransportCommandConstruct<T>,
         serial: string,
@@ -1808,6 +1878,9 @@ export class AdbClient {
         });
     }
 
+    /**
+     * Establishes a new monkey connection on port `1080`.
+     */
     openMonkey(serial: string): Promise<Monkey>;
     openMonkey(serial: string, cb: ExecCallbackWithValue<Monkey>): void;
     openMonkey(

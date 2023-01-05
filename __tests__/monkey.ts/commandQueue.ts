@@ -1,6 +1,6 @@
 import { Socket } from 'net';
 import MonkeyMock from '../../mockery/mockMonkeyServer';
-import Monkey from '../../lib/monkey/client';
+import { Monkey } from '../../lib/monkey/client';
 
 describe('Monkey command queue tests', () => {
     it('Should execute without error', async () => {

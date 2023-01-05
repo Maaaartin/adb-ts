@@ -1,7 +1,7 @@
 import { Socket } from 'net';
 import { promisify } from 'util';
 import MonkeyMock from '../../mockery/mockMonkeyServer';
-import Monkey from '../../lib/monkey/client';
+import { Monkey } from '../../lib/monkey/client';
 
 describe('Monkey client tests', () => {
     it('Create monkey instance', () => {

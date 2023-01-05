@@ -7,7 +7,7 @@ import { BaseCommand, Command, ParsableCommand } from './command';
 import CommandQueue from './commandqueue';
 import Parser from './parser';
 
-export default class Monkey extends Api {
+export class Monkey extends Api {
     public readonly queue: BaseCommand<any>[] = [];
     private parser: Parser = new Parser();
     private stream_?: Socket;
@@ -47,6 +47,11 @@ export default class Monkey extends Api {
         );
     }
 
+    /**
+     * Writes commands to monkey stream.
+     * @example
+     * monkey.send('key event 24', (err, value, command) => {});
+     */
     send(commands: string[] | string, cb: MonkeyCallback): this {
         return this.sendInternal(commands, (cmd) => new Command(cmd, cb));
     }
@@ -118,6 +123,18 @@ export default class Monkey extends Api {
         return this;
     }
 
+    /**
+     * Allows to executed commands in a queue.
+     * @example
+     * monkey
+     *      .commandQueue()
+     *      .touchDown(100, 0)
+     *      .sleep(5)
+     *      .touchUp(100, 0)
+     *      .execute((err, values) => {
+     *          monkey.end();
+     *      });
+     */
     commandQueue(): CommandQueue {
         return new CommandQueue(this);
     }

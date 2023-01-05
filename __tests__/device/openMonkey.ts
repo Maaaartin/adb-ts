@@ -1,4 +1,4 @@
-import Monkey from '../../lib/monkey/client';
+import { Monkey } from '../../lib/monkey/client';
 import { AdbMockMulti } from '../../mockery/mockAdbServer';
 import { getDevice } from '../../mockery/testDevice';
 

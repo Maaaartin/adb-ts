@@ -30,7 +30,7 @@ import Connection from './connection';
 import FileStat from './filestats';
 import { KeyCode } from './keycode';
 import { LogcatReader } from './logcat/reader';
-import Monkey from './monkey/client';
+import { Monkey } from './monkey/client';
 import { PullTransfer } from './sync/pulltransfer';
 import { PushTransfer } from './sync/pushtransfer';
 import { Readable } from 'stream';
