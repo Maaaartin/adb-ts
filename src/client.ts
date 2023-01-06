@@ -39,7 +39,7 @@ import {
     nodeify
 } from './util/functions';
 import { AdbExecError } from './util/errors';
-import Sync, { SyncMode } from './sync';
+import { Sync, SyncMode } from './sync';
 import { execFile } from 'child_process';
 import fs from 'fs';
 import { AdbDevice } from './device';

@@ -1,4 +1,4 @@
-import Sync from '../../sync';
+import { Sync } from '../../sync';
 import TransportCommand from '../transport';
 
 export default class SyncCommand extends TransportCommand<Sync> {

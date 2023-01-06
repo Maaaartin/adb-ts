@@ -1,14 +1,14 @@
-import { Reply } from './util/types';
-import { FailError } from './util/errors';
-import Connection from './connection';
+import { Reply } from '../util/types';
+import { FailError } from '../util/errors';
+import Connection from '../connection';
 import { EventEmitter } from 'events';
-import Parser from './parser';
+import Parser from '../parser';
 import Path from 'path';
-import { PullTransfer } from './sync/pulltransfer';
-import { PushTransfer } from './sync/pushtransfer';
+import { PullTransfer } from './pulltransfer';
+import { PushTransfer } from './pushtransfer';
 import { Readable } from 'stream';
-import Stats from './sync/stats';
-import SyncEntry from './sync/entry';
+import Stats from './stats';
+import SyncEntry from './entry';
 import fs from 'fs';
 import { promisify } from 'util';
 
@@ -17,7 +17,7 @@ export enum SyncMode {
     DATA_MAX_LENGTH = 65536
 }
 
-export default class Sync extends EventEmitter {
+export class Sync extends EventEmitter {
     private readonly connection: Connection;
     private readonly parser: Parser;
 
