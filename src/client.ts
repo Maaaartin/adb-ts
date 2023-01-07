@@ -60,7 +60,7 @@ import HostTransportCommand from './commands/host/transport';
 import InputCommand from './commands/host-trasport/input';
 import InstallCommand from './commands/host-trasport/install';
 import IsInstalledCommand from './commands/host-trasport/isinstalled';
-import { KeyCode } from './keycode';
+import { KeyCode } from './util/keycode';
 import KillCommand from './commands/host/kill';
 import ListDevicesCommand from './commands/host/listdevices';
 import ListFeaturesCommand from './commands/host-trasport/listfeatures';

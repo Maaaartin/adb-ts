@@ -1,4 +1,4 @@
-import { KeyCode } from '../../lib/keycode';
+import { KeyCode } from '../../lib/util';
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { getDevice } from '../../mockery/testDevice';
 

@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { KeyCode } from '../keycode';
+import { KeyCode } from '../util/keycode';
 import { MonkeyCallback } from '../util/types';
 
 // reference https://android.googlesource.com/platform/development/+/master/cmds/monkey/src/com/android/commands/monkey/MonkeySourceNetworkVars.java
