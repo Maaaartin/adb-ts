@@ -1,4 +1,4 @@
-import Connection from '../../connection';
+import { Connection } from '../../connection';
 import TransportCommand from '../transport';
 
 export default class MonkeyCommand extends TransportCommand<Connection> {

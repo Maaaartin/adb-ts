@@ -1,5 +1,5 @@
 import net from 'net';
-import Parser from '../lib/parser';
+import { Parser } from '../lib/parser';
 import { NonEmptyArray, Reply } from '../lib/util/types';
 import { encodeData } from '../lib/util/functions';
 import { promisify } from 'util';

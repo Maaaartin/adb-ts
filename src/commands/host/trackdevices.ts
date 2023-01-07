@@ -1,4 +1,4 @@
-import Connection from '../../connection';
+import { Connection } from '../../connection';
 import DevicesCommand from '../devices';
 import { IAdbDevice } from '../../util/types';
 

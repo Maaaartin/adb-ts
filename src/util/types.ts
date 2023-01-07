@@ -1,7 +1,7 @@
 import Command from '../command';
 import IpConnect from '../commands/ipConnect';
 import TransportCommand from '../commands/transport';
-import Connection from '../connection';
+import { Connection } from '../connection';
 import { LogcatEntry } from '../logcat/entry';
 
 export enum Reply {
@@ -120,18 +120,18 @@ export type StatsObject = {
     bytesTransferred: number;
 };
 
-export type ReversesForwardsBase = {
+export interface ReversesForwardsBase {
     local: string;
     remote: string;
-};
+}
 
-export type ReversesObject = ReversesForwardsBase & {
+export interface ReversesObject extends ReversesForwardsBase {
     host: string;
-};
+}
 
-export type ForwardsObject = ReversesForwardsBase & {
+export interface ForwardsObject extends ReversesForwardsBase {
     serial: string;
-};
+}
 
 export type PrimitiveType = string | boolean | number | null | undefined;
 
@@ -247,20 +247,20 @@ export type InputType =
     | 'press'
     | 'roll';
 
-export type InputOptions = {
+export interface InputOptions {
     source?: InputSource;
-};
+}
 
-export type KeyEventOptions = InputOptions & {
+export interface KeyEventOptions extends InputOptions {
     variant?: 'longpress' | 'doubletap';
-};
+}
 
-/**
- * Duration in milliseconds.
- */
-export type InputDurationOptions = InputOptions & {
+export interface InputDurationOptions extends InputOptions {
+    /**
+     * Duration in milliseconds.
+     */
     duration?: number;
-};
+}
 
 export interface CommandConstruct {
     new (connection: Connection): Command;

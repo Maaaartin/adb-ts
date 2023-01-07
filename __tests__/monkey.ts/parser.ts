@@ -1,4 +1,4 @@
-import Parser from '../../lib/monkey/parser';
+import { Parser } from '../../lib/monkey/parser';
 import { ErrReply, OkReply } from '../../lib/monkey/reply';
 
 describe('Monkey Parser tests', () => {

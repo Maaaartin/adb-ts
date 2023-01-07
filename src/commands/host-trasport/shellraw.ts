@@ -1,4 +1,4 @@
-import Connection from '../../connection';
+import { Connection } from '../../connection';
 import RawCommand from '../raw-command';
 
 export default class ShellRawCommand extends RawCommand {

@@ -1,6 +1,6 @@
 import { Socket, SocketConstructorOpts } from 'net';
-import Parser from './parser';
-export default class Connection extends Socket {
+import { Parser } from './parser';
+export class Connection extends Socket {
     public readonly parser: Parser;
     constructor(options?: SocketConstructorOpts) {
         super(options);

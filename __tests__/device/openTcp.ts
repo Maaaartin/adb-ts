@@ -1,4 +1,4 @@
-import Connection from '../../lib/connection';
+import { Connection } from '../../lib/connection';
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { getDevice } from '../../mockery/testDevice';
 

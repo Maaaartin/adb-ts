@@ -1,5 +1,5 @@
 import MonkeyApi from './api';
-import MonkeyParser from './parser';
+import { Parser as MonkeyParser } from './parser';
 
 export { MonkeyApi, MonkeyParser };
 export * from './reply';

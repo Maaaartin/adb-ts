@@ -1,6 +1,6 @@
-import Connection from './connection';
+import { Connection } from './connection';
 import { PrimitiveType, Reply } from './util/types';
-import Parser from './parser';
+import { Parser } from './parser';
 import { encodeData } from './util/functions';
 
 export default abstract class Command<T = any> {

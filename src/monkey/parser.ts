@@ -1,7 +1,7 @@
 import { Reply, OkReply, ErrReply } from './reply';
 import { EventEmitter } from 'events';
 
-export default class Parser extends EventEmitter {
+export class Parser extends EventEmitter {
     private column = 0;
     private buffer = Buffer.from('');
 

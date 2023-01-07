@@ -5,7 +5,7 @@ import { Reply, ErrReply } from './reply';
 import Api from './api';
 import { BaseCommand, Command, ParsableCommand } from './command';
 import { CommandQueue } from './commandqueue';
-import Parser from './parser';
+import { Parser } from './parser';
 
 export class Monkey extends Api {
     public readonly queue: BaseCommand<any>[] = [];

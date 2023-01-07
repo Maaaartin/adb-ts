@@ -4,7 +4,7 @@ import { Writable } from 'stream';
 import { Socket } from 'net';
 import T from 'timers/promises';
 
-export default class Parser {
+export class Parser {
     public readonly socket: Socket;
     private ended: boolean;
     constructor(socket: Socket) {

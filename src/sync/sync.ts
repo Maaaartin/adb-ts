@@ -1,8 +1,8 @@
 import { Reply } from '../util/types';
 import { FailError } from '../util/errors';
-import Connection from '../connection';
+import { Connection } from '../connection';
 import { EventEmitter } from 'events';
-import Parser from '../parser';
+import { Parser } from '../parser';
 import Path from 'path';
 import { PullTransfer } from './pulltransfer';
 import { PushTransfer } from './pushtransfer';

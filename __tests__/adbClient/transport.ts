@@ -1,6 +1,6 @@
 import { UnexpectedDataError } from '../../lib/util/errors';
 import { AdbClient } from '../../lib/client';
-import Connection from '../../lib/connection';
+import { Connection } from '../../lib/connection';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Transport tests', () => {
