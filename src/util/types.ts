@@ -271,6 +271,7 @@ export interface TransportCommandConstruct<T> {
 }
 
 export interface IpConnectConstruct {
+    /** @ignore */
     new (connection: Connection): IpConnect;
 }
 

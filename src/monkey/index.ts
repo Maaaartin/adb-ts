@@ -1,7 +1,8 @@
-import MonkeyApi from './api';
-import { Parser as MonkeyParser } from './parser';
+import Api from './api';
 
-export { MonkeyApi, MonkeyParser };
+export { Api };
+export * from './parser';
 export * from './reply';
 export * from './client';
 export * from './command';
+export * from './commandqueue';

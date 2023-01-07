@@ -4,6 +4,7 @@ import { LogcatReader } from './reader';
 
 export * from './reader';
 export * from './parser/binary';
+export * from './parser';
 export * from './priority';
 export * from './entry';
 

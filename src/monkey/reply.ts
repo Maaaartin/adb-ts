@@ -1,4 +1,4 @@
-enum ReplyType {
+export enum ReplyType {
     ERROR = 'ERROR',
     OK = 'OK'
 }
@@ -6,7 +6,6 @@ enum ReplyType {
 export abstract class Reply {
     abstract type: ReplyType;
     abstract value: string | null;
-
     abstract isError(): this is ErrReply;
 }
 

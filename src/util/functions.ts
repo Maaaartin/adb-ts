@@ -8,11 +8,11 @@ import {
     PropertyValue
 } from './types';
 
-type NonFunctionPropertyNames<T> = {
+export type NonFunctionPropertyNames<T> = {
     [K in keyof T]: T[K] extends Function ? never : K;
 }[keyof T];
 
-type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
+export type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
 
 export const decodeLength = (length: string): number => {
     return parseInt(length, 16);

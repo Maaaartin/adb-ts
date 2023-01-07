@@ -32,7 +32,7 @@
         "compile": "npx tsc",
         "watch": "rm -rf lib && npx tsc -w",
         "lint": "npx eslint .",
-        "docs": "npx typedoc --readme none --out docs --entryPoints src/index.ts"
+        "docs": "npx typedoc --readme none --excludeExternals --externalPattern \"**/node_modules/**\" --out docs --entryPoints src/indexDocs.ts"
     },
     "devDependencies": {
         "@types/jest": "^29.2.4",

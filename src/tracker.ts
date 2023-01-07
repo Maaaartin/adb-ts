@@ -6,9 +6,11 @@ import TrackCommand from './commands/host/trackdevices';
 import { AdbDevice } from './device';
 
 export class Tracker extends EventEmitter {
+    /** @ignore */
     private readonly command: TrackCommand;
     private deviceMap: Map<string, IAdbDevice> | null;
     private readonly client: AdbClient;
+    /** @ignore */
     constructor(command: TrackCommand, client: AdbClient) {
         super();
         this.command = command;
