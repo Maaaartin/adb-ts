@@ -1,5 +1,5 @@
 import { Connection } from '../../connection';
-import TransportCommand from '../transport';
+import TransportCommand from '../abstract/transport';
 
 export default class MonkeyCommand extends TransportCommand<Connection> {
     Cmd = 'shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port ';

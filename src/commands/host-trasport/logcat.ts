@@ -2,7 +2,7 @@ import LineTransform from '../../linetransform';
 import { readStream } from '../../logcat';
 import { LogcatReader } from '../../logcat/reader';
 import { LogcatOptions } from '../../util/types';
-import TransportCommand from '../transport';
+import TransportCommand from '../abstract/transport';
 
 export default class LogcatCommand extends TransportCommand<LogcatReader> {
     private logCat: LogcatReader | null = null;

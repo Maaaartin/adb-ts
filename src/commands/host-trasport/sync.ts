@@ -1,5 +1,5 @@
 import { Sync } from '../../sync';
-import TransportCommand from '../transport';
+import TransportCommand from '../abstract/transport';
 
 export default class SyncCommand extends TransportCommand<Sync> {
     Cmd = 'sync:';

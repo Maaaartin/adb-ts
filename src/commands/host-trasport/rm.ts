@@ -1,5 +1,5 @@
 import { RmOptions } from 'fs';
-import FileSystemCommand from '../filesystem';
+import FileSystemCommand from '../abstract/filesystem';
 
 export default class RmCommand extends FileSystemCommand {
     Cmd = 'rm';

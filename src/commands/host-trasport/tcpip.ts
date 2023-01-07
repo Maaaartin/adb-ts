@@ -1,4 +1,4 @@
-import RestartConnection from '../restartConnection';
+import RestartConnection from '../abstract/restartConnection';
 
 export default class TcpIpCommand extends RestartConnection {
     Cmd = 'tcpip:';

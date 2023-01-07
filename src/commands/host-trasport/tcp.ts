@@ -1,5 +1,5 @@
 import { Connection } from '../../connection';
-import RawCommand from '../raw-command';
+import RawCommand from '../abstract/raw-command';
 
 export default class TcpCommand extends RawCommand {
     Cmd = 'tcp:';

@@ -1,5 +1,5 @@
 import { Readable } from 'stream';
-import TransportCommand from '../transport';
+import TransportCommand from '../abstract/transport';
 
 export default class IsInstalledCommand extends TransportCommand<boolean> {
     Cmd = '';

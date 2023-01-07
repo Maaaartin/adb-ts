@@ -1,6 +1,6 @@
 import Command from '../commands/command';
-import IpConnect from '../commands/ipConnect';
-import TransportCommand from '../commands/transport';
+import IpConnect from '../commands/abstract/ipConnect';
+import TransportCommand from '../commands/abstract/transport';
 import { Connection } from '../connection';
 import { LogcatEntry } from '../logcat/entry';
 

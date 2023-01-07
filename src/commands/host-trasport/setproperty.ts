@@ -1,4 +1,4 @@
-import TransportParseAllCommand from '../transport-parse-all-command';
+import TransportParseAllCommand from '../abstract/transport-parse-all-command';
 
 export default class SetProp extends TransportParseAllCommand<void> {
     Cmd = 'shell:setprop ';

@@ -1,5 +1,5 @@
 import Command from './commands/command';
-import TransportCommand from './commands/transport';
+import TransportCommand from './commands/abstract/transport';
 export * as AdbClient from './client';
 export * as Logcat from './logcat';
 export * as Util from './util';

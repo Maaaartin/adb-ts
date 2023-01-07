@@ -1,5 +1,5 @@
-import Command from './command';
-import { ICmd } from '../util/types';
+import Command from '../command';
+import { ICmd } from '../../util/types';
 
 export default abstract class IpConnect extends Command implements ICmd {
     protected abstract validator(): RegExp;

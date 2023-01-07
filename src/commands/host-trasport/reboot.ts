@@ -1,4 +1,4 @@
-import TransportCommand from '../transport';
+import TransportCommand from '../abstract/transport';
 
 export default class RebootCommand extends TransportCommand<void> {
     Cmd = 'reboot:';

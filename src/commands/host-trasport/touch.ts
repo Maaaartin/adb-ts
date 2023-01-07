@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { TouchOptions } from '../../util/types';
-import FileSystemCommand from '../filesystem';
+import FileSystemCommand from '../abstract/filesystem';
 
 export default class TouchCommand extends FileSystemCommand {
     Cmd = 'touch';

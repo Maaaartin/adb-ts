@@ -1,4 +1,4 @@
-import IpConnect from '../ipConnect';
+import IpConnect from '../abstract/ipConnect';
 
 export default class Connect extends IpConnect {
     get Cmd(): string {

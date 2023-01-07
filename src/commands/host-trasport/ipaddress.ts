@@ -1,4 +1,4 @@
-import TransportCommand from '../transport';
+import TransportCommand from '../abstract/transport';
 
 export default class GetIpAddressCommand extends TransportCommand<
     string | string[] | null

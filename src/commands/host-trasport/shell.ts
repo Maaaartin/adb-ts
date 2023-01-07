@@ -1,4 +1,4 @@
-import ExecCommand from '../execCommand';
+import ExecCommand from '../abstract/execCommand';
 
 export default class ShellCommand extends ExecCommand<string> {
     public Cmd = '';

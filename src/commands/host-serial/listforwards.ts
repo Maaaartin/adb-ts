@@ -1,6 +1,6 @@
 import { findMatches } from '../../util/functions';
 import { ForwardsObject } from '../../util/types';
-import ParseCommand from '../parse-command';
+import ParseCommand from '../abstract//parse-command';
 
 export default class ListForwardsCommand extends ParseCommand<
     ForwardsObject[]

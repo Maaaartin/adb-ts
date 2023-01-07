@@ -1,6 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { AdbClient } from '../../lib/client';
-import TransportCommand from '../../lib/commands/transport';
+import TransportCommand from '../../lib/commands/abstract/transport';
 
 class TestCmd extends TransportCommand<null> {
     Cmd = 'test ';

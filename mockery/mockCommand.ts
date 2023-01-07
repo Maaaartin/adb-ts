@@ -1,4 +1,4 @@
-import Command from '../lib/command';
+import Command from '../lib/commands/command';
 
 export default class CommandMock extends Command {
     public execute(): Promise<void> {

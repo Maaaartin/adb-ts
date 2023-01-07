@@ -1,5 +1,5 @@
 import { IFileStat, FileStat } from '../../filestats';
-import ExecCommand from '../execCommand';
+import ExecCommand from '../abstract/execCommand';
 
 export default class FileStatCommand extends ExecCommand<FileStat> {
     Cmd = 'stat -c ';

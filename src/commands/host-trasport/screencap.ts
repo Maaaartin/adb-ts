@@ -1,6 +1,6 @@
 import { PrematureEOFError } from '../../util/errors';
 import LineTransform from '../../linetransform';
-import TransportCommand from '../transport';
+import TransportCommand from '../abstract/transport';
 
 export default class ScreencapCommand extends TransportCommand<Buffer> {
     protected postExecute(): Promise<Buffer> {

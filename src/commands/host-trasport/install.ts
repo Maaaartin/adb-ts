@@ -1,5 +1,5 @@
 import { InstallOptions } from '../../util/types';
-import TransportCommand from '../transport';
+import TransportCommand from '../abstract/transport';
 
 export default class InstallCommand extends TransportCommand<void> {
     Cmd = 'shell:pm install ';

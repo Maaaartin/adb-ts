@@ -1,5 +1,5 @@
 import { Connection } from '../../connection';
-import DevicesCommand from '../devices';
+import DevicesCommand from '../abstract/devices';
 import { IAdbDevice } from '../../util/types';
 
 export default class TrackCommand extends DevicesCommand {

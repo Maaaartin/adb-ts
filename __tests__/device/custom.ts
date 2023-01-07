@@ -1,4 +1,4 @@
-import TransportCommand from '../../lib/commands/transport';
+import TransportCommand from '../../lib/commands/abstract/transport';
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { getDevice } from '../../mockery/testDevice';
 

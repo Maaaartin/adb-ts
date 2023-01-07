@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { AdbExecError } from '../util/errors';
+import { AdbExecError } from '../../util/errors';
 import TransportCommand from './transport';
 
 export default abstract class ShellCommand<T> extends TransportCommand<T> {
