@@ -1,4 +1,4 @@
-import Command from '../../command';
+import Command from '../command';
 export default class HostTransportCommand extends Command {
     protected keepAlive = true;
     execute(serial: string): Promise<void> {

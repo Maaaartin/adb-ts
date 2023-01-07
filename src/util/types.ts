@@ -1,4 +1,4 @@
-import Command from '../command';
+import Command from '../commands/command';
 import IpConnect from '../commands/ipConnect';
 import TransportCommand from '../commands/transport';
 import { Connection } from '../connection';

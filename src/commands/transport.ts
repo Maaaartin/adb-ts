@@ -1,4 +1,4 @@
-import Command from '../command';
+import Command from './command';
 import { ICmd, IPreExecute } from '../util/types';
 
 export default abstract class TransportCommand<T>

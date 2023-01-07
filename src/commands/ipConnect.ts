@@ -1,4 +1,4 @@
-import Command from '../command';
+import Command from './command';
 import { ICmd } from '../util/types';
 
 export default abstract class IpConnect extends Command implements ICmd {

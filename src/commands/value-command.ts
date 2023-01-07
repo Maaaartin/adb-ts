@@ -1,4 +1,4 @@
-import Command from '../command';
+import Command from './command';
 import { IPreExecute, PrimitiveType, Reply } from '../util/types';
 
 export default abstract class ValueCommand

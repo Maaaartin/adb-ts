@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import Command from '../../lib/command';
+import Command from '../../lib/commands/command';
 import { AdbClient } from '../../lib/client';
 
 class TestCmd extends Command {

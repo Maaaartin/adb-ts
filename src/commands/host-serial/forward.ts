@@ -1,4 +1,4 @@
-import Command from '../../command';
+import Command from '../command';
 
 export default class ForwardCommand extends Command<void> {
     execute(serial: string, local: string, remote: string): Promise<void> {

@@ -1,4 +1,4 @@
-import Command from '../../command';
+import Command from '../command';
 import { Reply } from '../../util/types';
 
 export default class VersionCommand extends Command {

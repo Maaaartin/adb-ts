@@ -1,7 +1,7 @@
-import { Connection } from './connection';
-import { PrimitiveType, Reply } from './util/types';
-import { Parser } from './parser';
-import { encodeData } from './util/functions';
+import { Connection } from '../connection';
+import { PrimitiveType, Reply } from '../util/types';
+import { Parser } from '../parser';
+import { encodeData } from '../util/functions';
 
 export default abstract class Command<T = any> {
     public readonly connection: Connection;
