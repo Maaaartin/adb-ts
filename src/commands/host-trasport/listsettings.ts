@@ -1,6 +1,6 @@
 import { findMatches } from '../../util/functions';
 import { PropertyMap, SettingsMode } from '../../util/types';
-import TransportParseAllCommand from '../abstract/transport-parse-all-command';
+import TransportParseAllCommand from '../abstract/transportParseAll';
 
 export default class ListSettingsCommand extends TransportParseAllCommand<PropertyMap> {
     Cmd = 'shell:settings list ';

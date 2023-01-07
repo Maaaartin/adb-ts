@@ -1,5 +1,5 @@
 import { findMatches } from '../../util/functions';
-import TransportParseAllCommand from '../abstract/transport-parse-all-command';
+import TransportParseAllCommand from '../abstract/transportParseAll';
 
 export default class ListPackagesCommand extends TransportParseAllCommand<
     string[]

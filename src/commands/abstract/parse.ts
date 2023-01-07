@@ -1,4 +1,4 @@
-import ValueCommand from './value-command';
+import ValueCommand from './value';
 
 export default abstract class ParseCommand<T = any> extends ValueCommand {
     protected abstract parse(value: string): T;

@@ -1,4 +1,4 @@
-import ValueCommand from '../abstract/value-command';
+import ValueCommand from '../abstract/value';
 
 export default class GetDevicePathCommand extends ValueCommand {
     execute(serial: string): Promise<string> {

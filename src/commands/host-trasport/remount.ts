@@ -1,4 +1,4 @@
-import TransportParseAllCommand from '../abstract/transport-parse-all-command';
+import TransportParseAllCommand from '../abstract/transportParseAll';
 
 export default class RemountCommand extends TransportParseAllCommand<void> {
     protected parse(value: string): void {

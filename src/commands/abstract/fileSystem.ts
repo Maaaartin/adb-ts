@@ -1,4 +1,4 @@
-import ExecCommand from './execCommand';
+import ExecCommand from './exec';
 
 export default abstract class FileSystemCommand extends ExecCommand<void> {
     protected abstract intentArgs(options?: Record<string, any>): string[];

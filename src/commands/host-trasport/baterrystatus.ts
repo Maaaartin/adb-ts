@@ -1,4 +1,4 @@
-import TransportParseAllCommand from '../abstract/transport-parse-all-command';
+import TransportParseAllCommand from '../abstract/transportParseAll';
 import { PropertyMap } from '../../util/types';
 import { findMatches } from '../../util/functions';
 
