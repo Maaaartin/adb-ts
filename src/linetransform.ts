@@ -17,7 +17,7 @@ export default class LineTransform extends Transform {
 
     nullTransform(
         chunk: Buffer,
-        encoding: BufferEncoding,
+        _encoding: BufferEncoding,
         cb: () => void
     ): void {
         this.push(chunk);

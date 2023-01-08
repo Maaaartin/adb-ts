@@ -1,6 +1,6 @@
 # adb-ts
 
-Module handling adb functionality, inspired by [adbkit](https://www.npmjs.com/package/adbkit), [adbkit-monkey](https://www.npmjs.com/package/adbkit-monkey) and [adbkit-logcat](https://www.npmjs.com/package/adbkit-logcat). This module removes its deprecated api, includes bug fixes, TS support and more convinient functions and syntax as well as easy scalability for custom functionalities.
+Module handling adb functionality, inspired by [adbkit](https://www.npmjs.com/package/adbkit), [adbkit-monkey](https://www.npmjs.com/package/adbkit-monkey) and [adbkit-logcat](https://www.npmjs.com/package/adbkit-logcat). This module removes its deprecated api, includes bug fixes, TS support and more convenient functions and syntax as well as easy scalability for custom functionalities.
 
 Developed and tested with Android Debug Bridge version 1.0.41
 Version 29.0.5-5949299.
