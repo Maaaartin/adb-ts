@@ -94,7 +94,10 @@ export class AdbMock {
             this.writeOkay(seq.res);
             return;
         }
-
+        if (seq.cmd.includes('touch')) {
+            console.log('seq.cmd', seq.cmd);
+            console.log('value', value);
+        }
         this.writeFail();
     }
 
