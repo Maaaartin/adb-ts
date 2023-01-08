@@ -34,7 +34,7 @@ jobs:
             - name: Upload docs
               uses: actions/upload-artifact@v2
               with:
-                  name: production-files
+                  name: docs-files
                   path: ./docs
 
     deploy:
@@ -46,7 +46,7 @@ jobs:
             - name: Download artifact
               uses: actions/download-artifact@v2
               with:
-                  name: Docs files
+                  name: docs-files
                   path: ./docs
 
             - name: Deploy to GitHub Pages
