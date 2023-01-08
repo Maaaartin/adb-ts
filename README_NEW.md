@@ -16,3 +16,5 @@ Start by importing `AdbClient`.
 import { AdbClient } from 'adb-ts';
 const adb = new AdbClient();
 ```
+
+Documentation available at https://maaaartin.github.io/adb-ts/
