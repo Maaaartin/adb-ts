@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import moment from 'moment';
 import { UnexpectedDataError } from '../../lib/util/errors';
 import { AdbClient } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
@@ -9,6 +10,7 @@ beforeAll(() => {
     });
 });
 const date = new Date('2022-12-13T12:41:42.418Z');
+const formattedTime = moment(date).format('YYYYMMDDHHmm[.]ssSSS');
 describe('Touch OKAY tests', () => {
     it('Should execute without parameters', async () => {
         const adbMock = new AdbMock([
@@ -33,7 +35,7 @@ describe('Touch OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(touch -a -t '202212131341.42418' /file) || echo '123456'`,
+                cmd: `shell:(touch -a -t '${formattedTime}' /file) || echo '123456'`,
                 res: 'data',
                 rawRes: true
             }
@@ -55,7 +57,7 @@ describe('Touch OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(touch -a -t '202212131341.42418' /file) || echo '123456'`,
+                cmd: `shell:(touch -a -t '${formattedTime}' /file) || echo '123456'`,
                 res: 'data',
                 rawRes: true
             }
