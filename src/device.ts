@@ -46,7 +46,7 @@ export class AdbDevice implements IAdbDevice {
     readonly product: string | undefined;
     readonly transportId: string;
     readonly transport: TransportType;
-    private client: AdbClient;
+    private readonly client: AdbClient;
 
     constructor(client: AdbClient, props: IAdbDevice) {
         this.id = props.id;
