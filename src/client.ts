@@ -138,10 +138,7 @@ export class AdbClient {
     startServer(cb: ExecCallback): void;
     startServer(cb?: ExecCallback): Promise<void> | void {
         const port = this.options.port;
-        const args = port
-            ? ['-P', port.toString(), 'start-server']
-            : ['start-server'];
-
+        const args = ['-P', port.toString(), 'start-server'];
         return nodeify(
             promisify<void>((cb_) =>
                 execFile(this.options.bin, args, (err) => cb_(err))
