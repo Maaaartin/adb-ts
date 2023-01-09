@@ -1019,6 +1019,15 @@ export class AdbClient {
      * Opens logcat.
      * Analogous to `adb logcat`.
      * @see LogcatReader and LogcatOptions for more details.
+     * @example
+     * import { AdbClient, Priority } from 'adb-ts';
+     * const adb = new AdbClient();
+     * const logcat = await adb.openLogcat('serial', {
+     *     filter: (entry) => entry.priority > Priority.INFO
+     * });
+     * logcat.on('entry', (entry) => {
+     *     console.log(entry);
+     * });
      */
     openLogcat(serial: string): Promise<LogcatReader>;
     openLogcat(serial: string, options: LogcatOptions): Promise<LogcatReader>;
@@ -1858,13 +1867,15 @@ export class AdbClient {
     /**
      * Enables to execute any custom transport command.
      * @example
-     * class MyCommand extends TransportCommand<number> {
-     *       execute() {
-     *          return super.execute('host:version').then((reply) => {
-     *              // ...
-     *          });
-     *      }
-     *  }
+     * class MyCommand extends TransportCommand<null> {
+     *   Cmd = 'test ';
+     *   protected postExecute(): Promise<null> {
+     *     return Promise.resolve(null);
+     * }
+     *   public execute(serial: string, arg: string): Promise<null> {
+     *     this.Cmd += arg;
+     *     return this.preExecute(serial);
+     * }
      */
     customTransport<T>(
         CustomCommand: TransportCommandConstruct<T>,

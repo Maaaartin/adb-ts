@@ -1,5 +1,5 @@
 module.exports = {
-    readme: './README_NEW.md',
+    readme: './README_DOCS.md',
     treatWarningsAsErrors: true,
     excludeExternals: true,
     externalPattern: '**/node_modules/**',

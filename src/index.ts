@@ -1,4 +1,7 @@
 export * as Commands from './commands/indexDocs';
-export * as AdbClient from './client';
+import { AdbClient } from './client';
 export * as Util from './util';
-export * as Connection from './connection';
+import { Connection } from './connection';
+import { Priority } from './logcat';
+
+export { AdbClient, Connection, Priority };
