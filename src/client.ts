@@ -409,6 +409,8 @@ export class AdbClient {
     /**
      * Forwards socket connections from the ADB server host (local) to the device (remote).
      * Analogous to `adb forward <local> <remote>`.
+     * @example
+     * adb.forward('serial', 'tcp:9222', 'localabstract:chrome_devtools_remote')
      */
     forward(serial: string, local: string, remote: string): Promise<void>;
     forward(
@@ -455,6 +457,8 @@ export class AdbClient {
     /**
      * Reverses socket connections from the device (remote) to the ADB server host (local).
      * Analogous to `adb reverse <remote> <local>`.
+     * @example
+     * adb.reverse('serial', 'localabstract:chrome_devtools_remote', 'tcp:9222')
      */
     reverse(serial: string, local: string, remote: string): Promise<void>;
     reverse(
@@ -590,6 +594,9 @@ export class AdbClient {
     /**
      * Opens a direct TCP connection to specified port on the device.
      * Analogous to `adb tcp <port>:<host>`.
+     * @example
+     * const socket = await adb.openTcp('serial', 5555);
+     * // socket.write(...)
      */
     openTcp(serial: string, port: number | string): Promise<Connection>;
     openTcp(
@@ -628,7 +635,7 @@ export class AdbClient {
 
     /**
      * Sends roll input command to the device shell.
-     * Analogous to `adb shell input trackball roll x y`.
+     * Analogous to `adb shell input trackball roll <x> <y>`.
      * Default input source is `trackball`.
      * @param x Horizontal coordinate.
      * @param y Vertical coordinate.
