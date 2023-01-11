@@ -1389,6 +1389,15 @@ export class AdbClient {
     /**
      * Gets a PullTransfer instance.
      * @see PullTransfer
+     * @example
+     * let data = '';
+     * const transfer = await adb.pull('serial', '/path')
+     * transfer.on('data', (chunk) => {
+     *     data += chunk.toString();
+     * });
+     * transfer.on('end', () => {
+     *     console.log(data);
+     * });
      */
     pull(serial: string, path: string): Promise<PullTransfer>;
     pull(
@@ -1415,6 +1424,9 @@ export class AdbClient {
     /**
      * Gets a PushTransfer instance.
      * @see PushTransfer
+     * @example
+     * const transfer = await adb.push('serial', '/path-src', '/path-dest')
+     * transfer.on('end', () => { });
      */
     push(
         serial: string,
