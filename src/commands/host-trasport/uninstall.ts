@@ -4,7 +4,6 @@ import TransportCommand from '../abstract/transport';
 export default class UninstallCommand extends TransportCommand<void> {
     Cmd = 'shell:pm uninstall';
     protected postExecute(): Promise<void> {
-        // TODO test responses
         return this.parser
             .searchLine(/^(Success|Failure.*|.*Unknown package:.*)$/)
             .then(() => {})
