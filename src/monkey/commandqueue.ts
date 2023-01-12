@@ -15,6 +15,14 @@ export class CommandQueue extends Api {
         this.client = client;
     }
 
+    private get queue(): BaseCommand<any>[] {
+        return this.client.queue;
+    }
+
+    private set queue(queue: BaseCommand<any>[]) {
+        this.client.queue = queue;
+    }
+
     private collector(
         err: Error | null,
         value: any | null,
@@ -81,9 +89,7 @@ export class CommandQueue extends Api {
     }
 
     private pushCommands(): void {
-        this.commands.forEach((cmd) => {
-            this.client.queue.push(cmd);
-        });
+        this.queue = [...this.queue, ...this.commands];
     }
 
     execute(cb: (err: Error | null, data: any[]) => void): void {

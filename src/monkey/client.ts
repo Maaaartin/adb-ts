@@ -8,7 +8,7 @@ import { CommandQueue } from './commandqueue';
 import { Parser } from './parser';
 
 export class Monkey extends Api {
-    public readonly queue: BaseCommand<any>[] = [];
+    public queue: BaseCommand<any>[] = [];
     private parser: Parser = new Parser();
     private stream_?: Socket;
     private timeout?: NodeJS.Timeout;
