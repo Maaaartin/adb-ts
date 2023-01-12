@@ -1477,7 +1477,9 @@ export class AdbClient {
     }
 
     /**
-     * Connects to device over local network.
+     * Puts the device ADB daemon into tcp mode.
+     * Afterwards it is possible to use `connect` method.
+     * Analogous to `adb tcpip 5555`.
      */
     tcpip(serial: string): Promise<void>;
     tcpip(serial: string, port: number): Promise<void>;
