@@ -10,7 +10,7 @@ beforeAll(() => {
 });
 
 describe('Device Push file', () => {
-    test('Should push file', async () => {
+    it('Should push file', async () => {
         const buff = Buffer.from([0, 0, 0, 4]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },

@@ -2,17 +2,18 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 import { AdbClient } from '../../lib/client';
 import { FailError, UnexpectedDataError } from '../../lib/util';
 import fs, { WriteStream } from 'fs';
-import { BufferWritableMock } from 'stream-mock';
 import { Writable } from 'stream';
 
 beforeEach(() => {
     jest.spyOn(fs, 'createWriteStream').mockImplementation(() => {
-        return new BufferWritableMock() as Writable as WriteStream;
+        return new Writable({
+            write: () => {}
+        }) as WriteStream;
     });
 });
 
 describe('Pull file tests', () => {
-    test('OKAY', async () => {
+    it('OKAY', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -32,7 +33,7 @@ describe('Pull file tests', () => {
         }
     });
 
-    test('FAIL', async () => {
+    it('FAIL', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -56,7 +57,7 @@ describe('Pull file tests', () => {
         }
     });
 
-    test('Unexpected error', async () => {
+    it('Unexpected error', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },

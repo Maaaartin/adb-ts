@@ -3,7 +3,7 @@ import { promisify } from 'util';
 import { getDevice } from '../../mockery/testDevice';
 
 describe('Device Pull tests', () => {
-    test('Should pull file', async () => {
+    it('Should pull file', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },

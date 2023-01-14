@@ -3,7 +3,7 @@ import { AdbClient } from '../../lib/client';
 import { FailError, UnexpectedDataError } from '../../lib/util';
 
 describe('Pull data from file tests', () => {
-    test('OKAY', async () => {
+    it('OKAY', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -23,7 +23,7 @@ describe('Pull data from file tests', () => {
         }
     });
 
-    test('FAIL', async () => {
+    it('FAIL', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -47,7 +47,7 @@ describe('Pull data from file tests', () => {
         }
     });
 
-    test('Unexpected error', async () => {
+    it('Unexpected error', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },

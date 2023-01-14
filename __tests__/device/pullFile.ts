@@ -2,11 +2,12 @@ import { Writable } from 'stream';
 import fs, { WriteStream } from 'fs';
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { getDevice } from '../../mockery/testDevice';
-import { BufferWritableMock } from 'stream-mock';
 
 beforeEach(() => {
     jest.spyOn(fs, 'createWriteStream').mockImplementation(() => {
-        return new BufferWritableMock() as Writable as WriteStream;
+        return new Writable({
+            write: () => {}
+        }) as WriteStream;
     });
 });
 

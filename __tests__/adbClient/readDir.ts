@@ -4,7 +4,7 @@ import SyncEntry from '../../lib/sync/entry';
 import { UnexpectedDataError } from '../../lib/util';
 
 describe('Read dir', () => {
-    test('DENT', async () => {
+    it('DENT', async () => {
         const buff = Buffer.from([
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 0, 0, 0
         ]);
@@ -26,7 +26,7 @@ describe('Read dir', () => {
         }
     });
 
-    test('DENT with dot as name', async () => {
+    it('DENT with dot as name', async () => {
         const buff = Buffer.from([
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0
         ]);
@@ -48,7 +48,7 @@ describe('Read dir', () => {
         }
     });
 
-    test('DENT with two dots as name', async () => {
+    it('DENT with two dots as name', async () => {
         const buff = Buffer.from([
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0
         ]);
@@ -70,7 +70,7 @@ describe('Read dir', () => {
         }
     });
 
-    test('FAIL', async () => {
+    it('FAIL', async () => {
         const buff = Buffer.from([
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0
         ]);
@@ -94,7 +94,7 @@ describe('Read dir', () => {
         }
     });
 
-    test('FAIL', async () => {
+    it('FAIL', async () => {
         const buff = Buffer.from([
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0
         ]);

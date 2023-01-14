@@ -4,7 +4,7 @@ import { UnexpectedDataError } from '../../lib/util';
 import { Monkey } from '../../lib/monkey/client';
 
 describe('Open Monkey tests', () => {
-    test('OKAY', async () => {
+    it('OKAY', async () => {
         const adbMock = new AdbMockMulti([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -28,7 +28,7 @@ describe('Open Monkey tests', () => {
         }
     });
 
-    test('FAIL first response', async () => {
+    it('FAIL first response', async () => {
         const adbMock = new AdbMockMulti([
             { cmd: 'fail', res: null, rawRes: true },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -52,7 +52,7 @@ describe('Open Monkey tests', () => {
         }
     });
 
-    test('FAIL second response', async () => {
+    it('FAIL second response', async () => {
         const adbMock = new AdbMockMulti([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             { cmd: 'fail', res: null, rawRes: true },
@@ -76,7 +76,7 @@ describe('Open Monkey tests', () => {
         }
     });
 
-    test('FAIL third response', async () => {
+    it('FAIL third response', async () => {
         const adbMock = new AdbMockMulti([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -100,7 +100,7 @@ describe('Open Monkey tests', () => {
         }
     });
 
-    test('FAIL fourth response', async () => {
+    it('FAIL fourth response', async () => {
         const adbMock = new AdbMockMulti([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -124,7 +124,7 @@ describe('Open Monkey tests', () => {
         }
     });
 
-    test('FAIL fifth response', async () => {
+    it('FAIL fifth response', async () => {
         const adbMock = new AdbMockMulti([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -148,7 +148,7 @@ describe('Open Monkey tests', () => {
         }
     });
 
-    test('Unexpected first response', async () => {
+    it('Unexpected first response', async () => {
         const adbMock = new AdbMockMulti([
             {
                 cmd: 'host:transport:serial',
@@ -182,7 +182,7 @@ describe('Open Monkey tests', () => {
         }
     });
 
-    test('Unexpected second response', async () => {
+    it('Unexpected second response', async () => {
         const adbMock = new AdbMockMulti([
             {
                 cmd: 'host:transport:serial',
@@ -220,7 +220,7 @@ describe('Open Monkey tests', () => {
         }
     });
 
-    test('Unexpected third response', async () => {
+    it('Unexpected third response', async () => {
         const adbMock = new AdbMockMulti([
             {
                 cmd: 'host:transport:serial',
@@ -254,7 +254,7 @@ describe('Open Monkey tests', () => {
         }
     });
 
-    test('Unexpected fourth response', async () => {
+    it('Unexpected fourth response', async () => {
         const adbMock = new AdbMockMulti([
             {
                 cmd: 'host:transport:serial',
@@ -292,7 +292,7 @@ describe('Open Monkey tests', () => {
         }
     });
 
-    test('Unexpected fifth response', async () => {
+    it('Unexpected fifth response', async () => {
         const adbMock = new AdbMockMulti([
             {
                 cmd: 'host:transport:serial',

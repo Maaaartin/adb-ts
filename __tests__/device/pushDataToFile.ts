@@ -3,7 +3,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 import { getDevice } from '../../mockery/testDevice';
 
 describe('Device Push data to file tests', () => {
-    test('Success with string data', async () => {
+    it('Success with string data', async () => {
         const buff = Buffer.from([0, 0, 0, 4]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -22,7 +22,7 @@ describe('Device Push data to file tests', () => {
         }
     });
 
-    test('Success with buffer data', async () => {
+    it('Success with buffer data', async () => {
         const buff = Buffer.from([0, 0, 0, 4]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -44,7 +44,7 @@ describe('Device Push data to file tests', () => {
         }
     });
 
-    test('Success with readable data', async () => {
+    it('Success with readable data', async () => {
         const buff = Buffer.from([0, 0, 0, 4]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },

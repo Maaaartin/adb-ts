@@ -6,7 +6,7 @@ import { Readable } from 'stream';
 import { SyncMode } from '../../lib/sync';
 
 describe('Adb Push tests', () => {
-    test('Should return push transfer without sync mode', async () => {
+    it('Should return push transfer without sync mode', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -40,7 +40,7 @@ describe('Adb Push tests', () => {
         }
     });
 
-    test('Should return push transfer with sync mode', async () => {
+    it('Should return push transfer with sync mode', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -75,7 +75,7 @@ describe('Adb Push tests', () => {
         }
     });
 
-    test('Should handle FAIL response', async () => {
+    it('Should handle FAIL response', async () => {
         const buff = Buffer.from([5, 0, 0, 0]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -113,7 +113,7 @@ describe('Adb Push tests', () => {
         }
     });
 
-    test('Should handle unexpected response', async () => {
+    it('Should handle unexpected response', async () => {
         const buff = Buffer.from([5, 0, 0, 0]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -153,7 +153,7 @@ describe('Adb Push tests', () => {
         }
     });
 
-    test('No error if transfer is cancelled', async () => {
+    it('No error if transfer is cancelled', async () => {
         const buff = Buffer.from([5, 0, 0, 0]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
