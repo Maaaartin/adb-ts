@@ -1,6 +1,8 @@
 ## Description
 
-Module handling adb functionality, based on [adbkit](https://www.npmjs.com/package/adbkit), [adbkit-monkey](https://www.npmjs.com/package/adbkit-monkey) and [adbkit-logcat](https://www.npmjs.com/package/adbkit-logcat). This module removes its deprecated api, includes bug fixes, TS support and more convenient functions and syntax as well as easy scalability for custom functionalities.
+Module is a TS implementation of [adbkit](https://www.npmjs.com/package/adbkit), [adbkit-monkey](https://www.npmjs.com/package/adbkit-monkey) and [adbkit-logcat](https://www.npmjs.com/package/adbkit-logcat).
+The module uses socket interface of ADB. Version `3.x` contains bug fixes and
+has less dependencies than previous versions.
 
 ## Installation
 
@@ -10,7 +12,8 @@ yarn add adb-ts
 
 ## Development
 
-Node version `>=16.x`
+Node version `>=16.x`.
+`adb` CLI.
 
 Run to install dependencies:
 
@@ -21,7 +24,7 @@ yarn install
 ### Contribution
 
 Feel free to create pull requests and issues at [the repo](https://github.com/Maaaartin/adb-ts).
-Make sure you wrote tests for your code. Scripts `yarn test`, `yarn lint` and `yarn docs` must pass.
+Make sure you wrote tests for your code. Scripts `yarn test`, `yarn lint` and `yarn docs` must exit without error.
 
 ## API
 
