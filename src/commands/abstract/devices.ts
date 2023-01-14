@@ -19,12 +19,12 @@ const parseProps = (values: string[]): Record<string, string | undefined> =>
         return acc;
     }, {});
 
-function constructDevice(values: string[]): IAdbDevice {
+export function constructDevice(values: string[]): IAdbDevice {
     const [id, state] = values;
     checkValues([id, state], ['id', 'state']);
 
     const { usb, product, model, device, transport_id } = parseProps(values);
-    return {
+    const ret = {
         id: id || '',
         state:
             /emulator/.test(id) && state === 'device'
@@ -37,6 +37,7 @@ function constructDevice(values: string[]): IAdbDevice {
         transportId: transport_id || '',
         transport: ipRegex().test(id) ? 'local' : 'usb'
     };
+    return ret as any;
 }
 
 export default abstract class DevicesCommand extends Command {
