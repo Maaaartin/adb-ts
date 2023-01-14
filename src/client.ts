@@ -2075,7 +2075,8 @@ export class AdbClient {
     }
 
     /**
-     * Removes file/folder specified by `path` parameter. Analogous to `adb shell rm <path>`.
+     * Removes file/folder specified by `path` parameter.
+     * Analogous to `adb shell rm <path>`.
      */
     rm(serial: string, path: string): Promise<void>;
     rm(serial: string, path: string, options: RmOptions): Promise<void>;
@@ -2140,7 +2141,7 @@ export class AdbClient {
 
     /**
      * Updates access and modification times of file specified by `path` parameter, or creates a new file.
-     * Analogous to `adb shell touch <filename>` .
+     * Analogous to `adb shell touch <filename>`.
      */
     touch(serial: string, path: string): Promise<void>;
     touch(serial: string, path: string, options: TouchOptions): Promise<void>;

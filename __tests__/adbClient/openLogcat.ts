@@ -2,6 +2,7 @@ import { AdbClient } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { UnexpectedDataError } from '../../lib/util/errors';
 import { LogcatReader } from '../../lib/logcat/reader';
+import { promisify } from 'util';
 
 const logCatRes = Buffer.from([
     0, 0, 66, 0, 28, 0, 212, 0, 0, 0, 212, 0, 0, 0, 32, 109, 160, 99, 108, 188,
@@ -19,7 +20,7 @@ const logCatRes = Buffer.from([
 ]);
 
 describe('Open logcat OKAY tests', () => {
-    it('Should read logs', async () => {
+    it('Should read logs and safely exit', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
@@ -28,14 +29,27 @@ describe('Open logcat OKAY tests', () => {
                 rawRes: true
             }
         ]);
-        try {
-            const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
-            const result = await adb.openLogcat('serial');
-            expect(result).toBeInstanceOf(LogcatReader);
-        } finally {
-            await adbMock.end();
-        }
+
+        const port = await adbMock.start();
+        const adb = new AdbClient({ noAutoStart: true, port });
+        const result = await adb.openLogcat('serial');
+
+        expect(result).toBeInstanceOf(LogcatReader);
+        // if connection is not ended properly, should throw error
+        await promisify<void>((cb) => {
+            let timeout: NodeJS.Timeout;
+            (result as any).stream.on('end', () => {
+                clearTimeout(timeout);
+                cb(new Error('Connection was not destroyed'));
+            });
+            result.on('end', () => {
+                setTimeout(() => {
+                    adbMock.end();
+                    cb(null);
+                }, 500);
+            });
+            result.emit('end');
+        })();
     });
 
     it('Should clear read logs', async () => {

@@ -16,7 +16,6 @@ export default class LogcatCommand extends TransportCommand<LogcatReader> {
         });
         this.connection.on('error', (err) => this.logCat?.emit('error', err));
         this.logCat.on('end', () => {
-            // TODO write test for ending
             super.endConnection();
         });
         return Promise.resolve(this.logCat);
