@@ -5,14 +5,10 @@ import {
     InputOptions,
     InputSource,
     PropertyMap,
-    PropertyValue
+    PropertyValue,
+    NonFunctionProperties,
+    PrimitiveType
 } from './types';
-
-export type NonFunctionPropertyNames<T> = {
-    [K in keyof T]: T[K] extends Function ? never : K;
-}[keyof T];
-
-export type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
 
 export const decodeLength = (length: string): number => {
     return parseInt(length, 16);
@@ -141,4 +137,24 @@ export function buildInputParams(
         return { source: source.source, cb };
     }
     return { source: defaultSource, cb };
+}
+
+export function escape(arg: PrimitiveType): string {
+    switch (typeof arg) {
+        case 'undefined':
+            return "''";
+        case 'string':
+            return "'" + arg.replace(/'/g, "'\"'\"'") + "'";
+        default:
+            return `${arg}`;
+    }
+}
+
+export function escapeCompat(arg: PrimitiveType): string {
+    switch (typeof arg) {
+        case 'string':
+            return '"' + arg.replace(/([$`\\!"])/g, '\\$1') + '"';
+        default:
+            return escape(arg);
+    }
 }

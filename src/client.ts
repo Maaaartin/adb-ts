@@ -29,7 +29,7 @@ import {
     WaitForType,
     PropertyValue,
     TransportCommandConstruct
-} from './util/types';
+} from './util';
 import {
     parseOptions,
     parsePrimitiveParam,
@@ -37,8 +37,8 @@ import {
     buildInputParams,
     parseValueParam,
     nodeify
-} from './util/functions';
-import { AdbExecError } from './util/errors';
+} from './util';
+import { AdbExecError } from './util';
 import { Sync, SyncMode } from './sync';
 import { execFile } from 'child_process';
 import fs from 'fs';
@@ -512,7 +512,7 @@ export class AdbClient {
     /** @ignore */
     private shellInternal(
         serial: string,
-        command: string | string[]
+        command: string | NonEmptyArray<string>
     ): Promise<Connection> {
         return this.connection().then((conn) => {
             return new ShellRawCommand(conn).execute(serial, command);

@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { AdbExecError, UnexpectedDataError } from '../../lib/util/errors';
+import { AdbExecError, UnexpectedDataError } from '../../lib/util';
 import { AdbClient } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 

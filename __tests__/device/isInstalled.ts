@@ -1,4 +1,4 @@
-import { UnexpectedDataError } from '../../lib/util/errors';
+import { UnexpectedDataError } from '../../lib/util';
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { getDevice } from '../../mockery/testDevice';
 

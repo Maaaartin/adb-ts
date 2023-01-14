@@ -1,5 +1,5 @@
 import DevicesCommand from '../abstract/devices';
-import { IAdbDevice } from '../../util/types';
+import { IAdbDevice } from '../../util';
 
 export default class ListDevicesCommand extends DevicesCommand {
     execute(): Promise<IAdbDevice[]> {

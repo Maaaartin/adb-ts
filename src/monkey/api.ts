@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 import { KeyCode } from '../util/keycode';
-import { MonkeyCallback } from '../util/types';
+import { MonkeyCallback } from '../util';
 
 // reference https://android.googlesource.com/platform/development/+/master/cmds/monkey/src/com/android/commands/monkey/MonkeySourceNetworkVars.java
 export default abstract class Api extends EventEmitter {

@@ -1,6 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { AdbClient } from '../../lib/client';
-import { PrimitiveType } from '../../lib/util/types';
+import { PrimitiveType } from '../../lib/util';
 
 describe('Battery status tests', () => {
     it('Should parse battery status', async () => {

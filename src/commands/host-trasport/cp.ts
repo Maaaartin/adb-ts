@@ -1,4 +1,4 @@
-import { CpOptions } from '../../util/types';
+import { CpOptions } from '../../util';
 import FileSystemCommand from '../abstract/fileSystem';
 
 export default class CpCommand extends FileSystemCommand {

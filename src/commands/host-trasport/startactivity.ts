@@ -1,4 +1,4 @@
-import { StartActivityOptions } from '../../util/types';
+import { StartActivityOptions } from '../../util';
 import StartServiceCommand from './startservice';
 
 export default class StartActivityCommand extends StartServiceCommand {

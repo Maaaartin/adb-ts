@@ -1,4 +1,4 @@
-import { InputSource, PrimitiveType } from '../../util/types';
+import { InputSource, PrimitiveType, escape } from '../../util';
 import TransportCommand from '../abstract/transport';
 
 export default class InputCommand extends TransportCommand<void> {
@@ -24,7 +24,7 @@ export default class InputCommand extends TransportCommand<void> {
             .concat(
                 args
                     .filter(filterInvalid)
-                    .map((a) => (this.withEscape_ ? this.escape(a) : a))
+                    .map((a) => (this.withEscape_ ? escape(a) : a))
             )
             .join(' ');
         this.Cmd += params;

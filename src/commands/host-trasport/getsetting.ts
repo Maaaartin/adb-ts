@@ -1,5 +1,4 @@
-import { stringToType } from '../../util/functions';
-import { PropertyValue, SettingsMode } from '../../util/types';
+import { PropertyValue, SettingsMode, escape, stringToType } from '../../util';
 import TransportParseAllCommand from '../abstract/transportParseAll';
 
 export default class GetSetting extends TransportParseAllCommand<PropertyValue> {
@@ -14,7 +13,7 @@ export default class GetSetting extends TransportParseAllCommand<PropertyValue> 
         mode: SettingsMode,
         name: string
     ): Promise<PropertyValue> {
-        this.Cmd += [mode, this.escape(name)].join(' ');
+        this.Cmd += [mode, escape(name)].join(' ');
         return this.preExecute(serial);
     }
 }

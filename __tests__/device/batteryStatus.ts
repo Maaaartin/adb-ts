@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { PrimitiveType } from '../../lib/util/types';
+import { PrimitiveType } from '../../lib/util';
 import { getDevice } from '../../mockery/testDevice';
 
 describe('Device battery status tests', () => {

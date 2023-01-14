@@ -1,4 +1,4 @@
-import { UninstallOptions } from '../../util/types';
+import { UninstallOptions } from '../../util';
 import TransportCommand from '../abstract/transport';
 
 export default class UninstallCommand extends TransportCommand<void> {

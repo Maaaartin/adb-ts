@@ -1,4 +1,4 @@
-import { MkDirOptions } from '../../util/types';
+import { MkDirOptions, escape } from '../../util';
 import FileSystemCommand from '../abstract/fileSystem';
 
 export default class MkDirCommand extends FileSystemCommand {
@@ -9,7 +9,7 @@ export default class MkDirCommand extends FileSystemCommand {
             return args;
         }
         if (options.mode !== undefined) {
-            args.push('-m', this.escape(options.mode));
+            args.push('-m', escape(options.mode));
         }
         if (options.parent) {
             args.push('-p');

@@ -1,5 +1,5 @@
 import { AdbClient } from '../../lib/client';
-import { UnexpectedDataError } from '../../lib/util/errors';
+import { UnexpectedDataError } from '../../lib/util';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Get setting OKAY tests', () => {

@@ -1,4 +1,4 @@
-import { MonkeyCallback } from '../util/types';
+import { MonkeyCallback } from '../util';
 
 export abstract class BaseCommand<T> {
     public readonly command: string;

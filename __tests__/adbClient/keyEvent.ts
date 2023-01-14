@@ -1,6 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { AdbClient } from '../../lib/client';
-import { UnexpectedDataError } from '../../lib/util/errors';
+import { UnexpectedDataError } from '../../lib/util';
 
 describe('Key event', () => {
     it('OKAY with one input', async () => {

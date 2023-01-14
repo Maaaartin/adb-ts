@@ -1,7 +1,7 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { AdbClient } from '../../lib/client';
 import { promisify } from 'util';
-import { FailError, UnexpectedDataError } from '../../lib/util/errors';
+import { FailError, UnexpectedDataError } from '../../lib/util';
 
 describe('Pull tests', () => {
     test('OKAY', async () => {

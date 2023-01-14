@@ -1,5 +1,5 @@
-import { Reply } from '../util/types';
-import { FailError } from '../util/errors';
+import { Reply } from '../util';
+import { FailError } from '../util';
 import { Connection } from '../connection';
 import { EventEmitter } from 'events';
 import { Parser } from '../parser';

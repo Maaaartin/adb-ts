@@ -1,6 +1,6 @@
 import TransportParseAllCommand from '../abstract/transportParseAll';
-import { PropertyMap } from '../../util/types';
-import { findMatches } from '../../util/functions';
+import { PropertyMap } from '../../util';
+import { findMatches } from '../../util';
 
 export default class BatteryStatusCommand extends TransportParseAllCommand<PropertyMap> {
     Cmd = 'shell:dumpsys battery';

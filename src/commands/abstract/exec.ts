@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { AdbExecError } from '../../util/errors';
+import { AdbExecError, escape } from '../../util';
 import TransportCommand from './transport';
 
 export default abstract class ShellCommand<T> extends TransportCommand<T> {
@@ -27,7 +27,7 @@ export default abstract class ShellCommand<T> extends TransportCommand<T> {
             `shell:(${this.Cmd})`,
             '||',
             'echo',
-            this.escape(this.uuid)
+            escape(this.uuid)
         ].join(' ');
         return super.preExecute(serial);
     }

@@ -1,4 +1,5 @@
-import { InstallOptions } from '../../util/types';
+import { escapeCompat } from '../../util';
+import { InstallOptions } from '../../util';
 import TransportCommand from '../abstract/transport';
 
 export default class InstallCommand extends TransportCommand<void> {
@@ -51,11 +52,7 @@ export default class InstallCommand extends TransportCommand<void> {
         args?: string
     ): Promise<void> {
         this.apk = apk;
-        this.Cmd += [
-            ...this.intentArgs(options),
-            this.escapeCompat(this.apk),
-            args
-        ]
+        this.Cmd += [...this.intentArgs(options), escapeCompat(this.apk), args]
             .filter(Boolean)
             .join(' ');
 

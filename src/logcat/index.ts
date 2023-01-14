@@ -1,5 +1,5 @@
 import { Writable } from 'stream';
-import { LogcatReaderOptions } from '../util/types';
+import { LogcatReaderOptions } from '../util';
 import { LogcatReader } from './reader';
 
 export * from './reader';

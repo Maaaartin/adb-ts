@@ -1,6 +1,6 @@
 import TransportParseAllCommand from '../abstract/transportParseAll';
-import { PropertyMap } from '../../util/types';
-import { findMatches } from '../../util/functions';
+import { PropertyMap } from '../../util';
+import { findMatches } from '../../util';
 
 export default class ListFeaturesCommand extends TransportParseAllCommand<PropertyMap> {
     Cmd = 'shell:pm list features 2>/dev/null';

@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { AdbExecError } from '../../lib/util/errors';
+import { AdbExecError } from '../../lib/util';
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { getDevice } from '../../mockery/testDevice';
 

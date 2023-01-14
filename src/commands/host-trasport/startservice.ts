@@ -1,5 +1,11 @@
-import { PrematureEOFError, UnexpectedDataError } from '../../util/errors';
-import { AdbExtra, AdbExtraType, StartServiceOptions } from '../../util/types';
+import {
+    PrematureEOFError,
+    UnexpectedDataError,
+    AdbExtra,
+    AdbExtraType,
+    StartServiceOptions,
+    escape
+} from '../../util';
 import TransportCommand from '../abstract/transport';
 
 export default class StartServiceCommand extends TransportCommand<void> {
@@ -46,18 +52,18 @@ export default class StartServiceCommand extends TransportCommand<void> {
     private formatExtraObject(extra: AdbExtra): string[] {
         const type = this.formatExtraType(extra.type);
         if (extra.type === 'null') {
-            return ['--e' + type, this.escape(extra.key)];
+            return ['--e' + type, escape(extra.key)];
         }
         if (Array.isArray(extra.value)) {
             return [
                 '--e' + type + 'a',
-                this.escape(extra.key),
+                escape(extra.key),
                 (extra.value as (string | number)[])
-                    .map((val) => this.escape(val))
+                    .map((val) => escape(val))
                     .join(',')
             ];
         }
-        return ['--e' + type, this.escape(extra.key), this.escape(extra.value)];
+        return ['--e' + type, escape(extra.key), escape(extra.value)];
     }
 
     private formatExtras(extras: AdbExtra | AdbExtra[] = []): string[] {
@@ -98,11 +104,7 @@ export default class StartServiceCommand extends TransportCommand<void> {
                 case 'data':
                 case 'mimeType':
                 case 'flags':
-                    return [
-                        ...args,
-                        this.keyToFlag(k_),
-                        this.escape(options[k_])
-                    ];
+                    return [...args, this.keyToFlag(k_), escape(options[k_])];
                 case 'category':
                     return [
                         ...args,
@@ -110,7 +112,7 @@ export default class StartServiceCommand extends TransportCommand<void> {
                             ? options.category
                             : [options.category]
                         ).map((cat) =>
-                            [this.keyToFlag(k_), this.escape(cat)].join(' ')
+                            [this.keyToFlag(k_), escape(cat)].join(' ')
                         )
                     ];
 
@@ -130,9 +132,9 @@ export default class StartServiceCommand extends TransportCommand<void> {
             [
                 ...this.intentArgs(options),
                 '-n',
-                this.escape(`${pkg}/.${service}`),
+                escape(`${pkg}/.${service}`),
                 '--user',
-                this.escape(options.user || 0)
+                escape(options.user || 0)
             ].join(' ')
         );
 

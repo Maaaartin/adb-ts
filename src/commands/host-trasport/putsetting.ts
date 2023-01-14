@@ -1,4 +1,4 @@
-import { PrimitiveType, SettingsMode } from '../../util/types';
+import { PrimitiveType, SettingsMode, escape } from '../../util';
 import TransportParseAllCommand from '../abstract/transportParseAll';
 
 export default class PutSetting extends TransportParseAllCommand<void> {
@@ -15,7 +15,7 @@ export default class PutSetting extends TransportParseAllCommand<void> {
         name: string,
         value: PrimitiveType
     ): Promise<void> {
-        this.Cmd += [mode, this.escape(name), this.escape(value)].join(' ');
+        this.Cmd += [mode, escape(name), escape(value)].join(' ');
         return this.preExecute(serial);
     }
 }

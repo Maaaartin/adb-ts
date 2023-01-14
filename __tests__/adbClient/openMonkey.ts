@@ -1,6 +1,6 @@
 import { AdbMockMulti } from '../../mockery/mockAdbServer';
 import { AdbClient } from '../../lib/client';
-import { UnexpectedDataError } from '../../lib/util/errors';
+import { UnexpectedDataError } from '../../lib/util';
 import { Monkey } from '../../lib/monkey/client';
 
 describe('Open Monkey tests', () => {

@@ -1,4 +1,4 @@
-import { PrematureEOFError } from '../../util/errors';
+import { PrematureEOFError } from '../../util';
 import LineTransform from '../../linetransform';
 import TransportCommand from '../abstract/transport';
 

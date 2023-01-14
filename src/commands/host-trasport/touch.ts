@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { TouchOptions } from '../../util/types';
+import { TouchOptions, escape } from '../../util';
 import FileSystemCommand from '../abstract/fileSystem';
 
 export default class TouchCommand extends FileSystemCommand {
@@ -22,16 +22,16 @@ export default class TouchCommand extends FileSystemCommand {
             args.push('-h');
         }
         if (options.date) {
-            args.push('-d', this.escape(moment(options.date).toISOString()));
+            args.push('-d', escape(moment(options.date).toISOString()));
         }
         if (options.time) {
             args.push(
                 '-t',
-                this.escape(moment(options.time).format('YYYYMMDDHHmm[.]ssSSS'))
+                escape(moment(options.time).format('YYYYMMDDHHmm[.]ssSSS'))
             );
         }
         if (options.reference) {
-            args.push('-r', this.escape(options.reference));
+            args.push('-r', escape(options.reference));
         }
         return args;
     }

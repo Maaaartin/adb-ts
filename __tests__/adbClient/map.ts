@@ -1,8 +1,8 @@
 import { AdbClient } from '../../lib/client';
-import { IAdbDevice } from '../../lib/util/types';
+import { IAdbDevice } from '../../lib/util';
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { AdbDevice } from '../../lib/device';
-import { UnexpectedDataError } from '../../lib/util/errors';
+import { UnexpectedDataError } from '../../lib/util';
 
 describe('Map tests', () => {
     it('Should map over devices', async () => {

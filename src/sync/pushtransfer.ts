@@ -1,4 +1,4 @@
-import { StatsObject } from '../util/types';
+import { StatsObject } from '../util';
 import StreamHandler from '../streamHandler';
 
 export class PushTransfer extends StreamHandler {

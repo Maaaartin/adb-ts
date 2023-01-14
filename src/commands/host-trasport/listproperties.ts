@@ -1,5 +1,5 @@
-import { findMatches } from '../../util/functions';
-import { PropertyMap } from '../../util/types';
+import { findMatches } from '../../util';
+import { PropertyMap } from '../../util';
 import TransportParseAllCommand from '../abstract/transportParseAll';
 
 export default class ListPropertiesCommand extends TransportParseAllCommand<PropertyMap> {

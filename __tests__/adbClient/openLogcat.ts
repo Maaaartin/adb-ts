@@ -1,6 +1,6 @@
 import { AdbClient } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { UnexpectedDataError } from '../../lib/util/errors';
+import { UnexpectedDataError } from '../../lib/util';
 import { LogcatReader } from '../../lib/logcat/reader';
 import { promisify } from 'util';
 

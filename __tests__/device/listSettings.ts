@@ -1,5 +1,5 @@
 import { getDevice } from '../../mockery/testDevice';
-import { PropertyValue } from '../../lib/util/types';
+import { PropertyValue } from '../../lib/util';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('List settings tests', () => {

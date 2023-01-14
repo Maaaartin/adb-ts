@@ -1,4 +1,4 @@
-import { MvOptions } from '../../util/types';
+import { MvOptions } from '../../util';
 import FileSystemCommand from '../abstract/fileSystem';
 
 export default class MvCommand extends FileSystemCommand {

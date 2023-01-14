@@ -1,6 +1,6 @@
 import { AdbClient } from '../../lib/client';
 import { AdbDevice } from '../../lib/device';
-import { AdbExecError } from '../../lib/util/errors';
+import { AdbExecError } from '../../lib/util';
 import { mockExec } from '../../mockery/execMock';
 
 const device = new AdbDevice(new AdbClient({ noAutoStart: true }), {

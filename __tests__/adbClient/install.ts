@@ -1,6 +1,6 @@
 import { AdbMockMulti } from '../../mockery/mockAdbServer';
 import { AdbClient } from '../../lib/client';
-import { UnexpectedDataError } from '../../lib/util/errors';
+import { UnexpectedDataError } from '../../lib/util';
 import { Readable } from 'stream';
 
 describe('Install OKAY tests', () => {

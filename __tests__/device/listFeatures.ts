@@ -1,6 +1,6 @@
 import { AdbClient } from '../../lib/client';
 import { AdbDevice } from '../../lib/device';
-import { PropertyValue } from '../../lib/util/types';
+import { PropertyValue } from '../../lib/util';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('List features tests', () => {

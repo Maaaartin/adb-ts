@@ -1,6 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { AdbClient } from '../../lib/client';
-import { FailError, UnexpectedDataError } from '../../lib/util/errors';
+import { FailError, UnexpectedDataError } from '../../lib/util';
 import { Readable } from 'stream';
 import fs from 'fs';
 

@@ -1,7 +1,7 @@
 import { Connection } from '../connection';
-import { PrimitiveType, Reply } from '../util/types';
+import { PrimitiveType, Reply } from '../util';
 import { Parser } from '../parser';
-import { encodeData } from '../util/functions';
+import { encodeData } from '../util';
 
 export default abstract class Command<T = any> {
     public readonly connection: Connection;
@@ -53,24 +53,4 @@ export default abstract class Command<T = any> {
     }
 
     public abstract execute(...args: any[]): Promise<T>;
-
-    escape(arg: PrimitiveType): string {
-        switch (typeof arg) {
-            case 'undefined':
-                return "''";
-            case 'string':
-                return "'" + arg.replace(/'/g, "'\"'\"'") + "'";
-            default:
-                return `${arg}`;
-        }
-    }
-
-    escapeCompat(arg: PrimitiveType): string {
-        switch (typeof arg) {
-            case 'string':
-                return '"' + arg.replace(/([$`\\!"])/g, '\\$1') + '"';
-            default:
-                return this.escape(arg);
-        }
-    }
 }

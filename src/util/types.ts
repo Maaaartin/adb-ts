@@ -21,8 +21,6 @@ export type ExecCallback = (err: null | Error) => void;
 
 export type ExecCallbackWithValue<T> = (err: null | Error, value: T) => void;
 
-export type ExecValue<T = void> = Promise<T> | void;
-
 export type DeviceState =
     | 'offline'
     | 'device'
@@ -427,3 +425,9 @@ export interface CpOptions
 }
 
 export type PropertyMap = Map<string, PropertyValue>;
+
+export type NonFunctionPropertyNames<T> = {
+    [K in keyof T]: T[K] extends Function ? never : K;
+}[keyof T];
+
+export type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;

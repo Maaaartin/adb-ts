@@ -9,9 +9,11 @@ import {
     parsePrimitiveParam,
     parseOptions,
     findMatches,
-    buildInputParams
-} from '../lib/util/functions';
-import { PropertyValue } from '../lib/util/types';
+    buildInputParams,
+    PropertyValue,
+    escape,
+    escapeCompat
+} from '../lib/util';
 
 describe('Encode/decode length', () => {
     it('Decode length', () => {
@@ -387,5 +389,51 @@ describe('Build input params', () => {
         const { source, cb } = buildInputParams('gamepad', {}, undefined);
         expect(source).toBe('gamepad');
         expect(cb?.toString()).toBeUndefined();
+    });
+});
+
+describe('Escape tests', () => {
+    it('escape undefined', () => {
+        const result = escape(undefined);
+        expect(result).toBe("''");
+    });
+    it('escape string', () => {
+        const result = escape("'test'");
+        expect(result).toBe(`''"'"'test'"'"''`);
+    });
+    it('escape number', () => {
+        const result = escape(1);
+        expect(result).toBe(`${1}`);
+    });
+    it('escape null', () => {
+        const result = escape(null);
+        expect(result).toBe(`${null}`);
+    });
+    it('escape bool', () => {
+        const result = escape(true);
+        expect(result).toBe(`${true}`);
+    });
+});
+
+describe('Escape compat tests', () => {
+    it('escape undefined', () => {
+        const result = escapeCompat(undefined);
+        expect(result).toBe("''");
+    });
+    it('escape string', () => {
+        const result = escapeCompat('"test"');
+        expect(result).toBe('"\\"test\\""');
+    });
+    it('escape number', () => {
+        const result = escapeCompat(1);
+        expect(result).toBe(`${1}`);
+    });
+    it('escape null', () => {
+        const result = escapeCompat(null);
+        expect(result).toBe(`${null}`);
+    });
+    it('escape bool', () => {
+        const result = escapeCompat(true);
+        expect(result).toBe(`${true}`);
     });
 });

@@ -1,5 +1,5 @@
-import { MonkeyCallback } from '../util/types';
-import { NotConnectedError } from '../util/errors';
+import { MonkeyCallback } from '../util';
+import { NotConnectedError } from '../util';
 import { Socket } from 'net';
 import { Reply, ErrReply } from './reply';
 import Api from './api';

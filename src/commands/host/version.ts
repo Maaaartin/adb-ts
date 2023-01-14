@@ -1,5 +1,5 @@
 import Command from '../command';
-import { Reply } from '../../util/types';
+import { Reply } from '../../util';
 
 export default class VersionCommand extends Command {
     execute(): Promise<number> {

@@ -24,7 +24,7 @@ import {
     KeyEventOptions,
     InputDurationOptions,
     NonEmptyArray
-} from './util/types';
+} from './util';
 import { AdbClient } from './client';
 import { Connection } from './connection';
 import { FileStat } from './filestats';

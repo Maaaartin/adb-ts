@@ -1,5 +1,5 @@
 import { decodeLength } from './util//functions';
-import { PrematureEOFError, UnexpectedDataError } from './util/errors';
+import { PrematureEOFError, UnexpectedDataError } from './util';
 import { Writable } from 'stream';
 import { Socket } from 'net';
 import T from 'timers/promises';
