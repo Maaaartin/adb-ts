@@ -217,6 +217,13 @@ export class AdbClient {
 
     /**
      * Connects to device over local network.
+     * @example
+     * adb.map(async (device) => {
+     *    await device.tcpip();
+     *    await adb.waitFor('usb', 'device');
+     *    const ip = await device.getIpAddress();
+     *    await adb.connect(ip);
+     *});
      */
     connect(host: string): Promise<string>;
     connect(host: string, port: number | string): Promise<string>;
