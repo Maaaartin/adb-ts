@@ -2,7 +2,7 @@ import Command from '../command';
 import { ICmd } from '../../util';
 
 export default abstract class IpConnect extends Command implements ICmd {
-    protected abstract validator(): RegExp;
+    protected abstract Validator: RegExp;
     abstract Cmd: string;
     keepAlive = true;
     execute(host: string, port: number | string): Promise<string> {
@@ -11,7 +11,7 @@ export default abstract class IpConnect extends Command implements ICmd {
                 this.handleReply(() => {
                     return this.parser.readValue().then((value) => {
                         const valueStr = value.toString().trim();
-                        if (this.validator().test(valueStr)) {
+                        if (this.Validator.test(valueStr)) {
                             return `${host}:${port}`;
                         }
                         throw new Error(valueStr);
