@@ -1,11 +1,3 @@
-export class FailError extends Error {
-    constructor(message?: string) {
-        super();
-        this.name = 'FailError';
-        this.message = `Failure: ${message}`;
-    }
-}
-
 export class UnexpectedDataError extends Error {
     public unexpected: string;
     public expected: string;

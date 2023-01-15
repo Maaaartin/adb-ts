@@ -1,7 +1,7 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { AdbClient } from '../../lib/client';
 import { promisify } from 'util';
-import { FailError, UnexpectedDataError } from '../../lib/util';
+import { UnexpectedDataError } from '../../lib/util';
 import { Readable } from 'stream';
 import { SyncMode } from '../../lib/sync';
 
@@ -106,7 +106,7 @@ describe('Adb Push tests', () => {
                 })();
                 fail('Expected failure');
             } catch (e: any) {
-                expect(e).toEqual(new FailError('Error'));
+                expect(e).toEqual(new Error('Error'));
             }
         } finally {
             await adbMock.end();

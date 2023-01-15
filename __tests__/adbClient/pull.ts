@@ -1,7 +1,7 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { AdbClient } from '../../lib/client';
 import { promisify } from 'util';
-import { FailError, UnexpectedDataError } from '../../lib/util';
+import { UnexpectedDataError } from '../../lib/util';
 
 describe('Pull tests', () => {
     it('OKAY', async () => {
@@ -61,7 +61,7 @@ describe('Pull tests', () => {
                 })();
                 fail('Expected failure');
             } catch (e: any) {
-                expect(e).toEqual(new FailError('data'));
+                expect(e).toEqual(new Error ('data'));
             }
         } finally {
             await adbMock.end();

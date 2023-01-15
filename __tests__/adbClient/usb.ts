@@ -1,6 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { AdbClient } from '../../lib/client';
-import { FailError } from '../../lib/util';
 
 describe('Usb', () => {
     it('OKAY', async () => {
@@ -38,7 +37,7 @@ describe('Usb', () => {
                 await adb.usb('serial');
                 fail('Expected failure');
             } catch (e: any) {
-                expect(e).toEqual(new FailError('error'));
+                expect(e).toEqual(new Error('error'));
             }
         } finally {
             await adbMock.end();

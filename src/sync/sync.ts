@@ -1,5 +1,4 @@
 import { Reply } from '../util';
-import { FailError } from '../util';
 import { Connection } from '../connection';
 import { EventEmitter } from 'events';
 import { Parser } from '../parser';
@@ -36,7 +35,7 @@ export class Sync extends EventEmitter {
             return this.parser
                 .readBytes(length.readUInt32LE(0))
                 .then((buff) => {
-                    throw new FailError(buff.toString());
+                    throw new Error(buff.toString());
                 });
         });
     }

@@ -1,6 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { AdbClient } from '../../lib/client';
-import { FailError, UnexpectedDataError } from '../../lib/util';
+import { UnexpectedDataError } from '../../lib/util';
 import { Readable } from 'stream';
 import fs from 'fs';
 
@@ -52,7 +52,7 @@ describe('Push data to file', () => {
                 );
                 fail('Expected failure');
             } catch (e: any) {
-                expect(e).toEqual(new FailError('Error'));
+                expect(e).toEqual(new Error('Error'));
             }
         } finally {
             await adbMock.end();
