@@ -88,8 +88,8 @@ export const parseOptions = <R extends Record<string, any>>(
 export function findMatches(
     value: string,
     regExp: RegExp,
-    parseTo: 'set'
-): Set<string>;
+    parseTo: 'list'
+): string[];
 export function findMatches(
     value: string,
     regExp: RegExp,
@@ -99,16 +99,16 @@ export function findMatches(value: string, regExp: RegExp): string[][];
 export function findMatches(
     value: string,
     regExp: RegExp,
-    parseTo?: 'set' | 'map'
-): PropertyMap | string[][] | Set<string> {
+    parseTo?: 'list' | 'map'
+): PropertyMap | string[][] | string[] {
     let match: RegExpExecArray | null = null;
     const acc: string[][] = [];
     while ((match = regExp.exec(value))) {
         acc.push(match.slice(1));
     }
     switch (parseTo) {
-        case 'set':
-            return new Set(acc.map(([val]) => val));
+        case 'list':
+            return acc.map(([val]) => val);
         case 'map':
             return new Map(acc.map(([k, v]) => [k, stringToType(v)]));
         default:
