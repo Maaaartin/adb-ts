@@ -66,7 +66,7 @@ describe('Map tests', () => {
                 expect(e).toEqual(
                     new UnexpectedDataError(
                         'usb337641472Y, ',
-                        'usb, product, model, device, transport_id, transport'
+                        'usb, product, model, device, transport_id'
                     )
                 );
             }

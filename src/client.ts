@@ -156,8 +156,9 @@ export class AdbClient {
                 return resolve(connection);
             });
             connection.on('error', (err: Error) => {
+                // TODO add test for error
                 if (
-                    (err as any).code === 'ECONNREFUSED' &&
+                    (err as Record<string, any>).code === 'ECONNREFUSED' &&
                     !triedStarting &&
                     !this.options.noAutoStart
                 ) {
