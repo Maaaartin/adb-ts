@@ -3,6 +3,7 @@ import TransportCommand from '../abstract/transport';
 export default class GetIpAddressCommand extends TransportCommand<
     string | string[] | null
 > {
+    Cmd = "shell:ip route | awk '{ print $9 }'";
     protected postExecute(): Promise<string | string[] | null> {
         return this.parser.readAll().then((value) => {
             const addresses = value.toString().trim().split('\n');
@@ -15,9 +16,7 @@ export default class GetIpAddressCommand extends TransportCommand<
             return addresses.map((a) => a.trim());
         });
     }
-    get Cmd(): string {
-        return "shell:ip route | awk '{ print $9 }'";
-    }
+
     execute(serial: string): Promise<string | string[] | null> {
         return this.preExecute(serial);
     }
