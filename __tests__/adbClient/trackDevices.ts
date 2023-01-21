@@ -190,12 +190,10 @@ describe('Track devices', () => {
             const adb = new AdbClient({ noAutoStart: true, port });
             const tracker = await adb.trackDevices();
             const result = await promisify(async (cb) => {
-                tracker.on('error', () => {
-                    return null;
-                });
                 tracker.on('end', () => {
                     cb(null, undefined);
                 });
+
                 tracker.end();
             })();
             try {
@@ -203,6 +201,54 @@ describe('Track devices', () => {
             } finally {
                 tracker.end();
             }
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Should emit end when connection ends', async () => {
+        const adbMock = new AdbMock({
+            cmd: 'host:track-devices-l',
+            res: null
+        });
+
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const tracker = await adb.trackDevices();
+            const result = await promisify<void>(async (cb) => {
+                tracker.on('error', () => {});
+                tracker.once('end', () => {
+                    cb(null);
+                });
+                (tracker as any).command.endConnection();
+            })();
+
+            expect(result).toBeUndefined();
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Should emit error when connection has error', async () => {
+        const adbMock = new AdbMock({
+            cmd: 'host:track-devices-l',
+            res: null
+        });
+
+        try {
+            const port = await adbMock.start();
+            const adb = new AdbClient({ noAutoStart: true, port });
+            const tracker = await adb.trackDevices();
+            const result = await promisify<void>(async (cb) => {
+                tracker.once('error', () => {
+                    cb(null);
+                });
+
+                (tracker as any).command.connection.destroy(new Error('end'));
+            })();
+
+            expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }

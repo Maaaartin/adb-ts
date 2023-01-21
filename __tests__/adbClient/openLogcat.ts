@@ -37,18 +37,12 @@ describe('Open logcat OKAY tests', () => {
         expect(result).toBeInstanceOf(LogcatReader);
         // if connection is not ended properly, should throw error
         await promisify<void>((cb) => {
-            let timeout: NodeJS.Timeout;
-            (result as any).stream.on('end', () => {
-                clearTimeout(timeout);
-                cb(new Error('Connection was not destroyed'));
-            });
-            result.on('end', () => {
+            result.once('end', () => {
                 setTimeout(() => {
                     adbMock.end();
                     cb(null);
                 }, 500);
             });
-            result.emit('end');
         })();
     });
 

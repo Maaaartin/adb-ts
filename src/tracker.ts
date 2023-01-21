@@ -8,6 +8,7 @@ import { AdbDevice } from './device';
 export class Tracker extends EventEmitter {
     /** @ignore */
     private readonly command: TrackCommand;
+    private ended = false;
     private deviceMap: Map<string, IAdbDevice> | null;
     private readonly client: AdbClient;
     /** @ignore */
@@ -16,17 +17,29 @@ export class Tracker extends EventEmitter {
         this.command = command;
         this.deviceMap = null;
         this.client = client;
+        this.hook();
+    }
+
+    private hook(): void {
+        // Listener for error not needed, error is handled in catch for read()
+        // this.command.connection.on('error', (err) => this.emit('error', err));
+        this.command.connection.once('end', () => this.emit('end'));
+        const readErrHandler = (err: unknown): void => {
+            if (this.ended) {
+                return;
+            }
+            this.emit(
+                'error',
+                err instanceof PrematureEOFError
+                    ? new Error('Connection closed')
+                    : err
+            );
+        };
         this.read()
-            .catch((err) => {
-                if (err instanceof PrematureEOFError) {
-                    this.emit('error', new Error('Connection closed'));
-                } else {
-                    this.emit('error', err);
-                }
-            })
-            .finally(() => {
-                return this.command.parser.end().then(() => this.emit('end'));
-            });
+            .catch(readErrHandler)
+            .finally(() => this.command.parser.end())
+            .finally(() => this.command.endConnection())
+            .catch((err) => this.emit('error', err));
     }
 
     private read(): Promise<void> {
@@ -64,9 +77,8 @@ export class Tracker extends EventEmitter {
     }
 
     public end(): void {
-        this.emit('end');
+        this.ended = true;
         this.command.endConnection();
-        setImmediate(() => this.removeAllListeners());
     }
 
     on(event: 'add' | 'change', listener: (device: AdbDevice) => void): this;

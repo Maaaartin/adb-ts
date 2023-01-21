@@ -42,7 +42,7 @@ export default abstract class Command<T = any> {
     }
 
     endConnection(): void {
-        this.connection.destroy();
+        this.connection.end();
     }
 
     protected initExecute(...args: PrimitiveType[]): Promise<string> {
