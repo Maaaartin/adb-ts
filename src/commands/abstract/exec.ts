@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { AdbExecError, escape } from '../../util';
 import TransportCommand from './transport';
 
-export default abstract class ShellCommand<T> extends TransportCommand<T> {
+export default abstract class ExecCommand<T> extends TransportCommand<T> {
     public abstract Cmd: string;
     private readonly uuid = crypto.randomUUID();
     private rawCmd = '';

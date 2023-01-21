@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { getDevice } from '../../mockery/testDevice';
+import { getClientAndDevice } from '../../mockery/testDevice';
 
 describe('Device tcpip tests', () => {
     it('Should restart tcp connection', async () => {
@@ -13,7 +13,11 @@ describe('Device tcpip tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const result = await getDevice(port).tcpip();
+            const { device, client } = getClientAndDevice(port);
+            jest.spyOn(client as any, 'awaitActiveDevice').mockImplementation(
+                () => Promise.resolve()
+            );
+            const result = await device.tcpip();
             expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
@@ -31,7 +35,11 @@ describe('Device tcpip tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const result = await getDevice(port).tcpip(3333);
+            const { device, client } = getClientAndDevice(port);
+            jest.spyOn(client as any, 'awaitActiveDevice').mockImplementation(
+                () => Promise.resolve()
+            );
+            const result = await device.tcpip(3333);
             expect(result).toBeUndefined();
         } finally {
             await adbMock.end();

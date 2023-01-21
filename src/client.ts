@@ -1484,6 +1484,38 @@ export class AdbClient {
     }
 
     /**
+     * @ignore
+     */
+    private awaitActiveDevice(serial: string): Promise<void> {
+        const track = (tracker: Tracker): Promise<void> => {
+            return new Promise<void>((resolve, reject) => {
+                const activeDeviceListener = (device: IAdbDevice): void => {
+                    if (
+                        device.id === serial &&
+                        (device.state === 'device' ||
+                            device.state === 'emulator')
+                    ) {
+                        resolve();
+                    }
+                };
+                tracker.once('error', reject);
+                tracker.once('remove', (device) => {
+                    if (device.id === serial) {
+                        tracker.on('add', activeDeviceListener);
+                        tracker.on('change', activeDeviceListener);
+                    }
+                });
+            });
+        };
+        return this.trackDevices().then((tracker) => {
+            return Promise.race([
+                T.setTimeout(5000, undefined, { ref: false }),
+                track(tracker)
+            ]).finally(() => tracker.end());
+        });
+    }
+
+    /**
      * Puts the device ADB daemon into tcp mode.
      * Afterwards it is possible to use `connect` method.
      * Analogous to `adb tcpip 5555`.
@@ -1506,7 +1538,10 @@ export class AdbClient {
 
         return nodeify(
             this.connection().then((conn) => {
-                return new TcpIpCommand(conn).execute(serial, port_);
+                return new TcpIpCommand(
+                    conn,
+                    this.awaitActiveDevice(serial)
+                ).execute(serial, port_);
             }),
             cb
         );
@@ -1520,7 +1555,10 @@ export class AdbClient {
     usb(serial: string, cb?: ExecCallback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new UsbCommand(conn).execute(serial);
+                return new UsbCommand(
+                    conn,
+                    this.awaitActiveDevice(serial)
+                ).execute(serial);
             }),
             cb
         );

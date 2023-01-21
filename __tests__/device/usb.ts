@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { getDevice } from '../../mockery/testDevice';
+import { getClientAndDevice } from '../../mockery/testDevice';
 
 describe('Device usb tests', () => {
     it('Should restart usb connection', async () => {
@@ -13,7 +13,11 @@ describe('Device usb tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const result = await getDevice(port).usb();
+            const { device, client } = getClientAndDevice(port);
+            jest.spyOn(client as any, 'awaitActiveDevice').mockImplementation(
+                () => Promise.resolve()
+            );
+            const result = await device.usb();
             expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
