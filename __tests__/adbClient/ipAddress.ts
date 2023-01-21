@@ -16,7 +16,7 @@ describe('IP address', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.getIpAddress('serial');
-            expect(result).toBe('127.0.0.1');
+            expect(result).toEqual(['127.0.0.1']);
         } finally {
             await adbMock.end();
         }
@@ -56,7 +56,7 @@ describe('IP address', () => {
             const port = await adbMock.start();
             const adb = new AdbClient({ noAutoStart: true, port });
             const result = await adb.getIpAddress('serial');
-            expect(result).toBeNull();
+            expect(result).toHaveLength(0);
         } finally {
             await adbMock.end();
         }

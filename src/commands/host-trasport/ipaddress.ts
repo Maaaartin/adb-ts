@@ -1,23 +1,19 @@
+import net from 'net';
 import TransportCommand from '../abstract/transport';
 
-export default class GetIpAddressCommand extends TransportCommand<
-    string | string[] | null
-> {
+export default class GetIpAddressCommand extends TransportCommand<string[]> {
     Cmd = "shell:ip route | awk '{ print $9 }'";
-    protected postExecute(): Promise<string | string[] | null> {
-        return this.parser.readAll().then((value) => {
-            const addresses = value.toString().trim().split('\n');
-            if (!addresses[0]) {
-                return null;
-            }
-            if (addresses.length === 1) {
-                return addresses[0].trim();
-            }
-            return addresses.map((a) => a.trim());
-        });
+    protected postExecute(): Promise<string[]> {
+        return this.parser.readAll().then((value) =>
+            value
+                .toString()
+                .split('\n')
+                .map((v) => v.trim())
+                .filter(net.isIP)
+        );
     }
 
-    execute(serial: string): Promise<string | string[] | null> {
+    execute(serial: string): Promise<string[]> {
         return this.preExecute(serial);
     }
 }

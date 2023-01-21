@@ -394,17 +394,14 @@ export class AdbClient {
     }
 
     /**
-     * Gets the the ip address of default wlan interface.
+     * Gets the the ip address(es) of default wlan interface.
      */
-    getIpAddress(serial: string): Promise<string | string[] | null>;
+    getIpAddress(serial: string): Promise<string[]>;
+    getIpAddress(serial: string, cb: ExecCallbackWithValue<string[]>): void;
     getIpAddress(
         serial: string,
-        cb: ExecCallbackWithValue<string | string[] | null>
-    ): void;
-    getIpAddress(
-        serial: string,
-        cb?: ExecCallbackWithValue<string | string[] | null>
-    ): Promise<string | string[] | null> | void {
+        cb?: ExecCallbackWithValue<string[]>
+    ): Promise<string[]> | void {
         return nodeify(
             this.connection().then((conn) =>
                 new GetIpAddressCommand(conn).execute(serial)

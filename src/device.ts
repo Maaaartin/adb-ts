@@ -80,7 +80,7 @@ export class AdbDevice implements IAdbDevice {
         return this.client.listPackages(this.id);
     }
 
-    getIpAddress(): Promise<string | string[] | null> {
+    getIpAddress(): Promise<string[]> {
         return this.client.getIpAddress(this.id);
     }
 
