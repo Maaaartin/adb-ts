@@ -34,7 +34,7 @@
         "test": "npx jest",
         "build": "npx tsc",
         "watch": "rm -rf lib && npx tsc -w",
-        "lint": "npx eslint .",
+        "lint": "npx eslint . --max-warnings 0",
         "docs": "npx typedoc --options typedoc.js"
     },
     "devDependencies": {

@@ -1,3 +1,4 @@
+import net from 'net';
 import { DeviceState, IAdbDevice } from '../../util';
 import { UnexpectedDataError } from '../../util';
 import Command from '../command';
@@ -34,7 +35,9 @@ export function constructDevice(values: string[]): IAdbDevice {
         model: model,
         device: device,
         transportId: transport_id as string,
-        transport: /^(.*?):([0-9]+)$/.test(id) ? 'local' : 'usb'
+        transport: net.isIPv4(/^(.*?):([0-9]+)$/.exec(id)?.[1] || '')
+            ? 'local'
+            : 'usb'
     };
 }
 
