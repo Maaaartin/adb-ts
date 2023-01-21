@@ -3,7 +3,7 @@ import {
     CpOptions,
     DeviceState,
     ForwardsObject,
-    IAdbDevice,
+    IDevice,
     InputSource,
     InstallOptions,
     LogcatOptions,
@@ -19,13 +19,13 @@ import {
     TransportType,
     UninstallOptions,
     PropertyMap,
-    ExecCallbackWithValue,
+    ValueCallback,
     PropertyValue,
     KeyEventOptions,
     InputDurationOptions,
     NonEmptyArray
 } from './util';
-import { AdbClient } from './client';
+import { Client } from './client';
 import { Connection } from './connection';
 import { FileStat } from './filestats';
 import { KeyCode } from './util/keycode';
@@ -37,7 +37,7 @@ import { Readable } from 'stream';
 import SyncEntry from './sync/entry';
 import { SyncMode } from './sync';
 
-export class AdbDevice implements IAdbDevice {
+export class Device implements IDevice {
     readonly id: string;
     readonly state: DeviceState;
     readonly path: string | undefined;
@@ -46,9 +46,9 @@ export class AdbDevice implements IAdbDevice {
     readonly product: string | undefined;
     readonly transportId: string;
     readonly transport: TransportType;
-    private readonly client: AdbClient;
+    private readonly client: Client;
 
-    constructor(client: AdbClient, props: IAdbDevice) {
+    constructor(client: Client, props: IDevice) {
         this.id = props.id;
         this.state = props.state;
         this.path = props.path;
@@ -220,7 +220,7 @@ export class AdbDevice implements IAdbDevice {
     push(
         srcPath: string | Readable,
         destPath: string,
-        mode?: SyncMode | ExecCallbackWithValue<PushTransfer>
+        mode?: SyncMode | ValueCallback<PushTransfer>
     ): Promise<PushTransfer> {
         return this.client.push(this.id, srcPath, destPath, mode as SyncMode);
     }

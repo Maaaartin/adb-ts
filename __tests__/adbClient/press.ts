@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 
 describe('Press', () => {
@@ -18,7 +18,7 @@ describe('Press', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.press('serial');
             expect(result).toBeUndefined();
         } finally {
@@ -41,7 +41,7 @@ describe('Press', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.press('serial', 'gamepad');
             expect(result).toBeUndefined();
         } finally {
@@ -64,7 +64,7 @@ describe('Press', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.press('serial');
                 fail('Expected Failure');
@@ -91,7 +91,7 @@ describe('Press', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.press('serial');
                 fail('Expected Failure');
@@ -119,7 +119,7 @@ describe('Press', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.press('serial');
                 fail('Expected Failure');
@@ -149,7 +149,7 @@ describe('Press', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.press('serial');
                 fail('Expected Failure');

@@ -1,4 +1,4 @@
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import SyncEntry from '../../lib/sync/entry';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
@@ -17,7 +17,7 @@ describe('Device Read dir', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const [result] = await adb.readDir('serial', '/');
             expect(result).toBeInstanceOf(SyncEntry);
         } finally {

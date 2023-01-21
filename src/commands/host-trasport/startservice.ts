@@ -1,8 +1,8 @@
 import {
     PrematureEOFError,
     UnexpectedDataError,
-    AdbExtra,
-    AdbExtraType,
+    StartExtra,
+    ExtraType,
     StartServiceOptions,
     escape
 } from '../../util';
@@ -26,7 +26,7 @@ export default class StartServiceCommand extends TransportCommand<void> {
                 }
             );
     }
-    private formatExtraType(type: AdbExtraType): string {
+    private formatExtraType(type: ExtraType): string {
         switch (type) {
             case 'string':
                 return 's';
@@ -49,7 +49,7 @@ export default class StartServiceCommand extends TransportCommand<void> {
         }
     }
 
-    private formatExtraObject(extra: AdbExtra): string[] {
+    private formatExtraObject(extra: StartExtra): string[] {
         const type = this.formatExtraType(extra.type);
         if (extra.type === 'null') {
             return ['--e' + type, escape(extra.key)];
@@ -66,7 +66,7 @@ export default class StartServiceCommand extends TransportCommand<void> {
         return ['--e' + type, escape(extra.key), escape(extra.value)];
     }
 
-    private formatExtras(extras: AdbExtra | AdbExtra[] = []): string[] {
+    private formatExtras(extras: StartExtra | StartExtra[] = []): string[] {
         return [extras]
             .flat()
             .map((ext) => this.formatExtraObject(ext))

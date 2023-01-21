@@ -1,6 +1,6 @@
-import { IAdbDevice } from '../../lib/util';
+import { IDevice } from '../../lib/util';
 import { UnexpectedDataError } from '../../lib/util';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('List devices', () => {
@@ -8,7 +8,7 @@ describe('List devices', () => {
         const adbMock = new AdbMock([{ cmd: 'fail', res: null }]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ port, noAutoStart: true });
+            const adb = new Client({ port, noAutoStart: true });
             try {
                 await adb.listDevices();
                 fail('Expected Failure');
@@ -26,7 +26,7 @@ describe('List devices', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ port, noAutoStart: true });
+            const adb = new Client({ port, noAutoStart: true });
             await adb.listDevices();
             fail('Expected Failure');
         } catch (e: any) {
@@ -46,9 +46,9 @@ describe('List devices', () => {
 
         try {
             const port = await mock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const devices = await adb.listDevices();
-            const expected: IAdbDevice[] = [
+            const expected: IDevice[] = [
                 {
                     id: 'b137f5dc',
                     path: '337641472X',
@@ -74,9 +74,9 @@ describe('List devices', () => {
         const adbMock = new AdbMock([{ cmd: 'host:devices-l', res: raw }]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const devices = await adb.listDevices();
-            const expected: IAdbDevice[] = [
+            const expected: IDevice[] = [
                 {
                     device: 'FP4',
                     id: 'b137f5dc',
@@ -108,7 +108,7 @@ describe('List devices', () => {
         const adbMock = new AdbMock([{ cmd: 'host:devices-l', res: 'test' }]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             await adb.listDevices();
         } catch (e: any) {
             expect(e).toBeInstanceOf(UnexpectedDataError);
@@ -124,7 +124,7 @@ describe('List devices', () => {
         });
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             await adb.listDevices();
         } catch (e: any) {
             expect(e).toBeInstanceOf(UnexpectedDataError);
@@ -140,7 +140,7 @@ describe('List devices', () => {
         });
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const devices = await adb.listDevices();
             expect(devices).toEqual([]);
         } finally {

@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 
 describe('Swipe', () => {
@@ -18,7 +18,7 @@ describe('Swipe', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.swipe('serial', 100, 200, 100, 10);
             expect(result).toBeUndefined();
         } finally {
@@ -41,7 +41,7 @@ describe('Swipe', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.swipe('serial', 100, 200, 100, 10, {
                 source: 'gamepad'
             });
@@ -66,7 +66,7 @@ describe('Swipe', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.swipe('serial', 100, 200, 100, 10, {
                 source: undefined
             });
@@ -91,7 +91,7 @@ describe('Swipe', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.swipe('serial', 100, 200, 100, 10, {
                 duration: undefined
             });
@@ -116,7 +116,7 @@ describe('Swipe', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.swipe('serial', 100, 200, 100, 10, {
                 source: 'gamepad',
                 duration: 3000
@@ -142,7 +142,7 @@ describe('Swipe', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.swipe('serial', 100, 200, 100, 10);
                 fail('Expected Failure');
@@ -169,7 +169,7 @@ describe('Swipe', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.swipe('serial', 100, 200, 100, 10);
                 fail('Expected Failure');
@@ -197,7 +197,7 @@ describe('Swipe', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.swipe('serial', 100, 200, 100, 10);
                 fail('Expected Failure');
@@ -227,7 +227,7 @@ describe('Swipe', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.swipe('serial', 100, 200, 100, 10);
                 fail('Expected Failure');

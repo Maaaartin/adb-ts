@@ -1,4 +1,4 @@
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Version tests', () => {
@@ -6,7 +6,7 @@ describe('Version tests', () => {
         const adbMock = new AdbMock({ cmd: 'host:version', res: '0029' });
         try {
             const port = await adbMock.start();
-            const client = new AdbClient({
+            const client = new Client({
                 noAutoStart: true,
                 port
             });
@@ -24,7 +24,7 @@ describe('Version tests', () => {
         });
         try {
             const port = await adbMock.start();
-            const client = new AdbClient({
+            const client = new Client({
                 noAutoStart: true,
                 port
             });
@@ -47,7 +47,7 @@ describe('Version tests', () => {
         });
         try {
             const port = await adbMock.start();
-            const client = new AdbClient({
+            const client = new Client({
                 noAutoStart: true,
                 port
             });

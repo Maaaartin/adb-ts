@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { UnexpectedDataError } from '../../lib/util';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 beforeAll(() => {
@@ -21,7 +21,7 @@ describe('Mkdir OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.mkdir('serial', '/dir');
             expect(result).toBeUndefined();
         } finally {
@@ -40,7 +40,7 @@ describe('Mkdir OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.mkdir('serial', '/dir', {
                 mode: 'x',
                 parent: true
@@ -64,7 +64,7 @@ describe('Mkdir FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.mkdir('serial', '/dir');
                 fail('Expected Failure');
@@ -87,7 +87,7 @@ describe('Mkdir FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.mkdir('serial', '/dir');
                 fail('Expected Failure');
@@ -117,7 +117,7 @@ describe('Mkdir unexpected tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.mkdir('serial', '/dir');
                 fail('Expected Failure');
@@ -147,7 +147,7 @@ describe('Mkdir unexpected tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.mkdir('serial', '/dir');
                 fail('Expected Failure');

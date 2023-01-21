@@ -1,6 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import Command from '../../lib/commands/command';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 
 class TestCmd extends Command {
     public execute(arg: string): Promise<null> {
@@ -19,7 +19,7 @@ describe('Custom command tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ port, noAutoStart: true });
+            const adb = new Client({ port, noAutoStart: true });
             const result = await adb.custom(TestCmd, 'test');
             expect(result).toBeNull();
         } finally {

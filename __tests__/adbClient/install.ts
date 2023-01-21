@@ -1,5 +1,5 @@
 import { AdbMockMulti } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 import { Readable } from 'stream';
 
@@ -31,7 +31,7 @@ describe('Install OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
 
             const result = await adb.install(
                 'serial',
@@ -70,7 +70,7 @@ describe('Install OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
 
             try {
                 await adb.install(
@@ -117,7 +117,7 @@ describe('Install OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
 
             const result = await adb.install(
                 'serial',
@@ -166,7 +166,7 @@ describe('Install FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.install(
                     'serial',
@@ -207,7 +207,7 @@ describe('Install FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.install(
                     'serial',
@@ -248,7 +248,7 @@ describe('Install FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.install(
                     'serial',
@@ -290,7 +290,7 @@ describe('Install FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.install(
                     'serial',
@@ -332,7 +332,7 @@ describe('Install FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.install(
                     'serial',
@@ -374,7 +374,7 @@ describe('Install FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.install(
                     'serial',
@@ -423,7 +423,7 @@ describe('Install unexpected test', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.install(
                     'serial',
@@ -472,7 +472,7 @@ describe('Install unexpected test', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.install(
                     'serial',
@@ -525,7 +525,7 @@ describe('Install unexpected test', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.install(
                     'serial',
@@ -574,7 +574,7 @@ describe('Install unexpected test', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.install(
                     'serial',
@@ -627,7 +627,7 @@ describe('Install unexpected test', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.install(
                     'serial',
@@ -676,7 +676,7 @@ describe('Install unexpected test', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.install(
                     'serial',

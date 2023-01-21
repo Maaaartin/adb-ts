@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 
 describe('Gep prop tests', () => {
@@ -14,7 +14,7 @@ describe('Gep prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getProp('serial', 'prop');
             expect(result).toBe('string');
         } finally {
@@ -33,7 +33,7 @@ describe('Gep prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getProp('serial', 'prop');
             expect(result).toBe(0);
         } finally {
@@ -52,7 +52,7 @@ describe('Gep prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getProp('serial', 'prop');
             expect(result).toBe(false);
         } finally {
@@ -71,7 +71,7 @@ describe('Gep prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getProp('serial', 'prop');
             expect(result).toBeNull();
         } finally {
@@ -90,7 +90,7 @@ describe('Gep prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getProp('serial', 'prop');
             expect(result).toBeUndefined();
         } finally {
@@ -110,7 +110,7 @@ describe('Gep prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getProp('serial', 'prop');
             expect(result).toEqual(date);
         } finally {
@@ -129,7 +129,7 @@ describe('Gep prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.getProp('serial', 'prop');
                 fail('Expected Failure');
@@ -152,7 +152,7 @@ describe('Gep prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.getProp('serial', 'prop');
                 fail('Expected Failure');
@@ -180,7 +180,7 @@ describe('Gep prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.getProp('serial', 'prop');
                 fail('Expected Failure');
@@ -210,7 +210,7 @@ describe('Gep prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.getProp('serial', 'prop');
                 fail('Expected Failure');

@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 
 describe('Root', () => {
     it('OKAY', async () => {
@@ -9,7 +9,7 @@ describe('Root', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.root('serial');
             expect(result).toBeUndefined();
         } finally {
@@ -24,7 +24,7 @@ describe('Root', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.root('serial');
                 fail('Expected Failure');
@@ -43,7 +43,7 @@ describe('Root', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.root('serial');
                 fail('Expected Failure');
@@ -62,7 +62,7 @@ describe('Root', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.root('serial');
                 fail('Expected Failure');
@@ -86,7 +86,7 @@ describe('Root', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.root('serial');
                 fail('Expected Failure');
@@ -111,7 +111,7 @@ describe('Root', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.root('serial');
                 fail('Expected Failure');

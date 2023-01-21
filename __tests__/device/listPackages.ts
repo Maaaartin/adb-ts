@@ -1,5 +1,5 @@
-import { AdbClient } from '../../lib/client';
-import { AdbDevice } from '../../lib/device';
+import { Client } from '../../lib/client';
+import { Device } from '../../lib/device';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('List packages tests', () => {
@@ -16,8 +16,8 @@ package:four`,
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
-            const result = await new AdbDevice(adb, {
+            const adb = new Client({ noAutoStart: true, port });
+            const result = await new Device(adb, {
                 id: 'serial',
                 state: 'device',
                 path: 'path',

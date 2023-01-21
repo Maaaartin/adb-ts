@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 
 describe('Forward tests', () => {
@@ -13,7 +13,7 @@ serial tcp:9223 localabstract:chrome_devtools_remote`
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.listForwards('serial');
             expect(result).toEqual([
                 {
@@ -41,7 +41,7 @@ serial tcp:9223 localabstract:chrome_devtools_remote`
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.listForwards('serial');
             expect(result).toEqual([]);
         } finally {
@@ -58,7 +58,7 @@ serial tcp:9223 localabstract:chrome_devtools_remote`
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.listForwards('serial');
                 fail('Expected Failure');
@@ -80,7 +80,7 @@ serial tcp:9223 localabstract:chrome_devtools_remote`
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.listForwards('serial');
                 fail('Expected Failure');

@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import TransportCommand from '../../lib/commands/abstract/transport';
 
 class TestCmd extends TransportCommand<null> {
@@ -29,7 +29,7 @@ describe('Custom command tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ port, noAutoStart: true });
+            const adb = new Client({ port, noAutoStart: true });
             const result = await adb.customTransport(TestCmd, 'serial', 'arg');
             expect(result).toBeNull();
         } finally {

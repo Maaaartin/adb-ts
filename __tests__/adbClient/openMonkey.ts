@@ -1,5 +1,5 @@
 import { AdbMockMulti } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 import { Monkey } from '../../lib/monkey/client';
 
@@ -18,7 +18,7 @@ describe('Open Monkey tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
 
             const res = await adb.openMonkey('serial');
             expect(res).toBeInstanceOf(Monkey);
@@ -42,7 +42,7 @@ describe('Open Monkey tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             await adb.openMonkey('serial');
             fail('Expected Failure');
         } catch (e: any) {
@@ -66,7 +66,7 @@ describe('Open Monkey tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             await adb.openMonkey('serial');
             fail('Expected Failure');
         } catch (e: any) {
@@ -90,7 +90,7 @@ describe('Open Monkey tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             await adb.openMonkey('serial');
             fail('Expected Failure');
         } catch (e: any) {
@@ -114,7 +114,7 @@ describe('Open Monkey tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             await adb.openMonkey('serial');
             fail('Expected Failure');
         } catch (e: any) {
@@ -138,7 +138,7 @@ describe('Open Monkey tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             await adb.openMonkey('serial');
             fail('Expected Failure');
         } catch (e: any) {
@@ -167,7 +167,7 @@ describe('Open Monkey tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
 
             try {
                 await adb.openMonkey('serial');
@@ -205,7 +205,7 @@ describe('Open Monkey tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
 
             try {
                 await adb.openMonkey('serial');
@@ -239,7 +239,7 @@ describe('Open Monkey tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
 
             try {
                 await adb.openMonkey('serial');
@@ -277,7 +277,7 @@ describe('Open Monkey tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
 
             try {
                 await adb.openMonkey('serial');
@@ -319,7 +319,7 @@ describe('Open Monkey tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
 
             try {
                 await adb.openMonkey('serial');

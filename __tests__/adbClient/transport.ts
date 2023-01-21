@@ -1,5 +1,5 @@
 import { UnexpectedDataError } from '../../lib/util';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { Connection } from '../../lib/connection';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
@@ -8,7 +8,7 @@ describe('Transport tests', () => {
         const adbMock = new AdbMock({ cmd: 'host:transport:1234', res: null });
         try {
             const port = await adbMock.start();
-            const client = new AdbClient({
+            const client = new Client({
                 noAutoStart: true,
                 port
             });
@@ -24,7 +24,7 @@ describe('Transport tests', () => {
         const adbMock = new AdbMock({ cmd: 'host:transport:1234', res: null });
         try {
             const port = await adbMock.start();
-            const client = new AdbClient({
+            const client = new Client({
                 noAutoStart: true,
                 port
             });
@@ -47,7 +47,7 @@ describe('Transport tests', () => {
         });
         try {
             const port = await adbMock.start();
-            const client = new AdbClient({
+            const client = new Client({
                 noAutoStart: true,
                 port
             });

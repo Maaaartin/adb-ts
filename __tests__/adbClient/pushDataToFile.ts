@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 import { Readable } from 'stream';
 
@@ -16,7 +16,7 @@ describe('Push data to file', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.pushDataToFile('serial', 'data', 'dest');
             expect(result).toBeUndefined();
         } finally {
@@ -36,7 +36,7 @@ describe('Push data to file', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.pushDataToFile(
                 'serial',
                 Buffer.from('data', 'utf-8'),
@@ -60,7 +60,7 @@ describe('Push data to file', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.pushDataToFile(
                 'serial',
                 Readable.from('data'),
@@ -84,7 +84,7 @@ describe('Push data to file', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.pushDataToFile(
                     'serial',
@@ -112,7 +112,7 @@ describe('Push data to file', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.pushDataToFile(
                     'serial',

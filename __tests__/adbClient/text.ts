@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 
 describe('Text', () => {
@@ -18,7 +18,7 @@ describe('Text', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.text('serial', 'something');
             expect(result).toBeUndefined();
         } finally {
@@ -41,7 +41,7 @@ describe('Text', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.text('serial', '"something"');
             expect(result).toBeUndefined();
         } finally {
@@ -64,7 +64,7 @@ describe('Text', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.text('serial', "'something'");
             expect(result).toBeUndefined();
         } finally {
@@ -86,7 +86,7 @@ describe('Text', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.text('serial', 'something', 'gamepad');
             expect(result).toBeUndefined();
         } finally {
@@ -109,7 +109,7 @@ describe('Text', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             await adb.text('serial', 'something');
             fail('Expected Failure');
         } catch (e: any) {
@@ -134,7 +134,7 @@ describe('Text', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.text('serial', 'something');
                 fail('Expected Failure');
@@ -162,7 +162,7 @@ describe('Text', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.text('serial', 'something');
                 fail('Expected Failure');
@@ -192,7 +192,7 @@ describe('Text', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.text('serial', 'something');
                 fail('Expected Failure');

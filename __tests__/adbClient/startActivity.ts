@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 
 // extends start service tests
 describe('Start activity', () => {
@@ -14,7 +14,7 @@ describe('Start activity', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startActivity(
                 'serial',
                 'com.my.app',
@@ -37,7 +37,7 @@ describe('Start activity', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startActivity(
                 'serial',
                 'com.my.app',
@@ -61,7 +61,7 @@ describe('Start activity', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startActivity(
                 'serial',
                 'com.my.app',

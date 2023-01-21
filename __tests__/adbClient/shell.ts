@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { AdbExecError, UnexpectedDataError } from '../../lib/util';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 beforeAll(() => {
@@ -21,7 +21,7 @@ describe('Shell tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.shell('serial', '"one && "two"');
             expect(result).toBe('0');
         } finally {
@@ -40,7 +40,7 @@ describe('Shell tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.shell('serial', 'cmd');
                 fail('Expected failure');
@@ -63,7 +63,7 @@ describe('Shell tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.shell('serial', 'cmd');
                 fail('Expected failure');
@@ -86,7 +86,7 @@ describe('Shell tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.shell('serial', 'cmd');
                 fail('Expected failure');
@@ -114,7 +114,7 @@ describe('Shell tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.shell('serial', 'cmd');
                 fail('Expected failure');
@@ -144,7 +144,7 @@ describe('Shell tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.shell('serial', 'cmd');
                 fail('Expected failure');

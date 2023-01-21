@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 
 describe('Start service', () => {
@@ -14,7 +14,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -37,7 +37,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -61,7 +61,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -85,7 +85,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -109,7 +109,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -133,7 +133,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -157,7 +157,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -181,7 +181,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -205,7 +205,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -229,7 +229,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -253,7 +253,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -277,7 +277,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -301,7 +301,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -325,7 +325,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -349,7 +349,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -373,7 +373,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -397,7 +397,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -421,7 +421,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -445,7 +445,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -475,7 +475,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -505,7 +505,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -535,7 +535,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.startService(
                 'serial',
                 'com.my.app',
@@ -572,7 +572,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.startService('serial', 'com.my.app', 'Service');
                 fail('Expected failure');
@@ -595,7 +595,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.startService('serial', 'com.my.app', 'Service');
                 fail('Expected Failure');
@@ -618,7 +618,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.startService('serial', 'com.my.app', 'Service');
                 fail('Expected Failure');
@@ -646,7 +646,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.startService('serial', 'com.my.app', 'Service');
                 fail('Expected Failure');
@@ -676,7 +676,7 @@ describe('Start service', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.startService('serial', 'com.my.app', 'Service');
                 fail('Expected Failure');

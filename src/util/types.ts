@@ -17,9 +17,9 @@ export enum Reply {
     QUIT = 'QUIT'
 }
 
-export type ExecCallback = (err: null | Error) => void;
+export type Callback = (err: null | Error) => void;
 
-export type ExecCallbackWithValue<T> = (err: null | Error, value: T) => void;
+export type ValueCallback<T> = (err: null | Error, value: T) => void;
 
 export type DeviceState =
     | 'offline'
@@ -29,7 +29,7 @@ export type DeviceState =
     | 'recovery'
     | 'no permissions';
 
-export type AdbExtraType =
+export type ExtraType =
     | 'string'
     | 'null'
     | 'bool'
@@ -39,7 +39,7 @@ export type AdbExtraType =
     | 'uri'
     | 'component';
 
-export type AdbExtra =
+export type StartExtra =
     | {
           key: string;
           type: 'null';
@@ -89,7 +89,7 @@ export interface StartServiceOptions {
      */
     category?: string | string[];
     flags?: number;
-    extras?: AdbExtra | AdbExtra[];
+    extras?: StartExtra | StartExtra[];
 }
 
 export interface StartActivityOptions extends StartServiceOptions {
@@ -103,7 +103,7 @@ export interface StartActivityOptions extends StartServiceOptions {
     wait?: boolean;
 }
 
-export interface IAdbDevice {
+export interface IDevice {
     id: string;
     state: DeviceState;
     path?: string;
@@ -278,7 +278,7 @@ export interface IPreExecute<T> {
 }
 
 export interface ICmd {
-    readonly Cmd: string;
+    Cmd: string;
 }
 
 export type MonkeyCallback<T = null> = (

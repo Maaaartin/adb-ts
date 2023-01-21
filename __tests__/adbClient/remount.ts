@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 
 describe('Remount', () => {
     it('OKAY', async () => {
@@ -9,7 +9,7 @@ describe('Remount', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.remount('serial');
             expect(result).toBeUndefined();
         } finally {
@@ -24,7 +24,7 @@ describe('Remount', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.remount('serial');
                 fail('Expected Failure');
@@ -43,7 +43,7 @@ describe('Remount', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.remount('serial');
                 fail('Expected Failure');
@@ -62,7 +62,7 @@ describe('Remount', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.remount('serial');
                 fail('Expected Failure');
@@ -81,7 +81,7 @@ describe('Remount', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.remount('serial');
                 fail('Expected Failure');
@@ -100,7 +100,7 @@ describe('Remount', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.remount('serial');
                 fail('Expected Failure');
@@ -124,7 +124,7 @@ describe('Remount', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.remount('serial');
                 fail('Expected Failure');
@@ -149,7 +149,7 @@ describe('Remount', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.remount('serial');
                 fail('Expected Failure');

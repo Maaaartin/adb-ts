@@ -1,8 +1,8 @@
-import { AdbClient } from '../lib/client';
-import { AdbDevice } from '../lib/device';
+import { Client } from '../lib/client';
+import { Device } from '../lib/device';
 
-export const getDevice = (port: number): AdbDevice => {
-    return new AdbDevice(new AdbClient({ noAutoStart: true, port }), {
+export const getDevice = (port: number): Device => {
+    return new Device(new Client({ noAutoStart: true, port }), {
         id: 'serial',
         state: 'device',
         path: 'path',
@@ -17,11 +17,11 @@ export const getDevice = (port: number): AdbDevice => {
 export const getClientAndDevice = (
     port: number
 ): {
-    device: AdbDevice;
-    client: AdbClient;
+    device: Device;
+    client: Client;
 } => {
-    const client = new AdbClient({ noAutoStart: true, port });
-    const device = new AdbDevice(client, {
+    const client = new Client({ noAutoStart: true, port });
+    const device = new Device(client, {
         id: 'serial',
         state: 'device',
         path: 'path',

@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 
 describe('IP address', () => {
     it('Single address', async () => {
@@ -14,7 +14,7 @@ describe('IP address', () => {
 
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getIpAddress('serial');
             expect(result).toEqual(['127.0.0.1']);
         } finally {
@@ -34,7 +34,7 @@ describe('IP address', () => {
 
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getIpAddress('serial');
             expect(result).toEqual(['127.0.0.1', '127.0.0.2']);
         } finally {
@@ -54,7 +54,7 @@ describe('IP address', () => {
 
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getIpAddress('serial');
             expect(result).toHaveLength(0);
         } finally {
@@ -74,7 +74,7 @@ describe('IP address', () => {
 
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.getIpAddress('serial');
                 fail('Expected Failure');
@@ -98,7 +98,7 @@ describe('IP address', () => {
 
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.getIpAddress('serial');
                 fail('Expected Failure');

@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 import { Connection } from '../../lib/connection';
 
@@ -19,7 +19,7 @@ describe('Open TCP', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.openTcp('serial', 5555);
             expect(result).toBeInstanceOf(Connection);
         } finally {
@@ -42,7 +42,7 @@ describe('Open TCP', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.openTcp('serial', 5555, 'localhost');
             expect(result).toBeInstanceOf(Connection);
         } finally {
@@ -65,7 +65,7 @@ describe('Open TCP', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.openTcp('serial', 5555);
                 fail('Expected Failure');
@@ -92,7 +92,7 @@ describe('Open TCP', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.openTcp('serial', 5555);
                 fail('Expected Failure');
@@ -120,7 +120,7 @@ describe('Open TCP', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.openTcp('serial', 5555);
                 fail('Expected Failure');
@@ -150,7 +150,7 @@ describe('Open TCP', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.openTcp('serial', 5555);
                 fail('Expected Failure');

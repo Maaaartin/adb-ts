@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import SyncEntry from '../../lib/sync/entry';
 import { UnexpectedDataError } from '../../lib/util';
 
@@ -18,7 +18,7 @@ describe('Read dir', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.readDir('serial', '/');
             expect(result[0]).toBeInstanceOf(SyncEntry);
         } finally {
@@ -40,7 +40,7 @@ describe('Read dir', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.readDir('serial', '/');
             expect(result).toHaveLength(0);
         } finally {
@@ -62,7 +62,7 @@ describe('Read dir', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.readDir('serial', '/');
             expect(result).toHaveLength(0);
         } finally {
@@ -84,7 +84,7 @@ describe('Read dir', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             await adb.readDir('serial', '/');
             fail('Expected failure');
         } catch (e: any) {
@@ -108,7 +108,7 @@ describe('Read dir', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             await adb.readDir('serial', '/');
             fail('Expected failure');
         } catch (e: any) {

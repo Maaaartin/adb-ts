@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { PrematureEOFError } from '../../lib/util';
 
 describe('Wait boot complete', () => {
@@ -14,7 +14,7 @@ describe('Wait boot complete', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.waitBootComplete('serial');
             expect(result).toBeUndefined();
         } finally {
@@ -33,7 +33,7 @@ describe('Wait boot complete', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.waitBootComplete('serial');
                 fail('Expected failure');

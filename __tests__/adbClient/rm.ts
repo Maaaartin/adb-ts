@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { UnexpectedDataError } from '../../lib/util';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 beforeAll(() => {
@@ -21,7 +21,7 @@ describe('Rm OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.rm('serial', '/file');
             expect(result).toBeUndefined();
         } finally {
@@ -40,7 +40,7 @@ describe('Rm OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.rm('serial', '/file', {
                 force: true,
                 recursive: true
@@ -64,7 +64,7 @@ describe('Rm FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.rm('serial', '/file');
                 fail('Expected Failure');
@@ -87,7 +87,7 @@ describe('Rm FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.rm('serial', '/file');
                 fail('Expected Failure');
@@ -117,7 +117,7 @@ describe('Rm unexpected tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.rm('serial', '/file');
                 fail('Expected Failure');
@@ -147,7 +147,7 @@ describe('Rm unexpected tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.rm('serial', '/file');
                 fail('Expected Failure');

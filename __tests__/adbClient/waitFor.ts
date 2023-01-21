@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 
 describe('Wait for', () => {
@@ -9,7 +9,7 @@ describe('Wait for', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.waitFor('any', 'device');
             expect(result).toBeUndefined();
         } finally {
@@ -23,7 +23,7 @@ describe('Wait for', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.waitFor('local', 'device');
             expect(result).toBeUndefined();
         } finally {
@@ -37,7 +37,7 @@ describe('Wait for', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.waitFor('usb', 'device');
             expect(result).toBeUndefined();
         } finally {
@@ -51,7 +51,7 @@ describe('Wait for', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.waitFor('any', 'device');
             expect(result).toBeUndefined();
         } finally {
@@ -65,7 +65,7 @@ describe('Wait for', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.waitFor('any', 'bootloader');
             expect(result).toBeUndefined();
         } finally {
@@ -79,7 +79,7 @@ describe('Wait for', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.waitFor('any', 'recovery');
             expect(result).toBeUndefined();
         } finally {
@@ -93,7 +93,7 @@ describe('Wait for', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.waitFor('any', 'rescue');
             expect(result).toBeUndefined();
         } finally {
@@ -107,7 +107,7 @@ describe('Wait for', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.waitFor('any', 'sideload');
             expect(result).toBeUndefined();
         } finally {
@@ -121,7 +121,7 @@ describe('Wait for', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.waitFor('any', 'disconnect');
             expect(result).toBeUndefined();
         } finally {
@@ -135,7 +135,7 @@ describe('Wait for', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.waitFor('any', 'disconnect');
                 fail('Expected failure');
@@ -157,7 +157,7 @@ describe('Wait for', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.waitFor('any', 'disconnect');
                 fail('Expected failure');
@@ -179,7 +179,7 @@ describe('Wait for', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.waitFor('any', 'disconnect');
                 fail('Expected failure');
@@ -201,7 +201,7 @@ describe('Wait for', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.waitFor('any', 'disconnect');
                 fail('Expected failure');

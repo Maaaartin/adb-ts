@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { PropertyValue } from '../../lib/util';
 
 describe('List properties', () => {
@@ -20,7 +20,7 @@ describe('List properties', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.listProperties('serial');
             expect(result).toEqual(
                 new Map<string, PropertyValue>([
@@ -60,7 +60,7 @@ describe('List properties', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.listProperties('serial');
                 fail('Expected Failure');
@@ -89,7 +89,7 @@ describe('List properties', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.listProperties('serial');
                 fail('Expected Failure');
@@ -123,7 +123,7 @@ describe('List properties', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.listProperties('serial');
                 fail('Expected Failure');
@@ -159,7 +159,7 @@ describe('List properties', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.listProperties('serial');
                 fail('Expected Failure');

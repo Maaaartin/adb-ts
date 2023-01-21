@@ -1,9 +1,9 @@
-import { AdbClient } from '../../lib/client';
-import { AdbDevice } from '../../lib/device';
+import { Client } from '../../lib/client';
+import { Device } from '../../lib/device';
 
 describe('Adb device constructor tests', () => {
     it('should have the correct properties', () => {
-        const device = new AdbDevice(new AdbClient(), {
+        const device = new Device(new Client(), {
             id: 'test',
             state: 'device',
             path: 'path',

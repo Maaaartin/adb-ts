@@ -1,4 +1,4 @@
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
@@ -14,7 +14,7 @@ describe('Get setting OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getSetting('serial', 'system', 'prop');
             expect(result).toBe('string');
         } finally {
@@ -33,7 +33,7 @@ describe('Get setting OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getSetting('serial', 'system', 'prop');
             expect(result).toBe(0);
         } finally {
@@ -52,7 +52,7 @@ describe('Get setting OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getSetting('serial', 'system', 'prop');
             expect(result).toBe(false);
         } finally {
@@ -71,7 +71,7 @@ describe('Get setting OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getSetting('serial', 'system', 'prop');
             expect(result).toBeNull();
         } finally {
@@ -90,7 +90,7 @@ describe('Get setting OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getSetting('serial', 'system', 'prop');
             expect(result).toBeUndefined();
         } finally {
@@ -110,7 +110,7 @@ describe('Get setting OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getSetting('serial', 'system', 'prop');
             expect(result).toEqual(date);
         } finally {
@@ -131,7 +131,7 @@ describe('Get setting FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.getSetting('serial', 'system', 'prop');
                 fail('Expected Failure');
@@ -154,7 +154,7 @@ describe('Get setting FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.getSetting('serial', 'system', 'prop');
                 fail('Expected Failure');
@@ -184,7 +184,7 @@ describe('Get setting unexpected response tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.getSetting('serial', 'system', 'prop');
                 fail('Expected Failure');
@@ -214,7 +214,7 @@ describe('Get setting unexpected response tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.getSetting('serial', 'system', 'prop');
                 fail('Expected Failure');

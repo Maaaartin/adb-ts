@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { AdbExecError, UnexpectedDataError } from '../../lib/util';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 beforeAll(() => {
@@ -21,7 +21,7 @@ describe('Kill app OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.killApp('serial', 'package');
             expect(result).toBeUndefined();
         } finally {
@@ -40,7 +40,7 @@ describe('Kill app OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.killApp('serial', 'package');
                 fail('Expected failure');
@@ -65,7 +65,7 @@ describe('Kill app FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.killApp('serial', 'package');
                 fail('Expected failure');
@@ -88,7 +88,7 @@ describe('Kill app FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.killApp('serial', 'package');
                 fail('Expected failure');
@@ -118,7 +118,7 @@ describe('Kill app unexpected response tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.killApp('serial', 'package');
                 fail('Expected failure');
@@ -144,7 +144,7 @@ describe('Kill app unexpected response tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.killApp('serial', 'package');
                 fail('Expected failure');

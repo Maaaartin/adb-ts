@@ -1,7 +1,7 @@
 import { callbackify } from 'util';
 import {
-    ExecCallback,
-    ExecCallbackWithValue,
+    Callback,
+    ValueCallback,
     InputOptions,
     InputSource,
     PropertyMap,
@@ -52,7 +52,7 @@ export const nodeify: <T>(
 };
 
 export const parseValueParam = <T extends NonFunctionProperties<T> | string, R>(
-    param: T | ExecCallbackWithValue<R> | undefined
+    param: T | ValueCallback<R> | undefined
 ): T | undefined => {
     if (typeof param === 'function') {
         return;
@@ -61,9 +61,9 @@ export const parseValueParam = <T extends NonFunctionProperties<T> | string, R>(
 };
 
 export const parseCbParam = <T extends NonFunctionProperties<T> | string, R>(
-    param: T | ExecCallbackWithValue<R> | undefined,
-    cb: ExecCallbackWithValue<R> | undefined
-): ExecCallbackWithValue<R> | undefined => {
+    param: T | ValueCallback<R> | undefined,
+    cb: ValueCallback<R> | undefined
+): ValueCallback<R> | undefined => {
     if (typeof param === 'function') {
         return param;
     }
@@ -118,11 +118,11 @@ export function findMatches(
 
 export function buildInputParams(
     defaultSource: InputSource,
-    source: InputOptions | InputSource | ExecCallback | undefined,
-    cb: ExecCallback | undefined
+    source: InputOptions | InputSource | Callback | undefined,
+    cb: Callback | undefined
 ): {
     source: InputSource;
-    cb: ExecCallback | undefined;
+    cb: Callback | undefined;
 } {
     if (typeof source === 'function') {
         return { source: defaultSource, cb: source };

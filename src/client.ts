@@ -4,10 +4,10 @@ import {
     InputDurationOptions,
     CommandConstruct,
     CpOptions,
-    ExecCallback,
-    ExecCallbackWithValue,
+    Callback,
+    ValueCallback,
     ForwardsObject,
-    IAdbDevice,
+    IDevice,
     InputSource,
     InstallOptions,
     KeyEventOptions,
@@ -42,7 +42,7 @@ import { AdbExecError } from './util';
 import { Sync, SyncMode } from './sync';
 import { execFile } from 'child_process';
 import fs from 'fs';
-import { AdbDevice } from './device';
+import { Device } from './device';
 import BatteryStatusCommand from './commands/host-trasport/baterrystatus';
 import ClearCommand from './commands/host-trasport/clear';
 import Connect from './commands/host/connect';
@@ -115,7 +115,7 @@ const DEFAULT_OPTIONS: Readonly<AdbClientOptionsValues> = Object.freeze({
     noAutoStart: false
 });
 
-export class AdbClient {
+export class Client {
     /** @ignore */
     private options: AdbClientOptionsValues;
 
@@ -135,8 +135,8 @@ export class AdbClient {
      * Starts adb server if not running.
      */
     startServer(): Promise<void>;
-    startServer(cb: ExecCallback): void;
-    startServer(cb?: ExecCallback): Promise<void> | void {
+    startServer(cb: Callback): void;
+    startServer(cb?: Callback): Promise<void> | void {
         const port = this.options.port;
         const args = ['-P', port.toString(), 'start-server'];
         return nodeify(
@@ -184,8 +184,8 @@ export class AdbClient {
      * Gets the adb server version.
      */
     version(): Promise<number>;
-    version(cb: ExecCallbackWithValue<number>): void;
-    version(cb?: ExecCallbackWithValue<number>): Promise<number> | void {
+    version(cb: ValueCallback<number>): void;
+    version(cb?: ValueCallback<number>): Promise<number> | void {
         return nodeify(
             this.connection().then((conn) =>
                 new VersionCommand(conn).execute()
@@ -197,8 +197,8 @@ export class AdbClient {
     private ipConnect(
         Construct: IpConnectConstruct,
         host: string,
-        port: number | string | ExecCallbackWithValue<string> | undefined,
-        cb: ExecCallbackWithValue<string> | undefined
+        port: number | string | ValueCallback<string> | undefined,
+        cb: ValueCallback<string> | undefined
     ): Promise<string> | void {
         let port_ = parseValueParam(port);
         if (host.indexOf(':') !== -1) {
@@ -227,16 +227,16 @@ export class AdbClient {
      */
     connect(host: string): Promise<string>;
     connect(host: string, port: number | string): Promise<string>;
-    connect(host: string, cb: ExecCallbackWithValue<string>): void;
+    connect(host: string, cb: ValueCallback<string>): void;
     connect(
         host: string,
         port: number | string,
-        cb: ExecCallbackWithValue<string>
+        cb: ValueCallback<string>
     ): void;
     connect(
         host: string,
-        port?: number | string | ExecCallbackWithValue<string>,
-        cb?: ExecCallbackWithValue<string>
+        port?: number | string | ValueCallback<string>,
+        cb?: ValueCallback<string>
     ): Promise<string> | void {
         return this.ipConnect(Connect, host, port, cb);
     }
@@ -246,16 +246,16 @@ export class AdbClient {
      */
     disconnect(host: string): Promise<string>;
     disconnect(host: string, port: number | string): Promise<string>;
-    disconnect(host: string, cb: ExecCallbackWithValue<string>): void;
+    disconnect(host: string, cb: ValueCallback<string>): void;
     disconnect(
         host: string,
         port: number | string,
-        cb: ExecCallbackWithValue<string>
+        cb: ValueCallback<string>
     ): void;
     disconnect(
         host: string,
-        port?: ExecCallbackWithValue<string> | number | string,
-        cb?: ExecCallbackWithValue<string>
+        port?: ValueCallback<string> | number | string,
+        cb?: ValueCallback<string>
     ): Promise<string> | void {
         return this.ipConnect(Disconnect, host, port, cb);
     }
@@ -263,11 +263,9 @@ export class AdbClient {
     /**
      * Gets the list of currently connected devices and emulators.
      */
-    listDevices(): Promise<IAdbDevice[]>;
-    listDevices(cb: ExecCallbackWithValue<IAdbDevice[]>): void;
-    listDevices(
-        cb?: ExecCallbackWithValue<IAdbDevice[]>
-    ): Promise<IAdbDevice[]> | void {
+    listDevices(): Promise<IDevice[]>;
+    listDevices(cb: ValueCallback<IDevice[]>): void;
+    listDevices(cb?: ValueCallback<IDevice[]>): Promise<IDevice[]> | void {
         return nodeify(
             this.connection().then((conn) =>
                 new ListDevicesCommand(conn).execute()
@@ -280,8 +278,8 @@ export class AdbClient {
      * Tracks connection status of devices.
      */
     trackDevices(): Promise<Tracker>;
-    trackDevices(cb: ExecCallbackWithValue<Tracker>): void;
-    trackDevices(cb?: ExecCallbackWithValue<Tracker>): Promise<Tracker> | void {
+    trackDevices(cb: ValueCallback<Tracker>): void;
+    trackDevices(cb?: ValueCallback<Tracker>): Promise<Tracker> | void {
         return nodeify(
             this.connection().then((conn) => {
                 const command = new TrackCommand(conn);
@@ -295,8 +293,8 @@ export class AdbClient {
      * Kills the adb server.
      */
     kill(): Promise<void>;
-    kill(cb: ExecCallback): void;
-    kill(cb?: ExecCallback): Promise<void> | void {
+    kill(cb: Callback): void;
+    kill(cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => new KillCommand(conn).execute()),
             cb
@@ -309,10 +307,10 @@ export class AdbClient {
      * Analogous to `adb shell getprop ro.serialno`.
      */
     getSerialNo(serial: string): Promise<string>;
-    getSerialNo(serial: string, cb: ExecCallbackWithValue<string>): void;
+    getSerialNo(serial: string, cb: ValueCallback<string>): void;
     getSerialNo(
         serial: string,
-        cb?: ExecCallbackWithValue<string>
+        cb?: ValueCallback<string>
     ): Promise<string> | void {
         return cb
             ? this.getProp(serial, 'ro.serialno', (e, v) => cb(e, `${v}`))
@@ -323,10 +321,10 @@ export class AdbClient {
      * Gets the device path of the device identified by the device.
      */
     getDevicePath(serial: string): Promise<string>;
-    getDevicePath(serial: string, cb: ExecCallbackWithValue<string>): void;
+    getDevicePath(serial: string, cb: ValueCallback<string>): void;
     getDevicePath(
         serial: string,
-        cb?: ExecCallbackWithValue<string>
+        cb?: ValueCallback<string>
     ): Promise<string> | void {
         return nodeify(
             this.connection().then((conn) =>
@@ -341,13 +339,10 @@ export class AdbClient {
      * Analogous to `adb shell getprop`.
      */
     listProperties(serial: string): Promise<PropertyMap>;
+    listProperties(serial: string, cb: ValueCallback<PropertyMap>): void;
     listProperties(
         serial: string,
-        cb: ExecCallbackWithValue<PropertyMap>
-    ): void;
-    listProperties(
-        serial: string,
-        cb?: ExecCallbackWithValue<PropertyMap>
+        cb?: ValueCallback<PropertyMap>
     ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) =>
@@ -362,10 +357,10 @@ export class AdbClient {
      * Analogous to `adb shell pm list features`.
      */
     listFeatures(serial: string): Promise<PropertyMap>;
-    listFeatures(serial: string, cb: ExecCallbackWithValue<PropertyMap>): void;
+    listFeatures(serial: string, cb: ValueCallback<PropertyMap>): void;
     listFeatures(
         serial: string,
-        cb?: ExecCallbackWithValue<PropertyMap>
+        cb?: ValueCallback<PropertyMap>
     ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) =>
@@ -380,10 +375,10 @@ export class AdbClient {
      * Analogous to `adb shell pm list packages`.
      */
     listPackages(serial: string): Promise<string[]>;
-    listPackages(serial: string, cb: ExecCallbackWithValue<string[]>): void;
+    listPackages(serial: string, cb: ValueCallback<string[]>): void;
     listPackages(
         serial: string,
-        cb?: ExecCallbackWithValue<string[]>
+        cb?: ValueCallback<string[]>
     ): Promise<string[]> | void {
         return nodeify(
             this.connection().then((conn) =>
@@ -397,10 +392,10 @@ export class AdbClient {
      * Gets the the ip address(es) of default wlan interface.
      */
     getIpAddress(serial: string): Promise<string[]>;
-    getIpAddress(serial: string, cb: ExecCallbackWithValue<string[]>): void;
+    getIpAddress(serial: string, cb: ValueCallback<string[]>): void;
     getIpAddress(
         serial: string,
-        cb?: ExecCallbackWithValue<string[]>
+        cb?: ValueCallback<string[]>
     ): Promise<string[]> | void {
         return nodeify(
             this.connection().then((conn) =>
@@ -417,17 +412,12 @@ export class AdbClient {
      * adb.forward('serial', 'tcp:9222', 'localabstract:chrome_devtools_remote')
      */
     forward(serial: string, local: string, remote: string): Promise<void>;
+    forward(serial: string, local: string, remote: string, cb: Callback): void;
     forward(
         serial: string,
         local: string,
         remote: string,
-        cb: ExecCallback
-    ): void;
-    forward(
-        serial: string,
-        local: string,
-        remote: string,
-        cb?: ExecCallback
+        cb?: Callback
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
@@ -442,13 +432,10 @@ export class AdbClient {
      * Analogous to `adb forward --list`.
      */
     listForwards(serial: string): Promise<ForwardsObject[]>;
+    listForwards(serial: string, cb: ValueCallback<ForwardsObject[]>): void;
     listForwards(
         serial: string,
-        cb: ExecCallbackWithValue<ForwardsObject[]>
-    ): void;
-    listForwards(
-        serial: string,
-        cb?: ExecCallbackWithValue<ForwardsObject[]>
+        cb?: ValueCallback<ForwardsObject[]>
     ): Promise<ForwardsObject[]> | void {
         return nodeify(
             this.connection().then((conn) =>
@@ -465,17 +452,12 @@ export class AdbClient {
      * adb.reverse('serial', 'localabstract:chrome_devtools_remote', 'tcp:9222')
      */
     reverse(serial: string, local: string, remote: string): Promise<void>;
+    reverse(serial: string, local: string, remote: string, cb: Callback): void;
     reverse(
         serial: string,
         local: string,
         remote: string,
-        cb: ExecCallback
-    ): void;
-    reverse(
-        serial: string,
-        local: string,
-        remote: string,
-        cb?: ExecCallback
+        cb?: Callback
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
@@ -490,13 +472,10 @@ export class AdbClient {
      * Analogous to `adb reverse --list`.
      */
     listReverses(serial: string): Promise<ReversesObject[]>;
+    listReverses(serial: string, cb: ValueCallback<ReversesObject[]>): void;
     listReverses(
         serial: string,
-        cb: ExecCallbackWithValue<ReversesObject[]>
-    ): void;
-    listReverses(
-        serial: string,
-        cb?: ExecCallbackWithValue<ReversesObject[]>
+        cb?: ValueCallback<ReversesObject[]>
     ): Promise<ReversesObject[]> | void {
         return nodeify(
             this.connection().then((conn) => {
@@ -521,8 +500,8 @@ export class AdbClient {
      * Analogous to `adb reboot`.
      */
     reboot(serial: string): Promise<void>;
-    reboot(serial: string, cb: ExecCallback): void;
-    reboot(serial: string, cb?: ExecCallback): Promise<void> | void {
+    reboot(serial: string, cb: Callback): void;
+    reboot(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
                 new RebootCommand(conn).execute(serial)
@@ -536,8 +515,8 @@ export class AdbClient {
      * Analogous to `adb reboot -p`.
      */
     shutdown(serial: string): Promise<void>;
-    shutdown(serial: string, cb: ExecCallback): void;
-    shutdown(serial: string, cb?: ExecCallback): Promise<void> | void {
+    shutdown(serial: string, cb: Callback): void;
+    shutdown(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
                 new ShutdownCommand(conn).execute(serial)
@@ -552,8 +531,8 @@ export class AdbClient {
      * Analogous to `adb remount`
      */
     remount(serial: string): Promise<void>;
-    remount(serial: string, cb: ExecCallback): void;
-    remount(serial: string, cb?: ExecCallback): Promise<void> | void {
+    remount(serial: string, cb: Callback): void;
+    remount(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
                 new RemountCommand(conn).execute(serial)
@@ -567,8 +546,8 @@ export class AdbClient {
      * Analogous to `adb root`.
      */
     root(serial: string): Promise<void>;
-    root(serial: string, cb: ExecCallback): void;
-    root(serial: string, cb?: ExecCallback): Promise<void> | void {
+    root(serial: string, cb: Callback): void;
+    root(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
                 new RootCommand(conn).execute(serial)
@@ -582,10 +561,10 @@ export class AdbClient {
      * Analogous to `adb shell screencap -p`.
      */
     screenshot(serial: string): Promise<Buffer>;
-    screenshot(serial: string, cb: ExecCallbackWithValue<Buffer>): void;
+    screenshot(serial: string, cb: ValueCallback<Buffer>): void;
     screenshot(
         serial: string,
-        cb?: ExecCallbackWithValue<Buffer>
+        cb?: ValueCallback<Buffer>
     ): Promise<Buffer> | void {
         return nodeify(
             this.connection().then((conn) => {
@@ -611,19 +590,19 @@ export class AdbClient {
     openTcp(
         serial: string,
         port: number | string,
-        cb: ExecCallbackWithValue<Connection>
+        cb: ValueCallback<Connection>
     ): void;
     openTcp(
         serial: string,
         port: number | string,
         host: string,
-        cb: ExecCallbackWithValue<Connection>
+        cb: ValueCallback<Connection>
     ): void;
     openTcp(
         serial: string,
         port: number | string,
-        host?: string | ExecCallbackWithValue<Connection>,
-        cb?: ExecCallbackWithValue<Connection>
+        host?: string | ValueCallback<Connection>,
+        cb?: ValueCallback<Connection>
     ): Promise<Connection> | void {
         return nodeify(
             this.connection().then((conn) => {
@@ -651,20 +630,20 @@ export class AdbClient {
         y: number,
         source: InputSource
     ): Promise<void>;
-    roll(serial: string, x: number, y: number, cb: ExecCallback): void;
+    roll(serial: string, x: number, y: number, cb: Callback): void;
     roll(
         serial: string,
         x: number,
         y: number,
         source: InputSource,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     roll(
         serial: string,
         x: number,
         y: number,
-        source?: InputSource | ExecCallback,
-        cb?: ExecCallback
+        source?: InputSource | Callback,
+        cb?: Callback
     ): Promise<void> | void {
         const { source: _source, cb: _cb } = buildInputParams(
             'trackball',
@@ -693,12 +672,12 @@ export class AdbClient {
      */
     press(serial: string): Promise<void>;
     press(serial: string, source: InputSource): Promise<void>;
-    press(serial: string, cb: ExecCallback): void;
-    press(serial: string, source: InputSource, cb: ExecCallback): void;
+    press(serial: string, cb: Callback): void;
+    press(serial: string, source: InputSource, cb: Callback): void;
     press(
         serial: string,
-        source?: InputSource | ExecCallback,
-        cb?: ExecCallback
+        source?: InputSource | Callback,
+        cb?: Callback
     ): Promise<void> | void {
         const { source: _source, cb: _cb } = buildInputParams(
             'trackball',
@@ -743,7 +722,7 @@ export class AdbClient {
         y1: number,
         x2: number,
         y2: number,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     dragAndDrop(
         serial: string,
@@ -752,7 +731,7 @@ export class AdbClient {
         x2: number,
         y2: number,
         options: InputDurationOptions,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     dragAndDrop(
         serial: string,
@@ -760,8 +739,8 @@ export class AdbClient {
         y1: number,
         x2: number,
         y2: number,
-        options?: InputDurationOptions | ExecCallback,
-        cb?: ExecCallback
+        options?: InputDurationOptions | Callback,
+        cb?: Callback
     ): Promise<void> | void {
         const { source: _source, cb: _cb } = buildInputParams(
             'touchscreen',
@@ -816,7 +795,7 @@ export class AdbClient {
         y1: number,
         x2: number,
         y2: number,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     swipe(
         serial: string,
@@ -825,7 +804,7 @@ export class AdbClient {
         x2: number,
         y2: number,
         options: InputDurationOptions,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     swipe(
         serial: string,
@@ -833,8 +812,8 @@ export class AdbClient {
         y1: number,
         x2: number,
         y2: number,
-        options?: InputDurationOptions | ExecCallback,
-        cb?: ExecCallback
+        options?: InputDurationOptions | Callback,
+        cb?: Callback
     ): Promise<void> | void {
         const { source: _source, cb: _cb } = buildInputParams(
             'touchscreen',
@@ -887,32 +866,32 @@ export class AdbClient {
     keyEvent(
         serial: string,
         code: KeyCode | NonEmptyArray<KeyCode>,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     keyEvent(
         serial: string,
         code: number | NonEmptyArray<number>,
-        cb: ExecCallback
+        cb: Callback
     ): void;
 
     keyEvent(
         serial: string,
         code: KeyCode | NonEmptyArray<KeyCode>,
         options: KeyEventOptions,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     keyEvent(
         serial: string,
         code: number | NonEmptyArray<number>,
         options: KeyEventOptions,
-        cb: ExecCallback
+        cb: Callback
     ): void;
 
     keyEvent(
         serial: string,
         code: number | NonEmptyArray<number>,
-        options?: KeyEventOptions | ExecCallback,
-        cb?: ExecCallback
+        options?: KeyEventOptions | Callback,
+        cb?: Callback
     ): Promise<void> | void {
         const { source: _source, cb: _cb } = buildInputParams(
             'keyboard',
@@ -953,20 +932,20 @@ export class AdbClient {
         y: number,
         source: InputSource
     ): Promise<void>;
-    tap(serial: string, x: number, y: number, cb: ExecCallback): void;
+    tap(serial: string, x: number, y: number, cb: Callback): void;
     tap(
         serial: string,
         x: number,
         y: number,
         source: InputSource,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     tap(
         serial: string,
         x: number,
         y: number,
-        source?: InputSource | ExecCallback,
-        cb?: ExecCallback
+        source?: InputSource | Callback,
+        cb?: Callback
     ): Promise<void> | void {
         const { source: _source, cb: _cb } = buildInputParams(
             'touchscreen',
@@ -995,18 +974,13 @@ export class AdbClient {
      */
     text(serial: string, text: string): Promise<void>;
     text(serial: string, text: string, source: InputSource): Promise<void>;
-    text(serial: string, text: string, cb: ExecCallback): void;
+    text(serial: string, text: string, cb: Callback): void;
+    text(serial: string, text: string, source: InputSource, cb: Callback): void;
     text(
         serial: string,
         text: string,
-        source: InputSource,
-        cb: ExecCallback
-    ): void;
-    text(
-        serial: string,
-        text: string,
-        source?: InputSource | ExecCallback,
-        cb?: ExecCallback
+        source?: InputSource | Callback,
+        cb?: Callback
     ): Promise<void> | void {
         const { source: _source, cb: _cb } = buildInputParams(
             'touchscreen',
@@ -1028,8 +1002,8 @@ export class AdbClient {
      * Analogous to `adb logcat`.
      * @see LogcatReader and LogcatOptions for more details.
      * @example
-     * import { AdbClient, Priority } from 'adb-ts';
-     * const adb = new AdbClient();
+     * import { Client, Priority } from 'adb-ts';
+     * const adb = new Client();
      * const logcat = await adb.openLogcat('serial', {
      *     filter: (entry) => entry.priority > Priority.INFO
      * });
@@ -1039,16 +1013,16 @@ export class AdbClient {
      */
     openLogcat(serial: string): Promise<LogcatReader>;
     openLogcat(serial: string, options: LogcatOptions): Promise<LogcatReader>;
-    openLogcat(serial: string, cb: ExecCallbackWithValue<LogcatReader>): void;
+    openLogcat(serial: string, cb: ValueCallback<LogcatReader>): void;
     openLogcat(
         serial: string,
         options: LogcatOptions,
-        cb: ExecCallbackWithValue<LogcatReader>
+        cb: ValueCallback<LogcatReader>
     ): void;
     openLogcat(
         serial: string,
-        options?: ExecCallbackWithValue<LogcatReader> | LogcatOptions,
-        cb?: ExecCallbackWithValue<LogcatReader>
+        options?: ValueCallback<LogcatReader> | LogcatOptions,
+        cb?: ValueCallback<LogcatReader>
     ): Promise<LogcatReader> | void {
         if (typeof options === 'function') {
             cb = options;
@@ -1078,12 +1052,8 @@ export class AdbClient {
      * Analogous to `adb shell pm clear <pkg>`.
      */
     clear(serial: string, pkg: string): Promise<void>;
-    clear(serial: string, pkg: string, cb: ExecCallback): void;
-    clear(
-        serial: string,
-        pkg: string,
-        cb?: ExecCallback
-    ): Promise<void> | void {
+    clear(serial: string, pkg: string, cb: Callback): void;
+    clear(serial: string, pkg: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => {
                 return new ClearCommand(conn).execute(serial, pkg);
@@ -1136,27 +1106,27 @@ export class AdbClient {
         options: InstallOptions,
         args: string
     ): Promise<void>;
-    install(serial: string, apk: string | Readable, cb: ExecCallback): void;
+    install(serial: string, apk: string | Readable, cb: Callback): void;
     install(
         serial: string,
         apk: string | Readable,
         options: InstallOptions,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     install(
         serial: string,
         apk: string | Readable,
         options: InstallOptions,
         args: string,
-        cb: ExecCallback
+        cb: Callback
     ): void;
 
     install(
         serial: string,
         apk: string | Readable,
-        options?: InstallOptions | ExecCallback,
-        args?: string | ExecCallback,
-        cb?: ExecCallback
+        options?: InstallOptions | Callback,
+        args?: string | Callback,
+        cb?: Callback
     ): Promise<void> | void {
         let options_: InstallOptions = {},
             args_ = '';
@@ -1211,18 +1181,18 @@ export class AdbClient {
         pkg: string,
         options: UninstallOptions
     ): Promise<void>;
-    uninstall(serial: string, pkg: string, cb: ExecCallback): void;
+    uninstall(serial: string, pkg: string, cb: Callback): void;
     uninstall(
         serial: string,
         pkg: string,
         options: UninstallOptions,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     uninstall(
         serial: string,
         pkg: string,
-        options?: ExecCallback | UninstallOptions,
-        cb?: ExecCallback
+        options?: Callback | UninstallOptions,
+        cb?: Callback
     ): Promise<void> | void {
         let options_: UninstallOptions;
         if (typeof options === 'function') {
@@ -1246,15 +1216,11 @@ export class AdbClient {
      * Tells if a package is installed or not.
      */
     isInstalled(serial: string, pkg: string): Promise<boolean>;
+    isInstalled(serial: string, pkg: string, cb: ValueCallback<boolean>): void;
     isInstalled(
         serial: string,
         pkg: string,
-        cb: ExecCallbackWithValue<boolean>
-    ): void;
-    isInstalled(
-        serial: string,
-        pkg: string,
-        cb?: ExecCallbackWithValue<boolean>
+        cb?: ValueCallback<boolean>
     ): Promise<boolean> | void {
         return nodeify(
             this.connection().then((conn) => {
@@ -1279,21 +1245,21 @@ export class AdbClient {
         serial: string,
         pkg: string,
         activity: string,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     startActivity(
         serial: string,
         pkg: string,
         activity: string,
         options: StartActivityOptions,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     startActivity(
         serial: string,
         pkg: string,
         activity: string,
-        options?: StartActivityOptions | ExecCallback,
-        cb?: ExecCallback
+        options?: StartActivityOptions | Callback,
+        cb?: Callback
     ): Promise<void> | void {
         let options_: StartActivityOptions;
         if (typeof options === 'function') {
@@ -1329,21 +1295,21 @@ export class AdbClient {
         serial: string,
         pkg: string,
         service: string,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     startService(
         serial: string,
         pkg: string,
         service: string,
         options: StartServiceOptions,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     startService(
         serial: string,
         pkg: string,
         service: string,
-        options?: StartServiceOptions | ExecCallback,
-        cb?: ExecCallback
+        options?: StartServiceOptions | Callback,
+        cb?: Callback
     ): Promise<void> | void {
         let options_: StartServiceOptions;
         if (typeof options === 'function') {
@@ -1370,15 +1336,11 @@ export class AdbClient {
      * The path should start with `/`.
      */
     readDir(serial: string, path: string): Promise<SyncEntry[]>;
+    readDir(serial: string, path: string, cb: ValueCallback<SyncEntry[]>): void;
     readDir(
         serial: string,
         path: string,
-        cb: ExecCallbackWithValue<SyncEntry[]>
-    ): void;
-    readDir(
-        serial: string,
-        path: string,
-        cb?: ExecCallbackWithValue<SyncEntry[]>
+        cb?: ValueCallback<SyncEntry[]>
     ): Promise<SyncEntry[]> | void {
         return nodeify(
             this.syncService(serial).then((sync) => {
@@ -1404,16 +1366,12 @@ export class AdbClient {
      * });
      */
     pull(serial: string, path: string): Promise<PullTransfer>;
-    pull(
-        serial: string,
-        path: string,
-        cb: ExecCallbackWithValue<PullTransfer>
-    ): void;
+    pull(serial: string, path: string, cb: ValueCallback<PullTransfer>): void;
 
     pull(
         serial: string,
         path: string,
-        cb?: ExecCallbackWithValue<PullTransfer>
+        cb?: ValueCallback<PullTransfer>
     ): Promise<PullTransfer> | void {
         return nodeify(
             this.syncService(serial).then((sync) => {
@@ -1447,21 +1405,21 @@ export class AdbClient {
         serial: string,
         srcPath: string | Readable,
         destPath: string,
-        cb: ExecCallbackWithValue<PushTransfer>
+        cb: ValueCallback<PushTransfer>
     ): void;
     push(
         serial: string,
         srcPath: string | Readable,
         destPath: string,
         mode: SyncMode,
-        cb: ExecCallbackWithValue<PushTransfer>
+        cb: ValueCallback<PushTransfer>
     ): void;
     push(
         serial: string,
         srcPath: string | Readable,
         destPath: string,
-        mode?: ExecCallbackWithValue<PushTransfer> | SyncMode,
-        cb?: ExecCallbackWithValue<PushTransfer>
+        mode?: ValueCallback<PushTransfer> | SyncMode,
+        cb?: ValueCallback<PushTransfer>
     ): Promise<PushTransfer> | void {
         let mode_: SyncMode;
         if (typeof mode === 'function') {
@@ -1486,7 +1444,7 @@ export class AdbClient {
     private awaitActiveDevice(serial: string): Promise<void> {
         const track = (tracker: Tracker): Promise<void> => {
             return new Promise<void>((resolve, reject) => {
-                const activeDeviceListener = (device: IAdbDevice): void => {
+                const activeDeviceListener = (device: IDevice): void => {
                     if (
                         device.id === serial &&
                         (device.state === 'device' ||
@@ -1519,12 +1477,12 @@ export class AdbClient {
      */
     tcpip(serial: string): Promise<void>;
     tcpip(serial: string, port: number): Promise<void>;
-    tcpip(serial: string, cb: ExecCallback): void;
-    tcpip(serial: string, port: number, cb: ExecCallback): void;
+    tcpip(serial: string, cb: Callback): void;
+    tcpip(serial: string, port: number, cb: Callback): void;
     tcpip(
         serial: string,
-        port?: ExecCallback | number,
-        cb?: ExecCallback
+        port?: Callback | number,
+        cb?: Callback
     ): Promise<void> | void {
         let port_ = 5555;
         if (typeof port === 'function') {
@@ -1548,8 +1506,8 @@ export class AdbClient {
      * Sets the device transport back to usb.
      */
     usb(serial: string): Promise<void>;
-    usb(serial: string, cb: ExecCallback): void;
-    usb(serial: string, cb?: ExecCallback): Promise<void> | void {
+    usb(serial: string, cb: Callback): void;
+    usb(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => {
                 return new UsbCommand(
@@ -1565,8 +1523,8 @@ export class AdbClient {
      * Waits until the device has finished booting.
      */
     waitBootComplete(serial: string): Promise<void>;
-    waitBootComplete(serial: string, cb: ExecCallback): void;
-    waitBootComplete(serial: string, cb?: ExecCallback): Promise<void> | void {
+    waitBootComplete(serial: string, cb: Callback): void;
+    waitBootComplete(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => {
                 return new WaitBootCompleteCommand(conn).execute(serial);
@@ -1580,15 +1538,11 @@ export class AdbClient {
      * Analogous to `adb wait-for-<transport>-<state>`.
      */
     waitFor(transport: WaitForType, state: WaitForState): Promise<void>;
+    waitFor(transport: WaitForType, state: WaitForState, cb?: Callback): void;
     waitFor(
         transport: WaitForType,
         state: WaitForState,
-        cb?: ExecCallback
-    ): void;
-    waitFor(
-        transport: WaitForType,
-        state: WaitForState,
-        cb?: ExecCallback
+        cb?: Callback
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => {
@@ -1601,9 +1555,9 @@ export class AdbClient {
     /**
      * Maps through all connected devices.
      */
-    map<T>(mapper: (device: AdbDevice) => T): Promise<T[]> {
+    map<T>(mapper: (device: Device) => T): Promise<T[]> {
         return this.listDevices().then((devices) =>
-            devices.map((device) => mapper(new AdbDevice(this, device)))
+            devices.map((device) => mapper(new Device(this, device)))
         );
     }
 
@@ -1633,13 +1587,13 @@ export class AdbClient {
         serial: string,
         data: string | Buffer | Readable,
         destPath: string,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     pushDataToFile(
         serial: string,
         data: string | Buffer | Readable,
         destPath: string,
-        cb?: ExecCallback
+        cb?: Callback
     ): Promise<void> | void {
         return nodeify(
             this.pushInternal(
@@ -1661,13 +1615,13 @@ export class AdbClient {
         serial: string,
         srcPath: string,
         destPath: string,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     pushFile(
         serial: string,
         srcPath: string,
         destPath: string,
-        cb?: ExecCallback
+        cb?: Callback
     ): Promise<void> | void {
         return nodeify(this.pushInternal(serial, srcPath, destPath), cb);
     }
@@ -1679,12 +1633,12 @@ export class AdbClient {
     pullDataFromFile(
         serial: string,
         srcPath: string,
-        cb: ExecCallbackWithValue<Buffer>
+        cb: ValueCallback<Buffer>
     ): void;
     pullDataFromFile(
         serial: string,
         srcPath: string,
-        cb?: ExecCallbackWithValue<Buffer>
+        cb?: ValueCallback<Buffer>
     ): Promise<Buffer> | void {
         return nodeify(
             this.pull(serial, `${srcPath}`).then(
@@ -1713,13 +1667,13 @@ export class AdbClient {
         serial: string,
         srcPath: string,
         destPath: string,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     pullFile(
         serial: string,
         srcPath: string,
         destPath: string,
-        cb?: ExecCallback
+        cb?: Callback
     ): Promise<void> | void {
         return nodeify(
             this.pull(serial, srcPath).then(
@@ -1752,13 +1706,13 @@ export class AdbClient {
         serial: string,
         prop: string,
         value: PrimitiveType,
-        cb?: ExecCallback
+        cb?: Callback
     ): void;
     setProp(
         serial: string,
         prop: string,
         value: PrimitiveType,
-        cb?: ExecCallback
+        cb?: Callback
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
@@ -1776,12 +1730,12 @@ export class AdbClient {
     getProp(
         serial: string,
         prop: string,
-        cb: ExecCallbackWithValue<PropertyValue>
+        cb: ValueCallback<PropertyValue>
     ): void;
     getProp(
         serial: string,
         prop: string,
-        cb?: ExecCallbackWithValue<PropertyValue>
+        cb?: ValueCallback<PropertyValue>
     ): Promise<PropertyValue> | void {
         return nodeify(
             this.connection().then((conn) => {
@@ -1806,14 +1760,14 @@ export class AdbClient {
         mode: SettingsMode,
         name: string,
         value: PrimitiveType,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     putSetting(
         serial: string,
         mode: SettingsMode,
         name: string,
         value: PrimitiveType,
-        cb?: ExecCallback
+        cb?: Callback
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => {
@@ -1831,12 +1785,12 @@ export class AdbClient {
     listSettings(
         serial: string,
         mode: SettingsMode,
-        cb: ExecCallbackWithValue<PropertyMap>
+        cb: ValueCallback<PropertyMap>
     ): void;
     listSettings(
         serial: string,
         mode: SettingsMode,
-        cb?: ExecCallbackWithValue<PropertyMap>
+        cb?: ValueCallback<PropertyMap>
     ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) => {
@@ -1859,13 +1813,13 @@ export class AdbClient {
         serial: string,
         mode: SettingsMode,
         name: string,
-        cb: ExecCallbackWithValue<PropertyValue>
+        cb: ValueCallback<PropertyValue>
     ): void;
     getSetting(
         serial: string,
         mode: SettingsMode,
         name: string,
-        cb?: ExecCallbackWithValue<PropertyValue>
+        cb?: ValueCallback<PropertyValue>
     ): Promise<PropertyValue> | void {
         return nodeify(
             this.connection().then((conn) => {
@@ -1879,15 +1833,11 @@ export class AdbClient {
      * Executes a given shell command via adb console interface. Analogous to `adb -s <serial> shell <command>`.
      */
     shell(serial: string, command: string): Promise<string>;
+    shell(serial: string, command: string, cb: ValueCallback<string>): void;
     shell(
         serial: string,
         command: string,
-        cb: ExecCallbackWithValue<string>
-    ): void;
-    shell(
-        serial: string,
-        command: string,
-        cb?: ExecCallbackWithValue<string>
+        cb?: ValueCallback<string>
     ): Promise<string> | void {
         return nodeify(
             this.connection().then((conn) => {
@@ -1951,10 +1901,10 @@ export class AdbClient {
      * Establishes a new monkey connection on port `1080`.
      */
     openMonkey(serial: string): Promise<Monkey>;
-    openMonkey(serial: string, cb: ExecCallbackWithValue<Monkey>): void;
+    openMonkey(serial: string, cb: ValueCallback<Monkey>): void;
     openMonkey(
         serial: string,
-        cb?: ExecCallbackWithValue<Monkey>
+        cb?: ValueCallback<Monkey>
     ): Promise<Monkey> | void {
         const tryConnect = (times: number): Promise<Monkey> => {
             return this.openTcp(serial, 1080)
@@ -2017,12 +1967,8 @@ export class AdbClient {
      * Analogous to `adb shell am force-stop <package>`.
      */
     killApp(serial: string, pkg: string): Promise<void>;
-    killApp(serial: string, pkg: string, cb: ExecCallback): void;
-    killApp(
-        serial: string,
-        pkg: string,
-        cb?: ExecCallback
-    ): Promise<void> | void {
+    killApp(serial: string, pkg: string, cb: Callback): void;
+    killApp(serial: string, pkg: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.shell(serial, `am force-stop ${pkg}`).then(() => {}),
             cb
@@ -2054,11 +2000,8 @@ export class AdbClient {
      * Executes a given command via adb console interface.
      */
     exec(cmd: string): Promise<string>;
-    exec(cmd: string, cb: ExecCallbackWithValue<string>): void;
-    exec(
-        cmd: string,
-        cb?: ExecCallbackWithValue<string>
-    ): Promise<string> | void {
+    exec(cmd: string, cb: ValueCallback<string>): void;
+    exec(cmd: string, cb?: ValueCallback<string>): Promise<string> | void {
         return nodeify(this.execInternal(cmd), cb);
     }
 
@@ -2067,15 +2010,11 @@ export class AdbClient {
      *  Analogous to `adb -s <serial> <command>`.
      */
     execDevice(serial: string, cmd: string): Promise<string>;
+    execDevice(serial: string, cmd: string, cb: ValueCallback<string>): void;
     execDevice(
         serial: string,
         cmd: string,
-        cb: ExecCallbackWithValue<string>
-    ): void;
-    execDevice(
-        serial: string,
-        cmd: string,
-        cb?: ExecCallbackWithValue<string>
+        cb?: ValueCallback<string>
     ): Promise<string> | void {
         return nodeify(this.execInternal(...['-s', serial, cmd]), cb);
     }
@@ -2088,12 +2027,12 @@ export class AdbClient {
     execDeviceShell(
         serial: string,
         cmd: string,
-        cb: ExecCallbackWithValue<string>
+        cb: ValueCallback<string>
     ): void;
     execDeviceShell(
         serial: string,
         cmd: string,
-        cb?: ExecCallbackWithValue<string>
+        cb?: ValueCallback<string>
     ): Promise<string> | void {
         return nodeify(this.execInternal(...['-s', serial, 'shell', cmd]), cb);
     }
@@ -2103,10 +2042,10 @@ export class AdbClient {
      * Analogous to `adb -s <serial> shell dumpsys battery` .
      */
     batteryStatus(serial: string): Promise<PropertyMap>;
-    batteryStatus(serial: string, cb: ExecCallbackWithValue<PropertyMap>): void;
+    batteryStatus(serial: string, cb: ValueCallback<PropertyMap>): void;
     batteryStatus(
         serial: string,
-        cb?: ExecCallbackWithValue<PropertyMap>
+        cb?: ValueCallback<PropertyMap>
     ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) => {
@@ -2122,18 +2061,13 @@ export class AdbClient {
      */
     rm(serial: string, path: string): Promise<void>;
     rm(serial: string, path: string, options: RmOptions): Promise<void>;
-    rm(serial: string, path: string, cb: ExecCallback): void;
+    rm(serial: string, path: string, cb: Callback): void;
+    rm(serial: string, path: string, options: RmOptions, cb: Callback): void;
     rm(
         serial: string,
         path: string,
-        options: RmOptions,
-        cb: ExecCallback
-    ): void;
-    rm(
-        serial: string,
-        path: string,
-        options?: RmOptions | ExecCallback,
-        cb?: ExecCallback
+        options?: RmOptions | Callback,
+        cb?: Callback
     ): Promise<void> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
@@ -2155,18 +2089,18 @@ export class AdbClient {
      */
     mkdir(serial: string, path: string): Promise<void>;
     mkdir(serial: string, path: string, options?: MkDirOptions): Promise<void>;
-    mkdir(serial: string, path: string, cb: ExecCallback): void;
+    mkdir(serial: string, path: string, cb: Callback): void;
     mkdir(
         serial: string,
         path: string,
         options: MkDirOptions,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     mkdir(
         serial: string,
         path: string,
-        options?: MkDirOptions | ExecCallback,
-        cb?: ExecCallback
+        options?: MkDirOptions | Callback,
+        cb?: Callback
     ): Promise<void> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
@@ -2187,18 +2121,18 @@ export class AdbClient {
      */
     touch(serial: string, path: string): Promise<void>;
     touch(serial: string, path: string, options: TouchOptions): Promise<void>;
-    touch(serial: string, path: string, cb: ExecCallback): void;
+    touch(serial: string, path: string, cb: Callback): void;
     touch(
         serial: string,
         path: string,
         options: TouchOptions,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     touch(
         serial: string,
         path: string,
-        options?: TouchOptions | ExecCallback,
-        cb?: ExecCallback
+        options?: TouchOptions | Callback,
+        cb?: Callback
     ): Promise<void> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
@@ -2227,25 +2161,20 @@ export class AdbClient {
         destPath: string,
         options: MvOptions
     ): Promise<void>;
-    mv(
-        serial: string,
-        srcPath: string,
-        destPath: string,
-        cb: ExecCallback
-    ): void;
+    mv(serial: string, srcPath: string, destPath: string, cb: Callback): void;
     mv(
         serial: string,
         srcPath: string,
         destPath: string,
         options: MvOptions,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     mv(
         serial: string,
         srcPath: string,
         destPath: string,
-        options?: ExecCallback | MvOptions,
-        cb?: ExecCallback
+        options?: Callback | MvOptions,
+        cb?: Callback
     ): Promise<void> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
@@ -2275,25 +2204,20 @@ export class AdbClient {
         destPath: string,
         options: CpOptions
     ): Promise<void>;
-    cp(
-        serial: string,
-        srcPath: string,
-        destPath: string,
-        cb: ExecCallback
-    ): void;
+    cp(serial: string, srcPath: string, destPath: string, cb: Callback): void;
     cp(
         serial: string,
         srcPath: string,
         destPath: string,
         options: CpOptions,
-        cb: ExecCallback
+        cb: Callback
     ): void;
     cp(
         serial: string,
         srcPath: string,
         destPath: string,
-        options?: ExecCallback | CpOptions,
-        cb?: ExecCallback
+        options?: Callback | CpOptions,
+        cb?: Callback
     ): Promise<void> | void {
         if (typeof options === 'function' || !options) {
             cb = options;
@@ -2316,15 +2240,11 @@ export class AdbClient {
      * Analogous to `adb stat <filepath>`.
      */
     fileStat(serial: string, path: string): Promise<FileStat>;
+    fileStat(serial: string, path: string, cb: ValueCallback<FileStat>): void;
     fileStat(
         serial: string,
         path: string,
-        cb: ExecCallbackWithValue<FileStat>
-    ): void;
-    fileStat(
-        serial: string,
-        path: string,
-        cb?: ExecCallbackWithValue<FileStat>
+        cb?: ValueCallback<FileStat>
     ): Promise<FileStat> | void {
         return nodeify(
             this.connection().then((conn) => {

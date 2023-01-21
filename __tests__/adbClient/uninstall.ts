@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 
 describe('Uninstall', () => {
     it('OKAY with Success response', async () => {
@@ -17,7 +17,7 @@ describe('Uninstall', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.uninstall('serial', 'com.package');
             expect(result).toBeUndefined();
         } finally {
@@ -40,7 +40,7 @@ describe('Uninstall', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.uninstall('serial', 'com.package', {
                 keepCache: true
             });
@@ -65,7 +65,7 @@ describe('Uninstall', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.uninstall('serial', 'com.package');
             expect(result).toBeUndefined();
         } finally {
@@ -88,7 +88,7 @@ describe('Uninstall', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.uninstall('serial', 'com.package');
             expect(result).toBeUndefined();
         } finally {
@@ -111,7 +111,7 @@ describe('Uninstall', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.uninstall('serial', 'com.package');
                 fail('Expected Failure');
@@ -138,7 +138,7 @@ describe('Uninstall', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.uninstall('serial', 'com.package');
                 fail('Expected Failure');
@@ -166,7 +166,7 @@ describe('Uninstall', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.uninstall('serial', 'com.package');
                 fail('Expected Failure');
@@ -196,7 +196,7 @@ describe('Uninstall', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.uninstall('serial', 'com.package');
                 fail('Expected Failure');

@@ -1,18 +1,18 @@
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { AdbExecError } from '../../lib/util';
 import { mockExec } from '../../mockery/execMock';
 
 describe('Exec device shell tests', () => {
     it('Should execute without error', async () => {
         mockExec(null, '', '');
-        const adb = new AdbClient({ noAutoStart: true });
+        const adb = new Client({ noAutoStart: true });
         const result = await adb.execDeviceShell('serial', 'cmd');
         expect(result).toBe('');
     });
 
     it('Should execute with error', async () => {
         mockExec(new Error('message'), '', '');
-        const adb = new AdbClient({ noAutoStart: true });
+        const adb = new Client({ noAutoStart: true });
         await expect(() =>
             adb.execDeviceShell('serial', 'cmd')
         ).rejects.toThrowError(new Error('message'));
@@ -20,7 +20,7 @@ describe('Exec device shell tests', () => {
 
     it('Should execute with std error', async () => {
         mockExec(null, '', 'message');
-        const adb = new AdbClient({ noAutoStart: true });
+        const adb = new Client({ noAutoStart: true });
         try {
             await adb.execDeviceShell('serial', 'cmd');
         } catch (e: any) {
@@ -32,7 +32,7 @@ describe('Exec device shell tests', () => {
 
     it('Should execute with std out matching error reg exp', async () => {
         mockExec(null, 'Error: message', '');
-        const adb = new AdbClient({ noAutoStart: true });
+        const adb = new Client({ noAutoStart: true });
         try {
             await adb.execDeviceShell('serial', 'cmd');
         } catch (e: any) {

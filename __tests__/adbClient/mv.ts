@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { UnexpectedDataError } from '../../lib/util';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 beforeAll(() => {
@@ -21,7 +21,7 @@ describe('Mv OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.mv('serial', '/file', '/other');
             expect(result).toBeUndefined();
         } finally {
@@ -40,7 +40,7 @@ describe('Mv OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.mv('serial', '/file', '/other', {
                 force: true,
                 noClobber: true
@@ -64,7 +64,7 @@ describe('Mv FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.mv('serial', '/file', '/other');
                 fail('Expected Failure');
@@ -87,7 +87,7 @@ describe('Mv FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.mv('serial', '/file', '/other');
                 fail('Expected Failure');
@@ -117,7 +117,7 @@ describe('Mv unexpected tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.mv('serial', '/file', '/other');
                 fail('Expected Failure');
@@ -147,7 +147,7 @@ describe('Mv unexpected tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.mv('serial', '/file', '/other');
                 fail('Expected Failure');

@@ -1,18 +1,18 @@
 import { EventEmitter } from 'events';
-import { IAdbDevice } from './util';
+import { IDevice } from './util';
 import { PrematureEOFError } from './util';
-import { AdbClient } from './client';
+import { Client } from './client';
 import TrackCommand from './commands/host/trackdevices';
-import { AdbDevice } from './device';
+import { Device } from './device';
 
 export class Tracker extends EventEmitter {
     /** @ignore */
     private readonly command: TrackCommand;
     private ended = false;
-    private deviceMap: Map<string, IAdbDevice> | null;
-    private readonly client: AdbClient;
+    private deviceMap: Map<string, IDevice> | null;
+    private readonly client: Client;
     /** @ignore */
-    constructor(command: TrackCommand, client: AdbClient) {
+    constructor(command: TrackCommand, client: Client) {
         super();
         this.command = command;
         this.deviceMap = null;
@@ -43,24 +43,24 @@ export class Tracker extends EventEmitter {
     }
 
     private read(): Promise<void> {
-        return this.command.readDevices().then((list: IAdbDevice[]) => {
+        return this.command.readDevices().then((list: IDevice[]) => {
             this.update(list);
             return this.read();
         });
     }
 
-    private update(list: IAdbDevice[]): void {
+    private update(list: IDevice[]): void {
         const newMap = list.reduce((map, d) => {
             const oldDevice = this.deviceMap?.get(d.id);
             map.set(d.id, d);
 
             if (oldDevice && d.state !== oldDevice.state) {
-                this.emit('change', new AdbDevice(this.client, d));
+                this.emit('change', new Device(this.client, d));
                 return map;
             }
 
             if (this.deviceMap) {
-                this.emit('add', new AdbDevice(this.client, d));
+                this.emit('add', new Device(this.client, d));
                 return map;
             }
 
@@ -81,8 +81,8 @@ export class Tracker extends EventEmitter {
         this.command.endConnection();
     }
 
-    on(event: 'add' | 'change', listener: (device: AdbDevice) => void): this;
-    on(event: 'remove', listener: (device: IAdbDevice) => void): this;
+    on(event: 'add' | 'change', listener: (device: Device) => void): this;
+    on(event: 'remove', listener: (device: IDevice) => void): this;
     on(event: 'end', listener: () => void): this;
     on(event: 'error', listener: (err: Error) => void): this;
     on(event: string, listener: (...args: any[]) => void): this {

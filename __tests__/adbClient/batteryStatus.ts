@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { PrimitiveType } from '../../lib/util';
 
 describe('Battery status tests', () => {
@@ -27,7 +27,7 @@ describe('Battery status tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.batteryStatus('serial');
             expect(result).toEqual(
                 new Map<string, PrimitiveType>([

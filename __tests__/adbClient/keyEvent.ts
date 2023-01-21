@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 
 describe('Key event', () => {
@@ -18,7 +18,7 @@ describe('Key event', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.keyEvent('serial', 37);
             expect(result).toBeUndefined();
         } finally {
@@ -41,7 +41,7 @@ describe('Key event', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.keyEvent('serial', 37, {
                 variant: 'longpress'
             });
@@ -66,7 +66,7 @@ describe('Key event', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.keyEvent('serial', 37, {
                 variant: 'doubletap'
             });
@@ -91,7 +91,7 @@ describe('Key event', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.keyEvent('serial', [37, 37, 42]);
             expect(result).toBeUndefined();
         } finally {
@@ -114,7 +114,7 @@ describe('Key event', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.keyEvent('serial', [37, 37, 42], {
                 variant: 'longpress'
             });
@@ -139,7 +139,7 @@ describe('Key event', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.keyEvent('serial', [37, 37, 42], {
                 variant: 'doubletap'
             });
@@ -164,7 +164,7 @@ describe('Key event', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.keyEvent('serial', 37, {
                 source: 'gamepad'
             });
@@ -189,7 +189,7 @@ describe('Key event', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.keyEvent('serial', 37);
                 fail('Expected Failure');
@@ -216,7 +216,7 @@ describe('Key event', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.keyEvent('serial', 37);
                 fail('Expected Failure');
@@ -244,7 +244,7 @@ describe('Key event', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.keyEvent('serial', 37);
                 fail('Expected Failure');
@@ -274,7 +274,7 @@ describe('Key event', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.keyEvent('serial', 37);
                 fail('Expected Failure');

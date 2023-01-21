@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { AdbExecError, UnexpectedDataError } from '../../lib/util';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { FileStat } from '../../lib/filestats';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
@@ -21,7 +21,7 @@ describe('File stat OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.fileStat('serial', '/file');
             expect(result).toBeInstanceOf(FileStat);
             expect(result.abits).toBe(432);
@@ -67,7 +67,7 @@ describe('File stat OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             await adb.fileStat('serial', '/file');
         } catch (e: any) {
             expect(e.message).toBe('message');
@@ -93,7 +93,7 @@ describe('File stat FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.fileStat('serial', '/file');
                 fail('Expected Failure');
@@ -116,7 +116,7 @@ describe('File stat FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.fileStat('serial', '/file');
                 fail('Expected Failure');
@@ -146,7 +146,7 @@ describe('File stat unexpected tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.fileStat('serial', '/file');
                 fail('Expected Failure');
@@ -176,7 +176,7 @@ describe('File stat unexpected tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.fileStat('serial', '/file');
                 fail('Expected Failure');

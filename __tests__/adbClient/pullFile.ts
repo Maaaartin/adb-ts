@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 import fs, { WriteStream } from 'fs';
 import { Writable } from 'stream';
@@ -25,7 +25,7 @@ describe('Pull file tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.pullFile('serial', '/file', '/file');
             expect(result).toBeUndefined();
         } finally {
@@ -45,7 +45,7 @@ describe('Pull file tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.pullFile('serial', '/file', '/file');
                 fail('Expected failure');
@@ -69,7 +69,7 @@ describe('Pull file tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.pullFile('serial', '/file', '/file');
                 fail('Expected failure');

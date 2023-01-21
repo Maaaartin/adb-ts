@@ -1,9 +1,9 @@
-import { AdbClient } from '../../lib/client';
-import { AdbDevice } from '../../lib/device';
+import { Client } from '../../lib/client';
+import { Device } from '../../lib/device';
 import { AdbExecError } from '../../lib/util';
 import { mockExec } from '../../mockery/execMock';
 
-const device = new AdbDevice(new AdbClient({ noAutoStart: true }), {
+const device = new Device(new Client({ noAutoStart: true }), {
     id: 'serial',
     state: 'device',
     path: 'path',

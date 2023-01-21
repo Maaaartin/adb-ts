@@ -1,4 +1,4 @@
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { UnexpectedDataError } from '../../lib/util';
 import { LogcatReader } from '../../lib/logcat/reader';
@@ -31,7 +31,7 @@ describe('Open logcat OKAY tests', () => {
         ]);
 
         const port = await adbMock.start();
-        const adb = new AdbClient({ noAutoStart: true, port });
+        const adb = new Client({ noAutoStart: true, port });
         const result = await adb.openLogcat('serial');
 
         expect(result).toBeInstanceOf(LogcatReader);
@@ -57,7 +57,7 @@ describe('Open logcat OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.openLogcat('serial', { clear: true });
             expect(result).toBeInstanceOf(LogcatReader);
         } finally {
@@ -78,7 +78,7 @@ describe('Open logcat FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.openLogcat('serial');
             } catch (e) {
@@ -100,7 +100,7 @@ describe('Open logcat FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.openLogcat('serial');
             } catch (e) {
@@ -129,7 +129,7 @@ describe('Open logcat unexpected error tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.openLogcat('serial');
             } catch (e) {
@@ -158,7 +158,7 @@ describe('Open logcat unexpected error tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.openLogcat('serial');
             } catch (e) {

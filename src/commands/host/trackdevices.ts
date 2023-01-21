@@ -1,6 +1,6 @@
 import { Connection } from '../../connection';
 import DevicesCommand from '../abstract/devices';
-import { IAdbDevice } from '../../util';
+import { IDevice } from '../../util';
 
 export default class TrackCommand extends DevicesCommand {
     constructor(connection: Connection) {
@@ -9,7 +9,7 @@ export default class TrackCommand extends DevicesCommand {
         this.readOnExecute = false;
     }
 
-    execute(): Promise<IAdbDevice[]> {
+    execute(): Promise<IDevice[]> {
         return super.execute('host:track-devices-l');
     }
 }

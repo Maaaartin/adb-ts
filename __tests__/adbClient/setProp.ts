@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 
 describe('Set prop tests', () => {
@@ -14,7 +14,7 @@ describe('Set prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.setProp('serial', 'prop', '');
             expect(result).toBeUndefined();
         } finally {
@@ -33,7 +33,7 @@ describe('Set prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.setProp('serial', 'prop', `'text'`);
             expect(result).toBeUndefined();
         } finally {
@@ -52,7 +52,7 @@ describe('Set prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.setProp('serial', 'prop', `"text"`);
             expect(result).toBeUndefined();
         } finally {
@@ -71,7 +71,7 @@ describe('Set prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.setProp('serial', 'prop', false);
             expect(result).toBeUndefined();
         } finally {
@@ -90,7 +90,7 @@ describe('Set prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.setProp('serial', 'prop', undefined);
             expect(result).toBeUndefined();
         } finally {
@@ -109,7 +109,7 @@ describe('Set prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.setProp('serial', 'prop', 0);
             expect(result).toBeUndefined();
         } finally {
@@ -128,7 +128,7 @@ describe('Set prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.setProp('serial', 'prop', 0.1);
             expect(result).toBeUndefined();
         } finally {
@@ -147,7 +147,7 @@ describe('Set prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.setProp('serial', 'prop', undefined);
             expect(result).toBeUndefined();
         } finally {
@@ -166,7 +166,7 @@ describe('Set prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.setProp('serial', 'prop', undefined);
                 fail('Expected failure');
@@ -189,7 +189,7 @@ describe('Set prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.setProp('serial', 'prop', '');
                 fail('Expected Failure');
@@ -212,7 +212,7 @@ describe('Set prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.setProp('serial', 'prop', '');
                 fail('Expected Failure');
@@ -240,7 +240,7 @@ describe('Set prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.setProp('serial', 'prop', '');
                 fail('Expected Failure');
@@ -270,7 +270,7 @@ describe('Set prop tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.setProp('serial', 'prop', '');
                 fail('Expected Failure');

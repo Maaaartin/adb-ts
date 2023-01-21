@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 
 describe('Is installed', () => {
@@ -18,7 +18,7 @@ describe('Is installed', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.isInstalled('serial', 'com.package');
             expect(result).toBe(true);
         } finally {
@@ -41,7 +41,7 @@ describe('Is installed', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.isInstalled('serial', 'com.package');
             expect(result).toBe(false);
         } finally {
@@ -64,7 +64,7 @@ describe('Is installed', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.isInstalled('serial', 'com.package');
                 fail('Expected Failure');
@@ -94,7 +94,7 @@ describe('Is installed', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.isInstalled('serial', 'com.package');
                 fail('Expected Failure');
@@ -121,7 +121,7 @@ describe('Is installed', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.isInstalled('serial', 'com.package');
                 fail('Expected Failure');
@@ -149,7 +149,7 @@ describe('Is installed', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.isInstalled('serial', 'com.package');
                 fail('Expected Failure');
@@ -179,7 +179,7 @@ describe('Is installed', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.isInstalled('serial', 'com.package');
                 fail('Expected Failure');

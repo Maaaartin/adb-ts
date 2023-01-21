@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { promisify } from 'util';
 import { UnexpectedDataError } from '../../lib/util';
 
@@ -16,7 +16,7 @@ describe('Pull tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await promisify<string | null>(async (cb) => {
                 const transfer = await adb.pull('serial', '/');
                 let acc = '';
@@ -46,7 +46,7 @@ describe('Pull tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await promisify<string | null>(async (cb) => {
                     const transfer = await adb.pull('serial', '/');
@@ -61,7 +61,7 @@ describe('Pull tests', () => {
                 })();
                 fail('Expected failure');
             } catch (e: any) {
-                expect(e).toEqual(new Error ('data'));
+                expect(e).toEqual(new Error('data'));
             }
         } finally {
             await adbMock.end();
@@ -80,7 +80,7 @@ describe('Pull tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await promisify<string | null>(async (cb) => {
                     const transfer = await adb.pull('serial', '/');

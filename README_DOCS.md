@@ -1,10 +1,10 @@
 ## API
 
-Start by importing [`AdbClient`](./classes/AdbClient.AdbClient.html).
+Start by importing [`Client`](./classes/Client.Client.html).
 
 ```ts
-import { AdbClient } from 'adb-ts';
-const adb = new AdbClient();
+import { Client } from 'adb-ts';
+const adb = new Client();
 const statuses = await adb.map((device) => {
     return device.batteryStatus();
 });
@@ -13,15 +13,15 @@ const statuses = await adb.map((device) => {
 In order to start adb server automatically path to adb must be specified.
 
 ```ts
-import { AdbClient } from 'adb-ts';
-const adb = new AdbClient({ bin: '/path/to/adb' });
+import { Client } from 'adb-ts';
+const adb = new Client({ bin: '/path/to/adb' });
 // ...
 ```
 
 ## Examples
 
 For operations on all connected device `map` method can be used.
-In the callback an instance of [`AdbDevice`](./classes/AdbDevice.AdbDevice.html) comes as input parameter.
+In the callback an instance of [`Device`](./classes/Device.Device.html) comes as input parameter.
 
 ```ts
 const packages = await Promise.all([
@@ -73,7 +73,7 @@ tracker.on('change', (device) => {
 // tracker.end();
 ```
 
-Every `AdbClient` method has an overload with callback parameter.
+Every `Client` method has an overload with callback parameter.
 
 ```ts
 const devices = await adb.listDevices();

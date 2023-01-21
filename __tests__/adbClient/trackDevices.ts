@@ -1,6 +1,6 @@
 import { promisify } from 'util';
-import { AdbClient } from '../../lib/client';
-import { AdbDevice } from '../../lib/device';
+import { Client } from '../../lib/client';
+import { Device } from '../../lib/device';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Track devices', () => {
@@ -12,7 +12,7 @@ describe('Track devices', () => {
 
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const tracker = await adb.trackDevices();
             const result = await promisify((cb) => {
                 tracker.on('add', (d) => {
@@ -27,7 +27,7 @@ describe('Track devices', () => {
             })();
             try {
                 expect(result).toEqual(
-                    new AdbDevice(adb, {
+                    new Device(adb, {
                         id: 'b137f5dc',
                         state: 'unauthorized',
                         path: '337641472X',
@@ -54,7 +54,7 @@ describe('Track devices', () => {
 
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const tracker = await adb.trackDevices();
             const result = await promisify((cb) => {
                 tracker.on('remove', (d) => {
@@ -93,7 +93,7 @@ describe('Track devices', () => {
 
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const tracker = await adb.trackDevices();
             const result = await promisify((cb) => {
                 tracker.on('change', (d) => {
@@ -109,7 +109,7 @@ describe('Track devices', () => {
             })();
             try {
                 expect(result).toEqual(
-                    new AdbDevice(adb, {
+                    new Device(adb, {
                         id: 'b137f5dc',
                         state: 'device',
                         path: '337641472X',
@@ -136,7 +136,7 @@ describe('Track devices', () => {
 
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const tracker = await adb.trackDevices();
             const result = await promisify((cb) => {
                 tracker.on('error', (err) => {
@@ -161,7 +161,7 @@ describe('Track devices', () => {
 
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const tracker = await adb.trackDevices();
             const result = await promisify((cb) => {
                 tracker.on('error', () => null);
@@ -187,7 +187,7 @@ describe('Track devices', () => {
 
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const tracker = await adb.trackDevices();
             const result = await promisify(async (cb) => {
                 tracker.on('end', () => {
@@ -214,7 +214,7 @@ describe('Track devices', () => {
 
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const tracker = await adb.trackDevices();
             const result = await promisify<void>(async (cb) => {
                 tracker.on('error', () => {});
@@ -238,7 +238,7 @@ describe('Track devices', () => {
 
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const tracker = await adb.trackDevices();
             const result = await promisify<void>(async (cb) => {
                 tracker.once('error', () => {
@@ -262,7 +262,7 @@ describe('Track devices', () => {
 
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.trackDevices();
                 fail('Expected Failure');

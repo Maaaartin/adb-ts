@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 
 describe('List Reverses', () => {
@@ -14,7 +14,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.listReverses('serial');
             expect(result).toEqual([
                 {
@@ -44,7 +44,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.listReverses('serial');
                 fail('Expected Failure');
@@ -67,7 +67,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.listReverses('serial');
                 fail('Expected Failure');
@@ -95,7 +95,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.listReverses('serial');
                 fail('Expected Failure');
@@ -125,7 +125,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`,
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.listReverses('serial');
                 fail('Expected Failure');

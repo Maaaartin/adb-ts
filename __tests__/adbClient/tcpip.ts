@@ -1,6 +1,6 @@
 import T from 'timers/promises';
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 
 describe('Tcpip', () => {
     it('OKAY with default port', async () => {
@@ -14,7 +14,7 @@ describe('Tcpip', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             jest.spyOn(adb as any, 'awaitActiveDevice').mockImplementation(() =>
                 Promise.resolve()
             );
@@ -36,7 +36,7 @@ describe('Tcpip', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             jest.spyOn(adb as any, 'awaitActiveDevice').mockImplementation(() =>
                 Promise.resolve()
             );
@@ -58,7 +58,7 @@ describe('Tcpip', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             jest.spyOn(adb as any, 'awaitActiveDevice').mockImplementation(() =>
                 T.setTimeout(1000).then(() => {
                     throw new Error('message');
@@ -83,7 +83,7 @@ describe('Tcpip', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             jest.spyOn(adb as any, 'awaitActiveDevice').mockImplementation(() =>
                 Promise.resolve()
             );

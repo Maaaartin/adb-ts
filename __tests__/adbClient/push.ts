@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { promisify } from 'util';
 import { UnexpectedDataError } from '../../lib/util';
 import { Readable } from 'stream';
@@ -18,7 +18,7 @@ describe('Adb Push tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await promisify<void>(async (cb) => {
                 const transfer = await adb.push(
                     'serial',
@@ -52,7 +52,7 @@ describe('Adb Push tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await promisify<void>(async (cb) => {
                 const transfer = await adb.push(
                     'serial',
@@ -87,7 +87,7 @@ describe('Adb Push tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await promisify<void>(async (cb) => {
                     const transfer = await adb.push(
@@ -125,7 +125,7 @@ describe('Adb Push tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await promisify<void>(async (cb) => {
                     const transfer = await adb.push(
@@ -165,7 +165,7 @@ describe('Adb Push tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
 
             const result = await promisify<void>(async (cb) => {
                 const transfer = await adb.push(

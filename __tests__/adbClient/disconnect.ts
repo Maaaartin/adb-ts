@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { promisify } from 'util';
 
 describe('Disconnect', () => {
@@ -12,7 +12,7 @@ describe('Disconnect', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.disconnect('127.0.0.1');
             expect(result).toBe('127.0.0.1:5555');
         } finally {
@@ -29,7 +29,7 @@ describe('Disconnect', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.disconnect('127.0.0.1', 4444);
             expect(result).toBe('127.0.0.1:4444');
         } finally {
@@ -46,7 +46,7 @@ describe('Disconnect', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.disconnect('127.0.0.1:4444');
             expect(result).toBe('127.0.0.1:4444');
         } finally {
@@ -63,7 +63,7 @@ describe('Disconnect', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.disconnect('127.0.0.1', 4444);
             } catch (e: any) {
@@ -83,7 +83,7 @@ describe('Disconnect', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.disconnect('127.0.0.1', 4444);
                 fail('Expected Failure');
@@ -104,7 +104,7 @@ describe('Disconnect', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await promisify<string>((cb) => {
                 adb.disconnect('127.0.0.1', 4444, cb);
             })();

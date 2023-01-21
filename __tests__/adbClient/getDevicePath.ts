@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 
 describe('Get device path', () => {
     it('OKAY', async () => {
@@ -8,7 +8,7 @@ describe('Get device path', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getDevicePath('serial');
             expect(result).toBe('usb:336592896X');
         } finally {
@@ -20,7 +20,7 @@ describe('Get device path', () => {
         const adbMock = new AdbMock([{ cmd: 'fail', res: 'usb:336592896X' }]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.getDevicePath('serial');
                 fail('Expected Failure');

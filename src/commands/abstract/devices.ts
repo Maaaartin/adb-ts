@@ -1,5 +1,5 @@
 import net from 'net';
-import { DeviceState, IAdbDevice } from '../../util';
+import { DeviceState, IDevice } from '../../util';
 import { UnexpectedDataError } from '../../util';
 import Command from '../command';
 const checkValues = ([_1, _2]: [string, string], expected: string[]): void => {
@@ -19,7 +19,7 @@ const parseProps = (values: string[]): Record<string, string | undefined> =>
         return acc;
     }, {});
 
-export function constructDevice(values: string[]): IAdbDevice {
+export function constructDevice(values: string[]): IDevice {
     const [id, state] = values;
     checkValues([id, state], ['id', 'state']);
 
@@ -43,23 +43,23 @@ export function constructDevice(values: string[]): IAdbDevice {
 
 export default abstract class DevicesCommand extends Command {
     protected readOnExecute = true;
-    private parse(value: string): IAdbDevice[] {
+    private parse(value: string): IDevice[] {
         const lines = value.split('\n').filter((l) => l !== '');
         return lines.map((line) => constructDevice(line.split(/\s+/)));
     }
 
-    readDevices(): Promise<IAdbDevice[]> {
+    readDevices(): Promise<IDevice[]> {
         return this.parser.readValue().then((value) => {
             return this.parse(value.toString().trim());
         });
     }
 
-    execute(command: string): Promise<IAdbDevice[]> {
+    execute(command: string): Promise<IDevice[]> {
         return this.initExecute(command)
             .then(
                 this.handleReply(
                     this.readOnExecute
-                        ? (): Promise<IAdbDevice[]> => this.readDevices()
+                        ? (): Promise<IDevice[]> => this.readDevices()
                         : []
                 )
             )

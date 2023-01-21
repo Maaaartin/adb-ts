@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { UnexpectedDataError } from '../../lib/util';
 
 describe('Put setting tests', () => {
@@ -14,7 +14,7 @@ describe('Put setting tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.putSetting(
                 'serial',
                 'system',
@@ -38,7 +38,7 @@ describe('Put setting tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.putSetting(
                 'serial',
                 'system',
@@ -62,7 +62,7 @@ describe('Put setting tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.putSetting(
                 'serial',
                 'system',
@@ -86,7 +86,7 @@ describe('Put setting tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.putSetting(
                 'serial',
                 'system',
@@ -110,7 +110,7 @@ describe('Put setting tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.putSetting(
                 'serial',
                 'system',
@@ -134,7 +134,7 @@ describe('Put setting tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.putSetting(
                 'serial',
                 'system',
@@ -158,7 +158,7 @@ describe('Put setting tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.putSetting(
                 'serial',
                 'system',
@@ -182,7 +182,7 @@ describe('Put setting tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.putSetting(
                 'serial',
                 'system',
@@ -206,7 +206,7 @@ describe('Put setting tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.putSetting('serial', 'system', 'setting', undefined);
                 fail('Expected failure');
@@ -229,7 +229,7 @@ describe('Put setting tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.putSetting('serial', 'system', 'setting', '');
                 fail('Expected Failure');
@@ -252,7 +252,7 @@ describe('Put setting tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.putSetting('serial', 'system', 'setting', '');
                 fail('Expected Failure');
@@ -280,7 +280,7 @@ describe('Put setting tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.putSetting('serial', 'system', 'setting', '');
                 fail('Expected Failure');
@@ -310,7 +310,7 @@ describe('Put setting tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.putSetting('serial', 'system', 'setting', '');
                 fail('Expected Failure');

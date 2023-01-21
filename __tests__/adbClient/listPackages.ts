@@ -1,5 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 
 describe('List packages', () => {
     it('OKAY', async () => {
@@ -15,7 +15,7 @@ package:four`,
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.listPackages('serial');
             expect(result).toEqual(['one', 'two.three', 'four']);
         } finally {
@@ -36,7 +36,7 @@ package:four`,
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.listPackages('serial');
                 fail('Expected Failure');
@@ -61,7 +61,7 @@ package:four`,
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.listPackages('serial');
                 fail('Expected Failure');
@@ -91,7 +91,7 @@ package:four`,
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.listPackages('serial');
                 fail('Expected Failure');
@@ -123,7 +123,7 @@ package:four`,
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.listPackages('serial');
                 fail('Expected Failure');

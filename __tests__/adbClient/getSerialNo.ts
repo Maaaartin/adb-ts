@@ -1,4 +1,4 @@
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Get serial no', () => {
@@ -9,7 +9,7 @@ describe('Get serial no', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const serialNo = await adb.getSerialNo('serial');
             expect(serialNo).toBe('test');
         } finally {
@@ -24,7 +24,7 @@ describe('Get serial no', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.getSerialNo('fail');
                 fail('Expected Failure');
@@ -43,7 +43,7 @@ describe('Get serial no', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.getSerialNo('serial');
                 fail('Expected Failure');
@@ -67,7 +67,7 @@ describe('Get serial no', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.getSerialNo('serial');
                 fail('Expected Failure');
@@ -97,7 +97,7 @@ describe('Get serial no', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.getSerialNo('serial');
                 fail('Expected Failure');

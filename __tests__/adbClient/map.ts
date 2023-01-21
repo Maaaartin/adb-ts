@@ -1,7 +1,7 @@
-import { AdbClient } from '../../lib/client';
-import { IAdbDevice } from '../../lib/util';
+import { Client } from '../../lib/client';
+import { IDevice } from '../../lib/util';
 import { AdbMock } from '../../mockery/mockAdbServer';
-import { AdbDevice } from '../../lib/device';
+import { Device } from '../../lib/device';
 import { UnexpectedDataError } from '../../lib/util';
 
 describe('Map tests', () => {
@@ -16,9 +16,9 @@ describe('Map tests', () => {
         const adbMock = new AdbMock([{ cmd: 'host:devices-l', res: raw }]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const devices = await adb.map((d) => d);
-            const expected: IAdbDevice[] = [
+            const expected: IDevice[] = [
                 {
                     device: 'FP4',
                     id: 'b137f5dc',
@@ -41,7 +41,7 @@ describe('Map tests', () => {
                 }
             ];
             devices.forEach((d, i) => {
-                expect(d).toEqual(new AdbDevice(adb, expected[i]));
+                expect(d).toEqual(new Device(adb, expected[i]));
             });
         } finally {
             await adbMock.end();
@@ -59,7 +59,7 @@ describe('Map tests', () => {
         const adbMock = new AdbMock([{ cmd: 'host:devices-l', res: raw }]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.map((d) => d);
             } catch (e) {

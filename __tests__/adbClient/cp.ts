@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { UnexpectedDataError } from '../../lib/util';
-import { AdbClient } from '../../lib/client';
+import { Client } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 beforeAll(() => {
@@ -21,7 +21,7 @@ describe('Cp OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.cp('serial', '/file', '/other');
             expect(result).toBeUndefined();
         } finally {
@@ -40,7 +40,7 @@ describe('Cp OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.cp('serial', '/file', '/other', {
                 noClobber: true,
                 symlink: true,
@@ -73,7 +73,7 @@ describe('Cp OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.cp('serial', '/file', '/other', {
                 noClobber: true,
                 symlink: true,
@@ -107,7 +107,7 @@ describe('Cp OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.cp('serial', '/file', '/other', {
                 preserve: {
                     mode: true,
@@ -134,7 +134,7 @@ describe('Cp OKAY tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             const result = await adb.cp('serial', '/file', '/other', {
                 preserve: {
                     all: true,
@@ -164,7 +164,7 @@ describe('Cp FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.cp('serial', '/file', '/other');
                 fail('Expected Failure');
@@ -187,7 +187,7 @@ describe('Cp FAIL tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.cp('serial', '/file', '/other');
                 fail('Expected Failure');
@@ -217,7 +217,7 @@ describe('Cp unexpected tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.cp('serial', '/file', '/other');
                 fail('Expected Failure');
@@ -247,7 +247,7 @@ describe('Cp unexpected tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const adb = new AdbClient({ noAutoStart: true, port });
+            const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.mv('serial', '/file', '/other');
                 fail('Expected Failure');
