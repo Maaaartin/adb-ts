@@ -124,7 +124,7 @@ export class Device implements IDevice {
         return this.client.screenshot(this.id);
     }
 
-    openTcp(port: number | string, host?: string): Promise<Connection> {
+    openTcp(port: number, host?: string): Promise<Connection> {
         return this.client.openTcp(this.id, port, host as string);
     }
 

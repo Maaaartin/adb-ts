@@ -197,12 +197,14 @@ export class Client {
     private ipConnect(
         Construct: IpConnectConstruct,
         host: string,
-        port: number | string | ValueCallback<string> | undefined,
+        port: number | ValueCallback<string> | undefined,
         cb: ValueCallback<string> | undefined
     ): Promise<string> | void {
         let port_ = parseValueParam(port);
         if (host.indexOf(':') !== -1) {
-            [host, port_] = host.split(':', 2);
+            const [h, p] = host.split(':', 2);
+            host = h;
+            port_ = parseInt(p);
         }
         return nodeify(
             this.connection().then((conn) =>
@@ -226,16 +228,12 @@ export class Client {
      *});
      */
     connect(host: string): Promise<string>;
-    connect(host: string, port: number | string): Promise<string>;
+    connect(host: string, port: number): Promise<string>;
     connect(host: string, cb: ValueCallback<string>): void;
+    connect(host: string, port: number, cb: ValueCallback<string>): void;
     connect(
         host: string,
-        port: number | string,
-        cb: ValueCallback<string>
-    ): void;
-    connect(
-        host: string,
-        port?: number | string | ValueCallback<string>,
+        port?: number | ValueCallback<string>,
         cb?: ValueCallback<string>
     ): Promise<string> | void {
         return this.ipConnect(Connect, host, port, cb);
@@ -245,16 +243,12 @@ export class Client {
      * Disconnects from the given device.
      */
     disconnect(host: string): Promise<string>;
-    disconnect(host: string, port: number | string): Promise<string>;
+    disconnect(host: string, port: number): Promise<string>;
     disconnect(host: string, cb: ValueCallback<string>): void;
+    disconnect(host: string, port: number, cb: ValueCallback<string>): void;
     disconnect(
         host: string,
-        port: number | string,
-        cb: ValueCallback<string>
-    ): void;
-    disconnect(
-        host: string,
-        port?: ValueCallback<string> | number | string,
+        port?: ValueCallback<string> | number,
         cb?: ValueCallback<string>
     ): Promise<string> | void {
         return this.ipConnect(Disconnect, host, port, cb);
@@ -581,26 +575,18 @@ export class Client {
      * const socket = await adb.openTcp('serial', 5555);
      * // socket.write(...)
      */
-    openTcp(serial: string, port: number | string): Promise<Connection>;
+    openTcp(serial: string, port: number): Promise<Connection>;
+    openTcp(serial: string, port: number, host: string): Promise<Connection>;
+    openTcp(serial: string, port: number, cb: ValueCallback<Connection>): void;
     openTcp(
         serial: string,
-        port: number | string,
-        host: string
-    ): Promise<Connection>;
-    openTcp(
-        serial: string,
-        port: number | string,
-        cb: ValueCallback<Connection>
-    ): void;
-    openTcp(
-        serial: string,
-        port: number | string,
+        port: number,
         host: string,
         cb: ValueCallback<Connection>
     ): void;
     openTcp(
         serial: string,
-        port: number | string,
+        port: number,
         host?: string | ValueCallback<Connection>,
         cb?: ValueCallback<Connection>
     ): Promise<Connection> | void {

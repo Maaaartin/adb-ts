@@ -8,23 +8,18 @@ export default class InputCommand extends TransportCommand<void> {
         this.withEscape_ = true;
         return this;
     }
-    protected postExecute(): Promise<void> {
-        return Promise.resolve();
-    }
+    protected postExecute(): void {}
     private buildParams(
         source: InputSource,
         command: string,
         args: PrimitiveType[]
     ): void {
-        const filterInvalid = (a: PrimitiveType): boolean =>
-            typeof a !== 'undefined' && a !== '';
-        const params = [source as PrimitiveType]
-            .concat(command)
-            .filter(filterInvalid)
+        const params = [source as string]
             .concat(
+                command,
                 args
-                    .filter(filterInvalid)
-                    .map((a) => (this.withEscape_ ? escape(a) : a))
+                    .filter((a) => typeof a !== 'undefined' && a !== '')
+                    .map((a) => (this.withEscape_ ? escape(a) : String(a)))
             )
             .join(' ');
         this.Cmd += params;

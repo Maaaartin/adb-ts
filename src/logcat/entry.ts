@@ -1,20 +1,12 @@
 import { Priority } from './priority';
 
 export class LogcatEntry {
-    public date: Date;
-    public pid: number;
-    public tid: number;
-    public priority: Priority;
-    public tag: string;
-    public message: string;
-    constructor() {
-        this.date = new Date();
-        this.pid = -1;
-        this.tid = -1;
-        this.priority = Priority.SILENT;
-        this.tag = '';
-        this.message = '';
-    }
+    public date = new Date();
+    public pid = -1;
+    public tid = -1;
+    public priority = Priority.SILENT;
+    public tag = '';
+    public message = '';
 
     toBinary(): Buffer {
         let length = 20;

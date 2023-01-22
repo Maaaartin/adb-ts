@@ -4,6 +4,23 @@ import { Device } from '../../lib/device';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Track devices', () => {
+    it('Should have device map of null at initialization', async () => {
+        const adbMock = new AdbMock({
+            cmd: 'host:track-devices-l',
+            res: null
+        });
+
+        const port = await adbMock.start();
+        const adb = new Client({ noAutoStart: true, port });
+        const tracker = await adb.trackDevices();
+        try {
+            expect((tracker as any).deviceMap).toBeNull();
+        } finally {
+            tracker.end();
+            await adbMock.end();
+        }
+    });
+
     it('Add', async () => {
         const adbMock = new AdbMock({
             cmd: 'host:track-devices-l',

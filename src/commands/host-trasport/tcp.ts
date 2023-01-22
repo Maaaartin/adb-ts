@@ -4,11 +4,7 @@ import RawCommand from '../abstract/raw';
 export default class TcpCommand extends RawCommand {
     Cmd = 'tcp:';
 
-    execute(
-        serial: string,
-        port: number | string,
-        host?: string
-    ): Promise<Connection> {
+    execute(serial: string, port: number, host?: string): Promise<Connection> {
         this.Cmd += host ? host + ':' + port : port;
         return this.preExecute(serial).catch((err) => {
             this.connection.end();

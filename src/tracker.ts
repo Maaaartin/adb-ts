@@ -9,13 +9,13 @@ export class Tracker extends EventEmitter {
     /** @ignore */
     private readonly command: TrackCommand;
     private ended = false;
-    private deviceMap: Map<string, IDevice> | null;
+    // assigning to null prevents emitting 'add' events on first read
+    private deviceMap: Map<string, IDevice> | null = null;
     private readonly client: Client;
     /** @ignore */
     constructor(command: TrackCommand, client: Client) {
         super();
         this.command = command;
-        this.deviceMap = null;
         this.client = client;
         this.hook();
     }

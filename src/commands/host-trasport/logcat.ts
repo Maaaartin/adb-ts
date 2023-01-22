@@ -7,8 +7,9 @@ import TransportCommand from '../abstract/transport';
 export default class LogcatCommand extends TransportCommand<LogcatReader> {
     private logCat: LogcatReader | null = null;
     private options?: LogcatOptions | null;
+    Cmd = 'shell:echo && ';
     endConnection(): void {}
-    protected postExecute(): Promise<LogcatReader> {
+    protected postExecute(): LogcatReader {
         const stream = new LineTransform({ autoDetect: true });
         this.connection.pipe(stream);
         this.logCat = readStream(stream, {
@@ -16,9 +17,9 @@ export default class LogcatCommand extends TransportCommand<LogcatReader> {
         });
         this.connection.on('error', (err) => this.logCat?.emit('error', err));
         this.logCat.on('end', () => super.endConnection());
-        return Promise.resolve(this.logCat);
+        return this.logCat;
     }
-    Cmd = 'shell:echo && ';
+
     execute(serial: string, options?: LogcatOptions): Promise<LogcatReader> {
         let cmd = 'logcat -B *:I 2>/dev/null';
         if (options?.clear) {

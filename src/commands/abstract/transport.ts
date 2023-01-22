@@ -11,7 +11,7 @@ export default abstract class TransportCommand<T>
     /**
      * Executed when {@link preExecute} was successful
      */
-    protected abstract postExecute(): Promise<T>;
+    protected abstract postExecute(): T | Promise<T>;
     /**
      * Executes {@link Cmd} on the device
      */
@@ -21,10 +21,12 @@ export default abstract class TransportCommand<T>
                 this.handleReply(() => {
                     return this.initExecute(this.Cmd).then(
                         this.handleReply(() => {
-                            return this.postExecute().catch((err) => {
-                                this.endConnection();
-                                throw err;
-                            });
+                            return Promise.resolve(this.postExecute()).catch(
+                                (err) => {
+                                    this.endConnection();
+                                    throw err;
+                                }
+                            );
                         })
                     );
                 })

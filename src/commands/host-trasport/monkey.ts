@@ -11,7 +11,7 @@ export default class MonkeyCommand extends TransportCommand<Connection> {
 
     endConnection(): void {}
 
-    execute(serial: string, port: number | string): Promise<Connection> {
+    execute(serial: string, port: number): Promise<Connection> {
         this.Cmd += [port, '-v'].join(' ');
         return this.preExecute(serial).catch((err) => {
             super.endConnection();

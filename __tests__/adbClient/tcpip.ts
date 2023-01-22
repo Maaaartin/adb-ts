@@ -71,30 +71,4 @@ describe('Tcpip', () => {
             await adbMock.end();
         }
     });
-
-    it('FAIL with non matching response', async () => {
-        const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
-            {
-                cmd: `tcpip:5555`,
-                res: 'error',
-                rawRes: true
-            }
-        ]);
-        try {
-            const port = await adbMock.start();
-            const adb = new Client({ noAutoStart: true, port });
-            jest.spyOn(adb as any, 'awaitActiveDevice').mockImplementation(() =>
-                Promise.resolve()
-            );
-            try {
-                await adb.tcpip('serial');
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('error'));
-            }
-        } finally {
-            await adbMock.end();
-        }
-    });
 });

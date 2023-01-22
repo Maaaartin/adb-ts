@@ -3,7 +3,7 @@ import { Connection } from '../../connection';
 
 export default abstract class RawCommand extends TransportCommand<Connection> {
     endConnection(): void {}
-    protected postExecute(): Promise<Connection> {
-        return Promise.resolve(this.connection);
+    protected postExecute(): Connection {
+        return this.connection;
     }
 }

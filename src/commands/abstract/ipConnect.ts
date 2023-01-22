@@ -5,7 +5,7 @@ export default abstract class IpConnect extends Command implements ICmd {
     protected abstract Validator: RegExp;
     abstract Cmd: string;
     keepAlive = true;
-    execute(host: string, port: number | string): Promise<string> {
+    execute(host: string, port: number): Promise<string> {
         return this.initExecute(`${this.Cmd}:${host}:${port}`)
             .then(
                 this.handleReply(() => {
