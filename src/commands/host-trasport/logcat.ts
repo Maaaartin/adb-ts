@@ -8,7 +8,7 @@ export default class LogcatCommand extends TransportCommand<LogcatReader> {
     private logCat: LogcatReader | null = null;
     private options?: LogcatOptions | null;
     protected Cmd = 'shell:echo && ';
-    endConnection(): void {}
+    protected autoEnd = false;
     protected postExecute(): LogcatReader {
         const stream = new LineTransform({ autoDetect: true });
         this.connection.pipe(stream);
@@ -16,7 +16,7 @@ export default class LogcatCommand extends TransportCommand<LogcatReader> {
             filter: this.options?.filter
         });
         this.connection.on('error', (err) => this.logCat?.emit('error', err));
-        this.logCat.on('end', () => super.endConnection());
+        this.logCat.on('end', () => this.endConnection());
         return this.logCat;
     }
 
@@ -29,7 +29,7 @@ export default class LogcatCommand extends TransportCommand<LogcatReader> {
         this.options = options;
 
         return this.preExecute(serial).catch((err) => {
-            super.endConnection();
+            this.endConnection();
             this.logCat?.end();
             throw err;
         });

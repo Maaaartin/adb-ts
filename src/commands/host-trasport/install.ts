@@ -5,7 +5,7 @@ import TransportCommand from '../abstract/transport';
 export default class InstallCommand extends TransportCommand<void> {
     protected Cmd = 'shell:pm install ';
     private apk = '';
-    endConnection(): void {}
+    protected autoEnd = false;
     protected postExecute(): Promise<void> {
         return this.parser
             .searchLine(/^(Success|Failure \[(.*?)\])$/)
@@ -17,7 +17,7 @@ export default class InstallCommand extends TransportCommand<void> {
                 }
             })
             .finally(() => {
-                return this.parser.readAll().then(() => super.endConnection());
+                return this.parser.readAll().then(() => this.endConnection());
             });
     }
     private intentArgs(options?: InstallOptions): string[] {
@@ -57,7 +57,7 @@ export default class InstallCommand extends TransportCommand<void> {
             .join(' ');
 
         return this.preExecute(serial).catch((err) => {
-            super.endConnection();
+            this.endConnection();
             throw err;
         });
     }
