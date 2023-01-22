@@ -2,7 +2,7 @@ import { StartActivityOptions } from '../../util';
 import StartServiceCommand from './startservice';
 
 export default class StartActivityCommand extends StartServiceCommand {
-    Cmd = 'shell:am start ';
+    protected Cmd = 'shell:am start ';
     intentArgs(options: StartActivityOptions): string[] {
         return [...super.intentArgs(options)].concat(
             options.debug ? '-D' : [],

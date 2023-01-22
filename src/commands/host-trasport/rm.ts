@@ -2,7 +2,7 @@ import { RmOptions } from 'fs';
 import FileSystemCommand from '../abstract/fileSystem';
 
 export default class RmCommand extends FileSystemCommand {
-    Cmd = 'rm';
+    protected Cmd = 'rm';
     intentArgs(options?: RmOptions): string[] {
         const args: string[] = [];
         if (!options) {

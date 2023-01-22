@@ -3,7 +3,7 @@ import { PropertyValue } from '../../util';
 import TransportParseAllCommand from '../abstract/transportParseAll';
 
 export default class GetPropertyCommand extends TransportParseAllCommand<PropertyValue> {
-    Cmd = 'shell:getprop ';
+    protected Cmd = 'shell:getprop ';
 
     parse(value: string): PropertyValue {
         return stringToType(value);

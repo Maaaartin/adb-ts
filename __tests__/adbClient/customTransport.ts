@@ -3,7 +3,7 @@ import { Client } from '../../lib/client';
 import TransportCommand from '../../lib/commands/abstract/transport';
 
 class TestCmd extends TransportCommand<null> {
-    Cmd = 'test ';
+    protected Cmd = 'test ';
     protected postExecute(): Promise<null> {
         return Promise.resolve(null);
     }

@@ -2,7 +2,7 @@ import { InputSource, PrimitiveType, escape } from '../../util';
 import TransportCommand from '../abstract/transport';
 
 export default class InputCommand extends TransportCommand<void> {
-    Cmd = 'shell:input ';
+    protected Cmd = 'shell:input ';
     private withEscape_ = false;
     public withEscape(): this {
         this.withEscape_ = true;

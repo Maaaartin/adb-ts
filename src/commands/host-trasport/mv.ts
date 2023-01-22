@@ -2,7 +2,7 @@ import { MvOptions } from '../../util';
 import FileSystemCommand from '../abstract/fileSystem';
 
 export default class MvCommand extends FileSystemCommand {
-    Cmd = 'mv';
+    protected Cmd = 'mv';
     intentArgs(options?: MvOptions): string[] {
         const args: string[] = [];
         if (!options) {

@@ -8,7 +8,7 @@ export default class ScreencapCommand extends TransportCommand<Buffer> {
             .readBytes(1)
             .then((buffer) => this.transform(buffer));
     }
-    Cmd = 'shell:echo && screencap -p 2>/dev/null';
+    protected Cmd = 'shell:echo && screencap -p 2>/dev/null';
 
     private transform(buffer: Buffer): Promise<Buffer> {
         const transform = new LineTransform({

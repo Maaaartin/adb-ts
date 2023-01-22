@@ -3,7 +3,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 import { getDevice } from '../../mockery/testDevice';
 
 class TestCmd extends TransportCommand<null> {
-    Cmd = 'test ';
+    protected Cmd = 'test ';
     protected postExecute(): Promise<null> {
         return Promise.resolve(null);
     }

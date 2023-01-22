@@ -3,7 +3,7 @@ import { PropertyMap, SettingsMode } from '../../util';
 import TransportParseAllCommand from '../abstract/transportParseAll';
 
 export default class ListSettingsCommand extends TransportParseAllCommand<PropertyMap> {
-    Cmd = 'shell:settings list ';
+    protected Cmd = 'shell:settings list ';
 
     parse(value: string): PropertyMap {
         return findMatches(value, /^([\s\S]*?)=([\s\S]*?)$/gm, 'map');

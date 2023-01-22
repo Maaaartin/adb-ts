@@ -9,7 +9,7 @@ import {
 import TransportCommand from '../abstract/transport';
 
 export default class StartServiceCommand extends TransportCommand<void> {
-    Cmd = 'shell:am startservice ';
+    protected Cmd = 'shell:am startservice ';
     protected postExecute(): Promise<void> {
         return this.parser
             .searchLine(/^Error: (.*)$/)

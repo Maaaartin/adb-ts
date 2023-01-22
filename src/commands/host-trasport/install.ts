@@ -3,7 +3,7 @@ import { InstallOptions } from '../../util';
 import TransportCommand from '../abstract/transport';
 
 export default class InstallCommand extends TransportCommand<void> {
-    Cmd = 'shell:pm install ';
+    protected Cmd = 'shell:pm install ';
     private apk = '';
     endConnection(): void {}
     protected postExecute(): Promise<void> {

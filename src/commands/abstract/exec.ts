@@ -3,7 +3,6 @@ import { AdbExecError, escape } from '../../util';
 import TransportCommand from './transport';
 
 export default abstract class ExecCommand<T> extends TransportCommand<T> {
-    public abstract Cmd: string;
     private readonly uuid = crypto.randomUUID();
     private rawCmd = '';
     protected abstract cast(value: string): T;
@@ -21,7 +20,7 @@ export default abstract class ExecCommand<T> extends TransportCommand<T> {
         });
     }
 
-    preExecute(serial: string): Promise<T> {
+    protected preExecute(serial: string): Promise<T> {
         this.rawCmd = this.Cmd;
         this.Cmd = [
             `shell:(${this.Cmd})`,

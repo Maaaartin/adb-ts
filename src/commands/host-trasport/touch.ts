@@ -3,7 +3,7 @@ import { TouchOptions, escape } from '../../util';
 import FileSystemCommand from '../abstract/fileSystem';
 
 export default class TouchCommand extends FileSystemCommand {
-    Cmd = 'touch';
+    protected Cmd = 'touch';
     intentArgs(options?: TouchOptions): string[] {
         const args: string[] = [];
         if (!options) {

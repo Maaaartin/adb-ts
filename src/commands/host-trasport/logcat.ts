@@ -7,7 +7,7 @@ import TransportCommand from '../abstract/transport';
 export default class LogcatCommand extends TransportCommand<LogcatReader> {
     private logCat: LogcatReader | null = null;
     private options?: LogcatOptions | null;
-    Cmd = 'shell:echo && ';
+    protected Cmd = 'shell:echo && ';
     endConnection(): void {}
     protected postExecute(): LogcatReader {
         const stream = new LineTransform({ autoDetect: true });

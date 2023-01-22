@@ -2,7 +2,7 @@ import { Connection } from '../../connection';
 import RawCommand from '../abstract/raw';
 
 export default class TcpCommand extends RawCommand {
-    Cmd = 'tcp:';
+    protected Cmd = 'tcp:';
 
     execute(serial: string, port: number, host?: string): Promise<Connection> {
         this.Cmd += host ? host + ':' + port : port;

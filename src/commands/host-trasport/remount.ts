@@ -6,7 +6,7 @@ export default class RemountCommand extends TransportParseAllCommand<void> {
             throw new Error(value);
         }
     }
-    Cmd = 'remount:';
+    protected Cmd = 'remount:';
     execute(serial: string): Promise<void> {
         return this.preExecute(serial);
     }

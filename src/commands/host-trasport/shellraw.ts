@@ -3,7 +3,7 @@ import RawCommand from '../abstract/raw';
 import { escape } from '../../util';
 
 export default class ShellRawCommand extends RawCommand {
-    Cmd = 'shell:';
+    protected Cmd = 'shell:';
     execute(serial: string, command: string | string[]): Promise<Connection> {
         if (Array.isArray(command)) {
             command = command.map((cmd) => escape(cmd)).join(' ');

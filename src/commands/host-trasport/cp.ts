@@ -2,7 +2,7 @@ import { CpOptions } from '../../util';
 import FileSystemCommand from '../abstract/fileSystem';
 
 export default class CpCommand extends FileSystemCommand {
-    Cmd = 'cp';
+    protected Cmd = 'cp';
     intentArgs(options?: CpOptions): string[] {
         const args: string[] = [];
         if (!options) {

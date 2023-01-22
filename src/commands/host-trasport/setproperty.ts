@@ -2,7 +2,7 @@ import TransportParseAllCommand from '../abstract/transportParseAll';
 import { escape } from '../../util';
 
 export default class SetProp extends TransportParseAllCommand<void> {
-    Cmd = 'shell:setprop ';
+    protected Cmd = 'shell:setprop ';
     protected parse(value: string): void {
         if (!/^\s*$/.test(value)) {
             throw new Error(value);

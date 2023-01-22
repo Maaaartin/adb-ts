@@ -3,7 +3,7 @@ import PreExecute from './preExecute';
 
 export default abstract class ValueCommand<T> extends PreExecute<T> {
     protected abstract parse(value: string): T;
-    preExecute(...params: PrimitiveType[]): Promise<T> {
+    protected preExecute(...params: PrimitiveType[]): Promise<T> {
         return this.initExecute(...params).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:

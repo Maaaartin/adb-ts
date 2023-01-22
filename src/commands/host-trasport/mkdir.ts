@@ -2,7 +2,7 @@ import { MkDirOptions, escape } from '../../util';
 import FileSystemCommand from '../abstract/fileSystem';
 
 export default class MkDirCommand extends FileSystemCommand {
-    Cmd = 'mkdir';
+    protected Cmd = 'mkdir';
     intentArgs(options?: MkDirOptions): string[] {
         const args: string[] = [];
         if (!options) {

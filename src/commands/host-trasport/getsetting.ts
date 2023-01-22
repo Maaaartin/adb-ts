@@ -2,7 +2,7 @@ import { PropertyValue, SettingsMode, escape, stringToType } from '../../util';
 import TransportParseAllCommand from '../abstract/transportParseAll';
 
 export default class GetSetting extends TransportParseAllCommand<PropertyValue> {
-    Cmd = 'shell:settings get ';
+    protected Cmd = 'shell:settings get ';
 
     protected parse(value: string): PropertyValue {
         return stringToType(value);

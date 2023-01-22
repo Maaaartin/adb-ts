@@ -6,7 +6,7 @@ export default class RootCommand extends TransportParseAllCommand<void> {
             throw new Error(value);
         }
     }
-    Cmd = 'root:';
+    protected Cmd = 'root:';
     execute(serial: string): Promise<void> {
         return this.preExecute(serial);
     }

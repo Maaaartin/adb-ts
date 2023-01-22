@@ -2,7 +2,7 @@ import { PrimitiveType, SettingsMode, escape } from '../../util';
 import TransportParseAllCommand from '../abstract/transportParseAll';
 
 export default class PutSetting extends TransportParseAllCommand<void> {
-    Cmd = 'shell:settings put ';
+    protected Cmd = 'shell:settings put ';
     protected parse(value: string): void {
         if (!/^\s*$/.test(value)) {
             throw new Error(value);
