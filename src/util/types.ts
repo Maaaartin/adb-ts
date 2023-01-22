@@ -273,14 +273,6 @@ export interface IpConnectConstruct {
     new (connection: Connection): IpConnect;
 }
 
-export interface IPreExecute<T> {
-    preExecute: (...args: any[]) => Promise<T>;
-}
-
-export interface ICmd {
-    Cmd: string;
-}
-
 export type MonkeyCallback<T = null> = (
     err: Error | null,
     value: T | null,

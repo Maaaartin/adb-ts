@@ -1,8 +1,8 @@
 import { findMatches } from '../../util';
 import { ForwardsObject } from '../../util';
-import ParseCommand from '../abstract/parse';
+import ValueCommand from '../abstract/value';
 
-export default class ListForwardsCommand extends ParseCommand<
+export default class ListForwardsCommand extends ValueCommand<
     ForwardsObject[]
 > {
     parse(value: string): ForwardsObject[] {
@@ -16,6 +16,6 @@ export default class ListForwardsCommand extends ParseCommand<
     }
 
     execute(serial: string): Promise<ForwardsObject[]> {
-        return super.execute(`host-serial:${serial}:list-forward`);
+        return this.preExecute(`host-serial:${serial}:list-forward`);
     }
 }

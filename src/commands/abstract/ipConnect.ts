@@ -1,9 +1,7 @@
-import Command from '../command';
-import { ICmd } from '../../util';
+import Cmd from './cmd';
 
-export default abstract class IpConnect extends Command implements ICmd {
+export default abstract class IpConnect extends Cmd<string> {
     protected abstract Validator: RegExp;
-    abstract Cmd: string;
     keepAlive = true;
     execute(host: string, port: number): Promise<string> {
         return this.initExecute(`${this.Cmd}:${host}:${port}`)

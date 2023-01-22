@@ -1,4 +1,4 @@
-import { constructDevice } from '../src/commands/abstract/devices';
+import { constructDevice } from '../lib/commands/abstract/devices';
 
 describe('Construct device tests', () => {
     it('Should construct usb device', () => {

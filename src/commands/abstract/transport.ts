@@ -1,11 +1,11 @@
-import Command from '../command';
-import { ICmd, IPreExecute } from '../../util';
+import { Mixin } from 'ts-mixer';
+import Cmd from './cmd';
+import PreExecute from './preExecute';
 
-export default abstract class TransportCommand<T>
-    extends Command
-    implements IPreExecute<T>, ICmd
-{
-    abstract readonly Cmd: string;
+export default abstract class TransportCommand<T> extends Mixin(
+    PreExecute,
+    Cmd
+) {
     protected keepAlive = true;
     abstract execute(serial: string, ...args: any[]): Promise<T>;
     /**

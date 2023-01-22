@@ -1,16 +1,14 @@
-import Command from '../command';
-import { IPreExecute, PrimitiveType, Reply } from '../../util';
+import { PrimitiveType, Reply } from '../../util';
+import PreExecute from './preExecute';
 
-export default abstract class ValueCommand
-    extends Command
-    implements IPreExecute<string>
-{
-    preExecute(...params: PrimitiveType[]): Promise<string> {
+export default abstract class ValueCommand<T> extends PreExecute<T> {
+    protected abstract parse(value: string): T;
+    preExecute(...params: PrimitiveType[]): Promise<T> {
         return this.initExecute(...params).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
                     return this.parser.readValue().then((value) => {
-                        return value.toString().trim();
+                        return this.parse(value.toString().trim());
                     });
                 case Reply.FAIL:
                     return this.parser.readError().then((e) => {
