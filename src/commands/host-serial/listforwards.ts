@@ -5,6 +5,7 @@ import ValueCommand from '../abstract/value';
 export default class ListForwardsCommand extends ValueCommand<
     ForwardsObject[]
 > {
+    protected autoEnd = true;
     parse(value: string): ForwardsObject[] {
         return findMatches(value, /([^\s]+)\s([^\s]+)\s([^\s]+)/gm).map(
             ([serial, local, remote]) => ({

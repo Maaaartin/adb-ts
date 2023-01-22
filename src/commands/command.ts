@@ -6,7 +6,7 @@ import { encodeData } from '../util';
 export default abstract class Command<T = any> {
     public readonly connection: Connection;
     public readonly parser: Parser;
-    protected keepAlive = false;
+    protected abstract autoEnd: boolean;
     constructor(connection: Connection) {
         this.connection = connection;
         this.parser = new Parser(this.connection);
@@ -49,7 +49,7 @@ export default abstract class Command<T = any> {
         this.connection.write(encodeData(args.join(' ')));
         return this.parser
             .readAscii(4)
-            .finally(() => !this.keepAlive && this.endConnection());
+            .finally(() => this.autoEnd && this.endConnection());
     }
 
     public abstract execute(...args: any[]): Promise<T>;

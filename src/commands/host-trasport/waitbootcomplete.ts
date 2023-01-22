@@ -1,6 +1,7 @@
 import TransportCommand from '../abstract/transport';
 
 export default class WaitBootCompleteCommand extends TransportCommand<void> {
+    protected keepAlive = true;
     Cmd =
         'shell:while getprop sys.boot_completed 2>/dev/null; do sleep 1; done';
     protected postExecute(): Promise<void> {

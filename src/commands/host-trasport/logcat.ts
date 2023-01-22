@@ -8,7 +8,7 @@ export default class LogcatCommand extends TransportCommand<LogcatReader> {
     private logCat: LogcatReader | null = null;
     private options?: LogcatOptions | null;
     protected Cmd = 'shell:echo && ';
-    protected autoEnd = false;
+    protected keepAlive = false;
     protected postExecute(): LogcatReader {
         const stream = new LineTransform({ autoDetect: true });
         this.connection.pipe(stream);

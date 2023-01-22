@@ -1,6 +1,7 @@
 import ValueCommand from '../abstract/value';
 
 export default class GetDevicePathCommand extends ValueCommand<string> {
+    protected autoEnd = true;
     protected parse(value: string): string {
         return value;
     }

@@ -9,6 +9,7 @@ import {
 import TransportCommand from '../abstract/transport';
 
 export default class StartServiceCommand extends TransportCommand<void> {
+    protected keepAlive = false;
     protected Cmd = 'shell:am startservice ';
     protected postExecute(): Promise<void> {
         return this.parser

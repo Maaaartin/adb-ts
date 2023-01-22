@@ -6,8 +6,8 @@ export default abstract class TransportCommand<T> extends Mixin(
     PreExecute,
     Cmd
 ) {
-    protected keepAlive = true;
-    protected autoEnd = true;
+    protected autoEnd = false;
+    protected abstract keepAlive: boolean;
     abstract execute(serial: string, ...args: any[]): Promise<T>;
     /**
      * Executed when {@link preExecute} was successful
@@ -33,7 +33,7 @@ export default abstract class TransportCommand<T> extends Mixin(
                 })
             )
             .finally(() => {
-                this.autoEnd && this.endConnection();
+                !this.keepAlive && this.endConnection();
             });
     }
 }

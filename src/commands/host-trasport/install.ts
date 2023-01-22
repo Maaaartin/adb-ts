@@ -5,7 +5,7 @@ import TransportCommand from '../abstract/transport';
 export default class InstallCommand extends TransportCommand<void> {
     protected Cmd = 'shell:pm install ';
     private apk = '';
-    protected autoEnd = false;
+    protected keepAlive = false;
     protected postExecute(): Promise<void> {
         return this.parser
             .searchLine(/^(Success|Failure \[(.*?)\])$/)

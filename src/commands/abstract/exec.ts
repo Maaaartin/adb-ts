@@ -5,6 +5,7 @@ import TransportCommand from './transport';
 export default abstract class ExecCommand<T> extends TransportCommand<T> {
     private readonly uuid = crypto.randomUUID();
     private rawCmd = '';
+    protected keepAlive = false;
     protected abstract cast(value: string): T;
 
     postExecute(): Promise<T> {

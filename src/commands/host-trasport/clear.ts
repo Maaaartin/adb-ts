@@ -1,6 +1,7 @@
 import TransportCommand from '../abstract/transport';
 
 export default class ClearCommand extends TransportCommand<void> {
+    protected keepAlive = false;
     protected Cmd = 'shell:pm clear ';
     private pkg = '';
     protected postExecute(): Promise<void> {

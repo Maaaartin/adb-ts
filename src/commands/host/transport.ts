@@ -1,6 +1,6 @@
 import Command from '../command';
 export default class HostTransportCommand extends Command {
-    protected keepAlive = true;
+    protected autoEnd = false;
     execute(serial: string): Promise<void> {
         return this.initExecute('host:transport:' + serial)
             .then(this.handleReply(undefined))

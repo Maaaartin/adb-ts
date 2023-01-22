@@ -2,6 +2,7 @@ import net from 'net';
 import TransportCommand from '../abstract/transport';
 
 export default class GetIpAddressCommand extends TransportCommand<string[]> {
+    protected keepAlive = false;
     protected Cmd = "shell:ip route | awk '{ print $9 }'";
     protected postExecute(): Promise<string[]> {
         return this.parser.readAll().then((value) =>

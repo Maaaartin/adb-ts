@@ -3,6 +3,7 @@ import LineTransform from '../../linetransform';
 import TransportCommand from '../abstract/transport';
 
 export default class ScreencapCommand extends TransportCommand<Buffer> {
+    protected keepAlive = false;
     protected postExecute(): Promise<Buffer> {
         return this.parser
             .readBytes(1)

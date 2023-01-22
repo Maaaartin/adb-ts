@@ -2,6 +2,7 @@ import { Readable } from 'stream';
 import TransportCommand from '../abstract/transport';
 
 export default class IsInstalledCommand extends TransportCommand<boolean> {
+    protected keepAlive = false;
     protected Cmd = '';
     protected postExecute(): Promise<boolean> {
         return this.parser.readAscii(8).then(

@@ -2,6 +2,7 @@ import Command from '../command';
 import { Reply } from '../../util';
 
 export default class VersionCommand extends Command {
+    protected autoEnd = true;
     execute(): Promise<number> {
         return this.initExecute('host:version').then((reply) => {
             switch (reply) {

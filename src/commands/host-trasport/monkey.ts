@@ -3,7 +3,7 @@ import TransportCommand from '../abstract/transport';
 
 export default class MonkeyCommand extends TransportCommand<Connection> {
     protected Cmd = 'shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port ';
-    protected autoEnd = false;
+    protected keepAlive = true;
     protected postExecute(): Promise<Connection> {
         return this.parser.searchLine(/^:Monkey:/).then(() => {
             return this.connection;
