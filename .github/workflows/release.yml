@@ -1,25 +1,42 @@
 name: Publish Package to npmjs
 on:
-    release:
-        types: [created]
+    pull_request:
+        branches:
+            - master
+        types:
+            - closed
 jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
-            # Setup .npmrc file to publish to npm
-            - uses: actions/setup-node@v3
+            - name: Install Node, NPM and Yarn
+              uses: actions/setup-node@v3
               with:
-                  node-version: '16.x'
-                  registry-url: 'https://registry.npmjs.org'
-                  # Defaults to the user or organization that owns the workflow file
-                  scope: '@octocat'
-            - run: yarn --frozen-lockfile
-            - run: yarn build
-            - run: yarn test
-            - run: yarn publish
+                  node-version: 16
+
+            - name: Install modules
+              run: |
+                  yarn install --frozen-lockfile
+
+            - name: Build
+              run: |
+                  yarn build
+
+            - name: Test
+              run: |
+                  yarn test
+
+            - name: Lint
+              run: |
+                  yarn lint
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    docs:
+        name: Deploy docs
+        runs-on: ubuntu-latest
+
+        steps:
             - name: Generate docs
               run: |
                   yarn docs
@@ -28,12 +45,6 @@ jobs:
               with:
                   name: docs-files
                   path: ./docs
-    deploy:
-        name: Deploy docs
-        needs: build
-        runs-on: ubuntu-latest
-
-        steps:
             - name: Download artifact
               uses: actions/download-artifact@v2
               with:
