@@ -4,5 +4,7 @@ module.exports = {
     excludeExternals: true,
     externalPattern: '**/node_modules/**',
     out: './docs',
-    entryPoints: 'src/indexDocs.ts'
+    entryPoints: 'src/indexDocs.ts',
+    githubPages: true,
+    name: 'adb-ts'
 };
