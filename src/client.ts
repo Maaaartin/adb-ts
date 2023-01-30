@@ -383,7 +383,7 @@ export class Client {
     }
 
     /**
-     * Gets the the ip address(es) of default wlan interface.
+     * Gets the ipv4 addresses of default wlan interface.
      */
     getIpAddress(serial: string): Promise<string[]>;
     getIpAddress(serial: string, cb: ValueCallback<string[]>): void;
