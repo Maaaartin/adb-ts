@@ -24,10 +24,6 @@ export class LogcatReader extends StreamHandler {
         }
     }
 
-    setFilter(filter: (entry: LogcatEntry) => boolean): void {
-        this.filter = filter;
-    }
-
     hook(): void {
         this.stream.on('data', (data) => {
             this.parser.parse(data);

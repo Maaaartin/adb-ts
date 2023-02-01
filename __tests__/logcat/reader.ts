@@ -83,7 +83,8 @@ describe('Logcat reader tests', () => {
         const reader = new LogcatReader();
 
         reader.connect(new Writable());
-        reader.setFilter((ent) => ent.message === 'message');
+        (reader as any).filter = (ent: LogcatEntry) =>
+            ent.message === 'message';
         reader.on('entry', (err) => {
             expect(err).toEqual(
                 (() => {

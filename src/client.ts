@@ -116,7 +116,6 @@ const DEFAULT_OPTIONS: Readonly<AdbClientOptionsValues> = Object.freeze({
 });
 
 export class Client {
-    /** @ignore */
     private options: AdbClientOptionsValues;
 
     /**
@@ -147,7 +146,6 @@ export class Client {
         );
     }
 
-    /** @ignore */
     private connection(): Promise<Connection> {
         return new Promise<Connection>((resolve, reject) => {
             let triedStarting = false;
@@ -479,7 +477,6 @@ export class Client {
         );
     }
 
-    /** @ignore */
     private shellInternal(
         serial: string,
         command: string | NonEmptyArray<string>
@@ -1026,7 +1023,6 @@ export class Client {
         );
     }
 
-    /** @ignore */
     private syncService(serial: string): Promise<Sync> {
         return this.connection().then((conn) => {
             return new SyncCommand(conn).execute(serial);
@@ -1048,7 +1044,6 @@ export class Client {
         );
     }
 
-    /** @ignore */
     private installRemote(
         serial: string,
         apk: string,
@@ -1424,9 +1419,6 @@ export class Client {
         );
     }
 
-    /**
-     * @ignore
-     */
     private awaitActiveDevice(serial: string): Promise<void> {
         const track = (tracker: Tracker): Promise<void> => {
             return new Promise<void>((resolve, reject) => {
@@ -1547,7 +1539,6 @@ export class Client {
         );
     }
 
-    /** @ignore */
     private pushInternal(
         serial: string,
         data: string | Readable,
