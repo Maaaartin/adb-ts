@@ -9,6 +9,9 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
             - name: Install Node, NPM and Yarn
               uses: actions/setup-node@v3
               with:
@@ -22,18 +25,46 @@ jobs:
               run: |
                   yarn build
 
+            - name: Lint
+              run: |
+                  yarn lint
+
             - name: Test
               run: |
                   yarn test
 
-            - name: Lint
-              run: |
-                  yarn lint
+    release:
+        name: Release to npmjs
+        needs: build
+        if: github.event.pull_request.merged == true
+        runs-on: ubuntu-latest
+        steps:
+            - name: Git config
+              run: git config --global user.email "bot@google.com" && git config --global user.name "bot"
+
+            - name: Apply version major
+              if: contains(github.event.pull_request.labels.*.name, 'major')
+              run: npm version major
+
+            - name: Apply version minor
+              if: contains(github.event.pull_request.labels.*.name, 'minor')
+              run: npm version minor
+
+            - name: Apply version patch
+              if: contains(github.event.pull_request.labels.*.name, 'patch')
+              run: npm version patch
+
+            - name: Publish npm version
+              run: npm publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+            - name: Git push version
+              run: git push -u origin master --follow-tags
+
     docs:
         name: Deploy docs
+        needs: release
         runs-on: ubuntu-latest
 
         steps:
