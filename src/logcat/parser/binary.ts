@@ -2,13 +2,10 @@ import { LogcatEntry } from '../entry';
 import { Parser } from '../parser';
 
 export class Binary extends Parser {
-    private buffer: Buffer;
+    private buffer = Buffer.alloc(0);
     private readonly HEADER_SIZE_V1 = 20;
     private readonly HEADER_SIZE_MAX = 100;
-    constructor() {
-        super();
-        this.buffer = Buffer.from([]);
-    }
+
     parse(chunk: Buffer): void {
         this.buffer = Buffer.concat([this.buffer, chunk]);
         while (this.buffer.length > 4) {

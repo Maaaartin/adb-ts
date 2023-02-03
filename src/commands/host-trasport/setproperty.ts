@@ -9,7 +9,7 @@ export default class SetProp extends TransportParseAllCommand<void> {
         }
     }
     execute(serial: string, prop: string, value: any): Promise<void> {
-        this.Cmd += [prop, value].map((v) => escape(v)).join(' ');
+        this.Cmd += [prop, value].map(escape).join(' ');
         return this.preExecute(serial);
     }
 }

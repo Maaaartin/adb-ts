@@ -29,7 +29,7 @@ describe('Encode/decode length', () => {
 
 describe('Encode data', () => {
     it('Encode empty Buffer', () => {
-        const result = encodeData(Buffer.from(''));
+        const result = encodeData(Buffer.alloc(0));
         expect(result).toEqual(Buffer.from('0000'));
     });
 

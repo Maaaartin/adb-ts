@@ -369,7 +369,7 @@ device
     .openLogcat({
         filter: (entry) =>
             entry.message.includes('some string') &&
-            entry.prioritiy >= Priority.FATAL
+            entry.priority >= Priority.FATAL
     })
     .then((reader: LogcatReader) => {
         reader.on('entry', (entry) => {

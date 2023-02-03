@@ -5,7 +5,7 @@ export default class TcpIpCommand extends RestartConnection {
     protected Cmd = 'tcpip:';
 
     execute(serial: string, port: number): Promise<void> {
-        this.Cmd += `${port}`;
+        this.Cmd += port;
         return this.preExecute(serial);
     }
 }

@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 
 export class Parser extends EventEmitter {
     private column = 0;
-    private buffer = Buffer.from('');
+    private buffer = Buffer.alloc(0);
 
     parse(chunk: Buffer): void {
         this.buffer = Buffer.concat([chunk]);

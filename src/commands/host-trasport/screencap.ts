@@ -20,7 +20,7 @@ export default class ScreencapCommand extends TransportCommand<Buffer> {
         return new Promise<Buffer>((resolve, reject) => {
             const acc: Buffer[] = [];
             transform.on('data', (data) => {
-                acc.push(data);
+                acc.push(Buffer.from(data));
             });
             transform.once('end', () => {
                 resolve(Buffer.concat(acc));

@@ -8,9 +8,7 @@ export default class UninstallCommand extends TransportCommand<void> {
         return this.parser
             .searchLine(/^(Success|Failure.*|.*Unknown package:.*)$/)
             .then(() => {})
-            .finally(() => {
-                return this.parser.readAll();
-            });
+            .finally(() => this.parser.readAll());
     }
     execute(
         serial: string,

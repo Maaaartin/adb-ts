@@ -198,7 +198,7 @@ export type LogcatOptions = {
     /**
      * e.g. `(entry) =>
             entry.message.includes('some string') &&
-            entry.prioritiy >= Priority.FATAL`
+            entry.priority >= Priority.FATAL`
      */
     filter?: (entry: LogcatEntry) => boolean;
 };

@@ -19,10 +19,10 @@ export const encodeLength = (length: number): string => {
 };
 
 export const encodeData = (data: Buffer | string): Buffer => {
-    if (!Buffer.isBuffer(data)) {
-        data = Buffer.from(data);
-    }
-    return Buffer.concat([Buffer.from(encodeLength(data.length)), data]);
+    return Buffer.concat([
+        Buffer.from(encodeLength(data.length)),
+        Buffer.from(data)
+    ]);
 };
 
 export const stringToType = (value = ''): PropertyValue => {

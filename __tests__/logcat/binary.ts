@@ -58,7 +58,7 @@ describe('Binary parser tests', () => {
         parser.on('drain', () => {
             done();
         });
-        parser.parse(Buffer.from([]));
+        parser.parse(Buffer.alloc(0));
     });
 
     it('Should emit error', (done) => {

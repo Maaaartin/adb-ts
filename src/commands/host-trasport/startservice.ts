@@ -20,10 +20,9 @@ export default class StartServiceCommand extends TransportCommand<void> {
                     throw new Error(errMsg);
                 },
                 (err) => {
-                    if (err instanceof PrematureEOFError) {
-                        return;
+                    if (!(err instanceof PrematureEOFError)) {
+                        throw err;
                     }
-                    throw err;
                 }
             );
     }
