@@ -49,6 +49,7 @@ export class Device implements IDevice {
     private readonly client: Client;
 
     constructor(client: Client, props: IDevice) {
+        this.client = client;
         this.id = props.id;
         this.state = props.state;
         this.path = props.path;
@@ -57,7 +58,6 @@ export class Device implements IDevice {
         this.product = props.product;
         this.transportId = props.transportId;
         this.transport = props.transport;
-        this.client = client;
     }
 
     getSerialNo(): Promise<string> {

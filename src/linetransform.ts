@@ -5,13 +5,12 @@ interface LineTransformOptions extends TransformOptions {
 }
 
 export default class LineTransform extends Transform {
-    private savedR: any;
+    private savedR: Buffer | null = null;
     private autoDetect: boolean;
     private transformNeeded = true;
     private skipBytes = 0;
     constructor(options?: LineTransformOptions) {
         super(options);
-        this.savedR = null;
         this.autoDetect = options?.autoDetect || false;
     }
 

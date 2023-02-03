@@ -6,10 +6,9 @@ import T from 'timers/promises';
 
 export class Parser {
     public readonly socket: Socket;
-    private ended: boolean;
+    private ended = false;
     constructor(socket: Socket) {
         this.socket = socket;
-        this.ended = false;
     }
     readBytes(howMany: number): Promise<Buffer> {
         let tryRead: () => void,

@@ -2,18 +2,16 @@ import { NotConnectedError } from '../util';
 import StreamHandler from '../streamHandler';
 import { Binary } from './parser/binary';
 import { LogcatEntry } from './entry';
-import { Parser as LogcatParser } from './parser';
 import { Writable } from 'stream';
 import { LogcatReaderOptions } from '../util';
 
 export class LogcatReader extends StreamHandler {
     private filter?: (entry: LogcatEntry) => boolean;
-    private parser: LogcatParser;
+    private parser = new Binary();
     private stream_?: Writable;
     constructor(options?: LogcatReaderOptions) {
         super();
         this.filter = options?.filter;
-        this.parser = new Binary();
     }
 
     private get stream(): Writable {
