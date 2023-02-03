@@ -108,12 +108,12 @@ import { promisify } from 'util';
 import T from 'timers/promises';
 
 const ADB_DEFAULT_PORT = 5555;
-const DEFAULT_OPTIONS: Readonly<AdbClientOptionsValues> = Object.freeze({
+const DEFAULT_OPTIONS = {
     port: 5037,
     host: 'localhost',
     bin: 'adb',
     noAutoStart: false
-});
+} as const;
 
 export class Client {
     private options: AdbClientOptionsValues;
