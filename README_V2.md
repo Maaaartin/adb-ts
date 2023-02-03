@@ -548,7 +548,7 @@ device.pullFile('/path/on/device', 'output.txt').then(() => null);
 -   **srcPath: string**: path to file on the device to be read
 -   **destPath: boolean**: path to desired output file on the host
 
-Wraps `pull()` method, reads the content of file on the device to a file on the machine.
+Wraps `pull()` method, reads the content of file on the device and write it to a file on the machine.
 
 -   Returns: `Promise<void>`
 

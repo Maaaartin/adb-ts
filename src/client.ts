@@ -1637,7 +1637,7 @@ export class Client {
     }
 
     /**
-     * Wraps {@link pull} method, reads the content of file on the device to a file on the PC.
+     * Wraps {@link pull} method, reads the content of file on the device and write it to a file on the machine.
      */
     pullFile(serial: string, srcPath: string, destPath: string): Promise<void>;
     pullFile(
