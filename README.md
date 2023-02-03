@@ -7,6 +7,10 @@ has less dependencies than previous versions.
 ## Installation
 
 ```bash
+npm install adb-ts
+```
+
+```bash
 yarn add adb-ts
 ```
 
@@ -19,6 +23,12 @@ Run to install dependencies:
 
 ```bash
 yarn install
+```
+
+For building the output run
+
+```bash
+yarn build
 ```
 
 ### Contribution
