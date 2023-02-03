@@ -17,11 +17,10 @@ export class LogcatReader extends StreamHandler {
     }
 
     private get stream(): Writable {
-        if (this.stream_) {
-            return this.stream_;
-        } else {
+        if (!this.stream_) {
             throw new NotConnectedError();
         }
+        return this.stream_;
     }
 
     hook(): void {
