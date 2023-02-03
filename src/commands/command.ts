@@ -3,7 +3,7 @@ import { PrimitiveType, Reply } from '../util';
 import { Parser } from '../parser';
 import { encodeData } from '../util';
 
-export default abstract class Command<T = any> {
+export default abstract class Command<T> {
     public readonly connection: Connection;
     public readonly parser: Parser;
     protected abstract autoEnd: boolean;
@@ -12,7 +12,7 @@ export default abstract class Command<T = any> {
         this.parser = new Parser(this.connection);
     }
 
-    protected handleReply<T = void>(
+    protected handleReply<T>(
         resolver: T | (() => T | Promise<T>)
     ): (reply: string | Buffer) => Promise<T> {
         return (reply) => {

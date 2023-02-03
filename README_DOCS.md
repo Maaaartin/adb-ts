@@ -10,7 +10,7 @@ const statuses = await adb.map((device) => {
 });
 ```
 
-In order to start adb server automatically path to adb must be specified.
+In order to start adb server automatically `adb` must be globally accessible or path to `adb` binary must be specified.
 
 ```ts
 import { Client } from 'adb-ts';
@@ -24,13 +24,13 @@ For operations on all connected device `map` method can be used.
 In the callback an instance of [`Device`](./classes/Device.Device.html) comes as input parameter.
 
 ```ts
-const packages = await Promise.all([
+const packages = await Promise.all(
     adb.map(async (device) => {
         await device.uninstall('con.example.app');
         await device.install('/path/to/app.apk', { test: true });
         return device.listPackages();
     })
-]);
+);
 console.log(packages);
 ```
 

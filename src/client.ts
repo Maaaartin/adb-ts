@@ -1826,26 +1826,27 @@ export class Client {
     /**
      * Enables to execute any custom command.
      * @example
-     * class MyCommand extends Command {
-     *       execute() {
-     *          return super.execute('host:version').then((reply) => {
-     *              switch (reply) {
-     *                  case Reply.OKAY:
-     *                      return this.parser.readValue().then((value) => {
-     *                          return parseInt(value.toString(), 10);
-     *                      });
-     *                  case Reply.FAIL:
-     *                      return this.parser.readError().then((e) => {
-     *                          throw e;
-     *                      });
-     *                  default:
-     *                      return parseInt(reply, 10);
-     *              }
-     *          });
-     *      }
-     *  }
+     * class MyCommand extends Command<number> {
+     *    protected autoEnd = true;
+     *    execute(): Promise<number> {
+     *        return this.initExecute('host:version').then((reply) => {
+     *            switch (reply) {
+     *                case Reply.OKAY:
+     *                    return this.parser.readValue().then((value) => {
+     *                        return parseInt(value.toString(), 10);
+     *                    });
+     *                case Reply.FAIL:
+     *                    return this.parser.readError().then((e) => {
+     *                        throw e;
+     *                    });
+     *                default:
+     *                    return parseInt(reply, 10);
+     *            }
+     *        });
+     *    }
+     * }
      */
-    custom<T>(CustomCommand: CommandConstruct, ...args: any[]): Promise<T> {
+    custom<T>(CustomCommand: CommandConstruct<T>, ...args: any[]): Promise<T> {
         return this.connection().then((conn) => {
             return new CustomCommand(conn).execute(...args);
         });
@@ -1855,14 +1856,16 @@ export class Client {
      * Enables to execute any custom transport command.
      * @example
      * class MyCommand extends TransportCommand<null> {
-     *   Cmd = 'test ';
-     *   protected postExecute(): Promise<null> {
-     *     return Promise.resolve(null);
-     * }
-     *   public execute(serial: string, arg: string): Promise<null> {
-     *     this.Cmd += arg;
-     *     return this.preExecute(serial);
-     * }
+     *    protected keepAlive = false;
+     *    protected Cmd = 'test ';
+     *    protected postExecute(): null {
+     *        return null;
+     *    }
+     *    public execute(serial: string, arg: string): Promise<null> {
+     *        this.Cmd += arg;
+     *        return this.preExecute(serial);
+     *    }
+     *}
      */
     customTransport<T>(
         CustomCommand: TransportCommandConstruct<T>,

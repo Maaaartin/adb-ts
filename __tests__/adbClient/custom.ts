@@ -2,7 +2,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 import Command from '../../lib/commands/command';
 import { Client } from '../../lib/client';
 
-class TestCmd extends Command {
+class TestCmd extends Command<null> {
     protected autoEnd = true;
     public execute(arg: string): Promise<null> {
         return this.initExecute(arg).then(this.handleReply(null));

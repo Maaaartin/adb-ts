@@ -260,8 +260,8 @@ export interface InputDurationOptions extends InputOptions {
     duration?: number;
 }
 
-export interface CommandConstruct {
-    new (connection: Connection): Command;
+export interface CommandConstruct<T> {
+    new (connection: Connection): Command<T>;
 }
 
 export interface TransportCommandConstruct<T> {

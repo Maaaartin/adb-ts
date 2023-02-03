@@ -41,7 +41,7 @@ export function constructDevice(values: string[]): IDevice {
     };
 }
 
-export default abstract class DevicesCommand extends Command {
+export default abstract class DevicesCommand extends Command<IDevice[]> {
     protected readOnExecute = true;
     private parse(value: string): IDevice[] {
         const lines = value.split('\n').filter((l) => l !== '');

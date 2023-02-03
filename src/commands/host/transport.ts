@@ -1,5 +1,5 @@
 import Command from '../command';
-export default class HostTransportCommand extends Command {
+export default class HostTransportCommand extends Command<void> {
     protected autoEnd = false;
     execute(serial: string): Promise<void> {
         return this.initExecute('host:transport:' + serial)
