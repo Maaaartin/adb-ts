@@ -983,7 +983,7 @@ export class Client {
     /**
      * Opens logcat.
      * Analogous to `adb logcat`.
-     * @see LogcatReader and LogcatOptions for more details.
+     * @see `LogcatReader` and `LogcatOptions` for more details.
      * @example
      * import { Client, Priority } from 'adb-ts';
      * const adb = new Client();
@@ -1335,7 +1335,7 @@ export class Client {
 
     /**
      * Gets a PullTransfer instance.
-     * @see PullTransfer
+     * @see `PullTransfer`
      * @example
      * let data = '';
      * const transfer = await adb.pull('serial', '/path')
@@ -1366,7 +1366,7 @@ export class Client {
 
     /**
      * Gets a PushTransfer instance.
-     * @see PushTransfer
+     * @see `PushTransfer`
      * @example
      * const transfer = await adb.push('serial', '/path-src', '/path-dest')
      * transfer.on('end', () => { });
