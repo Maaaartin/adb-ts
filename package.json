@@ -60,5 +60,8 @@
         "stream": "^0.0.2",
         "ts-mixer": "^6.0.2",
         "util": "^0.12.5"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
     }
 }
