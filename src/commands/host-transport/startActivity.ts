@@ -1,5 +1,5 @@
 import { StartActivityOptions } from '../../util';
-import StartServiceCommand from './startService';
+import StartServiceCommand from './startservice';
 
 export default class StartActivityCommand extends StartServiceCommand {
     protected Cmd = 'shell:am start ';
