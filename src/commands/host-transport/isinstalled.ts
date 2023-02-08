@@ -1,22 +1,33 @@
 import { Readable } from 'stream';
-import TransportCommand from '../abstract/transport';
+import Connection from '../../connection';
+import { Reply } from '../..';
+import TransportCommand from '../transport';
 
-export default class IsInstalledCommand extends TransportCommand<boolean> {
-    protected keepAlive = false;
-    protected Cmd = '';
-    protected postExecute(): Promise<boolean> {
-        return this.parser.readAscii(8).then(
-            (reply) => {
-                if (reply === 'package:') {
+export default class IsInstalledCommand extends TransportCommand {
+  execute(serial: string, pkg: string | Readable) {
+    return super
+      .execute(serial, `shell:pm path ${pkg} 2>/dev/null`)
+      .then((reply) => {
+        switch (reply) {
+          case Reply.OKAY:
+            return this.parser
+              .readAscii(8)
+              .then((reply) => {
+                switch (reply) {
+                  case 'package:':
                     return true;
+                  default:
+                    return this.parser.unexpected(reply, 'package:');
                 }
-                throw this.parser.unexpected(reply, 'package:');
-            },
-            () => false
-        );
-    }
-    execute(serial: string, pkg: string | Readable): Promise<boolean> {
-        this.Cmd = `shell:pm path ${pkg} 2>/dev/null`;
-        return this.preExecute(serial);
-    }
+              })
+              .catch((err) => {
+                return false;
+              });
+          case Reply.FAIL:
+            return this.parser.readError();
+          default:
+            return this.parser.unexpected(reply, 'OKAY or FAIL');
+        }
+      });
+  }
 }

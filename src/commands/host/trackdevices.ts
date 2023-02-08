@@ -1,11 +1,7 @@
-import DevicesCommand from '../abstract/devices';
-import { IDevice } from '../../util';
+import DevicesCommand from '../../devices';
 
 export default class TrackCommand extends DevicesCommand {
-    protected autoEnd = true;
-    protected readOnExecute = false;
-
-    execute(): Promise<IDevice[]> {
-        return super.execute('host:track-devices-l');
-    }
+  execute() {
+    return super.execute('host:track-devices-l');
+  }
 }

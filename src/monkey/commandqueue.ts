@@ -1,107 +1,71 @@
+import Command from './command';
 import Api from './api';
-import { BaseCommand, Command, ParsableCommand } from './command';
-import { Monkey } from './client';
-import { MonkeyCallback } from '../util//types';
+import Monkey from './client';
+import { MonkeyCallback } from '..';
 
-export class CommandQueue extends Api {
-    private client: Monkey;
-    private commands: BaseCommand<any>[] = [];
-    private replies: any[] = [];
-    private errors: string[] = [];
-    private sent = false;
-    private callback?: (err: Error | null, data: any[]) => void;
-    constructor(client: Monkey) {
-        super();
-        this.client = client;
-    }
+export default class Multi extends Api {
+  private client: Monkey;
+  private commands: Command[] = [];
+  private replies = [];
+  private errors: string[] = [];
+  private counter = 0;
+  private sent = false;
+  private callback?: (err?: Error, data?: string[]) => void;
+  private collector: MonkeyCallback;
+  constructor(client: Monkey) {
+    super();
+    this.client = client;
 
-    private get queue(): BaseCommand<any>[] {
-        return this.client.queue;
-    }
+    this.collector = (err, result, cmd) => {
+      if (err) {
+        this.errors.push(`${cmd}: ${err.message}`);
+      }
+      this.replies.push(result);
+      this.counter -= 1;
+      return this.maybeFinish();
+    };
+  }
 
-    private set queue(queue: BaseCommand<any>[]) {
-        this.client.queue = queue;
-    }
-
-    private collector(
-        err: Error | null,
-        value: any | null,
-        command: string
-    ): void {
-        if (err) {
-            this.errors.push(`${command}: ${err.message}`);
-        }
-        this.replies.push(value || null);
-        return this.maybeFinish();
-    }
-
-    private maybeFinish(): void {
-        if (this.client.queue.length === 0) {
-            if (this.errors.length) {
-                setImmediate(() => {
-                    this.callback?.(new Error(this.errors.join(', ')), []);
-                });
-            } else {
-                setImmediate(() => {
-                    this.callback?.(null, this.replies);
-                });
-            }
-        }
-    }
-
-    private forbidReuse(): void {
-        if (this.sent) {
-            throw new Error('Reuse not supported');
-        }
-    }
-
-    private sendInternal(cmdConstruct: () => BaseCommand<any>): this {
-        this.forbidReuse();
-        this.commands.push(cmdConstruct());
-        return this;
-    }
-
-    sendAndParse(
-        command: string,
-        _cb: MonkeyCallback<any>,
-        parser: (data: any) => any
-    ): this {
-        return this.sendInternal(() => {
-            return new ParsableCommand(
-                command,
-                this.collector.bind(this),
-                parser
-            );
+  private maybeFinish() {
+    if (!this.counter) {
+      if (this.errors.length) {
+        setImmediate(() => {
+          this.callback?.(new Error(this.errors.join(', ')));
         });
-    }
-
-    send(command: string): this {
-        return this.sendInternal(() => {
-            return new Command(command, this.collector.bind(this));
+      } else {
+        setImmediate(() => {
+          this.callback?.(null, this.replies);
         });
+      }
     }
+  }
 
-    private getCommands(): string {
-        return this.commands
-            .map((cmd) => cmd.command)
-            .join('\n')
-            .concat('\n');
+  private forbidReuse() {
+    if (this.sent) {
+      throw new Error('Reuse not supported');
     }
+  }
 
-    private pushCommands(): void {
-        this.queue = [...this.queue, ...this.commands];
-    }
+  send(command: string) {
+    this.forbidReuse();
+    this.commands.push(new Command(command, this.collector));
+    return this;
+  }
 
-    execute(cb: (err: Error | null, data: any[]) => void): void {
-        this.forbidReuse();
-        this.sent = true;
-        this.callback = cb;
-        if (this.commands.length === 0) {
-            throw new Error('No commands to execute');
-        }
-        const commands = this.getCommands();
-        this.pushCommands();
-        this.commands = [];
-        this.client.stream.write(commands);
+  execute(cb: (err?: Error, data?: string[]) => void) {
+    this.forbidReuse();
+    this.counter = this.commands.length;
+    this.sent = true;
+    this.callback = cb;
+    if (!this.counter) return;
+
+    const parts = [];
+    for (const command of this.commands) {
+      this.client.queue.push(command);
+      parts.push(command.command);
     }
+    parts.push('');
+    this.commands = [];
+    this.client.getStream().write(parts.join('\n'));
+  }
 }

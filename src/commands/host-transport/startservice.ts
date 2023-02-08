@@ -1,141 +1,135 @@
 import {
-    PrematureEOFError,
-    UnexpectedDataError,
-    StartExtra,
-    ExtraType,
-    StartServiceOptions,
-    escape
-} from '../../util';
-import TransportCommand from '../abstract/transport';
+  AdbExtra,
+  AdbExtraType,
+  Reply,
+  StartServiceOptions,
+  StartActivityOptions,
+  PrematureEOFError,
+} from '../..';
+import TransportCommand from '../transport';
+import Promise from 'bluebird';
 
-export default class StartServiceCommand extends TransportCommand<void> {
-    protected keepAlive = false;
-    protected Cmd = 'shell:am startservice ';
-    protected postExecute(): Promise<void> {
-        return this.parser
+export default class StartServiceCommand extends TransportCommand {
+  private formatExtraType(type: AdbExtraType) {
+    switch (type) {
+      case 'string':
+        return 's';
+      case 'null':
+        return 'sn';
+      case 'bool':
+        return 'z';
+      case 'int':
+        return 'i';
+      case 'long':
+      case 'float':
+        return 'l';
+      case 'uri':
+        return 'u';
+      case 'component':
+        return 'cn';
+    }
+  }
+
+  private formatExtraObject(extra: AdbExtra) {
+    const args: string[] = [];
+    const type = this.formatExtraType(extra.type);
+    if (extra.type === 'null') {
+      args.push('--e' + type);
+      args.push(this.escape(extra.key));
+    } else if (Array.isArray(extra.value)) {
+      args.push('--e' + type + 'a');
+      args.push(this.escape(extra.key));
+      args.push(this.escape(extra.value.join(',')));
+    } else {
+      args.push('--e' + type);
+      args.push(this.escape(extra.key));
+      args.push(this.escape(extra.value));
+    }
+    return args;
+  }
+
+  private formatExtras(extras?: AdbExtra | AdbExtra[]) {
+    if (!extras) {
+      return [];
+    }
+    let result = [];
+    if (Array.isArray(extras)) {
+      for (const item of extras) {
+        result.push(...this.formatExtraObject(item));
+      }
+      return result;
+    } else {
+      result.push(...this.formatExtraObject(extras));
+      return result;
+    }
+  }
+
+  private intentArgs(options: StartServiceOptions) {
+    const args: string[] = [];
+    if (options.extras) {
+      args.push(...this.formatExtras(options.extras));
+    }
+    if (options.action) {
+      args.push('-a', this.escape(options.action));
+    }
+    if (options.data) {
+      args.push('-d', this.escape(options.data));
+    }
+    if (options.mimeType) {
+      args.push('-t', this.escape(options.mimeType));
+    }
+    if (options.category) {
+      if (Array.isArray(options.category)) {
+        options.category.forEach((category) => {
+          return args.push('-c', this.escape(category));
+        });
+      } else {
+        args.push('-c', this.escape(options.category));
+      }
+    }
+    if (options.flags) {
+      args.push('-f', this.escape(options.flags));
+    }
+    return args;
+  }
+
+  execute(
+    serial: string,
+    pkg: string,
+    service: string,
+    options?: StartServiceOptions,
+    command?: string
+  ): Promise<void> {
+    options = options || {};
+    const args = this.intentArgs(options);
+    if ((options as StartActivityOptions).debug) {
+      args.push('-D');
+    }
+    if ((options as StartActivityOptions).wait) {
+      args.push('-W');
+    }
+    args.push('-n', this.escape(`${pkg}/.${service}`));
+    args.push('--user', this.escape(options.user || 0));
+    command = command || 'shell:am startservice ';
+    return super.execute(serial, command, args.join(' ')).then((reply) => {
+      switch (reply) {
+        case Reply.OKAY:
+          return this.parser
             .searchLine(/^Error: (.*)$/)
-            .finally(() => this.parser.end())
-            .then(
-                ([, errMsg]) => {
-                    throw new Error(errMsg);
-                },
-                (err) => {
-                    if (!(err instanceof PrematureEOFError)) {
-                        throw err;
-                    }
-                }
-            );
-    }
-    private formatExtraType(type: ExtraType): string {
-        switch (type) {
-            case 'string':
-                return 's';
-            case 'null':
-                return 'sn';
-            case 'bool':
-                return 'z';
-            case 'int':
-                return 'i';
-            case 'long':
-                return 'l';
-            case 'float':
-                return 'f';
-            case 'uri':
-                return 'u';
-            case 'component':
-                return 'cn';
-            default:
-                throw new UnexpectedDataError(type, 'AdbExtraType');
-        }
-    }
-
-    private formatExtraObject(extra: StartExtra): string[] {
-        const type = this.formatExtraType(extra.type);
-        if (extra.type === 'null') {
-            return ['--e' + type, escape(extra.key)];
-        }
-        if (Array.isArray(extra.value)) {
-            return [
-                '--e' + type + 'a',
-                escape(extra.key),
-                (extra.value as (string | number)[]).map(escape).join(',')
-            ];
-        }
-        return ['--e' + type, escape(extra.key), escape(extra.value)];
-    }
-
-    private formatExtras(extras: StartExtra | StartExtra[] = []): string[] {
-        return [extras]
-            .flat()
-            .map((ext) => this.formatExtraObject(ext))
-            .flat();
-    }
-
-    private keyToFlag(k: keyof StartServiceOptions): string {
-        switch (k) {
-            case 'action':
-                return '-a';
-            case 'data':
-                return '-d';
-            case 'mimeType':
-                return '-t';
-            case 'category':
-                return '-c';
-            case 'flags':
-                return '-f';
-            default:
-                throw new UnexpectedDataError(k, 'keyof StartServiceOptions');
-        }
-    }
-    protected intentArgs(options: StartServiceOptions): string[] {
-        return Object.entries(options).reduce<string[]>((args, [k, v]) => {
-            if (typeof v === 'undefined') {
-                return [...args];
-            }
-            const k_ = k as keyof StartServiceOptions;
-
-            switch (k_) {
-                case 'extras':
-                    return [...args, ...this.formatExtras(options.extras)];
-
-                case 'action':
-                case 'data':
-                case 'mimeType':
-                case 'flags':
-                    return [...args, this.keyToFlag(k_), escape(options[k_])];
-                case 'category':
-                    return [
-                        ...args,
-                        ...(Array.isArray(options.category)
-                            ? options.category
-                            : [options.category]
-                        ).map((cat) =>
-                            [this.keyToFlag(k_), escape(cat)].join(' ')
-                        )
-                    ];
-
-                default:
-                    return [...args];
-            }
-        }, []);
-    }
-
-    execute(
-        serial: string,
-        pkg: string,
-        service: string,
-        options: StartServiceOptions = {}
-    ): Promise<void> {
-        this.Cmd = this.Cmd.concat(
-            [
-                ...this.intentArgs(options),
-                '-n',
-                escape(`${pkg}/.${service}`),
-                '--user',
-                escape(options.user || 0)
-            ].join(' ')
-        );
-
-        return this.preExecute(serial);
-    }
+            .finally(() => {
+              return this.parser.end();
+            })
+            .then((match) => {
+              throw new Error(match[1]);
+            })
+            .catch(PrematureEOFError, (err) => {
+              return;
+            });
+        case Reply.FAIL:
+          return this.parser.readError();
+        default:
+          return this.parser.unexpected(reply, 'OKAY or FAIL');
+      }
+    });
+  }
 }

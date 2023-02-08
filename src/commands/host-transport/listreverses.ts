@@ -1,18 +1,23 @@
-import { findMatches } from '../../util';
-import { ReversesObject } from '../../util';
-import TransportParseValueCommand from '../abstract/transportParseValue';
+import Promise from 'bluebird';
+import { ReversesObject } from '../..';
+import TransportParseValueCommand from '../transport-parse-value-command';
 
-export default class ListReversesCommand extends TransportParseValueCommand<
-    ReversesObject[]
-> {
-    protected Cmd = 'reverse:list-forward';
-
-    parse(value: string): ReversesObject[] {
-        return findMatches(value, /([^\s]+)\s([^\s]+)\s([^\s]+)/gm).map(
-            ([host, remote, local]) => ({ host, remote, local })
-        );
+export default class ListReversesCommand extends TransportParseValueCommand {
+  parse(value: string) {
+    const reverses = [];
+    const line = value.toString().split('\n');
+    for (const item of line) {
+      if (item) {
+        const tmp = item.split(/\s+/);
+        reverses.push({
+          remote: tmp[1],
+          local: tmp[2],
+        });
+      }
     }
-    execute(serial: string): Promise<ReversesObject[]> {
-        return this.preExecute(serial);
-    }
+    return reverses;
+  }
+  execute(serial: string): Promise<ReversesObject[]> {
+    return super.execute(serial, 'reverse:list-forward');
+  }
 }

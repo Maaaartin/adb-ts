@@ -1,32 +1,23 @@
-export abstract class Reply {
-    abstract value: string | null;
-    abstract isError(): this is ErrReply;
+export enum ReplyType {
+  ERROR = 'ERROR',
+  OK = 'OK',
 }
 
-export class OkReply extends Reply {
-    value: string | null;
-    constructor(value: string | null) {
-        super();
-        this.value = value;
-    }
+export default class Reply {
+  public type: ReplyType;
+  public value: string;
+  constructor(type: ReplyType, value: string) {
+    this.type = type;
+    this.value = value;
+  }
+  isError() {
+    return this.type === ReplyType.ERROR;
+  }
 
-    isError(): this is ErrReply {
-        return false;
+  toError() {
+    if (!this.isError()) {
+      throw new Error('toError() cannot be called for non-errors');
     }
-}
-
-export class ErrReply extends Reply {
-    value: string | null;
-    constructor(value: string | null) {
-        super();
-        this.value = value;
-    }
-
-    isError(): this is ErrReply {
-        return true;
-    }
-
-    toError(): Error {
-        return new Error(this.value || 'Unknown error');
-    }
+    return new Error(this.value);
+  }
 }
