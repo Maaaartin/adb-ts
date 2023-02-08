@@ -1,16 +1,10 @@
 import { Writable } from 'stream';
-import { LogcatReaderOptions } from '../util';
-import { LogcatReader } from './reader';
+import { LogcatReaderOptions } from '..';
+import { default as Reader } from './reader';
 
-export * from './reader';
-export * from './parser/binary';
-export * from './parser';
-export * from './priority';
-export * from './entry';
-
-export function readStream(
-    stream: Writable,
-    options: LogcatReaderOptions
-): LogcatReader {
-    return new LogcatReader(options).connect(stream);
+export default class Logcat {
+  public static readStream(stream: Writable, options: LogcatReaderOptions) {
+    return new Reader(options).connect(stream);
+  }
+  public static readonly Reader = Reader;
 }

@@ -1,15 +1,12 @@
-import { stringToType } from '../../util';
-import { PropertyValue } from '../../util';
-import TransportParseAllCommand from '../abstract/transportParseAll';
+import Promise from 'bluebird';
+import { SimpleType, stringToType } from '../..';
+import TransportParseAllCommand from '../transport-parse-all-command';
 
-export default class GetPropertyCommand extends TransportParseAllCommand<PropertyValue> {
-    protected Cmd = 'shell:getprop ';
-
-    parse(value: string): PropertyValue {
-        return stringToType(value);
-    }
-    execute(serial: string, prop: string): Promise<PropertyValue> {
-        this.Cmd += prop;
-        return this.preExecute(serial);
-    }
+export default class GetPropertyCommand extends TransportParseAllCommand {
+  parse(value) {
+    return stringToType(value);
+  }
+  execute(serial: string, prop: string): Promise<SimpleType> {
+    return super.execute(serial, `shell:getprop ${prop}`);
+  }
 }

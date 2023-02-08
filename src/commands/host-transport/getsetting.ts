@@ -1,19 +1,17 @@
-import { PropertyValue, SettingsMode, escape, stringToType } from '../../util';
-import TransportParseAllCommand from '../abstract/transportParseAll';
+import { SettingsMode, SimpleType, stringToType } from '../..';
+import TransportParseAllCommand from '../transport-parse-all-command';
+import Promise from 'bluebird';
 
-export default class GetSetting extends TransportParseAllCommand<PropertyValue> {
-    protected Cmd = 'shell:settings get ';
+export default class GetSetting extends TransportParseAllCommand {
+  protected parse(value: string) {
+    return stringToType(value);
+  }
 
-    protected parse(value: string): PropertyValue {
-        return stringToType(value);
-    }
-
-    execute(
-        serial: string,
-        mode: SettingsMode,
-        name: string
-    ): Promise<PropertyValue> {
-        this.Cmd += [mode, escape(name)].join(' ');
-        return this.preExecute(serial);
-    }
+  execute(
+    serial: string,
+    mode: SettingsMode,
+    name: string
+  ): Promise<SimpleType> {
+    return super.execute(serial, 'shell:settings get', mode, name);
+  }
 }

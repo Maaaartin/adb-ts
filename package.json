@@ -1,64 +1,59 @@
 {
-    "name": "adb-ts",
-    "version": "2.1.2",
-    "description": "A Node.js library for ADB",
-    "keywords": [
-        "adb",
-        "adbkit",
-        "adb-js",
-        "adb-ts",
-        "monkey",
-        "adb-monkey",
-        "logcat",
-        "adb-logcat",
-        "android"
-    ],
-    "bugs": {
-        "url": "https://github.com/Maaaartin/adb-ts/issues"
-    },
-    "license": "Apache-2.0",
-    "author": {
-        "name": "Martin Svoboda"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/Maaaartin/adb-ts.git"
-    },
-    "engines": {
-        "node": ">=16.0.0"
-    },
-    "main": "lib/index.js",
-    "types": "lib/index.d.ts",
-    "private": false,
-    "scripts": {
-        "test": "npx jest",
-        "build": "npx tsc",
-        "watch": "rm -rf lib && npx tsc -w",
-        "lint": "npx eslint . --max-warnings 0",
-        "docs": "npx typedoc --options typedoc.js"
-    },
-    "devDependencies": {
-        "@types/jest": "^29.4.0",
-        "@types/node": "^18.11.18",
-        "@typescript-eslint/eslint-plugin": "^5.50.0",
-        "@typescript-eslint/parser": "^5.50.0",
-        "eslint": "^8.33.0",
-        "eslint-plugin-jest": "^27.2.1",
-        "jest": "^29.4.1",
-        "ts-jest": "^29.0.5",
-        "typedoc": "^0.23.24",
-        "typescript": "^4.9.5"
-    },
-    "dependencies": {
-        "child_process": "^1.0.2",
-        "crypto": "^1.0.1",
-        "events": "^3.3.0",
-        "fs": "^0.0.1-security",
-        "moment": "^2.29.4",
-        "net": "^1.0.2",
-        "path": "^0.12.7",
-        "stream": "^0.0.2",
-        "ts-mixer": "^6.0.2",
-        "util": "^0.12.5"
-    }
+  "name": "adb-ts",
+  "version": "3.0.1",
+  "description": "A Node.js library for ADB",
+  "keywords": [
+    "adb",
+    "adbkit",
+    "adb-js",
+    "adb-ts",
+    "monkey",
+    "adb-monkey",
+    "logacat",
+    "adb-logcat",
+    "android"
+  ],
+  "bugs": {
+    "url": "https://github.com/Maaaartin/adb-ts/issues"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Martin Svoboda"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Maaaartin/adb-ts.git"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "private": false,
+  "scripts": {
+    "test": "jest",
+    "compile": "tsc",
+    "watch": "tsc -w"
+  },
+  "devDependencies": {
+    "@types/bluebird": "^3.5.37",
+    "@types/jest": "^29.2.2",
+    "@types/node": "^18.11.9",
+    "@types/ping": "^0.4.1",
+    "dotenv": "^16.0.3",
+    "ts-jest": "^29.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "child_process": "^1.0.2",
+    "fs": "^0.0.1-security",
+    "ip-regex": "^4.3.0",
+    "jest": "^29.3.1",
+    "jimp": "^0.16.2",
+    "moment": "^2.29.4",
+    "net": "^1.0.2",
+    "path": "^0.12.7",
+    "ping": "^0.4.2",
+    "stream": "^0.0.2",
+    "string-to-stream": "^3.0.1"
+  }
 }
