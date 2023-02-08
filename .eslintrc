@@ -1,33 +1,54 @@
 {
-  "env": {
-    "node": true,
-    "es6": true
-  },
-  "parser": "@typescript-eslint/parser", // Specifies the ESLint parser
-  "parserOptions": {
-    "ecmaVersion": 2020, // Allows for the parsing of modern ECMAScript features
-    "sourceType": "module" // Allows for the use of imports
-  },
-  "extends": [
-    "plugin:@typescript-eslint/recommended" // Uses the recommended rules from the @typescript-eslint/eslint-plugin
-  ],
-  "rules": {
-    "no-const-assign": "warn",
-    "no-this-before-super": "warn",
-    "no-undef": "error",
-    "no-unreachable": "warn",
-    "constructor-super": "warn",
-    "valid-typeof": "warn",
-    "no-extra-semi": "error",
-    "semi": "error",
-    "no-unused-vars": [
-      "warn",
-      {
-        "args": "after-used"
-      }
+    "env": {
+        "node": true,
+        "es6": true,
+        "jest/globals": true,
+        "commonjs": true
+    },
+    "globals": { "BufferEncoding": true, "NodeJS": true },
+    "ignorePatterns": ["lib", "__tests__", "docs"],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
+    "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-var-requires": "off",
-    "@typescript-eslint/no-empty-function": "warn"
-  }
+    "plugins": ["jest"],
+    "rules": {
+        "no-const-assign": "warn",
+        "no-this-before-super": "warn",
+        "no-undef": "error",
+        "no-unreachable": "warn",
+        "constructor-super": "error",
+        "valid-typeof": "warn",
+        "no-extra-semi": "error",
+        "semi": "error",
+        "default-case": "error",
+        "@typescript-eslint/no-unused-vars": [
+            "warn",
+            {
+                "args": "after-used"
+            }
+        ],
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/explicit-function-return-type": [
+            "error",
+            {
+                "allowTypedFunctionExpressions": true
+            }
+        ],
+        "@typescript-eslint/ban-types": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-expect": "error"
+    }
 }

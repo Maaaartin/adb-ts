@@ -102,6 +102,7 @@ dist
 
 # TernJS port file
 .tern-port
-vault
 lib
 script.ts
+*.apk
+docs/

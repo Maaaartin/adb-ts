@@ -1,539 +1,371 @@
 import {
-  CommandConstruct,
-  CpOptions,
-  DeviceState,
-  ForwardsObject,
-  IAdbDevice,
-  InputOptions,
-  InputSource,
-  InstallOptions,
-  KeyStringObject,
-  LogcatOptions,
-  MkDirOptions,
-  MvOptions,
-  ReversesObject,
-  RmOption,
-  SettingsMode,
-  SimpleType,
-  StartActivityOptions,
-  StartServiceOptions,
-  TouchOptions,
-  TransportType,
-  UninstallOptions,
-} from '.';
-
-import AdbClient from './client';
-import Connection from './connection';
-import FileStats from './filestats';
-import Jimp from 'jimp';
-import { KeyCode } from './keycode';
-import LogcatReader from './logcat/reader';
-import Monkey from './monkey/client';
-import Promise from 'bluebird';
-import PullTransfer from './sync/pulltransfer';
-import PushTransfer from './sync/pushtransfer';
+    TransportCommandConstruct,
+    CpOptions,
+    DeviceState,
+    ForwardsObject,
+    IDevice,
+    InputSource,
+    InstallOptions,
+    LogcatOptions,
+    MkDirOptions,
+    MvOptions,
+    ReversesObject,
+    RmOptions,
+    SettingsMode,
+    PrimitiveType,
+    StartActivityOptions,
+    StartServiceOptions,
+    TouchOptions,
+    TransportType,
+    UninstallOptions,
+    PropertyMap,
+    ValueCallback,
+    PropertyValue,
+    KeyEventOptions,
+    InputDurationOptions,
+    NonEmptyArray
+} from './util';
+import { Client } from './client';
+import { Connection } from './connection';
+import { FileStat } from './filestats';
+import { KeyCode } from './util/keycode';
+import { LogcatReader } from './logcat/reader';
+import { Monkey } from './monkey/client';
+import { PullTransfer } from './sync/pulltransfer';
+import { PushTransfer } from './sync/pushtransfer';
 import { Readable } from 'stream';
-import Stats from './sync/stats';
 import SyncEntry from './sync/entry';
 import { SyncMode } from './sync';
 
-export default class AdbDevice implements IAdbDevice {
-  id: string;
-  state: DeviceState;
-  path: string;
-  device: string;
-  model: string;
-  product: string;
-  transportId?: string;
-  transport: TransportType;
-  private client: AdbClient;
+export class Device implements IDevice {
+    readonly id: string;
+    readonly state: DeviceState;
+    readonly path: string | undefined;
+    readonly device: string | undefined;
+    readonly model: string | undefined;
+    readonly product: string | undefined;
+    readonly transportId: string;
+    readonly transport: TransportType;
+    private readonly client: Client;
 
-  constructor(client: AdbClient, props?: IAdbDevice) {
-    Object.assign(this, props || {});
-    this.client = client;
-  }
+    constructor(client: Client, props: IDevice) {
+        this.client = client;
+        this.id = props.id;
+        this.state = props.state;
+        this.path = props.path;
+        this.device = props.device;
+        this.model = props.model;
+        this.product = props.product;
+        this.transportId = props.transportId;
+        this.transport = props.transport;
+    }
 
-  getSerialNo(cb?: (err: Error, value: string) => void) {
-    return this.client.getSerialNo(this.id, cb);
-  }
+    getSerialNo(): Promise<string> {
+        return this.client.getSerialNo(this.id);
+    }
 
-  getDevicePath(cb?: (err: Error, value: string) => void) {
-    return this.client.getDevicePath(this.id, cb);
-  }
+    getDevicePath(): Promise<string> {
+        return this.client.getDevicePath(this.id);
+    }
 
-  listProperties(cb?: (err: Error, value: KeyStringObject) => void) {
-    return this.client.listProperties(this.id, cb);
-  }
+    listProperties(): Promise<PropertyMap> {
+        return this.client.listProperties(this.id);
+    }
 
-  listFeatures(cb?: (err: Error, value: KeyStringObject) => void) {
-    return this.client.listFeatures(this.id, cb);
-  }
+    listFeatures(): Promise<PropertyMap> {
+        return this.client.listFeatures(this.id);
+    }
 
-  listPackages(cb?: (err: Error, value: string[]) => void) {
-    return this.client.listPackages(this.id, cb);
-  }
+    listPackages(): Promise<string[]> {
+        return this.client.listPackages(this.id);
+    }
 
-  getIpAddress(cb?: (err: Error, value?: string) => void) {
-    return this.client.getIpAddress(this.id, cb);
-  }
+    getIpAddress(): Promise<string[]> {
+        return this.client.getIpAddress(this.id);
+    }
 
-  forward(local: string, remote: string, cb?: (err: Error) => void) {
-    return this.client.forward(this.id, local, remote, cb);
-  }
+    forward(local: string, remote: string): Promise<void> {
+        return this.client.forward(this.id, local, remote);
+    }
 
-  listForwards(cb?: (err: Error, value: ForwardsObject[]) => void) {
-    return this.client.listForwards(this.id, cb);
-  }
+    listForwards(): Promise<ForwardsObject[]> {
+        return this.client.listForwards(this.id);
+    }
 
-  reverse(local: string, remote: string, cb?: (err: Error) => void) {
-    return this.client.reverse(this.id, local, remote, cb);
-  }
+    reverse(local: string, remote: string): Promise<void> {
+        return this.client.reverse(this.id, local, remote);
+    }
 
-  listReverses(cb?: (err: Error, value: ReversesObject[]) => void) {
-    return this.client.listReverses(this.id, cb);
-  }
+    listReverses(): Promise<ReversesObject[]> {
+        return this.client.listReverses(this.id);
+    }
 
-  shell(command: string | string[], cb?: (err: Error, value: string) => void) {
-    return this.client.shell(this.id, command, cb);
-  }
+    shell(command: string): Promise<string> {
+        return this.client.shell(this.id, command);
+    }
 
-  reboot(cb?: (err: Error) => void) {
-    return this.client.reboot(this.id, cb);
-  }
+    reboot(): Promise<void> {
+        return this.client.reboot(this.id);
+    }
 
-  shutdown(cb?: (err: Error) => void) {
-    return this.client.shutdown(this.id, cb);
-  }
+    shutdown(): Promise<void> {
+        return this.client.shutdown(this.id);
+    }
 
-  remount(cb?: (err: Error) => void) {
-    return this.client.remount(this.id, cb);
-  }
+    remount(): Promise<void> {
+        return this.client.remount(this.id);
+    }
 
-  root(cb?: (err: Error) => void) {
-    return this.client.root(this.id, cb);
-  }
+    root(): Promise<void> {
+        return this.client.root(this.id);
+    }
 
-  screenshot(cb?: (err: Error, value: Jimp) => void) {
-    return this.client.screenshot(this.id, cb);
-  }
+    screenshot(): Promise<Buffer> {
+        return this.client.screenshot(this.id);
+    }
 
-  openTcp(
-    port: number | string,
-    cb?: (err: Error, value: Connection) => void
-  ): Promise<Connection>;
-  openTcp(
-    port: number | string,
-    host?: string,
-    cb?: (err: Error, value: Connection) => void
-  ): Promise<Connection>;
-  openTcp(
-    port: number | string,
-    host?: any,
-    cb?: (err: Error, value: Connection) => void
-  ) {
-    return this.client.openTcp(this.id, port, host, cb);
-  }
+    openTcp(port: number, host?: string): Promise<Connection> {
+        return this.client.openTcp(this.id, port, host as string);
+    }
 
-  openLogcat(
-    cb?: (err: Error, value: LogcatReader) => void
-  ): Promise<LogcatReader>;
-  openLogcat(
-    options?: LogcatOptions,
-    cb?: (err: Error, value: LogcatReader) => void
-  ): Promise<LogcatReader>;
-  openLogcat(options?: any, cb?: (err: Error, value: LogcatReader) => void) {
-    return this.client.openLogcat(this.id, options, cb);
-  }
+    openLogcat(options?: LogcatOptions): Promise<LogcatReader> {
+        return this.client.openLogcat(this.id, options as LogcatOptions);
+    }
 
-  clear(pkg: string, cb?: (err: Error) => void) {
-    return this.client.clear(this.id, pkg, cb);
-  }
+    clear(pkg: string): Promise<void> {
+        return this.client.clear(this.id, pkg);
+    }
 
-  install(apk: string | Readable, cb?: (err: Error) => void): Promise<void>;
-  install(
-    apk: string | Readable,
-    options?: InstallOptions,
-    cb?: (err: Error) => void
-  ): Promise<void>;
-  install(
-    apk: string | Readable,
-    options?: InstallOptions,
-    args?: string,
-    cb?: (err: Error) => void
-  ): Promise<void>;
-  install(
-    apk: string | Readable,
-    options?: any,
-    args?: any,
-    cb?: (err: Error) => void
-  ) {
-    return this.client.install(this.id, apk, options, args, cb);
-  }
-  uninstall(pkg: string, cb?: (err: Error) => void): Promise<void>;
-  uninstall(
-    pkg: string,
-    options?: UninstallOptions,
-    cb?: (err: Error) => void
-  ): Promise<void>;
-  uninstall(pkg: string, options?: any, cb?: (err: Error) => void) {
-    return this.client.uninstall(this.id, pkg, options, cb);
-  }
+    install(apk: string | Readable): Promise<void>;
+    install(apk: string | Readable, options?: InstallOptions): Promise<void>;
+    install(
+        apk: string | Readable,
+        options?: InstallOptions,
+        args?: string
+    ): Promise<void>;
+    install(
+        apk: string | Readable,
+        options?: InstallOptions,
+        args?: string
+    ): Promise<void> {
+        return this.client.install(
+            this.id,
+            apk,
+            options as InstallOptions,
+            args as string
+        );
+    }
 
-  isInstalled(pkg: string, cb?: (err: Error, value: boolean) => void) {
-    return this.client.isInstalled(this.id, pkg, cb);
-  }
+    uninstall(pkg: string, options?: UninstallOptions): Promise<void> {
+        return this.client.uninstall(this.id, pkg, options as UninstallOptions);
+    }
 
-  startActivity(
-    pkg: string,
-    activity: string,
-    cb?: (err: Error) => void
-  ): Promise<void>;
-  startActivity(
-    pkg: string,
-    activity: string,
-    options?: StartActivityOptions,
-    cb?: (err: Error) => void
-  ): Promise<void>;
-  startActivity(
-    pkg: string,
-    activity: string,
-    options?: any,
-    cb?: (err: Error) => void
-  ) {
-    return this.client.startActivity(this.id, pkg, activity, options, cb);
-  }
+    isInstalled(pkg: string): Promise<boolean> {
+        return this.client.isInstalled(this.id, pkg);
+    }
 
-  startService(pkg: string, service: string, cb?: (err: Error) => void);
-  startService(
-    pkg: string,
-    service: string,
-    options?: StartServiceOptions,
-    cb?: (err: Error) => void
-  ): Promise<void>;
-  startService(
-    pkg: string,
-    service: string,
-    options?: any,
-    cb?: (err: Error) => void
-  ) {
-    return this.client.startService(this.id, pkg, service, options, cb);
-  }
+    startActivity(
+        pkg: string,
+        activity: string,
+        options?: StartActivityOptions
+    ): Promise<void> {
+        return this.client.startActivity(
+            this.id,
+            pkg,
+            activity,
+            options as StartActivityOptions
+        );
+    }
 
-  stat(path: string, cb?: (err: Error, value: Stats) => void) {
-    return this.client.stat(this.id, path, cb);
-  }
+    startService(
+        pkg: string,
+        service: string,
+        options?: StartServiceOptions
+    ): Promise<void> {
+        return this.client.startService(
+            this.id,
+            pkg,
+            service,
+            options as StartActivityOptions
+        );
+    }
 
-  readDir(path: string, cb?: (err: Error, value: SyncEntry[]) => void) {
-    return this.client.readDir(this.id, path, cb);
-  }
+    readDir(path: string): Promise<SyncEntry[]> {
+        return this.client.readDir(this.id, path);
+    }
 
-  pushDataToFile(data: string, destPath: string, cb?: (err: Error) => void) {
-    return this.client.pushDataToFile(this.id, data, destPath, cb);
-  }
+    pushDataToFile(
+        data: string | Buffer | Readable,
+        destPath: string
+    ): Promise<void> {
+        return this.client.pushDataToFile(this.id, data, destPath);
+    }
 
-  pushFile(srcPath: string, destPath: string, cb?: (err: Error) => void) {
-    return this.client.pushFile(this.id, srcPath, destPath, cb);
-  }
+    pushFile(srcPath: string, destPath: string): Promise<void> {
+        return this.client.pushFile(this.id, srcPath, destPath);
+    }
 
-  pullDataFromFile(srcPath: string, cb?: (err: Error, value: string) => void) {
-    return this.client.pullDataFromFile(this.id, srcPath, cb);
-  }
+    pullDataFromFile(srcPath: string): Promise<Buffer> {
+        return this.client.pullDataFromFile(this.id, srcPath);
+    }
 
-  pullFile(srcPath: string, destPath: string, cb?: (err: Error) => void) {
-    return this.client.pullFile(this.id, srcPath, destPath, cb);
-  }
+    pullFile(srcPath: string, destPath: string): Promise<void> {
+        return this.client.pullFile(this.id, srcPath, destPath);
+    }
 
-  pull(path: string, cb?: (err: Error, value: PullTransfer) => void) {
-    return this.client.pull(this.id, path, cb);
-  }
+    pull(path: string): Promise<PullTransfer> {
+        return this.client.pull(this.id, path);
+    }
 
-  push(
-    srcPath: string | Readable,
-    destPath: string,
-    cb?: (err: Error, value: PushTransfer) => void
-  ): Promise<PushTransfer>;
-  push(
-    srcPath: string | Readable,
-    destPath: string,
-    mode?: SyncMode,
-    cb?: (err: Error, value: PushTransfer) => void
-  ): Promise<PushTransfer>;
-  push(
-    srcPath: string | Readable,
-    destPath: string,
-    mode?: any,
-    cb?: (err: Error, value: PushTransfer) => void
-  ) {
-    return this.client.push(this.id, srcPath, destPath, mode, cb);
-  }
+    push(
+        srcPath: string | Readable,
+        destPath: string,
+        mode?: SyncMode | ValueCallback<PushTransfer>
+    ): Promise<PushTransfer> {
+        return this.client.push(this.id, srcPath, destPath, mode as SyncMode);
+    }
 
-  tcpip(port = 5555, cb?: (err: Error, value: string) => void) {
-    return this.client.tcpip(this.id, port, cb);
-  }
+    tcpip(port = 5555): Promise<void> {
+        return this.client.tcpip(this.id, port);
+    }
 
-  usb(cb?: (err: Error) => void) {
-    return this.client.usb(this.id, cb);
-  }
+    usb(): Promise<void> {
+        return this.client.usb(this.id);
+    }
 
-  waitBootComplete(cb?: (err: Error) => void) {
-    return this.client.waitBootComplete(this.id, cb);
-  }
+    waitBootComplete(): Promise<void> {
+        return this.client.waitBootComplete(this.id);
+    }
 
-  listSettings(
-    mode: SettingsMode,
-    cb?: (err: Error, value: KeyStringObject) => void
-  ) {
-    return this.client.listSettings(this.id, mode, cb);
-  }
+    listSettings(mode: SettingsMode): Promise<PropertyMap> {
+        return this.client.listSettings(this.id, mode);
+    }
 
-  getProp(prop: string, cb?: (err: Error, value: SimpleType) => void) {
-    return this.client.getProp(this.id, prop, cb);
-  }
+    getProp(prop: string): Promise<PropertyValue> {
+        return this.client.getProp(this.id, prop);
+    }
 
-  setProp(
-    prop: string,
-    value: SimpleType,
-    cb?: (err: Error) => void
-  ): Promise<void> {
-    return this.client.setProp(this.id, prop, value, cb);
-  }
+    setProp(prop: string, value: PrimitiveType): Promise<void> {
+        return this.client.setProp(this.id, prop, value);
+    }
 
-  getSetting(
-    mode: SettingsMode,
-    name: string,
-    cb?: (err: Error, value: SimpleType) => void
-  ) {
-    return this.client.getSetting(this.id, mode, name, cb);
-  }
+    getSetting(mode: SettingsMode, name: string): Promise<PropertyValue> {
+        return this.client.getSetting(this.id, mode, name);
+    }
 
-  putSetting(
-    mode: SettingsMode,
-    name: string,
-    value: SimpleType,
-    cb?: (err: Error) => void
-  ) {
-    return this.client.putSetting(this.id, mode, name, value, cb);
-  }
+    putSetting(
+        mode: SettingsMode,
+        name: string,
+        value: PrimitiveType
+    ): Promise<void> {
+        return this.client.putSetting(this.id, mode, name, value);
+    }
 
-  tap(x: number, y: number, cb?: (err: Error) => void): Promise<void>;
-  tap(
-    x: number,
-    y: number,
-    source: InputSource,
-    cb?: (err: Error) => void
-  ): Promise<void>;
-  tap(x: number, y: number, source: any, cb?: (err: Error) => void) {
-    return this.client.tap(this.id, x, y, source, cb);
-  }
+    tap(x: number, y: number, source?: InputSource): Promise<void> {
+        return this.client.tap(this.id, x, y, source as InputSource);
+    }
 
-  text(text: SimpleType, cb?: (err: Error) => void): Promise<void>;
-  text(
-    text: SimpleType,
-    source: InputSource,
-    cb?: (err: Error) => void
-  ): Promise<void>;
-  text(text: SimpleType, source: any, cb?: (err: Error) => void) {
-    return this.client.text(this.id, text, source, cb);
-  }
+    text(text: string, source?: InputSource): Promise<void> {
+        return this.client.text(this.id, text, source as InputSource);
+    }
 
-  keyEvent(code: KeyCode | number, cb?: (err: Error) => void): Promise<void>;
-  keyEvent(
-    code: KeyCode | number,
-    options?: InputOptions & { longpress?: boolean },
-    cb?: (err: Error) => void
-  ): Promise<void>;
-  keyEvent(code: KeyCode | number, options?: any, cb?: (err: Error) => void) {
-    return this.client.keyEvent(this.id, code, options, cb);
-  }
+    keyEvent(
+        code: KeyCode | number | NonEmptyArray<number | KeyCode>,
+        options?: KeyEventOptions
+    ): Promise<void> {
+        return this.client.keyEvent(this.id, code, options as KeyEventOptions);
+    }
 
-  swipe(
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number,
-    cb?: (err: Error) => void
-  ): Promise<void>;
-  swipe(
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number,
-    options?: InputOptions & { duration?: number },
-    cb?: (err: Error) => void
-  ): Promise<void>;
-  swipe(
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number,
-    options?: any,
-    cb?: (err: Error) => void
-  ) {
-    return this.client.swipe(this.id, x1, y1, x2, y2, options, cb);
-  }
+    swipe(
+        x1: number,
+        y1: number,
+        x2: number,
+        y2: number,
+        options?: InputDurationOptions
+    ): Promise<void> {
+        return this.client.swipe(
+            this.id,
+            x1,
+            y1,
+            x2,
+            y2,
+            options as InputDurationOptions
+        );
+    }
 
-  dragAndDrop(
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number,
-    cb?: (err: Error) => void
-  ): Promise<void>;
-  dragAndDrop(
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number,
-    options?: InputOptions & { duration?: number },
-    cb?: (err: Error) => void
-  ): Promise<void>;
-  dragAndDrop(
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number,
-    options?: any,
-    cb?: (err: Error) => void
-  ) {
-    return this.client.dragAndDrop(this.id, x1, y1, x2, y2, options, cb);
-  }
+    dragAndDrop(
+        x1: number,
+        y1: number,
+        x2: number,
+        y2: number,
+        options?: InputDurationOptions
+    ): Promise<void> {
+        return this.client.dragAndDrop(
+            this.id,
+            x1,
+            y1,
+            x2,
+            y2,
+            options as InputDurationOptions
+        );
+    }
 
-  press(cb?: (err: Error) => void): Promise<void>;
-  press(source?: InputSource, cb?: (err: Error) => void): Promise<void>;
-  press(source: any, cb?: (err: Error) => void) {
-    return this.client.press(this.id, source, cb);
-  }
+    press(source?: InputSource): Promise<void> {
+        return this.client.press(this.id, source as InputSource);
+    }
 
-  roll(x: number, y: number, cb?: (err: Error) => void): Promise<void>;
-  roll(
-    x: number,
-    y: number,
-    source?: InputSource,
-    cb?: (err: Error) => void
-  ): Promise<void>;
-  roll(x: number, y: number, source: any, cb?: (err: Error) => void) {
-    return this.client.roll(this.id, x, y, source, cb);
-  }
+    roll(x: number, y: number, source?: InputSource): Promise<void> {
+        return this.client.roll(this.id, x, y, source as InputSource);
+    }
 
-  custom<T>(
-    CustomCommand: CommandConstruct,
-    cb?: (err: Error, value: T) => void
-  ) {
-    return this.client.customTransport<T>(CustomCommand, this.id, cb);
-  }
+    custom<T>(
+        CustomCommand: TransportCommandConstruct<T>,
+        ...args: any[]
+    ): Promise<T> {
+        return this.client.customTransport<T>(CustomCommand, this.id, args);
+    }
 
-  openMonkey(cb?: (err: Error, value: Monkey) => void) {
-    return this.client.openMonkey(this.id, cb);
-  }
+    openMonkey(): Promise<Monkey> {
+        return this.client.openMonkey(this.id);
+    }
 
-  killApp(pkg: string, cb?: (err: Error) => void) {
-    return this.client.killApp(this.id, pkg, cb);
-  }
+    killApp(pkg: string): Promise<void> {
+        return this.client.killApp(this.id, pkg);
+    }
 
-  exec(cmd: string, cb?: (err: Error, value: string) => void) {
-    return this.client.execDevice(this.id, cmd, cb);
-  }
+    exec(cmd: string): Promise<string> {
+        return this.client.execDevice(this.id, cmd);
+    }
 
-  execShell(cmd: string, cb?: (err: Error, value: string) => void) {
-    return this.client.execDeviceShell(this.id, cmd, cb);
-  }
+    execShell(cmd: string): Promise<string> {
+        return this.client.execDeviceShell(this.id, cmd);
+    }
 
-  batteryStatus(cb?: (err: Error, value: KeyStringObject) => void) {
-    return this.client.batteryStatus(this.id, cb);
-  }
+    batteryStatus(): Promise<PropertyMap> {
+        return this.client.batteryStatus(this.id);
+    }
 
-  rm(
-    path: string,
-    cb?: (err: Error | null, value: string) => void
-  ): Promise<string>;
-  rm(
-    path: string,
-    options?: RmOption,
-    cb?: (err: Error | null, value: string) => void
-  ): Promise<string>;
-  rm(
-    path: string,
-    options?: any,
-    cb?: (err: Error | null, value: string) => void
-  ) {
-    return this.client.rm(this.id, path, options, cb);
-  }
+    rm(path: string, options?: RmOptions): Promise<void> {
+        return this.client.rm(this.id, path, options as RmOptions);
+    }
 
-  mkdir(
-    path: string,
-    cb?: (err: Error | null, value: string) => void
-  ): Promise<string>;
-  mkdir(
-    path: string,
-    options?: MkDirOptions,
-    cb?: (err: Error | null, value: string) => void
-  ): Promise<string>;
-  mkdir(
-    path: string,
-    options?: any,
-    cb?: (err: Error | null, value: string) => void
-  ) {
-    return this.client.mkdir(this.id, path, options, cb);
-  }
+    mkdir(path: string, options?: MkDirOptions): Promise<void> {
+        return this.client.mkdir(this.id, path, options);
+    }
 
-  touch(
-    path: string,
-    cb?: (err: Error | null, value: string) => void
-  ): Promise<string>;
-  touch(
-    path: string,
-    options?: TouchOptions,
-    cb?: (err: Error | null, value: string) => void
-  ): Promise<string>;
-  touch(
-    path: string,
-    options?: any,
-    cb?: (err: Error | null, value: string) => void
-  ) {
-    return this.client.touch(this.id, path, options, cb);
-  }
+    touch(path: string, options?: TouchOptions): Promise<void> {
+        return this.client.touch(this.id, path, options as TouchOptions);
+    }
 
-  mv(
-    srcPath: string,
-    destPath: string,
-    cb?: (err: Error | null, value: string) => void
-  ): Promise<string>;
-  mv(
-    srcPath: string,
-    destPath: string,
-    options?: MvOptions,
-    cb?: (err: Error | null, value: string) => void
-  ): Promise<string>;
-  mv(
-    srcPath: string,
-    destPath: string,
-    options?: any,
-    cb?: (err: Error | null, value: string) => void
-  ) {
-    return this.client.mv(this.id, srcPath, destPath, options, cb);
-  }
+    mv(srcPath: string, destPath: string, options?: MvOptions): Promise<void> {
+        return this.client.mv(this.id, srcPath, destPath, options as MvOptions);
+    }
 
-  cp(
-    srcPath: string,
-    destPath: string,
-    cb?: (err: Error | null, value: string) => void
-  ): Promise<string>;
-  cp(
-    srcPath: string,
-    destPath: string,
-    options?: CpOptions,
-    cb?: (err: Error | null, value: string) => void
-  ): Promise<string>;
-  cp(
-    srcPath: string,
-    destPath: string,
-    options?: any,
-    cb?: (err: Error | null, value: string) => void
-  ) {
-    return this.client.cp(this.id, srcPath, destPath, options, cb);
-  }
+    cp(srcPath: string, destPath: string, options?: CpOptions): Promise<void> {
+        return this.client.cp(this.id, srcPath, destPath, options as CpOptions);
+    }
 
-  fileStat(path: string, cb?: (err: Error | null, value: FileStats) => void) {
-    return this.client.fileStat(this.id, path, cb);
-  }
+    fileStat(path: string): Promise<FileStat> {
+        return this.client.fileStat(this.id, path);
+    }
 }

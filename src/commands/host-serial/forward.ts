@@ -1,29 +1,14 @@
-import Command from '../../command';
-import { Reply } from '../..';
-import Promise from 'bluebird';
+import Command from '../command';
 
-export default class ForwardCommand extends Command {
-  execute(serial: string, local: string, remote: string): Promise<void> {
-    return super
-      .execute(`host-serial:${serial}:forward:${local};${remote}`)
-      .then((reply) => {
-        switch (reply) {
-          case Reply.OKAY:
-            return this.parser.readAscii(4).then((reply) => {
-              switch (reply) {
-                case Reply.OKAY:
-                  return;
-                case Reply.FAIL:
-                  return this.parser.readError();
-                default:
-                  return this.parser.unexpected(reply, 'OKAY or FAIL');
-              }
-            });
-          case Reply.FAIL:
-            return this.parser.readError();
-          default:
-            return this.parser.unexpected(reply, 'OKAY or FAIL');
-        }
-      });
-  }
+export default class ForwardCommand extends Command<void> {
+    protected autoEnd = true;
+    execute(serial: string, local: string, remote: string): Promise<void> {
+        return this.initExecute(
+            `host-serial:${serial}:forward:${local};${remote}`
+        ).then(
+            this.handleReply(() =>
+                this.parser.readAscii(4).then(this.handleReply(undefined))
+            )
+        );
+    }
 }

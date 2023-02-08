@@ -1,32 +1,25 @@
 import { RmOptions } from 'fs';
-import FileSystemCommand from '../filesystem';
+import FileSystemCommand from '../abstract/fileSystem';
 
 export default class RmCommand extends FileSystemCommand {
-  intentArgs(options?: RmOptions) {
-    const args: string[] = [];
-    if (!options) {
-      return args;
-    }
-    if (options.force) {
-      args.push('-f');
-      delete options.force;
-    }
-    if (options.recursive) {
-      args.push('-rR');
-      delete options.recursive;
+    protected Cmd = 'rm';
+    intentArgs(options?: RmOptions): string[] {
+        const args: string[] = [];
+        if (!options) {
+            return args;
+        }
+        if (options.force) {
+            args.push('-f');
+        }
+
+        if (options.recursive) {
+            args.push('-rR');
+        }
+
+        return args;
     }
 
-    for (const item of Object.entries(options)) {
-      args.push(item[0], this.escape(item[1]));
+    execute(serial: string, path: string, options?: RmOptions): Promise<void> {
+        return super.execute(serial, path, options);
     }
-    return args;
-  }
-
-  getCmd() {
-    return 'rm';
-  }
-
-  execute(serial: string, path: string, options?: RmOptions) {
-    return super.execute(serial, path, options);
-  }
 }

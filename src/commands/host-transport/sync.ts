@@ -1,18 +1,16 @@
-import { Reply } from '../..';
-import Sync from '../../sync';
-import TransportCommand from '../transport';
+import { Sync } from '../../sync';
+import TransportCommand from '../abstract/transport';
 
-export default class SyncCommand extends TransportCommand {
-  execute(serial: string) {
-    return super.execute(serial, 'sync:').then((reply) => {
-      switch (reply) {
-        case Reply.OKAY:
-          return new Sync(this.connection);
-        case Reply.FAIL:
-          return this.parser.readError();
-        default:
-          return this.parser.unexpected(reply, 'OKAY or FAIL');
-      }
-    });
-  }
+export default class SyncCommand extends TransportCommand<Sync> {
+    protected Cmd = 'sync:';
+    protected keepAlive = true;
+    protected postExecute(): Sync {
+        return new Sync(this.connection);
+    }
+    execute(serial: string): Promise<Sync> {
+        return this.preExecute(serial).catch((err) => {
+            this.endConnection();
+            throw err;
+        });
+    }
 }

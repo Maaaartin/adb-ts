@@ -1,11 +1,9 @@
-import { IAdbDevice } from '../..';
-import Promise from 'bluebird';
-import DevicesCommand from '../../devices';
+import DevicesCommand from '../abstract/devices';
+import { IDevice } from '../../util';
 
 export default class ListDevicesCommand extends DevicesCommand {
-  execute(): Promise<IAdbDevice[]> {
-    return super.execute('host:devices-l').then(() => {
-      return this.readDevices();
-    });
-  }
+    protected autoEnd = true;
+    execute(): Promise<IDevice[]> {
+        return super.execute('host:devices-l');
+    }
 }

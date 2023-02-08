@@ -1,71 +1,76 @@
-import { CpOptions } from '../..';
-import FileSystemCommand from '../filesystem';
+import { CpOptions } from '../../util';
+import FileSystemCommand from '../abstract/fileSystem';
 
 export default class CpCommand extends FileSystemCommand {
-  intentArgs(options?: CpOptions) {
-    const args: string[] = [];
-    if (!options) {
-      return args;
-    } else {
-      if (options.verbose) {
-        args.push('-v');
-      }
-      if (options.noClobber) {
-        args.push('-n');
-      }
-      if (options.symlink) {
-        args.push('-s');
-      }
-      if (options.interactive) {
-        args.push('-i');
-      }
-
-      if (options.hardLink) {
-        args.push('-l');
-      }
-
-      if (options.noFollowSymlinks) {
-        args.push('-P');
-      }
-      if (options.followAllSymlinks) {
-        args.push('-L');
-      }
-      if (options.followListedSymlinks) {
-        args.push('-H');
-      }
-      if (options.archive) {
-        args.push('-a');
-      } else {
-        if (options.recursive) {
-          args.push('-r');
+    protected Cmd = 'cp';
+    intentArgs(options?: CpOptions): string[] {
+        const args: string[] = [];
+        if (!options) {
+            return args;
         }
-        if (options.noDereference) {
-          args.push('-d');
+
+        if (options.noClobber) {
+            args.push('-n');
+        }
+        if (options.symlink) {
+            args.push('-s');
+        }
+
+        if (options.hardLink) {
+            args.push('-l');
+        }
+
+        if (options.noFollowSymlinks) {
+            args.push('-P');
+        }
+        if (options.followAllSymlinks) {
+            args.push('-L');
+        }
+        if (options.followListedSymlinks) {
+            args.push('-H');
+        }
+        if (options.archive) {
+            args.push('-a');
+        } else {
+            if (options.recursive) {
+                args.push('-r');
+            }
+            if (options.noDereference) {
+                args.push('-d');
+            }
+            if (options.preserveTimestamps) {
+                args.push('-p');
+            }
         }
         if (options.preserve) {
-          const params = options.preserve.all
-            ? ['all']
-            : Object.entries(options.preserve)
-                .filter(([key, value]) => key !== 'all' && value)
-                .map((item) => item[0]);
-          args.push(`--preserve=${params.join(',')}`);
+            const params = options.preserve.all
+                ? ['a']
+                : Object.entries(options.preserve)
+                      .filter(([key, value]) => key !== 'all' && value)
+                      .map(([key]) => key[0]);
+            args.push(`--preserve=${params.join('')}`);
         }
-      }
-      if (options.delFirst) {
-        args.push('-F');
-      }
-      if (options.delDest) {
-        args.push('-f');
-      }
-      return args;
+        if (options.delFirst) {
+            args.push('-F');
+        }
+        if (options.delDest) {
+            args.push('-f');
+        }
+        if (options.update) {
+            args.push('-u');
+        }
+
+        if (options.copyToTarget) {
+            args.push('-t');
+        }
+        return args;
     }
-  }
 
-  getCmd() {
-    return 'cp';
-  }
-
-  execute(serial: string, paths: string[], options?: CpOptions) {
-    return super.execute(serial, paths, options);
-  }
+    execute(
+        serial: string,
+        paths: [string, string],
+        options?: CpOptions
+    ): Promise<void> {
+        return super.execute(serial, paths, options);
+    }
 }
