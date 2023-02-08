@@ -1,14 +1,19 @@
-import TransportParseAllCommand from '../abstract/transportParseAll';
-import { PropertyMap } from '../../util';
-import { findMatches } from '../../util';
+import TransportParseAllCommand from '../transport-parse-all-command';
+import Promise from 'bluebird';
+import { KeyStringObject, stringToType } from '../..';
 
-export default class ListFeaturesCommand extends TransportParseAllCommand<PropertyMap> {
-    protected Cmd = 'shell:pm list features 2>/dev/null';
-    parse(value: string): PropertyMap {
-        return findMatches(value, /^feature:(.*?)(?:=(.*?))?\r?$/gm, 'map');
+export default class ListFeaturesCommand extends TransportParseAllCommand {
+  parse(value: string) {
+    const features: KeyStringObject = {};
+    let match;
+    const regExp = /^feature:(.*?)(?:=(.*?))?\r?$/gm;
+    while ((match = regExp.exec(value))) {
+      features[match[1]] = stringToType(match[2]) || true;
     }
+    return features;
+  }
 
-    execute(serial: string): Promise<PropertyMap> {
-        return this.preExecute(serial);
-    }
+  execute(serial: string): Promise<KeyStringObject> {
+    return super.execute(serial, 'shell:pm list features 2>/dev/null');
+  }
 }

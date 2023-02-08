@@ -1,14 +1,19 @@
-import { Connection } from '../../connection';
-import RawCommand from '../abstract/raw';
+import { encodeData, Reply } from '../..';
+import TransportCommand from '../transport';
 
-export default class TcpCommand extends RawCommand {
-    protected Cmd = 'tcp:';
-
-    execute(serial: string, port: number, host?: string): Promise<Connection> {
-        this.Cmd += host ? host + ':' + port : port;
-        return this.preExecute(serial).catch((err) => {
-            this.connection.end();
-            throw err;
-        });
-    }
+export default class TcpCommand extends TransportCommand {
+  execute(port: number | string, host?: string) {
+    const encoded = encodeData('tcp:' + port + (host ? ':' + host : ''));
+    this.connection.write(encoded);
+    return this.parser.readAscii(4).then((reply) => {
+      switch (reply) {
+        case Reply.OKAY:
+          return this.connection;
+        case Reply.FAIL:
+          return this.parser.readError();
+        default:
+          return this.parser.unexpected(reply, 'OKAY or FAIL');
+      }
+    });
+  }
 }

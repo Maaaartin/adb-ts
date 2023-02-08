@@ -1,14 +1,10 @@
-import { Connection } from '../../connection';
-import RawCommand from '../abstract/raw';
-import { escape } from '../../util';
+import RawCommand from '../raw-command';
 
 export default class ShellRawCommand extends RawCommand {
-    protected Cmd = 'shell:';
-    execute(serial: string, command: string | string[]): Promise<Connection> {
-        this.Cmd += [command].flat().map(escape).join(' ');
-        return this.preExecute(serial).catch((err) => {
-            this.connection.end();
-            throw err;
-        });
+  execute(serial: string, command: string | string[]) {
+    if (Array.isArray(command)) {
+      command = command.map(this.escape).join(' ');
     }
+    return super.execute(serial, 'shell:', command);
+  }
 }
