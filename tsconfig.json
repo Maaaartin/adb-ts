@@ -12,8 +12,7 @@
         "strictNullChecks": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
-        "alwaysStrict": true,
-        "forceConsistentCasingInFileNames": true
+        "alwaysStrict": true
     },
     "include": ["./src"],
     "exclude": ["node_modules"]
