@@ -106,3 +106,4 @@ lib
 script.ts
 *.apk
 docs/
+.DS_Store
