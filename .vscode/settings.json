@@ -1,0 +1,29 @@
+{
+    "cSpell.words": [
+        "abits",
+        "aflags",
+        "bootloader",
+        "doubletap",
+        "dpad",
+        "draganddrop",
+        "filestats",
+        "getprop",
+        "gname",
+        "keyevent",
+        "logcat",
+        "longpress",
+        "lowmemorykiller",
+        "moutpoint",
+        "nodeify",
+        "nsec",
+        "seccon",
+        "setprop",
+        "sideload",
+        "startservice",
+        "tcpip",
+        "touchnavigation",
+        "touchpad",
+        "UNEX",
+        "xattr"
+    ]
+}

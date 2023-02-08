@@ -1,72 +1,68 @@
-import { EventEmitter } from 'events';
+import { NotConnectedError } from '../util';
+import StreamHandler from '../streamHandler';
+import { Binary } from './parser/binary';
+import { LogcatEntry } from './entry';
 import { Writable } from 'stream';
-import { LogcatReaderOptions } from '..';
-import LogcatEntry from './entry';
-import LogcatParser from './parser';
-import Binary from './parser/binary';
-import Transform from './transform';
+import { LogcatReaderOptions } from '../util';
 
-export default class LogcatReader extends EventEmitter {
-  private filter?: (entry: LogcatEntry) => boolean;
-  private parser: LogcatParser;
-  private stream: Writable;
-  private options: LogcatReaderOptions;
-  constructor(options?: LogcatReaderOptions) {
-    super();
-    this.options = options;
-    this.filter = options.filter;
-    this.parser = new Binary();
-  }
-
-  setFilter(filter: (entry: LogcatEntry) => boolean) {
-    this.filter = filter;
-  }
-
-  hook() {
-    if (this.options.fixLineFeeds) {
-      const transform = this.stream.pipe(new Transform());
-      transform.on('data', (data) => {
-        return this.parser.parse(data);
-      });
-    } else {
-      this.stream.on('data', (data) => {
-        return this.parser.parse(data);
-      });
+export class LogcatReader extends StreamHandler {
+    private filter?: (entry: LogcatEntry) => boolean;
+    private parser = new Binary();
+    private stream_?: Writable;
+    constructor(options?: LogcatReaderOptions) {
+        super();
+        this.filter = options?.filter;
     }
-    this.stream.on('error', (err) => {
-      this.emit('error', err);
-    });
-    this.stream.on('end', () => {
-      this.emit('end');
-    });
-    this.stream.on('finish', () => {
-      this.emit('finish');
-    });
-    this.parser.on('entry', (entry: LogcatEntry) => {
-      if (this.filter) {
-        if (this.filter(entry)) this.emit('entry', entry);
-      } else this.emit('entry', entry);
-    });
-    this.parser.on('error', (err) => {
-      this.emit('error', err);
-    });
-  }
 
-  on(event: 'error', listener: (err: Error) => void): this;
-  on(event: 'entry', listener: (entry: LogcatEntry) => void): this;
-  on(event: 'finish' | 'end', listener: VoidFunction): this;
-  on(event: string | symbol, listener: (...args: any[]) => void) {
-    return super.on(event, listener);
-  }
+    private get stream(): Writable {
+        if (!this.stream_) {
+            throw new NotConnectedError();
+        }
+        return this.stream_;
+    }
 
-  connect(stream: Writable) {
-    this.stream = stream;
-    this.hook();
-    return this;
-  }
+    hook(): void {
+        this.stream.on('data', (data) => {
+            this.parser.parse(data);
+        });
 
-  end() {
-    this.stream.end();
-    return this;
-  }
+        this.stream.on('error', (err) => {
+            this.emit('error', err);
+        });
+        this.stream.on('end', () => {
+            this.emit('end');
+        });
+        this.stream.on('finish', () => {
+            this.emit('finish');
+        });
+        this.parser.on('entry', (entry: LogcatEntry) => {
+            if (this.filter) {
+                if (this.filter(entry)) {
+                    this.emit('entry', entry);
+                }
+            } else {
+                this.emit('entry', entry);
+            }
+        });
+        this.parser.on('error', (err) => {
+            this.emit('error', err);
+        });
+    }
+
+    on(event: 'error', listener: (err: Error) => void): this;
+    on(event: 'entry', listener: (entry: LogcatEntry) => void): this;
+    on(event: 'finish' | 'end', listener: () => void): this;
+    on(event: string | symbol, listener: (...args: any[]) => void): this {
+        return super.on(event, listener);
+    }
+
+    connect(stream: Writable): this {
+        this.stream_ = stream;
+        this.hook();
+        return this;
+    }
+
+    end(): void {
+        this.stream.end();
+    }
 }

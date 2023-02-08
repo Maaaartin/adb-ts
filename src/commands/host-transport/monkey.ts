@@ -1,27 +1,20 @@
-import { Reply } from '../..';
-import Promise from 'bluebird';
-import TransportCommand from '../transport';
+import { Connection } from '../../connection';
+import TransportCommand from '../abstract/transport';
 
-export default class MonkeyCommand extends TransportCommand {
-  execute(serial: string, port: number | string) {
-    return super
-      .execute(
-        serial,
-        `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port ${port} -v`
-      )
-      .then((reply) => {
-        switch (reply) {
-          case Reply.OKAY:
-            return this.parser
-              .searchLine(/^:Monkey:/)
-              .timeout(1000)
-              .then(() => this.connection)
-              .catch(Promise.TimeoutError, () => this.connection);
-          case Reply.FAIL:
-            return this.parser.readError();
-          default:
-            return this.parser.unexpected(reply, 'OKAY or FAIL');
-        }
-      });
-  }
+export default class MonkeyCommand extends TransportCommand<Connection> {
+    protected Cmd = 'shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port ';
+    protected keepAlive = true;
+    protected postExecute(): Promise<Connection> {
+        return this.parser.searchLine(/^:Monkey:/).then(() => {
+            return this.connection;
+        });
+    }
+
+    execute(serial: string, port: number): Promise<Connection> {
+        this.Cmd += [port, '-v'].join(' ');
+        return this.preExecute(serial).catch((err) => {
+            this.endConnection();
+            throw err;
+        });
+    }
 }

@@ -1,106 +1,141 @@
-import { NetConnectOpts, Socket } from 'net';
-import { MonkeyCallback } from '..';
+import { MonkeyCallback } from '../util';
+import { NotConnectedError } from '../util';
+import { Socket } from 'net';
+import { Reply, ErrReply } from './reply';
 import Api from './api';
-import Command from './command';
-import CommandQueue from './commandqueue';
-import Parser from './parser';
-import Reply, { ReplyType } from './reply';
+import { BaseCommand, Command, ParsableCommand } from './command';
+import { CommandQueue } from './commandqueue';
+import { Parser } from './parser';
 
-export default class Monkey extends Api {
-  public readonly queue: Command[] = [];
-  private parser: Parser = new Parser();
-  protected stream: Socket;
+export class Monkey extends Api {
+    public queue: BaseCommand<any>[] = [];
+    private parser: Parser = new Parser();
+    private stream_?: Socket;
+    private timeout?: NodeJS.Timeout;
 
-  getStream() {
-    return this.stream;
-  }
-
-  send(commands: string[] | string, cb: MonkeyCallback) {
-    if (Array.isArray(commands)) {
-      for (const command of commands) {
-        this.queue.push(new Command(command, cb));
-      }
-      this.stream.write(commands.join('\n') + '\n');
-    } else {
-      this.queue.push(new Command(commands, cb));
-      this.stream.write('' + commands + '\n');
+    get stream(): Socket {
+        if (!this.stream_) {
+            throw new NotConnectedError();
+        }
+        return this.stream_;
     }
-    let hadError = true;
-    const handler = () => {
-      hadError = false;
-    };
-    const removeListeners = () => {
-      this.stream.removeListener('data', handler);
-      this.stream.removeListener('error', handler);
-      this.stream.removeListener('end', handler);
-      this.stream.removeListener('finish', handler);
-    };
 
-    this.stream?.on('data', handler);
-    this.stream?.on('error', handler);
-    this.stream?.on('end', handler);
-    this.stream?.on('finish', handler);
-    setTimeout(() => {
-      if (hadError) this.consume(new Reply(ReplyType.ERROR, 'Command failed'));
-      removeListeners();
-    }, 100);
+    private sendInternal(
+        commands: string[] | string,
+        cmdConstruct: (cmd: string) => BaseCommand<any>
+    ): this {
+        [commands].flat().forEach((command) => {
+            this.queue.push(cmdConstruct(command));
+            this.stream.write(command + '\n');
+        });
 
-    return this;
-  }
+        this.timeout = setTimeout(() => {
+            this.consume(new ErrReply('Command failed'));
+        }, 500);
 
-  protected hook() {
-    this.stream?.on('data', (data) => {
-      return this.parser.parse(data);
-    });
-    this.stream?.on('error', (err) => {
-      return this.emit('error', err);
-    });
-    this.stream?.on('end', () => {
-      return this.emit('end');
-    });
-    this.stream?.on('finish', () => {
-      return this.emit('finish');
-    });
-    this.parser.on('reply', (reply) => {
-      return this.consume(reply);
-    });
-    this.parser.on('error', (err) => {
-      return this.emit('error', err);
-    });
-  }
+        return this;
+    }
 
-  on(event: 'error', listener: (err: Error) => void): this;
-  on(event: 'end', listener: VoidFunction): this;
-  on(event: 'finish', listener: VoidFunction): this;
-  on(event: string | symbol, listener: (...args: any[]) => void) {
-    return super.on(event, listener);
-  }
-  private consume(reply: Reply) {
-    const command = this.queue.shift();
-    if (command) {
-      if (reply.isError()) {
-        command.callback?.(reply.toError(), null, command.command);
-      } else {
+    sendAndParse<T>(
+        commands: string | string[],
+        cb: MonkeyCallback<T>,
+        parser: (data: string | null) => T
+    ): this {
+        return this.sendInternal(
+            commands,
+            (cmd) => new ParsableCommand(cmd, cb, parser)
+        );
+    }
+
+    /**
+     * Writes commands to monkey stream.
+     * @example
+     * monkey.send('key event 24', (err, value, command) => {});
+     */
+    send(commands: string[] | string, cb: MonkeyCallback): this {
+        return this.sendInternal(commands, (cmd) => new Command(cmd, cb));
+    }
+
+    protected hook(): void {
+        this.stream.on('data', (data) => {
+            clearTimeout(this.timeout);
+            return this.parser.parse(data);
+        });
+        this.stream.on('error', (err) => {
+            clearTimeout(this.timeout);
+            return this.emit('error', err);
+        });
+        this.stream.on('end', () => {
+            clearTimeout(this.timeout);
+            return this.emit('end');
+        });
+        this.stream.on('finish', () => {
+            clearTimeout(this.timeout);
+            return this.emit('finish');
+        });
+        this.parser.on('reply', (reply) => {
+            return this.consume(reply);
+        });
+        this.parser.on('error', (err) => {
+            return this.emit('error', err);
+        });
+    }
+
+    on(event: 'error', listener: (err: Error) => void): this;
+    on(event: 'end' | 'finish' | 'close', listener: () => void): this;
+    on(event: string | symbol, listener: (...args: any[]) => void): this {
+        return super.on(event, listener);
+    }
+
+    private consume(reply: Reply): void {
+        const command = this.queue.shift();
+        if (!command) {
+            this.emit(
+                'error',
+                new Error('Command queue depleted, but replies still coming in')
+            );
+            return;
+        }
+
+        if (reply.isError()) {
+            return command.callback?.(reply.toError(), null, command.command);
+        }
+
+        if (command.isParsable()) {
+            return command.callback?.(
+                null,
+                command.parser(reply.value),
+                command.command
+            );
+        }
         command.callback?.(null, reply.value, command.command);
-      }
-    } else {
-      throw new Error('Command queue depleted, but replies still coming in');
     }
-  }
 
-  connect(stream: Socket | NetConnectOpts) {
-    this.stream = stream as Socket;
-    this.stream.setMaxListeners(100);
-    this.hook();
-    return this;
-  }
+    connect(param: Socket): this {
+        this.stream_ = param;
+        this.hook();
+        return this;
+    }
 
-  end() {
-    this.stream?.end();
-    return this;
-  }
+    end(cb?: () => void): this {
+        clearTimeout(this.timeout);
+        this.stream.end(cb);
+        return this;
+    }
 
-  commandQueue() {
-    return new CommandQueue(this);
-  }
+    /**
+     * Allows executing commands in a queue.
+     * @example
+     * monkey
+     *      .commandQueue()
+     *      .touchDown(100, 0)
+     *      .sleep(5)
+     *      .touchUp(100, 0)
+     *      .execute((err, values) => {
+     *          monkey.end();
+     *      });
+     */
+    commandQueue(): CommandQueue {
+        return new CommandQueue(this);
+    }
 }

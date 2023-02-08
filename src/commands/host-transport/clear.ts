@@ -1,29 +1,23 @@
-import { Reply } from '../..';
-import TransportCommand from '../transport';
+import TransportCommand from '../abstract/transport';
 
-export default class ClearCommand extends TransportCommand {
-  execute(serial: string, pkg: string) {
-    return super.execute(serial, `shell:pm clear ${pkg}`).then((reply) => {
-      switch (reply) {
-        case Reply.OKAY:
-          return this.parser
-            .searchLine(/^(Success|Failed)$/)
-            .finally(() => {
-              return this.parser.end();
-            })
-            .then((result) => {
-              switch (result[0]) {
-                case 'Success':
-                  return;
-                case 'Failed':
-                  throw new Error("Package '" + pkg + "' could not be cleared");
-              }
+export default class ClearCommand extends TransportCommand<void> {
+    protected keepAlive = false;
+    protected Cmd = 'shell:pm clear ';
+    private pkg = '';
+    protected postExecute(): Promise<void> {
+        return this.parser
+            .searchLine(/^(Success|Failed)$/, false)
+            .then(([result]) => {
+                if (result !== 'Success') {
+                    throw new Error(
+                        `Package '${this.pkg}' could not be cleared`
+                    );
+                }
             });
-        case Reply.FAIL:
-          return this.parser.readError();
-        default:
-          return this.parser.unexpected(reply, 'OKAY or FAIL');
-      }
-    });
-  }
+    }
+    execute(serial: string, pkg: string): Promise<void> {
+        this.pkg = pkg;
+        this.Cmd += pkg;
+        return this.preExecute(serial);
+    }
 }

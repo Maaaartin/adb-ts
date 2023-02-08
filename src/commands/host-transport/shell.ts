@@ -1,12 +1,13 @@
-import Promise from 'bluebird';
-import { SimpleType, stringToType } from '../..';
-import TransportParseAllCommand from '../transport-parse-all-command';
+import ExecCommand from '../abstract/exec';
 
-export default class ShellCommand extends TransportParseAllCommand {
-  protected parse(value: string) {
-    return stringToType(value);
-  }
-  execute(serial: string, command: string | string[]): Promise<SimpleType> {
-    return super.execute(serial, 'shell:', command);
-  }
+export default class ShellCommand extends ExecCommand<string> {
+    public Cmd = '';
+    protected cast(value: string): string {
+        return value;
+    }
+
+    execute(serial: string, command: string): Promise<string> {
+        this.Cmd = command;
+        return this.preExecute(serial);
+    }
 }
