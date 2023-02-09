@@ -11,6 +11,7 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: 16
+                  registry-url: https://registry.npmjs.org
 
             - name: Install modules
               run: |
@@ -35,10 +36,7 @@ jobs:
               run: npm version major
 
             - name: Publish npm version
-              run: |
-                  echo '//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}' > .npmrc
-                  cat .npmrc
-                  npm publish
+              run: npm publish --access public
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
