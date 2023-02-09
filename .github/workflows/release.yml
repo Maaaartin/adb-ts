@@ -29,20 +29,6 @@ jobs:
               run: |
                   yarn test
 
-            - name: Git config
-              run: git config --global user.email "bot@google.com" && git config --global user.name "bot"
-
-            - name: Apply version major
-              run: npm version major
-
-            - name: Publish npm version
-              run: npm publish --access public npm publish --registry https://registry.npmjs.org
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-            - name: Git push version
-              run: git push -u origin master --follow-tags
-
             - name: Generate docs
               run: |
                   yarn docs
