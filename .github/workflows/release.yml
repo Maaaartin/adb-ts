@@ -35,7 +35,10 @@ jobs:
               run: npm version major
 
             - name: Publish npm version
-              run: npm publish
+              run: |
+                  echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+                  cat .npmrc
+                  npm publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
