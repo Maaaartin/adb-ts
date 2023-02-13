@@ -2,6 +2,7 @@ name: Publish Package to npmjs
 on: push
 jobs:
     build:
+        name: Build and release
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repo
@@ -29,11 +30,6 @@ jobs:
               run: |
                   yarn test
 
-    release:
-        name: Release to npmjs
-        needs: build
-        runs-on: ubuntu-latest
-        steps:
             - name: Git config
               run: git config --global user.email "bot@google.com" && git config --global user.name "bot"
 
@@ -48,12 +44,6 @@ jobs:
             - name: Git push version
               run: git push -u origin master --follow-tags
 
-    docs:
-        name: Deploy docs
-        needs: release
-        runs-on: ubuntu-latest
-
-        steps:
             - name: Generate docs
               run: |
                   yarn docs
