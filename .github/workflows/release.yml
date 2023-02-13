@@ -1,8 +1,14 @@
 name: Publish Package to npmjs
-on: push
+on:
+    pull_request:
+        branches:
+            - master
+        types:
+            - closed
 jobs:
-    build:
+    release:
         name: Build and release
+        if: github.event.pull_request.merged == true
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repo
@@ -33,7 +39,16 @@ jobs:
             - name: Git config
               run: git config --global user.email "bot@google.com" && git config --global user.name "bot"
 
+            - name: Apply version major
+              if: contains(github.event.pull_request.labels.*.name, 'major')
+              run: npm version major
+
+            - name: Apply version minor
+              if: contains(github.event.pull_request.labels.*.name, 'minor')
+              run: npm version minor
+
             - name: Apply version patch
+              if: contains(github.event.pull_request.labels.*.name, 'patch')
               run: npm version patch
 
             - name: Publish npm version
