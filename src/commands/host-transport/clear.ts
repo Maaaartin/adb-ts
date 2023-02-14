@@ -2,16 +2,14 @@ import { Connection } from '../../connection';
 import TransportCommand from '../abstract/transport';
 
 export default class ClearCommand extends TransportCommand<void> {
+    protected Cmd: string;
     protected keepAlive = false;
     private pkg: string;
 
     constructor(connection: Connection, serial: string, pkg: string) {
         super(connection, serial);
         this.pkg = pkg;
-    }
-
-    protected get Cmd(): string {
-        return 'shell:pm clear ' + this.pkg;
+        this.Cmd = `shell:pm clear ${pkg}`;
     }
 
     protected postExecute(): Promise<void> {

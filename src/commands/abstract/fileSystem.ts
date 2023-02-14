@@ -2,9 +2,7 @@ import { Connection } from '../../connection';
 import ExecCommand from './exec';
 
 export default abstract class FileSystemCommand extends ExecCommand<void> {
-    private path: string[];
-    private options: Record<string, any> | undefined;
-    private internalCmd: string;
+    protected rawCmd: string;
     protected abstract intentArgs(options?: Record<string, any>): string[];
 
     constructor(
@@ -15,18 +13,10 @@ export default abstract class FileSystemCommand extends ExecCommand<void> {
         options?: Record<string, any>
     ) {
         super(connection, serial);
-        this.options = options;
-        this.internalCmd = cmd;
-        this.path = path;
+        this.rawCmd = [cmd, ...this.intentArgs(options), ...[path].flat()].join(
+            ' '
+        );
     }
 
-    protected get rawCmd(): string {
-        return [
-            this.internalCmd,
-            ...this.intentArgs(this.options),
-            ...[this.path].flat()
-        ].join(' ');
-    }
-
-    cast(): void {}
+    protected cast(): void {}
 }

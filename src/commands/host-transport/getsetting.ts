@@ -1,19 +1,21 @@
+import { Connection } from '../../connection';
 import { PropertyValue, SettingsMode, escape, stringToType } from '../../util';
 import TransportParseAllCommand from '../abstract/transportParseAll';
 
 export default class GetSetting extends TransportParseAllCommand<PropertyValue> {
-    protected Cmd = 'shell:settings get ';
+    protected Cmd: string;
 
-    protected parse(value: string): PropertyValue {
-        return stringToType(value);
-    }
-
-    execute(
+    constructor(
+        connection: Connection,
         serial: string,
         mode: SettingsMode,
         name: string
-    ): Promise<PropertyValue> {
-        this.Cmd += [mode, escape(name)].join(' ');
-        return this.preExecute(serial);
+    ) {
+        super(connection, serial);
+        this.Cmd = ['shell:settings get', mode, escape(name)].join(' ');
+    }
+
+    protected parse(value: string): PropertyValue {
+        return stringToType(value);
     }
 }

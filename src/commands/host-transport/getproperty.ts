@@ -4,15 +4,11 @@ import { PropertyValue } from '../../util';
 import TransportParseAllCommand from '../abstract/transportParseAll';
 
 export default class GetPropertyCommand extends TransportParseAllCommand<PropertyValue> {
-    private property: string;
+    protected Cmd: string;
 
     constructor(connection: Connection, serial: string, property: string) {
         super(connection, serial);
-        this.property = property;
-    }
-
-    protected get Cmd(): string {
-        return `shell:getprop ${this.property}`;
+        this.Cmd = `shell:getprop ${property}`;
     }
 
     protected parse(value: string): PropertyValue {

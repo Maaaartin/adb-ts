@@ -34,14 +34,10 @@ const flags = [
 ] as const;
 
 export default class FileStatCommand extends ExecCommand<FileStat> {
-    private path: string;
+    protected rawCmd: string;
     constructor(connection: Connection, serial: string, path: string) {
         super(connection, serial);
-        this.path = path;
-    }
-
-    protected get rawCmd(): string {
-        return `stat -c "%${flags.join('\\_%')}" ${this.path}`;
+        this.rawCmd = `stat -c "%${flags.join('\\_%')}" ${path}`;
     }
 
     protected cast(value: string): FileStat {

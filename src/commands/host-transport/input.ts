@@ -1,21 +1,22 @@
+import { Connection } from '../../connection';
 import { InputSource, PrimitiveType, escape } from '../../util';
 import TransportCommand from '../abstract/transport';
 
+// TODO make separate classes for each input method
 export default class InputCommand extends TransportCommand<void> {
     protected keepAlive = false;
     protected Cmd = 'shell:input ';
     private withEscape_ = false;
-    public withEscape(): this {
-        this.withEscape_ = true;
-        return this;
-    }
-    protected postExecute(): void {}
-    private buildParams(
+
+    constructor(
+        connection: Connection,
+        serial: string,
         source: InputSource,
         command: string,
-        args: PrimitiveType[]
-    ): void {
-        const params = [source as string]
+        ...args: PrimitiveType[]
+    ) {
+        super(connection, serial);
+        this.Cmd = ['shell:input', source as string]
             .concat(
                 command,
                 args
@@ -23,15 +24,11 @@ export default class InputCommand extends TransportCommand<void> {
                     .map((a) => (this.withEscape_ ? escape(a) : String(a)))
             )
             .join(' ');
-        this.Cmd += params;
     }
-    execute(
-        serial: string,
-        source: InputSource,
-        command: string,
-        ...args: PrimitiveType[]
-    ): Promise<void> {
-        this.buildParams(source, command, args);
-        return this.preExecute(serial);
+    protected postExecute(): void {}
+
+    public withEscape(): this {
+        this.withEscape_ = true;
+        return this;
     }
 }
