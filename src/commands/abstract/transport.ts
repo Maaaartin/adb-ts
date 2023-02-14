@@ -1,14 +1,16 @@
-import { Mixin } from 'ts-mixer';
+import { Connection } from '../../connection';
 import Cmd from './cmd';
-import PreExecute from './preExecute';
 
-export default abstract class TransportCommand<T> extends Mixin(
-    PreExecute,
-    Cmd
-) {
+export default abstract class TransportCommand<T> extends Cmd<T> {
+    private serial: string;
     protected autoEnd = false;
     protected abstract keepAlive: boolean;
-    abstract execute(serial: string, ...args: any[]): Promise<T>;
+
+    constructor(connection: Connection, serial: string) {
+        super(connection);
+        this.serial = serial;
+    }
+
     /**
      * Executed when {@link preExecute} was successful
      */
@@ -16,9 +18,11 @@ export default abstract class TransportCommand<T> extends Mixin(
     /**
      * Executes {@link Cmd} on the device
      */
-    protected async preExecute(serial: string): Promise<T> {
+    public async execute(): Promise<T> {
         try {
-            await this.initAndValidateReply('host:transport:'.concat(serial));
+            await this.initAndValidateReply(
+                'host:transport:'.concat(this.serial)
+            );
             await this.initAndValidateReply(this.Cmd);
             try {
                 return await this.postExecute();

@@ -1,15 +1,21 @@
+import { Connection } from '../../connection';
 import { stringToType } from '../../util';
 import { PropertyValue } from '../../util';
 import TransportParseAllCommand from '../abstract/transportParseAll';
 
 export default class GetPropertyCommand extends TransportParseAllCommand<PropertyValue> {
-    protected Cmd = 'shell:getprop ';
+    private property: string;
 
-    parse(value: string): PropertyValue {
-        return stringToType(value);
+    constructor(connection: Connection, serial: string, property: string) {
+        super(connection, serial);
+        this.property = property;
     }
-    execute(serial: string, prop: string): Promise<PropertyValue> {
-        this.Cmd += prop;
-        return this.preExecute(serial);
+
+    protected get Cmd(): string {
+        return `shell:getprop ${this.property}`;
+    }
+
+    protected parse(value: string): PropertyValue {
+        return stringToType(value);
     }
 }

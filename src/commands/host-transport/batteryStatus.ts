@@ -7,8 +7,4 @@ export default class BatteryStatusCommand extends TransportParseAllCommand<Prope
     parse(value: string): PropertyMap {
         return findMatches(value, /^\s+([\s\S]*?): ([\s\S]*?)$/gm, 'map');
     }
-
-    execute(serial: string): Promise<PropertyMap> {
-        return this.preExecute(serial);
-    }
 }

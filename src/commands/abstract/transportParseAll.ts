@@ -5,9 +5,8 @@ export default abstract class TransportParseAllCommand<
 > extends TransportCommand<T> {
     protected keepAlive = false;
     protected abstract parse(value: string): Promise<T> | T;
-    protected postExecute(): Promise<T> {
-        return this.parser.readAll().then((value) => {
-            return this.parse(value.toString().trim());
-        });
+    protected async postExecute(): Promise<T> {
+        const value = (await this.parser.readAll()).toString().trim();
+        return this.parse(value);
     }
 }

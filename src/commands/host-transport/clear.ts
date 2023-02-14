@@ -1,9 +1,19 @@
+import { Connection } from '../../connection';
 import TransportCommand from '../abstract/transport';
 
 export default class ClearCommand extends TransportCommand<void> {
     protected keepAlive = false;
-    protected Cmd = 'shell:pm clear ';
-    private pkg = '';
+    private pkg: string;
+
+    constructor(connection: Connection, serial: string, pkg: string) {
+        super(connection, serial);
+        this.pkg = pkg;
+    }
+
+    protected get Cmd(): string {
+        return 'shell:pm clear ' + this.pkg;
+    }
+
     protected postExecute(): Promise<void> {
         return this.parser
             .searchLine(/^(Success|Failed)$/, false)
@@ -14,10 +24,5 @@ export default class ClearCommand extends TransportCommand<void> {
                     );
                 }
             });
-    }
-    execute(serial: string, pkg: string): Promise<void> {
-        this.pkg = pkg;
-        this.Cmd += pkg;
-        return this.preExecute(serial);
     }
 }
