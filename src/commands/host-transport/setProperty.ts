@@ -1,15 +1,25 @@
 import TransportParseAllCommand from '../abstract/transportParseAll';
-import { escape } from '../../util';
+import { escape, PrimitiveType } from '../../util';
+import { Connection } from '../../connection';
 
 export default class SetProp extends TransportParseAllCommand<void> {
-    protected Cmd = 'shell:setprop ';
+    protected Cmd: string;
+
+    constructor(
+        connection: Connection,
+        serial: string,
+        prop: string,
+        value: PrimitiveType
+    ) {
+        super(connection, serial);
+        this.Cmd = ['shell:setprop']
+            .concat([prop, value].map(escape))
+            .join(' ');
+    }
+
     protected parse(value: string): void {
         if (!/^\s*$/.test(value)) {
             throw new Error(value);
         }
-    }
-    execute(serial: string, prop: string, value: any): Promise<void> {
-        this.Cmd += [prop, value].map(escape).join(' ');
-        return this.preExecute(serial);
     }
 }

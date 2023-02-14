@@ -8,8 +8,4 @@ export default class ListPackagesCommand extends TransportParseAllCommand<
     protected parse(value: string): string[] {
         return findMatches(value, /^package:(.*?)\r?$/gm, 'list');
     }
-
-    execute(serial: string): Promise<string[]> {
-        return this.preExecute(serial);
-    }
 }

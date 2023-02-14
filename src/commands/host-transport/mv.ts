@@ -2,8 +2,8 @@ import { MvOptions } from '../../util';
 import FileSystemCommand from '../abstract/fileSystem';
 
 export default class MvCommand extends FileSystemCommand {
-    protected Cmd = 'mv';
-    intentArgs(options?: MvOptions): string[] {
+    protected rawCmd = 'mv';
+    protected intentArgs(options?: MvOptions): string[] {
         const args: string[] = [];
         if (!options) {
             return args;
@@ -16,13 +16,5 @@ export default class MvCommand extends FileSystemCommand {
             args.push('-n');
         }
         return args;
-    }
-
-    execute(
-        serial: string,
-        paths: [string, string],
-        options?: MvOptions
-    ): Promise<void> {
-        return super.execute(serial, paths, options);
     }
 }

@@ -1,3 +1,4 @@
+import { Connection } from '../../connection';
 import LineTransform from '../../linetransform';
 import { readStream } from '../../logcat';
 import { LogcatReader } from '../../logcat/reader';
@@ -9,6 +10,20 @@ export default class LogcatCommand extends TransportCommand<LogcatReader> {
     private options?: LogcatOptions | null;
     protected Cmd = 'shell:echo && ';
     protected keepAlive = false;
+
+    constructor(
+        connection: Connection,
+        serial: string,
+        options?: LogcatOptions
+    ) {
+        super(connection, serial);
+        let cmd = 'logcat -B *:I 2>/dev/null';
+        if (options?.clear) {
+            cmd = 'logcat -c 2>/dev/null && ' + cmd;
+        }
+        this.Cmd = `shell:echo && ${cmd}`;
+    }
+
     protected postExecute(): LogcatReader {
         const stream = new LineTransform({ autoDetect: true });
         this.connection.pipe(stream);
@@ -20,18 +35,13 @@ export default class LogcatCommand extends TransportCommand<LogcatReader> {
         return this.logCat;
     }
 
-    execute(serial: string, options?: LogcatOptions): Promise<LogcatReader> {
-        let cmd = 'logcat -B *:I 2>/dev/null';
-        if (options?.clear) {
-            cmd = 'logcat -c 2>/dev/null && ' + cmd;
-        }
-        this.Cmd += cmd;
-        this.options = options;
-
-        return this.preExecute(serial).catch((err) => {
+    public async execute(): Promise<LogcatReader> {
+        try {
+            return await super.execute();
+        } catch (err) {
             this.endConnection();
             this.logCat?.end();
             throw err;
-        });
+        }
     }
 }

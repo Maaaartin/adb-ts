@@ -8,8 +8,4 @@ export default class ListPropertiesCommand extends TransportParseAllCommand<Prop
     protected parse(value: string): PropertyMap {
         return findMatches(value, /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm, 'map');
     }
-
-    execute(serial: string): Promise<PropertyMap> {
-        return this.preExecute(serial);
-    }
 }

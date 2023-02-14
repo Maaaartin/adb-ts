@@ -2,8 +2,8 @@ import { CpOptions } from '../../util';
 import FileSystemCommand from '../abstract/fileSystem';
 
 export default class CpCommand extends FileSystemCommand {
-    protected Cmd = 'cp';
-    intentArgs(options?: CpOptions): string[] {
+    protected rawCmd = 'cp';
+    protected intentArgs(options?: CpOptions): string[] {
         const args: string[] = [];
         if (!options) {
             return args;
@@ -64,13 +64,5 @@ export default class CpCommand extends FileSystemCommand {
             args.push('-t');
         }
         return args;
-    }
-
-    execute(
-        serial: string,
-        paths: [string, string],
-        options?: CpOptions
-    ): Promise<void> {
-        return super.execute(serial, paths, options);
     }
 }

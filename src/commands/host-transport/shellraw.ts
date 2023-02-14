@@ -3,12 +3,23 @@ import RawCommand from '../abstract/raw';
 import { escape } from '../../util';
 
 export default class ShellRawCommand extends RawCommand {
-    protected Cmd = 'shell:';
-    execute(serial: string, command: string | string[]): Promise<Connection> {
-        this.Cmd += [command].flat().map(escape).join(' ');
-        return this.preExecute(serial).catch((err) => {
-            this.connection.end();
+    protected Cmd: string;
+
+    constructor(
+        connection: Connection,
+        serial: string,
+        command: string | string[]
+    ) {
+        super(connection, serial);
+        this.Cmd = ['shell:'].concat([command].flat().map(escape)).join(' ');
+    }
+
+    public async execute(): Promise<Connection> {
+        try {
+            return await super.execute();
+        } catch (err) {
+            this.endConnection();
             throw err;
-        });
+        }
     }
 }
