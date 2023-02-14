@@ -16,24 +16,18 @@ export default abstract class TransportCommand<T> extends Mixin(
     /**
      * Executes {@link Cmd} on the device
      */
-    protected preExecute(serial: string): Promise<T> {
-        return this.initExecute('host:transport:'.concat(serial))
-            .then(
-                this.handleReply(() => {
-                    return this.initExecute(this.Cmd).then(
-                        this.handleReply(() => {
-                            return Promise.resolve(this.postExecute()).catch(
-                                (err) => {
-                                    this.endConnection();
-                                    throw err;
-                                }
-                            );
-                        })
-                    );
-                })
-            )
-            .finally(() => {
-                !this.keepAlive && this.endConnection();
-            });
+    protected async preExecute(serial: string): Promise<T> {
+        try {
+            await this.initAndValidateReply('host:transport:'.concat(serial));
+            await this.initAndValidateReply(this.Cmd);
+            try {
+                return await this.postExecute();
+            } catch (err) {
+                this.endConnection();
+                throw err;
+            }
+        } finally {
+            !this.keepAlive && this.endConnection();
+        }
     }
 }

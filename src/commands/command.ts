@@ -45,6 +45,16 @@ export default abstract class Command<T> {
         this.connection.end();
     }
 
+    protected async initAndValidateReply(
+        ...args: PrimitiveType[]
+    ): Promise<void> {
+        this.connection.write(encodeData(args.join(' ')));
+        try {
+            return this.handleReply(undefined)(await this.parser.readAscii(4));
+        } finally {
+            this.autoEnd && this.endConnection();
+        }
+    }
     protected initExecute(...args: PrimitiveType[]): Promise<string> {
         this.connection.write(encodeData(args.join(' ')));
         return this.parser
