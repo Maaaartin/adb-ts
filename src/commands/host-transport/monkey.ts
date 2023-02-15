@@ -18,13 +18,4 @@ export default class MonkeyCommand extends TransportCommand<Connection> {
         await this.parser.searchLine(/^:Monkey:/);
         return this.connection;
     }
-
-    public async execute(): Promise<Connection> {
-        try {
-            return await super.execute();
-        } catch (err) {
-            this.endConnection();
-            throw err;
-        }
-    }
 }

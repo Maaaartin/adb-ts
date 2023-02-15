@@ -15,13 +15,4 @@ export default class TcpCommand extends RawCommand {
             host ? host.concat(':', String(port)) : String(port)
         );
     }
-
-    public async execute(): Promise<Connection> {
-        try {
-            return await super.execute();
-        } catch (err) {
-            this.endConnection();
-            throw err;
-        }
-    }
 }

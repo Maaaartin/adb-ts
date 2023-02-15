@@ -47,7 +47,7 @@
         "@typescript-eslint/no-explicit-any": "off",
 
         "@typescript-eslint/explicit-member-accessibility": [
-            "error",
+            "warn",
             {
                 "accessibility": "explicit",
                 "overrides": {

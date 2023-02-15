@@ -74,7 +74,6 @@ import MkDirCommand from './commands/host-transport/mkdir';
 import { Monkey } from './monkey/client';
 import MonkeyCommand from './commands/host-transport/monkey';
 import MvCommand from './commands/host-transport/mv';
-import { Parser } from './parser';
 import { PullTransfer } from './sync/pulltransfer';
 import { PushTransfer } from './sync/pushtransfer';
 import PutSetting from './commands/host-transport/putSetting';
@@ -87,7 +86,7 @@ import RootCommand from './commands/host-transport/root';
 import ScreenShotCommand from './commands/host-transport/screencap';
 import SetProp from './commands/host-transport/setProperty';
 import ShellCommand from './commands/host-transport/shell';
-import ShellRawCommand from './commands/host-transport/shellraw';
+import DeleteApk from './commands/host-transport/deleteApk';
 import ShutdownCommand from './commands/host-transport/shutdown';
 import StartActivityCommand from './commands/host-transport/startActivity';
 import StartServiceCommand from './commands/host-transport/startservice';
@@ -483,12 +482,9 @@ export class Client {
         );
     }
 
-    private shellInternal(
-        serial: string,
-        command: string | NonEmptyArray<string>
-    ): Promise<Connection> {
+    private deleteApk(serial: string, pathToApk: string): Promise<void> {
         return this.connection().then((conn) => {
-            return new ShellRawCommand(conn, serial, command).execute();
+            return new DeleteApk(conn, serial, pathToApk).execute();
         });
     }
 
@@ -1016,16 +1012,14 @@ export class Client {
             return new InstallCommand(conn, serial, apk, options, args)
                 .execute()
                 .then(() => {
-                    return this.shellInternal(serial, ['rm', '-f', apk]).then(
-                        (stream) => {
-                            return new Parser(stream)
-                                .readAll()
-                                .then(() => {})
-                                .finally(() => {
-                                    stream.end();
-                                });
-                        }
-                    );
+                    return this.deleteApk(serial, apk).then((stream) => {
+                        // return new Parser(stream)
+                        //     .readAll()
+                        //     .then(() => {})
+                        //     .finally(() => {
+                        //         stream.end();
+                        //     });
+                    });
                 });
         });
     }

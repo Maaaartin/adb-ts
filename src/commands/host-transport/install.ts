@@ -64,14 +64,4 @@ export default class InstallCommand extends TransportCommand<void> {
 
         return args;
     }
-
-    public async execute(): Promise<void> {
-        try {
-            return await super.execute();
-        } catch (err) {
-            // TODO find better way to handle this
-            this.endConnection();
-            throw err;
-        }
-    }
 }

@@ -23,7 +23,7 @@ describe('Install OKAY tests', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
                 rawRes: true,
                 end: true
@@ -62,7 +62,7 @@ describe('Install OKAY tests', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
                 rawRes: true,
                 end: true
@@ -109,7 +109,7 @@ describe('Install OKAY tests', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
                 rawRes: true,
                 end: true
@@ -158,7 +158,7 @@ describe('Install FAIL tests', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
                 rawRes: true,
                 end: true
@@ -199,7 +199,7 @@ describe('Install FAIL tests', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
                 rawRes: true,
                 end: true
@@ -240,7 +240,7 @@ describe('Install FAIL tests', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
                 rawRes: true,
                 end: true
@@ -282,7 +282,7 @@ describe('Install FAIL tests', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
                 rawRes: true,
                 end: true
@@ -324,7 +324,7 @@ describe('Install FAIL tests', () => {
             },
             { cmd: 'fail', res: null, rawRes: true },
             {
-                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
                 rawRes: true,
                 end: true
@@ -415,7 +415,7 @@ describe('Install unexpected test', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
                 rawRes: true,
                 end: true
@@ -464,7 +464,7 @@ describe('Install unexpected test', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
                 rawRes: true,
                 end: true
@@ -517,7 +517,7 @@ describe('Install unexpected test', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
                 rawRes: true,
                 end: true
@@ -566,7 +566,7 @@ describe('Install unexpected test', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
                 rawRes: true,
                 end: true
@@ -619,7 +619,7 @@ describe('Install unexpected test', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
                 rawRes: true,
                 end: true
@@ -667,7 +667,7 @@ describe('Install unexpected test', () => {
             },
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:'rm' '-f' '/data/local/tmp/_stream.apk'`,
+                cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
                 rawRes: true,
                 end: true,

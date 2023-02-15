@@ -1,8 +1,7 @@
 import { Connection } from '../../connection';
-import { StartServiceOptions, escape } from '../../util';
+import { StartServiceOptions } from '../../util';
 import StartProcess from '../abstract/startProcess';
 
-// TODO should have abstract
 export default class StartServiceCommand extends StartProcess {
     protected keepAlive = false;
     protected internalCmd = 'shell:am startservice';
