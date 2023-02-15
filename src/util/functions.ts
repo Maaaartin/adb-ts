@@ -116,27 +116,20 @@ export function findMatches(
     }
 }
 
-export function buildInputParams(
-    defaultSource: InputSource,
-    source: InputOptions | InputSource | Callback | undefined,
+export function buildInputParams<T extends InputSource | InputOptions>(
+    params: T | Callback | undefined,
     cb: Callback | undefined
 ): {
-    source: InputSource;
+    params: T | undefined;
     cb: Callback | undefined;
 } {
-    if (typeof source === 'function') {
-        return { source: defaultSource, cb: source };
+    if (typeof params === 'function') {
+        return { params: undefined, cb: params };
     }
-    if (typeof source === 'undefined') {
-        return { source: defaultSource, cb };
+    if (typeof params === 'object' || typeof params === 'string') {
+        return { params, cb };
     }
-    if (typeof source !== 'object') {
-        return { source, cb };
-    }
-    if (typeof source.source !== 'undefined') {
-        return { source: source.source, cb };
-    }
-    return { source: defaultSource, cb };
+    return { params: undefined, cb };
 }
 
 export function escape(arg: PrimitiveType): string {
