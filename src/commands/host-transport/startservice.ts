@@ -1,3 +1,4 @@
+import { Connection } from '../../connection';
 import {
     PrematureEOFError,
     UnexpectedDataError,
@@ -8,9 +9,30 @@ import {
 } from '../../util';
 import TransportCommand from '../abstract/transport';
 
+// TODO should have abstract
 export default class StartServiceCommand extends TransportCommand<void> {
     protected keepAlive = false;
-    protected Cmd = 'shell:am startservice ';
+    protected Cmd: string;
+    protected internalCmd = 'shell:am startservice';
+
+    constructor(
+        connection: Connection,
+        serial: string,
+        pkg: string,
+        service: string,
+        options: StartServiceOptions = {}
+    ) {
+        super(connection, serial);
+        this.Cmd = [
+            this.internalCmd,
+            ...this.intentArgs(options),
+            '-n',
+            escape(`${pkg}/.${service}`),
+            '--user',
+            escape(options.user || 0)
+        ].join(' ');
+    }
+
     protected postExecute(): Promise<void> {
         return this.parser
             .searchLine(/^Error: (.*)$/)
@@ -118,24 +140,5 @@ export default class StartServiceCommand extends TransportCommand<void> {
                     return [...args];
             }
         }, []);
-    }
-
-    execute(
-        serial: string,
-        pkg: string,
-        service: string,
-        options: StartServiceOptions = {}
-    ): Promise<void> {
-        this.Cmd = this.Cmd.concat(
-            [
-                ...this.intentArgs(options),
-                '-n',
-                escape(`${pkg}/.${service}`),
-                '--user',
-                escape(options.user || 0)
-            ].join(' ')
-        );
-
-        return this.preExecute(serial);
     }
 }

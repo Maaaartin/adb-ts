@@ -1,9 +1,18 @@
+import { Connection } from '../../connection';
 import { CpOptions } from '../../util';
 import FileSystemCommand from '../abstract/fileSystem';
 
 export default class CpCommand extends FileSystemCommand {
-    protected rawCmd = 'cp';
-    protected intentArgs(options?: CpOptions): string[] {
+    constructor(
+        connection: Connection,
+        serial: string,
+        path: string | string[],
+        options?: CpOptions
+    ) {
+        super(connection, serial, 'mv', path, options);
+    }
+
+    protected intentArgs(options: CpOptions): string[] {
         const args: string[] = [];
         if (!options) {
             return args;

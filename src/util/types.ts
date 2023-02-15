@@ -265,7 +265,11 @@ export interface CommandConstruct<T> {
 }
 
 export interface TransportCommandConstruct<T> {
-    new (connection: Connection): TransportCommand<T>;
+    new (
+        connection: Connection,
+        serial: string,
+        ...args: any[]
+    ): TransportCommand<T>;
 }
 
 export interface IpConnectConstruct {

@@ -1,9 +1,18 @@
+import { Connection } from '../../connection';
 import { MvOptions } from '../../util';
 import FileSystemCommand from '../abstract/fileSystem';
 
 export default class MvCommand extends FileSystemCommand {
-    protected rawCmd = 'mv';
-    protected intentArgs(options?: MvOptions): string[] {
+    constructor(
+        connection: Connection,
+        serial: string,
+        path: string | string[],
+        options: MvOptions = {}
+    ) {
+        super(connection, serial, 'mv', path, options);
+    }
+
+    protected intentArgs(options: MvOptions): string[] {
         const args: string[] = [];
         if (!options) {
             return args;

@@ -1,9 +1,18 @@
 import { RmOptions } from 'fs';
+import { Connection } from '../../connection';
 import FileSystemCommand from '../abstract/fileSystem';
 
 export default class RmCommand extends FileSystemCommand {
-    protected Cmd = 'rm';
-    intentArgs(options?: RmOptions): string[] {
+    constructor(
+        connection: Connection,
+        serial: string,
+        path: string,
+        options?: RmOptions
+    ) {
+        super(connection, serial, 'rm', path, options);
+    }
+
+    protected intentArgs(options: RmOptions): string[] {
         const args: string[] = [];
         if (!options) {
             return args;
@@ -17,9 +26,5 @@ export default class RmCommand extends FileSystemCommand {
         }
 
         return args;
-    }
-
-    execute(serial: string, path: string, options?: RmOptions): Promise<void> {
-        return super.execute(serial, path, options);
     }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import {
     AdbClientOptions,
     AdbClientOptionsValues,
@@ -338,7 +339,7 @@ export class Client {
     ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new ListPropertiesCommand(conn).execute(serial)
+                new ListPropertiesCommand(conn, serial).execute()
             ),
             cb
         );
@@ -356,7 +357,7 @@ export class Client {
     ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new ListFeaturesCommand(conn).execute(serial)
+                new ListFeaturesCommand(conn, serial).execute()
             ),
             cb
         );
@@ -374,7 +375,7 @@ export class Client {
     ): Promise<string[]> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new ListPackagesCommand(conn).execute(serial)
+                new ListPackagesCommand(conn, serial).execute()
             ),
             cb
         );
@@ -391,7 +392,7 @@ export class Client {
     ): Promise<string[]> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new GetIpAddressCommand(conn).execute(serial)
+                new GetIpAddressCommand(conn, serial).execute()
             ),
             cb
         );
@@ -453,7 +454,7 @@ export class Client {
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new ReverseCommand(conn).execute(serial, local, remote)
+                new ReverseCommand(conn, serial, local, remote).execute()
             ),
             cb
         );
@@ -471,7 +472,7 @@ export class Client {
     ): Promise<ReversesObject[]> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new ListReversesCommand(conn).execute(serial);
+                return new ListReversesCommand(conn, serial).execute();
             }),
             cb
         );
@@ -482,7 +483,7 @@ export class Client {
         command: string | NonEmptyArray<string>
     ): Promise<Connection> {
         return this.connection().then((conn) => {
-            return new ShellRawCommand(conn).execute(serial, command);
+            return new ShellRawCommand(conn, serial, command).execute();
         });
     }
 
@@ -495,7 +496,7 @@ export class Client {
     reboot(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new RebootCommand(conn).execute(serial)
+                new RebootCommand(conn, serial).execute()
             ),
             cb
         );
@@ -510,7 +511,7 @@ export class Client {
     shutdown(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new ShutdownCommand(conn).execute(serial)
+                new ShutdownCommand(conn, serial).execute()
             ),
             cb
         );
@@ -526,7 +527,7 @@ export class Client {
     remount(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new RemountCommand(conn).execute(serial)
+                new RemountCommand(conn, serial).execute()
             ),
             cb
         );
@@ -541,7 +542,7 @@ export class Client {
     root(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new RootCommand(conn).execute(serial)
+                new RootCommand(conn, serial).execute()
             ),
             cb
         );
@@ -559,7 +560,7 @@ export class Client {
     ): Promise<Buffer> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new ScreenShotCommand(conn).execute(serial);
+                return new ScreenShotCommand(conn, serial).execute();
             }),
             cb
         );
@@ -589,11 +590,12 @@ export class Client {
     ): Promise<Connection> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new TcpCommand(conn).execute(
+                return new TcpCommand(
+                    conn,
                     serial,
                     port,
                     parseValueParam(host)
-                );
+                ).execute();
             }),
             parseCbParam(host, cb)
         );
@@ -636,13 +638,14 @@ export class Client {
 
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn).execute(
+                return new InputCommand(
+                    conn,
                     serial,
                     _source,
                     'roll',
                     x,
                     y
-                );
+                ).execute();
             }),
             _cb
         );
@@ -669,7 +672,12 @@ export class Client {
         );
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn).execute(serial, _source, 'press');
+                return new InputCommand(
+                    conn,
+                    serial,
+                    _source,
+                    'press'
+                ).execute();
             }),
             _cb
         );
@@ -733,7 +741,8 @@ export class Client {
 
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn).execute(
+                return new InputCommand(
+                    conn,
                     serial,
                     _source,
                     'draganddrop',
@@ -742,7 +751,7 @@ export class Client {
                     x2,
                     y2,
                     typeof options === 'object' ? options.duration : ''
-                );
+                ).execute();
             }),
             _cb
         );
@@ -805,7 +814,8 @@ export class Client {
         );
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn).execute(
+                return new InputCommand(
+                    conn,
                     serial,
                     _source,
                     'swipe',
@@ -814,7 +824,7 @@ export class Client {
                     x2,
                     y2,
                     typeof options === 'object' ? options.duration : ''
-                );
+                ).execute();
             }),
             _cb
         );
@@ -883,7 +893,8 @@ export class Client {
         );
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn).execute(
+                return new InputCommand(
+                    conn,
                     serial,
                     _source,
                     'keyevent',
@@ -895,7 +906,7 @@ export class Client {
                             : ''
                         : '',
                     ...[code].flat()
-                );
+                ).execute();
             }),
             _cb
         );
@@ -938,13 +949,14 @@ export class Client {
 
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn).execute(
+                return new InputCommand(
+                    conn,
                     serial,
                     _source,
                     'tap',
                     x,
                     y
-                );
+                ).execute();
             }),
             _cb
         );
@@ -972,9 +984,9 @@ export class Client {
         );
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn)
+                return new InputCommand(conn, serial, _source, 'text', text)
                     .withEscape()
-                    .execute(serial, _source, 'text', text);
+                    .execute();
             }),
             _cb
         );
@@ -1014,10 +1026,11 @@ export class Client {
 
         return nodeify(
             this.connection().then((conn) => {
-                return new LogcatCommand(conn).execute(
+                return new LogcatCommand(
+                    conn,
                     serial,
                     typeof options === 'object' ? options : undefined
-                );
+                ).execute();
             }),
             cb
         );
@@ -1025,7 +1038,7 @@ export class Client {
 
     private syncService(serial: string): Promise<Sync> {
         return this.connection().then((conn) => {
-            return new SyncCommand(conn).execute(serial);
+            return new SyncCommand(conn, serial).execute();
         });
     }
 
@@ -1038,7 +1051,7 @@ export class Client {
     clear(serial: string, pkg: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new ClearCommand(conn).execute(serial, pkg);
+                return new ClearCommand(conn, serial, pkg).execute();
             }),
             cb
         );
@@ -1051,8 +1064,8 @@ export class Client {
         args?: string
     ): Promise<void> {
         return this.connection().then((conn) => {
-            return new InstallCommand(conn)
-                .execute(serial, apk, options, args)
+            return new InstallCommand(conn, serial, apk, options, args)
+                .execute()
                 .then(() => {
                     return this.shellInternal(serial, ['rm', '-f', apk]).then(
                         (stream) => {
@@ -1183,11 +1196,12 @@ export class Client {
         }
         return nodeify(
             this.connection().then((conn) => {
-                return new UninstallCommand(conn).execute(
+                return new UninstallCommand(
+                    conn,
                     serial,
                     pkg,
                     options_
-                );
+                ).execute();
             }),
             cb
         );
@@ -1205,7 +1219,7 @@ export class Client {
     ): Promise<boolean> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new IsInstalledCommand(conn).execute(serial, pkg);
+                return new IsInstalledCommand(conn, serial, pkg).execute();
             }),
             cb
         );
@@ -1250,12 +1264,13 @@ export class Client {
         }
         return nodeify(
             this.connection().then((conn) => {
-                return new StartActivityCommand(conn).execute(
+                return new StartActivityCommand(
+                    conn,
                     serial,
                     pkg,
                     activity,
                     options_
-                );
+                ).execute();
             }),
             cb
         );
@@ -1301,12 +1316,13 @@ export class Client {
 
         return nodeify(
             this.connection().then((conn) => {
-                return new StartServiceCommand(conn).execute(
+                return new StartServiceCommand(
+                    conn,
                     serial,
                     pkg,
                     service,
                     options_
-                );
+                ).execute();
             }),
             cb
         );
@@ -1473,8 +1489,10 @@ export class Client {
             this.connection().then((conn) => {
                 return new TcpIpCommand(
                     conn,
-                    this.awaitActiveDevice(serial)
-                ).execute(serial, port_);
+                    serial,
+                    this.awaitActiveDevice(serial),
+                    port_
+                ).execute();
             }),
             cb
         );
@@ -1490,8 +1508,9 @@ export class Client {
             this.connection().then((conn) => {
                 return new UsbCommand(
                     conn,
+                    serial,
                     this.awaitActiveDevice(serial)
-                ).execute(serial);
+                ).execute();
             }),
             cb
         );
@@ -1505,7 +1524,7 @@ export class Client {
     waitBootComplete(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new WaitBootCompleteCommand(conn).execute(serial);
+                return new WaitBootCompleteCommand(conn, serial).execute();
             }),
             cb
         );
@@ -1693,7 +1712,7 @@ export class Client {
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new SetProp(conn).execute(serial, prop, value)
+                new SetProp(conn, serial, prop, value).execute()
             ),
             cb
         );
@@ -1716,7 +1735,7 @@ export class Client {
     ): Promise<PropertyValue> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new GetPropertyCommand(conn).execute(serial, prop);
+                return new GetPropertyCommand(conn, serial, prop).execute();
             }),
             cb
         );
@@ -1748,7 +1767,13 @@ export class Client {
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new PutSetting(conn).execute(serial, mode, name, value);
+                return new PutSetting(
+                    conn,
+                    serial,
+                    mode,
+                    name,
+                    value
+                ).execute();
             }),
             cb
         );
@@ -1771,7 +1796,7 @@ export class Client {
     ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new ListSettingsCommand(conn).execute(serial, mode);
+                return new ListSettingsCommand(conn, serial, mode).execute();
             }),
             cb
         );
@@ -1800,7 +1825,7 @@ export class Client {
     ): Promise<PropertyValue> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new GetSetting(conn).execute(serial, mode, name);
+                return new GetSetting(conn, serial, mode, name).execute();
             }),
             cb
         );
@@ -1818,7 +1843,7 @@ export class Client {
     ): Promise<string> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new ShellCommand(conn).execute(serial, command);
+                return new ShellCommand(conn, serial, command).execute();
             }),
             cb
         );
@@ -1873,7 +1898,7 @@ export class Client {
         ...args: any[]
     ): Promise<T> {
         return this.connection().then((conn) => {
-            return new CustomCommand(conn).execute(serial, ...args);
+            return new CustomCommand(conn, serial, ...args).execute();
         });
     }
 
@@ -1925,7 +1950,7 @@ export class Client {
             };
             return this.transport(serial)
                 .then((transport) => {
-                    return new MonkeyCommand(transport).execute(serial, 1080);
+                    return new MonkeyCommand(transport, serial, 1080).execute();
                 })
                 .then((conn) => {
                     return tryConnect(20).then(
@@ -2029,7 +2054,7 @@ export class Client {
     ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new BatteryStatusCommand(conn).execute(serial);
+                return new BatteryStatusCommand(conn, serial).execute();
             }),
             cb
         );
@@ -2057,7 +2082,7 @@ export class Client {
 
         return nodeify(
             this.connection().then((conn) => {
-                return new RmCommand(conn).execute(serial, path, options_);
+                return new RmCommand(conn, serial, path, options_).execute();
             }),
             cb
         );
@@ -2089,7 +2114,7 @@ export class Client {
         const options_: MkDirOptions | undefined = options;
         return nodeify(
             this.connection().then((conn) => {
-                return new MkDirCommand(conn).execute(serial, path, options_);
+                return new MkDirCommand(conn, serial, path, options_).execute();
             }),
             cb
         );
@@ -2120,11 +2145,12 @@ export class Client {
         }
         return nodeify(
             this.connection().then((conn) => {
-                return new TouchCommand(conn).execute(
+                return new TouchCommand(
+                    conn,
                     serial,
                     path,
                     parseOptions(options)
-                );
+                ).execute();
             }),
             cb
         );
@@ -2163,11 +2189,12 @@ export class Client {
 
         return nodeify(
             this.connection().then((conn) => {
-                return new MvCommand(conn).execute(
+                return new MvCommand(
+                    conn,
                     serial,
                     [srcPath, destPath],
                     parseOptions(options)
-                );
+                ).execute();
             }),
             cb
         );
@@ -2205,11 +2232,12 @@ export class Client {
         }
         return nodeify(
             this.connection().then((conn) => {
-                return new CpCommand(conn).execute(
+                return new CpCommand(
+                    conn,
                     serial,
                     [srcPath, destPath],
                     parseOptions(options)
-                );
+                ).execute();
             }),
             cb
         );
@@ -2228,7 +2256,7 @@ export class Client {
     ): Promise<FileStat> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new FileStatCommand(conn).execute(serial, path);
+                return new FileStatCommand(conn, serial, path).execute();
             }),
             cb
         );

@@ -9,8 +9,8 @@ export default abstract class FileSystemCommand extends ExecCommand<void> {
         connection: Connection,
         serial: string,
         cmd: string,
-        path: string[],
-        options?: Record<string, any>
+        path: string | string[],
+        options: Record<string, any> = {}
     ) {
         super(connection, serial);
         this.rawCmd = [cmd, ...this.intentArgs(options), ...[path].flat()].join(

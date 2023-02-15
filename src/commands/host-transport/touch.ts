@@ -1,10 +1,19 @@
 import moment from 'moment';
+import { Connection } from '../../connection';
 import { TouchOptions, escape } from '../../util';
 import FileSystemCommand from '../abstract/fileSystem';
 
 export default class TouchCommand extends FileSystemCommand {
-    protected Cmd = 'touch';
-    intentArgs(options?: TouchOptions): string[] {
+    constructor(
+        connection: Connection,
+        serial: string,
+        path: string,
+        options?: TouchOptions
+    ) {
+        super(connection, serial, 'touch', path, options);
+    }
+
+    protected intentArgs(options: TouchOptions): string[] {
         const args: string[] = [];
         if (!options) {
             return args;
@@ -34,13 +43,5 @@ export default class TouchCommand extends FileSystemCommand {
             args.push('-r', escape(options.reference));
         }
         return args;
-    }
-
-    execute(
-        serial: string,
-        path: string,
-        options?: TouchOptions
-    ): Promise<void> {
-        return super.execute(serial, path, options).then(() => {});
     }
 }
