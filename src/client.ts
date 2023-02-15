@@ -107,6 +107,7 @@ import WaitBootCompleteCommand from './commands/host-transport/waitBootComplete'
 import WaitFor from './commands/host/waitFor';
 import { promisify } from 'util';
 import T from 'timers/promises';
+import Text from './commands/host-transport/text';
 
 const ADB_DEFAULT_PORT = 5555;
 const DEFAULT_OPTIONS = {
@@ -984,9 +985,7 @@ export class Client {
         );
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn, serial, _source, 'text', text)
-                    .withEscape()
-                    .execute();
+                return new Text(conn, serial, _source, text).execute();
             }),
             _cb
         );
