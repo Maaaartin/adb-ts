@@ -127,12 +127,11 @@ export default abstract class StartProcess extends TransportCommand<void> {
                 case 'category':
                     return [
                         ...args,
-                        ...(Array.isArray(options.category)
-                            ? options.category
-                            : [options.category]
-                        ).map((cat) =>
-                            [this.keyToFlag(k_), escape(cat)].join(' ')
-                        )
+                        ...[options.category]
+                            .flat()
+                            .map((cat) =>
+                                [this.keyToFlag(k_), escape(cat)].join(' ')
+                            )
                     ];
 
                 default:

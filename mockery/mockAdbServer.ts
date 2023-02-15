@@ -29,7 +29,7 @@ export class AdbMock {
     }
 
     constructor(seq: Sequence | NonEmptyArray<Sequence>) {
-        this.seq = Array.isArray(seq) ? seq : [seq];
+        this.seq = [seq].flat();
     }
 
     protected getPort(): number {
