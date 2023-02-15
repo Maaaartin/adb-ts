@@ -20,17 +20,12 @@ export default class Swipe extends Input {
             options?: InputDurationOptions;
         }
     ) {
-        super(
-            connection,
-            serial,
-            source,
-            'swipe',
-            false,
+        super(connection, serial, source, 'swipe', [
             x1,
             y1,
             x2,
             y2,
             typeof duration === 'number' ? duration : ''
-        );
+        ]);
     }
 }

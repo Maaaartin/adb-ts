@@ -11,14 +11,15 @@ export default abstract class Input extends TransportCommand<void> {
         serial: string,
         source: InputSource,
         command: string,
-        withEscape: boolean,
-        ...args: PrimitiveType[]
+        args?: PrimitiveType | PrimitiveType[],
+        withEscape = false
     ) {
         super(connection, serial);
         this.Cmd = ['shell:input', source as string]
             .concat(
                 command,
-                args
+                [args]
+                    .flat()
                     .filter((a) => typeof a !== 'undefined' && a !== '')
                     .map((a) => (withEscape ? escape(a) : String(a)))
             )

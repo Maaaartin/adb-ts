@@ -20,17 +20,12 @@ export default class DragAndDrop extends Input {
             options?: InputDurationOptions;
         }
     ) {
-        super(
-            connection,
-            serial,
-            source,
-            'draganddrop',
-            false,
+        super(connection, serial, source, 'draganddrop', [
             x1,
             y1,
             x2,
             y2,
             typeof duration === 'number' ? duration : ''
-        );
+        ]);
     }
 }

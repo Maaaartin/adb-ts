@@ -14,18 +14,13 @@ export default class KeyEvent extends Input {
             code: number | NonEmptyArray<number>;
         }
     ) {
-        super(
-            connection,
-            serial,
-            source,
-            'keyevent',
-            false,
+        super(connection, serial, source, 'keyevent', [
             variant === 'longpress'
                 ? '--longpress'
                 : variant === 'doubletap'
                 ? '--doubletap'
                 : '',
             ...[code].flat()
-        );
+        ]);
     }
 }

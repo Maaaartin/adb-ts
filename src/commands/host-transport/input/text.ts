@@ -14,6 +14,6 @@ export default class Text extends Input {
             text: string;
         }
     ) {
-        super(connection, serial, source, 'text', true, text);
+        super(connection, serial, source, 'text', text, true);
     }
 }

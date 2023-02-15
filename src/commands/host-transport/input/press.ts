@@ -8,6 +8,6 @@ export default class Press extends Input {
         serial: string,
         source = 'trackball' as InputSource
     ) {
-        super(connection, serial, source, 'press', false);
+        super(connection, serial, source, 'press');
     }
 }

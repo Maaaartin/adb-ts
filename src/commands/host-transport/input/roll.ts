@@ -16,6 +16,6 @@ export default class Roll extends Input {
             y: number;
         }
     ) {
-        super(connection, serial, source, 'roll', false, x, y);
+        super(connection, serial, source, 'roll', [x, y]);
     }
 }

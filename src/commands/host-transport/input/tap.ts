@@ -12,6 +12,6 @@ export default class Tap extends Input {
             y
         }: { source?: InputSource; x: number; y: number }
     ) {
-        super(connection, serial, source, 'tap', false, x, y);
+        super(connection, serial, source, 'tap', [x, y]);
     }
 }
