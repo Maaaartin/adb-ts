@@ -1,4 +1,5 @@
 import net from 'net';
+import { Connection } from '../../connection';
 import { DeviceState, IDevice } from '../../util';
 import { UnexpectedDataError } from '../../util';
 import Command from '../command';
@@ -42,7 +43,15 @@ export function constructDevice(values: string[]): IDevice {
 }
 
 export default abstract class DevicesCommand extends Command<IDevice[]> {
-    protected readOnExecute = true;
+    // TODO should be abstract
+    protected abstract readOnExecute: boolean;
+    private command: string;
+
+    constructor(connection: Connection, command: string) {
+        super(connection);
+        this.command = command;
+    }
+
     private parse(value: string): IDevice[] {
         const lines = value.split('\n').filter((l) => l !== '');
         return lines.map((line) => constructDevice(line.split(/\s+/)));
@@ -54,8 +63,8 @@ export default abstract class DevicesCommand extends Command<IDevice[]> {
         });
     }
 
-    public execute(command: string): Promise<IDevice[]> {
-        return this.initExecute(command)
+    public execute(): Promise<IDevice[]> {
+        return this.initExecute(this.command)
             .then(
                 this.handleReply(
                     this.readOnExecute

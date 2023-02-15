@@ -261,7 +261,7 @@ export interface InputDurationOptions extends InputOptions {
 }
 
 export interface CommandConstruct<T> {
-    new (connection: Connection): Command<T>;
+    new (connection: Connection, ...args: any[]): Command<T>;
 }
 
 export interface TransportCommandConstruct<T> {
@@ -274,7 +274,7 @@ export interface TransportCommandConstruct<T> {
 
 export interface IpConnectConstruct {
     /** @ignore */
-    new (connection: Connection): IpConnect;
+    new (connection: Connection, host: string, port: number): IpConnect;
 }
 
 export type MonkeyCallback<T = null> = (

@@ -177,10 +177,10 @@ export class Client {
         });
     }
 
-    transport(serial: string): Promise<Connection> {
-        return this.connection().then((conn) =>
-            new HostTransportCommand(conn).execute(serial).then(() => conn)
-        );
+    public async transport(serial: string): Promise<Connection> {
+        const conn = await this.connection();
+        await new HostTransportCommand(conn, serial).execute();
+        return conn;
     }
 
     /**
@@ -211,10 +211,11 @@ export class Client {
         }
         return nodeify(
             this.connection().then((conn) =>
-                new Construct(conn).execute(
+                new Construct(
+                    conn,
                     host,
                     parsePrimitiveParam(ADB_DEFAULT_PORT, port_)
-                )
+                ).execute()
             ),
             parseCbParam(port, cb)
         );
@@ -325,7 +326,7 @@ export class Client {
     ): Promise<string> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new GetDevicePathCommand(conn).execute(serial)
+                new GetDevicePathCommand(conn, serial).execute()
             ),
             cb
         );
@@ -418,7 +419,7 @@ export class Client {
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new ForwardCommand(conn).execute(serial, local, remote)
+                new ForwardCommand(conn, serial, local, remote).execute()
             ),
             cb
         );
@@ -436,7 +437,7 @@ export class Client {
     ): Promise<ForwardsObject[]> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new ListForwardsCommand(conn).execute(serial)
+                new ListForwardsCommand(conn, serial).execute()
             ),
             cb
         );
@@ -1011,16 +1012,7 @@ export class Client {
         return this.connection().then((conn) => {
             return new InstallCommand(conn, serial, apk, options, args)
                 .execute()
-                .then(() => {
-                    return this.deleteApk(serial, apk).then((stream) => {
-                        // return new Parser(stream)
-                        //     .readAll()
-                        //     .then(() => {})
-                        //     .finally(() => {
-                        //         stream.end();
-                        //     });
-                    });
-                });
+                .then(() => this.deleteApk(serial, apk));
         });
     }
 
@@ -1486,7 +1478,7 @@ export class Client {
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new WaitFor(conn).execute(transport, state);
+                return new WaitFor(conn, transport, state).execute();
             }),
             cb
         );
@@ -1791,6 +1783,7 @@ export class Client {
             cb
         );
     }
+    // TODO update js docs
     /**
      * Enables to execute any custom command.
      * @example
@@ -1816,7 +1809,7 @@ export class Client {
      */
     custom<T>(CustomCommand: CommandConstruct<T>, ...args: any[]): Promise<T> {
         return this.connection().then((conn) => {
-            return new CustomCommand(conn).execute(...args);
+            return new CustomCommand(conn, ...args).execute();
         });
     }
 

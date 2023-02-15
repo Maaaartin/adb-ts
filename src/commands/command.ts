@@ -62,5 +62,5 @@ export default abstract class Command<T> {
             .finally(() => this.autoEnd && this.endConnection());
     }
 
-    public abstract execute(...args: any[]): Promise<T>;
+    public abstract execute(): Promise<T>;
 }

@@ -1,10 +1,10 @@
-import { PrimitiveType, Reply } from '../../util';
-import PreExecute from './preExecute';
+import { Reply } from '../../util';
+import Cmd from './cmd';
 
-export default abstract class ValueCommand<T> extends PreExecute<T> {
+export default abstract class ValueCommand<T> extends Cmd<T> {
     protected abstract parse(value: string): T;
-    protected preExecute(...params: PrimitiveType[]): Promise<T> {
-        return this.initExecute(...params).then((reply) => {
+    public execute(): Promise<T> {
+        return this.initExecute(this.Cmd).then((reply) => {
             switch (reply) {
                 case Reply.OKAY:
                     return this.parser.readValue().then((value) => {

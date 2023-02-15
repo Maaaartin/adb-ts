@@ -1,11 +1,17 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import Command from '../../lib/commands/command';
 import { Client } from '../../lib/client';
+import { Connection } from '../../lib/connection';
 
 class TestCmd extends Command<null> {
     protected autoEnd = true;
-    public execute(arg: string): Promise<null> {
-        return this.initExecute(arg).then(this.handleReply(null));
+    private arg: string;
+    constructor(connection: Connection, arg: string) {
+        super(connection);
+        this.arg = arg;
+    }
+    public execute(): Promise<null> {
+        return this.initExecute(this.arg).then(this.handleReply(null));
     }
 }
 
