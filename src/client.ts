@@ -58,7 +58,6 @@ import GetIpAddressCommand from './commands/host-transport/ipaddress';
 import GetPropertyCommand from './commands/host-transport/getproperty';
 import GetSetting from './commands/host-transport/getsetting';
 import HostTransportCommand from './commands/host/transport';
-import InputCommand from './commands/host-transport/input';
 import InstallCommand from './commands/host-transport/install';
 import IsInstalledCommand from './commands/host-transport/isinstalled';
 import { KeyCode } from './util/keycode';
@@ -107,7 +106,13 @@ import WaitBootCompleteCommand from './commands/host-transport/waitBootComplete'
 import WaitFor from './commands/host/waitFor';
 import { promisify } from 'util';
 import T from 'timers/promises';
-import Text from './commands/host-transport/text';
+import Text from './commands/host-transport/input/text';
+import Roll from './commands/host-transport/input/roll';
+import DragAndDrop from './commands/host-transport/input/dragAndDrop';
+import Swipe from './commands/host-transport/input/swipe';
+import Press from './commands/host-transport/input/press';
+import KeyEvent from './commands/host-transport/input/keyEvent';
+import Tap from './commands/host-transport/input/tap';
 
 const ADB_DEFAULT_PORT = 5555;
 const DEFAULT_OPTIONS = {
@@ -631,22 +636,15 @@ export class Client {
         source?: InputSource | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { source: _source, cb: _cb } = buildInputParams(
-            'trackball',
-            source,
-            cb
-        );
+        const { cb: _cb } = buildInputParams('trackball', source, cb);
 
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(
-                    conn,
-                    serial,
-                    _source,
-                    'roll',
+                return new Roll(conn, serial, {
+                    source: typeof source === 'string' ? source : undefined,
                     x,
                     y
-                ).execute();
+                }).execute();
             }),
             _cb
         );
@@ -666,18 +664,13 @@ export class Client {
         source?: InputSource | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { source: _source, cb: _cb } = buildInputParams(
-            'trackball',
-            source,
-            cb
-        );
+        const { cb: _cb } = buildInputParams('trackball', source, cb);
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(
+                return new Press(
                     conn,
                     serial,
-                    _source,
-                    'press'
+                    typeof source === 'string' ? source : undefined
                 ).execute();
             }),
             _cb
@@ -734,25 +727,17 @@ export class Client {
         options?: InputDurationOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { source: _source, cb: _cb } = buildInputParams(
-            'touchscreen',
-            options,
-            cb
-        );
+        const { cb: _cb } = buildInputParams('touchscreen', options, cb);
 
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(
-                    conn,
-                    serial,
-                    _source,
-                    'draganddrop',
+                return new DragAndDrop(conn, serial, {
                     x1,
                     y1,
                     x2,
                     y2,
-                    typeof options === 'object' ? options.duration : ''
-                ).execute();
+                    options: typeof options === 'object' ? options : undefined
+                }).execute();
             }),
             _cb
         );
@@ -808,24 +793,16 @@ export class Client {
         options?: InputDurationOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { source: _source, cb: _cb } = buildInputParams(
-            'touchscreen',
-            options,
-            cb
-        );
+        const { cb: _cb } = buildInputParams('touchscreen', options, cb);
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(
-                    conn,
-                    serial,
-                    _source,
-                    'swipe',
+                return new Swipe(conn, serial, {
                     x1,
                     y1,
                     x2,
                     y2,
-                    typeof options === 'object' ? options.duration : ''
-                ).execute();
+                    options: typeof options === 'object' ? options : undefined
+                }).execute();
             }),
             _cb
         );
@@ -887,27 +864,13 @@ export class Client {
         options?: KeyEventOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { source: _source, cb: _cb } = buildInputParams(
-            'keyboard',
-            options,
-            cb
-        );
+        const { cb: _cb } = buildInputParams('keyboard', options, cb);
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(
-                    conn,
-                    serial,
-                    _source,
-                    'keyevent',
-                    typeof options === 'object'
-                        ? options.variant === 'longpress'
-                            ? '--longpress'
-                            : options.variant === 'doubletap'
-                            ? '--doubletap'
-                            : ''
-                        : '',
-                    ...[code].flat()
-                ).execute();
+                return new KeyEvent(conn, serial, {
+                    options: typeof options === 'object' ? options : undefined,
+                    code
+                }).execute();
             }),
             _cb
         );
@@ -950,14 +913,11 @@ export class Client {
 
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(
-                    conn,
-                    serial,
-                    _source,
-                    'tap',
+                return new Tap(conn, serial, {
+                    source: typeof source === 'string' ? source : undefined,
                     x,
                     y
-                ).execute();
+                }).execute();
             }),
             _cb
         );
@@ -978,14 +938,13 @@ export class Client {
         source?: InputSource | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { source: _source, cb: _cb } = buildInputParams(
-            'touchscreen',
-            source,
-            cb
-        );
+        const { cb: _cb } = buildInputParams('touchscreen', source, cb);
         return nodeify(
             this.connection().then((conn) => {
-                return new Text(conn, serial, _source, text).execute();
+                return new Text(conn, serial, {
+                    source: typeof source === 'string' ? source : undefined,
+                    text
+                }).execute();
             }),
             _cb
         );
