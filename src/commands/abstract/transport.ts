@@ -12,7 +12,7 @@ export default abstract class TransportCommand<T> extends Cmd<T> {
     }
 
     /**
-     * Executed when {@link preExecute} was successful
+     * Executed when {@link execute} was successful
      */
     protected abstract postExecute(): T | Promise<T>;
     /**

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import net from 'net';
 import { Parser } from '../lib/parser';
 import { NonEmptyArray, Reply } from '../lib/util';

@@ -9,7 +9,7 @@ export default class CpCommand extends FileSystemCommand {
         path: string | string[],
         options?: CpOptions
     ) {
-        super(connection, serial, 'mv', path, options);
+        super(connection, serial, 'cp', path, options);
     }
 
     protected intentArgs(options: CpOptions): string[] {

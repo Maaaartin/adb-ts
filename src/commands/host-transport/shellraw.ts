@@ -11,7 +11,7 @@ export default class ShellRawCommand extends RawCommand {
         command: string | string[]
     ) {
         super(connection, serial);
-        this.Cmd = ['shell:'].concat([command].flat().map(escape)).join(' ');
+        this.Cmd = 'shell:'.concat([command].flat().map(escape).join(' '));
     }
 
     public async execute(): Promise<Connection> {

@@ -41,7 +41,7 @@ export default abstract class Command<T> {
         };
     }
 
-    endConnection(): void {
+    public endConnection(): void {
         this.connection.end();
     }
 
