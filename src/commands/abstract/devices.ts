@@ -48,13 +48,13 @@ export default abstract class DevicesCommand extends Command<IDevice[]> {
         return lines.map((line) => constructDevice(line.split(/\s+/)));
     }
 
-    readDevices(): Promise<IDevice[]> {
+    public readDevices(): Promise<IDevice[]> {
         return this.parser.readValue().then((value) => {
             return this.parse(value.toString().trim());
         });
     }
 
-    execute(command: string): Promise<IDevice[]> {
+    public execute(command: string): Promise<IDevice[]> {
         return this.initExecute(command)
             .then(
                 this.handleReply(
