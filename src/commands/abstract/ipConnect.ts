@@ -1,6 +1,5 @@
 import { Connection } from '../../connection';
 import Command from '../command';
-import Cmd from './cmd';
 
 export default abstract class IpConnect extends Command<string> {
     protected abstract Validator: RegExp;
@@ -21,21 +20,18 @@ export default abstract class IpConnect extends Command<string> {
         this.port = port;
     }
 
-    public execute(): Promise<string> {
-        return this.initExecute(`${this.command}:${this.host}:${this.port}`)
-            .then(
-                this.handleReply(() => {
-                    return this.parser.readValue().then((value) => {
-                        const valueStr = value.toString().trim();
-                        if (this.Validator.test(valueStr)) {
-                            return `${this.host}:${this.port}`;
-                        }
-                        throw new Error(valueStr);
-                    });
-                })
-            )
-            .finally(() => {
-                this.endConnection();
-            });
+    public async execute(): Promise<string> {
+        try {
+            await this.initAndValidateReply(
+                `${this.command}:${this.host}:${this.port}`
+            );
+            const value = (await this.parser.readValue()).toString().trim();
+            if (this.Validator.test(value)) {
+                return `${this.host}:${this.port}`;
+            }
+            throw new Error(value);
+        } finally {
+            this.endConnection();
+        }
     }
 }

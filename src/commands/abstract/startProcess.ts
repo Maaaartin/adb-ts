@@ -32,20 +32,18 @@ export default abstract class StartProcess extends TransportCommand<void> {
         ].join(' ');
     }
 
-    protected postExecute(): Promise<void> {
-        return this.parser
-            .searchLine(/^Error: (.*)$/)
-            .finally(() => this.parser.end())
-            .then(
-                ([, errMsg]) => {
-                    throw new Error(errMsg);
-                },
-                (err) => {
-                    if (!(err instanceof PrematureEOFError)) {
-                        throw err;
-                    }
-                }
-            );
+    protected async postExecute(): Promise<void> {
+        try {
+            const [, errMsg] = await this.parser.searchLine(/^Error: (.*)$/);
+            throw new Error(errMsg);
+        } catch (err) {
+            if (!(err instanceof PrematureEOFError)) {
+                throw err;
+            }
+        } finally {
+            // TODO test, is needed?
+            await this.parser.end();
+        }
     }
     protected formatExtraType(type: ExtraType): string {
         switch (type) {

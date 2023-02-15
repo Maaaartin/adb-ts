@@ -39,7 +39,7 @@ export default class LogcatCommand extends TransportCommand<LogcatReader> {
         try {
             return await super.execute();
         } catch (err) {
-            this.endConnection();
+            // TODO test, is needed?
             this.logCat?.end();
             throw err;
         }

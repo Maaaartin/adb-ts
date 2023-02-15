@@ -9,12 +9,12 @@ export default class HostTransportCommand extends Command<void> {
         this.serial = serial;
     }
 
-    public execute(): Promise<void> {
-        return this.initExecute('host:transport:' + this.serial)
-            .then(this.handleReply(undefined))
-            .catch((err) => {
-                this.endConnection();
-                throw err;
-            });
+    public async execute(): Promise<void> {
+        try {
+            await this.initAndValidateReply(`host:transport:${this.serial}`);
+        } catch (err) {
+            this.endConnection();
+            throw err;
+        }
     }
 }

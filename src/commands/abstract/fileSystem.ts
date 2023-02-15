@@ -1,6 +1,7 @@
 import { Connection } from '../../connection';
 import ExecCommand from './exec';
 
+// TODO move inherited classes to their own files
 export default abstract class FileSystemCommand extends ExecCommand<void> {
     protected rawCmd: string;
     protected abstract intentArgs(options?: Record<string, any>): string[];

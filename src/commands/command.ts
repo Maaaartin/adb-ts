@@ -12,6 +12,7 @@ export default abstract class Command<T> {
         this.parser = new Parser(this.connection);
     }
 
+    // TODO kill usage of this?
     protected handleReply<T>(
         resolver: T | (() => T | Promise<T>)
     ): (reply: string | Buffer) => Promise<T> {
@@ -45,6 +46,7 @@ export default abstract class Command<T> {
         this.connection.end();
     }
 
+    // TODO should be param just string?
     protected async initAndValidateReply(
         ...args: PrimitiveType[]
     ): Promise<void> {

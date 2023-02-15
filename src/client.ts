@@ -287,6 +287,7 @@ export class Client {
         );
     }
 
+    // TODO write tests
     /**
      * Kills the adb server.
      */
