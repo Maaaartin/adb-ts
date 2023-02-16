@@ -1,8 +1,5 @@
 name: Build and test
-on:
-    push:
-        branches:
-            - master
+on: push
 jobs:
     test:
         name: Test and lint
