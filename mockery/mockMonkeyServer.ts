@@ -10,7 +10,7 @@ export default class MonkeyMock {
         this.replies_ = replies;
     }
 
-    end(): void {
+    public end(): void {
         this.server_.close();
     }
 
@@ -47,7 +47,7 @@ export default class MonkeyMock {
         return info.port;
     }
 
-    start(): Promise<number> {
+    public start(): Promise<number> {
         return new Promise((resolve, reject) => {
             if (!this.server_.listening) {
                 this.server_.once('error', reject);

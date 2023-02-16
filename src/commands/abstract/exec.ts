@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-import { Connection } from '../../connection';
 import { AdbExecError, escape } from '../../util';
 import TransportCommand from './transport';
 

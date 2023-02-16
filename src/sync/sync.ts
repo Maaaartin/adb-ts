@@ -9,7 +9,6 @@ import { Readable } from 'stream';
 import Stats from './stats';
 import SyncEntry from './entry';
 import fs from 'fs';
-import { promisify } from 'util';
 
 export enum SyncMode {
     DEFAULT_CHMOD = 0x1a4,
