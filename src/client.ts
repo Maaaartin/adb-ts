@@ -32,6 +32,7 @@ import {
     PropertyValue,
     TransportCommandConstruct,
     buildInputParams,
+    KeyCode,
     parseOptions,
     parsePrimitiveParam,
     parseCbParam,
@@ -59,7 +60,6 @@ import GetSetting from './commands/host-transport/getsetting';
 import HostTransportCommand from './commands/host/transport';
 import InstallCommand from './commands/host-transport/install';
 import IsInstalledCommand from './commands/host-transport/isinstalled';
-import { KeyCode } from './util/keycode';
 import KillCommand from './commands/host/kill';
 import ListDevicesCommand from './commands/host/listdevices';
 import ListFeaturesCommand from './commands/host-transport/listfeatures';

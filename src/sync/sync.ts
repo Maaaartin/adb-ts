@@ -30,14 +30,10 @@ export class Sync extends EventEmitter {
         return `/data/local/tmp/${Path.basename(path)}`;
     }
 
-    private readError(): Promise<never> {
-        return this.parser.readBytes(4).then((length) => {
-            return this.parser
-                .readBytes(length.readUInt32LE(0))
-                .then((buff) => {
-                    throw new Error(buff.toString());
-                });
-        });
+    private async readError(): Promise<never> {
+        const length = await this.parser.readBytes(4);
+        const buff = await this.parser.readBytes(length.readUInt32LE(0));
+        throw new Error(buff.toString());
     }
 
     private sendCommandWithLength(cmd: Reply, length: number): boolean {
@@ -55,104 +51,93 @@ export class Sync extends EventEmitter {
             errorListener: (error?: Error | null) => void,
             readableListener: () => void,
             canceled = false;
-        const writeData = (): Promise<any> => {
-            return new Promise<void>((resolve, reject) => {
-                const writeNext = (): Promise<any> => {
-                    const chunk =
-                        stream.read(SyncMode.DATA_MAX_LENGTH) || stream.read();
-                    if (Buffer.isBuffer(chunk)) {
-                        this.sendCommandWithLength(Reply.DATA, chunk.length);
-                        transfer.push(chunk.length);
-                        if (
-                            this.connection.write(chunk, (err) => {
-                                if (err) {
-                                    throw err;
-                                } else {
+        const writeData = async (): Promise<any> => {
+            try {
+                return await new Promise<void>((resolve, reject) => {
+                    const writeNext = async (): Promise<void> => {
+                        const chunk =
+                            stream.read(SyncMode.DATA_MAX_LENGTH) ||
+                            stream.read();
+                        if (Buffer.isBuffer(chunk)) {
+                            this.sendCommandWithLength(
+                                Reply.DATA,
+                                chunk.length
+                            );
+                            transfer.push(chunk.length);
+                            if (
+                                // TODO test for this if possible
+                                this.connection.write(chunk, (err) => {
+                                    if (err) {
+                                        return reject(err);
+                                    }
                                     transfer.pop();
-                                }
-                            })
-                        ) {
+                                })
+                            ) {
+                                return writeNext();
+                            }
+                            await waitForDrain();
                             return writeNext();
-                        } else {
-                            return waitForDrain().then(writeNext);
                         }
-                    } else {
-                        return Promise.resolve();
-                    }
-                };
-                stream.once(
-                    'end',
-                    (endListener = (): void => {
-                        this.sendCommandWithLength(Reply.DONE, timestamp);
-                        return resolve();
-                    })
-                );
-                stream.on(
-                    'readable',
-                    (readableListener = (): Promise<any> => writeNext())
-                );
-                stream.once(
-                    'error',
-                    (errorListener = (err): void => reject(err))
-                );
-                this.connection.once(
-                    'error',
-                    (connErrorListener = (err): void => {
-                        stream.destroy();
-                        this.connection.end();
-                        return reject(err);
-                    })
-                );
-                const waitForDrain = (): Promise<void> => {
-                    return new Promise<void>((resolve) => {
-                        this.connection.removeAllListeners('drain');
-                        this.connection.once('drain', (): void => {
+                    };
+                    stream.once(
+                        'end',
+                        (endListener = (): void => {
+                            this.sendCommandWithLength(Reply.DONE, timestamp);
                             resolve();
+                        })
+                    );
+                    stream.on('readable', (readableListener = writeNext));
+                    stream.once('error', (errorListener = reject));
+                    this.connection.once(
+                        'error',
+                        (connErrorListener = (err_1): void => {
+                            stream.destroy();
+                            this.connection.end();
+                            reject(err_1);
+                        })
+                    );
+                    const waitForDrain = (): Promise<void> =>
+                        new Promise<void>((resolve_1) => {
+                            this.connection.removeAllListeners('drain');
+                            this.connection.once('drain', resolve_1);
                         });
-                    });
-                };
-            }).finally(() => {
+                });
+            } finally {
                 stream.removeListener('end', endListener);
                 stream.removeListener('readable', readableListener);
                 stream.removeListener('error', errorListener);
-                return this.connection.removeListener(
-                    'error',
-                    connErrorListener
-                );
-            });
+                this.connection.removeListener('error', connErrorListener);
+            }
         };
-        const readReply = (): Promise<void> => {
-            return this.parser.readAscii(4).then((reply) => {
-                switch (reply) {
-                    case Reply.OKAY:
-                        return this.parser.readBytes(4).then(() => {
-                            return undefined;
-                        });
-                    case Reply.FAIL:
-                        return this.readError();
-                    default:
-                        throw this.parser.unexpected(reply, 'OKAY or FAIL');
-                }
-            });
+        const readReply = async (): Promise<void> => {
+            const reply = await this.parser.readAscii(4);
+            switch (reply) {
+                case Reply.OKAY:
+                    await this.parser.readBytes(4);
+                    return;
+                case Reply.FAIL:
+                    throw await this.readError();
+                default:
+                    throw this.parser.unexpected(reply, 'OKAY or FAIL');
+            }
         };
-        writeData()
-            .then(readReply)
-            .catch((err) => {
+
+        (async (): Promise<void> => {
+            try {
+                await writeData();
+                await readReply();
+            } catch (err) {
                 if (canceled) {
-                    return promisify<void>((cb) =>
-                        this.connection.end(() => cb(null))
-                    )();
+                    this.connection.end();
+                    return;
                 }
                 transfer.emit('error', err);
-                return;
-            })
-            .finally(() => {
-                return transfer.end();
-            });
+            } finally {
+                transfer.end();
+            }
+        })();
 
-        transfer.once('cancel', () => {
-            canceled = true;
-        });
+        transfer.once('cancel', () => (canceled = true));
         return transfer;
     }
 
@@ -188,50 +173,48 @@ export class Sync extends EventEmitter {
     ): PushTransfer {
         if (typeof contents === 'string') {
             return this.pushFile(contents, path, mode);
-        } else {
-            return this.pushStream(contents, path, mode);
         }
+        return this.pushStream(contents, path, mode);
     }
 
     private readData(): PullTransfer {
         let canceled = false;
         const transfer = new PullTransfer();
-        const readNext = (): Promise<any> => {
-            return this.parser.readAscii(4).then((reply) => {
-                switch (reply) {
-                    case Reply.DATA:
-                        return this.parser.readBytes(4).then((lengthData) => {
-                            const length = lengthData.readUInt32LE(0);
-                            return this.parser
-                                .readByteFlow(length, transfer)
-                                .then(readNext);
-                        });
-                    case Reply.DONE:
-                        return this.parser.readBytes(4).then(() => {});
-
-                    case Reply.FAIL:
-                        return this.readError();
-                    default:
-                        throw this.parser.unexpected(
-                            reply,
-                            'DATA, DONE or FAIL'
-                        );
+        const readNext = async (): Promise<void> => {
+            const reply = await this.parser.readAscii(4);
+            switch (reply) {
+                case Reply.DATA: {
+                    const length = (
+                        await this.parser.readBytes(4)
+                    ).readUInt32LE(0);
+                    await this.parser.readByteFlow(length, transfer);
+                    return readNext();
                 }
-            });
+                case Reply.DONE:
+                    await this.parser.readBytes(4);
+                    return;
+
+                case Reply.FAIL:
+                    return this.readError();
+                default:
+                    throw this.parser.unexpected(reply, 'DATA, DONE or FAIL');
+            }
         };
-        readNext()
-            .catch((err) => {
+        (async (): Promise<void> => {
+            try {
+                await readNext();
+            } catch (err) {
+                // TODO write test if possible
                 if (canceled) {
-                    return promisify<void>((cb) =>
-                        this.connection.end(() => cb(null))
-                    )();
+                    this.connection.end();
+                    return;
                 }
                 transfer.emit('error', err);
-                return;
-            })
-            .finally(() => {
-                return promisify((cb) => transfer.end(cb))();
-            });
+            } finally {
+                transfer.end();
+            }
+        })();
+
         transfer.once('cancel', () => (canceled = true));
         return transfer;
     }
@@ -241,52 +224,37 @@ export class Sync extends EventEmitter {
         return this.readData();
     }
 
-    public readDir(path: string): Promise<SyncEntry[]> {
+    public async readDir(path: string): Promise<SyncEntry[]> {
         const files: SyncEntry[] = [];
-        const readNext = (): Promise<SyncEntry[]> => {
-            return this.parser.readAscii(4).then((reply) => {
-                switch (reply) {
-                    case Reply.DENT:
-                        return this.parser.readBytes(16).then((stat) => {
-                            const mode = stat.readUInt32LE(0);
-                            const size = stat.readUInt32LE(4);
-                            const mtime = stat.readUInt32LE(8);
-                            const nameLen = stat.readUInt32LE(12);
-                            return this.parser
-                                .readBytes(nameLen)
-                                .then((name) => {
-                                    const nameStr = name.toString();
-                                    if (
-                                        !(nameStr === '.' || nameStr === '..')
-                                    ) {
-                                        files.push(
-                                            new SyncEntry(
-                                                nameStr,
-                                                mode,
-                                                size,
-                                                mtime
-                                            )
-                                        );
-                                    }
-                                    return readNext();
-                                });
-                        });
-                    case Reply.DONE:
-                        return this.parser.readBytes(16).then(() => {
-                            return files;
-                        });
-                    case Reply.FAIL:
-                        return this.parser.readError().then((e) => {
-                            throw e;
-                        });
-
-                    default:
-                        throw this.parser.unexpected(
-                            reply,
-                            'DENT, DONE or FAIL'
-                        );
+        const readNext = async (): Promise<SyncEntry[]> => {
+            const reply = await this.parser.readAscii(4);
+            switch (reply) {
+                case Reply.DENT: {
+                    const stat = await this.parser.readBytes(16);
+                    const [mode, size, mtime, nameLen] = [
+                        stat.readUInt32LE(0),
+                        stat.readUInt32LE(4),
+                        stat.readUInt32LE(8),
+                        stat.readUInt32LE(12)
+                    ];
+                    const name = (
+                        await this.parser.readBytes(nameLen)
+                    ).toString();
+                    if (!(name === '.' || name === '..')) {
+                        files.push(new SyncEntry(name, mode, size, mtime));
+                    }
+                    return readNext();
                 }
-            });
+                case Reply.DONE:
+                    await this.parser.readBytes(16);
+                    return files;
+
+                case Reply.FAIL:
+                    throw await this.parser.readError();
+
+                default:
+                    throw this.parser.unexpected(reply, 'DENT, DONE or FAIL');
+            }
         };
         this.sendCommandWithArg(Reply.LIST, path);
         return readNext();

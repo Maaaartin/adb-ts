@@ -6,20 +6,20 @@ export class PullTransfer extends PassThrough {
         bytesTransferred: 0
     };
 
-    cancel(): void {
-        this.emit('cancel');
+    public cancel(): boolean {
+        return this.emit('cancel');
     }
 
-    write(
+    public write(
         chunk: Buffer,
         encoding?: BufferEncoding,
         cb?: (error: Error | null | undefined) => void
     ): boolean;
-    write(
+    public write(
         chunk: Buffer,
         cb?: (error: Error | null | undefined) => void
     ): boolean;
-    write(
+    public write(
         chunk: Buffer,
         encoding?: any,
         cb?: (error: Error | null | undefined) => void

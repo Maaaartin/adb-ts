@@ -34,20 +34,20 @@ export class Parser {
             };
 
             this.socket.on('readable', tryRead);
-            errorListener = (err: Error): void => {
-                return reject(err);
-            };
+            errorListener = reject;
             this.socket.on('error', errorListener);
-            endListener = (): void => {
-                this.ended = true;
-                return reject(new PrematureEOFError(howMany));
-            };
-            this.socket.on('end', endListener);
+            this.socket.on(
+                'end',
+                (endListener = (): void => {
+                    this.ended = true;
+                    reject(new PrematureEOFError(howMany));
+                })
+            );
             tryRead();
         }).finally(() => {
             this.socket.removeListener('readable', tryRead);
             this.socket.removeListener('error', errorListener);
-            return this.socket.removeListener('end', endListener);
+            this.socket.removeListener('end', endListener);
         });
     }
 
@@ -61,18 +61,15 @@ export class Parser {
                     continue;
                 }
             };
-            this.socket.on('readable', () => {
-                tryRead();
-            });
-            errorListener = (err): void => {
-                return reject(err);
-            };
-            this.socket.on('error', errorListener);
-            endListener = (): void => {
-                this.ended = true;
-                return resolve();
-            };
-            this.socket.on('end', endListener);
+            this.socket.on('readable', tryRead);
+            this.socket.on('error', (errorListener = reject));
+            this.socket.on(
+                'end',
+                (endListener = (): void => {
+                    this.ended = true;
+                    resolve();
+                })
+            );
             if (this.ended) {
                 return resolve();
             }
@@ -81,21 +78,18 @@ export class Parser {
         }).finally(() => {
             this.socket.removeListener('readable', tryRead);
             this.socket.removeListener('error', errorListener);
-            return this.socket.removeListener('end', endListener);
+            this.socket.removeListener('end', endListener);
         });
     }
 
-    public readAscii(howMany: number): Promise<string> {
-        return this.readBytes(howMany).then((chunk) => {
-            return chunk.toString('ascii');
-        });
+    public async readAscii(howMany: number): Promise<string> {
+        return (await this.readBytes(howMany)).toString('ascii');
     }
 
-    public readValue(): Promise<Buffer> {
-        return this.readAscii(4).then((value) => {
-            const length = decodeLength(value);
-            return this.readBytes(length);
-        });
+    public async readValue(): Promise<Buffer> {
+        const value = await this.readAscii(4);
+        const length = decodeLength(value);
+        return this.readBytes(length);
     }
 
     public readError(): Promise<Error> {
@@ -135,64 +129,58 @@ export class Parser {
                     if (this.ended) {
                         return reject(new PrematureEOFError(howMany));
                     }
-                } else {
-                    return resolve();
                 }
-            };
-            endListener = (): void => {
-                this.ended = true;
-                return reject(new PrematureEOFError(howMany));
-            };
-            errorListener = (err): void => {
-                return reject(err);
+                return resolve();
             };
             this.socket.on('readable', tryRead);
-            this.socket.on('error', errorListener);
-            this.socket.on('end', endListener);
+            this.socket.on('error', (errorListener = reject));
+            this.socket.on(
+                'end',
+                (endListener = (): void => {
+                    this.ended = true;
+                    reject(new PrematureEOFError(howMany));
+                })
+            );
             tryRead();
         }).finally(() => {
             this.socket.removeListener('readable', tryRead);
             this.socket.removeListener('error', errorListener);
-            return this.socket.removeListener('end', endListener);
+            this.socket.removeListener('end', endListener);
         });
     }
 
     private readUntil(code: number): Promise<Buffer> {
-        let skipped = Buffer.alloc(0);
-        const read = (): Promise<Buffer> => {
-            return this.readBytes(1).then((chunk) => {
-                if (chunk[0] === code) {
-                    return skipped;
-                } else {
-                    skipped = Buffer.concat([skipped, chunk]);
-                    return read();
-                }
-            });
+        const read = async (skipped = Buffer.alloc(0)): Promise<Buffer> => {
+            const chunk = await this.readBytes(1);
+            if (chunk[0] === code) {
+                return skipped;
+            }
+            return read(Buffer.concat([skipped, chunk]));
         };
         return read();
     }
 
-    private readline(): Promise<Buffer> {
-        return this.readUntil(0x0a).then((line) => {
-            if (line[line.length - 1] === 0x0d) {
-                return line.subarray(0, -1);
-            }
-            return line;
-        });
+    private async readline(): Promise<Buffer> {
+        const line = await this.readUntil(10);
+        if (line[line.length - 1] === 13) {
+            return line.subarray(0, -1);
+        }
+        return line;
     }
 
-    public searchLine(regExp: RegExp, retry = true): Promise<RegExpExecArray> {
-        return this.readline().then((line) => {
-            const lineStr = line.toString();
-            let match;
-            if ((match = regExp.exec(lineStr))) {
-                return match;
-            }
-            if (retry) {
-                return this.searchLine(regExp);
-            }
-            throw new UnexpectedDataError(lineStr, regExp.toString());
-        });
+    public async searchLine(
+        regExp: RegExp,
+        retry = true
+    ): Promise<RegExpExecArray> {
+        const line = (await this.readline()).toString();
+        let match;
+        if ((match = regExp.exec(line))) {
+            return match;
+        }
+        if (retry) {
+            return this.searchLine(regExp);
+        }
+        throw new UnexpectedDataError(line, regExp.toString());
     }
 
     public readAll(): Promise<Buffer> {
@@ -211,19 +199,19 @@ export class Parser {
                 }
             };
             this.socket.on('readable', tryRead);
-            errorListener = (err): void => {
-                return reject(err);
-            };
+            errorListener = reject;
             this.socket.on('error', errorListener);
-            endListener = (): void => {
-                this.ended = true;
-                return resolve(all);
-            };
-            this.socket.on('end', endListener);
+            this.socket.on(
+                'end',
+                (endListener = (): void => {
+                    this.ended = true;
+                    return resolve(all);
+                })
+            );
         }).finally(() => {
             this.socket.removeListener('readable', tryRead);
             this.socket.removeListener('error', errorListener);
-            return this.socket.removeListener('end', endListener);
+            this.socket.removeListener('end', endListener);
         });
     }
 }

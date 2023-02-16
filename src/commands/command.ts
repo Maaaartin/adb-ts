@@ -16,23 +16,19 @@ export default abstract class Command<T> {
     protected handleReply<T>(
         resolver: T | (() => T | Promise<T>)
     ): (reply: string | Buffer) => Promise<T> {
-        return (reply) => {
-            const resolverToPromise = (): Promise<T> => {
+        return async (reply) => {
+            const resolverToPromise = async (): Promise<T> => {
                 if (typeof resolver === 'function') {
-                    return Promise.resolve(
-                        (resolver as () => T | Promise<T>)()
-                    );
+                    return (resolver as () => T | Promise<T>)();
                 }
-                return Promise.resolve(resolver);
+                return resolver;
             };
             const replyStr = reply.toString();
             switch (replyStr) {
                 case Reply.OKAY:
                     return resolverToPromise();
                 case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
-                        throw e;
-                    });
+                    throw await this.parser.readError();
                 default:
                     throw this.parser.unexpected(
                         replyStr,
@@ -57,11 +53,13 @@ export default abstract class Command<T> {
             this.autoEnd && this.endConnection();
         }
     }
-    protected initExecute(...args: PrimitiveType[]): Promise<string> {
+    protected async initExecute(...args: PrimitiveType[]): Promise<string> {
         this.connection.write(encodeData(args.join(' ')));
-        return this.parser
-            .readAscii(4)
-            .finally(() => this.autoEnd && this.endConnection());
+        try {
+            return this.parser.readAscii(4);
+        } finally {
+            this.autoEnd && this.endConnection();
+        }
     }
 
     public abstract execute(): Promise<T>;

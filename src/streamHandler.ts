@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
 
 export default abstract class StreamHandler extends EventEmitter {
-    abstract end(): void;
+    public abstract end(): void;
 }

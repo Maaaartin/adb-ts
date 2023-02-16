@@ -7,28 +7,28 @@ export class PushTransfer extends StreamHandler {
         bytesTransferred: 0
     };
 
-    cancel(): void {
-        this.emit('cancel');
+    public cancel(): boolean {
+        return this.emit('cancel');
     }
 
-    push(byteCount: number): void {
+    public push(byteCount: number): void {
         this.stack.push(byteCount);
     }
 
-    pop(): void {
+    public pop(): void {
         const byteCount = this.stack.pop();
         this.stats.bytesTransferred += byteCount || 0;
         this.emit('progress', this.stats);
     }
 
-    end(): void {
+    public end(): void {
         this.emit('end');
     }
 
-    on(event: 'error', listener: (err: Error) => void): this;
-    on(event: 'end' | 'cancel', listener: () => void): this;
-    on(event: 'progress', listener: (stats: StatsObject) => void): this;
-    on(event: string, listener: (...args: any[]) => void): this {
+    public on(event: 'error', listener: (err: Error) => void): this;
+    public on(event: 'end' | 'cancel', listener: () => void): this;
+    public on(event: 'progress', listener: (stats: StatsObject) => void): this;
+    public on(event: string, listener: (...args: any[]) => void): this {
         return super.on(event, listener);
     }
 }
