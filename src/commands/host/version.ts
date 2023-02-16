@@ -6,10 +6,10 @@ export default class VersionCommand extends Command<number> {
     public async execute(): Promise<number> {
         const reply = await this.initExecute('host:version');
         switch (reply) {
-            case Reply.OKAY:
-                return this.parser.readValue().then((value) => {
-                    return parseInt(value.toString(), 10);
-                });
+            case Reply.OKAY: {
+                const value = (await this.parser.readValue()).toString();
+                return parseInt(value, 10);
+            }
             case Reply.FAIL:
                 throw await this.parser.readError();
             default:
