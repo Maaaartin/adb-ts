@@ -33,12 +33,12 @@ import {
     TransportCommandConstruct,
     buildInputParams,
     KeyCode,
-    parseOptions,
     parsePrimitiveParam,
     parseCbParam,
     parseValueParam,
     nodeify,
-    AdbExecError
+    AdbExecError,
+    buildFsParams
 } from './util';
 import { Sync, SyncMode } from './sync';
 import { execFile } from 'child_process';
@@ -155,19 +155,16 @@ export class Client {
         return new Promise<Connection>((resolve, reject) => {
             let triedStarting = false;
             const connection = new Connection();
-            connection.once('connect', () => {
-                return resolve(connection);
-            });
-            connection.on('error', (err: Error) => {
+            connection.once('connect', () => resolve(connection));
+            connection.on('error', async (err: NodeJS.ErrnoException) => {
                 if (
-                    (err as Record<string, any>).code === 'ECONNREFUSED' &&
+                    err.code === 'ECONNREFUSED' &&
                     !triedStarting &&
                     !this.options.noAutoStart
                 ) {
                     triedStarting = true;
-                    return this.startServer().then(() =>
-                        connection.connect(this.options)
-                    );
+                    await this.startServer();
+                    return connection.connect(this.options);
                 }
                 connection.destroy();
                 connection.removeAllListeners();
@@ -633,7 +630,7 @@ export class Client {
         source?: InputSource | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { params, cb: _cb } = buildInputParams(source, cb);
+        const { params, cb_ } = buildInputParams(source, cb);
 
         return nodeify(
             this.connection().then((conn) => {
@@ -643,7 +640,7 @@ export class Client {
                     y
                 }).execute();
             }),
-            _cb
+            cb_
         );
     }
 
@@ -661,12 +658,12 @@ export class Client {
         source?: InputSource | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { params, cb: _cb } = buildInputParams(source, cb);
+        const { params, cb_ } = buildInputParams(source, cb);
         return nodeify(
             this.connection().then((conn) => {
                 return new Press(conn, serial, params).execute();
             }),
-            _cb
+            cb_
         );
     }
 
@@ -720,7 +717,7 @@ export class Client {
         options?: InputDurationOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { params, cb: _cb } = buildInputParams(options, cb);
+        const { params, cb_ } = buildInputParams(options, cb);
 
         return nodeify(
             this.connection().then((conn) => {
@@ -732,7 +729,7 @@ export class Client {
                     options: params
                 }).execute();
             }),
-            _cb
+            cb_
         );
     }
 
@@ -786,7 +783,7 @@ export class Client {
         options?: InputDurationOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { params, cb: _cb } = buildInputParams(options, cb);
+        const { params, cb_ } = buildInputParams(options, cb);
         return nodeify(
             this.connection().then((conn) => {
                 return new Swipe(conn, serial, {
@@ -797,7 +794,7 @@ export class Client {
                     options: params
                 }).execute();
             }),
-            _cb
+            cb_
         );
     }
 
@@ -857,7 +854,7 @@ export class Client {
         options?: KeyEventOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { params, cb: _cb } = buildInputParams(options, cb);
+        const { params, cb_ } = buildInputParams(options, cb);
         return nodeify(
             this.connection().then((conn) => {
                 return new KeyEvent(conn, serial, {
@@ -865,7 +862,7 @@ export class Client {
                     code
                 }).execute();
             }),
-            _cb
+            cb_
         );
     }
 
@@ -898,7 +895,7 @@ export class Client {
         source?: InputSource | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { params, cb: _cb } = buildInputParams(source, cb);
+        const { params, cb_ } = buildInputParams(source, cb);
 
         return nodeify(
             this.connection().then((conn) => {
@@ -908,7 +905,7 @@ export class Client {
                     y
                 }).execute();
             }),
-            _cb
+            cb_
         );
     }
 
@@ -927,7 +924,7 @@ export class Client {
         source?: InputSource | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { params, cb: _cb } = buildInputParams(source, cb);
+        const { params, cb_ } = buildInputParams(source, cb);
         return nodeify(
             this.connection().then((conn) => {
                 return new Text(conn, serial, {
@@ -935,7 +932,7 @@ export class Client {
                     text
                 }).execute();
             }),
-            _cb
+            cb_
         );
     }
 
@@ -1843,58 +1840,54 @@ export class Client {
         serial: string,
         cb?: ValueCallback<Monkey>
     ): Promise<Monkey> | void {
-        const tryConnect = (times: number): Promise<Monkey> => {
-            return this.openTcp(serial, 1080)
-                .then((stream) => {
-                    return new Monkey().connect(stream);
-                })
-                .catch((err) => {
-                    if ((times -= 1)) {
-                        return T.setTimeout(100).then(() => tryConnect(times));
-                    }
-                    throw err;
-                });
+        const tryConnect = async (times: number): Promise<Monkey> => {
+            try {
+                const stream = await this.openTcp(serial, 1080);
+                return new Monkey().connect(stream);
+            } catch (err) {
+                if ((times -= 1)) {
+                    await T.setTimeout(100);
+                    return tryConnect(times);
+                }
+                throw err;
+            }
         };
 
-        const establishConnection = (attempts: number): Promise<Monkey> => {
-            const tryConnectHandler = (
+        const establishConnection = async (
+            attempts: number
+        ): Promise<Monkey> => {
+            const tryConnectHandler = async (
                 conn: Connection,
                 monkey: Monkey
             ): Promise<Monkey> => {
-                return T.setTimeout(100).then(() => {
-                    const hookMonkey = (): Promise<Monkey> => {
-                        return Promise.resolve(
-                            monkey.once('end', () => {
-                                return conn.end();
-                            })
-                        );
-                    };
-                    if (monkey.stream.readyState === 'closed') {
-                        conn.end();
+                await T.setTimeout(100);
+                const hookMonkey = async (): Promise<Monkey> => {
+                    return monkey.once('end', () => conn.end());
+                };
 
-                        // if attempts fail, return monkey anyway
-                        return attempts === 0
-                            ? hookMonkey()
-                            : establishConnection(attempts - 1);
-                    }
+                if (monkey.stream.readyState !== 'closed') {
                     return hookMonkey();
-                });
+                }
+
+                conn.end();
+                // if attempts fail, return monkey anyway
+                return attempts === 0
+                    ? hookMonkey()
+                    : establishConnection(attempts - 1);
             };
-            return this.transport(serial)
-                .then((transport) => {
-                    return new MonkeyCommand(transport, serial, 1080).execute();
-                })
-                .then((conn) => {
-                    return tryConnect(20).then(
-                        (monkey) => {
-                            return tryConnectHandler(conn, monkey);
-                        },
-                        (err) => {
-                            conn.end();
-                            throw err;
-                        }
-                    );
-                });
+            const transport = await this.transport(serial);
+            const conn_2 = await new MonkeyCommand(
+                transport,
+                serial,
+                1080
+            ).execute();
+            return tryConnect(20).then(
+                (monkey_1) => tryConnectHandler(conn_2, monkey_1),
+                (err) => {
+                    conn_2.end();
+                    throw err;
+                }
+            );
         };
         return nodeify(establishConnection(3), cb);
     }
@@ -2006,17 +1999,12 @@ export class Client {
         options?: RmOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        if (typeof options === 'function' || !options) {
-            cb = options;
-            options = undefined;
-        }
-        const options_: RmOptions | undefined = options;
-
+        const { options_, cb_ } = buildFsParams(options, cb);
         return nodeify(
             this.connection().then((conn) => {
                 return new RmCommand(conn, serial, path, options_).execute();
             }),
-            cb
+            cb_
         );
     }
 
@@ -2039,16 +2027,12 @@ export class Client {
         options?: MkDirOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        if (typeof options === 'function' || !options) {
-            cb = options;
-            options = undefined;
-        }
-        const options_: MkDirOptions | undefined = options;
+        const { options_, cb_ } = buildFsParams(options, cb);
         return nodeify(
             this.connection().then((conn) => {
                 return new MkDirCommand(conn, serial, path, options_).execute();
             }),
-            cb
+            cb_
         );
     }
 
@@ -2071,20 +2055,12 @@ export class Client {
         options?: TouchOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        if (typeof options === 'function' || !options) {
-            cb = options;
-            options = undefined;
-        }
+        const { options_, cb_ } = buildFsParams(options, cb);
         return nodeify(
             this.connection().then((conn) => {
-                return new TouchCommand(
-                    conn,
-                    serial,
-                    path,
-                    parseOptions(options)
-                ).execute();
+                return new TouchCommand(conn, serial, path, options_).execute();
             }),
-            cb
+            cb_
         );
     }
 
@@ -2114,21 +2090,17 @@ export class Client {
         options?: Callback | MvOptions,
         cb?: Callback
     ): Promise<void> | void {
-        if (typeof options === 'function' || !options) {
-            cb = options;
-            options = undefined;
-        }
-
+        const { options_, cb_ } = buildFsParams(options, cb);
         return nodeify(
             this.connection().then((conn) => {
                 return new MvCommand(
                     conn,
                     serial,
                     [srcPath, destPath],
-                    parseOptions(options)
+                    options_
                 ).execute();
             }),
-            cb
+            cb_
         );
     }
 
@@ -2158,20 +2130,17 @@ export class Client {
         options?: Callback | CpOptions,
         cb?: Callback
     ): Promise<void> | void {
-        if (typeof options === 'function' || !options) {
-            cb = options;
-            options = undefined;
-        }
+        const { options_, cb_ } = buildFsParams(options, cb);
         return nodeify(
             this.connection().then((conn) => {
                 return new CpCommand(
                     conn,
                     serial,
                     [srcPath, destPath],
-                    parseOptions(options)
+                    options_
                 ).execute();
             }),
-            cb
+            cb_
         );
     }
 

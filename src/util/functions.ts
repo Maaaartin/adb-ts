@@ -76,14 +76,6 @@ export const parsePrimitiveParam = <T>(def: T, param: T | undefined): T => {
     }
     return param;
 };
-export const parseOptions = <R extends Record<string, any>>(
-    options: R | undefined
-): NonFunctionProperties<R> | undefined => {
-    if (typeof options === 'function') {
-        return;
-    }
-    return options;
-};
 
 export function findMatches(
     value: string,
@@ -116,20 +108,37 @@ export function findMatches(
     }
 }
 
+// TODO test call signature of fs functions
+export function buildFsParams<T extends Object>(
+    options: T | Callback | undefined,
+    cb: Callback | undefined
+): {
+    options_: T | undefined;
+    cb_: Callback | undefined;
+} {
+    if (typeof options === 'function') {
+        return { options_: undefined, cb_: options };
+    }
+    if (typeof options === 'object') {
+        return { options_: options, cb_: cb };
+    }
+    return { options_: undefined, cb_: cb };
+}
+
 export function buildInputParams<T extends InputSource | InputOptions>(
     params: T | Callback | undefined,
     cb: Callback | undefined
 ): {
     params: T | undefined;
-    cb: Callback | undefined;
+    cb_: Callback | undefined;
 } {
     if (typeof params === 'function') {
-        return { params: undefined, cb: params };
+        return { params: undefined, cb_: params };
     }
-    if (typeof params === 'object' || typeof params === 'string') {
-        return { params, cb };
+    if (typeof params !== 'undefined') {
+        return { params, cb_: cb };
     }
-    return { params: undefined, cb };
+    return { params: undefined, cb_: cb };
 }
 
 export function escape(arg: PrimitiveType): string {
