@@ -1078,12 +1078,7 @@ export class Client {
                 let errorListener: (err: Error) => void;
                 let endListener: () => void;
                 return new Promise<void>((resolve, reject) => {
-                    transfer.once(
-                        'error',
-                        (errorListener = (err): void => {
-                            reject(err);
-                        })
-                    );
+                    transfer.once('error', (errorListener = reject));
                     transfer.once(
                         'end',
                         (endListener = (): void => {
