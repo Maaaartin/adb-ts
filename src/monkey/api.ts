@@ -48,51 +48,51 @@ export default abstract class Api extends EventEmitter {
         );
     }
 
-    keyDown(keyCode: KeyCode | number, cb?: MonkeyCallback): this {
+    public keyDown(keyCode: KeyCode | number, cb?: MonkeyCallback): this {
         return this.send('key down ' + keyCode, cb);
     }
 
-    keyUp(keyCode: KeyCode | number, cb?: MonkeyCallback): this {
+    public keyUp(keyCode: KeyCode | number, cb?: MonkeyCallback): this {
         return this.send('key up ' + keyCode, cb);
     }
 
-    touchDown(x: number, y: number, cb?: MonkeyCallback): this {
+    public touchDown(x: number, y: number, cb?: MonkeyCallback): this {
         return this.send('touch down ' + x + ' ' + y, cb);
     }
 
-    touchUp(x: number, y: number, cb?: MonkeyCallback): this {
+    public touchUp(x: number, y: number, cb?: MonkeyCallback): this {
         return this.send('touch up ' + x + ' ' + y, cb);
     }
 
-    touchMove(x: number, y: number, cb?: MonkeyCallback): this {
+    public touchMove(x: number, y: number, cb?: MonkeyCallback): this {
         return this.send('touch move ' + x + ' ' + y, cb);
     }
 
-    trackball(dx: number, dy: number, cb?: MonkeyCallback): this {
+    public trackball(dx: number, dy: number, cb?: MonkeyCallback): this {
         return this.send('trackball ' + dx + ' ' + dy, cb);
     }
 
-    flipOpen(cb?: MonkeyCallback): this {
+    public flipOpen(cb?: MonkeyCallback): this {
         return this.send('flip open', cb);
     }
 
-    flipClose(cb?: MonkeyCallback): this {
+    public flipClose(cb?: MonkeyCallback): this {
         return this.send('flip close', cb);
     }
 
-    wake(cb?: MonkeyCallback): this {
+    public wake(cb?: MonkeyCallback): this {
         return this.send('wake', cb);
     }
 
-    tap(x: number, y: number, cb?: MonkeyCallback): this {
+    public tap(x: number, y: number, cb?: MonkeyCallback): this {
         return this.send('tap ' + x + ' ' + y, cb);
     }
 
-    press(keyCode: KeyCode | number, cb?: MonkeyCallback): this {
+    public press(keyCode: KeyCode | number, cb?: MonkeyCallback): this {
         return this.send('press ' + keyCode, cb);
     }
 
-    type(str: string, cb?: MonkeyCallback): this {
+    public type(str: string, cb?: MonkeyCallback): this {
         str = str.replace(/"/g, '\\"');
         if (str.indexOf(' ') === -1) {
             return this.send('type ' + str, cb);
@@ -101,36 +101,36 @@ export default abstract class Api extends EventEmitter {
         }
     }
 
-    list(cb?: MonkeyCallback<string[] | null>): this {
+    public list(cb?: MonkeyCallback<string[] | null>): this {
         return this.sendAndParse('listvar', cb, (vars) => {
             return vars?.trim().split(/\s+/g) || null;
         });
     }
 
-    get(name: string, cb?: MonkeyCallback<string | null>): this {
+    public get(name: string, cb?: MonkeyCallback<string | null>): this {
         return this.send('getvar ' + name, cb);
     }
 
-    sleep(ms: number, cb?: MonkeyCallback): this {
+    public sleep(ms: number, cb?: MonkeyCallback): this {
         return this.send('sleep ' + ms, cb);
     }
 
-    quit(cb?: MonkeyCallback): this {
+    public quit(cb?: MonkeyCallback): this {
         return this.send('quit', cb);
     }
 
-    done(cb?: MonkeyCallback): this {
+    public done(cb?: MonkeyCallback): this {
         return this.send('done', cb);
     }
 
     // am.  note that the current activity information isn't valid
     // until the first activity gets launched after the monkey has
     // been started.
-    getAmCurrentAction(cb?: MonkeyCallback<string | null>): this {
+    public getAmCurrentAction(cb?: MonkeyCallback<string | null>): this {
         return this.get('am.current.action', cb);
     }
 
-    getAmCurrentCategories(cb?: MonkeyCallback<string[] | null>): this {
+    public getAmCurrentCategories(cb?: MonkeyCallback<string[] | null>): this {
         return this.getAndParse(
             'am.current.categories',
             { type: 'stringArray', splitter: /\s+/g },
@@ -138,67 +138,67 @@ export default abstract class Api extends EventEmitter {
         );
     }
 
-    getAmCurrentCompClass(cb?: MonkeyCallback<string | null>): this {
+    public getAmCurrentCompClass(cb?: MonkeyCallback<string | null>): this {
         return this.get('am.current.comp.class', cb);
     }
 
-    getAmCurrentCompPackage(cb?: MonkeyCallback<string | null>): this {
+    public getAmCurrentCompPackage(cb?: MonkeyCallback<string | null>): this {
         return this.get('am.current.comp.package', cb);
     }
 
-    getAmCurrentData(cb?: MonkeyCallback<string | null>): this {
+    public getAmCurrentData(cb?: MonkeyCallback<string | null>): this {
         return this.get('am.current.data', cb);
     }
 
-    getAmCurrentPackage(cb?: MonkeyCallback<string | null>): this {
+    public getAmCurrentPackage(cb?: MonkeyCallback<string | null>): this {
         return this.get('am.current.package', cb);
     }
 
-    getBuildBoard(cb?: MonkeyCallback<string | null>): this {
+    public getBuildBoard(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.board', cb);
     }
 
-    getBuildBrand(cb?: MonkeyCallback<string | null>): this {
+    public getBuildBrand(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.brand', cb);
     }
 
-    getBuildCpuAbi(cb?: MonkeyCallback<string | null>): this {
+    public getBuildCpuAbi(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.cpu_abi', cb);
     }
 
-    getBuildDevice(cb?: MonkeyCallback<string | null>): this {
+    public getBuildDevice(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.device', cb);
     }
 
-    getBuildDisplay(cb?: MonkeyCallback<string | null>): this {
+    public getBuildDisplay(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.display', cb);
     }
 
-    getBuildFingerprint(cb?: MonkeyCallback<string | null>): this {
+    public getBuildFingerprint(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.fingerprint', cb);
     }
 
-    getBuildHost(cb?: MonkeyCallback<string | null>): this {
+    public getBuildHost(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.host', cb);
     }
 
-    getBuildId(cb?: MonkeyCallback<string | null>): this {
+    public getBuildId(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.id', cb);
     }
 
-    getBuildManufacturer(cb?: MonkeyCallback<string | null>): this {
+    public getBuildManufacturer(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.manufacturer', cb);
     }
 
-    getBuildModel(cb?: MonkeyCallback<string | null>): this {
+    public getBuildModel(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.model', cb);
     }
 
-    getBuildProduct(cb?: MonkeyCallback<string | null>): this {
+    public getBuildProduct(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.product', cb);
     }
 
-    getBuildTags(cb?: MonkeyCallback<string[] | null>): this {
+    public getBuildTags(cb?: MonkeyCallback<string[] | null>): this {
         return this.getAndParse(
             'build.tags',
             { type: 'stringArray', splitter: ',' },
@@ -206,51 +206,53 @@ export default abstract class Api extends EventEmitter {
         );
     }
 
-    getBuildType(cb?: MonkeyCallback<string | null>): this {
+    public getBuildType(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.type', cb);
     }
 
-    getBuildUser(cb?: MonkeyCallback<string | null>): this {
+    public getBuildUser(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.user', cb);
     }
 
-    getBuildVersionCodename(cb?: MonkeyCallback<string | null>): this {
+    public getBuildVersionCodename(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.version.codename', cb);
     }
 
-    getBuildVersionIncremental(cb?: MonkeyCallback<string | null>): this {
+    public getBuildVersionIncremental(
+        cb?: MonkeyCallback<string | null>
+    ): this {
         return this.get('build.version.incremental', cb);
     }
 
-    getBuildVersionRelease(cb?: MonkeyCallback<string | null>): this {
+    public getBuildVersionRelease(cb?: MonkeyCallback<string | null>): this {
         return this.get('build.version.release', cb);
     }
 
-    getBuildVersionSdk(cb?: MonkeyCallback<number | null>): this {
+    public getBuildVersionSdk(cb?: MonkeyCallback<number | null>): this {
         return this.getAndParse('build.version.sdk', { type: 'number' }, cb);
     }
 
-    getClockMillis(cb?: MonkeyCallback<number | null>): this {
+    public getClockMillis(cb?: MonkeyCallback<number | null>): this {
         return this.getAndParse('clock.millis', { type: 'number' }, cb);
     }
 
-    getClockRealtime(cb?: MonkeyCallback<number | null>): this {
+    public getClockRealtime(cb?: MonkeyCallback<number | null>): this {
         return this.getAndParse('clock.realtime', { type: 'number' }, cb);
     }
 
-    getClockUptime(cb?: MonkeyCallback<number | null>): this {
+    public getClockUptime(cb?: MonkeyCallback<number | null>): this {
         return this.getAndParse('clock.uptime', { type: 'number' }, cb);
     }
 
-    getDisplayDensity(cb?: MonkeyCallback<number | null>): this {
+    public getDisplayDensity(cb?: MonkeyCallback<number | null>): this {
         return this.getAndParse('display.density', { type: 'number' }, cb);
     }
 
-    getDisplayHeight(cb?: MonkeyCallback<number | null>): this {
+    public getDisplayHeight(cb?: MonkeyCallback<number | null>): this {
         return this.getAndParse('display.height', { type: 'number' }, cb);
     }
 
-    getDisplayWidth(cb?: MonkeyCallback<number | null>): this {
+    public getDisplayWidth(cb?: MonkeyCallback<number | null>): this {
         return this.getAndParse('display.width', { type: 'number' }, cb);
     }
 }

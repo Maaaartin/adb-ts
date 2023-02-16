@@ -40,7 +40,7 @@ export class AdbError extends Error {
 }
 
 export class AdbExecError extends Error {
-    command: string;
+    public command: string;
     constructor(message: string, cmd: string) {
         super();
         this.name = 'AdbExecError';

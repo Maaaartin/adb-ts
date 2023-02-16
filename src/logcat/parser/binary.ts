@@ -6,7 +6,7 @@ export class Binary extends Parser {
     private readonly HEADER_SIZE_V1 = 20;
     private readonly HEADER_SIZE_MAX = 100;
 
-    parse(chunk: Buffer): void {
+    public parse(chunk: Buffer): void {
         this.buffer = Buffer.concat([this.buffer, chunk]);
         while (this.buffer.length > 4) {
             let cursor = 0;
@@ -67,10 +67,13 @@ export class Binary extends Parser {
         );
     }
 
-    on(event: 'entry', listener: (entry: LogcatEntry) => void): this;
-    on(event: 'error', listener: (err: Error) => void): this;
-    on(event: 'wait' | 'drain', listener: () => void): this;
-    on(event: string | symbol, listener: (...args: any[]) => void): this {
+    public on(event: 'entry', listener: (entry: LogcatEntry) => void): this;
+    public on(event: 'error', listener: (err: Error) => void): this;
+    public on(event: 'wait' | 'drain', listener: () => void): this;
+    public on(
+        event: string | symbol,
+        listener: (...args: any[]) => void
+    ): this {
         return super.on(event, listener);
     }
 }

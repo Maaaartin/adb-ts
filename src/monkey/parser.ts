@@ -5,7 +5,7 @@ export class Parser extends EventEmitter {
     private column = 0;
     private buffer = Buffer.alloc(0);
 
-    parse(chunk: Buffer): void {
+    public parse(chunk: Buffer): void {
         this.buffer = Buffer.concat([chunk]);
 
         while (this.column < this.buffer.length) {
@@ -44,9 +44,12 @@ export class Parser extends EventEmitter {
         }
     }
 
-    on(event: 'reply', listener: (reply: Reply) => void): this;
-    on(event: 'error', listener: (error: Error) => void): this;
-    on(event: string | symbol, listener: (...args: any[]) => void): this {
+    public on(event: 'reply', listener: (reply: Reply) => void): this;
+    public on(event: 'error', listener: (error: Error) => void): this;
+    public on(
+        event: string | symbol,
+        listener: (...args: any[]) => void
+    ): this {
         return super.on(event, listener);
     }
 }

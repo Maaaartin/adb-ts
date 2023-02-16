@@ -10,7 +10,7 @@ export class Parser {
     constructor(socket: Socket) {
         this.socket = socket;
     }
-    readBytes(howMany: number): Promise<Buffer> {
+    public readBytes(howMany: number): Promise<Buffer> {
         let tryRead: () => void,
             errorListener: (err: Error) => void,
             endListener: () => void;
@@ -51,7 +51,7 @@ export class Parser {
         });
     }
 
-    end(): Promise<void> {
+    public end(): Promise<void> {
         let tryRead: () => void,
             errorListener: (err: Error) => void,
             endListener: () => void;
@@ -85,20 +85,20 @@ export class Parser {
         });
     }
 
-    readAscii(howMany: number): Promise<string> {
+    public readAscii(howMany: number): Promise<string> {
         return this.readBytes(howMany).then((chunk) => {
             return chunk.toString('ascii');
         });
     }
 
-    readValue(): Promise<Buffer> {
+    public readValue(): Promise<Buffer> {
         return this.readAscii(4).then((value) => {
             const length = decodeLength(value);
             return this.readBytes(length);
         });
     }
 
-    readError(): Promise<Error> {
+    public readError(): Promise<Error> {
         return Promise.race([
             T.setTimeout(1000, new Error('Could not read error'), {
                 ref: false
@@ -107,11 +107,14 @@ export class Parser {
         ]);
     }
 
-    unexpected(data: string, expected: string): UnexpectedDataError {
+    public unexpected(data: string, expected: string): UnexpectedDataError {
         return new UnexpectedDataError(data, expected);
     }
 
-    readByteFlow(howMany: number, targetStream: Writable): Promise<void> {
+    public readByteFlow(
+        howMany: number,
+        targetStream: Writable
+    ): Promise<void> {
         let tryRead: () => void,
             errorListener: (err: Error) => void,
             endListener: () => void;
@@ -178,7 +181,7 @@ export class Parser {
         });
     }
 
-    searchLine(regExp: RegExp, retry = true): Promise<RegExpExecArray> {
+    public searchLine(regExp: RegExp, retry = true): Promise<RegExpExecArray> {
         return this.readline().then((line) => {
             const lineStr = line.toString();
             let match;
@@ -192,7 +195,7 @@ export class Parser {
         });
     }
 
-    readAll(): Promise<Buffer> {
+    public readAll(): Promise<Buffer> {
         let tryRead: () => void,
             errorListener: (err: Error) => void,
             endListener: () => void;

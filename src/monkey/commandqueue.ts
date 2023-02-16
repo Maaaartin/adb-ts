@@ -61,7 +61,7 @@ export class CommandQueue extends Api {
         return this;
     }
 
-    sendAndParse(
+    public sendAndParse(
         command: string,
         _cb: MonkeyCallback<any>,
         parser: (data: any) => any
@@ -75,7 +75,7 @@ export class CommandQueue extends Api {
         });
     }
 
-    send(command: string): this {
+    public send(command: string): this {
         return this.sendInternal(() => {
             return new Command(command, this.collector.bind(this));
         });
@@ -92,7 +92,7 @@ export class CommandQueue extends Api {
         this.queue = [...this.queue, ...this.commands];
     }
 
-    execute(cb: (err: Error | null, data: any[]) => void): void {
+    public execute(cb: (err: Error | null, data: any[]) => void): void {
         this.forbidReuse();
         this.sent = true;
         this.callback = cb;

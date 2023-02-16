@@ -13,7 +13,7 @@ export class Monkey extends Api {
     private stream_?: Socket;
     private timeout?: NodeJS.Timeout;
 
-    get stream(): Socket {
+    public get stream(): Socket {
         if (!this.stream_) {
             throw new NotConnectedError();
         }
@@ -36,7 +36,7 @@ export class Monkey extends Api {
         return this;
     }
 
-    sendAndParse<T>(
+    public sendAndParse<T>(
         commands: string | string[],
         cb: MonkeyCallback<T>,
         parser: (data: string | null) => T
@@ -52,7 +52,7 @@ export class Monkey extends Api {
      * @example
      * monkey.send('key event 24', (err, value, command) => {});
      */
-    send(commands: string[] | string, cb: MonkeyCallback): this {
+    public send(commands: string[] | string, cb: MonkeyCallback): this {
         return this.sendInternal(commands, (cmd) => new Command(cmd, cb));
     }
 
@@ -81,9 +81,12 @@ export class Monkey extends Api {
         });
     }
 
-    on(event: 'error', listener: (err: Error) => void): this;
-    on(event: 'end' | 'finish' | 'close', listener: () => void): this;
-    on(event: string | symbol, listener: (...args: any[]) => void): this {
+    public on(event: 'error', listener: (err: Error) => void): this;
+    public on(event: 'end' | 'finish' | 'close', listener: () => void): this;
+    public on(
+        event: string | symbol,
+        listener: (...args: any[]) => void
+    ): this {
         return super.on(event, listener);
     }
 
@@ -111,13 +114,13 @@ export class Monkey extends Api {
         command.callback?.(null, reply.value, command.command);
     }
 
-    connect(param: Socket): this {
+    public connect(param: Socket): this {
         this.stream_ = param;
         this.hook();
         return this;
     }
 
-    end(cb?: () => void): this {
+    public end(cb?: () => void): this {
         clearTimeout(this.timeout);
         this.stream.end(cb);
         return this;
@@ -135,7 +138,7 @@ export class Monkey extends Api {
      *          monkey.end();
      *      });
      */
-    commandQueue(): CommandQueue {
+    public commandQueue(): CommandQueue {
         return new CommandQueue(this);
     }
 }

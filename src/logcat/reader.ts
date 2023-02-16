@@ -21,7 +21,7 @@ export class LogcatReader extends StreamHandler {
         return this.stream_;
     }
 
-    hook(): void {
+    private hook(): void {
         this.stream.on('data', (data) => {
             this.parser.parse(data);
         });
@@ -49,20 +49,23 @@ export class LogcatReader extends StreamHandler {
         });
     }
 
-    on(event: 'error', listener: (err: Error) => void): this;
-    on(event: 'entry', listener: (entry: LogcatEntry) => void): this;
-    on(event: 'finish' | 'end', listener: () => void): this;
-    on(event: string | symbol, listener: (...args: any[]) => void): this {
+    public on(event: 'error', listener: (err: Error) => void): this;
+    public on(event: 'entry', listener: (entry: LogcatEntry) => void): this;
+    public on(event: 'finish' | 'end', listener: () => void): this;
+    public on(
+        event: string | symbol,
+        listener: (...args: any[]) => void
+    ): this {
         return super.on(event, listener);
     }
 
-    connect(stream: Writable): this {
+    public connect(stream: Writable): this {
         this.stream_ = stream;
         this.hook();
         return this;
     }
 
-    end(): void {
+    public end(): void {
         this.stream.end();
     }
 }

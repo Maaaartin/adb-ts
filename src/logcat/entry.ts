@@ -8,7 +8,7 @@ export class LogcatEntry {
     public tag = '';
     public message = '';
 
-    toBinary(): Buffer {
+    public toBinary(): Buffer {
         let length = 20;
         length += 1;
         length += this.tag.length;
