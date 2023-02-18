@@ -2,7 +2,7 @@ import DevicesCommand from '../abstract/devices';
 import { Connection } from '../../connection';
 
 export default class TrackCommand extends DevicesCommand {
-    protected autoEnd = true;
+    protected autoEnd = false;
     protected readOnExecute = false;
 
     constructor(connection: Connection) {

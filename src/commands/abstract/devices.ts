@@ -65,7 +65,6 @@ export default abstract class DevicesCommand extends Command<IDevice[]> {
         try {
             await this.initAndValidateReply(this.command);
             return this.readOnExecute ? await this.readDevices() : [];
-            // TODO is catch needed?
         } catch (err) {
             this.endConnection();
             throw err;
