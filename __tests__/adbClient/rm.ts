@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import { UnexpectedDataError } from '../../lib/util';
 import { Client } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
+import { promisify } from 'util';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
@@ -10,11 +11,33 @@ beforeAll(() => {
 });
 
 describe('Rm OKAY tests', () => {
-    it('Should execute without parameters', async () => {
+    it('Should execute with options', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(rm /file) || echo '123456'`,
+                cmd: `shell:(rm -f -rR /file) || echo '123456'`,
+                res: 'data',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new Client({ noAutoStart: true, port });
+            const result = await adb.rm('serial', '/file', {
+                force: true,
+                recursive: true
+            });
+            expect(result).toBeUndefined();
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Should execute callback overload without options', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:(rm -f -rR /file) || echo '123456'`,
                 res: null,
                 rawRes: true
             }
@@ -22,14 +45,24 @@ describe('Rm OKAY tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            const result = await adb.rm('serial', '/file');
+            const result = await promisify<void>((cb) =>
+                adb.rm(
+                    'serial',
+                    '/file',
+                    {
+                        force: true,
+                        recursive: true
+                    },
+                    cb
+                )
+            )();
             expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
         }
     });
 
-    it('Should execute with parameters', async () => {
+    it('Should execute callback overload with options', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {

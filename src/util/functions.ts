@@ -108,7 +108,6 @@ export function findMatches(
     }
 }
 
-// TODO test call signature of fs functions
 export function buildFsParams<T extends Object>(
     options: T | Callback | undefined,
     cb: Callback | undefined

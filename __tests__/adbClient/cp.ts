@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import { UnexpectedDataError } from '../../lib/util';
 import { Client } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
+import { promisify } from 'util';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
@@ -10,7 +11,7 @@ beforeAll(() => {
 });
 
 describe('Cp OKAY tests', () => {
-    it('Should execute without parameters', async () => {
+    it('Should execute without options', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
@@ -23,6 +24,27 @@ describe('Cp OKAY tests', () => {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
             const result = await adb.cp('serial', '/file', '/other');
+            expect(result).toBeUndefined();
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Should execute callback overload without options', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:(cp /file /other) || echo '123456'`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new Client({ noAutoStart: true, port });
+            const result = await promisify<void>((cb) =>
+                adb.cp('serial', '/file', '/other', cb)
+            )();
             expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
@@ -145,6 +167,42 @@ describe('Cp OKAY tests', () => {
                     xattr: true
                 }
             });
+            expect(result).toBeUndefined();
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Should execute callback overload with preserve option with all', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:(cp --preserve=a /file /other) || echo '123456'`,
+                res: 'data',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new Client({ noAutoStart: true, port });
+            const result = await promisify<void>((cb) =>
+                adb.cp(
+                    'serial',
+                    '/file',
+                    '/other',
+                    {
+                        preserve: {
+                            all: true,
+                            mode: true,
+                            ownership: true,
+                            timestamps: true,
+                            context: true,
+                            xattr: true
+                        }
+                    },
+                    cb
+                )
+            )();
             expect(result).toBeUndefined();
         } finally {
             await adbMock.end();
