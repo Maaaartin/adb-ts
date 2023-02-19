@@ -15,6 +15,6 @@ export default class ReverseCommand extends TransportParseAllCommand<void> {
     }
 
     protected parse(value: string): Promise<void> {
-        return this.handleReply(undefined)(value);
+        return this.validateReply(value);
     }
 }

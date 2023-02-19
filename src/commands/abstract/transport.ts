@@ -24,7 +24,6 @@ export default abstract class TransportCommand<T> extends Cmd<T> {
                 'host:transport:'.concat(this.serial)
             );
             await this.initAndValidateReply(this.Cmd);
-            // TODO is await needed here?
             return await this.postExecute();
         } catch (err) {
             this.endConnection();

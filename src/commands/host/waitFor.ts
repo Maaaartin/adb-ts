@@ -22,7 +22,7 @@ export default class WaitFor extends Command<void> {
             await this.initAndValidateReply(
                 `host:wait-for-${this.transport}-${this.state}`
             );
-            await this.handleReply(undefined)(await this.parser.readAscii(4));
+            await this.readAndValidateReply();
         } finally {
             this.endConnection();
         }

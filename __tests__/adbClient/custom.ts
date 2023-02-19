@@ -10,8 +10,9 @@ class TestCmd extends Command<null> {
         super(connection);
         this.arg = arg;
     }
-    public execute(): Promise<null> {
-        return this.initExecute(this.arg).then(this.handleReply(null));
+    public async execute(): Promise<null> {
+        await this.initAndValidateReply(this.arg);
+        return null;
     }
 }
 

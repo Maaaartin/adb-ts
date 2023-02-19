@@ -18,6 +18,6 @@ export default class ForwardCommand extends Command<void> {
 
     public async execute(): Promise<void> {
         await this.initAndValidateReply(this.command);
-        await this.handleReply(undefined)(await this.parser.readAscii(4));
+        await this.readAndValidateReply();
     }
 }
