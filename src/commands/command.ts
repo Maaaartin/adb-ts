@@ -38,7 +38,7 @@ export default abstract class Command<T> {
     protected async initAndValidateReply(args: string): Promise<void> {
         this.connection.write(encodeData(args));
         try {
-            return this.readAndValidateReply();
+            return await this.readAndValidateReply();
         } finally {
             this.autoEnd && this.endConnection();
         }
@@ -46,7 +46,7 @@ export default abstract class Command<T> {
     protected async initExecute(args: string): Promise<string> {
         this.connection.write(encodeData(args));
         try {
-            return this.parser.readAscii(4);
+            return await this.parser.readAscii(4);
         } finally {
             this.autoEnd && this.endConnection();
         }

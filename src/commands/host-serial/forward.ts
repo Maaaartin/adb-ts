@@ -1,6 +1,7 @@
 import { Connection } from '../../connection';
 import Command from '../command';
 
+// TODO should be same as Reverse cmd
 export default class ForwardCommand extends Command<void> {
     protected autoEnd = true;
 
