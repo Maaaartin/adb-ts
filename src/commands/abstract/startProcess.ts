@@ -41,7 +41,6 @@ export default abstract class StartProcess extends TransportCommand<void> {
                 throw err;
             }
         } finally {
-            // TODO test, is needed?
             await this.parser.end();
         }
     }

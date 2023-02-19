@@ -1,3 +1,4 @@
+import { promisify } from 'util';
 import { Connection } from '../../connection';
 import LineTransform from '../../linetransform';
 import { readStream } from '../../logcat';
@@ -6,7 +7,6 @@ import { LogcatOptions } from '../../util';
 import TransportCommand from '../abstract/transport';
 
 export default class LogcatCommand extends TransportCommand<LogcatReader> {
-    private logCat: LogcatReader | null = null;
     private options?: LogcatOptions | null;
     protected Cmd = 'shell:echo && ';
     protected keepAlive = false;
@@ -24,24 +24,15 @@ export default class LogcatCommand extends TransportCommand<LogcatReader> {
         this.Cmd = `shell:echo && ${cmd}`;
     }
 
-    protected postExecute(): LogcatReader {
+    protected async postExecute(): Promise<LogcatReader> {
         const stream = new LineTransform({ autoDetect: true });
         this.connection.pipe(stream);
-        this.logCat = readStream(stream, {
+        await promisify<void>((cb) => stream.once('readable', cb))();
+        const logCat = readStream(stream, {
             filter: this.options?.filter
         });
-        this.connection.on('error', (err) => this.logCat?.emit('error', err));
-        this.logCat.on('end', () => this.endConnection());
-        return this.logCat;
-    }
-
-    public async execute(): Promise<LogcatReader> {
-        try {
-            return await super.execute();
-        } catch (err) {
-            // TODO test, is needed?
-            this.logCat?.end();
-            throw err;
-        }
+        this.connection.on('error', (err) => logCat.emit('error', err));
+        logCat.on('end', () => this.endConnection());
+        return logCat;
     }
 }
