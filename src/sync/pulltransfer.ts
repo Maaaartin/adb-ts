@@ -28,4 +28,20 @@ export class PullTransfer extends PassThrough {
         this.emit('progress', this.stats);
         return super.write(chunk, encoding, cb);
     }
+
+    public on(event: 'close', listener: () => void): this;
+    public on(event: 'data', listener: (chunk: any) => void): this;
+    public on(event: 'end', listener: () => void): this;
+    public on(event: 'error', listener: (err: Error) => void): this;
+    public on(event: 'pause', listener: () => void): this;
+    public on(event: 'readable', listener: () => void): this;
+    public on(event: 'resume', listener: () => void): this;
+    public on(event: 'progress', listener: (stats: StatsObject) => void): this;
+    public on(event: string | symbol, listener: (...args: any[]) => void): this;
+    public on(
+        event: string | symbol,
+        listener: (...args: any[]) => void
+    ): this {
+        return super.on(event, listener);
+    }
 }

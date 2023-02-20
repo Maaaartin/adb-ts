@@ -1,10 +1,10 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { Client } from '../../lib/client';
 import { promisify } from 'util';
-import { UnexpectedDataError } from '../../lib/util';
+import { StatsObject, UnexpectedDataError } from '../../lib/util';
 
 describe('Pull tests', () => {
-    it('OKAY', async () => {
+    it('Should pull data', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
@@ -29,6 +29,31 @@ describe('Pull tests', () => {
                 });
             })();
             expect(result).toBe('data');
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Should emit progress event', async () => {
+        const buff = Buffer.from([4, 0, 0, 0]);
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: 'sync:',
+                res: 'DATA' + buff.toString() + 'dataDONE' + buff.toString(),
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new Client({ noAutoStart: true, port });
+            const result = await promisify<StatsObject>(async (cb) => {
+                const transfer = await adb.pull('serial', '/');
+                transfer.on('progress', (stats) => {
+                    cb(null, stats);
+                });
+            })();
+            expect(result).toEqual({ bytesTransferred: 4 });
         } finally {
             await adbMock.end();
         }

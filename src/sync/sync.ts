@@ -65,9 +65,7 @@ export class Sync extends EventEmitter {
                             );
                             transfer.push(chunk.length);
                             if (
-                                // TODO test for transfer events
                                 this.connection.write(chunk, (err) => {
-                                    console.log(err);
                                     if (err) {
                                         return reject(err);
                                     }
@@ -97,11 +95,9 @@ export class Sync extends EventEmitter {
                             reject(err_1);
                         })
                     );
-                    const waitForDrain = promisify<void>((cb) => {
-                        // TODO can remove?
-                        this.connection.removeAllListeners('drain');
-                        this.connection.once('drain', cb);
-                    });
+                    const waitForDrain = promisify<void>((cb) =>
+                        this.connection.once('drain', cb)
+                    );
                 });
             } finally {
                 stream.removeListener('end', endListener);
@@ -205,7 +201,6 @@ export class Sync extends EventEmitter {
             try {
                 await readNext();
             } catch (err) {
-                // TODO write test if possible
                 if (canceled) {
                     this.connection.end();
                     return;
