@@ -9,6 +9,7 @@ import { Readable } from 'stream';
 import Stats from './stats';
 import SyncEntry from './entry';
 import fs from 'fs';
+import { promisify } from 'util';
 
 export enum SyncMode {
     DEFAULT_CHMOD = 0x1a4,
@@ -64,8 +65,9 @@ export class Sync extends EventEmitter {
                             );
                             transfer.push(chunk.length);
                             if (
-                                // TODO test for this if possible
+                                // TODO test for transfer events
                                 this.connection.write(chunk, (err) => {
+                                    console.log(err);
                                     if (err) {
                                         return reject(err);
                                     }
@@ -95,11 +97,11 @@ export class Sync extends EventEmitter {
                             reject(err_1);
                         })
                     );
-                    const waitForDrain = (): Promise<void> =>
-                        new Promise<void>((resolve_1) => {
-                            this.connection.removeAllListeners('drain');
-                            this.connection.once('drain', resolve_1);
-                        });
+                    const waitForDrain = promisify<void>((cb) => {
+                        // TODO can remove?
+                        this.connection.removeAllListeners('drain');
+                        this.connection.once('drain', cb);
+                    });
                 });
             } finally {
                 stream.removeListener('end', endListener);
