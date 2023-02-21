@@ -1,4 +1,3 @@
-import { Readable } from 'stream';
 import TransportCommand from '../abstract/transport';
 
 export default class IsInstalledCommand extends TransportCommand<boolean> {
@@ -15,7 +14,7 @@ export default class IsInstalledCommand extends TransportCommand<boolean> {
             () => false
         );
     }
-    execute(serial: string, pkg: string | Readable): Promise<boolean> {
+    execute(serial: string, pkg: string): Promise<boolean> {
         this.Cmd = `shell:pm path ${pkg} 2>/dev/null`;
         return this.preExecute(serial);
     }

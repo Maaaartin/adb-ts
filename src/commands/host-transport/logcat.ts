@@ -1,3 +1,4 @@
+import { promisify } from 'util';
 import LineTransform from '../../linetransform';
 import { readStream } from '../../logcat';
 import { LogcatReader } from '../../logcat/reader';
@@ -9,15 +10,21 @@ export default class LogcatCommand extends TransportCommand<LogcatReader> {
     private options?: LogcatOptions | null;
     protected Cmd = 'shell:echo && ';
     protected keepAlive = false;
-    protected postExecute(): LogcatReader {
+    protected postExecute(): Promise<LogcatReader> {
         const stream = new LineTransform({ autoDetect: true });
         this.connection.pipe(stream);
-        this.logCat = readStream(stream, {
-            filter: this.options?.filter
-        });
-        this.connection.on('error', (err) => this.logCat?.emit('error', err));
-        this.logCat.on('end', () => this.endConnection());
-        return this.logCat;
+        return promisify<void>((cb) => stream.once('readable', cb))().then(
+            () => {
+                this.logCat = readStream(stream, {
+                    filter: this.options?.filter
+                });
+                this.connection.on('error', (err) =>
+                    this.logCat?.emit('error', err)
+                );
+                this.logCat.on('end', () => this.endConnection());
+                return this.logCat;
+            }
+        );
     }
 
     execute(serial: string, options?: LogcatOptions): Promise<LogcatReader> {
