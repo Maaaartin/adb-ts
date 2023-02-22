@@ -1779,30 +1779,33 @@ export class Client {
     /**
      * Enables to execute any custom command.
      * @example
-     * class MyCommand extends Command<number> {
-     *    protected autoEnd = true;
-     *    execute(): Promise<number> {
-     *        return this.initExecute('host:version').then((reply) => {
-     *            switch (reply) {
-     *                case Reply.OKAY:
-     *                    return this.parser.readValue().then((value) => {
-     *                        return parseInt(value.toString(), 10);
-     *                    });
-     *                case Reply.FAIL:
-     *                    return this.parser.readError().then((e) => {
-     *                        throw e;
-     *                    });
-     *                default:
-     *                    return parseInt(reply, 10);
-     *            }
-     *        });
-     *    }
-     * }
+     *   class TestCmd extends Command<number> {
+     *   protected autoEnd = true;
+     *   private arg: string;
+     *   constructor(connection: Connection, arg: string) {
+     *       super(connection);
+     *       this.arg = arg;
+     *   }
+     *   async execute(): Promise<number> {
+     *       const reply = await this.initExecute(this.arg);
+     *       switch (reply) {
+     *           case Reply.OKAY:
+     *               const value = await this.parser.readValue();
+     *               return parseInt(value.toString(), 10);
+     *           case Reply.FAIL:
+     *               throw await this.parser.readError();
+     *           default:
+     *               return parseInt(reply, 10);
+     *          }
+     *      }
+     *  }
      */
-    custom<T>(CustomCommand: CommandConstruct<T>, ...args: any[]): Promise<T> {
-        return this.connection().then((conn) => {
-            return new CustomCommand(conn, ...args).execute();
-        });
+    async custom<T>(
+        CustomCommand: CommandConstruct<T>,
+        ...args: any[]
+    ): Promise<T> {
+        const conn = await this.connection();
+        return new CustomCommand(conn, ...args).execute();
     }
 
     /**
