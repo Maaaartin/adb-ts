@@ -1775,11 +1775,11 @@ export class Client {
             cb
         );
     }
-    // TODO update js docs
+
     /**
      * Enables to execute any custom command.
      * @example
-     *   class TestCmd extends Command<number> {
+     *   class MyCommand extends Command<number> {
      *   protected autoEnd = true;
      *   private arg: string;
      *   constructor(connection: Connection, arg: string) {
@@ -1811,17 +1811,20 @@ export class Client {
     /**
      * Enables to execute any custom transport command.
      * @example
-     * class MyCommand extends TransportCommand<null> {
+     *    class MyCommand extends TransportCommand<null> {
      *    protected keepAlive = false;
-     *    protected Cmd = 'test ';
+     *    private arg: string;
+     *    constructor(connection: Connection, serial: string, arg: string) {
+     *        super(connection, serial);
+     *        this.arg = arg;
+     *    }
+     *    protected get Cmd() {
+     *        return `test ${this.arg}`;
+     *    }
      *    protected postExecute(): null {
      *        return null;
      *    }
-     *    public execute(serial: string, arg: string): Promise<null> {
-     *        this.Cmd += arg;
-     *        return this.preExecute(serial);
-     *    }
-     *}
+     * }
      */
     customTransport<T>(
         CustomCommand: TransportCommandConstruct<T>,

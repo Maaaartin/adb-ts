@@ -5,13 +5,14 @@ import { Connection } from '../../lib/connection';
 
 class TestCmd extends TransportCommand<null> {
     protected keepAlive = false;
-    protected Cmd: string;
-
+    private arg: string;
     constructor(connection: Connection, serial: string, arg: string) {
         super(connection, serial);
-        this.Cmd = 'test ' + arg;
+        this.arg = arg;
     }
-
+    protected get Cmd() {
+        return `test ${this.arg}`;
+    }
     protected postExecute(): null {
         return null;
     }
