@@ -93,18 +93,25 @@ export function findMatches(
     regExp: RegExp,
     parseTo?: 'list' | 'map'
 ): PropertyMap | string[][] | string[] {
-    const exec = (acc: string[][] = []): string[][] => {
-        const match = regExp.exec(value);
-        return match ? exec([...acc, match.slice(1)]) : acc;
+    const exec = <T>(
+        mapper: (match: string[], acc: T) => T
+    ): ((init: T) => T) => {
+        const internal: (acc: T) => T = (acc: T) => {
+            const match = regExp.exec(value);
+            return match ? internal(mapper(match.slice(1), acc)) : acc;
+        };
+        return internal;
     };
-    const data = exec();
+
     switch (parseTo) {
         case 'list':
-            return data.map(([val]) => val);
+            return exec<string[]>(([match], acc) => acc.concat(match))([]);
         case 'map':
-            return new Map(data.map(([k, v]) => [k, stringToType(v)]));
+            return exec<PropertyMap>(([k, v], acc) =>
+                acc.set(k, stringToType(v))
+            )(new Map());
         default:
-            return data;
+            return exec<string[][]>((match, acc) => [...acc, match])([]);
     }
 }
 
