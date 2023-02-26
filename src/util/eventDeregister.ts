@@ -1,14 +1,17 @@
 import EventEmitter from 'events';
 
-export default class EventDeregister<T extends EventEmitter> {
+export default class EventUnregister<T extends EventEmitter> {
     private instance: T;
-    private listeners: Map<string | symbol, ((...args: any[]) => void)[]> =
-        new Map();
+    private offListeners: [string | symbol, ((...args: any[]) => void)[]][] =
+        [];
     constructor(instance: T) {
         this.instance = instance;
     }
 
-    private getListeners(): Map<string | symbol, ((...args: any[]) => void)[]> {
+    private getListenerMap(): Map<
+        string | symbol,
+        ((...args: any[]) => void)[]
+    > {
         return this.instance
             .eventNames()
             .reduce(
@@ -18,18 +21,32 @@ export default class EventDeregister<T extends EventEmitter> {
     }
 
     public register(cb: (instance: T) => T): void {
-        this.listeners = this.getListeners();
+        const prevListeners = this.getListenerMap();
         cb(this.instance);
+
+        this.offListeners = [...this.getListenerMap()].map(
+            ([event, listeners]) => [
+                event,
+                listeners.filter(
+                    (listener) => !prevListeners.get(event)?.includes(listener)
+                )
+            ]
+        );
     }
 
-    public unregister(): void {
-        const newListeners = this.getListeners();
-        [...this.listeners.entries()].forEach(([event, listeners]) => {
-            newListeners.get(event)?.forEach((l) => {
-                if (!listeners.includes(l)) {
-                    this.instance.off(event, l);
-                }
+    private unregister(): void {
+        this.offListeners.forEach(([event, listeners]) => {
+            listeners.forEach((listener) => {
+                this.instance.off(event, listener);
             });
         });
+    }
+
+    public async unregisterAfter<U>(promise: Promise<U>): Promise<U> {
+        try {
+            return await promise;
+        } finally {
+            this.unregister();
+        }
     }
 }
