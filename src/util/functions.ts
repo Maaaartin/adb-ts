@@ -93,18 +93,18 @@ export function findMatches(
     regExp: RegExp,
     parseTo?: 'list' | 'map'
 ): PropertyMap | string[][] | string[] {
-    let match: RegExpExecArray | null = null;
-    const acc: string[][] = [];
-    while ((match = regExp.exec(value))) {
-        acc.push(match.slice(1));
-    }
+    const exec = (acc: string[][] = []): string[][] => {
+        const match = regExp.exec(value);
+        return match ? exec([...acc, match.slice(1)]) : acc;
+    };
+    const data = exec();
     switch (parseTo) {
         case 'list':
-            return acc.map(([val]) => val);
+            return data.map(([val]) => val);
         case 'map':
-            return new Map(acc.map(([k, v]) => [k, stringToType(v)]));
+            return new Map(data.map(([k, v]) => [k, stringToType(v)]));
         default:
-            return acc;
+            return data;
     }
 }
 
