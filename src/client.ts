@@ -1775,7 +1775,7 @@ export class Client {
      *        this.arg = arg;
      *    }
      *    protected get Cmd() {
-     *        return `test ${this.arg}`;
+     *        return 'test '.concat(this.arg);
      *    }
      *    protected postExecute(): null {
      *        return null;
