@@ -28,3 +28,6 @@ jobs:
             - name: Test
               run: |
                   yarn test
+            - name: Test generate docs
+              run: |
+                  yarn docs
