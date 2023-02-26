@@ -10,6 +10,7 @@ import Stats from './stats';
 import SyncEntry from './entry';
 import fs from 'fs';
 import { promisify } from 'util';
+import EventUnregister from '../util/eventDeregister';
 
 export enum SyncMode {
     DEFAULT_CHMOD = 0x1a4,
@@ -30,7 +31,7 @@ export class Sync extends EventEmitter {
         return `/data/local/tmp/${Path.basename(path)}`;
     }
 
-    private async readError(): Promise<never> {
+    private async error(): Promise<never> {
         const length = await this.parser.readBytes(4);
         const buff = await this.parser.readBytes(length.readUInt32LE(0));
         throw new Error(buff.toString());
@@ -46,65 +47,57 @@ export class Sync extends EventEmitter {
     private writeData(stream: Readable, timestamp: number): PushTransfer {
         const transfer = new PushTransfer();
 
-        let connErrorListener: (error?: Error | null) => void,
-            endListener: () => void,
-            errorListener: (error?: Error | null) => void,
-            readableListener: () => void,
-            canceled = false;
-        const writeData = async (): Promise<any> => {
-            try {
-                return await new Promise<void>((resolve, reject) => {
-                    const writeNext = async (): Promise<void> => {
-                        const chunk =
-                            stream.read(SyncMode.DATA_MAX_LENGTH) ||
-                            stream.read();
-                        if (Buffer.isBuffer(chunk)) {
-                            this.sendCommandWithLength(
-                                Reply.DATA,
-                                chunk.length
-                            );
-                            transfer.push(chunk.length);
-                            if (
-                                this.connection.write(chunk, (err) => {
-                                    if (err) {
-                                        return reject(err);
-                                    }
-                                    transfer.pop();
-                                })
-                            ) {
-                                return writeNext();
-                            }
-                            await waitForDrain();
+        let canceled = false;
+        const writeData = async (): Promise<void> => {
+            const streamUnregister = new EventUnregister(stream);
+            const connectionUnregister = new EventUnregister(this.connection);
+
+            const promise = new Promise<void>((resolve, reject) => {
+                const writeNext = async (): Promise<void> => {
+                    const chunk =
+                        stream.read(SyncMode.DATA_MAX_LENGTH) || stream.read();
+                    if (Buffer.isBuffer(chunk)) {
+                        this.sendCommandWithLength(Reply.DATA, chunk.length);
+                        transfer.push(chunk.length);
+                        if (
+                            this.connection.write(chunk, (err) => {
+                                if (err) {
+                                    return reject(err);
+                                }
+                                transfer.pop();
+                            })
+                        ) {
                             return writeNext();
                         }
-                    };
-                    stream.once(
-                        'end',
-                        (endListener = (): void => {
+                        await waitForDrain();
+                        return writeNext();
+                    }
+                };
+                streamUnregister.register((stream_) =>
+                    stream_
+                        .on('end', (): void => {
                             this.sendCommandWithLength(Reply.DONE, timestamp);
                             resolve();
                         })
-                    );
-                    stream.on('readable', (readableListener = writeNext));
-                    stream.once('error', (errorListener = reject));
-                    this.connection.once(
-                        'error',
-                        (connErrorListener = (err_1): void => {
-                            stream.destroy();
-                            this.connection.end();
-                            reject(err_1);
-                        })
-                    );
-                    const waitForDrain = promisify<void>((cb) =>
-                        this.connection.once('drain', cb)
-                    );
-                });
-            } finally {
-                stream.removeListener('end', endListener);
-                stream.removeListener('readable', readableListener);
-                stream.removeListener('error', errorListener);
-                this.connection.removeListener('error', connErrorListener);
-            }
+                        .on('readable', writeNext)
+                        .on('error', reject)
+                );
+                connectionUnregister.register((connection) =>
+                    connection.on('error', (err): void => {
+                        stream.destroy();
+                        this.connection.end();
+                        reject(err);
+                    })
+                );
+
+                const waitForDrain = promisify<void>((cb) =>
+                    this.connection.once('drain', cb)
+                );
+            });
+            await Promise.all([
+                streamUnregister.unregisterAfter(promise),
+                connectionUnregister.unregisterAfter(promise)
+            ]);
         };
         const readReply = async (): Promise<void> => {
             const reply = await this.parser.readAscii(4);
@@ -113,7 +106,7 @@ export class Sync extends EventEmitter {
                     await this.parser.readBytes(4);
                     return;
                 case Reply.FAIL:
-                    throw await this.readError();
+                    throw await this.error();
                 default:
                     throw this.parser.unexpected(reply, 'OKAY or FAIL');
             }
@@ -192,7 +185,7 @@ export class Sync extends EventEmitter {
                     return;
 
                 case Reply.FAIL:
-                    return this.readError();
+                    return this.error();
                 default:
                     throw this.parser.unexpected(reply, 'DATA, DONE or FAIL');
             }

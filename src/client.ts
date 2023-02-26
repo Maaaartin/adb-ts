@@ -111,6 +111,7 @@ import Swipe from './commands/host-transport/input/swipe';
 import Press from './commands/host-transport/input/press';
 import KeyEvent from './commands/host-transport/input/keyEvent';
 import Tap from './commands/host-transport/input/tap';
+import EventUnregister from './util/eventDeregister';
 
 const ADB_DEFAULT_PORT = 5555;
 const DEFAULT_OPTIONS = {
@@ -1071,22 +1072,17 @@ export class Client {
         const temp = Sync.temp(typeof apk === 'string' ? apk : '_stream.apk');
         return nodeify(
             this.push(serial, apk, temp).then((transfer) => {
-                let errorListener: (err: Error) => void;
-                let endListener: () => void;
-                return new Promise<void>((resolve, reject) => {
-                    transfer.once('error', (errorListener = reject));
-                    transfer.once(
-                        'end',
-                        (endListener = (): void => {
+                const eventUnregister = new EventUnregister(transfer);
+                const promise = new Promise<void>((resolve, reject) => {
+                    eventUnregister.register((transfer) =>
+                        transfer.on('error', reject).on('end', (): void => {
                             this.installRemote(serial, temp, options_, args_)
                                 .then(resolve)
                                 .catch(reject);
                         })
                     );
-                }).finally(() => {
-                    transfer.removeListener('error', errorListener);
-                    transfer.removeListener('end', endListener);
                 });
+                return eventUnregister.unregisterAfter(promise);
             }),
             cb
         );
