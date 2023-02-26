@@ -168,7 +168,6 @@ export class Client {
                     return connection.connect(this.options);
                 }
                 connection.destroy();
-                connection.removeAllListeners();
                 return reject(err);
             });
             connection.connect(this.options);
@@ -1055,20 +1054,7 @@ export class Client {
         args?: string | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        let options_: InstallOptions = {},
-            args_ = '';
-        if (typeof options === 'function') {
-            cb = options;
-            options = undefined;
-        } else if (typeof options === 'object') {
-            options_ = options;
-        }
-        if (typeof args === 'function') {
-            cb = args;
-            args = undefined;
-        } else if (typeof args === 'string') {
-            args_ = args;
-        }
+        // TODO test callback overload
         const temp = Sync.temp(typeof apk === 'string' ? apk : '_stream.apk');
         return nodeify(
             this.push(serial, apk, temp).then((transfer) => {
@@ -1076,7 +1062,12 @@ export class Client {
                 const promise = new Promise<void>((resolve, reject) => {
                     eventUnregister.register((transfer) =>
                         transfer.on('error', reject).on('end', (): void => {
-                            this.installRemote(serial, temp, options_, args_)
+                            this.installRemote(
+                                serial,
+                                temp,
+                                parseValueParam(options),
+                                parseValueParam(args)
+                            )
                                 .then(resolve)
                                 .catch(reject);
                         })
@@ -1084,7 +1075,7 @@ export class Client {
                 });
                 return eventUnregister.unregisterAfter(promise);
             }),
-            cb
+            parseCbParam(options, cb) || parseCbParam(args, cb)
         );
     }
 
@@ -1111,22 +1102,16 @@ export class Client {
         options?: Callback | UninstallOptions,
         cb?: Callback
     ): Promise<void> | void {
-        let options_: UninstallOptions;
-        if (typeof options === 'function') {
-            cb = options;
-        } else if (typeof options === 'object') {
-            options_ = options;
-        }
         return nodeify(
             this.connection().then((conn) => {
                 return new UninstallCommand(
                     conn,
                     serial,
                     pkg,
-                    options_
+                    parseValueParam(options)
                 ).execute();
             }),
-            cb
+            parseCbParam(options, cb)
         );
     }
 
@@ -1179,12 +1164,6 @@ export class Client {
         options?: StartActivityOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        let options_: StartActivityOptions;
-        if (typeof options === 'function') {
-            cb = options;
-        } else if (typeof options === 'object') {
-            options_ = options;
-        }
         return nodeify(
             this.connection().then((conn) => {
                 return new StartActivityCommand(
@@ -1192,10 +1171,10 @@ export class Client {
                     serial,
                     pkg,
                     activity,
-                    options_
+                    parseValueParam(options)
                 ).execute();
             }),
-            cb
+            parseCbParam(options, cb)
         );
     }
 
@@ -1230,13 +1209,6 @@ export class Client {
         options?: StartServiceOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        let options_: StartServiceOptions;
-        if (typeof options === 'function') {
-            cb = options;
-        } else if (typeof options === 'object') {
-            options_ = options;
-        }
-
         return nodeify(
             this.connection().then((conn) => {
                 return new StartServiceCommand(
@@ -1244,10 +1216,10 @@ export class Client {
                     serial,
                     pkg,
                     service,
-                    options_
+                    parseValueParam(options)
                 ).execute();
             }),
-            cb
+            parseCbParam(options, cb)
         );
     }
 
@@ -1341,20 +1313,15 @@ export class Client {
         mode?: ValueCallback<PushTransfer> | SyncMode,
         cb?: ValueCallback<PushTransfer>
     ): Promise<PushTransfer> | void {
-        let mode_: SyncMode;
-        if (typeof mode === 'function') {
-            cb = mode;
-        } else if (typeof mode !== 'undefined') {
-            mode_ = mode;
-        }
-
         return nodeify(
             this.syncService(serial).then((sync) => {
-                return sync.push(srcPath, destPath, mode_).on('end', () => {
-                    sync.end();
-                });
+                return sync
+                    .push(srcPath, destPath, parseValueParam(mode))
+                    .on('end', () => {
+                        sync.end();
+                    });
             }),
-            cb
+            parseCbParam(mode, cb)
         );
     }
 
@@ -1401,23 +1368,16 @@ export class Client {
         port?: Callback | number,
         cb?: Callback
     ): Promise<void> | void {
-        let port_ = 5555;
-        if (typeof port === 'function') {
-            cb = port;
-        } else if (typeof port === 'number') {
-            port_ = port;
-        }
-
         return nodeify(
             this.connection().then((conn) => {
                 return new TcpIpCommand(
                     conn,
                     serial,
                     this.awaitActiveDevice(serial),
-                    port_
+                    parsePrimitiveParam(ADB_DEFAULT_PORT, parseValueParam(port))
                 ).execute();
             }),
-            cb
+            parseCbParam(port, cb)
         );
     }
 

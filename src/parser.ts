@@ -16,8 +16,8 @@ export class Parser {
         const promise = new Promise<Buffer>((resolve, reject) => {
             const tryRead = (): void => {
                 if (howMany) {
-                    let chunk;
-                    if ((chunk = this.socket.read(howMany))) {
+                    const chunk = this.socket.read(howMany);
+                    if (chunk) {
                         howMany -= chunk.length;
                         if (howMany === 0) {
                             return resolve(chunk);
@@ -159,8 +159,8 @@ export class Parser {
         retry = true
     ): Promise<RegExpExecArray> {
         const line = (await this.readline()).toString();
-        let match;
-        if ((match = regExp.exec(line))) {
+        const match = regExp.exec(line);
+        if (match) {
             return match;
         }
         if (retry) {

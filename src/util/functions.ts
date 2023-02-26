@@ -52,7 +52,7 @@ export const nodeify: <T>(
 };
 
 export const parseValueParam = <T extends NonFunctionProperties<T> | string, R>(
-    param: T | ValueCallback<R> | undefined
+    param: T | ValueCallback<R> | Callback | undefined
 ): T | undefined => {
     if (typeof param === 'function') {
         return;
