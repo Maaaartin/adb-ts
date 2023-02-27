@@ -2,7 +2,7 @@ import Cmd from './cmd';
 
 export default abstract class IpConnect extends Cmd<string> {
     protected abstract Validator: RegExp;
-    protected autoEnd = true;
+    protected autoEnd = false;
     execute(host: string, port: number): Promise<string> {
         return this.initExecute(`${this.Cmd}:${host}:${port}`)
             .then(

@@ -2,7 +2,7 @@ import DevicesCommand from '../abstract/devices';
 import { IDevice } from '../../util';
 
 export default class TrackCommand extends DevicesCommand {
-    protected autoEnd = true;
+    protected autoEnd = false;
     protected readOnExecute = false;
 
     execute(): Promise<IDevice[]> {
