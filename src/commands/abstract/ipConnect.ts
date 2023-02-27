@@ -3,7 +3,7 @@ import Command from '../command';
 
 export default abstract class IpConnect extends Command<string> {
     protected abstract Validator: RegExp;
-    protected autoEnd = true;
+    protected autoEnd = false;
     private command: string;
     private host: string;
     private port: number;

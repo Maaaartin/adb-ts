@@ -15,20 +15,20 @@ export class Parser {
         const eventUnregister = new EventUnregister(this.socket);
         const promise = new Promise<Buffer>((resolve, reject) => {
             const tryRead = (): void => {
-                if (howMany) {
-                    const chunk = this.socket.read(howMany);
-                    if (chunk) {
-                        howMany -= chunk.length;
-                        if (howMany === 0) {
-                            return resolve(chunk);
-                        }
-                    }
-
-                    if (this.ended) {
-                        return reject(new PrematureEOFError(howMany));
-                    }
-                } else {
+                if (!howMany) {
                     return resolve(Buffer.alloc(0));
+                }
+
+                const chunk = this.socket.read(howMany);
+                if (chunk) {
+                    howMany -= chunk.length;
+                    if (howMany === 0) {
+                        return resolve(chunk);
+                    }
+                }
+
+                if (this.ended) {
+                    return reject(new PrematureEOFError(howMany));
                 }
             };
 
@@ -103,23 +103,26 @@ export class Parser {
         const eventUnregister = new EventUnregister(this.socket);
         const promise = new Promise<void>((resolve, reject) => {
             const tryRead = (): void => {
-                let chunk: Buffer;
-                if (howMany) {
-                    while (
-                        (chunk =
-                            this.socket.read(howMany) || this.socket.read())
-                    ) {
-                        howMany -= chunk.length;
-                        targetStream.write(chunk);
-                        if (howMany === 0) {
-                            return resolve();
-                        }
-                    }
-                    if (this.ended) {
-                        return reject(new PrematureEOFError(howMany));
-                    }
+                if (!howMany) {
+                    return resolve();
                 }
-                return resolve();
+
+                const readAll = (
+                    chunk = this.socket.read(howMany) || this.socket.read()
+                ): boolean => {
+                    if (!chunk) {
+                        return false;
+                    }
+                    howMany -= chunk.length;
+                    targetStream.write(chunk);
+                    return howMany === 0 || readAll();
+                };
+                if (readAll()) {
+                    return resolve();
+                }
+                if (this.ended) {
+                    return reject(new PrematureEOFError(howMany));
+                }
             };
             eventUnregister.register((socket) =>
                 socket
