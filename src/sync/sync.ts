@@ -10,7 +10,7 @@ import Stats from './stats';
 import SyncEntry from './entry';
 import fs from 'fs';
 import { promisify } from 'util';
-import EventUnregister from '../util/eventDeregister';
+import EventUnregister from '../util/eventUnregister';
 
 export enum SyncMode {
     DEFAULT_CHMOD = 0x1a4,

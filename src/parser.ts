@@ -3,7 +3,7 @@ import { PrematureEOFError, UnexpectedDataError } from './util';
 import { Writable } from 'stream';
 import { Socket } from 'net';
 import T from 'timers/promises';
-import EventUnregister from './util/eventDeregister';
+import EventUnregister from './util/eventUnregister';
 
 export class Parser {
     public readonly socket: Socket;

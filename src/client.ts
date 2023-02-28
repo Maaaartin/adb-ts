@@ -111,7 +111,7 @@ import Swipe from './commands/host-transport/input/swipe';
 import Press from './commands/host-transport/input/press';
 import KeyEvent from './commands/host-transport/input/keyEvent';
 import Tap from './commands/host-transport/input/tap';
-import EventUnregister from './util/eventDeregister';
+import EventUnregister from './util/eventUnregister';
 
 const ADB_DEFAULT_PORT = 5555;
 const DEFAULT_OPTIONS = {

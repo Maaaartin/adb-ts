@@ -96,11 +96,11 @@ export function findMatches(
     const exec = <T>(
         mapper: (match: string[], acc: T) => T
     ): ((init: T) => T) => {
-        const internal: (acc: T) => T = (acc: T) => {
+        const execInternal: (acc: T) => T = (acc: T) => {
             const match = regExp.exec(value);
-            return match ? internal(mapper(match.slice(1), acc)) : acc;
+            return match ? execInternal(mapper(match.slice(1), acc)) : acc;
         };
-        return internal;
+        return execInternal;
     };
 
     switch (parseTo) {
