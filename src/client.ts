@@ -156,8 +156,10 @@ export class Client {
         return new Promise<Connection>((resolve, reject) => {
             let triedStarting = false;
             const connection = new Connection();
-            connection.once('connect', () => resolve(connection));
-            connection.on('error', async (err: NodeJS.ErrnoException) => {
+
+            const errorListener = async (
+                err: NodeJS.ErrnoException
+            ): Promise<any> => {
                 if (
                     err.code === 'ECONNREFUSED' &&
                     !triedStarting &&
@@ -169,6 +171,11 @@ export class Client {
                 }
                 connection.destroy();
                 return reject(err);
+            };
+            connection.on('error', errorListener);
+            connection.once('connect', () => {
+                connection.removeListener('error', errorListener);
+                return resolve(connection);
             });
             connection.connect(this.options);
         });
@@ -1324,7 +1331,7 @@ export class Client {
         );
     }
 
-    private awaitActiveDevice(serial: string): Promise<void> {
+    private async awaitActiveDevice(serial: string): Promise<void> {
         const track = (tracker: Tracker): Promise<void> => {
             return new Promise<void>((resolve, reject) => {
                 const activeDeviceListener = (device: IDevice): void => {
@@ -1345,12 +1352,15 @@ export class Client {
                 });
             });
         };
-        return this.trackDevices().then((tracker) => {
-            return Promise.race([
+        const tracker_2 = await this.trackDevices();
+        try {
+            return await Promise.race([
                 T.setTimeout(5000, undefined, { ref: false }),
-                track(tracker)
-            ]).finally(() => tracker.end());
-        });
+                track(tracker_2)
+            ]);
+        } finally {
+            tracker_2.end();
+        }
     }
 
     /**
@@ -1440,16 +1450,15 @@ export class Client {
         );
     }
 
-    private pushInternal(
+    private async pushInternal(
         serial: string,
         data: string | Readable,
         dest: string
     ): Promise<void> {
-        return this.push(serial, data, `${dest}`).then((transfer) => {
-            return new Promise((resolve, reject) => {
-                transfer.on('end', resolve);
-                transfer.on('error', reject);
-            });
+        const transfer = await this.push(serial, data, `${dest}`);
+        return new Promise((resolve, reject) => {
+            transfer.once('end', resolve);
+            transfer.once('error', reject);
         });
     }
 
@@ -1560,6 +1569,7 @@ export class Client {
                         transfer.once('readable', () => {
                             transfer.pipe(fs.createWriteStream(destPath));
                         });
+                        // TODO is removing listeners needed?
                         transfer.once('end', () => {
                             transfer.removeAllListeners('readable');
                             resolve();
