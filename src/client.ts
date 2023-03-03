@@ -1060,7 +1060,6 @@ export class Client {
         args?: string | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        // TODO test callback overload
         const temp = Sync.temp(typeof apk === 'string' ? apk : '_stream.apk');
         return nodeify(
             this.push(serial, apk, temp).then((transfer) => {
@@ -1564,21 +1563,22 @@ export class Client {
     ): Promise<void> | void {
         return nodeify(
             this.pull(serial, srcPath).then(
-                (transfer: PullTransfer): Promise<void> => {
-                    return new Promise((resolve, reject) => {
-                        transfer.once('readable', () => {
-                            transfer.pipe(fs.createWriteStream(destPath));
-                        });
-                        // TODO is removing listeners needed?
-                        transfer.once('end', () => {
-                            transfer.removeAllListeners('readable');
-                            resolve();
-                        });
-                        transfer.once('error', (err) => {
-                            transfer.removeAllListeners('readable');
-                            reject(err);
-                        });
+                async (transfer: PullTransfer): Promise<void> => {
+                    const eventUnregister = new EventUnregister(transfer);
+                    const promise = new Promise<void>((resolve, reject) => {
+                        eventUnregister.register((transfer_) =>
+                            transfer_
+                                .once('readable', () =>
+                                    transfer_.pipe(
+                                        fs.createWriteStream(destPath)
+                                    )
+                                )
+                                .once('end', resolve)
+                                .once('error', reject)
+                        );
                     });
+
+                    return eventUnregister.unregisterAfter(promise);
                 }
             ),
             cb
