@@ -1,6 +1,6 @@
 import { RmOptions } from 'fs';
-import { Connection } from '../../connection';
-import FileSystemCommand from '../abstract/fileSystem';
+import { Connection } from '../../../connection';
+import FileSystemCommand from '../../abstract/fileSystem';
 
 export default class RmCommand extends FileSystemCommand {
     constructor(

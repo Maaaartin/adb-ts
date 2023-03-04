@@ -1,6 +1,6 @@
-import { Connection } from '../../connection';
-import { MkDirOptions, escape } from '../../util';
-import FileSystemCommand from '../abstract/fileSystem';
+import { Connection } from '../../../connection';
+import { MkDirOptions, escape } from '../../../util';
+import FileSystemCommand from '../../abstract/fileSystem';
 
 export default class MkDirCommand extends FileSystemCommand {
     constructor(

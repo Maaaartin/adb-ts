@@ -1,6 +1,6 @@
-import { Connection } from '../../connection';
-import { CpOptions } from '../../util';
-import FileSystemCommand from '../abstract/fileSystem';
+import { Connection } from '../../../connection';
+import { CpOptions } from '../../../util';
+import FileSystemCommand from '../../abstract/fileSystem';
 
 export default class CpCommand extends FileSystemCommand {
     constructor(

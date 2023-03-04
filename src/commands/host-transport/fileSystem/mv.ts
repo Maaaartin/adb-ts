@@ -1,6 +1,6 @@
-import { Connection } from '../../connection';
-import { MvOptions } from '../../util';
-import FileSystemCommand from '../abstract/fileSystem';
+import { Connection } from '../../../connection';
+import { MvOptions } from '../../../util';
+import FileSystemCommand from '../../abstract/fileSystem';
 
 export default class MvCommand extends FileSystemCommand {
     constructor(

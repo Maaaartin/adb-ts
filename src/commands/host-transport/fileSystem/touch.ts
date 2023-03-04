@@ -1,7 +1,7 @@
 import moment from 'moment';
-import { Connection } from '../../connection';
-import { TouchOptions, escape } from '../../util';
-import FileSystemCommand from '../abstract/fileSystem';
+import { Connection } from '../../../connection';
+import { TouchOptions, escape } from '../../../util';
+import FileSystemCommand from '../../abstract/fileSystem';
 
 export default class TouchCommand extends FileSystemCommand {
     constructor(
