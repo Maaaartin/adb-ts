@@ -1870,7 +1870,9 @@ export class Client {
     killApp(serial: string, pkg: string, cb: Callback): void;
     killApp(serial: string, pkg: string, cb?: Callback): Promise<void> | void {
         return nodeify(
-            this.shell(serial, `am force-stop ${pkg}`).then(() => {}),
+            this.shell(serial, `am force-stop ${pkg}`).then(() => {
+                return;
+            }),
             cb
         );
     }

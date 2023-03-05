@@ -115,7 +115,7 @@ export function findMatches(
     }
 }
 
-export function buildFsParams<T extends Object>(
+export function buildFsParams<T extends object>(
     options: T | Callback | undefined,
     cb: Callback | undefined
 ): {

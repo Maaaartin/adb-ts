@@ -25,5 +25,7 @@ export default abstract class Input extends TransportCommand<void> {
             )
             .join(' ');
     }
-    protected postExecute(): void {}
+    protected postExecute(): void {
+        return;
+    }
 }

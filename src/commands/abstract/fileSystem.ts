@@ -18,5 +18,7 @@ export default abstract class FileSystemCommand extends ExecCommand<void> {
         );
     }
 
-    protected cast(): void {}
+    protected cast(): void {
+        return;
+    }
 }

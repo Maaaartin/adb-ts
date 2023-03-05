@@ -423,7 +423,7 @@ export interface CpOptions
 export type PropertyMap = Map<string, PropertyValue>;
 
 export type NonFunctionPropertyNames<T> = {
-    [K in keyof T]: T[K] extends Function ? never : K;
+    [K in keyof T]: T[K] extends () => void ? never : K;
 }[keyof T];
 
 export type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
