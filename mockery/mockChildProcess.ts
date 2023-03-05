@@ -185,10 +185,10 @@ export class ChildProcessMock implements ChildProcess {
     getMaxListeners(): number {
         throw new Error('Method not implemented.');
     }
-    listeners(): Function[] {
+    listeners(): (() => void)[] {
         throw new Error('Method not implemented.');
     }
-    rawListeners(): Function[] {
+    rawListeners(): (() => void)[] {
         throw new Error('Method not implemented.');
     }
     listenerCount(): number {
