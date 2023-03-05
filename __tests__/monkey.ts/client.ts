@@ -110,7 +110,7 @@ describe('Commands', () => {
                 new Error('Command queue depleted, but replies still coming in')
             );
         });
-        monkey.send('test', () => {});
+        monkey.send('test', () => undefined);
         monkey.queue.splice(0, monkey.queue.length);
     });
 });

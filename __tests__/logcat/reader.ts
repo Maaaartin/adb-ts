@@ -51,7 +51,7 @@ describe('Logcat reader tests', () => {
         reader.connect(new Writable());
         reader.on('entry', (err) => {
             expect(err).toEqual(
-                (() => {
+                ((): LogcatEntry => {
                     const entry = new LogcatEntry();
                     entry.date = new Date(2);
                     entry.pid = 10;
@@ -66,7 +66,7 @@ describe('Logcat reader tests', () => {
         });
         (reader as any).parser.emit(
             'entry',
-            (() => {
+            ((): LogcatEntry => {
                 const entry = new LogcatEntry();
                 entry.date = new Date(2);
                 entry.pid = 10;
@@ -83,11 +83,11 @@ describe('Logcat reader tests', () => {
         const reader = new LogcatReader();
 
         reader.connect(new Writable());
-        (reader as any).filter = (ent: LogcatEntry) =>
+        (reader as any).filter = (ent: LogcatEntry): boolean =>
             ent.message === 'message';
         reader.on('entry', (err) => {
             expect(err).toEqual(
-                (() => {
+                ((): LogcatEntry => {
                     const entry = new LogcatEntry();
                     entry.date = new Date(2);
                     entry.pid = 10;
@@ -102,7 +102,7 @@ describe('Logcat reader tests', () => {
         });
         (reader as any).parser.emit(
             'entry',
-            (() => {
+            ((): LogcatEntry => {
                 const entry = new LogcatEntry();
                 entry.date = new Date(2);
                 entry.pid = 10;
@@ -115,7 +115,7 @@ describe('Logcat reader tests', () => {
         );
         (reader as any).parser.emit(
             'entry',
-            (() => {
+            ((): LogcatEntry => {
                 const entry = new LogcatEntry();
                 entry.date = new Date(2);
                 entry.pid = 10;

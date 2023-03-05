@@ -6,7 +6,7 @@ import { getDevice } from '../../mockery/testDevice';
 beforeEach(() => {
     jest.spyOn(fs, 'createWriteStream').mockImplementation(() => {
         return new Writable({
-            write: () => {}
+            write: (): void => undefined
         }) as WriteStream;
     });
 });

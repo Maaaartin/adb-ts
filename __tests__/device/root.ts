@@ -23,12 +23,9 @@ describe('Root tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            try {
-                await getDevice(port).root();
-                fail('Expected Failure');
-            } catch (e) {
-                expect(e).toEqual(new Error('invalid'));
-            }
+            await expect(() => getDevice(port).root()).rejects.toThrowError(
+                new Error('invalid')
+            );
         } finally {
             await adbMock.end();
         }

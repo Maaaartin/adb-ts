@@ -25,10 +25,7 @@ describe('Monkey Parser tests', () => {
         const replies = ['value1', 'value2'];
         parser.on('reply', (reply) => {
             const val = replies.shift();
-            if (!val) {
-                fail('Unexpected reply');
-            }
-            expect(reply).toEqual(new OkReply(val));
+            expect(reply).toEqual(val && new OkReply(val));
 
             if (replies.length === 0) {
                 done();
@@ -42,10 +39,7 @@ describe('Monkey Parser tests', () => {
         const replies = ['value1', 'value2'];
         parser.on('reply', (reply) => {
             const val = replies.shift();
-            if (!val) {
-                fail('Unexpected reply');
-            }
-            expect(reply).toEqual(new OkReply(val));
+            expect(reply).toEqual(val && new OkReply(val));
 
             if (replies.length === 0) {
                 done();
@@ -60,10 +54,7 @@ describe('Monkey Parser tests', () => {
         const replies = ['value1', 'value2', 'value3', 'value4'];
         parser.on('reply', (reply) => {
             const val = replies.shift();
-            if (!val) {
-                fail('Unexpected reply');
-            }
-            expect(reply).toEqual(new OkReply(val));
+            expect(reply).toEqual(val && new OkReply(val));
 
             if (replies.length === 0) {
                 done();

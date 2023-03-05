@@ -138,12 +138,16 @@ const displayMethods = {
     }
 };
 
-const runVoidTests = (methods: Record<string, any>) => {
+const runVoidTests = (methods: Record<string, any>): void => {
     describe('Void OK tests', () => {
         Object.entries(methods).forEach(([method, { cmd, params }]) => {
             it(`Should execute ${method} without error`, (done) => {
                 const monkey = new MonkeyMock(new OkReply(null));
-                const cb = (err: Error | null, reply: any, command: string) => {
+                const cb = (
+                    err: Error | null,
+                    reply: any,
+                    command: string
+                ): void => {
                     expect(err).toBeNull();
                     expect(reply).toBeNull();
                     expect(command).toEqual(
@@ -164,7 +168,11 @@ const runVoidTests = (methods: Record<string, any>) => {
         Object.entries(methods).forEach(([method, { cmd, params }]) => {
             it(`Should execute ${method} with error`, (done) => {
                 const monkey = new MonkeyMock(new ErrReply('error'));
-                const cb = (err: Error | null, reply: any, command: string) => {
+                const cb = (
+                    err: Error | null,
+                    reply: any,
+                    command: string
+                ): void => {
                     expect(err).toEqual(new Error('error'));
                     expect(reply).toBeNull();
                     expect(command).toEqual(
@@ -183,7 +191,7 @@ const runVoidTests = (methods: Record<string, any>) => {
     });
 };
 
-const runSpecialCaseMethods = (methods: Record<string, any>) => {
+const runSpecialCaseMethods = (methods: Record<string, any>): void => {
     describe('Special case OK tests', () => {
         Object.entries(methods).forEach(
             ([method, { cmd, params, response, parsed, escaped }]) => {
@@ -193,7 +201,7 @@ const runSpecialCaseMethods = (methods: Record<string, any>) => {
                         err: Error | null,
                         reply: any,
                         command: string
-                    ) => {
+                    ): void => {
                         expect(err).toBeNull();
                         expect(reply).toEqual(parsed || response);
                         expect(command).toEqual(
@@ -221,7 +229,7 @@ const runSpecialCaseMethods = (methods: Record<string, any>) => {
                         err: Error | null,
                         reply: any,
                         command: string
-                    ) => {
+                    ): void => {
                         expect(err).toEqual(new Error('error'));
                         expect(reply).toBeNull();
                         expect(command).toEqual(
@@ -242,7 +250,10 @@ const runSpecialCaseMethods = (methods: Record<string, any>) => {
     });
 };
 
-const runSubcommandTests = (name: string, methods: Record<string, any>) => {
+const runSubcommandTests = (
+    name: string,
+    methods: Record<string, any>
+): void => {
     describe(`Am ${name} tests`, () => {
         Object.entries(methods).forEach(
             ([method, { cmd, response, parsed }]) => {
@@ -252,7 +263,7 @@ const runSubcommandTests = (name: string, methods: Record<string, any>) => {
                         err: Error | null,
                         reply: any,
                         command: string
-                    ) => {
+                    ): void => {
                         expect(err).toBeNull();
                         expect(reply).toEqual(parsed || response);
                         expect(command).toEqual(cmd);
@@ -269,7 +280,11 @@ const runSubcommandTests = (name: string, methods: Record<string, any>) => {
         Object.entries(amMethods).forEach(([method, { cmd }]) => {
             it(`Should execute ${method} with error`, (done) => {
                 const monkey = new MonkeyMock(new ErrReply('error'));
-                const cb = (err: Error | null, reply: any, command: string) => {
+                const cb = (
+                    err: Error | null,
+                    reply: any,
+                    command: string
+                ): void => {
                     expect(err).toEqual(new Error('error'));
                     expect(reply).toBeNull();
                     expect(command).toEqual(cmd);

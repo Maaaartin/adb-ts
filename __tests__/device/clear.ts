@@ -40,14 +40,11 @@ describe('Clear tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            try {
-                await getDevice(port).clear('com.something');
-                fail('Expected failure');
-            } catch (e) {
-                expect(e).toEqual(
-                    new Error(`Package 'com.something' could not be cleared`)
-                );
-            }
+            await expect(() =>
+                getDevice(port).clear('com.something')
+            ).rejects.toThrowError(
+                new Error(`Package 'com.something' could not be cleared`)
+            );
         } finally {
             await adbMock.end();
         }
@@ -68,14 +65,11 @@ describe('Clear tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            try {
-                await getDevice(port).clear('com.something');
-                fail('Expected failure');
-            } catch (e) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('Something', '/^(Success|Failed)$/')
-                );
-            }
+            await expect(() =>
+                getDevice(port).clear('com.something')
+            ).rejects.toThrowError(
+                new UnexpectedDataError('Something', '/^(Success|Failed)$/')
+            );
         } finally {
             await adbMock.end();
         }
