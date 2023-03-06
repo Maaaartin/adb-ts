@@ -250,7 +250,7 @@ describe('Track devices', () => {
             const adb = new Client({ noAutoStart: true, port });
             const tracker = await adb.trackDevices();
             const result = await promisify<void>(async (cb) => {
-                tracker.on('error', () => {});
+                tracker.on('error', () => undefined);
                 tracker.once('end', () => {
                     cb(null);
                 });
@@ -296,12 +296,9 @@ describe('Track devices', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.trackDevices();
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(() => adb.trackDevices()).rejects.toThrowError(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
