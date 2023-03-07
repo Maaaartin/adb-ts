@@ -3,7 +3,7 @@ import ExecCommand from './exec';
 
 export default abstract class FileSystemCommand extends ExecCommand<void> {
     protected rawCmd: string;
-    protected abstract intentArgs(options?: Record<string, any>): string[];
+    protected abstract intentArgs(options?: object): string[];
 
     constructor(
         connection: Connection,

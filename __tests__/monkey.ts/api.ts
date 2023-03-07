@@ -138,7 +138,7 @@ const displayMethods = {
     }
 };
 
-const runVoidTests = (methods: Record<string, any>): void => {
+const runVoidTests = (methods: object): void => {
     describe('Void OK tests', () => {
         Object.entries(methods).forEach(([method, { cmd, params }]) => {
             it(`Should execute ${method} without error`, (done) => {
@@ -250,10 +250,7 @@ const runSpecialCaseMethods = (methods: Record<string, any>): void => {
     });
 };
 
-const runSubcommandTests = (
-    name: string,
-    methods: Record<string, any>
-): void => {
+const runSubcommandTests = (name: string, methods: object): void => {
     describe(`Am ${name} tests`, () => {
         Object.entries(methods).forEach(
             ([method, { cmd, response, parsed }]) => {
