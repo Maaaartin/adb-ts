@@ -31,7 +31,7 @@ describe('Device cp tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cp -n -s -l -P -L -H -r -d -p -F -f -u -t /file /other) || echo '123456'`,
+                cmd: `shell:(cp -F -H -L -P -d -f -l -n -p -r -s -t -u /file /other) || echo '123456'`,
                 res: 'data',
                 rawRes: true
             }

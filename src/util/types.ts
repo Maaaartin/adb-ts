@@ -427,3 +427,11 @@ export type NonFunctionPropertyNames<T> = {
 }[keyof T];
 
 export type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
+
+export type NonNullable<T> = Exclude<T, undefined>;
+
+export type ArgsMapper<T> = {
+    [K in keyof T]-?:
+        | string
+        | ((value: NonNullable<T[K]>) => string | string[]);
+};
