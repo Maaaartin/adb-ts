@@ -2,43 +2,54 @@ import { Connection } from '../../connection';
 import { ArgsMapper, NonNullable } from '../../util';
 import ExecCommand from './exec';
 
-export default abstract class FileSystemCommand<T> extends ExecCommand<void> {
-    protected rawCmd: string;
-    // protected abstract intentArgs(options?: object): string[];
+export default abstract class FileSystemCommand<
+    T,
+    P extends string | string[]
+> extends ExecCommand<void> {
+    protected abstract rootCmd: string;
+    protected abstract argsMapper: ArgsMapper<T>;
+    private path: P;
+    private options: T;
 
     constructor(
         connection: Connection,
         serial: string,
-        cmd: string,
-        path: string | string[],
-        argsMapper: ArgsMapper<T>,
+        path: P,
         options: T = {} as T
     ) {
         super(connection, serial);
-        const args = Object.entries(options as object).reduce<
+        this.path = path;
+        this.options = options;
+    }
+
+    protected get rawCmd(): string {
+        const args = Object.entries(this.options as object).reduce<
             (string | string[])[]
         >((acc, [key, val]) => {
-            const key_ = key as keyof T;
+            const [key_, val_] = [key as keyof T, val as T[keyof T]];
+            if (typeof val_ === 'undefined') {
+                return acc;
+            }
 
-            const mapper = argsMapper[key_];
-            if (typeof mapper === 'function' && typeof val !== 'undefined') {
-                const t = options[key_];
-                acc.push(mapper(options[key_] as NonNullable<typeof t>));
-            } else if (
-                typeof mapper === 'string' &&
-                typeof val !== 'undefined' &&
-                val !== false
-            ) {
-                acc.push(mapper);
+            const mapper = this.argsMapper[key_];
+            if (typeof mapper === 'function') {
+                return acc.concat([
+                    [mapper(val_ as NonNullable<typeof val_>, this.options)]
+                        .flat()
+                        .filter(Boolean)
+                ]);
+            }
+            if (val_ !== false) {
+                return acc.concat(mapper);
             }
 
             return acc;
         }, []);
 
-        this.rawCmd = [
-            cmd,
+        return [
+            this.rootCmd,
             ...args.filter(Boolean).sort().flat(),
-            ...[path].flat()
+            ...[this.path].flat()
         ].join(' ');
     }
 
