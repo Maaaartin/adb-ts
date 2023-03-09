@@ -98,12 +98,9 @@ describe('Rm FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.rm('serial', '/file');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() => adb.rm('serial', '/file')).rejects.toThrowError(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -121,12 +118,9 @@ describe('Rm FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.rm('serial', '/file');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() => adb.rm('serial', '/file')).rejects.toThrowError(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -151,14 +145,9 @@ describe('Rm unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.rm('serial', '/file');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => adb.rm('serial', '/file')).rejects.toThrowError(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -181,14 +170,9 @@ describe('Rm unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.rm('serial', '/file');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => adb.rm('serial', '/file')).rejects.toThrowError(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
