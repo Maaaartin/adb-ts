@@ -118,8 +118,8 @@ describe('Adb Push tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await promisify<void>(async (cb) => {
+            await expect(
+                promisify<void>(async (cb) => {
                     const transfer = await adb.push(
                         'serial',
                         Readable.from(Buffer.from([1, 0, 0, 0])),
@@ -133,11 +133,8 @@ describe('Adb Push tests', () => {
                     transfer.on('end', () => {
                         cb(null);
                     });
-                })();
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Error'));
-            }
+                })
+            ).rejects.toThrowError(new Error('Error'));
         } finally {
             await adbMock.end();
         }
@@ -156,8 +153,8 @@ describe('Adb Push tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await promisify<void>(async (cb) => {
+            await expect(
+                promisify<void>(async (cb) => {
                     const transfer = await adb.push(
                         'serial',
                         Readable.from(Buffer.from([1, 0, 0, 0])),
@@ -171,13 +168,10 @@ describe('Adb Push tests', () => {
                     transfer.on('end', () => {
                         cb(null);
                     });
-                })();
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+                })
+            ).rejects.toThrowError(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }

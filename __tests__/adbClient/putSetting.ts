@@ -207,12 +207,9 @@ describe('Put setting tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.putSetting('serial', 'system', 'setting', undefined);
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failed'));
-            }
+            await expect(() =>
+                adb.putSetting('serial', 'system', 'setting', undefined)
+            ).rejects.toThrowError(new Error('Failed'));
         } finally {
             await adbMock.end();
         }
@@ -230,12 +227,9 @@ describe('Put setting tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.putSetting('serial', 'system', 'setting', '');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() =>
+                adb.putSetting('serial', 'system', 'setting', '')
+            ).rejects.toThrowError(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -253,12 +247,9 @@ describe('Put setting tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.putSetting('serial', 'system', 'setting', '');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() =>
+                adb.putSetting('serial', 'system', 'setting', '')
+            ).rejects.toThrowError(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -281,14 +272,11 @@ describe('Put setting tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.putSetting('serial', 'system', 'setting', '');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.putSetting('serial', 'system', 'setting', '')
+            ).rejects.toThrowError(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -311,14 +299,11 @@ describe('Put setting tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.putSetting('serial', 'system', 'setting', '');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.putSetting('serial', 'system', 'setting', '')
+            ).rejects.toThrowError(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }

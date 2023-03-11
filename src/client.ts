@@ -1493,6 +1493,7 @@ export class Client {
         );
     }
 
+    // TODO test if works correctly
     /**
      * Wraps {@link push} method, reads the content of file on the host to a file on the device.
      */

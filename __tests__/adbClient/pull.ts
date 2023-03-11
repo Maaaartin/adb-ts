@@ -72,8 +72,8 @@ describe('Pull tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await promisify<string | null>(async (cb) => {
+            await expect(
+                promisify<string | null>(async (cb) => {
                     const transfer = await adb.pull('serial', '/');
                     let acc = '';
                     transfer.on('error', (err) => cb(err, null));
@@ -83,11 +83,8 @@ describe('Pull tests', () => {
                     transfer.on('end', () => {
                         cb(null, acc);
                     });
-                })();
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('data'));
-            }
+                })()
+            ).rejects.toEqual(new Error('data'));
         } finally {
             await adbMock.end();
         }
@@ -106,8 +103,8 @@ describe('Pull tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await promisify<string | null>(async (cb) => {
+            await expect(
+                promisify<string | null>(async (cb) => {
                     const transfer = await adb.pull('serial', '/');
                     let acc = '';
                     transfer.on('error', (err) => cb(err, null));
@@ -117,13 +114,10 @@ describe('Pull tests', () => {
                     transfer.on('end', () => {
                         cb(null, acc);
                     });
-                })();
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'DATA, DONE or FAIL')
-                );
-            }
+                })()
+            ).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'DATA, DONE or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
