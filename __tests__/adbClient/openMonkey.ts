@@ -40,13 +40,13 @@ describe('Open Monkey tests', () => {
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             { cmd: 'tcp:1080', res: null, rawRes: true }
         ]);
+
+        const port = await adbMock.start();
+        const adb = new Client({ noAutoStart: true, port });
         try {
-            const port = await adbMock.start();
-            const adb = new Client({ noAutoStart: true, port });
-            await adb.openMonkey('serial');
-            fail('Expected Failure');
-        } catch (e: any) {
-            expect(e).toEqual(new Error('Failure'));
+            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -64,13 +64,12 @@ describe('Open Monkey tests', () => {
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             { cmd: 'tcp:1080', res: null, rawRes: true }
         ]);
+        const port = await adbMock.start();
+        const adb = new Client({ noAutoStart: true, port });
         try {
-            const port = await adbMock.start();
-            const adb = new Client({ noAutoStart: true, port });
-            await adb.openMonkey('serial');
-            fail('Expected Failure');
-        } catch (e: any) {
-            expect(e).toEqual(new Error('Failure'));
+            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -88,13 +87,12 @@ describe('Open Monkey tests', () => {
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             { cmd: 'tcp:1080', res: null, rawRes: true }
         ]);
+        const port = await adbMock.start();
+        const adb = new Client({ noAutoStart: true, port });
         try {
-            const port = await adbMock.start();
-            const adb = new Client({ noAutoStart: true, port });
-            await adb.openMonkey('serial');
-            fail('Expected Failure');
-        } catch (e: any) {
-            expect(e).toEqual(new Error('Failure'));
+            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -112,13 +110,13 @@ describe('Open Monkey tests', () => {
             { cmd: 'fail', res: null, rawRes: true },
             { cmd: 'tcp:1080', res: null, rawRes: true }
         ]);
+
+        const port = await adbMock.start();
+        const adb = new Client({ noAutoStart: true, port });
         try {
-            const port = await adbMock.start();
-            const adb = new Client({ noAutoStart: true, port });
-            await adb.openMonkey('serial');
-            fail('Expected Failure');
-        } catch (e: any) {
-            expect(e).toEqual(new Error('Failure'));
+            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -136,13 +134,13 @@ describe('Open Monkey tests', () => {
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             { cmd: 'fail', res: null, rawRes: true }
         ]);
+
+        const port = await adbMock.start();
+        const adb = new Client({ noAutoStart: true, port });
         try {
-            const port = await adbMock.start();
-            const adb = new Client({ noAutoStart: true, port });
-            await adb.openMonkey('serial');
-            fail('Expected Failure');
-        } catch (e: any) {
-            expect(e).toEqual(new Error('Failure'));
+            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -168,15 +166,9 @@ describe('Open Monkey tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-
-            try {
-                await adb.openMonkey('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -206,15 +198,9 @@ describe('Open Monkey tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-
-            try {
-                await adb.openMonkey('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -240,15 +226,9 @@ describe('Open Monkey tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-
-            try {
-                await adb.openMonkey('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -278,15 +258,9 @@ describe('Open Monkey tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-
-            try {
-                await adb.openMonkey('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -320,15 +294,9 @@ describe('Open Monkey tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-
-            try {
-                await adb.openMonkey('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
