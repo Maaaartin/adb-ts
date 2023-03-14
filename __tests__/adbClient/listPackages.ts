@@ -38,7 +38,7 @@ package:four`,
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.listPackages('serial')).rejects.toThrowError(
+            await expect(() => adb.listPackages('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -60,7 +60,7 @@ package:four`,
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.listPackages('serial')).rejects.toThrowError(
+            await expect(() => adb.listPackages('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -87,7 +87,7 @@ package:four`,
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.listPackages('serial')).rejects.toThrowError(
+            await expect(() => adb.listPackages('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -114,7 +114,7 @@ package:four`,
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.listPackages('serial')).rejects.toThrowError(
+            await expect(() => adb.listPackages('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

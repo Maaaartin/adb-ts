@@ -225,7 +225,7 @@ describe('Cp FAIL tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.cp('serial', '/file', '/other')
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -245,7 +245,7 @@ describe('Cp FAIL tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.cp('serial', '/file', '/other')
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -272,9 +272,7 @@ describe('Cp unexpected tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.cp('serial', '/file', '/other')
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
@@ -299,9 +297,7 @@ describe('Cp unexpected tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.cp('serial', '/file', '/other')
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

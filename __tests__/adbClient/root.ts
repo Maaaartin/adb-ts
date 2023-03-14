@@ -26,7 +26,7 @@ describe('Root', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.root('serial')).rejects.toThrowError(
+            await expect(() => adb.root('serial')).rejects.toEqual(
                 new Error('invalid')
             );
         } finally {
@@ -42,7 +42,7 @@ describe('Root', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.root('serial')).rejects.toThrowError(
+            await expect(() => adb.root('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -58,7 +58,7 @@ describe('Root', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.root('serial')).rejects.toThrowError(
+            await expect(() => adb.root('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -79,7 +79,7 @@ describe('Root', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.root('serial')).rejects.toThrowError(
+            await expect(() => adb.root('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -99,7 +99,7 @@ describe('Root', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.root('serial')).rejects.toThrowError(
+            await expect(() => adb.root('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

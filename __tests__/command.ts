@@ -48,7 +48,7 @@ describe('Handle response', () => {
             const port = await adbMock.start();
             const conn = await getConnection(port);
             const cmd = new MockCommand(conn);
-            await expect(() => cmd.execute()).rejects.toThrowError(
+            await expect(() => cmd.execute()).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {

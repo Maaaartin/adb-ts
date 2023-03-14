@@ -44,7 +44,7 @@ describe('Open Monkey tests', () => {
         const port = await adbMock.start();
         const adb = new Client({ noAutoStart: true, port });
         try {
-            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+            await expect(() => adb.openMonkey('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -67,7 +67,7 @@ describe('Open Monkey tests', () => {
         const port = await adbMock.start();
         const adb = new Client({ noAutoStart: true, port });
         try {
-            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+            await expect(() => adb.openMonkey('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -90,7 +90,7 @@ describe('Open Monkey tests', () => {
         const port = await adbMock.start();
         const adb = new Client({ noAutoStart: true, port });
         try {
-            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+            await expect(() => adb.openMonkey('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -114,7 +114,7 @@ describe('Open Monkey tests', () => {
         const port = await adbMock.start();
         const adb = new Client({ noAutoStart: true, port });
         try {
-            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+            await expect(() => adb.openMonkey('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -138,7 +138,7 @@ describe('Open Monkey tests', () => {
         const port = await adbMock.start();
         const adb = new Client({ noAutoStart: true, port });
         try {
-            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+            await expect(() => adb.openMonkey('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -166,7 +166,7 @@ describe('Open Monkey tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+            await expect(() => adb.openMonkey('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -198,7 +198,7 @@ describe('Open Monkey tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+            await expect(() => adb.openMonkey('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -226,7 +226,7 @@ describe('Open Monkey tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+            await expect(() => adb.openMonkey('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -258,7 +258,7 @@ describe('Open Monkey tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+            await expect(() => adb.openMonkey('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -294,7 +294,7 @@ describe('Open Monkey tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.openMonkey('serial')).rejects.toThrowError(
+            await expect(() => adb.openMonkey('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

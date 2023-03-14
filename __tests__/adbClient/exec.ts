@@ -13,7 +13,7 @@ describe('Exec tests', () => {
     it('Should execute with error', async () => {
         mockExec(new Error('message'), '', '');
         const adb = new Client({ noAutoStart: true });
-        await expect(() => adb.exec('cmd')).rejects.toThrowError(
+        await expect(() => adb.exec('cmd')).rejects.toEqual(
             new Error('message')
         );
     });

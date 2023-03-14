@@ -23,7 +23,7 @@ describe('Device exec tests', () => {
 
     it('Should execute with error', async () => {
         mockExec(new Error('message'), '', '');
-        await expect(() => device.exec('cmd')).rejects.toThrowError(
+        await expect(() => device.exec('cmd')).rejects.toEqual(
             new Error('message')
         );
     });

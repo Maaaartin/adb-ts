@@ -26,7 +26,7 @@ describe('Remount', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.remount('serial')).rejects.toThrowError(
+            await expect(() => adb.remount('serial')).rejects.toEqual(
                 new Error('Not running as root')
             );
         } finally {
@@ -42,7 +42,7 @@ describe('Remount', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.remount('serial')).rejects.toThrowError(
+            await expect(() => adb.remount('serial')).rejects.toEqual(
                 new Error('inaccessible')
             );
         } finally {
@@ -58,7 +58,7 @@ describe('Remount', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.remount('serial')).rejects.toThrowError(
+            await expect(() => adb.remount('serial')).rejects.toEqual(
                 new Error('not found')
             );
         } finally {
@@ -74,7 +74,7 @@ describe('Remount', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.remount('serial')).rejects.toThrowError(
+            await expect(() => adb.remount('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -90,7 +90,7 @@ describe('Remount', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.remount('serial')).rejects.toThrowError(
+            await expect(() => adb.remount('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -111,7 +111,7 @@ describe('Remount', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.remount('serial')).rejects.toThrowError(
+            await expect(() => adb.remount('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -131,7 +131,7 @@ describe('Remount', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.remount('serial')).rejects.toThrowError(
+            await expect(() => adb.remount('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

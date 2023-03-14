@@ -34,7 +34,7 @@ describe('Screencap', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.screenshot('serial')).rejects.toThrowError(
+            await expect(() => adb.screenshot('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -54,7 +54,7 @@ describe('Screencap', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.screenshot('serial')).rejects.toThrowError(
+            await expect(() => adb.screenshot('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -79,7 +79,7 @@ describe('Screencap', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.screenshot('serial')).rejects.toThrowError(
+            await expect(() => adb.screenshot('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -104,7 +104,7 @@ describe('Screencap', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.screenshot('serial')).rejects.toThrowError(
+            await expect(() => adb.screenshot('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

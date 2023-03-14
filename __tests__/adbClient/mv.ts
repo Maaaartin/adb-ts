@@ -119,7 +119,7 @@ describe('Mv FAIL tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.mv('serial', '/file', '/other')
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -139,7 +139,7 @@ describe('Mv FAIL tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.mv('serial', '/file', '/other')
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -166,9 +166,7 @@ describe('Mv unexpected tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.mv('serial', '/file', '/other')
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
@@ -193,9 +191,7 @@ describe('Mv unexpected tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.mv('serial', '/file', '/other')
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

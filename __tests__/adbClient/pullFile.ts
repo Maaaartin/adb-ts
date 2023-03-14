@@ -48,7 +48,7 @@ describe('Pull file tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.pullFile('serial', '/file', '/file')
-            ).rejects.toThrowError(new Error('data'));
+            ).rejects.toEqual(new Error('data'));
         } finally {
             await adbMock.end();
         }
@@ -69,7 +69,7 @@ describe('Pull file tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.pullFile('serial', '/file', '/file')
-            ).rejects.toThrowError(
+            ).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'DATA, DONE or FAIL')
             );
         } finally {

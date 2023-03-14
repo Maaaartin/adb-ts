@@ -15,7 +15,7 @@ describe('Exec device shell tests', () => {
         const adb = new Client({ noAutoStart: true });
         await expect(() =>
             adb.execDeviceShell('serial', 'cmd')
-        ).rejects.toThrowError(new Error('message'));
+        ).rejects.toEqual(new Error('message'));
     });
 
     it('Should execute with std error', async () => {

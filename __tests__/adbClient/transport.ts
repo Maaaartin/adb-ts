@@ -28,7 +28,7 @@ describe('Transport tests', () => {
                 noAutoStart: true,
                 port
             });
-            await expect(() => client.transport('5678')).rejects.toThrowError(
+            await expect(() => client.transport('5678')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -48,7 +48,7 @@ describe('Transport tests', () => {
                 noAutoStart: true,
                 port
             });
-            await expect(() => client.transport('5678')).rejects.toThrowError(
+            await expect(() => client.transport('5678')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

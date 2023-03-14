@@ -9,7 +9,7 @@ describe('List devices', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ port, noAutoStart: true });
-            await expect(() => adb.listDevices()).rejects.toThrowError(
+            await expect(() => adb.listDevices()).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -24,7 +24,7 @@ describe('List devices', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ port, noAutoStart: true });
-            await expect(() => adb.listDevices()).rejects.toThrowError(
+            await expect(() => adb.listDevices()).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

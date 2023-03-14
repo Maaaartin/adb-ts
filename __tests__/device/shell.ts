@@ -39,9 +39,9 @@ describe('Shell tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            await expect(() =>
-                getDevice(port).shell('cmd')
-            ).rejects.toThrowError(new AdbExecError('message', 'cmd'));
+            await expect(() => getDevice(port).shell('cmd')).rejects.toEqual(
+                new AdbExecError('message', 'cmd')
+            );
         } finally {
             await adbMock.end();
         }

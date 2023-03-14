@@ -83,7 +83,7 @@ describe('Read dir', () => {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
 
-            await expect(() => adb.readDir('serial', '/')).rejects.toThrowError(
+            await expect(() => adb.readDir('serial', '/')).rejects.toEqual(
                 new Error('Err')
             );
         } finally {
@@ -104,7 +104,7 @@ describe('Read dir', () => {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
 
-            await expect(() => adb.readDir('serial', '/')).rejects.toThrowError(
+            await expect(() => adb.readDir('serial', '/')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'DENT, DONE or FAIL')
             );
         } finally {

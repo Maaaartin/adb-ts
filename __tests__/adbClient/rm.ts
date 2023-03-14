@@ -98,7 +98,7 @@ describe('Rm FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.rm('serial', '/file')).rejects.toThrowError(
+            await expect(() => adb.rm('serial', '/file')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -118,7 +118,7 @@ describe('Rm FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.rm('serial', '/file')).rejects.toThrowError(
+            await expect(() => adb.rm('serial', '/file')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -145,7 +145,7 @@ describe('Rm unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.rm('serial', '/file')).rejects.toThrowError(
+            await expect(() => adb.rm('serial', '/file')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -170,7 +170,7 @@ describe('Rm unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.rm('serial', '/file')).rejects.toThrowError(
+            await expect(() => adb.rm('serial', '/file')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

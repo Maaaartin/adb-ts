@@ -296,7 +296,7 @@ describe('Track devices', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.trackDevices()).rejects.toThrowError(
+            await expect(() => adb.trackDevices()).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {

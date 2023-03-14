@@ -190,7 +190,7 @@ describe('Key event', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.keyEvent('serial', 37)).rejects.toThrowError(
+            await expect(() => adb.keyEvent('serial', 37)).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -214,7 +214,7 @@ describe('Key event', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.keyEvent('serial', 37)).rejects.toThrowError(
+            await expect(() => adb.keyEvent('serial', 37)).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -239,7 +239,7 @@ describe('Key event', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.keyEvent('serial', 37)).rejects.toThrowError(
+            await expect(() => adb.keyEvent('serial', 37)).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -264,7 +264,7 @@ describe('Key event', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.keyEvent('serial', 37)).rejects.toThrowError(
+            await expect(() => adb.keyEvent('serial', 37)).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

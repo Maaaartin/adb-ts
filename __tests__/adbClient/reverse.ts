@@ -44,7 +44,7 @@ describe('Reverse', () => {
                     'localabstract:chrome_devtools_remote',
                     'tcp:9222'
                 )
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -68,7 +68,7 @@ describe('Reverse', () => {
                     'localabstract:chrome_devtools_remote',
                     'tcp:9222'
                 )
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -97,9 +97,7 @@ describe('Reverse', () => {
                     'localabstract:chrome_devtools_remote',
                     'tcp:9222'
                 )
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
@@ -128,9 +126,7 @@ describe('Reverse', () => {
                     'localabstract:chrome_devtools_remote',
                     'tcp:9222'
                 )
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

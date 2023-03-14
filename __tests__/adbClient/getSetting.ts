@@ -154,7 +154,7 @@ describe('Get setting FAIL tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(
                 adb.getSetting('serial', 'system', 'prop')
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -181,9 +181,7 @@ describe('Get setting unexpected response tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(
                 adb.getSetting('serial', 'system', 'prop')
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

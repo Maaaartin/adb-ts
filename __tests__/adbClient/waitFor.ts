@@ -124,7 +124,7 @@ describe('Wait for', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.waitFor('any', 'disconnect')
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -143,7 +143,7 @@ describe('Wait for', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.waitFor('any', 'disconnect')
-            ).rejects.toThrowError(new Error('Err'));
+            ).rejects.toEqual(new Error('Err'));
         } finally {
             await adbMock.end();
         }
@@ -162,7 +162,7 @@ describe('Wait for', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.waitFor('any', 'disconnect')
-            ).rejects.toThrowError(new Error('Could not read error'));
+            ).rejects.toEqual(new Error('Could not read error'));
         } finally {
             await adbMock.end();
         }
@@ -181,9 +181,7 @@ describe('Wait for', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.waitFor('any', 'disconnect')
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

@@ -134,7 +134,7 @@ describe('Adb Push tests', () => {
                         cb(null);
                     });
                 })
-            ).rejects.toThrowError(new Error('Error'));
+            ).rejects.toEqual(new Error('Error'));
         } finally {
             await adbMock.end();
         }
@@ -169,9 +169,7 @@ describe('Adb Push tests', () => {
                         cb(null);
                     });
                 })
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

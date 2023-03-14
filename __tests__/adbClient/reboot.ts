@@ -26,7 +26,7 @@ describe('Reboot', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.reboot('serial')).rejects.toThrowError(
+            await expect(() => adb.reboot('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -42,7 +42,7 @@ describe('Reboot', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.reboot('serial')).rejects.toThrowError(
+            await expect(() => adb.reboot('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -63,7 +63,7 @@ describe('Reboot', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.reboot('serial')).rejects.toThrowError(
+            await expect(() => adb.reboot('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -83,7 +83,7 @@ describe('Reboot', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.reboot('serial')).rejects.toThrowError(
+            await expect(() => adb.reboot('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

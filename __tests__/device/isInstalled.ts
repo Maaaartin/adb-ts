@@ -64,9 +64,7 @@ describe('Is installed tests', () => {
             const port = await adbMock.start();
             await expect(() =>
                 getDevice(port).isInstalled('com.package')
-            ).rejects.toThrowError(
-                new UnexpectedDataError('badValue', 'package:')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('badValue', 'package:'));
         } finally {
             await adbMock.end();
         }

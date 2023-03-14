@@ -41,7 +41,7 @@ describe('Shell tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.shell('serial', 'cmd')).rejects.toThrowError(
+            await expect(() => adb.shell('serial', 'cmd')).rejects.toEqual(
                 new AdbExecError('message', 'cmd')
             );
         } finally {
@@ -61,7 +61,7 @@ describe('Shell tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.shell('serial', 'cmd')).rejects.toThrowError(
+            await expect(() => adb.shell('serial', 'cmd')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -81,7 +81,7 @@ describe('Shell tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.shell('serial', 'cmd')).rejects.toThrowError(
+            await expect(() => adb.shell('serial', 'cmd')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -106,7 +106,7 @@ describe('Shell tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.shell('serial', 'cmd')).rejects.toThrowError(
+            await expect(() => adb.shell('serial', 'cmd')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -131,7 +131,7 @@ describe('Shell tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.shell('serial', 'cmd')).rejects.toThrowError(
+            await expect(() => adb.shell('serial', 'cmd')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

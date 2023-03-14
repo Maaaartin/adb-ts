@@ -145,7 +145,7 @@ describe('Swipe', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.swipe('serial', 100, 200, 100, 10)
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -169,7 +169,7 @@ describe('Swipe', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.swipe('serial', 100, 200, 100, 10)
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -194,9 +194,7 @@ describe('Swipe', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.swipe('serial', 100, 200, 100, 10)
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
@@ -221,9 +219,7 @@ describe('Swipe', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.swipe('serial', 100, 200, 100, 10)
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

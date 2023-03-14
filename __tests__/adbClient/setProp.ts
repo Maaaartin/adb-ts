@@ -169,7 +169,7 @@ describe('Set prop tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.setProp('serial', 'prop', undefined)
-            ).rejects.toThrowError(new Error('Failed'));
+            ).rejects.toEqual(new Error('Failed'));
         } finally {
             await adbMock.end();
         }
@@ -189,7 +189,7 @@ describe('Set prop tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.setProp('serial', 'prop', '')
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -209,7 +209,7 @@ describe('Set prop tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.setProp('serial', 'prop', '')
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -234,9 +234,7 @@ describe('Set prop tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.setProp('serial', 'prop', '')
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
@@ -261,9 +259,7 @@ describe('Set prop tests', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.setProp('serial', 'prop', '')
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

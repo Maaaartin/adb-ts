@@ -64,8 +64,8 @@ describe('Tcpip', () => {
                     throw new Error('message');
                 })
             );
-            await expect(() => adb.tcpip('serial')).rejects.toThrowError(
-                'message'
+            await expect(adb.tcpip('serial')).rejects.toEqual(
+                new Error('message')
             );
         } finally {
             await adbMock.end();

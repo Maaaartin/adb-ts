@@ -65,9 +65,9 @@ describe('Mkdir FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() =>
-                adb.mkdir('serial', '/dir')
-            ).rejects.toThrowError(new Error('Failure'));
+            await expect(() => adb.mkdir('serial', '/dir')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -85,9 +85,9 @@ describe('Mkdir FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() =>
-                adb.mkdir('serial', '/dir')
-            ).rejects.toThrowError(new Error('Failure'));
+            await expect(() => adb.mkdir('serial', '/dir')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -112,9 +112,7 @@ describe('Mkdir unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() =>
-                adb.mkdir('serial', '/dir')
-            ).rejects.toThrowError(
+            await expect(() => adb.mkdir('serial', '/dir')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -139,9 +137,7 @@ describe('Mkdir unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() =>
-                adb.mkdir('serial', '/dir')
-            ).rejects.toThrowError(
+            await expect(() => adb.mkdir('serial', '/dir')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

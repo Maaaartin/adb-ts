@@ -43,8 +43,8 @@ describe('Usb', () => {
                 })
             );
 
-            await expect(() => adb.usb('serial')).rejects.toThrowError(
-                'message'
+            await expect(adb.usb('serial')).rejects.toEqual(
+                new Error('message')
             );
         } finally {
             await adbMock.end();

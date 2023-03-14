@@ -45,7 +45,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.listReverses('serial')).rejects.toThrowError(
+            await expect(() => adb.listReverses('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -65,7 +65,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.listReverses('serial')).rejects.toThrowError(
+            await expect(() => adb.listReverses('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -90,7 +90,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.listReverses('serial')).rejects.toThrowError(
+            await expect(() => adb.listReverses('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -115,7 +115,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`,
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.listReverses('serial')).rejects.toThrowError(
+            await expect(() => adb.listReverses('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

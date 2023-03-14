@@ -13,9 +13,9 @@ describe('Exec device tests', () => {
     it('Should execute with error', async () => {
         mockExec(new Error('message'), '', '');
         const adb = new Client({ noAutoStart: true });
-        await expect(() =>
-            adb.execDevice('serial', 'cmd')
-        ).rejects.toThrowError(new Error('message'));
+        await expect(() => adb.execDevice('serial', 'cmd')).rejects.toEqual(
+            new Error('message')
+        );
     });
 
     it('Should execute with std error', async () => {

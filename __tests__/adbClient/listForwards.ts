@@ -59,7 +59,7 @@ serial tcp:9223 localabstract:chrome_devtools_remote`
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.listForwards('serial')).rejects.toThrowError(
+            await expect(() => adb.listForwards('serial')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -78,7 +78,7 @@ serial tcp:9223 localabstract:chrome_devtools_remote`
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.listForwards('serial')).rejects.toThrowError(
+            await expect(() => adb.listForwards('serial')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

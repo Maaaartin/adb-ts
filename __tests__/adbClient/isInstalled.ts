@@ -67,9 +67,7 @@ describe('Is installed', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.isInstalled('serial', 'com.package')
-            ).rejects.toThrowError(
-                new UnexpectedDataError('badValue', 'package:')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('badValue', 'package:'));
         } finally {
             await adbMock.end();
         }
@@ -93,7 +91,7 @@ describe('Is installed', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.isInstalled('serial', 'com.package')
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -117,7 +115,7 @@ describe('Is installed', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.isInstalled('serial', 'com.package')
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -142,9 +140,7 @@ describe('Is installed', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.isInstalled('serial', 'com.package')
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
@@ -169,9 +165,7 @@ describe('Is installed', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.isInstalled('serial', 'com.package')
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

@@ -29,7 +29,7 @@ describe('Kill server tests', () => {
                 noAutoStart: true,
                 port
             });
-            await expect(() => client.kill()).rejects.toThrowError(
+            await expect(() => client.kill()).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -49,7 +49,7 @@ describe('Kill server tests', () => {
                 noAutoStart: true,
                 port
             });
-            await expect(() => client.kill()).rejects.toThrowError(
+            await expect(() => client.kill()).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

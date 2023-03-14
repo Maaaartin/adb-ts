@@ -28,7 +28,7 @@ describe('Version tests', () => {
                 noAutoStart: true,
                 port
             });
-            await expect(() => client.version()).rejects.toThrowError(
+            await expect(() => client.version()).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {

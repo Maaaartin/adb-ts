@@ -110,9 +110,9 @@ describe('Text', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() =>
-                adb.text('serial', 'something')
-            ).rejects.toThrowError(new Error('Failure'));
+            await expect(() => adb.text('serial', 'something')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -134,9 +134,9 @@ describe('Text', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() =>
-                adb.text('serial', 'something')
-            ).rejects.toThrowError(new Error('Failure'));
+            await expect(() => adb.text('serial', 'something')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -159,9 +159,7 @@ describe('Text', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() =>
-                adb.text('serial', 'something')
-            ).rejects.toThrowError(
+            await expect(() => adb.text('serial', 'something')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -186,9 +184,7 @@ describe('Text', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() =>
-                adb.text('serial', 'something')
-            ).rejects.toThrowError(
+            await expect(() => adb.text('serial', 'something')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

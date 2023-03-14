@@ -156,9 +156,9 @@ describe('Touch FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() =>
-                adb.touch('serial', '/file')
-            ).rejects.toThrowError(new Error('Failure'));
+            await expect(() => adb.touch('serial', '/file')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -176,9 +176,9 @@ describe('Touch FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() =>
-                adb.touch('serial', '/file')
-            ).rejects.toThrowError(new Error('Failure'));
+            await expect(() => adb.touch('serial', '/file')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -203,9 +203,7 @@ describe('Touch unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() =>
-                adb.touch('serial', '/file')
-            ).rejects.toThrowError(
+            await expect(() => adb.touch('serial', '/file')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -230,9 +228,7 @@ describe('Touch unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() =>
-                adb.touch('serial', '/file')
-            ).rejects.toThrowError(
+            await expect(() => adb.touch('serial', '/file')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

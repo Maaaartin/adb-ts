@@ -575,7 +575,7 @@ describe('Start service', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.startService('serial', 'com.my.app', 'Service')
-            ).rejects.toThrowError(new Error('message'));
+            ).rejects.toEqual(new Error('message'));
         } finally {
             await adbMock.end();
         }
@@ -595,7 +595,7 @@ describe('Start service', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.startService('serial', 'com.my.app', 'Service')
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -615,7 +615,7 @@ describe('Start service', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.startService('serial', 'com.my.app', 'Service')
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -640,9 +640,7 @@ describe('Start service', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.startService('serial', 'com.my.app', 'Service')
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
@@ -667,9 +665,7 @@ describe('Start service', () => {
             const adb = new Client({ noAutoStart: true, port });
             await expect(() =>
                 adb.startService('serial', 'com.my.app', 'Service')
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

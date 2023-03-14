@@ -317,7 +317,7 @@ describe('Install FAIL tests', () => {
                     'serial',
                     Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
                 )
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             adbMock.end();
         }
@@ -355,7 +355,7 @@ describe('Install FAIL tests', () => {
                     'serial',
                     Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
                 )
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             adbMock.end();
         }
@@ -393,7 +393,7 @@ describe('Install FAIL tests', () => {
                     'serial',
                     Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
                 )
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             adbMock.end();
         }
@@ -432,7 +432,7 @@ describe('Install FAIL tests', () => {
                     'serial',
                     Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
                 )
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             adbMock.end();
         }
@@ -471,7 +471,7 @@ describe('Install FAIL tests', () => {
                     'serial',
                     Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
                 )
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             adbMock.end();
         }
@@ -510,7 +510,7 @@ describe('Install FAIL tests', () => {
                     'serial',
                     Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
                 )
-            ).rejects.toThrowError(new Error('Failure'));
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             adbMock.end();
         }
@@ -556,9 +556,7 @@ describe('Install unexpected test', () => {
                     'serial',
                     Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
                 )
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             adbMock.end();
         }
@@ -602,9 +600,7 @@ describe('Install unexpected test', () => {
                     'serial',
                     Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
                 )
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             adbMock.end();
         }
@@ -652,9 +648,7 @@ describe('Install unexpected test', () => {
                     'serial',
                     Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
                 )
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             adbMock.end();
         }
@@ -698,9 +692,7 @@ describe('Install unexpected test', () => {
                     'serial',
                     Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
                 )
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             adbMock.end();
         }
@@ -748,9 +740,7 @@ describe('Install unexpected test', () => {
                     'serial',
                     Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
                 )
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             adbMock.end();
         }
@@ -794,9 +784,7 @@ describe('Install unexpected test', () => {
                     'serial',
                     Readable.from(Buffer.from([1, 0, 0, 0, 0, 0, 0]))
                 )
-            ).rejects.toThrowError(
-                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-            );
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             adbMock.end();
         }

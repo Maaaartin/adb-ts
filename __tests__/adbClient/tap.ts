@@ -65,7 +65,7 @@ describe('Tap', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.tap('serial', 100, 0)).rejects.toThrowError(
+            await expect(() => adb.tap('serial', 100, 0)).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -89,7 +89,7 @@ describe('Tap', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.tap('serial', 100, 0)).rejects.toThrowError(
+            await expect(() => adb.tap('serial', 100, 0)).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -114,7 +114,7 @@ describe('Tap', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.tap('serial', 100, 0)).rejects.toThrowError(
+            await expect(() => adb.tap('serial', 100, 0)).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
@@ -139,7 +139,7 @@ describe('Tap', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(() => adb.tap('serial', 100, 0)).rejects.toThrowError(
+            await expect(() => adb.tap('serial', 100, 0)).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {
