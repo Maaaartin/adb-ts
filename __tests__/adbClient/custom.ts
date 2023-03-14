@@ -11,12 +11,13 @@ class TestCmd extends Command<number> {
         super(connection);
         this.arg = arg;
     }
-    async execute(): Promise<number> {
+    public async execute(): Promise<number> {
         const reply = await this.initExecute(this.arg);
         switch (reply) {
-            case Reply.OKAY:
+            case Reply.OKAY: {
                 const value = await this.parser.readValue();
                 return parseInt(value.toString(), 10);
+            }
             case Reply.FAIL:
                 throw await this.parser.readError();
             default:

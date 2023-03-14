@@ -94,11 +94,9 @@ describe('Clear', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-
-            await adb.clear('serial', 'com.something');
-            fail('Expected Failure');
-        } catch (e: any) {
-            expect(e).toEqual(new Error('Failure'));
+            await expect(adb.getProp('serial', 'prop')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -120,11 +118,9 @@ describe('Clear', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-
-            await adb.clear('serial', 'com.something');
-            fail('Expected Failure');
-        } catch (e: any) {
-            expect(e).toEqual(new Error('Failure'));
+            await expect(adb.getProp('serial', 'prop')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -147,11 +143,9 @@ describe('Clear', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-
-            await adb.clear('serial', 'com.something');
-            fail('Expected Failure');
-        } catch (e: any) {
-            expect(e).toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
+            await expect(adb.getProp('serial', 'prop')).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }

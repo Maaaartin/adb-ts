@@ -36,16 +36,13 @@ describe('Forward tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.forward(
+            await expect(
+                adb.forward(
                     'serial',
                     'tcp:9222',
                     'localabstract:chrome_devtools_remote'
-                );
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+                )
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -63,19 +60,13 @@ describe('Forward tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.forward(
+            await expect(
+                adb.forward(
                     'serial',
                     'tcp:9222',
                     'localabstract:chrome_devtools_remote'
-                );
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toBeInstanceOf(UnexpectedDataError);
-                expect(e).toEqual(
-                    new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
-                );
-            }
+                )
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

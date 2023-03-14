@@ -10,7 +10,7 @@ class TestCmd extends TransportCommand<null> {
         super(connection, serial);
         this.arg = arg;
     }
-    protected get Cmd() {
+    protected get Cmd(): string {
         return `test ${this.arg}`;
     }
     protected postExecute(): null {

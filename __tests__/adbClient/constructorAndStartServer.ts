@@ -24,10 +24,10 @@ describe('Client constructor tests', () => {
 });
 
 describe('Start server tests', () => {
-    it('Start adb server', () => {
+    it('Start adb server', async () => {
         mockExec(null);
         const client = new Client();
-        expect(client.startServer()).resolves;
+        await expect(client.startServer()).resolves.toBeUndefined();
     });
 
     it('Start adb server error', async () => {

@@ -1,4 +1,5 @@
 import { Client } from '../../lib/client';
+import { UnexpectedDataError } from '../../lib/util';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Get serial no', () => {
@@ -25,12 +26,9 @@ describe('Get serial no', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.getSerialNo('fail');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(adb.getSerialNo('serial')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -44,12 +42,9 @@ describe('Get serial no', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.getSerialNo('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(adb.getSerialNo('serial')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -68,14 +63,9 @@ describe('Get serial no', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.getSerialNo('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe(
-                    "Unexpected 'UNEX', was expecting OKAY or FAIL"
-                );
-            }
+            await expect(adb.getSerialNo('serial')).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -98,14 +88,9 @@ describe('Get serial no', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.getSerialNo('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe(
-                    "Unexpected 'UNEX', was expecting OKAY or FAIL"
-                );
-            }
+            await expect(adb.getSerialNo('serial')).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
