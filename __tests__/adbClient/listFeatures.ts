@@ -1,6 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { Client } from '../../lib/client';
-import { PropertyValue } from '../../lib/util';
+import { PropertyValue, UnexpectedDataError } from '../../lib/util';
 
 describe('List properties', () => {
     it('OKAY', async () => {
@@ -52,12 +52,9 @@ feature:six`,
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.listFeatures('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(() => adb.listFeatures('serial')).rejects.toThrowError(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -80,12 +77,9 @@ feature:six`,
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.listFeatures('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(() => adb.listFeatures('serial')).rejects.toThrowError(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -113,14 +107,10 @@ feature:six`,
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.listFeatures('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe(
-                    "Unexpected 'UNEX', was expecting OKAY or FAIL"
-                );
-            }
+
+            await expect(() => adb.listFeatures('serial')).rejects.toThrowError(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -148,14 +138,9 @@ feature:six`,
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.listFeatures('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe(
-                    "Unexpected 'UNEX', was expecting OKAY or FAIL"
-                );
-            }
+            await expect(() => adb.listFeatures('serial')).rejects.toThrowError(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }

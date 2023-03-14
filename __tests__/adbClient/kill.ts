@@ -29,12 +29,9 @@ describe('Kill server tests', () => {
                 noAutoStart: true,
                 port
             });
-            try {
-                await client.kill();
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() => client.kill()).rejects.toThrowError(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -52,10 +49,9 @@ describe('Kill server tests', () => {
                 noAutoStart: true,
                 port
             });
-            await client.kill();
-            fail('Expected Failure');
-        } catch (e) {
-            expect(e).toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
+            await expect(() => client.kill()).rejects.toThrowError(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }

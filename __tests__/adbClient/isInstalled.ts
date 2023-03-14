@@ -65,15 +65,11 @@ describe('Is installed', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.isInstalled('serial', 'com.package');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toBeInstanceOf(UnexpectedDataError);
-                expect(e.message).toBe(
-                    "Unexpected 'badValue', was expecting package:"
-                );
-            }
+            await expect(() =>
+                adb.isInstalled('serial', 'com.package')
+            ).rejects.toThrowError(
+                new UnexpectedDataError('badValue', 'package:')
+            );
         } finally {
             await adbMock.end();
         }
@@ -95,12 +91,9 @@ describe('Is installed', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.isInstalled('serial', 'com.package');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(() =>
+                adb.isInstalled('serial', 'com.package')
+            ).rejects.toThrowError(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -122,12 +115,9 @@ describe('Is installed', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.isInstalled('serial', 'com.package');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(() =>
+                adb.isInstalled('serial', 'com.package')
+            ).rejects.toThrowError(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -150,14 +140,11 @@ describe('Is installed', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.isInstalled('serial', 'com.package');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe(
-                    "Unexpected 'UNEX', was expecting OKAY or FAIL"
-                );
-            }
+            await expect(() =>
+                adb.isInstalled('serial', 'com.package')
+            ).rejects.toThrowError(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -180,14 +167,11 @@ describe('Is installed', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.isInstalled('serial', 'com.package');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe(
-                    "Unexpected 'UNEX', was expecting OKAY or FAIL"
-                );
-            }
+            await expect(() =>
+                adb.isInstalled('serial', 'com.package')
+            ).rejects.toThrowError(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
