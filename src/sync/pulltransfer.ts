@@ -21,16 +21,20 @@ export class PullTransfer extends PassThrough {
     ): boolean;
     public write(
         chunk: Buffer,
-        encoding?: any,
+        encoding?: BufferEncoding | ((error: Error | null | undefined) => void),
         cb?: (error: Error | null | undefined) => void
     ): boolean {
         this.stats.bytesTransferred += chunk.length;
         this.emit('progress', this.stats);
+        if (typeof encoding === 'function') {
+            cb = encoding;
+            encoding = undefined;
+        }
         return super.write(chunk, encoding, cb);
     }
 
     public on(event: 'close', listener: () => void): this;
-    public on(event: 'data', listener: (chunk: any) => void): this;
+    public on(event: 'data', listener: (chunk: unknown) => void): this;
     public on(event: 'end', listener: () => void): this;
     public on(event: 'error', listener: (err: Error) => void): this;
     public on(event: 'pause', listener: () => void): this;

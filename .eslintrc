@@ -6,7 +6,7 @@
         "commonjs": true
     },
     "globals": { "BufferEncoding": true, "NodeJS": true },
-    "ignorePatterns": ["lib", "docs"],
+    "ignorePatterns": ["lib", "docs", "__tests__/", "mockery"],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 2020,
@@ -41,7 +41,10 @@
                 "allowTypedFunctionExpressions": true
             }
         ],
-        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-explicit-any": [
+            "error",
+            { "ignoreRestArgs": true }
+        ],
         "@typescript-eslint/explicit-member-accessibility": [
             "warn",
             {

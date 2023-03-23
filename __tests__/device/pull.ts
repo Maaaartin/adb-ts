@@ -20,7 +20,7 @@ describe('Device Pull tests', () => {
                 let acc = Buffer.alloc(0);
                 transfer.on('error', (err) => cb(err, Buffer.alloc(0)));
                 transfer.on('data', (data) => {
-                    acc = Buffer.concat([acc, data]);
+                    acc = Buffer.concat([acc, data as Buffer]);
                 });
                 transfer.on('end', () => {
                     cb(null, acc);

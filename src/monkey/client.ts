@@ -8,7 +8,7 @@ import { CommandQueue } from './commandqueue';
 import { Parser } from './parser';
 
 export class Monkey extends Api {
-    public queue: BaseCommand<any>[] = [];
+    public queue: BaseCommand<unknown>[] = [];
     private parser: Parser = new Parser();
     private stream_?: Socket;
     private timeout?: NodeJS.Timeout;
@@ -22,7 +22,7 @@ export class Monkey extends Api {
 
     private sendInternal(
         commands: string[] | string,
-        cmdConstruct: (cmd: string) => BaseCommand<any>
+        cmdConstruct: (cmd: string) => BaseCommand<unknown>
     ): this {
         [commands].flat().forEach((command) => {
             this.queue.push(cmdConstruct(command));
@@ -43,7 +43,8 @@ export class Monkey extends Api {
     ): this {
         return this.sendInternal(
             commands,
-            (cmd) => new ParsableCommand(cmd, cb, parser)
+            (cmd) =>
+                new ParsableCommand(cmd, cb, parser) as BaseCommand<unknown>
         );
     }
 
@@ -53,7 +54,10 @@ export class Monkey extends Api {
      * monkey.send('key event 24', (err, value, command) => {});
      */
     public send(commands: string[] | string, cb: MonkeyCallback): this {
-        return this.sendInternal(commands, (cmd) => new Command(cmd, cb));
+        return this.sendInternal(
+            commands,
+            (cmd) => new Command(cmd, cb) as BaseCommand<unknown>
+        );
     }
 
     protected hook(): void {

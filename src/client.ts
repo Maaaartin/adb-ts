@@ -159,7 +159,7 @@ export class Client {
 
             const errorListener = async (
                 err: NodeJS.ErrnoException
-            ): Promise<any> => {
+            ): Promise<void> => {
                 if (
                     err.code === 'ECONNREFUSED' &&
                     !triedStarting &&
@@ -167,7 +167,8 @@ export class Client {
                 ) {
                     triedStarting = true;
                     await this.startServer();
-                    return connection.connect(this.options);
+                    connection.connect(this.options);
+                    return;
                 }
                 connection.destroy();
                 return reject(err);
@@ -1533,7 +1534,9 @@ export class Client {
                     return new Promise((resolve, reject) => {
                         let data = Buffer.alloc(0);
                         transfer.on('data', (chunk) => {
-                            data = Buffer.concat([data, chunk]);
+                            data = Buffer.isBuffer(chunk)
+                                ? Buffer.concat([data, chunk])
+                                : data;
                         });
                         transfer.on('end', () => {
                             resolve(data);

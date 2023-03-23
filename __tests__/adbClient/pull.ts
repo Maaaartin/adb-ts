@@ -22,7 +22,7 @@ describe('Pull tests', () => {
                 let acc = '';
                 transfer.on('error', (err) => cb(err, null));
                 transfer.on('data', (data) => {
-                    acc += data.toString();
+                    acc += (data as Buffer).toString();
                 });
                 transfer.on('end', () => {
                     cb(null, acc);
@@ -78,7 +78,7 @@ describe('Pull tests', () => {
                     let acc = '';
                     transfer.on('error', (err) => cb(err, null));
                     transfer.on('data', (data) => {
-                        acc += data.toString();
+                        acc += (data as Buffer).toString();
                     });
                     transfer.on('end', () => {
                         cb(null, acc);
@@ -109,7 +109,7 @@ describe('Pull tests', () => {
                     let acc = '';
                     transfer.on('error', (err) => cb(err, null));
                     transfer.on('data', (data) => {
-                        acc += data.toString();
+                        acc += (data as Buffer).toString();
                     });
                     transfer.on('end', () => {
                         cb(null, acc);

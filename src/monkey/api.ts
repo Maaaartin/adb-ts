@@ -8,7 +8,7 @@ export default abstract class Api extends EventEmitter {
     public abstract sendAndParse<T>(
         command: string,
         cb?: MonkeyCallback<T>,
-        parser?: (data: string | null) => T
+        parser?: (data: string | null) => T | null
     ): this;
     private getAndParse(
         command: string,
