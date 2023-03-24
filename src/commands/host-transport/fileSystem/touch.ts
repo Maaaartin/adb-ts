@@ -2,7 +2,6 @@ import moment from 'moment';
 import { TouchOptions, escape } from '../../../util';
 import FileSystemCommand from '../../abstract/fileSystem';
 
-// TODO check if sorting flags for time works
 export default class TouchCommand extends FileSystemCommand<
     TouchOptions,
     string
