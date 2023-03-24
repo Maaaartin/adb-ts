@@ -9,7 +9,7 @@ export default class MonkeyMock extends Api {
         super();
         this.reply_ = reply;
     }
-    public send(command: string, cb?: MonkeyCallback<any> | undefined): this {
+    public send<T>(command: string, cb?: MonkeyCallback<T> | undefined): this {
         if (this.reply_.isError()) {
             cb?.(
                 new Error(this.reply_.value || 'Unknown error'),
@@ -17,7 +17,7 @@ export default class MonkeyMock extends Api {
                 command
             );
         } else {
-            cb?.(null, this.reply_.value, command);
+            cb?.(null, this.reply_.value as T, command);
         }
         return this;
     }

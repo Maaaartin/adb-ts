@@ -135,14 +135,14 @@ export class AdbMock {
                         this.hook();
                         resolve(this.getPort());
                         this.server_.removeListener('error', reject);
-                    } catch (e: any) {
+                    } catch (e: unknown) {
                         reject(e);
                     }
                 });
             } else {
                 try {
                     resolve(this.getPort());
-                } catch (e: any) {
+                } catch (e: unknown) {
                     reject(e);
                 }
             }
