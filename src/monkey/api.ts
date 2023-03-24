@@ -4,7 +4,7 @@ import { MonkeyCallback } from '../util';
 
 // reference https://android.googlesource.com/platform/development/+/master/cmds/monkey/src/com/android/commands/monkey/MonkeySourceNetworkVars.java
 export default abstract class Api extends EventEmitter {
-    public abstract send(command: string, cb?: MonkeyCallback): this;
+    public abstract send<T>(command: string, cb?: MonkeyCallback<T>): this;
     public abstract sendAndParse<T>(
         command: string,
         cb?: MonkeyCallback<T>,
