@@ -6,7 +6,7 @@
         "commonjs": true
     },
     "globals": { "BufferEncoding": true, "NodeJS": true },
-    "ignorePatterns": ["lib", "docs", "__tests__/", "mockery"],
+    "ignorePatterns": ["lib", "docs"],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 2020,
