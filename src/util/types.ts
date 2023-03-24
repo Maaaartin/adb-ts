@@ -312,7 +312,7 @@ export interface RecursiveFSOption {
 
 export interface RmOptions extends ForceFSOption, RecursiveFSOption {}
 
-export interface MkDirOptions extends ForceFSOption {
+export interface MkDirOptions {
     /**
      * Adds `-m <value>` flag. Sets access mode
      */
