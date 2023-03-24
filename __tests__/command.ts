@@ -69,10 +69,9 @@ describe('Handle response', () => {
             const cmd = new MockCommand(conn);
             try {
                 await cmd.execute();
-            } catch (e: any) {
-                expect(e).toBeInstanceOf(UnexpectedDataError);
-                expect(e.message).toBe(
-                    "Unexpected 'UNEX', was expecting OKAY or FAIL"
+            } catch (e: unknown) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
             }
         } finally {

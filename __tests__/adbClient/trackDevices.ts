@@ -14,7 +14,7 @@ describe('Track devices', () => {
         const adb = new Client({ noAutoStart: true, port });
         const tracker = await adb.trackDevices();
         try {
-            expect((tracker as any).command.autoEnd).toBe(false);
+            expect(tracker['command'].autoEnd).toBe(false);
         } finally {
             tracker.end();
             await adbMock.end();
@@ -30,7 +30,7 @@ describe('Track devices', () => {
         const adb = new Client({ noAutoStart: true, port });
         const tracker = await adb.trackDevices();
         try {
-            expect((tracker as any).deviceMap).toBeNull();
+            expect(tracker['deviceMap']).toBeNull();
         } finally {
             tracker.end();
             await adbMock.end();
@@ -254,7 +254,7 @@ describe('Track devices', () => {
                 tracker.once('end', () => {
                     cb(null);
                 });
-                (tracker as any).command.endConnection();
+                tracker['command'].endConnection();
             })();
 
             expect(result).toBeUndefined();
@@ -278,7 +278,7 @@ describe('Track devices', () => {
                     cb(null);
                 });
 
-                (tracker as any).command.connection.destroy(new Error('end'));
+                tracker['command'].connection.destroy(new Error('end'));
             })();
 
             expect(result).toBeUndefined();

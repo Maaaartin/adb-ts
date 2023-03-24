@@ -106,7 +106,7 @@ describe('List devices', () => {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
             await adb.listDevices();
-        } catch (e: any) {
+        } catch (e: unknown) {
             expect(e).toBeInstanceOf(UnexpectedDataError);
         } finally {
             await adbMock.end();
@@ -122,7 +122,7 @@ describe('List devices', () => {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
             await adb.listDevices();
-        } catch (e: any) {
+        } catch (e: unknown) {
             expect(e).toBeInstanceOf(UnexpectedDataError);
         } finally {
             await adbMock.end();

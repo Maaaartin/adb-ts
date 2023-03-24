@@ -42,7 +42,7 @@ describe('Logcat reader tests', () => {
             expect(err).toEqual(new Error('message'));
             done();
         });
-        (reader as any).parser.emit('error', new Error('message'));
+        reader['parser'].emit('error', new Error('message'));
     });
 
     it('Should emit entry when parser gets entry event', (done) => {
@@ -64,7 +64,7 @@ describe('Logcat reader tests', () => {
             );
             done();
         });
-        (reader as any).parser.emit(
+        reader['parser'].emit(
             'entry',
             ((): LogcatEntry => {
                 const entry = new LogcatEntry();
@@ -83,7 +83,7 @@ describe('Logcat reader tests', () => {
         const reader = new LogcatReader();
 
         reader.connect(new Writable());
-        (reader as any).filter = (ent: LogcatEntry): boolean =>
+        reader['filter'] = (ent: LogcatEntry): boolean =>
             ent.message === 'message';
         reader.on('entry', (err) => {
             expect(err).toEqual(
@@ -100,7 +100,7 @@ describe('Logcat reader tests', () => {
             );
             done();
         });
-        (reader as any).parser.emit(
+        reader['parser'].emit(
             'entry',
             ((): LogcatEntry => {
                 const entry = new LogcatEntry();
@@ -113,7 +113,7 @@ describe('Logcat reader tests', () => {
                 return entry;
             })()
         );
-        (reader as any).parser.emit(
+        reader['parser'].emit(
             'entry',
             ((): LogcatEntry => {
                 const entry = new LogcatEntry();

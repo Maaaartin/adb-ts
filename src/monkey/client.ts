@@ -53,7 +53,10 @@ export class Monkey extends Api {
      * @example
      * monkey.send('key event 24', (err, value, command) => {});
      */
-    public send(commands: string[] | string, cb: MonkeyCallback): this {
+    public send(
+        commands: string[] | string,
+        cb: MonkeyCallback<unknown>
+    ): this {
         return this.sendInternal(
             commands,
             (cmd) => new Command(cmd, cb) as BaseCommand<unknown>

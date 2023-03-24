@@ -43,7 +43,7 @@ describe('Clear', () => {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
             await adb.clear('serial', 'com.something');
-        } catch (e: any) {
+        } catch (e: unknown) {
             expect(e).toEqual(
                 new Error(`Package 'com.something' could not be cleared`)
             );
@@ -69,7 +69,7 @@ describe('Clear', () => {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
             await adb.clear('serial', 'com.something');
-        } catch (e: any) {
+        } catch (e: unknown) {
             expect(e).toEqual(
                 new UnexpectedDataError('Something', '/^(Success|Failed)$/')
             );

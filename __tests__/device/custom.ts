@@ -7,7 +7,7 @@ class TestCmd extends TransportCommand<null> {
     protected keepAlive = false;
     protected Cmd: string;
 
-    constructor(connection: Connection, serial: string, [arg]: any[]) {
+    constructor(connection: Connection, serial: string, [arg]: string[]) {
         super(connection, serial);
         this.Cmd = 'test ' + arg;
     }

@@ -69,12 +69,13 @@ describe('File stat OKAY tests', () => {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
             await adb.fileStat('serial', '/file');
-        } catch (e: any) {
-            expect(e.message).toBe('message');
-            expect(e.command).toBe(
-                `stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file`
+        } catch (e: unknown) {
+            expect(e).toEqual(
+                new AdbExecError(
+                    'message',
+                    `stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file`
+                )
             );
-            expect(e).toBeInstanceOf(AdbExecError);
         } finally {
             await adbMock.end();
         }

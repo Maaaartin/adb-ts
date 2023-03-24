@@ -23,10 +23,10 @@ describe('Exec tests', () => {
         const adb = new Client({ noAutoStart: true });
         try {
             await adb.exec('cmd');
-        } catch (e: any) {
-            expect(e.message).toBe('message');
-            expect(e.command).toBe('cmd');
-            expect(e).toBeInstanceOf(AdbExecError);
+        } catch (e: unknown) {
+            expect(e).toEqual(
+                new AdbExecError('message', '-s serial shell cmd')
+            );
         }
     });
 
@@ -35,10 +35,10 @@ describe('Exec tests', () => {
         const adb = new Client({ noAutoStart: true });
         try {
             await adb.exec('cmd');
-        } catch (e: any) {
-            expect(e.message).toBe('Error: message');
-            expect(e.command).toBe('cmd');
-            expect(e).toBeInstanceOf(AdbExecError);
+        } catch (e: unknown) {
+            expect(e).toEqual(
+                new AdbExecError('Error: message', '-s serial shell cmd')
+            );
         }
     });
 });

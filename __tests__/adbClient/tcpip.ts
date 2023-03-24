@@ -15,9 +15,10 @@ describe('Tcpip', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            jest.spyOn(adb as any, 'awaitActiveDevice').mockImplementation(() =>
-                Promise.resolve()
-            );
+            jest.spyOn(
+                adb,
+                'awaitActiveDevice' as keyof Client
+            ).mockImplementation(() => Promise.resolve());
             const result = await adb.tcpip('serial');
             expect(result).toBeUndefined();
         } finally {
@@ -37,9 +38,10 @@ describe('Tcpip', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            jest.spyOn(adb as any, 'awaitActiveDevice').mockImplementation(() =>
-                Promise.resolve()
-            );
+            jest.spyOn(
+                adb,
+                'awaitActiveDevice' as keyof Client
+            ).mockImplementation(() => Promise.resolve());
             const result = await adb.tcpip('serial', 3333);
             expect(result).toBeUndefined();
         } finally {
@@ -59,7 +61,10 @@ describe('Tcpip', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            jest.spyOn(adb as any, 'awaitActiveDevice').mockImplementation(() =>
+            jest.spyOn(
+                adb,
+                'awaitActiveDevice' as keyof Client
+            ).mockImplementation(() =>
                 T.setTimeout(1000).then(() => {
                     throw new Error('message');
                 })

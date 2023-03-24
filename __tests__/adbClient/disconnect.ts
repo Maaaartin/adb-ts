@@ -66,8 +66,8 @@ describe('Disconnect', () => {
             const adb = new Client({ noAutoStart: true, port });
             try {
                 await adb.disconnect('127.0.0.1', 4444);
-            } catch (e: any) {
-                expect(e.message).toBe('invalid');
+            } catch (e: unknown) {
+                expect(e).toEqual(new Error('invalid'));
             }
         } finally {
             await adbMock.end();
