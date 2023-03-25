@@ -1444,10 +1444,9 @@ export class Client {
     /**
      * Maps through all connected devices.
      */
-    map<T>(mapper: (device: Device) => T): Promise<T[]> {
-        return this.listDevices().then((devices) =>
-            devices.map((device) => mapper(new Device(this, device)))
-        );
+    async map<T>(mapper: (device: Device) => T): Promise<T[]> {
+        const devices = await this.listDevices();
+        return devices.map((device_1) => mapper(new Device(this, device_1)));
     }
 
     private async pushInternal(
