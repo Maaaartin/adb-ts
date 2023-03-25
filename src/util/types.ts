@@ -433,5 +433,8 @@ export type NonNullable<T> = Exclude<T, undefined>;
 export type ArgsMapper<T> = {
     [K in keyof T]-?:
         | string
-        | ((value: NonNullable<T[K]>, options: T) => string | string[]);
+        | ((
+              value: NonNullable<T[K]>,
+              options: Readonly<T>
+          ) => string | string[]);
 };
