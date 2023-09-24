@@ -298,7 +298,13 @@ export class Client {
     kill(cb: Callback): void;
     kill(cb?: Callback): Promise<void> | void {
         return nodeify(
-            this.connection().then((conn) => new KillCommand(conn).execute()),
+            this.connection()
+                .catch((error) => {
+                    if (error.code !== 'ECONNREFUSED') {
+                        throw error;
+                    }
+                })
+                .then((conn) => conn && new KillCommand(conn).execute()),
             cb
         );
     }

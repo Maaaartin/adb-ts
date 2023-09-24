@@ -18,6 +18,15 @@ describe('Kill server tests', () => {
         }
     });
 
+    it('Should ignore error when cannot connect to server', async () => {
+        new AdbMock({ cmd: 'host:kill', res: null });
+        const client = new Client({
+            noAutoStart: true
+        });
+        const result = await client.kill();
+        expect(result).toBeUndefined();
+    });
+
     it('Should throw error after failure', async () => {
         const adbMock = new AdbMock({
             cmd: 'fail',
