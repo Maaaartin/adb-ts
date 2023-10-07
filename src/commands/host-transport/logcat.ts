@@ -7,7 +7,7 @@ import { LogcatOptions } from '../../util';
 import TransportCommand from '../abstract/transport';
 
 export default class LogcatCommand extends TransportCommand<LogcatReader> {
-    private options?: LogcatOptions | null;
+    private options: LogcatOptions | void;
     protected Cmd = 'shell:echo && ';
     protected keepAlive = false;
 
@@ -17,6 +17,7 @@ export default class LogcatCommand extends TransportCommand<LogcatReader> {
         options?: LogcatOptions
     ) {
         super(connection, serial);
+        this.options = options;
         let cmd = 'logcat -B *:I 2>/dev/null';
         if (options?.clear) {
             cmd = 'logcat -c 2>/dev/null && ' + cmd;
