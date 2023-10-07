@@ -11,7 +11,7 @@ export default abstract class Input extends TransportCommand<void> {
         serial: string,
         source: InputSource,
         command: string,
-        args?: PrimitiveType | PrimitiveType[],
+        args: PrimitiveType | PrimitiveType[] | void,
         withEscape = false
     ) {
         super(connection, serial);
@@ -20,7 +20,10 @@ export default abstract class Input extends TransportCommand<void> {
                 command,
                 [args]
                     .flat()
-                    .filter((a) => typeof a !== 'undefined' && a !== '')
+                    .filter(
+                        (a): a is PrimitiveType =>
+                            typeof a !== 'undefined' && a !== ''
+                    )
                     .map((a) => (withEscape ? escape(a) : String(a)))
             )
             .join(' ');

@@ -14,7 +14,7 @@ export default class LogcatCommand extends TransportCommand<LogcatReader> {
     constructor(
         connection: Connection,
         serial: string,
-        options?: LogcatOptions
+        options: LogcatOptions | void
     ) {
         super(connection, serial);
         this.options = options;

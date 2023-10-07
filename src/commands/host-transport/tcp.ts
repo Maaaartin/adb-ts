@@ -8,7 +8,7 @@ export default class TcpCommand extends RawCommand {
         connection: Connection,
         serial: string,
         port: number,
-        host?: string
+        host: string | void
     ) {
         super(connection, serial);
         this.Cmd = 'tcp:'.concat(

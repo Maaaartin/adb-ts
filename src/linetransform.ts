@@ -9,7 +9,7 @@ export default class LineTransform extends Transform {
     private autoDetect: boolean;
     private transformNeeded = true;
     private skipBytes = 0;
-    constructor(options?: LineTransformOptions) {
+    constructor(options: LineTransformOptions) {
         super(options);
         this.autoDetect = options?.autoDetect || false;
     }
