@@ -12,8 +12,8 @@ export default class InstallCommand extends TransportCommand<void> {
         connection: Connection,
         serial: string,
         apk: string,
-        options?: InstallOptions,
-        args?: string
+        options: InstallOptions | void,
+        args: string | void
     ) {
         super(connection, serial);
         this.apk = apk;
@@ -40,7 +40,7 @@ export default class InstallCommand extends TransportCommand<void> {
             this.endConnection();
         }
     }
-    private intentArgs(options?: InstallOptions): string[] {
+    private intentArgs(options: InstallOptions | void): string[] {
         const args: string[] = [];
         if (!options) {
             return args;
