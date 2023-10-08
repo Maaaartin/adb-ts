@@ -17,7 +17,7 @@ export default class DragAndDrop extends Input {
             y1: number;
             x2: number;
             y2: number;
-            options?: InputDurationOptions;
+            options: InputDurationOptions | void;
         }
     ) {
         super(connection, serial, source, 'draganddrop', [
