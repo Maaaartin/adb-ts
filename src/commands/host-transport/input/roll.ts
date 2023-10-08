@@ -11,7 +11,7 @@ export default class Roll extends Input {
             x,
             y
         }: {
-            source?: InputSource;
+            source: InputSource | void;
             x: number;
             y: number;
         }

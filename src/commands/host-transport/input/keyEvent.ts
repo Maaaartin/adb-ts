@@ -10,7 +10,7 @@ export default class KeyEvent extends Input {
             options: { source = 'keyboard', variant } = {},
             code
         }: {
-            options?: KeyEventOptions;
+            options: KeyEventOptions | void;
             code: number | NonEmptyArray<number>;
         }
     ) {

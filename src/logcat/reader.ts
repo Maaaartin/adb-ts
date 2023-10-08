@@ -6,9 +6,9 @@ import { Writable } from 'stream';
 import { LogcatReaderOptions } from '../util';
 
 export class LogcatReader extends StreamHandler {
-    private filter?: (entry: LogcatEntry) => boolean;
+    private filter: ((entry: LogcatEntry) => boolean) | void;
     private parser = new Binary();
-    private stream_?: Writable;
+    private stream_: Writable | null = null;
     constructor(options?: LogcatReaderOptions) {
         super();
         this.filter = options?.filter;

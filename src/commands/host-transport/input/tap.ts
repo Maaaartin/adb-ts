@@ -10,7 +10,7 @@ export default class Tap extends Input {
             source = 'touchscreen',
             x,
             y
-        }: { source?: InputSource; x: number; y: number }
+        }: { source: InputSource | void; x: number; y: number }
     ) {
         super(connection, serial, source, 'tap', [x, y]);
     }

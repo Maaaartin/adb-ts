@@ -10,7 +10,7 @@ export default class Text extends Input {
             text,
             source = 'touchscreen'
         }: {
-            source?: InputSource;
+            source: InputSource | void;
             text: string;
         }
     ) {
