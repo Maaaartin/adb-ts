@@ -109,10 +109,6 @@ export class Sync extends EventEmitter {
                         reject(err);
                     })
                 );
-
-                // const waitForDrain = promisify<void>((cb) =>
-                //     this.connection.once('drain', cb)
-                // );
             });
             await Promise.all([
                 streamUnregister.unregisterAfter(promise),
