@@ -44,6 +44,24 @@ export class Sync extends EventEmitter {
         return this.connection.write(payload);
     }
 
+    private getDrainAwaiter(): {
+        waitForDrain: (cb: (err: null) => void) => void;
+        unregisterDrainListener: () => void;
+    } {
+        let cb_: (err: null) => void;
+        const listener_ = (): void => {
+            cb_?.(null);
+        };
+        this.connection.on('drain', listener_);
+        const waitForDrain = (cb: typeof cb_): void => {
+            cb_ = cb;
+        };
+        const unregisterDrainListener = (): void => {
+            this.connection.off('drain', listener_);
+        };
+        return { waitForDrain, unregisterDrainListener };
+    }
+
     private writeData(stream: Readable, timestamp: number): PushTransfer {
         const transfer = new PushTransfer();
 
@@ -52,6 +70,8 @@ export class Sync extends EventEmitter {
             const streamUnregister = new EventUnregister(stream);
             const connectionUnregister = new EventUnregister(this.connection);
 
+            const { waitForDrain, unregisterDrainListener } =
+                this.getDrainAwaiter();
             const promise = new Promise<void>((resolve, reject) => {
                 const writeNext = async (): Promise<void> => {
                     const chunk =
@@ -69,7 +89,7 @@ export class Sync extends EventEmitter {
                         ) {
                             return writeNext();
                         }
-                        await waitForDrain();
+                        await promisify<void>(waitForDrain)();
                         return writeNext();
                     }
                 };
@@ -90,14 +110,15 @@ export class Sync extends EventEmitter {
                     })
                 );
 
-                const waitForDrain = promisify<void>((cb) =>
-                    this.connection.once('drain', cb)
-                );
+                // const waitForDrain = promisify<void>((cb) =>
+                //     this.connection.once('drain', cb)
+                // );
             });
             await Promise.all([
                 streamUnregister.unregisterAfter(promise),
                 connectionUnregister.unregisterAfter(promise)
             ]);
+            unregisterDrainListener();
         };
         const readReply = async (): Promise<void> => {
             const reply = await this.parser.readAscii(4);
