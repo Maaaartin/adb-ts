@@ -175,7 +175,7 @@ export class Client {
             };
             connection.on('error', errorListener);
             connection.once('connect', () => {
-                connection.removeListener('error', errorListener);
+                connection.off('error', errorListener);
                 return resolve(connection);
             });
             connection.connect(this.options);
