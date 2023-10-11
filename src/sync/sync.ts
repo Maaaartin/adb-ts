@@ -48,9 +48,10 @@ export class Sync extends EventEmitter {
         waitForDrain: (cb: (err: null) => void) => void;
         unregisterDrainListener: () => void;
     } {
-        let cb_: (err: null) => void;
+        let cb_: ((err: null) => void) | null = null;
         const listener_ = (): void => {
             cb_?.(null);
+            cb_ = null;
         };
         this.connection.on('drain', listener_);
         const waitForDrain = (cb: typeof cb_): void => {
