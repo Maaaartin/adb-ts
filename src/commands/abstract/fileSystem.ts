@@ -26,20 +26,19 @@ export default abstract class FileSystemCommand<
         const args = Object.entries(this.options as object).reduce<
             (string | string[])[]
         >((acc, [key, val]) => {
-            const [key_, val_] = [key as keyof T, val as T[keyof T]];
-            if (typeof val_ === 'undefined') {
+            if (typeof val === 'undefined') {
                 return acc;
             }
 
-            const mapper = this.argsMapper[key_];
+            const mapper = this.argsMapper[key as keyof T];
             if (typeof mapper === 'function') {
                 return acc.concat([
-                    [mapper(val_ as NonNullable<T[keyof T]>, this.options)]
+                    [mapper(val as NonNullable<T[keyof T]>, this.options)]
                         .flat()
                         .filter(Boolean)
                 ]);
             }
-            if (val_ !== false) {
+            if (val !== false) {
                 return acc.concat(mapper);
             }
 
