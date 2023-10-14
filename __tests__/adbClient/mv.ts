@@ -6,7 +6,7 @@ import { promisify } from 'util';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
-        return '123456';
+        return '1-2-3-4-5';
     });
 });
 
@@ -15,7 +15,7 @@ describe('Mv OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(mv /file /other) || echo '123456'`,
+                cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -34,7 +34,7 @@ describe('Mv OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(mv /file /other) || echo '123456'`,
+                cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -55,7 +55,7 @@ describe('Mv OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(mv -f -n /file /other) || echo '123456'`,
+                cmd: `shell:(mv -f -n /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -77,7 +77,7 @@ describe('Mv OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(mv -f -n /file /other) || echo '123456'`,
+                cmd: `shell:(mv -f -n /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -109,7 +109,7 @@ describe('Mv FAIL tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'fail', res: null, rawRes: true },
             {
-                cmd: `shell:(mv /file /other) || echo '123456'`,
+                cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -156,7 +156,7 @@ describe('Mv unexpected tests', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:(mv /file /other) || echo '123456'`,
+                cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -180,7 +180,7 @@ describe('Mv unexpected tests', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:(mv /file /other) || echo '123456'`,
+                cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true,
                 unexpected: true

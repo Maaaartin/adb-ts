@@ -5,7 +5,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
-        return '123456';
+        return '1-2-3-4-5';
     });
 });
 
@@ -14,7 +14,7 @@ describe('Shell tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:("one && "two") || echo '123456'`,
+                cmd: `shell:("one && "two") || echo '1-2-3-4-5'`,
                 res: '0',
                 rawRes: true
             }
@@ -33,8 +33,8 @@ describe('Shell tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cmd) || echo '123456'`,
-                res: 'message \n123456',
+                cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
+                res: 'message \n1-2-3-4-5',
                 rawRes: true
             }
         ]);
@@ -53,8 +53,8 @@ describe('Shell tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'fail', res: null, rawRes: true },
             {
-                cmd: `shell:(cmd) || echo '123456'`,
-                res: 'message \n123456',
+                cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
+                res: 'message \n1-2-3-4-5',
                 rawRes: true
             }
         ]);
@@ -74,7 +74,7 @@ describe('Shell tests', () => {
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
                 cmd: `fail`,
-                res: 'message \n123456',
+                res: 'message \n1-2-3-4-5',
                 rawRes: true
             }
         ]);
@@ -98,8 +98,8 @@ describe('Shell tests', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:(cmd) || echo '123456'`,
-                res: 'message \n123456',
+                cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
+                res: 'message \n1-2-3-4-5',
                 rawRes: true
             }
         ]);
@@ -122,8 +122,8 @@ describe('Shell tests', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:(cmd) || echo '123456'`,
-                res: 'message \n123456',
+                cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
+                res: 'message \n1-2-3-4-5',
                 rawRes: true,
                 unexpected: true
             }

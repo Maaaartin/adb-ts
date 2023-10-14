@@ -6,7 +6,7 @@ import { promisify } from 'util';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
-        return '123456';
+        return '1-2-3-4-5';
     });
 });
 
@@ -15,7 +15,7 @@ describe('Rm OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(rm -f -rR /file) || echo '123456'`,
+                cmd: `shell:(rm -f -rR /file) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -37,7 +37,7 @@ describe('Rm OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(rm -f -rR /file) || echo '123456'`,
+                cmd: `shell:(rm -f -rR /file) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -66,7 +66,7 @@ describe('Rm OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(rm -f -rR /file) || echo '123456'`,
+                cmd: `shell:(rm -f -rR /file) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -90,7 +90,7 @@ describe('Rm FAIL tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'fail', res: null, rawRes: true },
             {
-                cmd: `shell:(rm /file) || echo '123456'`,
+                cmd: `shell:(rm /file) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -137,7 +137,7 @@ describe('Rm unexpected tests', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:(rm /file) || echo '123456'`,
+                cmd: `shell:(rm /file) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -161,7 +161,7 @@ describe('Rm unexpected tests', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:(rm /file) || echo '123456'`,
+                cmd: `shell:(rm /file) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true,
                 unexpected: true

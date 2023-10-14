@@ -6,7 +6,7 @@ import { promisify } from 'util';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
-        return '123456';
+        return '1-2-3-4-5';
     });
 });
 
@@ -15,7 +15,7 @@ describe('Cp OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cp /file /other) || echo '123456'`,
+                cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -34,7 +34,7 @@ describe('Cp OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cp /file /other) || echo '123456'`,
+                cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -55,7 +55,7 @@ describe('Cp OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cp -F -H -L -P -d -f -l -n -p -r -s -t -u /file /other) || echo '123456'`,
+                cmd: `shell:(cp -F -H -L -P -d -f -l -n -p -r -s -t -u /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -88,7 +88,7 @@ describe('Cp OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cp -F -H -L -P -a -f -l -n -s -t -u /file /other) || echo '123456'`,
+                cmd: `shell:(cp -F -H -L -P -a -f -l -n -s -t -u /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -122,7 +122,7 @@ describe('Cp OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cp --preserve=motcx /file /other) || echo '123456'`,
+                cmd: `shell:(cp --preserve=motcx /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -149,7 +149,7 @@ describe('Cp OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cp --preserve=a /file /other) || echo '123456'`,
+                cmd: `shell:(cp --preserve=a /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -177,7 +177,7 @@ describe('Cp OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cp --preserve=a /file /other) || echo '123456'`,
+                cmd: `shell:(cp --preserve=a /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -215,7 +215,7 @@ describe('Cp FAIL tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'fail', res: null, rawRes: true },
             {
-                cmd: `shell:(cp /file /other) || echo '123456'`,
+                cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -262,7 +262,7 @@ describe('Cp unexpected tests', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:(cp /file /other) || echo '123456'`,
+                cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -286,7 +286,7 @@ describe('Cp unexpected tests', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:(cp /file /other) || echo '123456'`,
+                cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true,
                 unexpected: true

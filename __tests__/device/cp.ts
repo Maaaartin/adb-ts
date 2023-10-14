@@ -4,7 +4,7 @@ import { getDevice } from '../../mockery/testDevice';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
-        return '123456';
+        return '1-2-3-4-5';
     });
 });
 
@@ -13,7 +13,7 @@ describe('Device cp tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cp /file /other) || echo '123456'`,
+                cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -31,7 +31,7 @@ describe('Device cp tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cp -F -H -L -P -d -f -l -n -p -r -s -t -u /file /other) || echo '123456'`,
+                cmd: `shell:(cp -F -H -L -P -d -f -l -n -p -r -s -t -u /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }

@@ -5,7 +5,7 @@ import { getDevice } from '../../mockery/testDevice';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
-        return '123456';
+        return '1-2-3-4-5';
     });
 });
 
@@ -14,7 +14,7 @@ describe('Shell tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:("one && "two") || echo '123456'`,
+                cmd: `shell:("one && "two") || echo '1-2-3-4-5'`,
                 res: '0',
                 rawRes: true
             }
@@ -32,8 +32,8 @@ describe('Shell tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cmd) || echo '123456'`,
-                res: 'message \n123456',
+                cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
+                res: 'message \n1-2-3-4-5',
                 rawRes: true
             }
         ]);

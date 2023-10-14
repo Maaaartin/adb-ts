@@ -6,7 +6,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
-        return '123456';
+        return '1-2-3-4-5';
     });
 });
 const date = new Date('2022-12-13T12:41:42.418Z');
@@ -16,7 +16,7 @@ describe('Touch OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(touch /file) || echo '123456'`,
+                cmd: `shell:(touch /file) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -35,7 +35,7 @@ describe('Touch OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(touch -a -t '${formattedTime}' /file) || echo '123456'`,
+                cmd: `shell:(touch -a -t '${formattedTime}' /file) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -57,7 +57,7 @@ describe('Touch OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(touch -a -t '${formattedTime}' /file) || echo '123456'`,
+                cmd: `shell:(touch -a -t '${formattedTime}' /file) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -79,7 +79,7 @@ describe('Touch OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(touch -d '2022-12-13T12:41:42.418Z' -m /file) || echo '123456'`,
+                cmd: `shell:(touch -d '2022-12-13T12:41:42.418Z' -m /file) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -101,7 +101,7 @@ describe('Touch OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(touch -d '2022-12-13T12:41:42.418Z' -m /file) || echo '123456'`,
+                cmd: `shell:(touch -d '2022-12-13T12:41:42.418Z' -m /file) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -123,7 +123,7 @@ describe('Touch OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(touch -c -h -r '/file' /file) || echo '123456'`,
+                cmd: `shell:(touch -c -h -r '/file' /file) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -148,7 +148,7 @@ describe('Touch FAIL tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'fail', res: null, rawRes: true },
             {
-                cmd: `shell:(touch /file) || echo '123456'`,
+                cmd: `shell:(touch /file) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -195,7 +195,7 @@ describe('Touch unexpected tests', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:(touch /file) || echo '123456'`,
+                cmd: `shell:(touch /file) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -219,7 +219,7 @@ describe('Touch unexpected tests', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:(touch /file) || echo '123456'`,
+                cmd: `shell:(touch /file) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true,
                 unexpected: true

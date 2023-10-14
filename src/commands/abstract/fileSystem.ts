@@ -34,7 +34,7 @@ export default abstract class FileSystemCommand<
             const mapper = this.argsMapper[key_];
             if (typeof mapper === 'function') {
                 return acc.concat([
-                    [mapper(val_ as NonNullable<typeof val_>, this.options)]
+                    [mapper(val_ as NonNullable<T[keyof T]>, this.options)]
                         .flat()
                         .filter(Boolean)
                 ]);
