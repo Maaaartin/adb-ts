@@ -1,7 +1,8 @@
-export * as Commands from './commands/indexDocs';
-import { Client } from './client';
 export * as Util from './util';
-import { Connection } from './connection';
-import { Priority } from './logcat';
+export * as Commands from './commands/indexDocs';
 
-export { Client, Connection, Priority };
+export { Client } from './client';
+export { Device } from './device';
+export { Tracker } from './tracker';
+export { Priority } from './logcat';
+export { Connection } from './connection';  
