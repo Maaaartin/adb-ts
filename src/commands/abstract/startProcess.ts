@@ -5,7 +5,8 @@ import {
     StartExtra,
     ExtraType,
     StartServiceOptions,
-    escape
+    escape,
+    ObjectEntries
 } from '../../util';
 import TransportCommand from './transport';
 
@@ -106,31 +107,30 @@ export default abstract class StartProcess extends TransportCommand<void> {
         }
     }
     protected intentArgs(options: StartServiceOptions): string[] {
-        return Object.entries(options).reduce<string[]>((args, [k, v]) => {
+        return (
+            Object.entries(options) as ObjectEntries<StartServiceOptions>
+        ).reduce<string[]>((args, [k, v]) => {
             if (typeof v === 'undefined') {
                 return [...args];
             }
-            const k_ = k as keyof StartServiceOptions;
 
-            switch (k_) {
+            switch (k) {
                 case 'extras':
                     return [...args, ...this.formatExtras(options.extras)];
-
                 case 'action':
                 case 'data':
                 case 'mimeType':
                 case 'flags':
-                    return [...args, this.keyToFlag(k_), escape(options[k_])];
+                    return [...args, this.keyToFlag(k), escape(options[k])];
                 case 'category':
                     return [
                         ...args,
                         ...[options.category]
                             .flat()
                             .map((cat) =>
-                                [this.keyToFlag(k_), escape(cat)].join(' ')
+                                [this.keyToFlag(k), escape(cat)].join(' ')
                             )
                     ];
-
                 default:
                     return [...args];
             }

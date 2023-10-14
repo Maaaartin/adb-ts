@@ -1,4 +1,4 @@
-import { CpOptions, PreserveOptions } from '../../../util';
+import { CpOptions, ObjectEntries, PreserveOptions } from '../../../util';
 import FileSystemCommand from '../../abstract/fileSystem';
 
 export default class CpCommand extends FileSystemCommand<CpOptions, string[]> {
@@ -20,9 +20,9 @@ export default class CpCommand extends FileSystemCommand<CpOptions, string[]> {
         preserve(value: PreserveOptions): string {
             const params = value.all
                 ? ['a']
-                : Object.entries(value)
+                : (Object.entries(value) as ObjectEntries<PreserveOptions>)
                       .filter(([key, value]) => key !== 'all' && value)
-                      .map(([key]) => key[0]);
+                      .map(([[char]]) => char);
             return `--preserve=${params.join('')}`;
         },
         delFirst: '-F',

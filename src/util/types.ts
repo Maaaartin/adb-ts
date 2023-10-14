@@ -430,7 +430,7 @@ export type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
 
 export type NonNullable<T> = Exclude<T, undefined>;
 
-export type ArgsMapper<T> = {
+export type ArgsMapper<T extends object> = {
     [K in keyof T]-?:
         | string
         | ((
@@ -438,3 +438,5 @@ export type ArgsMapper<T> = {
               options: Readonly<T>
           ) => string | string[]);
 };
+
+export type ObjectEntries<T extends object> = [[keyof T, T[keyof T]]];

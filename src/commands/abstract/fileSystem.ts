@@ -1,9 +1,9 @@
 import { Connection } from '../../connection';
-import { ArgsMapper, NonNullable } from '../../util';
+import { ArgsMapper, NonNullable, ObjectEntries } from '../../util';
 import ExecCommand from './exec';
 
 export default abstract class FileSystemCommand<
-    T,
+    T extends object,
     P extends string | string[]
 > extends ExecCommand<void> {
     protected abstract rootCmd: string;
@@ -23,7 +23,7 @@ export default abstract class FileSystemCommand<
     }
 
     protected get rawCmd(): string {
-        const args = Object.entries(this.options as object).reduce<
+        const args = (Object.entries(this.options) as ObjectEntries<T>).reduce<
             (string | string[])[]
         >((acc, [key, val]) => {
             if (typeof val === 'undefined') {
