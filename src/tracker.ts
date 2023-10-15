@@ -93,7 +93,10 @@ export class Tracker extends EventEmitter {
     public on(event: 'remove', listener: (device: IDevice) => void): this;
     public on(event: 'end', listener: () => void): this;
     public on(event: 'error', listener: (err: Error) => void): this;
-    public on(event: string, listener: (...args: any[]) => void): this {
+    public on(
+        event: string,
+        listener: ((param: Device) => void) | ((param: Error) => void)
+    ): this {
         return super.on(event, listener);
     }
 }

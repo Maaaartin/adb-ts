@@ -48,7 +48,7 @@ export class Parser extends EventEmitter {
     public on(event: 'error', listener: (error: Error) => void): this;
     public on(
         event: string | symbol,
-        listener: (...args: any[]) => void
+        listener: ((reply: Reply) => void) | ((error: Error) => void)
     ): this {
         return super.on(event, listener);
     }

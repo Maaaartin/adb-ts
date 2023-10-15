@@ -41,10 +41,16 @@ export class PullTransfer extends PassThrough {
     public on(event: 'readable', listener: () => void): this;
     public on(event: 'resume', listener: () => void): this;
     public on(event: 'progress', listener: (stats: StatsObject) => void): this;
-    public on(event: string | symbol, listener: (...args: any[]) => void): this;
+    public on<T extends Array<unknown>>(
+        event: string | symbol,
+        listener: (...args: T) => void
+    ): this;
     public on(
         event: string | symbol,
-        listener: (...args: any[]) => void
+        listener:
+            | ((chunk: unknown) => void)
+            | ((err: Error) => void)
+            | ((stats: StatsObject) => void)
     ): this {
         return super.on(event, listener);
     }

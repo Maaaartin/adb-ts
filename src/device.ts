@@ -321,7 +321,7 @@ export class Device implements IDevice {
 
     custom<T>(
         CustomCommand: TransportCommandConstruct<T>,
-        ...args: any[]
+        ...args: unknown[]
     ): Promise<T> {
         return this.client.customTransport<T>(CustomCommand, this.id, args);
     }

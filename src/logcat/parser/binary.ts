@@ -72,7 +72,7 @@ export class Binary extends Parser {
     public on(event: 'wait' | 'drain', listener: () => void): this;
     public on(
         event: string | symbol,
-        listener: (...args: any[]) => void
+        listener: ((entry: LogcatEntry) => void) | ((err: Error) => void)
     ): this {
         return super.on(event, listener);
     }

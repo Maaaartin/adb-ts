@@ -50,7 +50,7 @@ export class LogcatReader extends StreamHandler {
     public on(event: 'finish' | 'end', listener: () => void): this;
     public on(
         event: string | symbol,
-        listener: (...args: any[]) => void
+        listener: ((entry: LogcatEntry) => void) | ((err: Error) => void)
     ): this {
         return super.on(event, listener);
     }

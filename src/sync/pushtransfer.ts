@@ -28,7 +28,10 @@ export class PushTransfer extends StreamHandler {
     public on(event: 'error', listener: (err: Error) => void): this;
     public on(event: 'end' | 'cancel', listener: () => void): this;
     public on(event: 'progress', listener: (stats: StatsObject) => void): this;
-    public on(event: string, listener: (...args: any[]) => void): this {
+    public on(
+        event: string,
+        listener: ((err: Error) => void) | ((stats: StatsObject) => void)
+    ): this {
         return super.on(event, listener);
     }
 }

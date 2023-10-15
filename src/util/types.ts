@@ -261,14 +261,14 @@ export interface InputDurationOptions extends InputOptions {
 }
 
 export interface CommandConstruct<T> {
-    new (connection: Connection, ...args: any[]): Command<T>;
+    new (connection: Connection, ...args: unknown[]): Command<T>;
 }
 
 export interface TransportCommandConstruct<T> {
     new (
         connection: Connection,
         serial: string,
-        ...args: any[]
+        ...args: unknown[]
     ): TransportCommand<T>;
 }
 

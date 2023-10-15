@@ -1777,7 +1777,7 @@ export class Client {
      */
     async custom<T>(
         CustomCommand: CommandConstruct<T>,
-        ...args: any[]
+        ...args: unknown[]
     ): Promise<T> {
         const conn = await this.connection();
         return new CustomCommand(conn, ...args).execute();
@@ -1804,7 +1804,7 @@ export class Client {
     customTransport<T>(
         CustomCommand: TransportCommandConstruct<T>,
         serial: string,
-        ...args: any[]
+        ...args: unknown[]
     ): Promise<T> {
         return this.connection().then((conn) => {
             return new CustomCommand(conn, serial, ...args).execute();

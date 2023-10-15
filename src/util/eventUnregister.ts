@@ -2,15 +2,17 @@ import EventEmitter from 'events';
 
 export default class EventUnregister<T extends EventEmitter> {
     private instance: T;
-    private offListeners: [string | symbol, ((...args: any[]) => void)[]][] =
-        [];
+    private offListeners: [
+        string | symbol,
+        ((...args: unknown[]) => void)[]
+    ][] = [];
     constructor(instance: T) {
         this.instance = instance;
     }
 
     private getListenerMap(): Map<
         string | symbol,
-        ((...args: any[]) => void)[]
+        ((...args: unknown[]) => void)[]
     > {
         return this.instance
             .eventNames()

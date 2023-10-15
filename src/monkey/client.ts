@@ -92,7 +92,7 @@ export class Monkey extends Api {
     public on(event: 'end' | 'finish' | 'close', listener: () => void): this;
     public on(
         event: string | symbol,
-        listener: (...args: any[]) => void
+        listener: (...args: [Error]) => void
     ): this {
         return super.on(event, listener);
     }
