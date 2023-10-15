@@ -188,28 +188,23 @@ export class Client {
         return new VersionCommand(await this.connection()).execute();
     }
 
-    private ipConnect(
+    private async ipConnect(
         Construct: IpConnectConstruct,
         host: string,
-        port: number | ValueCallback<string> | undefined,
-        cb: ValueCallback<string> | undefined
-    ): Promise<string> | void {
+        port: number | ValueCallback<string> | undefined
+    ): Promise<string> {
         let port_ = parseValueParam(port);
         if (host.indexOf(':') !== -1) {
             const [h, p] = host.split(':', 2);
             host = h;
             port_ = parseInt(p);
         }
-        return nodeify(
-            this.connection().then((conn) =>
-                new Construct(
-                    conn,
-                    host,
-                    parsePrimitiveParam(ADB_DEFAULT_PORT, port_)
-                ).execute()
-            ),
-            parseCbParam(port, cb)
-        );
+        const conn = await this.connection();
+        return new Construct(
+            conn,
+            host,
+            parsePrimitiveParam(ADB_DEFAULT_PORT, port_)
+        ).execute();
     }
 
     /**
@@ -230,63 +225,41 @@ export class Client {
     /**
      * Disconnects from the given device.
      */
-    disconnect(host: string): Promise<string>;
-    disconnect(host: string, port: number): Promise<string>;
-    disconnect(host: string, cb: ValueCallback<string>): void;
-    disconnect(host: string, port: number, cb: ValueCallback<string>): void;
-    disconnect(
-        host: string,
-        port?: ValueCallback<string> | number,
-        cb?: ValueCallback<string>
-    ): Promise<string> | void {
-        return this.ipConnect(Disconnect, host, port, cb);
+    public disconnect(host: string): Promise<string>;
+    public disconnect(host: string, port: number): Promise<string>;
+    public disconnect(host: string, port?: number): Promise<string> {
+        return this.ipConnect(Disconnect, host, port);
     }
 
     /**
      * Gets the list of currently connected devices and emulators.
      */
-    listDevices(): Promise<IDevice[]>;
-    listDevices(cb: ValueCallback<IDevice[]>): void;
-    listDevices(cb?: ValueCallback<IDevice[]>): Promise<IDevice[]> | void {
-        return nodeify(
-            this.connection().then((conn) =>
-                new ListDevicesCommand(conn).execute()
-            ),
-            cb
-        );
+    public async listDevices(): Promise<IDevice[]> {
+        return new ListDevicesCommand(await this.connection()).execute();
     }
 
     /**
      * Tracks connection status of devices.
      */
-    trackDevices(): Promise<Tracker>;
-    trackDevices(cb: ValueCallback<Tracker>): void;
-    trackDevices(cb?: ValueCallback<Tracker>): Promise<Tracker> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                const command = new TrackCommand(conn);
-                return command.execute().then(() => new Tracker(command, this));
-            }),
-            cb
-        );
+    public async trackDevices(): Promise<Tracker> {
+        const conn = await this.connection();
+        const command = new TrackCommand(conn);
+        await command.execute();
+        return new Tracker(command, this);
     }
 
     /**
      * Kills the adb server.
      */
-    kill(): Promise<void>;
-    kill(cb: Callback): void;
-    kill(cb?: Callback): Promise<void> | void {
-        return nodeify(
-            this.connection()
-                .catch((error) => {
-                    if (error.code !== 'ECONNREFUSED') {
-                        throw error;
-                    }
-                })
-                .then((conn) => conn && new KillCommand(conn).execute()),
-            cb
-        );
+    public kill(): Promise<void> {
+        // TODO try catch
+        return this.connection()
+            .catch((error) => {
+                if (error.code !== 'ECONNREFUSED') {
+                    throw error;
+                }
+            })
+            .then((conn) => conn && new KillCommand(conn).execute());
     }
 
     /**
@@ -294,103 +267,63 @@ export class Client {
      * Meant for getting serial number of local devices.
      * Analogous to `adb shell getprop ro.serialno`.
      */
-    getSerialNo(serial: string): Promise<string>;
-    getSerialNo(serial: string, cb: ValueCallback<string>): void;
-    getSerialNo(
-        serial: string,
-        cb?: ValueCallback<string>
-    ): Promise<string> | void {
-        return cb
-            ? this.getProp(serial, 'ro.serialno', (e, v) => cb(e, `${v}`))
-            : this.getProp(serial, 'ro.serialno').then((v) => `${v}`);
+    public async getSerialNo(serial: string): Promise<string> {
+        // TODO should trim
+        const serialNo = await this.getProp(serial, 'ro.serialno');
+        return String(serialNo);
     }
 
     /**
      * Gets the device path of the device identified by the device.
      */
-    getDevicePath(serial: string): Promise<string>;
-    getDevicePath(serial: string, cb: ValueCallback<string>): void;
-    getDevicePath(
-        serial: string,
-        cb?: ValueCallback<string>
-    ): Promise<string> | void {
-        return nodeify(
-            this.connection().then((conn) =>
-                new GetDevicePathCommand(conn, serial).execute()
-            ),
-            cb
-        );
+    public async getDevicePath(serial: string): Promise<string> {
+        return new GetDevicePathCommand(
+            await this.connection(),
+            serial
+        ).execute();
     }
 
     /**
      * Lists properties of the device.
      * Analogous to `adb shell getprop`.
      */
-    listProperties(serial: string): Promise<PropertyMap>;
-    listProperties(serial: string, cb: ValueCallback<PropertyMap>): void;
-    listProperties(
-        serial: string,
-        cb?: ValueCallback<PropertyMap>
-    ): Promise<PropertyMap> | void {
-        return nodeify(
-            this.connection().then((conn) =>
-                new ListPropertiesCommand(conn, serial).execute()
-            ),
-            cb
-        );
+    public async listProperties(serial: string): Promise<PropertyMap> {
+        return new ListPropertiesCommand(
+            await this.connection(),
+            serial
+        ).execute();
     }
 
     /**
      * Lists features of the device.
      * Analogous to `adb shell pm list features`.
      */
-    listFeatures(serial: string): Promise<PropertyMap>;
-    listFeatures(serial: string, cb: ValueCallback<PropertyMap>): void;
-    listFeatures(
-        serial: string,
-        cb?: ValueCallback<PropertyMap>
-    ): Promise<PropertyMap> | void {
-        return nodeify(
-            this.connection().then((conn) =>
-                new ListFeaturesCommand(conn, serial).execute()
-            ),
-            cb
-        );
+    public async listFeatures(serial: string): Promise<PropertyMap> {
+        return new ListFeaturesCommand(
+            await this.connection(),
+            serial
+        ).execute();
     }
 
     /**
      * Lists installed packages.
      * Analogous to `adb shell pm list packages`.
      */
-    listPackages(serial: string): Promise<string[]>;
-    listPackages(serial: string, cb: ValueCallback<string[]>): void;
-    listPackages(
-        serial: string,
-        cb?: ValueCallback<string[]>
-    ): Promise<string[]> | void {
-        return nodeify(
-            this.connection().then((conn) =>
-                new ListPackagesCommand(conn, serial).execute()
-            ),
-            cb
-        );
+    public async listPackages(serial: string): Promise<string[]> {
+        return new ListPackagesCommand(
+            await this.connection(),
+            serial
+        ).execute();
     }
 
     /**
      * Gets the ipv4 addresses of default wlan interface.
      */
-    getIpAddress(serial: string): Promise<string[]>;
-    getIpAddress(serial: string, cb: ValueCallback<string[]>): void;
-    getIpAddress(
-        serial: string,
-        cb?: ValueCallback<string[]>
-    ): Promise<string[]> | void {
-        return nodeify(
-            this.connection().then((conn) =>
-                new GetIpAddressCommand(conn, serial).execute()
-            ),
-            cb
-        );
+    public async getIpAddress(serial: string): Promise<string[]> {
+        return new GetIpAddressCommand(
+            await this.connection(),
+            serial
+        ).execute();
     }
 
     /**
@@ -399,38 +332,28 @@ export class Client {
      * @example
      * adb.forward('serial', 'tcp:9222', 'localabstract:chrome_devtools_remote')
      */
-    forward(serial: string, local: string, remote: string): Promise<void>;
-    forward(serial: string, local: string, remote: string, cb: Callback): void;
-    forward(
+    public async forward(
         serial: string,
         local: string,
-        remote: string,
-        cb?: Callback
-    ): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) =>
-                new ForwardCommand(conn, serial, local, remote).execute()
-            ),
-            cb
-        );
+        remote: string
+    ): Promise<void> {
+        return new ForwardCommand(
+            await this.connection(),
+            serial,
+            local,
+            remote
+        ).execute();
     }
 
     /**
      * Lists all forwarded connections.
      * Analogous to `adb forward --list`.
      */
-    listForwards(serial: string): Promise<ForwardsObject[]>;
-    listForwards(serial: string, cb: ValueCallback<ForwardsObject[]>): void;
-    listForwards(
-        serial: string,
-        cb?: ValueCallback<ForwardsObject[]>
-    ): Promise<ForwardsObject[]> | void {
-        return nodeify(
-            this.connection().then((conn) =>
-                new ListForwardsCommand(conn, serial).execute()
-            ),
-            cb
-        );
+    public async listForwards(serial: string): Promise<ForwardsObject[]> {
+        return new ListForwardsCommand(
+            await this.connection(),
+            serial
+        ).execute();
     }
 
     /**
@@ -439,38 +362,28 @@ export class Client {
      * @example
      * adb.reverse('serial', 'localabstract:chrome_devtools_remote', 'tcp:9222')
      */
-    reverse(serial: string, local: string, remote: string): Promise<void>;
-    reverse(serial: string, local: string, remote: string, cb: Callback): void;
-    reverse(
+    public async reverse(
         serial: string,
         local: string,
-        remote: string,
-        cb?: Callback
-    ): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) =>
-                new ReverseCommand(conn, serial, local, remote).execute()
-            ),
-            cb
-        );
+        remote: string
+    ): Promise<void> {
+        return new ReverseCommand(
+            await this.connection(),
+            serial,
+            local,
+            remote
+        ).execute();
     }
 
     /**
      * Lists all reversed connections.
      * Analogous to `adb reverse --list`.
      */
-    listReverses(serial: string): Promise<ReversesObject[]>;
-    listReverses(serial: string, cb: ValueCallback<ReversesObject[]>): void;
-    listReverses(
-        serial: string,
-        cb?: ValueCallback<ReversesObject[]>
-    ): Promise<ReversesObject[]> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new ListReversesCommand(conn, serial).execute();
-            }),
-            cb
-        );
+    public async listReverses(serial: string): Promise<ReversesObject[]> {
+        return new ListReversesCommand(
+            await this.connection(),
+            serial
+        ).execute();
     }
 
     private deleteApk(serial: string, pathToApk: string): Promise<void> {
@@ -483,30 +396,16 @@ export class Client {
      * Reboots the device.
      * Analogous to `adb reboot`.
      */
-    reboot(serial: string): Promise<void>;
-    reboot(serial: string, cb: Callback): void;
-    reboot(serial: string, cb?: Callback): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) =>
-                new RebootCommand(conn, serial).execute()
-            ),
-            cb
-        );
+    public async reboot(serial: string): Promise<void> {
+        return new RebootCommand(conn, serial).execute();
     }
 
     /**
      * Shuts the device down.
      * Analogous to `adb reboot -p`.
      */
-    shutdown(serial: string): Promise<void>;
-    shutdown(serial: string, cb: Callback): void;
-    shutdown(serial: string, cb?: Callback): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) =>
-                new ShutdownCommand(conn, serial).execute()
-            ),
-            cb
-        );
+    public async shutdown(serial: string): Promise<void> {
+        return new ShutdownCommand(conn, serial).execute();
     }
 
     /**
@@ -514,48 +413,24 @@ export class Client {
      * Can be done on a rooted device. Analogous to `adb remount`.
      * Analogous to `adb remount`
      */
-    remount(serial: string): Promise<void>;
-    remount(serial: string, cb: Callback): void;
-    remount(serial: string, cb?: Callback): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) =>
-                new RemountCommand(conn, serial).execute()
-            ),
-            cb
-        );
+    public async remount(serial: string): Promise<void> {
+        return new RemountCommand(conn, serial).execute();
     }
 
     /**
      * Attempts to which the device to the root mode.
      * Analogous to `adb root`.
      */
-    root(serial: string): Promise<void>;
-    root(serial: string, cb: Callback): void;
-    root(serial: string, cb?: Callback): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) =>
-                new RootCommand(conn, serial).execute()
-            ),
-            cb
-        );
+    public async root(serial: string): Promise<void> {
+        return new RootCommand(conn, serial).execute();
     }
 
     /**
      * Takes a screenshot on the specified device.
      * Analogous to `adb shell screencap -p`.
      */
-    screenshot(serial: string): Promise<Buffer>;
-    screenshot(serial: string, cb: ValueCallback<Buffer>): void;
-    screenshot(
-        serial: string,
-        cb?: ValueCallback<Buffer>
-    ): Promise<Buffer> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new ScreenShotCommand(conn, serial).execute();
-            }),
-            cb
-        );
+    public async screenshot(serial: string): Promise<Buffer> {
+        return new ScreenShotCommand(conn, serial).execute();
     }
 
     /**
@@ -565,32 +440,23 @@ export class Client {
      * const socket = await adb.openTcp('serial', 5555);
      * // socket.write(...)
      */
-    openTcp(serial: string, port: number): Promise<Connection>;
-    openTcp(serial: string, port: number, host: string): Promise<Connection>;
-    openTcp(serial: string, port: number, cb: ValueCallback<Connection>): void;
-    openTcp(
+    public async openTcp(serial: string, port: number): Promise<Connection>;
+    public async openTcp(
         serial: string,
         port: number,
-        host: string,
-        cb: ValueCallback<Connection>
-    ): void;
-    openTcp(
+        host: string
+    ): Promise<Connection>;
+    public async openTcp(
         serial: string,
         port: number,
-        host?: string | ValueCallback<Connection>,
-        cb?: ValueCallback<Connection>
-    ): Promise<Connection> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new TcpCommand(
-                    conn,
-                    serial,
-                    port,
-                    parseValueParam(host)
-                ).execute();
-            }),
-            parseCbParam(host, cb)
-        );
+        host?: string
+    ): Promise<Connection> {
+        return new TcpCommand(
+            conn,
+            serial,
+            port,
+            parseValueParam(host)
+        ).execute();
     }
 
     /**
@@ -600,40 +466,25 @@ export class Client {
      * @param x Horizontal coordinate.
      * @param y Vertical coordinate.
      */
-    roll(serial: string, x: number, y: number): Promise<void>;
-    roll(
+    public async roll(serial: string, x: number, y: number): Promise<void>;
+    public async roll(
         serial: string,
         x: number,
         y: number,
         source: InputSource
     ): Promise<void>;
-    roll(serial: string, x: number, y: number, cb: Callback): void;
-    roll(
+    public async roll(
         serial: string,
         x: number,
         y: number,
-        source: InputSource,
-        cb: Callback
-    ): void;
-    roll(
-        serial: string,
-        x: number,
-        y: number,
-        source?: InputSource | Callback,
-        cb?: Callback
-    ): Promise<void> | void {
-        const { params, cb_ } = buildInputParams(source, cb);
-
-        return nodeify(
-            this.connection().then((conn) => {
-                return new Roll(conn, serial, {
-                    source: params,
-                    x,
-                    y
-                }).execute();
-            }),
-            cb_
-        );
+        source?: InputSource
+    ): Promise<void> {
+        const { params } = buildInputParams(source, undefined);
+        return new Roll(conn, serial, {
+            source: params,
+            x,
+            y
+        }).execute();
     }
 
     /**
@@ -641,22 +492,11 @@ export class Client {
      * Analogous to `adb shell input trackball press`.
      * Default input source is `trackball`.
      */
-    press(serial: string): Promise<void>;
-    press(serial: string, source: InputSource): Promise<void>;
-    press(serial: string, cb: Callback): void;
-    press(serial: string, source: InputSource, cb: Callback): void;
-    press(
-        serial: string,
-        source?: InputSource | Callback,
-        cb?: Callback
-    ): Promise<void> | void {
-        const { params, cb_ } = buildInputParams(source, cb);
-        return nodeify(
-            this.connection().then((conn) => {
-                return new Press(conn, serial, params).execute();
-            }),
-            cb_
-        );
+    public async press(serial: string): Promise<void>;
+    public async press(serial: string, source: InputSource): Promise<void>;
+    public async press(serial: string, source?: InputSource): Promise<void> {
+        const { params } = buildInputParams(source, undefined);
+        return new Press(conn, serial, params).execute();
     }
 
     /**
@@ -668,14 +508,14 @@ export class Client {
      * @param x2 Horizontal ending coordinate.
      * @param y2 Vertical ending coordinate.
      */
-    dragAndDrop(
+    public async dragAndDrop(
         serial: string,
         x1: number,
         y1: number,
         x2: number,
         y2: number
     ): Promise<void>;
-    dragAndDrop(
+    public async dragAndDrop(
         serial: string,
         x1: number,
         y1: number,
@@ -683,46 +523,22 @@ export class Client {
         y2: number,
         options: InputDurationOptions
     ): Promise<void>;
-    dragAndDrop(
+    public async dragAndDrop(
         serial: string,
         x1: number,
         y1: number,
         x2: number,
         y2: number,
-        cb: Callback
-    ): void;
-    dragAndDrop(
-        serial: string,
-        x1: number,
-        y1: number,
-        x2: number,
-        y2: number,
-        options: InputDurationOptions,
-        cb: Callback
-    ): void;
-    dragAndDrop(
-        serial: string,
-        x1: number,
-        y1: number,
-        x2: number,
-        y2: number,
-        options?: InputDurationOptions | Callback,
-        cb?: Callback
-    ): Promise<void> | void {
-        const { params, cb_ } = buildInputParams(options, cb);
-
-        return nodeify(
-            this.connection().then((conn) => {
-                return new DragAndDrop(conn, serial, {
-                    x1,
-                    y1,
-                    x2,
-                    y2,
-                    options: params
-                }).execute();
-            }),
-            cb_
-        );
+        options?: InputDurationOptions
+    ): Promise<void> {
+        const { params } = buildInputParams(options, undefined);
+        return new DragAndDrop(conn, serial, {
+            x1,
+            y1,
+            x2,
+            y2,
+            options: params
+        }).execute();
     }
 
     /**
@@ -734,14 +550,14 @@ export class Client {
      * @param x2 Horizontal ending coordinate.
      * @param y2 Vertical ending coordinate.
      */
-    swipe(
+    public async swipe(
         serial: string,
         x1: number,
         y1: number,
         x2: number,
         y2: number
     ): Promise<void>;
-    swipe(
+    public async swipe(
         serial: string,
         x1: number,
         y1: number,
@@ -749,45 +565,22 @@ export class Client {
         y2: number,
         options: InputDurationOptions
     ): Promise<void>;
-    swipe(
+    public async swipe(
         serial: string,
         x1: number,
         y1: number,
         x2: number,
         y2: number,
-        cb: Callback
-    ): void;
-    swipe(
-        serial: string,
-        x1: number,
-        y1: number,
-        x2: number,
-        y2: number,
-        options: InputDurationOptions,
-        cb: Callback
-    ): void;
-    swipe(
-        serial: string,
-        x1: number,
-        y1: number,
-        x2: number,
-        y2: number,
-        options?: InputDurationOptions | Callback,
-        cb?: Callback
-    ): Promise<void> | void {
-        const { params, cb_ } = buildInputParams(options, cb);
-        return nodeify(
-            this.connection().then((conn) => {
-                return new Swipe(conn, serial, {
-                    x1,
-                    y1,
-                    x2,
-                    y2,
-                    options: params
-                }).execute();
-            }),
-            cb_
-        );
+        options?: InputDurationOptions
+    ): Promise<void> {
+        const { params } = buildInputParams(options, undefined);
+        return new Swipe(conn, serial, {
+            x1,
+            y1,
+            x2,
+            y2,
+            options: params
+        }).execute();
     }
 
     /**

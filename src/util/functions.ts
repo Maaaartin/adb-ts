@@ -131,6 +131,7 @@ export function buildFsParams<T extends object>(
     return { options_: undefined, cb_: cb };
 }
 
+// TODO remove cb
 export function buildInputParams<T extends InputSource | InputOptions>(
     params: T | Callback | undefined,
     cb: Callback | undefined
