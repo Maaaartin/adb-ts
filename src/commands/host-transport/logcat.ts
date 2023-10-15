@@ -28,7 +28,7 @@ export default class LogcatCommand extends TransportCommand<LogcatReader> {
     protected async postExecute(): Promise<LogcatReader> {
         const stream = new LineTransform({ autoDetect: true });
         this.connection.pipe(stream);
-        await promisify<void>((cb) => stream.once('readable', cb))();
+        await promisify<unknown>((cb) => stream.once('readable', cb))();
         const logCat = readStream(stream, {
             filter: this.options?.filter
         });

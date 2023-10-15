@@ -52,6 +52,6 @@ export class PullTransfer extends PassThrough {
             | ((err: Error) => void)
             | ((stats: StatsObject) => void)
     ): this {
-        return super.on(event, listener);
+        return super.on(event, listener as (...args: unknown[]) => void);
     }
 }

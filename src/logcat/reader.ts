@@ -23,7 +23,10 @@ export class LogcatReader extends StreamHandler {
 
     private hook(): void {
         this.stream.on('data', (data) => {
-            this.parser.parse(data);
+            if (Buffer.isBuffer(data)) {
+                return this.parser.parse(data);
+            }
+            this.emit('error', new Error('Invalid data'));
         });
 
         this.stream.on('error', (err) => {
