@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-member-accessibility */
-
 import {
     AdbClientOptions,
     AdbClientOptionsValues,
@@ -139,17 +137,12 @@ export class Client {
     /**
      * Starts adb server if not running.
      */
-    startServer(): Promise<void>;
-    startServer(cb: Callback): void;
-    startServer(cb?: Callback): Promise<void> | void {
+    public startServer(): Promise<void> {
         const port = this.options.port;
         const args = ['-P', port.toString(), 'start-server'];
-        return nodeify(
-            promisify<void>((cb_) =>
-                execFile(this.options.bin, args, (err) => cb_(err))
-            )(),
-            cb
-        );
+        return promisify<void>((cb_) =>
+            execFile(this.options.bin, args, (err) => cb_(err))
+        )();
     }
 
     private connection(): Promise<Connection> {
@@ -191,15 +184,8 @@ export class Client {
     /**
      * Gets the adb server version.
      */
-    version(): Promise<number>;
-    version(cb: ValueCallback<number>): void;
-    version(cb?: ValueCallback<number>): Promise<number> | void {
-        return nodeify(
-            this.connection().then((conn) =>
-                new VersionCommand(conn).execute()
-            ),
-            cb
-        );
+    public async version(): Promise<number> {
+        return new VersionCommand(await this.connection()).execute();
     }
 
     private ipConnect(
@@ -235,16 +221,10 @@ export class Client {
      *    await adb.connect(ip);
      *});
      */
-    connect(host: string): Promise<string>;
-    connect(host: string, port: number): Promise<string>;
-    connect(host: string, cb: ValueCallback<string>): void;
-    connect(host: string, port: number, cb: ValueCallback<string>): void;
-    connect(
-        host: string,
-        port?: number | ValueCallback<string>,
-        cb?: ValueCallback<string>
-    ): Promise<string> | void {
-        return this.ipConnect(Connect, host, port, cb);
+    public connect(host: string): Promise<string>;
+    public connect(host: string, port: number): Promise<string>;
+    public connect(host: string, port?: number): Promise<string> {
+        return this.ipConnect(Connect, host, port);
     }
 
     /**
