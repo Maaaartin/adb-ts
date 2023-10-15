@@ -1,80 +1,80 @@
-name: Publish Package to npmjs
-on:
-    pull_request:
-        branches:
-            - master
-        types:
-            - closed
-jobs:
-    release:
-        name: Build and release
-        if: github.event.pull_request.merged == true
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repo
-              uses: actions/checkout@v3
+# name: Publish Package to npmjs
+# on:
+#     pull_request:
+#         branches:
+#             - master
+#         types:
+#             - closed
+# jobs:
+#     release:
+#         name: Build and release
+#         if: github.event.pull_request.merged == true
+#         runs-on: ubuntu-latest
+#         steps:
+#             - name: Checkout repo
+#               uses: actions/checkout@v3
 
-            - name: Install Node, NPM and Yarn
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 16
-                  registry-url: 'https://registry.npmjs.org'
+#             - name: Install Node, NPM and Yarn
+#               uses: actions/setup-node@v3
+#               with:
+#                   node-version: 16
+#                   registry-url: 'https://registry.npmjs.org'
 
-            - name: Install modules
-              run: |
-                  yarn install --frozen-lockfile
+#             - name: Install modules
+#               run: |
+#                   yarn install --frozen-lockfile
 
-            - name: Build
-              run: |
-                  yarn build
+#             - name: Build
+#               run: |
+#                   yarn build
 
-            - name: Lint
-              run: |
-                  yarn lint
+#             - name: Lint
+#               run: |
+#                   yarn lint
 
-            - name: Test
-              run: |
-                  yarn test
+#             - name: Test
+#               run: |
+#                   yarn test
 
-            - name: Git config
-              run: git config --global user.email "bot@google.com" && git config --global user.name "bot"
+#             - name: Git config
+#               run: git config --global user.email "bot@google.com" && git config --global user.name "bot"
 
-            - name: Apply version major
-              if: contains(github.event.pull_request.labels.*.name, 'major')
-              run: npm version major
+#             - name: Apply version major
+#               if: contains(github.event.pull_request.labels.*.name, 'major')
+#               run: npm version major
 
-            - name: Apply version minor
-              if: contains(github.event.pull_request.labels.*.name, 'minor')
-              run: npm version minor
+#             - name: Apply version minor
+#               if: contains(github.event.pull_request.labels.*.name, 'minor')
+#               run: npm version minor
 
-            - name: Apply version patch
-              if: contains(github.event.pull_request.labels.*.name, 'patch')
-              run: npm version patch
+#             - name: Apply version patch
+#               if: contains(github.event.pull_request.labels.*.name, 'patch')
+#               run: npm version patch
 
-            - name: Publish npm version
-              run: npm publish
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+#             - name: Publish npm version
+#               run: npm publish
+#               env:
+#                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-            - name: Generate docs
-              run: |
-                  yarn docs
-            - name: Upload docs
-              uses: actions/upload-artifact@v2
-              with:
-                  name: docs-files
-                  path: ./docs
-            - name: Download artifact
-              uses: actions/download-artifact@v2
-              with:
-                  name: docs-files
-                  path: ./docs
+#             - name: Generate docs
+#               run: |
+#                   yarn docs
+#             - name: Upload docs
+#               uses: actions/upload-artifact@v2
+#               with:
+#                   name: docs-files
+#                   path: ./docs
+#             - name: Download artifact
+#               uses: actions/download-artifact@v2
+#               with:
+#                   name: docs-files
+#                   path: ./docs
 
-            - name: Deploy to GitHub Pages
-              uses: peaceiris/actions-gh-pages@v3
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  publish_dir: ./docs
+#             - name: Deploy to GitHub Pages
+#               uses: peaceiris/actions-gh-pages@v3
+#               with:
+#                   github_token: ${{ secrets.GITHUB_TOKEN }}
+#                   publish_dir: ./docs
 
-            - name: Git push version
-              run: git push -u origin master --follow-tags
+#             - name: Git push version
+#               run: git push -u origin master --follow-tags
