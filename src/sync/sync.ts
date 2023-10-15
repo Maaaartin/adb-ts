@@ -65,6 +65,16 @@ export class Sync extends EventEmitter {
 
     private writeData(stream: Readable, timestamp: number): PushTransfer {
         const transfer = new PushTransfer();
+        const didWrite = (chunk: Buffer): Promise<boolean> =>
+            promisify<boolean>((cb) => {
+                const result = this.connection.write(chunk, (err) => {
+                    if (err) {
+                        return cb(err, false);
+                    }
+                    transfer.pop();
+                    cb(null, result);
+                });
+            })();
 
         let canceled = false;
         const writeData = async (): Promise<void> => {
@@ -80,14 +90,7 @@ export class Sync extends EventEmitter {
                     if (Buffer.isBuffer(chunk)) {
                         this.sendCommandWithLength(Reply.DATA, chunk.length);
                         transfer.push(chunk.length);
-                        if (
-                            this.connection.write(chunk, (err) => {
-                                if (err) {
-                                    return reject(err);
-                                }
-                                transfer.pop();
-                            })
-                        ) {
+                        if (await didWrite(chunk)) {
                             return writeNext();
                         }
                         await promisify<void>(waitForDrain)();
