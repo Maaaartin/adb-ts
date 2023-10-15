@@ -1,5 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { Client } from '../../lib/client';
+import { UnexpectedDataError } from '../../lib/util';
 
 describe('Remount', () => {
     it('OKAY', async () => {
@@ -25,12 +26,9 @@ describe('Remount', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.remount('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Not running as root'));
-            }
+            await expect(() => adb.remount('serial')).rejects.toEqual(
+                new Error('Not running as root')
+            );
         } finally {
             await adbMock.end();
         }
@@ -44,12 +42,9 @@ describe('Remount', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.remount('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('inaccessible'));
-            }
+            await expect(() => adb.remount('serial')).rejects.toEqual(
+                new Error('inaccessible')
+            );
         } finally {
             await adbMock.end();
         }
@@ -63,12 +58,9 @@ describe('Remount', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.remount('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('not found'));
-            }
+            await expect(() => adb.remount('serial')).rejects.toEqual(
+                new Error('not found')
+            );
         } finally {
             await adbMock.end();
         }
@@ -82,12 +74,9 @@ describe('Remount', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.remount('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() => adb.remount('serial')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -101,12 +90,9 @@ describe('Remount', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.remount('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() => adb.remount('serial')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -125,14 +111,9 @@ describe('Remount', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.remount('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
-                );
-            }
+            await expect(() => adb.remount('serial')).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -150,14 +131,9 @@ describe('Remount', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.remount('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new Error("Unexpected 'UNEX', was expecting OKAY or FAIL")
-                );
-            }
+            await expect(() => adb.remount('serial')).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }

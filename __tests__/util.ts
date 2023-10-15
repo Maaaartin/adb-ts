@@ -7,12 +7,12 @@ import {
     parseCbParam,
     parseValueParam,
     parsePrimitiveParam,
-    parseOptions,
     findMatches,
     buildInputParams,
     PropertyValue,
     escape,
-    escapeCompat
+    escapeCompat,
+    buildFsParams
 } from '../lib/util';
 
 describe('Encode/decode length', () => {
@@ -116,8 +116,8 @@ describe('Nodeify', () => {
     it('Reject Promise', async () => {
         try {
             await nodeify(Promise.reject(new Error('message')), undefined);
-        } catch (e: any) {
-            expect(e.message).toBe('message');
+        } catch (e: unknown) {
+            expect(e).toEqual(new Error('message'));
         }
     });
 
@@ -205,20 +205,23 @@ describe('Parse primitive type', () => {
     });
 });
 
-describe('Parse options', () => {
-    it('undefined', () => {
-        const result = parseOptions(undefined);
-        expect(result).toBeUndefined();
+describe('Build fs params', () => {
+    it('Options is function, cb is undefined', () => {
+        const { options_, cb_ } = buildFsParams(() => undefined, undefined);
+        expect(options_).toBeUndefined();
+        expect(typeof cb_).toBe('function');
     });
 
-    it('function', () => {
-        const result = parseOptions(() => null);
-        expect(result).toBeUndefined();
+    it('Options is object, cb is undefined', () => {
+        const { options_, cb_ } = buildFsParams({}, undefined);
+        expect(options_).toEqual({});
+        expect(cb_).toBeUndefined();
     });
 
-    it('object', () => {
-        const result = parseOptions({ one: 1 });
-        expect(result).toEqual({ one: 1 });
+    it('Options is object, cb is function', () => {
+        const { options_, cb_ } = buildFsParams({}, () => undefined);
+        expect(options_).toEqual({});
+        expect(typeof cb_).toBe('function');
     });
 });
 
@@ -309,84 +312,31 @@ describe('Find matches', () => {
 });
 
 describe('Build input params', () => {
-    it('Source is input options, cb is undefined', () => {
-        const result = buildInputParams(
-            'gamepad',
-            { source: 'keyboard' },
-            undefined
+    it('Params is function, cb is undefined', () => {
+        const { params, cb_ } = buildInputParams(() => undefined, undefined);
+        expect(params).toBeUndefined();
+        expect(typeof cb_).toBe('function');
+    });
+
+    it('Params is InputOptions, cb is function', () => {
+        const { params, cb_ } = buildInputParams(
+            { source: 'dpad' },
+            () => undefined
         );
-        expect(Object.entries(result)).toEqual([
-            ['source', 'keyboard'],
-            ['cb', undefined]
-        ]);
+        expect(params).toEqual({ source: 'dpad' });
+        expect(typeof cb_).toBe('function');
     });
 
-    it('Source is input source, cb is undefined', () => {
-        const { source, cb } = buildInputParams(
-            'gamepad',
-            'keyboard',
-            undefined
-        );
-        expect(source).toBe('keyboard');
-        expect(cb?.toString()).toBeUndefined();
+    it('Params is InputSource, cb is function', () => {
+        const { params, cb_ } = buildInputParams('dpad', () => undefined);
+        expect(params).toEqual('dpad');
+        expect(typeof cb_).toBe('function');
     });
 
-    it('Source is function, cb is undefined', () => {
-        const { source, cb } = buildInputParams('gamepad', () => {}, undefined);
-        expect(source).toBe('gamepad');
-        expect(cb?.toString()).toBe((() => {}).toString());
-    });
-
-    it('Source is undefined, cb is undefined', () => {
-        const { source, cb } = buildInputParams(
-            'gamepad',
-            undefined,
-            undefined
-        );
-        expect(source).toBe('gamepad');
-        expect(cb?.toString()).toBeUndefined();
-    });
-
-    it('Source is input options, cb is function', () => {
-        const { source, cb } = buildInputParams(
-            'gamepad',
-            { source: 'keyboard' },
-            () => {}
-        );
-        expect(source).toBe('keyboard');
-        expect(cb?.toString()).toBe((() => {}).toString());
-    });
-
-    it('Source is input source, cb is function', () => {
-        const { source, cb } = buildInputParams(
-            'gamepad',
-            'keyboard',
-            () => {}
-        );
-        expect(source).toBe('keyboard');
-        expect(cb?.toString()).toBe((() => {}).toString());
-    });
-
-    it('Source is function, cb is function', () => {
-        const { source, cb } = buildInputParams(
-            'gamepad',
-            () => 0,
-            () => 1
-        );
-        expect(source).toBe('gamepad');
-        expect(cb?.toString()).toBe((() => 0).toString());
-    });
-
-    it('Source is undefined, cb is function', () => {
-        const { source, cb } = buildInputParams('gamepad', undefined, () => {});
-        expect(source).toBe('gamepad');
-        expect(cb?.toString()).toBe((() => {}).toString());
-    });
-
-    it('Source is empty object', () => {
-        const { source, cb } = buildInputParams('gamepad', {}, undefined);
-        expect(source).toBe('gamepad');
-        expect(cb?.toString()).toBeUndefined();
+    it('Params is InputSource, cb is undefined', () => {
+        const { params, cb_ } = buildInputParams('dpad', undefined);
+        expect(params).toEqual('dpad');
+        expect(typeof cb_).toBe('undefined');
     });
 });
 

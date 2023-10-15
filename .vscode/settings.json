@@ -7,6 +7,7 @@
         "dpad",
         "draganddrop",
         "filestats",
+        "getdevicepath",
         "getprop",
         "gname",
         "keyevent",

@@ -5,7 +5,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
-        return '123456';
+        return '1-2-3-4-5';
     });
 });
 
@@ -14,7 +14,7 @@ describe('Shell tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:("one && "two") || echo '123456'`,
+                cmd: `shell:("one && "two") || echo '1-2-3-4-5'`,
                 res: '0',
                 rawRes: true
             }
@@ -33,20 +33,17 @@ describe('Shell tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cmd) || echo '123456'`,
-                res: 'message \n123456',
+                cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
+                res: 'message \n1-2-3-4-5',
                 rawRes: true
             }
         ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.shell('serial', 'cmd');
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(new AdbExecError('message', 'cmd'));
-            }
+            await expect(() => adb.shell('serial', 'cmd')).rejects.toEqual(
+                new AdbExecError('message', 'cmd')
+            );
         } finally {
             await adbMock.end();
         }
@@ -56,20 +53,17 @@ describe('Shell tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'fail', res: null, rawRes: true },
             {
-                cmd: `shell:(cmd) || echo '123456'`,
-                res: 'message \n123456',
+                cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
+                res: 'message \n1-2-3-4-5',
                 rawRes: true
             }
         ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.shell('serial', 'cmd');
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() => adb.shell('serial', 'cmd')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -80,19 +74,16 @@ describe('Shell tests', () => {
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
                 cmd: `fail`,
-                res: 'message \n123456',
+                res: 'message \n1-2-3-4-5',
                 rawRes: true
             }
         ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.shell('serial', 'cmd');
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() => adb.shell('serial', 'cmd')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -107,22 +98,17 @@ describe('Shell tests', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:(cmd) || echo '123456'`,
-                res: 'message \n123456',
+                cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
+                res: 'message \n1-2-3-4-5',
                 rawRes: true
             }
         ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.shell('serial', 'cmd');
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => adb.shell('serial', 'cmd')).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -136,8 +122,8 @@ describe('Shell tests', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:(cmd) || echo '123456'`,
-                res: 'message \n123456',
+                cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
+                res: 'message \n1-2-3-4-5',
                 rawRes: true,
                 unexpected: true
             }
@@ -145,14 +131,9 @@ describe('Shell tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.shell('serial', 'cmd');
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => adb.shell('serial', 'cmd')).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }

@@ -190,12 +190,9 @@ describe('Key event', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.keyEvent('serial', 37);
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() => adb.keyEvent('serial', 37)).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -217,12 +214,9 @@ describe('Key event', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.keyEvent('serial', 37);
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() => adb.keyEvent('serial', 37)).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -245,14 +239,9 @@ describe('Key event', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.keyEvent('serial', 37);
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => adb.keyEvent('serial', 37)).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -275,14 +264,9 @@ describe('Key event', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.keyEvent('serial', 37);
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => adb.keyEvent('serial', 37)).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }

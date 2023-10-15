@@ -31,33 +31,33 @@ export interface IFileStat {
 }
 
 export class FileStat extends Stats implements IFileStat {
-    abits: number;
-    aflags: string;
-    atime: Date;
-    atimeMs: number;
-    blksize: number;
-    blocks: number;
-    bytes: number;
-    ctime: Date;
-    ctimeMs: number;
-    dev: number;
-    dTypeMajor: number;
-    dTypeMinor: number;
-    ino: number;
-    gid: number;
-    gname: string;
-    mode: number;
-    moutpoint: string;
-    mtime: Date;
-    mtimeMs: number;
-    name: string;
-    nlink: number;
-    lname: string;
-    seccon: string;
-    size: number;
-    type: string;
-    uid: number;
-    uname: string;
+    public abits: number;
+    public aflags: string;
+    public atime: Date;
+    public atimeMs: number;
+    public blksize: number;
+    public blocks: number;
+    public bytes: number;
+    public ctime: Date;
+    public ctimeMs: number;
+    public dev: number;
+    public dTypeMajor: number;
+    public dTypeMinor: number;
+    public ino: number;
+    public gid: number;
+    public gname: string;
+    public mode: number;
+    public moutpoint: string;
+    public mtime: Date;
+    public mtimeMs: number;
+    public name: string;
+    public nlink: number;
+    public lname: string;
+    public seccon: string;
+    public size: number;
+    public type: string;
+    public uid: number;
+    public uname: string;
     constructor(props: IFileStat) {
         super();
         this.abits = props.abits;
@@ -89,31 +89,31 @@ export class FileStat extends Stats implements IFileStat {
         this.uname = props.uname;
     }
 
-    isSocket(): boolean {
+    public isSocket(): boolean {
         return /socket/.test(this.type);
     }
 
-    isFIFO(): boolean {
+    public isFIFO(): boolean {
         return /fifo/.test(this.type);
     }
 
-    isSymbolicLink(): boolean {
+    public isSymbolicLink(): boolean {
         return /link/.test(this.type);
     }
 
-    isCharacterDevice(): boolean {
+    public isCharacterDevice(): boolean {
         return /character/.test(this.type);
     }
 
-    isBlockDevice(): boolean {
+    public isBlockDevice(): boolean {
         return /block/.test(this.type);
     }
 
-    isDirectory(): boolean {
+    public isDirectory(): boolean {
         return /directory/.test(this.type);
     }
 
-    isFile(): boolean {
+    public isFile(): boolean {
         return /file/.test(this.type);
     }
 }

@@ -1,11 +1,28 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import Command from '../../lib/commands/command';
 import { Client } from '../../lib/client';
+import { Connection } from '../../lib/connection';
+import { Reply } from '../../lib/util';
 
-class TestCmd extends Command<null> {
+class TestCmd extends Command<number> {
     protected autoEnd = true;
-    public execute(arg: string): Promise<null> {
-        return this.initExecute(arg).then(this.handleReply(null));
+    private arg: string;
+    constructor(connection: Connection, arg: string) {
+        super(connection);
+        this.arg = arg;
+    }
+    public async execute(): Promise<number> {
+        const reply = await this.initExecute(this.arg);
+        switch (reply) {
+            case Reply.OKAY: {
+                const value = await this.parser.readValue();
+                return parseInt(value.toString(), 10);
+            }
+            case Reply.FAIL:
+                throw await this.parser.readError();
+            default:
+                return parseInt(reply, 10);
+        }
     }
 }
 
@@ -14,15 +31,14 @@ describe('Custom command tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'test',
-                res: null,
-                rawRes: true
+                res: '10'
             }
         ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ port, noAutoStart: true });
             const result = await adb.custom(TestCmd, 'test');
-            expect(result).toBeNull();
+            expect(result).toBe(10);
         } finally {
             adbMock.end();
         }

@@ -4,31 +4,24 @@ import TransportCommand from './transport';
 
 export default abstract class ExecCommand<T> extends TransportCommand<T> {
     private readonly uuid = crypto.randomUUID();
-    private rawCmd = '';
     protected keepAlive = false;
     protected abstract cast(value: string): T;
+    protected abstract rawCmd: string;
 
-    postExecute(): Promise<T> {
-        return this.parser.readAll().then((value) => {
-            const valueStr = value.toString();
-            if (valueStr.includes(this.uuid)) {
-                throw new AdbExecError(
-                    valueStr.replace(this.uuid, '').trim(),
-                    this.rawCmd
-                );
-            }
-            return this.cast(valueStr);
-        });
+    protected get Cmd(): string {
+        return [`shell:(${this.rawCmd})`, '||', 'echo', escape(this.uuid)].join(
+            ' '
+        );
     }
 
-    protected preExecute(serial: string): Promise<T> {
-        this.rawCmd = this.Cmd;
-        this.Cmd = [
-            `shell:(${this.Cmd})`,
-            '||',
-            'echo',
-            escape(this.uuid)
-        ].join(' ');
-        return super.preExecute(serial);
+    protected async postExecute(): Promise<T> {
+        const value = (await this.parser.readAll()).toString();
+        if (value.includes(this.uuid)) {
+            throw new AdbExecError(
+                value.replace(this.uuid, '').trim(),
+                this.rawCmd
+            );
+        }
+        return this.cast(value);
     }
 }

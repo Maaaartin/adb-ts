@@ -1,11 +1,17 @@
+import { Connection } from '../../connection';
 import RestartConnection from '../abstract/restartConnection';
 
 export default class TcpIpCommand extends RestartConnection {
     protected keepAlive = true;
-    protected Cmd = 'tcpip:';
+    protected Cmd: string;
 
-    execute(serial: string, port: number): Promise<void> {
-        this.Cmd += port;
-        return this.preExecute(serial);
+    constructor(
+        connection: Connection,
+        serial: string,
+        awaiter: Promise<void>,
+        port: number
+    ) {
+        super(connection, serial, awaiter);
+        this.Cmd = `tcpip:${port}`;
     }
 }

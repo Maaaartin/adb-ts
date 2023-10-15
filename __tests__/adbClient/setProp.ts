@@ -167,12 +167,9 @@ describe('Set prop tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.setProp('serial', 'prop', undefined);
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failed'));
-            }
+            await expect(() =>
+                adb.setProp('serial', 'prop', undefined)
+            ).rejects.toEqual(new Error('Failed'));
         } finally {
             await adbMock.end();
         }
@@ -190,12 +187,9 @@ describe('Set prop tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.setProp('serial', 'prop', '');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() =>
+                adb.setProp('serial', 'prop', '')
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -213,12 +207,9 @@ describe('Set prop tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.setProp('serial', 'prop', '');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() =>
+                adb.setProp('serial', 'prop', '')
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -241,14 +232,9 @@ describe('Set prop tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.setProp('serial', 'prop', '');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.setProp('serial', 'prop', '')
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
@@ -271,14 +257,9 @@ describe('Set prop tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.setProp('serial', 'prop', '');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.setProp('serial', 'prop', '')
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

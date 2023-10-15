@@ -6,9 +6,9 @@ import { Writable } from 'stream';
 import { LogcatReaderOptions } from '../util';
 
 export class LogcatReader extends StreamHandler {
-    private filter?: (entry: LogcatEntry) => boolean;
+    private filter: ((entry: LogcatEntry) => boolean) | void;
     private parser = new Binary();
-    private stream_?: Writable;
+    private stream_: Writable | null = null;
     constructor(options?: LogcatReaderOptions) {
         super();
         this.filter = options?.filter;
@@ -21,9 +21,12 @@ export class LogcatReader extends StreamHandler {
         return this.stream_;
     }
 
-    hook(): void {
+    private hook(): void {
         this.stream.on('data', (data) => {
-            this.parser.parse(data);
+            if (Buffer.isBuffer(data)) {
+                return this.parser.parse(data);
+            }
+            this.emit('error', new Error('Invalid data'));
         });
 
         this.stream.on('error', (err) => {
@@ -36,11 +39,7 @@ export class LogcatReader extends StreamHandler {
             this.emit('finish');
         });
         this.parser.on('entry', (entry: LogcatEntry) => {
-            if (this.filter) {
-                if (this.filter(entry)) {
-                    this.emit('entry', entry);
-                }
-            } else {
+            if (!this.filter || this.filter(entry)) {
                 this.emit('entry', entry);
             }
         });
@@ -49,20 +48,23 @@ export class LogcatReader extends StreamHandler {
         });
     }
 
-    on(event: 'error', listener: (err: Error) => void): this;
-    on(event: 'entry', listener: (entry: LogcatEntry) => void): this;
-    on(event: 'finish' | 'end', listener: () => void): this;
-    on(event: string | symbol, listener: (...args: any[]) => void): this {
+    public on(event: 'error', listener: (err: Error) => void): this;
+    public on(event: 'entry', listener: (entry: LogcatEntry) => void): this;
+    public on(event: 'finish' | 'end', listener: () => void): this;
+    public on(
+        event: string | symbol,
+        listener: ((entry: LogcatEntry) => void) | ((err: Error) => void)
+    ): this {
         return super.on(event, listener);
     }
 
-    connect(stream: Writable): this {
+    public connect(stream: Writable): this {
         this.stream_ = stream;
         this.hook();
         return this;
     }
 
-    end(): void {
+    public end(): void {
         this.stream.end();
     }
 }

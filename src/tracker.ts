@@ -20,33 +20,38 @@ export class Tracker extends EventEmitter {
         this.hook();
     }
 
-    private hook(): void {
+    private async hook(): Promise<void> {
         // Listener for error not needed, error is handled in catch for read()
         // this.command.connection.on('error', (err) => this.emit('error', err));
         this.command.connection.once('end', () => this.emit('end'));
-        const readErrHandler = (err: unknown): void => {
-            if (this.ended) {
-                return;
+        const endConnection = async (): Promise<void> => {
+            try {
+                await this.command.parser.end();
+                this.command.endConnection();
+            } catch (err) {
+                this.emit('error', err);
             }
-            this.emit(
-                'error',
-                err instanceof PrematureEOFError
-                    ? new Error('Connection closed')
-                    : err
-            );
         };
-        this.read()
-            .catch(readErrHandler)
-            .finally(() => this.command.parser.end())
-            .finally(() => this.command.endConnection())
-            .catch((err) => this.emit('error', err));
+        try {
+            await this.read();
+        } catch (err) {
+            if (!this.ended) {
+                this.emit(
+                    'error',
+                    err instanceof PrematureEOFError
+                        ? new Error('Connection closed')
+                        : err
+                );
+            }
+        } finally {
+            endConnection();
+        }
     }
 
-    private read(): Promise<void> {
-        return this.command.readDevices().then((list: IDevice[]) => {
-            this.update(list);
-            return this.read();
-        });
+    private async read(): Promise<void> {
+        const list = await this.command.readDevices();
+        this.update(list);
+        return this.read();
     }
 
     private update(list: IDevice[]): void {
@@ -81,11 +86,17 @@ export class Tracker extends EventEmitter {
         this.command.endConnection();
     }
 
-    on(event: 'add' | 'change', listener: (device: Device) => void): this;
-    on(event: 'remove', listener: (device: IDevice) => void): this;
-    on(event: 'end', listener: () => void): this;
-    on(event: 'error', listener: (err: Error) => void): this;
-    on(event: string, listener: (...args: any[]) => void): this {
+    public on(
+        event: 'add' | 'change',
+        listener: (device: Device) => void
+    ): this;
+    public on(event: 'remove', listener: (device: IDevice) => void): this;
+    public on(event: 'end', listener: () => void): this;
+    public on(event: 'error', listener: (err: Error) => void): this;
+    public on(
+        event: string,
+        listener: ((param: Device) => void) | ((param: Error) => void)
+    ): this {
         return super.on(event, listener);
     }
 }

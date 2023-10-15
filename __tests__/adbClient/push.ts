@@ -1,7 +1,7 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { Client } from '../../lib/client';
 import { promisify } from 'util';
-import { UnexpectedDataError } from '../../lib/util';
+import { StatsObject, UnexpectedDataError } from '../../lib/util';
 import { Readable } from 'stream';
 import { SyncMode } from '../../lib/sync';
 
@@ -35,6 +35,36 @@ describe('Adb Push tests', () => {
                 });
             })();
             expect(result).toBeUndefined();
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Should emit progress event', async () => {
+        const buff = Buffer.from([4, 0, 0, 0]);
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: 'sync:',
+                res: 'OKAY' + buff.toString(),
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new Client({ noAutoStart: true, port });
+            const result = await promisify<StatsObject>(async (cb) => {
+                const transfer = await adb.push(
+                    'serial',
+                    Readable.from(Buffer.from([1, 0, 0, 0])),
+                    '/sdcard'
+                );
+
+                transfer.on('progress', (stats) => {
+                    return cb(null, stats);
+                });
+            })();
+            expect(result).toEqual({ bytesTransferred: 4 });
         } finally {
             await adbMock.end();
         }
@@ -88,8 +118,8 @@ describe('Adb Push tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await promisify<void>(async (cb) => {
+            await expect(
+                promisify<void>(async (cb) => {
                     const transfer = await adb.push(
                         'serial',
                         Readable.from(Buffer.from([1, 0, 0, 0])),
@@ -103,11 +133,8 @@ describe('Adb Push tests', () => {
                     transfer.on('end', () => {
                         cb(null);
                     });
-                })();
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Error'));
-            }
+                })
+            ).rejects.toEqual(new Error('Error'));
         } finally {
             await adbMock.end();
         }
@@ -126,8 +153,8 @@ describe('Adb Push tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await promisify<void>(async (cb) => {
+            await expect(
+                promisify<void>(async (cb) => {
                     const transfer = await adb.push(
                         'serial',
                         Readable.from(Buffer.from([1, 0, 0, 0])),
@@ -141,13 +168,8 @@ describe('Adb Push tests', () => {
                     transfer.on('end', () => {
                         cb(null);
                     });
-                })();
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+                })
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

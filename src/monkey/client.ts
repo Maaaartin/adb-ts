@@ -8,12 +8,12 @@ import { CommandQueue } from './commandqueue';
 import { Parser } from './parser';
 
 export class Monkey extends Api {
-    public queue: BaseCommand<any>[] = [];
+    public queue: BaseCommand<unknown>[] = [];
     private parser: Parser = new Parser();
-    private stream_?: Socket;
-    private timeout?: NodeJS.Timeout;
+    private stream_: Socket | null = null;
+    private timeout: NodeJS.Timeout | undefined = undefined;
 
-    get stream(): Socket {
+    public get stream(): Socket {
         if (!this.stream_) {
             throw new NotConnectedError();
         }
@@ -22,7 +22,7 @@ export class Monkey extends Api {
 
     private sendInternal(
         commands: string[] | string,
-        cmdConstruct: (cmd: string) => BaseCommand<any>
+        cmdConstruct: (cmd: string) => BaseCommand<unknown>
     ): this {
         [commands].flat().forEach((command) => {
             this.queue.push(cmdConstruct(command));
@@ -36,14 +36,15 @@ export class Monkey extends Api {
         return this;
     }
 
-    sendAndParse<T>(
+    public sendAndParse<T>(
         commands: string | string[],
         cb: MonkeyCallback<T>,
         parser: (data: string | null) => T
     ): this {
         return this.sendInternal(
             commands,
-            (cmd) => new ParsableCommand(cmd, cb, parser)
+            (cmd) =>
+                new ParsableCommand(cmd, cb, parser) as BaseCommand<unknown>
         );
     }
 
@@ -52,8 +53,14 @@ export class Monkey extends Api {
      * @example
      * monkey.send('key event 24', (err, value, command) => {});
      */
-    send(commands: string[] | string, cb: MonkeyCallback): this {
-        return this.sendInternal(commands, (cmd) => new Command(cmd, cb));
+    public send(
+        commands: string[] | string,
+        cb: MonkeyCallback<unknown>
+    ): this {
+        return this.sendInternal(
+            commands,
+            (cmd) => new Command(cmd, cb) as BaseCommand<unknown>
+        );
     }
 
     protected hook(): void {
@@ -81,9 +88,12 @@ export class Monkey extends Api {
         });
     }
 
-    on(event: 'error', listener: (err: Error) => void): this;
-    on(event: 'end' | 'finish' | 'close', listener: () => void): this;
-    on(event: string | symbol, listener: (...args: any[]) => void): this {
+    public on(event: 'error', listener: (err: Error) => void): this;
+    public on(event: 'end' | 'finish' | 'close', listener: () => void): this;
+    public on(
+        event: string | symbol,
+        listener: (...args: [Error]) => void
+    ): this {
         return super.on(event, listener);
     }
 
@@ -111,13 +121,13 @@ export class Monkey extends Api {
         command.callback?.(null, reply.value, command.command);
     }
 
-    connect(param: Socket): this {
+    public connect(param: Socket): this {
         this.stream_ = param;
         this.hook();
         return this;
     }
 
-    end(cb?: () => void): this {
+    public end(cb?: () => void): this {
         clearTimeout(this.timeout);
         this.stream.end(cb);
         return this;
@@ -135,7 +145,7 @@ export class Monkey extends Api {
      *          monkey.end();
      *      });
      */
-    commandQueue(): CommandQueue {
+    public commandQueue(): CommandQueue {
         return new CommandQueue(this);
     }
 }

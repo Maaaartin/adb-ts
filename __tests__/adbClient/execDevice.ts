@@ -13,9 +13,9 @@ describe('Exec device tests', () => {
     it('Should execute with error', async () => {
         mockExec(new Error('message'), '', '');
         const adb = new Client({ noAutoStart: true });
-        await expect(() =>
-            adb.execDevice('serial', 'cmd')
-        ).rejects.toThrowError(new Error('message'));
+        await expect(() => adb.execDevice('serial', 'cmd')).rejects.toEqual(
+            new Error('message')
+        );
     });
 
     it('Should execute with std error', async () => {
@@ -23,10 +23,10 @@ describe('Exec device tests', () => {
         const adb = new Client({ noAutoStart: true });
         try {
             await adb.execDevice('serial', 'cmd');
-        } catch (e: any) {
-            expect(e.message).toBe('message');
-            expect(e.command).toBe('-s serial cmd');
-            expect(e).toBeInstanceOf(AdbExecError);
+        } catch (e: unknown) {
+            expect(e).toEqual(
+                new AdbExecError('message', '-s serial shell cmd')
+            );
         }
     });
 
@@ -35,10 +35,10 @@ describe('Exec device tests', () => {
         const adb = new Client({ noAutoStart: true });
         try {
             await adb.execDevice('serial', 'cmd');
-        } catch (e: any) {
-            expect(e.message).toBe('Error: message');
-            expect(e.command).toBe('-s serial cmd');
-            expect(e).toBeInstanceOf(AdbExecError);
+        } catch (e: unknown) {
+            expect(e).toEqual(
+                new AdbExecError('Error: message', '-s serial shell cmd')
+            );
         }
     });
 });

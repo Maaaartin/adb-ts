@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
+
 import {
     AdbClientOptions,
     AdbClientOptionsValues,
@@ -28,17 +30,16 @@ import {
     NonEmptyArray,
     WaitForType,
     PropertyValue,
-    TransportCommandConstruct
-} from './util';
-import {
-    parseOptions,
+    TransportCommandConstruct,
+    buildInputParams,
+    KeyCode,
     parsePrimitiveParam,
     parseCbParam,
-    buildInputParams,
     parseValueParam,
-    nodeify
+    nodeify,
+    AdbExecError,
+    buildFsParams
 } from './util';
-import { AdbExecError } from './util';
 import { Sync, SyncMode } from './sync';
 import { execFile } from 'child_process';
 import fs from 'fs';
@@ -47,7 +48,7 @@ import BatteryStatusCommand from './commands/host-transport/batteryStatus';
 import ClearCommand from './commands/host-transport/clear';
 import Connect from './commands/host/connect';
 import { Connection } from './connection';
-import CpCommand from './commands/host-transport/cp';
+import CpCommand from './commands/host-transport/fileSystem/cp';
 import Disconnect from './commands/host/disconnect';
 import FileStatCommand from './commands/host-transport/fileStat';
 import { FileStat } from './filestats';
@@ -57,10 +58,8 @@ import GetIpAddressCommand from './commands/host-transport/ipaddress';
 import GetPropertyCommand from './commands/host-transport/getproperty';
 import GetSetting from './commands/host-transport/getsetting';
 import HostTransportCommand from './commands/host/transport';
-import InputCommand from './commands/host-transport/input';
 import InstallCommand from './commands/host-transport/install';
 import IsInstalledCommand from './commands/host-transport/isinstalled';
-import { KeyCode } from './util/keycode';
 import KillCommand from './commands/host/kill';
 import ListDevicesCommand from './commands/host/listdevices';
 import ListFeaturesCommand from './commands/host-transport/listfeatures';
@@ -71,11 +70,10 @@ import ListReversesCommand from './commands/host-transport/listreverses';
 import ListSettingsCommand from './commands/host-transport/listSettings';
 import LogcatCommand from './commands/host-transport/logcat';
 import { LogcatReader } from './logcat/reader';
-import MkDirCommand from './commands/host-transport/mkdir';
+import MkDirCommand from './commands/host-transport/fileSystem/mkdir';
 import { Monkey } from './monkey/client';
 import MonkeyCommand from './commands/host-transport/monkey';
-import MvCommand from './commands/host-transport/mv';
-import { Parser } from './parser';
+import MvCommand from './commands/host-transport/fileSystem/mv';
 import { PullTransfer } from './sync/pulltransfer';
 import { PushTransfer } from './sync/pushtransfer';
 import PutSetting from './commands/host-transport/putSetting';
@@ -83,12 +81,12 @@ import { Readable } from 'stream';
 import RebootCommand from './commands/host-transport/reboot';
 import RemountCommand from './commands/host-transport/remount';
 import ReverseCommand from './commands/host-transport/reverse';
-import RmCommand from './commands/host-transport/rm';
+import RmCommand from './commands/host-transport/fileSystem/rm';
 import RootCommand from './commands/host-transport/root';
 import ScreenShotCommand from './commands/host-transport/screencap';
 import SetProp from './commands/host-transport/setProperty';
 import ShellCommand from './commands/host-transport/shell';
-import ShellRawCommand from './commands/host-transport/shellraw';
+import DeleteApk from './commands/host-transport/deleteApk';
 import ShutdownCommand from './commands/host-transport/shutdown';
 import StartActivityCommand from './commands/host-transport/startActivity';
 import StartServiceCommand from './commands/host-transport/startservice';
@@ -96,7 +94,7 @@ import SyncCommand from './commands/host-transport/sync';
 import SyncEntry from './sync/entry';
 import TcpCommand from './commands/host-transport/tcp';
 import TcpIpCommand from './commands/host-transport/tcpip';
-import TouchCommand from './commands/host-transport/touch';
+import TouchCommand from './commands/host-transport/fileSystem/touch';
 import TrackCommand from './commands/host/trackdevices';
 import { Tracker } from './tracker';
 import UninstallCommand from './commands/host-transport/uninstall';
@@ -106,6 +104,14 @@ import WaitBootCompleteCommand from './commands/host-transport/waitBootComplete'
 import WaitFor from './commands/host/waitFor';
 import { promisify } from 'util';
 import T from 'timers/promises';
+import Text from './commands/host-transport/input/text';
+import Roll from './commands/host-transport/input/roll';
+import DragAndDrop from './commands/host-transport/input/dragAndDrop';
+import Swipe from './commands/host-transport/input/swipe';
+import Press from './commands/host-transport/input/press';
+import KeyEvent from './commands/host-transport/input/keyEvent';
+import Tap from './commands/host-transport/input/tap';
+import EventUnregister from './util/eventUnregister';
 
 const ADB_DEFAULT_PORT = 5555;
 const DEFAULT_OPTIONS = {
@@ -150,32 +156,36 @@ export class Client {
         return new Promise<Connection>((resolve, reject) => {
             let triedStarting = false;
             const connection = new Connection();
-            connection.once('connect', () => {
-                return resolve(connection);
-            });
-            connection.on('error', (err: Error) => {
+
+            const errorListener = async (
+                err: NodeJS.ErrnoException
+            ): Promise<void> => {
                 if (
-                    (err as Record<string, any>).code === 'ECONNREFUSED' &&
+                    err.code === 'ECONNREFUSED' &&
                     !triedStarting &&
                     !this.options.noAutoStart
                 ) {
                     triedStarting = true;
-                    return this.startServer().then(() =>
-                        connection.connect(this.options)
-                    );
+                    await this.startServer();
+                    connection.connect(this.options);
+                    return;
                 }
                 connection.destroy();
-                connection.removeAllListeners();
                 return reject(err);
+            };
+            connection.on('error', errorListener);
+            connection.once('connect', () => {
+                connection.off('error', errorListener);
+                return resolve(connection);
             });
             connection.connect(this.options);
         });
     }
 
-    transport(serial: string): Promise<Connection> {
-        return this.connection().then((conn) =>
-            new HostTransportCommand(conn).execute(serial).then(() => conn)
-        );
+    public async transport(serial: string): Promise<Connection> {
+        const conn = await this.connection();
+        await new HostTransportCommand(conn, serial).execute();
+        return conn;
     }
 
     /**
@@ -206,10 +216,11 @@ export class Client {
         }
         return nodeify(
             this.connection().then((conn) =>
-                new Construct(conn).execute(
+                new Construct(
+                    conn,
                     host,
                     parsePrimitiveParam(ADB_DEFAULT_PORT, port_)
-                )
+                ).execute()
             ),
             parseCbParam(port, cb)
         );
@@ -220,8 +231,7 @@ export class Client {
      * @example
      * adb.map(async (device) => {
      *    await device.tcpip();
-     *    await adb.waitFor('usb', 'device');
-     *    const ip = await device.getIpAddress();
+     *    const [ip] = await device.getIpAddress();
      *    await adb.connect(ip);
      *});
      */
@@ -288,7 +298,13 @@ export class Client {
     kill(cb: Callback): void;
     kill(cb?: Callback): Promise<void> | void {
         return nodeify(
-            this.connection().then((conn) => new KillCommand(conn).execute()),
+            this.connection()
+                .catch((error) => {
+                    if (error.code !== 'ECONNREFUSED') {
+                        throw error;
+                    }
+                })
+                .then((conn) => conn && new KillCommand(conn).execute()),
             cb
         );
     }
@@ -320,7 +336,7 @@ export class Client {
     ): Promise<string> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new GetDevicePathCommand(conn).execute(serial)
+                new GetDevicePathCommand(conn, serial).execute()
             ),
             cb
         );
@@ -338,7 +354,7 @@ export class Client {
     ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new ListPropertiesCommand(conn).execute(serial)
+                new ListPropertiesCommand(conn, serial).execute()
             ),
             cb
         );
@@ -356,7 +372,7 @@ export class Client {
     ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new ListFeaturesCommand(conn).execute(serial)
+                new ListFeaturesCommand(conn, serial).execute()
             ),
             cb
         );
@@ -374,7 +390,7 @@ export class Client {
     ): Promise<string[]> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new ListPackagesCommand(conn).execute(serial)
+                new ListPackagesCommand(conn, serial).execute()
             ),
             cb
         );
@@ -391,7 +407,7 @@ export class Client {
     ): Promise<string[]> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new GetIpAddressCommand(conn).execute(serial)
+                new GetIpAddressCommand(conn, serial).execute()
             ),
             cb
         );
@@ -413,7 +429,7 @@ export class Client {
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new ForwardCommand(conn).execute(serial, local, remote)
+                new ForwardCommand(conn, serial, local, remote).execute()
             ),
             cb
         );
@@ -431,7 +447,7 @@ export class Client {
     ): Promise<ForwardsObject[]> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new ListForwardsCommand(conn).execute(serial)
+                new ListForwardsCommand(conn, serial).execute()
             ),
             cb
         );
@@ -453,7 +469,7 @@ export class Client {
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new ReverseCommand(conn).execute(serial, local, remote)
+                new ReverseCommand(conn, serial, local, remote).execute()
             ),
             cb
         );
@@ -471,18 +487,15 @@ export class Client {
     ): Promise<ReversesObject[]> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new ListReversesCommand(conn).execute(serial);
+                return new ListReversesCommand(conn, serial).execute();
             }),
             cb
         );
     }
 
-    private shellInternal(
-        serial: string,
-        command: string | NonEmptyArray<string>
-    ): Promise<Connection> {
+    private deleteApk(serial: string, pathToApk: string): Promise<void> {
         return this.connection().then((conn) => {
-            return new ShellRawCommand(conn).execute(serial, command);
+            return new DeleteApk(conn, serial, pathToApk).execute();
         });
     }
 
@@ -495,7 +508,7 @@ export class Client {
     reboot(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new RebootCommand(conn).execute(serial)
+                new RebootCommand(conn, serial).execute()
             ),
             cb
         );
@@ -510,7 +523,7 @@ export class Client {
     shutdown(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new ShutdownCommand(conn).execute(serial)
+                new ShutdownCommand(conn, serial).execute()
             ),
             cb
         );
@@ -526,7 +539,7 @@ export class Client {
     remount(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new RemountCommand(conn).execute(serial)
+                new RemountCommand(conn, serial).execute()
             ),
             cb
         );
@@ -541,7 +554,7 @@ export class Client {
     root(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new RootCommand(conn).execute(serial)
+                new RootCommand(conn, serial).execute()
             ),
             cb
         );
@@ -559,7 +572,7 @@ export class Client {
     ): Promise<Buffer> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new ScreenShotCommand(conn).execute(serial);
+                return new ScreenShotCommand(conn, serial).execute();
             }),
             cb
         );
@@ -589,11 +602,12 @@ export class Client {
     ): Promise<Connection> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new TcpCommand(conn).execute(
+                return new TcpCommand(
+                    conn,
                     serial,
                     port,
                     parseValueParam(host)
-                );
+                ).execute();
             }),
             parseCbParam(host, cb)
         );
@@ -628,23 +642,17 @@ export class Client {
         source?: InputSource | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { source: _source, cb: _cb } = buildInputParams(
-            'trackball',
-            source,
-            cb
-        );
+        const { params, cb_ } = buildInputParams(source, cb);
 
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn).execute(
-                    serial,
-                    _source,
-                    'roll',
+                return new Roll(conn, serial, {
+                    source: params,
                     x,
                     y
-                );
+                }).execute();
             }),
-            _cb
+            cb_
         );
     }
 
@@ -662,16 +670,12 @@ export class Client {
         source?: InputSource | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { source: _source, cb: _cb } = buildInputParams(
-            'trackball',
-            source,
-            cb
-        );
+        const { params, cb_ } = buildInputParams(source, cb);
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn).execute(serial, _source, 'press');
+                return new Press(conn, serial, params).execute();
             }),
-            _cb
+            cb_
         );
     }
 
@@ -725,26 +729,19 @@ export class Client {
         options?: InputDurationOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { source: _source, cb: _cb } = buildInputParams(
-            'touchscreen',
-            options,
-            cb
-        );
+        const { params, cb_ } = buildInputParams(options, cb);
 
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn).execute(
-                    serial,
-                    _source,
-                    'draganddrop',
+                return new DragAndDrop(conn, serial, {
                     x1,
                     y1,
                     x2,
                     y2,
-                    typeof options === 'object' ? options.duration : ''
-                );
+                    options: params
+                }).execute();
             }),
-            _cb
+            cb_
         );
     }
 
@@ -798,25 +795,18 @@ export class Client {
         options?: InputDurationOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { source: _source, cb: _cb } = buildInputParams(
-            'touchscreen',
-            options,
-            cb
-        );
+        const { params, cb_ } = buildInputParams(options, cb);
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn).execute(
-                    serial,
-                    _source,
-                    'swipe',
+                return new Swipe(conn, serial, {
                     x1,
                     y1,
                     x2,
                     y2,
-                    typeof options === 'object' ? options.duration : ''
-                );
+                    options: params
+                }).execute();
             }),
-            _cb
+            cb_
         );
     }
 
@@ -876,28 +866,15 @@ export class Client {
         options?: KeyEventOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { source: _source, cb: _cb } = buildInputParams(
-            'keyboard',
-            options,
-            cb
-        );
+        const { params, cb_ } = buildInputParams(options, cb);
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn).execute(
-                    serial,
-                    _source,
-                    'keyevent',
-                    typeof options === 'object'
-                        ? options.variant === 'longpress'
-                            ? '--longpress'
-                            : options.variant === 'doubletap'
-                            ? '--doubletap'
-                            : ''
-                        : '',
-                    ...[code].flat()
-                );
+                return new KeyEvent(conn, serial, {
+                    options: params,
+                    code
+                }).execute();
             }),
-            _cb
+            cb_
         );
     }
 
@@ -930,23 +907,17 @@ export class Client {
         source?: InputSource | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { source: _source, cb: _cb } = buildInputParams(
-            'touchscreen',
-            source,
-            cb
-        );
+        const { params, cb_ } = buildInputParams(source, cb);
 
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn).execute(
-                    serial,
-                    _source,
-                    'tap',
+                return new Tap(conn, serial, {
+                    source: params,
                     x,
                     y
-                );
+                }).execute();
             }),
-            _cb
+            cb_
         );
     }
 
@@ -965,18 +936,15 @@ export class Client {
         source?: InputSource | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        const { source: _source, cb: _cb } = buildInputParams(
-            'touchscreen',
-            source,
-            cb
-        );
+        const { params, cb_ } = buildInputParams(source, cb);
         return nodeify(
             this.connection().then((conn) => {
-                return new InputCommand(conn)
-                    .withEscape()
-                    .execute(serial, _source, 'text', text);
+                return new Text(conn, serial, {
+                    source: params,
+                    text
+                }).execute();
             }),
-            _cb
+            cb_
         );
     }
 
@@ -1014,10 +982,11 @@ export class Client {
 
         return nodeify(
             this.connection().then((conn) => {
-                return new LogcatCommand(conn).execute(
+                return new LogcatCommand(
+                    conn,
                     serial,
                     typeof options === 'object' ? options : undefined
-                );
+                ).execute();
             }),
             cb
         );
@@ -1025,7 +994,7 @@ export class Client {
 
     private syncService(serial: string): Promise<Sync> {
         return this.connection().then((conn) => {
-            return new SyncCommand(conn).execute(serial);
+            return new SyncCommand(conn, serial).execute();
         });
     }
 
@@ -1038,7 +1007,7 @@ export class Client {
     clear(serial: string, pkg: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new ClearCommand(conn).execute(serial, pkg);
+                return new ClearCommand(conn, serial, pkg).execute();
             }),
             cb
         );
@@ -1051,20 +1020,9 @@ export class Client {
         args?: string
     ): Promise<void> {
         return this.connection().then((conn) => {
-            return new InstallCommand(conn)
-                .execute(serial, apk, options, args)
-                .then(() => {
-                    return this.shellInternal(serial, ['rm', '-f', apk]).then(
-                        (stream) => {
-                            return new Parser(stream)
-                                .readAll()
-                                .then(() => {})
-                                .finally(() => {
-                                    stream.end();
-                                });
-                        }
-                    );
-                });
+            return new InstallCommand(conn, serial, apk, options, args)
+                .execute()
+                .then(() => this.deleteApk(serial, apk));
         });
     }
 
@@ -1109,46 +1067,27 @@ export class Client {
         args?: string | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        let options_: InstallOptions = {},
-            args_ = '';
-        if (typeof options === 'function') {
-            cb = options;
-            options = undefined;
-        } else if (typeof options === 'object') {
-            options_ = options;
-        }
-        if (typeof args === 'function') {
-            cb = args;
-            args = undefined;
-        } else if (typeof args === 'string') {
-            args_ = args;
-        }
         const temp = Sync.temp(typeof apk === 'string' ? apk : '_stream.apk');
         return nodeify(
             this.push(serial, apk, temp).then((transfer) => {
-                let errorListener: (err: Error) => void;
-                let endListener: () => void;
-                return new Promise<void>((resolve, reject) => {
-                    transfer.once(
-                        'error',
-                        (errorListener = (err): void => {
-                            reject(err);
-                        })
-                    );
-                    transfer.once(
-                        'end',
-                        (endListener = (): void => {
-                            this.installRemote(serial, temp, options_, args_)
+                const eventUnregister = new EventUnregister(transfer);
+                const promise = new Promise<void>((resolve, reject) => {
+                    eventUnregister.register((transfer) =>
+                        transfer.on('error', reject).on('end', (): void => {
+                            this.installRemote(
+                                serial,
+                                temp,
+                                parseValueParam(options),
+                                parseValueParam(args)
+                            )
                                 .then(resolve)
                                 .catch(reject);
                         })
                     );
-                }).finally(() => {
-                    transfer.removeListener('error', errorListener);
-                    transfer.removeListener('end', endListener);
                 });
+                return eventUnregister.unregisterAfter(promise);
             }),
-            cb
+            parseCbParam(options, cb) || parseCbParam(args, cb)
         );
     }
 
@@ -1175,21 +1114,16 @@ export class Client {
         options?: Callback | UninstallOptions,
         cb?: Callback
     ): Promise<void> | void {
-        let options_: UninstallOptions;
-        if (typeof options === 'function') {
-            cb = options;
-        } else if (typeof options === 'object') {
-            options_ = options;
-        }
         return nodeify(
             this.connection().then((conn) => {
-                return new UninstallCommand(conn).execute(
+                return new UninstallCommand(
+                    conn,
                     serial,
                     pkg,
-                    options_
-                );
+                    parseValueParam(options)
+                ).execute();
             }),
-            cb
+            parseCbParam(options, cb)
         );
     }
 
@@ -1205,7 +1139,7 @@ export class Client {
     ): Promise<boolean> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new IsInstalledCommand(conn).execute(serial, pkg);
+                return new IsInstalledCommand(conn, serial, pkg).execute();
             }),
             cb
         );
@@ -1242,22 +1176,17 @@ export class Client {
         options?: StartActivityOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        let options_: StartActivityOptions;
-        if (typeof options === 'function') {
-            cb = options;
-        } else if (typeof options === 'object') {
-            options_ = options;
-        }
         return nodeify(
             this.connection().then((conn) => {
-                return new StartActivityCommand(conn).execute(
+                return new StartActivityCommand(
+                    conn,
                     serial,
                     pkg,
                     activity,
-                    options_
-                );
+                    parseValueParam(options)
+                ).execute();
             }),
-            cb
+            parseCbParam(options, cb)
         );
     }
 
@@ -1292,23 +1221,17 @@ export class Client {
         options?: StartServiceOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        let options_: StartServiceOptions;
-        if (typeof options === 'function') {
-            cb = options;
-        } else if (typeof options === 'object') {
-            options_ = options;
-        }
-
         return nodeify(
             this.connection().then((conn) => {
-                return new StartServiceCommand(conn).execute(
+                return new StartServiceCommand(
+                    conn,
                     serial,
                     pkg,
                     service,
-                    options_
-                );
+                    parseValueParam(options)
+                ).execute();
             }),
-            cb
+            parseCbParam(options, cb)
         );
     }
 
@@ -1402,24 +1325,19 @@ export class Client {
         mode?: ValueCallback<PushTransfer> | SyncMode,
         cb?: ValueCallback<PushTransfer>
     ): Promise<PushTransfer> | void {
-        let mode_: SyncMode;
-        if (typeof mode === 'function') {
-            cb = mode;
-        } else if (typeof mode !== 'undefined') {
-            mode_ = mode;
-        }
-
         return nodeify(
             this.syncService(serial).then((sync) => {
-                return sync.push(srcPath, destPath, mode_).on('end', () => {
-                    sync.end();
-                });
+                return sync
+                    .push(srcPath, destPath, parseValueParam(mode))
+                    .on('end', () => {
+                        sync.end();
+                    });
             }),
-            cb
+            parseCbParam(mode, cb)
         );
     }
 
-    private awaitActiveDevice(serial: string): Promise<void> {
+    private async awaitActiveDevice(serial: string): Promise<void> {
         const track = (tracker: Tracker): Promise<void> => {
             return new Promise<void>((resolve, reject) => {
                 const activeDeviceListener = (device: IDevice): void => {
@@ -1440,12 +1358,15 @@ export class Client {
                 });
             });
         };
-        return this.trackDevices().then((tracker) => {
-            return Promise.race([
+        const tracker_2 = await this.trackDevices();
+        try {
+            return await Promise.race([
                 T.setTimeout(5000, undefined, { ref: false }),
-                track(tracker)
-            ]).finally(() => tracker.end());
-        });
+                track(tracker_2)
+            ]);
+        } finally {
+            tracker_2.end();
+        }
     }
 
     /**
@@ -1462,21 +1383,16 @@ export class Client {
         port?: Callback | number,
         cb?: Callback
     ): Promise<void> | void {
-        let port_ = 5555;
-        if (typeof port === 'function') {
-            cb = port;
-        } else if (typeof port === 'number') {
-            port_ = port;
-        }
-
         return nodeify(
             this.connection().then((conn) => {
                 return new TcpIpCommand(
                     conn,
-                    this.awaitActiveDevice(serial)
-                ).execute(serial, port_);
+                    serial,
+                    this.awaitActiveDevice(serial),
+                    parsePrimitiveParam(ADB_DEFAULT_PORT, parseValueParam(port))
+                ).execute();
             }),
-            cb
+            parseCbParam(port, cb)
         );
     }
 
@@ -1490,8 +1406,9 @@ export class Client {
             this.connection().then((conn) => {
                 return new UsbCommand(
                     conn,
+                    serial,
                     this.awaitActiveDevice(serial)
-                ).execute(serial);
+                ).execute();
             }),
             cb
         );
@@ -1505,7 +1422,7 @@ export class Client {
     waitBootComplete(serial: string, cb?: Callback): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new WaitBootCompleteCommand(conn).execute(serial);
+                return new WaitBootCompleteCommand(conn, serial).execute();
             }),
             cb
         );
@@ -1524,7 +1441,7 @@ export class Client {
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new WaitFor(conn).execute(transport, state);
+                return new WaitFor(conn, transport, state).execute();
             }),
             cb
         );
@@ -1533,22 +1450,22 @@ export class Client {
     /**
      * Maps through all connected devices.
      */
-    map<T>(mapper: (device: Device) => T): Promise<T[]> {
-        return this.listDevices().then((devices) =>
-            devices.map((device) => mapper(new Device(this, device)))
+    async map<T>(mapper: (device: Device) => Promise<T> | T): Promise<T[]> {
+        const devices = await this.listDevices();
+        return Promise.all(
+            devices.map((device_1) => mapper(new Device(this, device_1)))
         );
     }
 
-    private pushInternal(
+    private async pushInternal(
         serial: string,
         data: string | Readable,
         dest: string
     ): Promise<void> {
-        return this.push(serial, data, `${dest}`).then((transfer) => {
-            return new Promise((resolve, reject) => {
-                transfer.on('end', resolve);
-                transfer.on('error', reject);
-            });
+        const transfer = await this.push(serial, data, `${dest}`);
+        return new Promise((resolve, reject) => {
+            transfer.once('end', resolve);
+            transfer.once('error', reject);
         });
     }
 
@@ -1623,7 +1540,9 @@ export class Client {
                     return new Promise((resolve, reject) => {
                         let data = Buffer.alloc(0);
                         transfer.on('data', (chunk) => {
-                            data = Buffer.concat([data, chunk]);
+                            data = Buffer.isBuffer(chunk)
+                                ? Buffer.concat([data, chunk])
+                                : data;
                         });
                         transfer.on('end', () => {
                             resolve(data);
@@ -1654,20 +1573,22 @@ export class Client {
     ): Promise<void> | void {
         return nodeify(
             this.pull(serial, srcPath).then(
-                (transfer: PullTransfer): Promise<void> => {
-                    return new Promise((resolve, reject) => {
-                        transfer.once('readable', () => {
-                            transfer.pipe(fs.createWriteStream(destPath));
-                        });
-                        transfer.once('end', () => {
-                            transfer.removeAllListeners('readable');
-                            resolve();
-                        });
-                        transfer.once('error', (err) => {
-                            transfer.removeAllListeners('readable');
-                            reject(err);
-                        });
+                async (transfer: PullTransfer): Promise<void> => {
+                    const eventUnregister = new EventUnregister(transfer);
+                    const promise = new Promise<void>((resolve, reject) => {
+                        eventUnregister.register((transfer_) =>
+                            transfer_
+                                .once('readable', () =>
+                                    transfer_.pipe(
+                                        fs.createWriteStream(destPath)
+                                    )
+                                )
+                                .once('end', resolve)
+                                .once('error', reject)
+                        );
                     });
+
+                    return eventUnregister.unregisterAfter(promise);
                 }
             ),
             cb
@@ -1693,7 +1614,7 @@ export class Client {
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) =>
-                new SetProp(conn).execute(serial, prop, value)
+                new SetProp(conn, serial, prop, value).execute()
             ),
             cb
         );
@@ -1716,7 +1637,7 @@ export class Client {
     ): Promise<PropertyValue> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new GetPropertyCommand(conn).execute(serial, prop);
+                return new GetPropertyCommand(conn, serial, prop).execute();
             }),
             cb
         );
@@ -1748,7 +1669,13 @@ export class Client {
     ): Promise<void> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new PutSetting(conn).execute(serial, mode, name, value);
+                return new PutSetting(
+                    conn,
+                    serial,
+                    mode,
+                    name,
+                    value
+                ).execute();
             }),
             cb
         );
@@ -1771,7 +1698,7 @@ export class Client {
     ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new ListSettingsCommand(conn).execute(serial, mode);
+                return new ListSettingsCommand(conn, serial, mode).execute();
             }),
             cb
         );
@@ -1800,7 +1727,7 @@ export class Client {
     ): Promise<PropertyValue> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new GetSetting(conn).execute(serial, mode, name);
+                return new GetSetting(conn, serial, mode, name).execute();
             }),
             cb
         );
@@ -1818,62 +1745,69 @@ export class Client {
     ): Promise<string> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new ShellCommand(conn).execute(serial, command);
+                return new ShellCommand(conn, serial, command).execute();
             }),
             cb
         );
     }
+
     /**
      * Enables to execute any custom command.
      * @example
-     * class MyCommand extends Command<number> {
-     *    protected autoEnd = true;
-     *    execute(): Promise<number> {
-     *        return this.initExecute('host:version').then((reply) => {
-     *            switch (reply) {
-     *                case Reply.OKAY:
-     *                    return this.parser.readValue().then((value) => {
-     *                        return parseInt(value.toString(), 10);
-     *                    });
-     *                case Reply.FAIL:
-     *                    return this.parser.readError().then((e) => {
-     *                        throw e;
-     *                    });
-     *                default:
-     *                    return parseInt(reply, 10);
-     *            }
-     *        });
-     *    }
-     * }
+     *   class MyCommand extends Command<number> {
+     *   protected autoEnd = true;
+     *   private arg: string;
+     *   constructor(connection: Connection, arg: string) {
+     *       super(connection);
+     *       this.arg = arg;
+     *   }
+     *   async execute(): Promise<number> {
+     *       const reply = await this.initExecute(this.arg);
+     *       switch (reply) {
+     *           case Reply.OKAY:
+     *               const value = await this.parser.readValue();
+     *               return parseInt(value.toString(), 10);
+     *           case Reply.FAIL:
+     *               throw await this.parser.readError();
+     *           default:
+     *               return parseInt(reply, 10);
+     *          }
+     *      }
+     *  }
      */
-    custom<T>(CustomCommand: CommandConstruct<T>, ...args: any[]): Promise<T> {
-        return this.connection().then((conn) => {
-            return new CustomCommand(conn).execute(...args);
-        });
+    async custom<T, P extends unknown[] = unknown[]>(
+        CustomCommand: CommandConstruct<T, P>,
+        ...args: P
+    ): Promise<T> {
+        const conn = await this.connection();
+        return new CustomCommand(conn, ...args).execute();
     }
 
     /**
      * Enables to execute any custom transport command.
      * @example
-     * class MyCommand extends TransportCommand<null> {
+     *    class MyCommand extends TransportCommand<null> {
      *    protected keepAlive = false;
-     *    protected Cmd = 'test ';
+     *    private arg: string;
+     *    constructor(connection: Connection, serial: string, arg: string) {
+     *        super(connection, serial);
+     *        this.arg = arg;
+     *    }
+     *    protected get Cmd() {
+     *        return 'test '.concat(this.arg);
+     *    }
      *    protected postExecute(): null {
      *        return null;
      *    }
-     *    public execute(serial: string, arg: string): Promise<null> {
-     *        this.Cmd += arg;
-     *        return this.preExecute(serial);
-     *    }
-     *}
+     * }
      */
-    customTransport<T>(
-        CustomCommand: TransportCommandConstruct<T>,
+    customTransport<T, P extends unknown[] = unknown[]>(
+        CustomCommand: TransportCommandConstruct<T, P>,
         serial: string,
-        ...args: any[]
+        ...args: P
     ): Promise<T> {
         return this.connection().then((conn) => {
-            return new CustomCommand(conn).execute(serial, ...args);
+            return new CustomCommand(conn, serial, ...args).execute();
         });
     }
 
@@ -1886,58 +1820,54 @@ export class Client {
         serial: string,
         cb?: ValueCallback<Monkey>
     ): Promise<Monkey> | void {
-        const tryConnect = (times: number): Promise<Monkey> => {
-            return this.openTcp(serial, 1080)
-                .then((stream) => {
-                    return new Monkey().connect(stream);
-                })
-                .catch((err) => {
-                    if ((times -= 1)) {
-                        return T.setTimeout(100).then(() => tryConnect(times));
-                    }
-                    throw err;
-                });
+        const tryConnect = async (times: number): Promise<Monkey> => {
+            try {
+                const stream = await this.openTcp(serial, 1080);
+                return new Monkey().connect(stream);
+            } catch (err) {
+                if ((times -= 1)) {
+                    await T.setTimeout(100);
+                    return tryConnect(times);
+                }
+                throw err;
+            }
         };
 
-        const establishConnection = (attempts: number): Promise<Monkey> => {
-            const tryConnectHandler = (
+        const establishConnection = async (
+            attempts: number
+        ): Promise<Monkey> => {
+            const tryConnectHandler = async (
                 conn: Connection,
                 monkey: Monkey
             ): Promise<Monkey> => {
-                return T.setTimeout(100).then(() => {
-                    const hookMonkey = (): Promise<Monkey> => {
-                        return Promise.resolve(
-                            monkey.once('end', () => {
-                                return conn.end();
-                            })
-                        );
-                    };
-                    if (monkey.stream.readyState === 'closed') {
-                        conn.end();
+                await T.setTimeout(100);
+                const hookMonkey = async (): Promise<Monkey> => {
+                    return monkey.once('end', () => conn.end());
+                };
 
-                        // if attempts fail, return monkey anyway
-                        return attempts === 0
-                            ? hookMonkey()
-                            : establishConnection(attempts - 1);
-                    }
+                if (monkey.stream.readyState !== 'closed') {
                     return hookMonkey();
-                });
+                }
+
+                conn.end();
+                // if attempts fail, return monkey anyway
+                return attempts === 0
+                    ? hookMonkey()
+                    : establishConnection(attempts - 1);
             };
-            return this.transport(serial)
-                .then((transport) => {
-                    return new MonkeyCommand(transport).execute(serial, 1080);
-                })
-                .then((conn) => {
-                    return tryConnect(20).then(
-                        (monkey) => {
-                            return tryConnectHandler(conn, monkey);
-                        },
-                        (err) => {
-                            conn.end();
-                            throw err;
-                        }
-                    );
-                });
+            const transport = await this.transport(serial);
+            const conn_2 = await new MonkeyCommand(
+                transport,
+                serial,
+                1080
+            ).execute();
+            return tryConnect(20).then(
+                (monkey_1) => tryConnectHandler(conn_2, monkey_1),
+                (err) => {
+                    conn_2.end();
+                    throw err;
+                }
+            );
         };
         return nodeify(establishConnection(3), cb);
     }
@@ -1950,7 +1880,9 @@ export class Client {
     killApp(serial: string, pkg: string, cb: Callback): void;
     killApp(serial: string, pkg: string, cb?: Callback): Promise<void> | void {
         return nodeify(
-            this.shell(serial, `am force-stop ${pkg}`).then(() => {}),
+            this.shell(serial, `am force-stop ${pkg}`).then(() => {
+                return;
+            }),
             cb
         );
     }
@@ -2029,7 +1961,7 @@ export class Client {
     ): Promise<PropertyMap> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new BatteryStatusCommand(conn).execute(serial);
+                return new BatteryStatusCommand(conn, serial).execute();
             }),
             cb
         );
@@ -2049,17 +1981,12 @@ export class Client {
         options?: RmOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        if (typeof options === 'function' || !options) {
-            cb = options;
-            options = undefined;
-        }
-        const options_: RmOptions | undefined = options;
-
+        const { options_, cb_ } = buildFsParams(options, cb);
         return nodeify(
             this.connection().then((conn) => {
-                return new RmCommand(conn).execute(serial, path, options_);
+                return new RmCommand(conn, serial, path, options_).execute();
             }),
-            cb
+            cb_
         );
     }
 
@@ -2082,16 +2009,12 @@ export class Client {
         options?: MkDirOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        if (typeof options === 'function' || !options) {
-            cb = options;
-            options = undefined;
-        }
-        const options_: MkDirOptions | undefined = options;
+        const { options_, cb_ } = buildFsParams(options, cb);
         return nodeify(
             this.connection().then((conn) => {
-                return new MkDirCommand(conn).execute(serial, path, options_);
+                return new MkDirCommand(conn, serial, path, options_).execute();
             }),
-            cb
+            cb_
         );
     }
 
@@ -2114,19 +2037,12 @@ export class Client {
         options?: TouchOptions | Callback,
         cb?: Callback
     ): Promise<void> | void {
-        if (typeof options === 'function' || !options) {
-            cb = options;
-            options = undefined;
-        }
+        const { options_, cb_ } = buildFsParams(options, cb);
         return nodeify(
             this.connection().then((conn) => {
-                return new TouchCommand(conn).execute(
-                    serial,
-                    path,
-                    parseOptions(options)
-                );
+                return new TouchCommand(conn, serial, path, options_).execute();
             }),
-            cb
+            cb_
         );
     }
 
@@ -2156,20 +2072,17 @@ export class Client {
         options?: Callback | MvOptions,
         cb?: Callback
     ): Promise<void> | void {
-        if (typeof options === 'function' || !options) {
-            cb = options;
-            options = undefined;
-        }
-
+        const { options_, cb_ } = buildFsParams(options, cb);
         return nodeify(
             this.connection().then((conn) => {
-                return new MvCommand(conn).execute(
+                return new MvCommand(
+                    conn,
                     serial,
                     [srcPath, destPath],
-                    parseOptions(options)
-                );
+                    options_
+                ).execute();
             }),
-            cb
+            cb_
         );
     }
 
@@ -2199,19 +2112,17 @@ export class Client {
         options?: Callback | CpOptions,
         cb?: Callback
     ): Promise<void> | void {
-        if (typeof options === 'function' || !options) {
-            cb = options;
-            options = undefined;
-        }
+        const { options_, cb_ } = buildFsParams(options, cb);
         return nodeify(
             this.connection().then((conn) => {
-                return new CpCommand(conn).execute(
+                return new CpCommand(
+                    conn,
                     serial,
                     [srcPath, destPath],
-                    parseOptions(options)
-                );
+                    options_
+                ).execute();
             }),
-            cb
+            cb_
         );
     }
 
@@ -2228,7 +2139,7 @@ export class Client {
     ): Promise<FileStat> | void {
         return nodeify(
             this.connection().then((conn) => {
-                return new FileStatCommand(conn).execute(serial, path);
+                return new FileStatCommand(conn, serial, path).execute();
             }),
             cb
         );

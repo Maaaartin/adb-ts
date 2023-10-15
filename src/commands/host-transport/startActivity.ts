@@ -1,20 +1,21 @@
+import { Connection } from '../../connection';
 import { StartActivityOptions } from '../../util';
-import StartServiceCommand from './startservice';
+import StartProcess from '../abstract/startProcess';
 
-export default class StartActivityCommand extends StartServiceCommand {
-    protected Cmd = 'shell:am start ';
-    intentArgs(options: StartActivityOptions): string[] {
+export default class StartActivityCommand extends StartProcess {
+    constructor(
+        connection: Connection,
+        serial: string,
+        pkg: string,
+        activity: string,
+        options: StartActivityOptions = {}
+    ) {
+        super(connection, serial, 'shell:am start', pkg, activity, options);
+    }
+    protected intentArgs(options: StartActivityOptions): string[] {
         return [...super.intentArgs(options)].concat(
             options.debug ? '-D' : [],
             options.wait ? '-W' : []
         );
-    }
-    execute(
-        serial: string,
-        pkg: string,
-        activity: string,
-        options?: StartActivityOptions
-    ): Promise<void> {
-        return super.execute(serial, pkg, activity, options);
     }
 }

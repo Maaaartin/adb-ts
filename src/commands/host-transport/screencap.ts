@@ -4,14 +4,11 @@ import TransportCommand from '../abstract/transport';
 
 export default class ScreencapCommand extends TransportCommand<Buffer> {
     protected keepAlive = false;
-    protected postExecute(): Promise<Buffer> {
-        return this.parser
-            .readBytes(1)
-            .then((buffer) => this.transform(buffer));
-    }
+
     protected Cmd = 'shell:echo && screencap -p 2>/dev/null';
 
-    private transform(buffer: Buffer): Promise<Buffer> {
+    protected async postExecute(): Promise<Buffer> {
+        const buffer = await this.parser.readBytes(1);
         const transform = new LineTransform({
             autoDetect: true
         });
@@ -28,17 +25,17 @@ export default class ScreencapCommand extends TransportCommand<Buffer> {
             transform.once('error', reject);
         });
     }
-    execute(serial: string): Promise<Buffer> {
-        return this.preExecute(serial)
 
-            .catch((err) => {
-                if (err instanceof PrematureEOFError) {
-                    throw new Error('No support for the screencap command');
-                }
-                throw err;
-            })
-            .finally(() => {
-                return this.endConnection();
-            });
+    public async execute(): Promise<Buffer> {
+        try {
+            return await super.execute();
+        } catch (err) {
+            if (err instanceof PrematureEOFError) {
+                throw new Error('No support for the screencap command');
+            }
+            throw err;
+        } finally {
+            this.endConnection();
+        }
     }
 }

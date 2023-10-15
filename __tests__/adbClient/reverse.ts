@@ -38,16 +38,13 @@ describe('Reverse', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.reverse(
+            await expect(() =>
+                adb.reverse(
                     'serial',
                     'localabstract:chrome_devtools_remote',
                     'tcp:9222'
-                );
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+                )
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -65,16 +62,13 @@ describe('Reverse', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.reverse(
+            await expect(() =>
+                adb.reverse(
                     'serial',
                     'localabstract:chrome_devtools_remote',
                     'tcp:9222'
-                );
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+                )
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -97,18 +91,13 @@ describe('Reverse', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.reverse(
+            await expect(() =>
+                adb.reverse(
                     'serial',
                     'localabstract:chrome_devtools_remote',
                     'tcp:9222'
-                );
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+                )
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
@@ -131,18 +120,13 @@ describe('Reverse', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.reverse(
+            await expect(() =>
+                adb.reverse(
                     'serial',
                     'localabstract:chrome_devtools_remote',
                     'tcp:9222'
-                );
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+                )
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

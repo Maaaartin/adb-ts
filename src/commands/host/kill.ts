@@ -2,7 +2,13 @@ import Command from '../command';
 
 export default class KillCommand extends Command<void> {
     protected autoEnd = true;
-    execute(): Promise<void> {
-        return this.initExecute('host:kill').then(this.handleReply(undefined));
+    public endConnection(): void {
+        this.connection.once('error', () => {
+            // ignore
+        });
+        return super.endConnection();
+    }
+    public async execute(): Promise<void> {
+        await this.initAndValidateReply('host:kill');
     }
 }

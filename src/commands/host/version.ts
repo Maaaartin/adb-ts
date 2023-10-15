@@ -3,20 +3,17 @@ import { Reply } from '../../util';
 
 export default class VersionCommand extends Command<number> {
     protected autoEnd = true;
-    execute(): Promise<number> {
-        return this.initExecute('host:version').then((reply) => {
-            switch (reply) {
-                case Reply.OKAY:
-                    return this.parser.readValue().then((value) => {
-                        return parseInt(value.toString(), 10);
-                    });
-                case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
-                        throw e;
-                    });
-                default:
-                    return parseInt(reply, 10);
+    public async execute(): Promise<number> {
+        const reply = await this.initExecute('host:version');
+        switch (reply) {
+            case Reply.OKAY: {
+                const value = (await this.parser.readValue()).toString();
+                return parseInt(value, 10);
             }
-        });
+            case Reply.FAIL:
+                throw await this.parser.readError();
+            default:
+                return parseInt(reply, 10);
+        }
     }
 }

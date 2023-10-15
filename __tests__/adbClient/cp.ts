@@ -2,19 +2,20 @@ import crypto from 'crypto';
 import { UnexpectedDataError } from '../../lib/util';
 import { Client } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
+import { promisify } from 'util';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
-        return '123456';
+        return '1-2-3-4-5';
     });
 });
 
 describe('Cp OKAY tests', () => {
-    it('Should execute without parameters', async () => {
+    it('Should execute without options', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cp /file /other) || echo '123456'`,
+                cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -29,11 +30,32 @@ describe('Cp OKAY tests', () => {
         }
     });
 
+    it('Should execute callback overload without options', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
+                res: null,
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new Client({ noAutoStart: true, port });
+            const result = await promisify<void>((cb) =>
+                adb.cp('serial', '/file', '/other', cb)
+            )();
+            expect(result).toBeUndefined();
+        } finally {
+            await adbMock.end();
+        }
+    });
+
     it('Should execute with simple parameters without archive', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cp -n -s -l -P -L -H -r -d -p -F -f -u -t /file /other) || echo '123456'`,
+                cmd: `shell:(cp -F -H -L -P -d -f -l -n -p -r -s -t -u /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -66,7 +88,7 @@ describe('Cp OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cp -n -s -l -P -L -H -a -F -f -u -t /file /other) || echo '123456'`,
+                cmd: `shell:(cp -F -H -L -P -a -f -l -n -s -t -u /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -100,7 +122,7 @@ describe('Cp OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cp --preserve=motcx /file /other) || echo '123456'`,
+                cmd: `shell:(cp --preserve=motcx /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -127,7 +149,7 @@ describe('Cp OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(cp --preserve=a /file /other) || echo '123456'`,
+                cmd: `shell:(cp --preserve=a /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -150,6 +172,42 @@ describe('Cp OKAY tests', () => {
             await adbMock.end();
         }
     });
+
+    it('Should execute callback overload with preserve option with all', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:(cp --preserve=a /file /other) || echo '1-2-3-4-5'`,
+                res: 'data',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new Client({ noAutoStart: true, port });
+            const result = await promisify<void>((cb) =>
+                adb.cp(
+                    'serial',
+                    '/file',
+                    '/other',
+                    {
+                        preserve: {
+                            all: true,
+                            mode: true,
+                            ownership: true,
+                            timestamps: true,
+                            context: true,
+                            xattr: true
+                        }
+                    },
+                    cb
+                )
+            )();
+            expect(result).toBeUndefined();
+        } finally {
+            await adbMock.end();
+        }
+    });
 });
 
 describe('Cp FAIL tests', () => {
@@ -157,7 +215,7 @@ describe('Cp FAIL tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'fail', res: null, rawRes: true },
             {
-                cmd: `shell:(cp /file /other) || echo '123456'`,
+                cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -165,12 +223,9 @@ describe('Cp FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.cp('serial', '/file', '/other');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() =>
+                adb.cp('serial', '/file', '/other')
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -188,12 +243,9 @@ describe('Cp FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.cp('serial', '/file', '/other');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() =>
+                adb.cp('serial', '/file', '/other')
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -210,7 +262,7 @@ describe('Cp unexpected tests', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:(cp /file /other) || echo '123456'`,
+                cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -218,14 +270,9 @@ describe('Cp unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.cp('serial', '/file', '/other');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.cp('serial', '/file', '/other')
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
@@ -239,7 +286,7 @@ describe('Cp unexpected tests', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:(cp /file /other) || echo '123456'`,
+                cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true,
                 unexpected: true
@@ -248,14 +295,9 @@ describe('Cp unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.mv('serial', '/file', '/other');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.cp('serial', '/file', '/other')
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

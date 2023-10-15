@@ -44,16 +44,9 @@ describe('Push data to file', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.pushDataToFile(
-                    'serial',
-                    Readable.from('data'),
-                    'dest'
-                );
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Error'));
-            }
+            await expect(() =>
+                adb.pushFile('serial', 'data', 'dest')
+            ).rejects.toEqual(new Error('Error'));
         } finally {
             await adbMock.end();
         }
@@ -72,18 +65,9 @@ describe('Push data to file', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.pushDataToFile(
-                    'serial',
-                    Readable.from('data'),
-                    'dest'
-                );
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.pushFile('serial', 'data', 'dest')
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

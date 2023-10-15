@@ -7,10 +7,4 @@ export default class SyncCommand extends TransportCommand<Sync> {
     protected postExecute(): Sync {
         return new Sync(this.connection);
     }
-    execute(serial: string): Promise<Sync> {
-        return this.preExecute(serial).catch((err) => {
-            this.endConnection();
-            throw err;
-        });
-    }
 }

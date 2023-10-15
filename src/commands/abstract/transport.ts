@@ -1,39 +1,35 @@
-import { Mixin } from 'ts-mixer';
+import { Connection } from '../../connection';
 import Cmd from './cmd';
-import PreExecute from './preExecute';
 
-export default abstract class TransportCommand<T> extends Mixin(
-    PreExecute,
-    Cmd
-) {
+export default abstract class TransportCommand<T> extends Cmd<T> {
+    private serial: string;
     protected autoEnd = false;
     protected abstract keepAlive: boolean;
-    abstract execute(serial: string, ...args: any[]): Promise<T>;
+
+    constructor(connection: Connection, serial: string) {
+        super(connection);
+        this.serial = serial;
+    }
+
     /**
-     * Executed when {@link preExecute} was successful
+     * Executed when {@link execute} was successful
      */
     protected abstract postExecute(): T | Promise<T>;
     /**
      * Executes {@link Cmd} on the device
      */
-    protected preExecute(serial: string): Promise<T> {
-        return this.initExecute('host:transport:'.concat(serial))
-            .then(
-                this.handleReply(() => {
-                    return this.initExecute(this.Cmd).then(
-                        this.handleReply(() => {
-                            return Promise.resolve(this.postExecute()).catch(
-                                (err) => {
-                                    this.endConnection();
-                                    throw err;
-                                }
-                            );
-                        })
-                    );
-                })
-            )
-            .finally(() => {
-                !this.keepAlive && this.endConnection();
-            });
+    public async execute(): Promise<T> {
+        try {
+            await this.initAndValidateReply(
+                'host:transport:'.concat(this.serial)
+            );
+            await this.initAndValidateReply(this.Cmd);
+            return await this.postExecute();
+        } catch (err) {
+            this.endConnection();
+            throw err;
+        } finally {
+            !this.keepAlive && this.endConnection();
+        }
     }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import net from 'net';
 import { Parser } from '../lib/parser';
 import { NonEmptyArray, Reply } from '../lib/util';
@@ -28,7 +29,7 @@ export class AdbMock {
     }
 
     constructor(seq: Sequence | NonEmptyArray<Sequence>) {
-        this.seq = Array.isArray(seq) ? seq : [seq];
+        this.seq = [seq].flat();
     }
 
     protected getPort(): number {
@@ -134,14 +135,14 @@ export class AdbMock {
                         this.hook();
                         resolve(this.getPort());
                         this.server_.removeListener('error', reject);
-                    } catch (e: any) {
+                    } catch (e: unknown) {
                         reject(e);
                     }
                 });
             } else {
                 try {
                     resolve(this.getPort());
-                } catch (e: any) {
+                } catch (e: unknown) {
                     reject(e);
                 }
             }

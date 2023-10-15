@@ -1,19 +1,22 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { Client } from '../../lib/client';
 import TransportCommand from '../../lib/commands/abstract/transport';
+import { Connection } from '../../lib/connection';
 
 class TestCmd extends TransportCommand<null> {
     protected keepAlive = false;
-    protected Cmd = 'test ';
-    protected postExecute(): Promise<null> {
-        return Promise.resolve(null);
+    private arg: string;
+    constructor(connection: Connection, serial: string, arg: string) {
+        super(connection, serial);
+        this.arg = arg;
     }
-    public execute(serial: string, arg: string): Promise<null> {
-        this.Cmd += arg;
-        return this.preExecute(serial);
+    protected get Cmd(): string {
+        return `test ${this.arg}`;
+    }
+    protected postExecute(): null {
+        return null;
     }
 }
-
 describe('Custom command tests', () => {
     it('Should execute command', async () => {
         const adbMock = new AdbMock([

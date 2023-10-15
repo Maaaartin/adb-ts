@@ -9,12 +9,12 @@ export default class LineTransform extends Transform {
     private autoDetect: boolean;
     private transformNeeded = true;
     private skipBytes = 0;
-    constructor(options?: LineTransformOptions) {
+    constructor(options: LineTransformOptions) {
         super(options);
         this.autoDetect = options?.autoDetect || false;
     }
 
-    nullTransform(
+    private nullTransform(
         chunk: Buffer,
         _encoding: BufferEncoding,
         cb: () => void
@@ -23,7 +23,11 @@ export default class LineTransform extends Transform {
         cb();
     }
 
-    _transform(chunk: Buffer, encoding: BufferEncoding, cb: () => void): void {
+    public _transform(
+        chunk: Buffer,
+        encoding: BufferEncoding,
+        cb: () => void
+    ): void {
         if (this.autoDetect) {
             if (chunk[0] === 0x0a) {
                 this.transformNeeded = false;
@@ -71,7 +75,7 @@ export default class LineTransform extends Transform {
         cb();
     }
 
-    _flush(cb: () => void): void {
+    public _flush(cb: () => void): void {
         if (this.savedR) {
             this.push(this.savedR);
         }

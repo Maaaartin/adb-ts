@@ -132,12 +132,9 @@ describe('Get setting FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.getSetting('serial', 'system', 'prop');
-                fail('Expected Failure');
-            } catch (e) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(
+                adb.getSetting('serial', 'system', 'prop')
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -155,12 +152,9 @@ describe('Get setting FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.getSetting('serial', 'system', 'prop');
-                fail('Expected Failure');
-            } catch (e) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(
+                adb.getSetting('serial', 'system', 'prop')
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -185,14 +179,9 @@ describe('Get setting unexpected response tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.getSetting('serial', 'system', 'prop');
-                fail('Expected Failure');
-            } catch (e) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(
+                adb.getSetting('serial', 'system', 'prop')
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
@@ -215,14 +204,9 @@ describe('Get setting unexpected response tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.getSetting('serial', 'system', 'prop');
-                fail('Expected Failure');
-            } catch (e) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(
+                adb.getSetting('serial', 'system', 'prop')
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

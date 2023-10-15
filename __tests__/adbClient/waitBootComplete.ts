@@ -34,12 +34,9 @@ describe('Wait boot complete', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.waitBootComplete('serial');
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toBeInstanceOf(PrematureEOFError);
-            }
+            await expect(() =>
+                adb.waitBootComplete('serial')
+            ).rejects.toBeInstanceOf(PrematureEOFError);
         } finally {
             await adbMock.end();
         }

@@ -1,12 +1,20 @@
+import { Connection } from '../../connection';
 import Command from '../command';
 export default class HostTransportCommand extends Command<void> {
     protected autoEnd = false;
-    execute(serial: string): Promise<void> {
-        return this.initExecute('host:transport:' + serial)
-            .then(this.handleReply(undefined))
-            .catch((err) => {
-                this.endConnection();
-                throw err;
-            });
+    private serial: string;
+
+    constructor(connection: Connection, serial: string) {
+        super(connection);
+        this.serial = serial;
+    }
+
+    public async execute(): Promise<void> {
+        try {
+            await this.initAndValidateReply(`host:transport:${this.serial}`);
+        } catch (err) {
+            this.endConnection();
+            throw err;
+        }
     }
 }

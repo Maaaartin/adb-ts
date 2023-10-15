@@ -1,5 +1,6 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { Client } from '../../lib/client';
+import { UnexpectedDataError } from '../../lib/util';
 
 describe('Uninstall', () => {
     it('OKAY with Success response', async () => {
@@ -112,12 +113,9 @@ describe('Uninstall', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.uninstall('serial', 'com.package');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(() =>
+                adb.uninstall('serial', 'com.package')
+            ).rejects.toThrow(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -139,12 +137,9 @@ describe('Uninstall', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.uninstall('serial', 'com.package');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(() =>
+                adb.uninstall('serial', 'com.package')
+            ).rejects.toThrow(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -167,14 +162,9 @@ describe('Uninstall', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.uninstall('serial', 'com.package');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe(
-                    "Unexpected 'UNEX', was expecting OKAY or FAIL"
-                );
-            }
+            await expect(() =>
+                adb.uninstall('serial', 'com.package')
+            ).rejects.toThrow(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
@@ -197,14 +187,9 @@ describe('Uninstall', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.uninstall('serial', 'com.package');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe(
-                    "Unexpected 'UNEX', was expecting OKAY or FAIL"
-                );
-            }
+            await expect(() =>
+                adb.uninstall('serial', 'com.package')
+            ).rejects.toThrow(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

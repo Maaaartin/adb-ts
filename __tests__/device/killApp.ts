@@ -4,7 +4,7 @@ import { getDevice } from '../../mockery/testDevice';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
-        return '123456';
+        return '1-2-3-4-5';
     });
 });
 
@@ -13,7 +13,7 @@ describe('Device kill app tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(am force-stop package) || echo '123456'`,
+                cmd: `shell:(am force-stop package) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }

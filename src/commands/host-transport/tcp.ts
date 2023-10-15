@@ -2,13 +2,17 @@ import { Connection } from '../../connection';
 import RawCommand from '../abstract/raw';
 
 export default class TcpCommand extends RawCommand {
-    protected Cmd = 'tcp:';
+    protected Cmd: string;
 
-    execute(serial: string, port: number, host?: string): Promise<Connection> {
-        this.Cmd += host ? host + ':' + port : port;
-        return this.preExecute(serial).catch((err) => {
-            this.connection.end();
-            throw err;
-        });
+    constructor(
+        connection: Connection,
+        serial: string,
+        port: number,
+        host: string | void
+    ) {
+        super(connection, serial);
+        this.Cmd = 'tcp:'.concat(
+            host ? host.concat(':', String(port)) : String(port)
+        );
     }
 }

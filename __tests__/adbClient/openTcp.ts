@@ -66,12 +66,9 @@ describe('Open TCP', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.openTcp('serial', 5555);
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() => adb.openTcp('serial', 5555)).rejects.toThrow(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -93,12 +90,9 @@ describe('Open TCP', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.openTcp('serial', 5555);
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() => adb.openTcp('serial', 5555)).rejects.toThrow(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -121,14 +115,9 @@ describe('Open TCP', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.openTcp('serial', 5555);
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => adb.openTcp('serial', 5555)).rejects.toThrow(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -151,14 +140,9 @@ describe('Open TCP', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.openTcp('serial', 5555);
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => adb.openTcp('serial', 5555)).rejects.toThrow(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }

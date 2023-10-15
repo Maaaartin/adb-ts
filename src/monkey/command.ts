@@ -7,17 +7,17 @@ export abstract class BaseCommand<T> {
         this.command = command;
         this.callback = callback;
     }
-    abstract isParsable(): this is ParsableCommand<T>;
+    public abstract isParsable(): this is ParsableCommand<T>;
 }
 
 export class Command extends BaseCommand<null> {
-    isParsable(): this is ParsableCommand<null> {
+    public isParsable(): this is ParsableCommand<null> {
         return false;
     }
 }
 
 export class ParsableCommand<T> extends BaseCommand<T> {
-    isParsable(): this is ParsableCommand<T> {
+    public isParsable(): this is ParsableCommand<T> {
         return true;
     }
     public readonly parser: (data: string | null) => T;

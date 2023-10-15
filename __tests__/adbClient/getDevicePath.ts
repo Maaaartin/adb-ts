@@ -21,12 +21,9 @@ describe('Get device path', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.getDevicePath('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(adb.getDevicePath('serial')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }

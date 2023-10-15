@@ -75,12 +75,9 @@ describe('IP address', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.getIpAddress('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(() => adb.getIpAddress('serial')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -99,12 +96,9 @@ describe('IP address', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.getIpAddress('serial');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(() => adb.getIpAddress('serial')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }

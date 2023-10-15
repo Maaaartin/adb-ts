@@ -1,4 +1,5 @@
 import net from 'net';
+import { Connection } from '../../connection';
 import { DeviceState, IDevice } from '../../util';
 import { UnexpectedDataError } from '../../util';
 import Command from '../command';
@@ -42,30 +43,31 @@ export function constructDevice(values: string[]): IDevice {
 }
 
 export default abstract class DevicesCommand extends Command<IDevice[]> {
-    protected readOnExecute = true;
+    protected abstract readOnExecute: boolean;
+    private command: string;
+
+    constructor(connection: Connection, command: string) {
+        super(connection);
+        this.command = command;
+    }
+
     private parse(value: string): IDevice[] {
-        const lines = value.split('\n').filter((l) => l !== '');
+        const lines = value.split('\n').filter(Boolean);
         return lines.map((line) => constructDevice(line.split(/\s+/)));
     }
 
-    readDevices(): Promise<IDevice[]> {
-        return this.parser.readValue().then((value) => {
-            return this.parse(value.toString().trim());
-        });
+    public async readDevices(): Promise<IDevice[]> {
+        const value = (await this.parser.readValue()).toString().trim();
+        return this.parse(value);
     }
 
-    execute(command: string): Promise<IDevice[]> {
-        return this.initExecute(command)
-            .then(
-                this.handleReply(
-                    this.readOnExecute
-                        ? (): Promise<IDevice[]> => this.readDevices()
-                        : []
-                )
-            )
-            .catch((err) => {
-                this.endConnection();
-                throw err;
-            });
+    public async execute(): Promise<IDevice[]> {
+        try {
+            await this.initAndValidateReply(this.command);
+            return this.readOnExecute ? await this.readDevices() : [];
+        } catch (err) {
+            this.endConnection();
+            throw err;
+        }
     }
 }

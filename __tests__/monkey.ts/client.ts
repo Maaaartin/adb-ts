@@ -84,11 +84,14 @@ describe('Commands', () => {
         const monkey = new Monkey();
 
         monkey.connect(new Socket().connect({ port, host: 'localhost' }));
-        const [err, value, command] = await promisify<any[]>((cb) => {
+        const [err, value, command] = await promisify<
+            [Error | null, unknown, string]
+        >((cb) => {
             monkey.send('test', (err, value, command) => {
                 return cb(null, [err, value, command]);
             });
         })();
+
         monkey.end();
         monkeyMock.end();
         expect(err).toEqual(new Error('Command failed'));
@@ -110,7 +113,7 @@ describe('Commands', () => {
                 new Error('Command queue depleted, but replies still coming in')
             );
         });
-        monkey.send('test', () => {});
+        monkey.send('test', () => undefined);
         monkey.queue.splice(0, monkey.queue.length);
     });
 });

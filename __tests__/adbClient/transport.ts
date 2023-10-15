@@ -28,12 +28,9 @@ describe('Transport tests', () => {
                 noAutoStart: true,
                 port
             });
-            try {
-                await client.transport('5678');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() => client.transport('5678')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -51,14 +48,9 @@ describe('Transport tests', () => {
                 noAutoStart: true,
                 port
             });
-            try {
-                await client.transport('5678');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => client.transport('5678')).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }

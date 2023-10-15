@@ -2,10 +2,11 @@ import crypto from 'crypto';
 import { UnexpectedDataError } from '../../lib/util';
 import { Client } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
+import { promisify } from 'util';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
-        return '123456';
+        return '1-2-3-4-5';
     });
 });
 
@@ -14,7 +15,7 @@ describe('Mv OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(mv /file /other) || echo '123456'`,
+                cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -29,11 +30,32 @@ describe('Mv OKAY tests', () => {
         }
     });
 
-    it('Should execute with parameters', async () => {
+    it('Should execute callback overload without options', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(mv -f -n /file /other) || echo '123456'`,
+                cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
+                res: 'data',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new Client({ noAutoStart: true, port });
+            const result = await promisify<void>((cb) =>
+                adb.mv('serial', '/file', '/other', cb)
+            )();
+            expect(result).toBeUndefined();
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Should execute with options', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:(mv -f -n /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -50,6 +72,36 @@ describe('Mv OKAY tests', () => {
             await adbMock.end();
         }
     });
+
+    it('Should execute callback overload with parameters', async () => {
+        const adbMock = new AdbMock([
+            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            {
+                cmd: `shell:(mv -f -n /file /other) || echo '1-2-3-4-5'`,
+                res: 'data',
+                rawRes: true
+            }
+        ]);
+        try {
+            const port = await adbMock.start();
+            const adb = new Client({ noAutoStart: true, port });
+            const result = await promisify<void>((cb) =>
+                adb.mv(
+                    'serial',
+                    '/file',
+                    '/other',
+                    {
+                        force: true,
+                        noClobber: true
+                    },
+                    cb
+                )
+            )();
+            expect(result).toBeUndefined();
+        } finally {
+            await adbMock.end();
+        }
+    });
 });
 
 describe('Mv FAIL tests', () => {
@@ -57,7 +109,7 @@ describe('Mv FAIL tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'fail', res: null, rawRes: true },
             {
-                cmd: `shell:(mv /file /other) || echo '123456'`,
+                cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -65,12 +117,9 @@ describe('Mv FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.mv('serial', '/file', '/other');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() =>
+                adb.mv('serial', '/file', '/other')
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -88,12 +137,9 @@ describe('Mv FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.mv('serial', '/file', '/other');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() =>
+                adb.mv('serial', '/file', '/other')
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -110,7 +156,7 @@ describe('Mv unexpected tests', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:(mv /file /other) || echo '123456'`,
+                cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -118,14 +164,9 @@ describe('Mv unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.mv('serial', '/file', '/other');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.mv('serial', '/file', '/other')
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
@@ -139,7 +180,7 @@ describe('Mv unexpected tests', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:(mv /file /other) || echo '123456'`,
+                cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true,
                 unexpected: true
@@ -148,14 +189,9 @@ describe('Mv unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.mv('serial', '/file', '/other');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.mv('serial', '/file', '/other')
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

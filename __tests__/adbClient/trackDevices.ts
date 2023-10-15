@@ -4,6 +4,22 @@ import { Device } from '../../lib/device';
 import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Track devices', () => {
+    it('Should command with autoEnd false', async () => {
+        const adbMock = new AdbMock({
+            cmd: 'host:track-devices-l',
+            res: null
+        });
+
+        const port = await adbMock.start();
+        const adb = new Client({ noAutoStart: true, port });
+        const tracker = await adb.trackDevices();
+        try {
+            expect(tracker['command'].autoEnd).toBe(false);
+        } finally {
+            tracker.end();
+            await adbMock.end();
+        }
+    });
     it('Should have device map of null at initialization', async () => {
         const adbMock = new AdbMock({
             cmd: 'host:track-devices-l',
@@ -14,7 +30,7 @@ describe('Track devices', () => {
         const adb = new Client({ noAutoStart: true, port });
         const tracker = await adb.trackDevices();
         try {
-            expect((tracker as any).deviceMap).toBeNull();
+            expect(tracker['deviceMap']).toBeNull();
         } finally {
             tracker.end();
             await adbMock.end();
@@ -234,11 +250,11 @@ describe('Track devices', () => {
             const adb = new Client({ noAutoStart: true, port });
             const tracker = await adb.trackDevices();
             const result = await promisify<void>(async (cb) => {
-                tracker.on('error', () => {});
+                tracker.on('error', () => undefined);
                 tracker.once('end', () => {
                     cb(null);
                 });
-                (tracker as any).command.endConnection();
+                tracker['command'].endConnection();
             })();
 
             expect(result).toBeUndefined();
@@ -262,7 +278,7 @@ describe('Track devices', () => {
                     cb(null);
                 });
 
-                (tracker as any).command.connection.destroy(new Error('end'));
+                tracker['command'].connection.destroy(new Error('end'));
             })();
 
             expect(result).toBeUndefined();
@@ -280,12 +296,9 @@ describe('Track devices', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.trackDevices();
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(() => adb.trackDevices()).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }

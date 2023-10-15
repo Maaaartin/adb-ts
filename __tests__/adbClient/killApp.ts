@@ -5,7 +5,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
-        return '123456';
+        return '1-2-3-4-5';
     });
 });
 
@@ -14,7 +14,7 @@ describe('Kill app OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(am force-stop package) || echo '123456'`,
+                cmd: `shell:(am force-stop package) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -33,20 +33,17 @@ describe('Kill app OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(am force-stop package) || echo '123456'`,
-                res: 'message \n123456',
+                cmd: `shell:(am force-stop package) || echo '1-2-3-4-5'`,
+                res: 'message \n1-2-3-4-5',
                 rawRes: true
             }
         ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.killApp('serial', 'package');
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(new AdbExecError('message', 'package'));
-            }
+            await expect(() =>
+                adb.killApp('serial', 'package')
+            ).rejects.toEqual(new AdbExecError('message', 'package'));
         } finally {
             await adbMock.end();
         }
@@ -58,20 +55,17 @@ describe('Kill app FAIL tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'fail', res: null, rawRes: true },
             {
-                cmd: `shell:(am force-stop package) || echo '123456'`,
-                res: 'message \n123456',
+                cmd: `shell:(am force-stop package) || echo '1-2-3-4-5'`,
+                res: 'message \n1-2-3-4-5',
                 rawRes: true
             }
         ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.killApp('serial', 'package');
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() =>
+                adb.killApp('serial', 'package')
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -82,19 +76,16 @@ describe('Kill app FAIL tests', () => {
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
                 cmd: `fail`,
-                res: 'message \n123456',
+                res: 'message \n1-2-3-4-5',
                 rawRes: true
             }
         ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.killApp('serial', 'package');
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() =>
+                adb.killApp('serial', 'package')
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -111,7 +102,7 @@ describe('Kill app unexpected response tests', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:(am force-stop package) || echo '123456'`,
+                cmd: `shell:(am force-stop package) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -119,14 +110,9 @@ describe('Kill app unexpected response tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.killApp('serial', 'package');
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.killApp('serial', 'package')
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
@@ -136,7 +122,7 @@ describe('Kill app unexpected response tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(am force-stop package) || echo '123456'`,
+                cmd: `shell:(am force-stop package) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true,
                 unexpected: true
@@ -145,14 +131,9 @@ describe('Kill app unexpected response tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.killApp('serial', 'package');
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.killApp('serial', 'package')
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

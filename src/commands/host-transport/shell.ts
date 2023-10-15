@@ -1,13 +1,15 @@
+import { Connection } from '../../connection';
 import ExecCommand from '../abstract/exec';
 
 export default class ShellCommand extends ExecCommand<string> {
-    public Cmd = '';
-    protected cast(value: string): string {
-        return value;
+    protected rawCmd: string;
+
+    constructor(connection: Connection, serial: string, command: string) {
+        super(connection, serial);
+        this.rawCmd = command;
     }
 
-    execute(serial: string, command: string): Promise<string> {
-        this.Cmd = command;
-        return this.preExecute(serial);
+    protected cast(value: string): string {
+        return value;
     }
 }

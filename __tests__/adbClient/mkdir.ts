@@ -5,7 +5,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
-        return '123456';
+        return '1-2-3-4-5';
     });
 });
 
@@ -14,7 +14,7 @@ describe('Mkdir OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(mkdir /dir) || echo '123456'`,
+                cmd: `shell:(mkdir /dir) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -33,7 +33,7 @@ describe('Mkdir OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(mkdir -m 'x' -p /dir) || echo '123456'`,
+                cmd: `shell:(mkdir -m 'x' -p /dir) || echo '1-2-3-4-5'`,
                 res: 'data',
                 rawRes: true
             }
@@ -57,7 +57,7 @@ describe('Mkdir FAIL tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'fail', res: null, rawRes: true },
             {
-                cmd: `shell:(mkdir /dir) || echo '123456'`,
+                cmd: `shell:(mkdir /dir) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -65,12 +65,9 @@ describe('Mkdir FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.mkdir('serial', '/dir');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() => adb.mkdir('serial', '/dir')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -88,12 +85,9 @@ describe('Mkdir FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.mkdir('serial', '/dir');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() => adb.mkdir('serial', '/dir')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -110,7 +104,7 @@ describe('Mkdir unexpected tests', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:(mkdir /dir) || echo '123456'`,
+                cmd: `shell:(mkdir /dir) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -118,14 +112,9 @@ describe('Mkdir unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.mkdir('serial', '/dir');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => adb.mkdir('serial', '/dir')).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -139,7 +128,7 @@ describe('Mkdir unexpected tests', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:(mkdir /dir) || echo '123456'`,
+                cmd: `shell:(mkdir /dir) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true,
                 unexpected: true
@@ -148,14 +137,9 @@ describe('Mkdir unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.mkdir('serial', '/dir');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() => adb.mkdir('serial', '/dir')).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }

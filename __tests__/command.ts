@@ -48,12 +48,9 @@ describe('Handle response', () => {
             const port = await adbMock.start();
             const conn = await getConnection(port);
             const cmd = new MockCommand(conn);
-            try {
-                await cmd.execute();
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(() => cmd.execute()).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -72,10 +69,9 @@ describe('Handle response', () => {
             const cmd = new MockCommand(conn);
             try {
                 await cmd.execute();
-            } catch (e: any) {
-                expect(e).toBeInstanceOf(UnexpectedDataError);
-                expect(e.message).toBe(
-                    "Unexpected 'UNEX', was expecting OKAY or FAIL"
+            } catch (e: unknown) {
+                expect(e).toEqual(
+                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
                 );
             }
         } finally {

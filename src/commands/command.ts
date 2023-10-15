@@ -1,5 +1,5 @@
 import { Connection } from '../connection';
-import { PrimitiveType, Reply } from '../util';
+import { Reply } from '../util';
 import { Parser } from '../parser';
 import { encodeData } from '../util';
 
@@ -12,45 +12,45 @@ export default abstract class Command<T> {
         this.parser = new Parser(this.connection);
     }
 
-    protected handleReply<T>(
-        resolver: T | (() => T | Promise<T>)
-    ): (reply: string | Buffer) => Promise<T> {
-        return (reply) => {
-            const resolverToPromise = (): Promise<T> => {
-                if (typeof resolver === 'function') {
-                    return Promise.resolve(
-                        (resolver as () => T | Promise<T>)()
-                    );
-                }
-                return Promise.resolve(resolver);
-            };
-            const replyStr = reply.toString();
-            switch (replyStr) {
-                case Reply.OKAY:
-                    return resolverToPromise();
-                case Reply.FAIL:
-                    return this.parser.readError().then((e) => {
-                        throw e;
-                    });
-                default:
-                    throw this.parser.unexpected(
-                        replyStr,
-                        [Reply.OKAY, Reply.FAIL].join(' or ')
-                    );
-            }
-        };
+    protected async validateReply(reply: string | Buffer): Promise<void> {
+        const replyStr = reply.toString();
+        switch (replyStr) {
+            case Reply.OKAY:
+                return undefined;
+            case Reply.FAIL:
+                throw await this.parser.readError();
+            default:
+                throw this.parser.unexpected(
+                    replyStr,
+                    [Reply.OKAY, Reply.FAIL].join(' or ')
+                );
+        }
     }
 
-    endConnection(): void {
+    protected async readAndValidateReply(): Promise<void> {
+        return this.validateReply(await this.parser.readAscii(4));
+    }
+
+    public endConnection(): void {
         this.connection.end();
     }
 
-    protected initExecute(...args: PrimitiveType[]): Promise<string> {
-        this.connection.write(encodeData(args.join(' ')));
-        return this.parser
-            .readAscii(4)
-            .finally(() => this.autoEnd && this.endConnection());
+    protected async initAndValidateReply(args: string): Promise<void> {
+        this.connection.write(encodeData(args));
+        try {
+            return await this.readAndValidateReply();
+        } finally {
+            this.autoEnd && this.endConnection();
+        }
+    }
+    protected async initExecute(args: string): Promise<string> {
+        this.connection.write(encodeData(args));
+        try {
+            return await this.parser.readAscii(4);
+        } finally {
+            this.autoEnd && this.endConnection();
+        }
     }
 
-    public abstract execute(...args: any[]): Promise<T>;
+    public abstract execute(): Promise<T>;
 }

@@ -1,8 +1,45 @@
+import { Connection } from '../../connection';
 import { IFileStat, FileStat } from '../../filestats';
 import ExecCommand from '../abstract/exec';
 
+const flags = [
+    'a',
+    'A',
+    'b',
+    'B',
+    'C',
+    'd',
+    'D',
+    'f',
+    'F',
+    'g',
+    'G',
+    'h',
+    'i',
+    'm',
+    'n',
+    'N',
+    'o',
+    's',
+    't',
+    'T',
+    'u',
+    'U',
+    'x',
+    'X',
+    'y',
+    'Y',
+    'z',
+    'Z'
+] as const;
+
 export default class FileStatCommand extends ExecCommand<FileStat> {
-    protected Cmd = 'stat -c ';
+    protected rawCmd: string;
+    constructor(connection: Connection, serial: string, path: string) {
+        super(connection, serial);
+        this.rawCmd = `stat -c "%${flags.join('\\_%')}" ${path}`;
+    }
+
     protected cast(value: string): FileStat {
         const props = value.split('\\_');
 
@@ -37,40 +74,5 @@ export default class FileStatCommand extends ExecCommand<FileStat> {
         };
 
         return new FileStat(parsed);
-    }
-
-    execute(serial: string, path: string): Promise<FileStat> {
-        const flags = [
-            'a',
-            'A',
-            'b',
-            'B',
-            'C',
-            'd',
-            'D',
-            'f',
-            'F',
-            'g',
-            'G',
-            'h',
-            'i',
-            'm',
-            'n',
-            'N',
-            'o',
-            's',
-            't',
-            'T',
-            'u',
-            'U',
-            'x',
-            'X',
-            'y',
-            'Y',
-            'z',
-            'Z'
-        ];
-        this.Cmd += `"%${flags.join('\\_%')}" ${path}`;
-        return this.preExecute(serial);
     }
 }

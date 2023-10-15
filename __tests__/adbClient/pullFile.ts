@@ -7,7 +7,7 @@ import { Writable } from 'stream';
 beforeEach(() => {
     jest.spyOn(fs, 'createWriteStream').mockImplementation(() => {
         return new Writable({
-            write: () => {}
+            write: (): void => undefined
         }) as WriteStream;
     });
 });
@@ -46,12 +46,9 @@ describe('Pull file tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.pullFile('serial', '/file', '/file');
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('data'));
-            }
+            await expect(() =>
+                adb.pullFile('serial', '/file', '/file')
+            ).rejects.toEqual(new Error('data'));
         } finally {
             await adbMock.end();
         }
@@ -70,14 +67,11 @@ describe('Pull file tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.pullFile('serial', '/file', '/file');
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'DATA, DONE or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.pullFile('serial', '/file', '/file')
+            ).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'DATA, DONE or FAIL')
+            );
         } finally {
             await adbMock.end();
         }

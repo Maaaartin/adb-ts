@@ -70,26 +70,4 @@ describe('Uninstall tests', () => {
             await adbMock.end();
         }
     });
-
-    it('Should uninstall package after getting Failure response', async () => {
-        const adbMock = new AdbMock([
-            {
-                cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
-            },
-            {
-                cmd: `shell:pm uninstall com.package`,
-                res: 'Unknown package:\n',
-                rawRes: true
-            }
-        ]);
-        try {
-            const port = await adbMock.start();
-            const result = await getDevice(port).uninstall('com.package');
-            expect(result).toBeUndefined();
-        } finally {
-            adbMock.end();
-        }
-    });
 });

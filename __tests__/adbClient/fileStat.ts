@@ -6,7 +6,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 
 beforeAll(() => {
     jest.spyOn(crypto, 'randomUUID').mockImplementation(() => {
-        return '123456';
+        return '1-2-3-4-5';
     });
 });
 describe('File stat OKAY tests', () => {
@@ -14,7 +14,7 @@ describe('File stat OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file) || echo '123456'`,
+                cmd: `shell:(stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file) || echo '1-2-3-4-5'`,
                 res: '660\\_-rw-rw----\\_8\\_512\\_u:object_r:fuse:s0\\_80\\_50\\_81b0\\_regular empty file\\_1023\\_media_rw\\_1\\_303154\\_/storage/emulated\\_/sdcard/file\\_/sdcard/file\\_4096\\_0\\_0\\_0\\_10145\\_u0_a145\\_2022-12-15 16:40:46.871000000 +0100\\_1671118846\\_2022-12-15 16:40:46.871000000 +0100\\_1671118846\\_2022-12-15 21:33:17.585000000 +0100\\_1671136397',
                 rawRes: true
             }
@@ -60,8 +60,8 @@ describe('File stat OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
-                cmd: `shell:(stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file) || echo '123456'`,
-                res: 'message 123456',
+                cmd: `shell:(stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file) || echo '1-2-3-4-5'`,
+                res: 'message 1-2-3-4-5',
                 rawRes: true
             }
         ]);
@@ -69,12 +69,13 @@ describe('File stat OKAY tests', () => {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
             await adb.fileStat('serial', '/file');
-        } catch (e: any) {
-            expect(e.message).toBe('message');
-            expect(e.command).toBe(
-                `stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file`
+        } catch (e: unknown) {
+            expect(e).toEqual(
+                new AdbExecError(
+                    'message',
+                    `stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file`
+                )
             );
-            expect(e).toBeInstanceOf(AdbExecError);
         } finally {
             await adbMock.end();
         }
@@ -86,7 +87,7 @@ describe('File stat FAIL tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'fail', res: null, rawRes: true },
             {
-                cmd: `shell:(stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file) || echo '123456'`,
+                cmd: `shell:(stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -94,12 +95,9 @@ describe('File stat FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.fileStat('serial', '/file');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(adb.fileStat('serial', '/file')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -117,12 +115,9 @@ describe('File stat FAIL tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.fileStat('serial', '/file');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(adb.fileStat('serial', '/file')).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -139,7 +134,7 @@ describe('File stat unexpected tests', () => {
                 unexpected: true
             },
             {
-                cmd: `shell:(stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file) || echo '123456'`,
+                cmd: `shell:(stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true
             }
@@ -147,14 +142,9 @@ describe('File stat unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.fileStat('serial', '/file');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(adb.fileStat('serial', '/file')).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -168,7 +158,7 @@ describe('File stat unexpected tests', () => {
                 rawRes: true
             },
             {
-                cmd: `shell:(stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file) || echo '123456'`,
+                cmd: `shell:(stat -c "%a\\_%A\\_%b\\_%B\\_%C\\_%d\\_%D\\_%f\\_%F\\_%g\\_%G\\_%h\\_%i\\_%m\\_%n\\_%N\\_%o\\_%s\\_%t\\_%T\\_%u\\_%U\\_%x\\_%X\\_%y\\_%Y\\_%z\\_%Z" /file) || echo '1-2-3-4-5'`,
                 res: null,
                 rawRes: true,
                 unexpected: true
@@ -177,14 +167,9 @@ describe('File stat unexpected tests', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.fileStat('serial', '/file');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(adb.fileStat('serial', '/file')).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }

@@ -28,12 +28,9 @@ describe('Version tests', () => {
                 noAutoStart: true,
                 port
             });
-            try {
-                await client.version();
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(() => client.version()).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }

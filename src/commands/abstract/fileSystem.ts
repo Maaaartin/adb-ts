@@ -1,23 +1,58 @@
+import { Connection } from '../../connection';
+import { ArgsMapper, NonNullable, ObjectEntries } from '../../util';
 import ExecCommand from './exec';
 
-export default abstract class FileSystemCommand extends ExecCommand<void> {
-    protected abstract intentArgs(options?: Record<string, any>): string[];
-    protected options?: Record<string, any>;
+export default abstract class FileSystemCommand<
+    T extends object,
+    P extends string | string[]
+> extends ExecCommand<void> {
+    protected abstract rootCmd: string;
+    protected abstract argsMapper: ArgsMapper<T>;
+    private path: P;
+    private options: T;
 
-    cast(): void {}
-
-    execute(
+    constructor(
+        connection: Connection,
         serial: string,
-        path: string | string[],
-        options?: Record<string, any>
-    ): Promise<void> {
-        const pathArr = Array.isArray(path) ? path : [path];
-
-        this.Cmd = [this.Cmd, ...this.intentArgs(options), ...pathArr].join(
-            ' '
-        );
-
+        path: P,
+        options: T = {} as T
+    ) {
+        super(connection, serial);
+        this.path = path;
         this.options = options;
-        return this.preExecute(serial);
+    }
+
+    protected get rawCmd(): string {
+        const args = (Object.entries(this.options) as ObjectEntries<T>).reduce<
+            (string | string[])[]
+        >((acc, [key, val]) => {
+            if (typeof val === 'undefined') {
+                return acc;
+            }
+
+            const mapper = this.argsMapper[key];
+            if (typeof mapper === 'function') {
+                return acc.concat([
+                    [mapper(val as NonNullable<T[keyof T]>, this.options)]
+                        .flat()
+                        .filter(Boolean)
+                ]);
+            }
+            if (val !== false) {
+                return acc.concat(mapper);
+            }
+
+            return acc;
+        }, []);
+
+        return [
+            this.rootCmd,
+            ...args.filter(Boolean).sort().flat(),
+            ...[this.path].flat()
+        ].join(' ');
+    }
+
+    protected cast(): void {
+        return;
     }
 }

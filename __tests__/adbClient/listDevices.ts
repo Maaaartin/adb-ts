@@ -9,12 +9,9 @@ describe('List devices', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ port, noAutoStart: true });
-            try {
-                await adb.listDevices();
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e.message).toBe('Failure');
-            }
+            await expect(() => adb.listDevices()).rejects.toEqual(
+                new Error('Failure')
+            );
         } finally {
             await adbMock.end();
         }
@@ -27,10 +24,9 @@ describe('List devices', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ port, noAutoStart: true });
-            await adb.listDevices();
-            fail('Expected Failure');
-        } catch (e: any) {
-            expect(e).toBeInstanceOf(UnexpectedDataError);
+            await expect(() => adb.listDevices()).rejects.toEqual(
+                new UnexpectedDataError('UNEX', 'OKAY or FAIL')
+            );
         } finally {
             await adbMock.end();
         }
@@ -110,7 +106,7 @@ describe('List devices', () => {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
             await adb.listDevices();
-        } catch (e: any) {
+        } catch (e: unknown) {
             expect(e).toBeInstanceOf(UnexpectedDataError);
         } finally {
             await adbMock.end();
@@ -126,7 +122,7 @@ describe('List devices', () => {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
             await adb.listDevices();
-        } catch (e: any) {
+        } catch (e: unknown) {
             expect(e).toBeInstanceOf(UnexpectedDataError);
         } finally {
             await adbMock.end();

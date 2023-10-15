@@ -573,12 +573,9 @@ describe('Start service', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.startService('serial', 'com.my.app', 'Service');
-                fail('Expected failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('message'));
-            }
+            await expect(() =>
+                adb.startService('serial', 'com.my.app', 'Service')
+            ).rejects.toEqual(new Error('message'));
         } finally {
             await adbMock.end();
         }
@@ -596,12 +593,9 @@ describe('Start service', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.startService('serial', 'com.my.app', 'Service');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() =>
+                adb.startService('serial', 'com.my.app', 'Service')
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -619,12 +613,9 @@ describe('Start service', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.startService('serial', 'com.my.app', 'Service');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() =>
+                adb.startService('serial', 'com.my.app', 'Service')
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -647,14 +638,9 @@ describe('Start service', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.startService('serial', 'com.my.app', 'Service');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.startService('serial', 'com.my.app', 'Service')
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
@@ -677,14 +663,9 @@ describe('Start service', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.startService('serial', 'com.my.app', 'Service');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.startService('serial', 'com.my.app', 'Service')
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

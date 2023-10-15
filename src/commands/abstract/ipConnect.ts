@@ -1,23 +1,37 @@
-import Cmd from './cmd';
+import { Connection } from '../../connection';
+import Command from '../command';
 
-export default abstract class IpConnect extends Cmd<string> {
+export default abstract class IpConnect extends Command<string> {
     protected abstract Validator: RegExp;
     protected autoEnd = false;
-    execute(host: string, port: number): Promise<string> {
-        return this.initExecute(`${this.Cmd}:${host}:${port}`)
-            .then(
-                this.handleReply(() => {
-                    return this.parser.readValue().then((value) => {
-                        const valueStr = value.toString().trim();
-                        if (this.Validator.test(valueStr)) {
-                            return `${host}:${port}`;
-                        }
-                        throw new Error(valueStr);
-                    });
-                })
-            )
-            .finally(() => {
-                this.endConnection();
-            });
+    private command: string;
+    private host: string;
+    private port: number;
+
+    constructor(
+        connection: Connection,
+        command: string,
+        host: string,
+        port: number
+    ) {
+        super(connection);
+        this.command = command;
+        this.host = host;
+        this.port = port;
+    }
+
+    public async execute(): Promise<string> {
+        try {
+            await this.initAndValidateReply(
+                `${this.command}:${this.host}:${this.port}`
+            );
+            const value = (await this.parser.readValue()).toString().trim();
+            if (this.Validator.test(value)) {
+                return `${this.host}:${this.port}`;
+            }
+            throw new Error(value);
+        } finally {
+            this.endConnection();
+        }
     }
 }

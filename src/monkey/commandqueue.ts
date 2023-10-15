@@ -1,31 +1,30 @@
 import Api from './api';
 import { BaseCommand, Command, ParsableCommand } from './command';
 import { Monkey } from './client';
-import { MonkeyCallback } from '../util//types';
 
 export class CommandQueue extends Api {
     private client: Monkey;
-    private commands: BaseCommand<any>[] = [];
-    private replies: any[] = [];
+    private commands: BaseCommand<unknown>[] = [];
+    private replies: unknown[] = [];
     private errors: string[] = [];
     private sent = false;
-    private callback?: (err: Error | null, data: any[]) => void;
+    private callback?: (err: Error | null, data: unknown[]) => void;
     constructor(client: Monkey) {
         super();
         this.client = client;
     }
 
-    private get queue(): BaseCommand<any>[] {
+    private get queue(): BaseCommand<unknown>[] {
         return this.client.queue;
     }
 
-    private set queue(queue: BaseCommand<any>[]) {
+    private set queue(queue: BaseCommand<unknown>[]) {
         this.client.queue = queue;
     }
 
     private collector(
         err: Error | null,
-        value: any | null,
+        value: unknown,
         command: string
     ): void {
         if (err) {
@@ -55,30 +54,33 @@ export class CommandQueue extends Api {
         }
     }
 
-    private sendInternal(cmdConstruct: () => BaseCommand<any>): this {
+    private sendInternal(cmdConstruct: BaseCommand<unknown>): this {
         this.forbidReuse();
-        this.commands.push(cmdConstruct());
+        this.commands.push(cmdConstruct);
         return this;
     }
 
-    sendAndParse(
+    public sendAndParse<T>(
         command: string,
-        _cb: MonkeyCallback<any>,
-        parser: (data: any) => any
+        _cb: never,
+        parser: (data: string | null) => T | null
     ): this {
-        return this.sendInternal(() => {
-            return new ParsableCommand(
+        return this.sendInternal(
+            new ParsableCommand(
                 command,
                 this.collector.bind(this),
-                parser
-            );
-        });
+                parser as (data: string | null) => T
+            ) as BaseCommand<unknown>
+        );
     }
 
-    send(command: string): this {
-        return this.sendInternal(() => {
-            return new Command(command, this.collector.bind(this));
-        });
+    public send(command: string): this {
+        return this.sendInternal(
+            new Command(
+                command,
+                this.collector.bind(this)
+            ) as BaseCommand<unknown>
+        );
     }
 
     private getCommands(): string {
@@ -92,7 +94,7 @@ export class CommandQueue extends Api {
         this.queue = [...this.queue, ...this.commands];
     }
 
-    execute(cb: (err: Error | null, data: any[]) => void): void {
+    public execute(cb: (err: Error | null, data: unknown[]) => void): void {
         this.forbidReuse();
         this.sent = true;
         this.callback = cb;

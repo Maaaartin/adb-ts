@@ -260,17 +260,21 @@ export interface InputDurationOptions extends InputOptions {
     duration?: number;
 }
 
-export interface CommandConstruct<T> {
-    new (connection: Connection): Command<T>;
+export interface CommandConstruct<T, P extends unknown[] = unknown[]> {
+    new (connection: Connection, ...args: P): Command<T>;
 }
 
-export interface TransportCommandConstruct<T> {
-    new (connection: Connection): TransportCommand<T>;
+export interface TransportCommandConstruct<T, P extends unknown[] = unknown[]> {
+    new (
+        connection: Connection,
+        serial: string,
+        ...args: P
+    ): TransportCommand<T>;
 }
 
 export interface IpConnectConstruct {
     /** @ignore */
-    new (connection: Connection): IpConnect;
+    new (connection: Connection, host: string, port: number): IpConnect;
 }
 
 export type MonkeyCallback<T = null> = (
@@ -308,7 +312,7 @@ export interface RecursiveFSOption {
 
 export interface RmOptions extends ForceFSOption, RecursiveFSOption {}
 
-export interface MkDirOptions extends ForceFSOption {
+export interface MkDirOptions {
     /**
      * Adds `-m <value>` flag. Sets access mode
      */
@@ -419,7 +423,20 @@ export interface CpOptions
 export type PropertyMap = Map<string, PropertyValue>;
 
 export type NonFunctionPropertyNames<T> = {
-    [K in keyof T]: T[K] extends Function ? never : K;
+    [K in keyof T]: T[K] extends () => void ? never : K;
 }[keyof T];
 
 export type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
+
+export type NonNullable<T> = Exclude<T, undefined>;
+
+export type ArgsMapper<T extends object> = {
+    [K in keyof T]-?:
+        | string
+        | ((
+              value: NonNullable<T[K]>,
+              options: Readonly<T>
+          ) => string | string[]);
+};
+
+export type ObjectEntries<T extends object> = [[keyof T, T[keyof T]]];

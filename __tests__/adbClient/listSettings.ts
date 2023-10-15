@@ -81,12 +81,9 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.listSettings('serial', 'system');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() =>
+                adb.listSettings('serial', 'system')
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -110,12 +107,9 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.listSettings('serial', 'system');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(new Error('Failure'));
-            }
+            await expect(() =>
+                adb.listSettings('serial', 'system')
+            ).rejects.toEqual(new Error('Failure'));
         } finally {
             await adbMock.end();
         }
@@ -144,19 +138,14 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.listSettings('serial', 'system');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.listSettings('serial', 'system')
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }
     });
-    it('FAIL Unexpected first response', async () => {
+    it('Unexpected second response', async () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
@@ -179,14 +168,9 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            try {
-                await adb.listSettings('serial', 'system');
-                fail('Expected Failure');
-            } catch (e: any) {
-                expect(e).toEqual(
-                    new UnexpectedDataError('UNEX', 'OKAY or FAIL')
-                );
-            }
+            await expect(() =>
+                adb.listSettings('serial', 'system')
+            ).rejects.toEqual(new UnexpectedDataError('UNEX', 'OKAY or FAIL'));
         } finally {
             await adbMock.end();
         }

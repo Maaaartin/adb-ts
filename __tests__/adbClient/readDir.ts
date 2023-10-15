@@ -71,9 +71,6 @@ describe('Read dir', () => {
     });
 
     it('FAIL', async () => {
-        const buff = Buffer.from([
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0
-        ]);
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
@@ -85,19 +82,16 @@ describe('Read dir', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await adb.readDir('serial', '/');
-            fail('Expected failure');
-        } catch (e: any) {
-            expect(e).toEqual(new Error('Err'));
+
+            await expect(() => adb.readDir('serial', '/')).rejects.toEqual(
+                new Error('Err')
+            );
         } finally {
             await adbMock.end();
         }
     });
 
-    it('FAIL', async () => {
-        const buff = Buffer.from([
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0
-        ]);
+    it('Unexpected data', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: null, rawRes: true },
             {
@@ -109,10 +103,8 @@ describe('Read dir', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await adb.readDir('serial', '/');
-            fail('Expected failure');
-        } catch (e: any) {
-            expect(e).toEqual(
+
+            await expect(() => adb.readDir('serial', '/')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'DENT, DONE or FAIL')
             );
         } finally {

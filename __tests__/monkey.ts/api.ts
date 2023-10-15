@@ -1,6 +1,8 @@
 import { OkReply, ErrReply } from '../../lib/monkey/reply';
 import MonkeyMock from '../../mockery/mockMonkey';
 
+type MockSignature = Record<string, (...args: unknown[]) => unknown>;
+
 const voidMethods = {
     keyDown: { cmd: 'key down', params: [4] },
     keyUp: { cmd: 'key up', params: [4] },
@@ -25,15 +27,23 @@ const specialCaseMethods = {
         cmd: 'type',
         params: ['"test"'],
         response: null,
-        escaped: 'type \\"test\\"'
+        escaped: 'type \\"test\\"',
+        parsed: null
     },
     list: {
         cmd: 'listvar',
         params: null,
         response: 'var1 var2',
-        parsed: ['var1', 'var2']
+        parsed: ['var1', 'var2'],
+        escaped: null
     },
-    get: { cmd: 'getvar', params: ['test'], response: 'value' }
+    get: {
+        cmd: 'getvar',
+        params: ['test'],
+        response: 'value',
+        parsed: null,
+        escaped: null
+    }
 };
 
 const amMethods = {
@@ -138,12 +148,18 @@ const displayMethods = {
     }
 };
 
-const runVoidTests = (methods: Record<string, any>) => {
+const runVoidTests = (methods: object): void => {
     describe('Void OK tests', () => {
         Object.entries(methods).forEach(([method, { cmd, params }]) => {
             it(`Should execute ${method} without error`, (done) => {
-                const monkey = new MonkeyMock(new OkReply(null));
-                const cb = (err: Error | null, reply: any, command: string) => {
+                const monkey = new MonkeyMock(
+                    new OkReply(null)
+                ) as unknown as MockSignature;
+                const cb = (
+                    err: Error | null,
+                    reply: null,
+                    command: string
+                ): void => {
                     expect(err).toBeNull();
                     expect(reply).toBeNull();
                     expect(command).toEqual(
@@ -152,9 +168,9 @@ const runVoidTests = (methods: Record<string, any>) => {
                     done();
                 };
                 if (params) {
-                    (monkey as any)[method](...params, cb);
+                    <unknown>monkey[method](...params, cb);
                 } else {
-                    (monkey as any)[method](cb);
+                    <unknown>monkey[method](cb);
                 }
             });
         });
@@ -163,8 +179,14 @@ const runVoidTests = (methods: Record<string, any>) => {
     describe('Void Error tests', () => {
         Object.entries(methods).forEach(([method, { cmd, params }]) => {
             it(`Should execute ${method} with error`, (done) => {
-                const monkey = new MonkeyMock(new ErrReply('error'));
-                const cb = (err: Error | null, reply: any, command: string) => {
+                const monkey = new MonkeyMock(
+                    new ErrReply('error')
+                ) as unknown as MockSignature;
+                const cb = (
+                    err: Error | null,
+                    reply: null,
+                    command: string
+                ): void => {
                     expect(err).toEqual(new Error('error'));
                     expect(reply).toBeNull();
                     expect(command).toEqual(
@@ -174,26 +196,28 @@ const runVoidTests = (methods: Record<string, any>) => {
                 };
 
                 if (params) {
-                    (monkey as any)[method](...params, cb);
+                    <unknown>monkey[method](...params, cb);
                 } else {
-                    (monkey as any)[method](cb);
+                    <unknown>monkey[method](cb);
                 }
             });
         });
     });
 };
 
-const runSpecialCaseMethods = (methods: Record<string, any>) => {
+const runSpecialCaseMethods = (methods: typeof specialCaseMethods): void => {
     describe('Special case OK tests', () => {
         Object.entries(methods).forEach(
             ([method, { cmd, params, response, parsed, escaped }]) => {
                 it(`Should execute ${method} without error`, (done) => {
-                    const monkey = new MonkeyMock(new OkReply(response));
+                    const monkey = new MonkeyMock(
+                        new OkReply(response)
+                    ) as unknown as MockSignature;
                     const cb = (
                         err: Error | null,
-                        reply: any,
+                        reply: string,
                         command: string
-                    ) => {
+                    ): void => {
                         expect(err).toBeNull();
                         expect(reply).toEqual(parsed || response);
                         expect(command).toEqual(
@@ -203,9 +227,9 @@ const runSpecialCaseMethods = (methods: Record<string, any>) => {
                         done();
                     };
                     if (params) {
-                        (monkey as any)[method](...params, cb);
+                        <unknown>monkey[method](...params, cb);
                     } else {
-                        (monkey as any)[method](cb);
+                        <unknown>monkey[method](cb);
                     }
                 });
             }
@@ -216,12 +240,14 @@ const runSpecialCaseMethods = (methods: Record<string, any>) => {
         Object.entries(methods).forEach(
             ([method, { cmd, params, escaped }]) => {
                 it(`Should execute ${method} with error`, (done) => {
-                    const monkey = new MonkeyMock(new ErrReply('error'));
+                    const monkey = new MonkeyMock(
+                        new ErrReply('error')
+                    ) as unknown as MockSignature;
                     const cb = (
                         err: Error | null,
-                        reply: any,
+                        reply: null,
                         command: string
-                    ) => {
+                    ): void => {
                         expect(err).toEqual(new Error('error'));
                         expect(reply).toBeNull();
                         expect(command).toEqual(
@@ -232,9 +258,9 @@ const runSpecialCaseMethods = (methods: Record<string, any>) => {
                     };
 
                     if (params) {
-                        (monkey as any)[method](...params, cb);
+                        <unknown>monkey[method](...params, cb);
                     } else {
-                        (monkey as any)[method](cb);
+                        <unknown>monkey[method](cb);
                     }
                 });
             }
@@ -242,24 +268,26 @@ const runSpecialCaseMethods = (methods: Record<string, any>) => {
     });
 };
 
-const runSubcommandTests = (name: string, methods: Record<string, any>) => {
+const runSubcommandTests = (name: string, methods: object): void => {
     describe(`Am ${name} tests`, () => {
         Object.entries(methods).forEach(
             ([method, { cmd, response, parsed }]) => {
                 it(`Should execute ${method} without error`, (done) => {
-                    const monkey = new MonkeyMock(new OkReply(response));
+                    const monkey = new MonkeyMock(
+                        new OkReply(response)
+                    ) as unknown as MockSignature;
                     const cb = (
                         err: Error | null,
-                        reply: any,
+                        reply: typeof parsed | typeof response,
                         command: string
-                    ) => {
+                    ): void => {
                         expect(err).toBeNull();
                         expect(reply).toEqual(parsed || response);
                         expect(command).toEqual(cmd);
                         done();
                     };
 
-                    (monkey as any)[method](cb);
+                    <unknown>monkey[method](cb);
                 });
             }
         );
@@ -268,15 +296,21 @@ const runSubcommandTests = (name: string, methods: Record<string, any>) => {
     describe('Am Error tests', () => {
         Object.entries(amMethods).forEach(([method, { cmd }]) => {
             it(`Should execute ${method} with error`, (done) => {
-                const monkey = new MonkeyMock(new ErrReply('error'));
-                const cb = (err: Error | null, reply: any, command: string) => {
+                const monkey = new MonkeyMock(
+                    new ErrReply('error')
+                ) as unknown as MockSignature;
+                const cb = (
+                    err: Error | null,
+                    reply: null,
+                    command: string
+                ): void => {
                     expect(err).toEqual(new Error('error'));
                     expect(reply).toBeNull();
                     expect(command).toEqual(cmd);
                     done();
                 };
 
-                (monkey as any)[method](cb);
+                monkey[method](cb);
             });
         });
     });

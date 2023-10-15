@@ -1,23 +1,24 @@
+import { Connection } from '../../connection';
 import TransportCommand from '../abstract/transport';
 
 export default class ClearCommand extends TransportCommand<void> {
+    protected Cmd: string;
     protected keepAlive = false;
-    protected Cmd = 'shell:pm clear ';
-    private pkg = '';
-    protected postExecute(): Promise<void> {
-        return this.parser
-            .searchLine(/^(Success|Failed)$/, false)
-            .then(([result]) => {
-                if (result !== 'Success') {
-                    throw new Error(
-                        `Package '${this.pkg}' could not be cleared`
-                    );
-                }
-            });
-    }
-    execute(serial: string, pkg: string): Promise<void> {
+    private pkg: string;
+
+    constructor(connection: Connection, serial: string, pkg: string) {
+        super(connection, serial);
         this.pkg = pkg;
-        this.Cmd += pkg;
-        return this.preExecute(serial);
+        this.Cmd = `shell:pm clear ${pkg}`;
+    }
+
+    protected async postExecute(): Promise<void> {
+        const [result] = await this.parser.searchLine(
+            /^(Success|Failed)$/,
+            false
+        );
+        if (result !== 'Success') {
+            throw new Error(`Package '${this.pkg}' could not be cleared`);
+        }
     }
 }

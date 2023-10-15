@@ -1,12 +1,20 @@
+import { Connection } from '../../connection';
 import TransportParseAllCommand from '../abstract/transportParseAll';
 
 export default class ReverseCommand extends TransportParseAllCommand<void> {
-    protected parse(value: string): Promise<void> {
-        return this.handleReply(undefined)(value);
+    protected Cmd: string;
+
+    constructor(
+        connection: Connection,
+        serial: string,
+        remote: string,
+        local: string
+    ) {
+        super(connection, serial);
+        this.Cmd = `reverse:forward:${remote};${local}`;
     }
-    protected Cmd = 'reverse:forward:';
-    execute(serial: string, remote: string, local: string): Promise<void> {
-        this.Cmd += `${remote};${local}`;
-        return this.preExecute(serial);
+
+    protected parse(value: string): Promise<void> {
+        return this.validateReply(value);
     }
 }

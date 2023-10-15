@@ -2,19 +2,20 @@ import { Connection } from '../../connection';
 import TransportCommand from '../abstract/transport';
 
 export default class MonkeyCommand extends TransportCommand<Connection> {
-    protected Cmd = 'shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port ';
+    protected Cmd: string;
     protected keepAlive = true;
-    protected postExecute(): Promise<Connection> {
-        return this.parser.searchLine(/^:Monkey:/).then(() => {
-            return this.connection;
-        });
+
+    constructor(connection: Connection, serial: string, port: number) {
+        super(connection, serial);
+        this.Cmd = [
+            'shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port',
+            port,
+            '-v'
+        ].join(' ');
     }
 
-    execute(serial: string, port: number): Promise<Connection> {
-        this.Cmd += [port, '-v'].join(' ');
-        return this.preExecute(serial).catch((err) => {
-            this.endConnection();
-            throw err;
-        });
+    protected async postExecute(): Promise<Connection> {
+        await this.parser.searchLine(/^:Monkey:/);
+        return this.connection;
     }
 }

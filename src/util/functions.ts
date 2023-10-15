@@ -52,7 +52,7 @@ export const nodeify: <T>(
 };
 
 export const parseValueParam = <T extends NonFunctionProperties<T> | string, R>(
-    param: T | ValueCallback<R> | undefined
+    param: T | ValueCallback<R> | Callback | undefined
 ): T | undefined => {
     if (typeof param === 'function') {
         return;
@@ -76,14 +76,6 @@ export const parsePrimitiveParam = <T>(def: T, param: T | undefined): T => {
     }
     return param;
 };
-export const parseOptions = <R extends Record<string, any>>(
-    options: R | undefined
-): NonFunctionProperties<R> | undefined => {
-    if (typeof options === 'function') {
-        return;
-    }
-    return options;
-};
 
 export function findMatches(
     value: string,
@@ -101,42 +93,58 @@ export function findMatches(
     regExp: RegExp,
     parseTo?: 'list' | 'map'
 ): PropertyMap | string[][] | string[] {
-    let match: RegExpExecArray | null = null;
-    const acc: string[][] = [];
-    while ((match = regExp.exec(value))) {
-        acc.push(match.slice(1));
-    }
+    const exec = <T>(
+        mapper: (match: string[], acc: T) => T
+    ): ((init: T) => T) => {
+        const execInternal: (acc: T) => T = (acc: T) => {
+            const match = regExp.exec(value);
+            return match ? execInternal(mapper(match.slice(1), acc)) : acc;
+        };
+        return execInternal;
+    };
+
     switch (parseTo) {
         case 'list':
-            return acc.map(([val]) => val);
+            return exec<string[]>(([match], acc) => acc.concat(match))([]);
         case 'map':
-            return new Map(acc.map(([k, v]) => [k, stringToType(v)]));
+            return exec<PropertyMap>(([k, v], acc) =>
+                acc.set(k, stringToType(v))
+            )(new Map());
         default:
-            return acc;
+            return exec<string[][]>((match, acc) => [...acc, match])([]);
     }
 }
 
-export function buildInputParams(
-    defaultSource: InputSource,
-    source: InputOptions | InputSource | Callback | undefined,
+export function buildFsParams<T extends object>(
+    options: T | Callback | undefined,
     cb: Callback | undefined
 ): {
-    source: InputSource;
-    cb: Callback | undefined;
+    options_: T | undefined;
+    cb_: Callback | undefined;
 } {
-    if (typeof source === 'function') {
-        return { source: defaultSource, cb: source };
+    if (typeof options === 'function') {
+        return { options_: undefined, cb_: options };
     }
-    if (typeof source === 'undefined') {
-        return { source: defaultSource, cb };
+    if (typeof options === 'object') {
+        return { options_: options, cb_: cb };
     }
-    if (typeof source !== 'object') {
-        return { source, cb };
+    return { options_: undefined, cb_: cb };
+}
+
+export function buildInputParams<T extends InputSource | InputOptions>(
+    params: T | Callback | undefined,
+    cb: Callback | undefined
+): {
+    params: T | undefined;
+    cb_: Callback | undefined;
+} {
+    if (typeof params === 'function') {
+        return { params: undefined, cb_: params };
     }
-    if (typeof source.source !== 'undefined') {
-        return { source: source.source, cb };
+    if (typeof params !== 'undefined') {
+        return { params, cb_: cb };
     }
-    return { source: defaultSource, cb };
+    return { params: undefined, cb_: cb };
 }
 
 export function escape(arg: PrimitiveType): string {
