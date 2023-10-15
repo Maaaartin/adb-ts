@@ -1,7 +1,7 @@
 import { OkReply, ErrReply } from '../../lib/monkey/reply';
 import MonkeyMock from '../../mockery/mockMonkey';
 
-type MockSignature = Record<string, (...args: any[]) => unknown>;
+type MockSignature = Record<string, (...args: unknown[]) => unknown>;
 
 const voidMethods = {
     keyDown: { cmd: 'key down', params: [4] },

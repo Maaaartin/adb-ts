@@ -56,7 +56,7 @@ export class ChildProcessMock implements ChildProcess {
     ref(): void {
         throw new Error('Method not implemented.');
     }
-    addListener(event: string, listener: (...args: any[]) => void): this;
+    addListener(event: string, listener: (...args: unknown[]) => void): this;
     addListener(
         event: 'close',
         listener: (code: number | null, signal: NodeJS.Signals | null) => void
@@ -95,7 +95,7 @@ export class ChildProcessMock implements ChildProcess {
     emit(): boolean {
         throw new Error('Method not implemented.');
     }
-    on(event: string, listener: (...args: any[]) => void): this;
+    on(event: string, listener: (...args: unknown[]) => void): this;
     on(
         event: 'close',
         listener: (code: number | null, signal: NodeJS.Signals | null) => void
@@ -113,7 +113,7 @@ export class ChildProcessMock implements ChildProcess {
     on(): this {
         throw new Error('Method not implemented.');
     }
-    once(event: string, listener: (...args: any[]) => void): this;
+    once(event: string, listener: (...args: unknown[]) => void): this;
     once(
         event: 'close',
         listener: (code: number | null, signal: NodeJS.Signals | null) => void
@@ -131,7 +131,10 @@ export class ChildProcessMock implements ChildProcess {
     once(): this {
         throw new Error('Method not implemented.');
     }
-    prependListener(event: string, listener: (...args: any[]) => void): this;
+    prependListener(
+        event: string,
+        listener: (...args: unknown[]) => void
+    ): this;
     prependListener(
         event: 'close',
         listener: (code: number | null, signal: NodeJS.Signals | null) => void
@@ -151,7 +154,7 @@ export class ChildProcessMock implements ChildProcess {
     }
     prependOnceListener(
         event: string,
-        listener: (...args: any[]) => void
+        listener: (...args: unknown[]) => void
     ): this;
     prependOnceListener(
         event: 'close',

@@ -41,10 +41,7 @@
                 "allowTypedFunctionExpressions": true
             }
         ],
-        "@typescript-eslint/no-explicit-any": [
-            "error",
-            { "ignoreRestArgs": true }
-        ],
+        "@typescript-eslint/no-explicit-any": ["error"],
         "@typescript-eslint/explicit-member-accessibility": [
             "warn",
             {

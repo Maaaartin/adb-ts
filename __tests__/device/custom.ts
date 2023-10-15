@@ -32,7 +32,7 @@ describe('Device custom command tests', () => {
         ]);
         try {
             const port = await adbMock.start();
-            const result = await getDevice(port).custom(TestCmd, 'arg');
+            const result = await getDevice(port).custom(TestCmd, ['arg']);
             expect(result).toBeNull();
         } finally {
             await adbMock.end();
