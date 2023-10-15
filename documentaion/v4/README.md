@@ -2,7 +2,7 @@ adb-ts / [Exports](modules.md)
 
 ## API
 
-Start by importing [`Client`](./classes/Client.Client.html).
+Start by importing [`Client`](./classes/Client.Client.md).
 
 ```ts
 import { Client } from 'adb-ts';
