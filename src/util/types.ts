@@ -260,15 +260,15 @@ export interface InputDurationOptions extends InputOptions {
     duration?: number;
 }
 
-export interface CommandConstruct<T> {
-    new (connection: Connection, ...args: unknown[]): Command<T>;
+export interface CommandConstruct<T, P extends unknown[] = unknown[]> {
+    new (connection: Connection, ...args: P): Command<T>;
 }
 
-export interface TransportCommandConstruct<T> {
+export interface TransportCommandConstruct<T, P extends unknown[] = unknown[]> {
     new (
         connection: Connection,
         serial: string,
-        ...args: unknown[]
+        ...args: P
     ): TransportCommand<T>;
 }
 

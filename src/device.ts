@@ -319,11 +319,15 @@ export class Device implements IDevice {
         return this.client.roll(this.id, x, y, source as InputSource);
     }
 
-    custom<T>(
-        CustomCommand: TransportCommandConstruct<T>,
-        ...args: unknown[]
+    custom<T, P extends unknown[] = unknown[]>(
+        CustomCommand: TransportCommandConstruct<T, P>,
+        ...args: P
     ): Promise<T> {
-        return this.client.customTransport<T>(CustomCommand, this.id, args);
+        return this.client.customTransport<T, P>(
+            CustomCommand,
+            this.id,
+            ...args
+        );
     }
 
     openMonkey(): Promise<Monkey> {
