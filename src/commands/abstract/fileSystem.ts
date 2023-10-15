@@ -30,7 +30,7 @@ export default abstract class FileSystemCommand<
                 return acc;
             }
 
-            const mapper = this.argsMapper[key as keyof T];
+            const mapper = this.argsMapper[key];
             if (typeof mapper === 'function') {
                 return acc.concat([
                     [mapper(val as NonNullable<T[keyof T]>, this.options)]
