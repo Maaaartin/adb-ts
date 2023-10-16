@@ -589,66 +589,30 @@ export class Client {
      * Default input source is `keyboard`.
      * @param code Key code to send.
      */
-    keyEvent(
+    public async keyEvent(
         serial: string,
         code: KeyCode | NonEmptyArray<KeyCode>
     ): Promise<void>;
-    keyEvent(
+    public async keyEvent(
         serial: string,
         code: number | NonEmptyArray<number>
     ): Promise<void>;
 
-    keyEvent(
+    public async keyEvent(
         serial: string,
         code: KeyCode | NonEmptyArray<KeyCode>,
         options: KeyEventOptions
     ): Promise<void>;
-    keyEvent(
+    public async keyEvent(
         serial: string,
         code: number | NonEmptyArray<number>,
-        options: KeyEventOptions
-    ): Promise<void>;
-
-    keyEvent(
-        serial: string,
-        code: KeyCode | NonEmptyArray<KeyCode>,
-        cb: Callback
-    ): void;
-    keyEvent(
-        serial: string,
-        code: number | NonEmptyArray<number>,
-        cb: Callback
-    ): void;
-
-    keyEvent(
-        serial: string,
-        code: KeyCode | NonEmptyArray<KeyCode>,
-        options: KeyEventOptions,
-        cb: Callback
-    ): void;
-    keyEvent(
-        serial: string,
-        code: number | NonEmptyArray<number>,
-        options: KeyEventOptions,
-        cb: Callback
-    ): void;
-
-    keyEvent(
-        serial: string,
-        code: number | NonEmptyArray<number>,
-        options?: KeyEventOptions | Callback,
-        cb?: Callback
-    ): Promise<void> | void {
-        const { params, cb_ } = buildInputParams(options, cb);
-        return nodeify(
-            this.connection().then((conn) => {
-                return new KeyEvent(conn, serial, {
-                    options: params,
-                    code
-                }).execute();
-            }),
-            cb_
-        );
+        options?: KeyEventOptions
+    ): Promise<void> {
+        const { params } = buildInputParams(options, undefined);
+        return new KeyEvent(conn, serial, {
+            options: params,
+            code
+        }).execute();
     }
 
     /**
@@ -658,40 +622,25 @@ export class Client {
      * @param x Horizontal coordinate.
      * @param y Vertical coordinate.
      */
-    tap(serial: string, x: number, y: number): Promise<void>;
-    tap(
+    public async tap(serial: string, x: number, y: number): Promise<void>;
+    public async tap(
         serial: string,
         x: number,
         y: number,
         source: InputSource
     ): Promise<void>;
-    tap(serial: string, x: number, y: number, cb: Callback): void;
-    tap(
+    public async tap(
         serial: string,
         x: number,
         y: number,
-        source: InputSource,
-        cb: Callback
-    ): void;
-    tap(
-        serial: string,
-        x: number,
-        y: number,
-        source?: InputSource | Callback,
-        cb?: Callback
-    ): Promise<void> | void {
-        const { params, cb_ } = buildInputParams(source, cb);
-
-        return nodeify(
-            this.connection().then((conn) => {
-                return new Tap(conn, serial, {
-                    source: params,
-                    x,
-                    y
-                }).execute();
-            }),
-            cb_
-        );
+        source?: InputSource
+    ): Promise<void> {
+        const { params } = buildInputParams(source, undefined);
+        return new Tap(conn, serial, {
+            source: params,
+            x,
+            y
+        }).execute();
     }
 
     /**
@@ -699,26 +648,22 @@ export class Client {
      * Analogous to `adb shell input touchscreen text '<text>'`.
      * Default input source is `touchscreen`.
      */
-    text(serial: string, text: string): Promise<void>;
-    text(serial: string, text: string, source: InputSource): Promise<void>;
-    text(serial: string, text: string, cb: Callback): void;
-    text(serial: string, text: string, source: InputSource, cb: Callback): void;
-    text(
+    public async text(serial: string, text: string): Promise<void>;
+    public async text(
         serial: string,
         text: string,
-        source?: InputSource | Callback,
-        cb?: Callback
-    ): Promise<void> | void {
-        const { params, cb_ } = buildInputParams(source, cb);
-        return nodeify(
-            this.connection().then((conn) => {
-                return new Text(conn, serial, {
-                    source: params,
-                    text
-                }).execute();
-            }),
-            cb_
-        );
+        source: InputSource
+    ): Promise<void>;
+    public async text(
+        serial: string,
+        text: string,
+        source?: InputSource
+    ): Promise<void> {
+        const { params } = buildInputParams(source, undefined);
+        return new Text(conn, serial, {
+            source: params,
+            text
+        }).execute();
     }
 
     /**
@@ -735,34 +680,16 @@ export class Client {
      *     console.log(entry);
      * });
      */
-    openLogcat(serial: string): Promise<LogcatReader>;
-    openLogcat(serial: string, options: LogcatOptions): Promise<LogcatReader>;
-    openLogcat(serial: string, cb: ValueCallback<LogcatReader>): void;
-    openLogcat(
+    public async openLogcat(serial: string): Promise<LogcatReader>;
+    public async openLogcat(
         serial: string,
-        options: LogcatOptions,
-        cb: ValueCallback<LogcatReader>
-    ): void;
-    openLogcat(
+        options: LogcatOptions
+    ): Promise<LogcatReader>;
+    public async openLogcat(
         serial: string,
-        options?: ValueCallback<LogcatReader> | LogcatOptions,
-        cb?: ValueCallback<LogcatReader>
-    ): Promise<LogcatReader> | void {
-        if (typeof options === 'function') {
-            cb = options;
-            options = undefined;
-        }
-
-        return nodeify(
-            this.connection().then((conn) => {
-                return new LogcatCommand(
-                    conn,
-                    serial,
-                    typeof options === 'object' ? options : undefined
-                ).execute();
-            }),
-            cb
-        );
+        options?: LogcatOptions
+    ): Promise<LogcatReader> {
+        return new LogcatCommand(conn, serial, options).execute();
     }
 
     private syncService(serial: string): Promise<Sync> {
@@ -775,15 +702,8 @@ export class Client {
      * Deletes all data associated with a package from the device.
      * Analogous to `adb shell pm clear <pkg>`.
      */
-    clear(serial: string, pkg: string): Promise<void>;
-    clear(serial: string, pkg: string, cb: Callback): void;
-    clear(serial: string, pkg: string, cb?: Callback): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new ClearCommand(conn, serial, pkg).execute();
-            }),
-            cb
-        );
+    public async clear(serial: string, pkg: string): Promise<void> {
+        return new ClearCommand(await this.connection(), serial, pkg).execute();
     }
 
     private installRemote(
