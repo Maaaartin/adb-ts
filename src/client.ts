@@ -706,25 +706,28 @@ export class Client {
         return new ClearCommand(await this.connection(), serial, pkg).execute();
     }
 
-    private installRemote(
+    private async installRemote(
         serial: string,
         apk: string,
-        options?: InstallOptions,
-        args?: string
+        options: InstallOptions | undefined,
+        args: string | undefined
     ): Promise<void> {
-        return this.connection().then((conn) => {
-            return new InstallCommand(conn, serial, apk, options, args)
-                .execute()
-                .then(() => this.deleteApk(serial, apk));
-        });
+        await new InstallCommand(
+            await this.connection(),
+            serial,
+            apk,
+            options,
+            args
+        ).execute();
+        return this.deleteApk(serial, apk);
     }
 
     /**
      * Installs an apk to the device.
      * Analogous to `adb install <pkg>`.
      */
-    install(serial: string, apk: string | Readable): Promise<void>;
-    install(
+    public async install(serial: string, apk: string | Readable): Promise<void>;
+    public async install(
         serial: string,
         apk: string | Readable,
         options: InstallOptions
@@ -732,56 +735,39 @@ export class Client {
     /**
      * @param args Extra arguments. E.g. `--fastdeploy` flag.
      */
-    install(
+    public async install(
         serial: string,
         apk: string | Readable,
         options: InstallOptions,
         args: string
     ): Promise<void>;
-    install(serial: string, apk: string | Readable, cb: Callback): void;
-    install(
+    public async install(
         serial: string,
         apk: string | Readable,
-        options: InstallOptions,
-        cb: Callback
-    ): void;
-    install(
-        serial: string,
-        apk: string | Readable,
-        options: InstallOptions,
-        args: string,
-        cb: Callback
-    ): void;
-
-    install(
-        serial: string,
-        apk: string | Readable,
-        options?: InstallOptions | Callback,
-        args?: string | Callback,
-        cb?: Callback
-    ): Promise<void> | void {
-        const temp = Sync.temp(typeof apk === 'string' ? apk : '_stream.apk');
-        return nodeify(
-            this.push(serial, apk, temp).then((transfer) => {
-                const eventUnregister = new EventUnregister(transfer);
-                const promise = new Promise<void>((resolve, reject) => {
-                    eventUnregister.register((transfer) =>
-                        transfer.on('error', reject).on('end', (): void => {
-                            this.installRemote(
+        options?: InstallOptions,
+        args?: string
+    ): Promise<void> {
+        const temp = Sync.temp(typeof apk === 'string' ? apk : '_stream.apk'),
+            transfer = await this.push(serial, apk, temp),
+            eventUnregister = new EventUnregister(transfer),
+            doInstall = promisify<void>((cb) => {
+                eventUnregister.register((transfer) =>
+                    transfer.on('error', cb).on('end', async () => {
+                        try {
+                            await this.installRemote(
                                 serial,
                                 temp,
                                 parseValueParam(options),
                                 parseValueParam(args)
-                            )
-                                .then(resolve)
-                                .catch(reject);
-                        })
-                    );
-                });
-                return eventUnregister.unregisterAfter(promise);
-            }),
-            parseCbParam(options, cb) || parseCbParam(args, cb)
-        );
+                            );
+                            cb(null);
+                        } catch (error) {
+                            cb(error);
+                        }
+                    })
+                );
+            });
+        eventUnregister.unregisterAfter(doInstall());
     }
 
     /**
