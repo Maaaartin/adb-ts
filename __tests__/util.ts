@@ -3,8 +3,6 @@ import {
     encodeLength,
     encodeData,
     stringToType,
-    nodeify,
-    parseCbParam,
     parseValueParam,
     parsePrimitiveParam,
     findMatches,
@@ -107,40 +105,6 @@ describe('String to type', () => {
     });
 });
 
-describe('Nodeify', () => {
-    it('Resolve Promise', async () => {
-        const result = await nodeify(Promise.resolve(null), undefined);
-        expect(result).toBeNull();
-    });
-
-    it('Reject Promise', async () => {
-        try {
-            await nodeify(Promise.reject(new Error('message')), undefined);
-        } catch (e: unknown) {
-            expect(e).toEqual(new Error('message'));
-        }
-    });
-
-    it('Resolve Callback', () => {
-        const result = nodeify(Promise.resolve(null), (err, value) => {
-            expect(err).toBeNull();
-            expect(value).toBeNull();
-        });
-        expect(result).toBeUndefined();
-    });
-
-    it('Reject Callback', () => {
-        const result = nodeify(
-            Promise.reject(new Error('message')),
-            (err, value) => {
-                expect(err?.message).toBe('message');
-                expect(value).toBeUndefined();
-            }
-        );
-        expect(result).toBeUndefined();
-    });
-});
-
 describe('Parse value param', () => {
     it('undefined', () => {
         const result = parseValueParam(undefined);
@@ -155,41 +119,6 @@ describe('Parse value param', () => {
     it('object', () => {
         const result = parseValueParam({ one: 1 });
         expect(result).toEqual({ one: 1 });
-    });
-});
-
-describe('Parse cb params', () => {
-    it('undefined/undefined', () => {
-        const result = parseCbParam(undefined, undefined);
-        expect(result).toBeUndefined();
-    });
-
-    it('function/undefined', () => {
-        const result = parseCbParam(() => null, undefined);
-        expect(typeof result).toBe('function');
-    });
-
-    it('object/undefined', () => {
-        const result = parseCbParam({ one: 1 }, undefined);
-        expect(result).toBeUndefined();
-    });
-
-    it('object/function', () => {
-        const result = parseCbParam({ one: 1 }, () => null);
-        expect(typeof result).toBe('function');
-    });
-
-    it('undefined/function', () => {
-        const result = parseCbParam(undefined, () => null);
-        expect(typeof result).toBe('function');
-    });
-
-    it('function/function', () => {
-        const result = parseCbParam(
-            () => 1,
-            () => 2
-        );
-        expect(result?.(null, null)).toBe(1);
     });
 });
 

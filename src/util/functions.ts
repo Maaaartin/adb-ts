@@ -1,14 +1,4 @@
-import { callbackify } from 'util';
-import {
-    Callback,
-    ValueCallback,
-    InputOptions,
-    InputSource,
-    PropertyMap,
-    PropertyValue,
-    NonFunctionProperties,
-    PrimitiveType
-} from './types';
+import { PropertyMap, PropertyValue, PrimitiveType } from './types';
 
 export const decodeLength = (length: string): number => {
     return parseInt(length, 16);
@@ -42,32 +32,6 @@ export const stringToType = (value = ''): PropertyValue => {
         }
         return value || undefined;
     }
-};
-
-export const nodeify: <T>(
-    promise: Promise<T>,
-    cb: ((err: null | Error, value: T) => void) | undefined
-) => Promise<T> | void = (promise, cb) => {
-    return cb ? callbackify(() => promise)(cb) : promise;
-};
-
-export const parseValueParam = <T extends NonFunctionProperties<T> | string, R>(
-    param: T | ValueCallback<R> | Callback | undefined
-): T | undefined => {
-    if (typeof param === 'function') {
-        return;
-    }
-    return param;
-};
-
-export const parseCbParam = <T extends NonFunctionProperties<T> | string, R>(
-    param: T | ValueCallback<R> | undefined,
-    cb: ValueCallback<R> | undefined
-): ValueCallback<R> | undefined => {
-    if (typeof param === 'function') {
-        return param;
-    }
-    return cb;
 };
 
 export const parsePrimitiveParam = <T>(def: T, param: T | undefined): T => {
@@ -113,39 +77,6 @@ export function findMatches(
         default:
             return exec<string[][]>((match, acc) => [...acc, match])([]);
     }
-}
-
-export function buildFsParams<T extends object>(
-    options: T | Callback | undefined,
-    cb: Callback | undefined
-): {
-    options_: T | undefined;
-    cb_: Callback | undefined;
-} {
-    if (typeof options === 'function') {
-        return { options_: undefined, cb_: options };
-    }
-    if (typeof options === 'object') {
-        return { options_: options, cb_: cb };
-    }
-    return { options_: undefined, cb_: cb };
-}
-
-// TODO remove cb
-export function buildInputParams<T extends InputSource | InputOptions>(
-    params: T | Callback | undefined,
-    cb: Callback | undefined
-): {
-    params: T | undefined;
-    cb_: Callback | undefined;
-} {
-    if (typeof params === 'function') {
-        return { params: undefined, cb_: params };
-    }
-    if (typeof params !== 'undefined') {
-        return { params, cb_: cb };
-    }
-    return { params: undefined, cb_: cb };
 }
 
 export function escape(arg: PrimitiveType): string {

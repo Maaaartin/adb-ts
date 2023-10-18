@@ -17,10 +17,6 @@ export enum Reply {
     QUIT = 'QUIT'
 }
 
-export type Callback = (err: null | Error) => void;
-
-export type ValueCallback<T> = (err: null | Error, value: T) => void;
-
 export type DeviceState =
     | 'offline'
     | 'device'
@@ -425,8 +421,6 @@ export type PropertyMap = Map<string, PropertyValue>;
 export type NonFunctionPropertyNames<T> = {
     [K in keyof T]: T[K] extends () => void ? never : K;
 }[keyof T];
-
-export type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
 
 export type NonNullable<T> = Exclude<T, undefined>;
 

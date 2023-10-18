@@ -4,7 +4,6 @@ import {
     InputDurationOptions,
     CommandConstruct,
     CpOptions,
-    ValueCallback,
     ForwardsObject,
     IDevice,
     InputSource,
@@ -28,12 +27,9 @@ import {
     WaitForType,
     PropertyValue,
     TransportCommandConstruct,
-    buildInputParams,
     KeyCode,
     parsePrimitiveParam,
-    parseValueParam,
-    AdbExecError,
-    buildFsParams
+    AdbExecError
 } from './util';
 import { Sync, SyncMode } from './sync';
 import { execFile } from 'child_process';
@@ -188,19 +184,18 @@ export class Client {
     private async ipConnect(
         Construct: IpConnectConstruct,
         host: string,
-        port: number | ValueCallback<string> | undefined
+        port: number | undefined
     ): Promise<string> {
-        let port_ = parseValueParam(port);
         if (host.indexOf(':') !== -1) {
             const [h, p] = host.split(':', 2);
             host = h;
-            port_ = parseInt(p);
+            port = parseInt(p);
         }
         const conn = await this.connection();
         return new Construct(
             conn,
             host,
-            parsePrimitiveParam(ADB_DEFAULT_PORT, port_)
+            parsePrimitiveParam(ADB_DEFAULT_PORT, port)
         ).execute();
     }
 
@@ -452,7 +447,7 @@ export class Client {
             await this.connection(),
             serial,
             port,
-            parseValueParam(host)
+            host
         ).execute();
     }
 
@@ -476,9 +471,8 @@ export class Client {
         y: number,
         source?: InputSource
     ): Promise<void> {
-        const { params } = buildInputParams(source, undefined);
         return new Roll(await this.connection(), serial, {
-            source: params,
+            source,
             x,
             y
         }).execute();
@@ -492,8 +486,7 @@ export class Client {
     public async press(serial: string): Promise<void>;
     public async press(serial: string, source: InputSource): Promise<void>;
     public async press(serial: string, source?: InputSource): Promise<void> {
-        const { params } = buildInputParams(source, undefined);
-        return new Press(await this.connection(), serial, params).execute();
+        return new Press(await this.connection(), serial, source).execute();
     }
 
     /**
@@ -528,13 +521,12 @@ export class Client {
         y2: number,
         options?: InputDurationOptions
     ): Promise<void> {
-        const { params } = buildInputParams(options, undefined);
         return new DragAndDrop(await this.connection(), serial, {
             x1,
             y1,
             x2,
             y2,
-            options: params
+            options
         }).execute();
     }
 
@@ -570,13 +562,12 @@ export class Client {
         y2: number,
         options?: InputDurationOptions
     ): Promise<void> {
-        const { params } = buildInputParams(options, undefined);
         return new Swipe(await this.connection(), serial, {
             x1,
             y1,
             x2,
             y2,
-            options: params
+            options
         }).execute();
     }
 
@@ -605,9 +596,8 @@ export class Client {
         code: number | NonEmptyArray<number>,
         options?: KeyEventOptions
     ): Promise<void> {
-        const { params } = buildInputParams(options, undefined);
         return new KeyEvent(await this.connection(), serial, {
-            options: params,
+            options,
             code
         }).execute();
     }
@@ -632,9 +622,8 @@ export class Client {
         y: number,
         source?: InputSource
     ): Promise<void> {
-        const { params } = buildInputParams(source, undefined);
         return new Tap(await this.connection(), serial, {
-            source: params,
+            source,
             x,
             y
         }).execute();
@@ -656,9 +645,8 @@ export class Client {
         text: string,
         source?: InputSource
     ): Promise<void> {
-        const { params } = buildInputParams(source, undefined);
         return new Text(await this.connection(), serial, {
-            source: params,
+            source,
             text
         }).execute();
     }
@@ -758,8 +746,8 @@ export class Client {
                             await this.installRemote(
                                 serial,
                                 temp,
-                                parseValueParam(options),
-                                parseValueParam(args)
+                                options,
+                                args
                             );
                             cb(null);
                         } catch (error) {
@@ -1383,12 +1371,11 @@ export class Client {
         path: string,
         options?: RmOptions
     ): Promise<void> {
-        const { options_ } = buildFsParams(options, undefined);
         return new RmCommand(
             await this.connection(),
             serial,
             path,
-            options_
+            options
         ).execute();
     }
 
@@ -1407,12 +1394,11 @@ export class Client {
         path: string,
         options?: MkDirOptions
     ): Promise<void> {
-        const { options_ } = buildFsParams(options, undefined);
         return new MkDirCommand(
             await this.connection(),
             serial,
             path,
-            options_
+            options
         ).execute();
     }
 
@@ -1431,12 +1417,11 @@ export class Client {
         path: string,
         options?: TouchOptions
     ): Promise<void> {
-        const { options_ } = buildFsParams(options, undefined);
         return new TouchCommand(
             await this.connection(),
             serial,
             path,
-            options_
+            options
         ).execute();
     }
 
@@ -1461,12 +1446,11 @@ export class Client {
         destPath: string,
         options?: MvOptions
     ): Promise<void> {
-        const { options_ } = buildFsParams(options, undefined);
         return new MvCommand(
             await this.connection(),
             serial,
             [srcPath, destPath],
-            options_
+            options
         ).execute();
     }
 
@@ -1491,12 +1475,11 @@ export class Client {
         destPath: string,
         options?: CpOptions
     ): Promise<void> {
-        const { options_ } = buildFsParams(options, undefined);
         return new CpCommand(
             await this.connection(),
             serial,
             [srcPath, destPath],
-            options_
+            options
         ).execute();
     }
 
