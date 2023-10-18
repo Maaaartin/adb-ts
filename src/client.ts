@@ -4,7 +4,6 @@ import {
     InputDurationOptions,
     CommandConstruct,
     CpOptions,
-    Callback,
     ValueCallback,
     ForwardsObject,
     IDevice,
@@ -32,9 +31,7 @@ import {
     buildInputParams,
     KeyCode,
     parsePrimitiveParam,
-    parseCbParam,
     parseValueParam,
-    nodeify,
     AdbExecError,
     buildFsParams
 } from './util';
@@ -397,7 +394,7 @@ export class Client {
      * Analogous to `adb reboot`.
      */
     public async reboot(serial: string): Promise<void> {
-        return new RebootCommand(conn, serial).execute();
+        return new RebootCommand(await this.connection(), serial).execute();
     }
 
     /**
@@ -405,7 +402,7 @@ export class Client {
      * Analogous to `adb reboot -p`.
      */
     public async shutdown(serial: string): Promise<void> {
-        return new ShutdownCommand(conn, serial).execute();
+        return new ShutdownCommand(await this.connection(), serial).execute();
     }
 
     /**
@@ -414,7 +411,7 @@ export class Client {
      * Analogous to `adb remount`
      */
     public async remount(serial: string): Promise<void> {
-        return new RemountCommand(conn, serial).execute();
+        return new RemountCommand(await this.connection(), serial).execute();
     }
 
     /**
@@ -422,7 +419,7 @@ export class Client {
      * Analogous to `adb root`.
      */
     public async root(serial: string): Promise<void> {
-        return new RootCommand(conn, serial).execute();
+        return new RootCommand(await this.connection(), serial).execute();
     }
 
     /**
@@ -430,7 +427,7 @@ export class Client {
      * Analogous to `adb shell screencap -p`.
      */
     public async screenshot(serial: string): Promise<Buffer> {
-        return new ScreenShotCommand(conn, serial).execute();
+        return new ScreenShotCommand(await this.connection(), serial).execute();
     }
 
     /**
@@ -452,7 +449,7 @@ export class Client {
         host?: string
     ): Promise<Connection> {
         return new TcpCommand(
-            conn,
+            await this.connection(),
             serial,
             port,
             parseValueParam(host)
@@ -480,7 +477,7 @@ export class Client {
         source?: InputSource
     ): Promise<void> {
         const { params } = buildInputParams(source, undefined);
-        return new Roll(conn, serial, {
+        return new Roll(await this.connection(), serial, {
             source: params,
             x,
             y
@@ -496,7 +493,7 @@ export class Client {
     public async press(serial: string, source: InputSource): Promise<void>;
     public async press(serial: string, source?: InputSource): Promise<void> {
         const { params } = buildInputParams(source, undefined);
-        return new Press(conn, serial, params).execute();
+        return new Press(await this.connection(), serial, params).execute();
     }
 
     /**
@@ -532,7 +529,7 @@ export class Client {
         options?: InputDurationOptions
     ): Promise<void> {
         const { params } = buildInputParams(options, undefined);
-        return new DragAndDrop(conn, serial, {
+        return new DragAndDrop(await this.connection(), serial, {
             x1,
             y1,
             x2,
@@ -574,7 +571,7 @@ export class Client {
         options?: InputDurationOptions
     ): Promise<void> {
         const { params } = buildInputParams(options, undefined);
-        return new Swipe(conn, serial, {
+        return new Swipe(await this.connection(), serial, {
             x1,
             y1,
             x2,
@@ -609,7 +606,7 @@ export class Client {
         options?: KeyEventOptions
     ): Promise<void> {
         const { params } = buildInputParams(options, undefined);
-        return new KeyEvent(conn, serial, {
+        return new KeyEvent(await this.connection(), serial, {
             options: params,
             code
         }).execute();
@@ -636,7 +633,7 @@ export class Client {
         source?: InputSource
     ): Promise<void> {
         const { params } = buildInputParams(source, undefined);
-        return new Tap(conn, serial, {
+        return new Tap(await this.connection(), serial, {
             source: params,
             x,
             y
@@ -660,7 +657,7 @@ export class Client {
         source?: InputSource
     ): Promise<void> {
         const { params } = buildInputParams(source, undefined);
-        return new Text(conn, serial, {
+        return new Text(await this.connection(), serial, {
             source: params,
             text
         }).execute();
@@ -689,7 +686,11 @@ export class Client {
         serial: string,
         options?: LogcatOptions
     ): Promise<LogcatReader> {
-        return new LogcatCommand(conn, serial, options).execute();
+        return new LogcatCommand(
+            await this.connection(),
+            serial,
+            options
+        ).execute();
     }
 
     private syncService(serial: string): Promise<Sync> {
