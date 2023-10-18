@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import {
     TransportCommandConstruct,
     CpOptions,
@@ -20,7 +19,6 @@ import {
     TransportType,
     UninstallOptions,
     PropertyMap,
-    ValueCallback,
     PropertyValue,
     KeyEventOptions,
     InputDurationOptions,
@@ -39,14 +37,14 @@ import SyncEntry from './sync/entry';
 import { SyncMode } from './sync';
 
 export class Device implements IDevice {
-    readonly id: string;
-    readonly state: DeviceState;
-    readonly path: string | undefined;
-    readonly device: string | undefined;
-    readonly model: string | undefined;
-    readonly product: string | undefined;
-    readonly transportId: string;
-    readonly transport: TransportType;
+    public readonly id: string;
+    public readonly state: DeviceState;
+    public readonly path: string | undefined;
+    public readonly device: string | undefined;
+    public readonly model: string | undefined;
+    public readonly product: string | undefined;
+    public readonly transportId: string;
+    public readonly transport: TransportType;
     private readonly client: Client;
 
     constructor(client: Client, props: IDevice) {
@@ -61,90 +59,93 @@ export class Device implements IDevice {
         this.transport = props.transport;
     }
 
-    getSerialNo(): Promise<string> {
+    public getSerialNo(): Promise<string> {
         return this.client.getSerialNo(this.id);
     }
 
-    getDevicePath(): Promise<string> {
+    public getDevicePath(): Promise<string> {
         return this.client.getDevicePath(this.id);
     }
 
-    listProperties(): Promise<PropertyMap> {
+    public listProperties(): Promise<PropertyMap> {
         return this.client.listProperties(this.id);
     }
 
-    listFeatures(): Promise<PropertyMap> {
+    public listFeatures(): Promise<PropertyMap> {
         return this.client.listFeatures(this.id);
     }
 
-    listPackages(): Promise<string[]> {
+    public listPackages(): Promise<string[]> {
         return this.client.listPackages(this.id);
     }
 
-    getIpAddress(): Promise<string[]> {
+    public getIpAddress(): Promise<string[]> {
         return this.client.getIpAddress(this.id);
     }
 
-    forward(local: string, remote: string): Promise<void> {
+    public forward(local: string, remote: string): Promise<void> {
         return this.client.forward(this.id, local, remote);
     }
 
-    listForwards(): Promise<ForwardsObject[]> {
+    public listForwards(): Promise<ForwardsObject[]> {
         return this.client.listForwards(this.id);
     }
 
-    reverse(local: string, remote: string): Promise<void> {
+    public reverse(local: string, remote: string): Promise<void> {
         return this.client.reverse(this.id, local, remote);
     }
 
-    listReverses(): Promise<ReversesObject[]> {
+    public listReverses(): Promise<ReversesObject[]> {
         return this.client.listReverses(this.id);
     }
 
-    shell(command: string): Promise<string> {
+    public shell(command: string): Promise<string> {
         return this.client.shell(this.id, command);
     }
 
-    reboot(): Promise<void> {
+    public reboot(): Promise<void> {
         return this.client.reboot(this.id);
     }
 
-    shutdown(): Promise<void> {
+    public shutdown(): Promise<void> {
         return this.client.shutdown(this.id);
     }
 
-    remount(): Promise<void> {
+    public remount(): Promise<void> {
         return this.client.remount(this.id);
     }
 
-    root(): Promise<void> {
+    public root(): Promise<void> {
         return this.client.root(this.id);
     }
 
-    screenshot(): Promise<Buffer> {
+    public screenshot(): Promise<Buffer> {
         return this.client.screenshot(this.id);
     }
 
-    openTcp(port: number, host?: string): Promise<Connection> {
+    public openTcp(port: number, host?: string): Promise<Connection> {
         return this.client.openTcp(this.id, port, host as string);
     }
 
-    openLogcat(options?: LogcatOptions): Promise<LogcatReader> {
+    public openLogcat(options?: LogcatOptions): Promise<LogcatReader> {
         return this.client.openLogcat(this.id, options as LogcatOptions);
     }
 
-    clear(pkg: string): Promise<void> {
+    public clear(pkg: string): Promise<void> {
         return this.client.clear(this.id, pkg);
     }
 
-    install(apk: string | Readable): Promise<void>;
-    install(apk: string | Readable, options?: InstallOptions): Promise<void>;
-    install(
+    public install(apk: string | Readable): Promise<void>;
+    public install(
+        apk: string | Readable,
+        options?: InstallOptions
+    ): Promise<void>;
+    public install(
         apk: string | Readable,
         options?: InstallOptions,
         args?: string
     ): Promise<void>;
-    install(
+    public install(
         apk: string | Readable,
         options?: InstallOptions,
         args?: string
@@ -157,15 +158,15 @@ export class Device implements IDevice {
         );
     }
 
-    uninstall(pkg: string, options?: UninstallOptions): Promise<void> {
+    public uninstall(pkg: string, options?: UninstallOptions): Promise<void> {
         return this.client.uninstall(this.id, pkg, options as UninstallOptions);
     }
 
-    isInstalled(pkg: string): Promise<boolean> {
+    public isInstalled(pkg: string): Promise<boolean> {
         return this.client.isInstalled(this.id, pkg);
     }
 
-    startActivity(
+    public startActivity(
         pkg: string,
         activity: string,
         options?: StartActivityOptions
@@ -178,7 +179,7 @@ export class Device implements IDevice {
         );
     }
 
-    startService(
+    public startService(
         pkg: string,
         service: string,
         options?: StartServiceOptions
@@ -191,70 +192,73 @@ export class Device implements IDevice {
         );
     }
 
-    readDir(path: string): Promise<SyncEntry[]> {
+    public readDir(path: string): Promise<SyncEntry[]> {
         return this.client.readDir(this.id, path);
     }
 
-    pushDataToFile(
+    public pushDataToFile(
         data: string | Buffer | Readable,
         destPath: string
     ): Promise<void> {
         return this.client.pushDataToFile(this.id, data, destPath);
     }
 
-    pushFile(srcPath: string, destPath: string): Promise<void> {
+    public pushFile(srcPath: string, destPath: string): Promise<void> {
         return this.client.pushFile(this.id, srcPath, destPath);
     }
 
-    pullDataFromFile(srcPath: string): Promise<Buffer> {
+    public pullDataFromFile(srcPath: string): Promise<Buffer> {
         return this.client.pullDataFromFile(this.id, srcPath);
     }
 
-    pullFile(srcPath: string, destPath: string): Promise<void> {
+    public pullFile(srcPath: string, destPath: string): Promise<void> {
         return this.client.pullFile(this.id, srcPath, destPath);
     }
 
-    pull(path: string): Promise<PullTransfer> {
+    public pull(path: string): Promise<PullTransfer> {
         return this.client.pull(this.id, path);
     }
 
-    push(
+    public push(
         srcPath: string | Readable,
         destPath: string,
-        mode?: SyncMode | ValueCallback<PushTransfer>
+        mode?: SyncMode
     ): Promise<PushTransfer> {
         return this.client.push(this.id, srcPath, destPath, mode as SyncMode);
     }
 
-    tcpip(port = 5555): Promise<void> {
+    public tcpip(port = 5555): Promise<void> {
         return this.client.tcpip(this.id, port);
     }
 
-    usb(): Promise<void> {
+    public usb(): Promise<void> {
         return this.client.usb(this.id);
     }
 
-    waitBootComplete(): Promise<void> {
+    public waitBootComplete(): Promise<void> {
         return this.client.waitBootComplete(this.id);
     }
 
-    listSettings(mode: SettingsMode): Promise<PropertyMap> {
+    public listSettings(mode: SettingsMode): Promise<PropertyMap> {
         return this.client.listSettings(this.id, mode);
     }
 
-    getProp(prop: string): Promise<PropertyValue> {
+    public getProp(prop: string): Promise<PropertyValue> {
         return this.client.getProp(this.id, prop);
     }
 
-    setProp(prop: string, value: PrimitiveType): Promise<void> {
+    public setProp(prop: string, value: PrimitiveType): Promise<void> {
         return this.client.setProp(this.id, prop, value);
     }
 
-    getSetting(mode: SettingsMode, name: string): Promise<PropertyValue> {
+    public getSetting(
+        mode: SettingsMode,
+        name: string
+    ): Promise<PropertyValue> {
         return this.client.getSetting(this.id, mode, name);
     }
 
-    putSetting(
+    public putSetting(
         mode: SettingsMode,
         name: string,
         value: PrimitiveType
@@ -262,22 +266,22 @@ export class Device implements IDevice {
         return this.client.putSetting(this.id, mode, name, value);
     }
 
-    tap(x: number, y: number, source?: InputSource): Promise<void> {
+    public tap(x: number, y: number, source?: InputSource): Promise<void> {
         return this.client.tap(this.id, x, y, source as InputSource);
     }
 
-    text(text: string, source?: InputSource): Promise<void> {
+    public text(text: string, source?: InputSource): Promise<void> {
         return this.client.text(this.id, text, source as InputSource);
     }
 
-    keyEvent(
+    public keyEvent(
         code: KeyCode | number | NonEmptyArray<number | KeyCode>,
         options?: KeyEventOptions
     ): Promise<void> {
         return this.client.keyEvent(this.id, code, options as KeyEventOptions);
     }
 
-    swipe(
+    public swipe(
         x1: number,
         y1: number,
         x2: number,
@@ -294,7 +298,7 @@ export class Device implements IDevice {
         );
     }
 
-    dragAndDrop(
+    public dragAndDrop(
         x1: number,
         y1: number,
         x2: number,
@@ -311,15 +315,15 @@ export class Device implements IDevice {
         );
     }
 
-    press(source?: InputSource): Promise<void> {
+    public press(source?: InputSource): Promise<void> {
         return this.client.press(this.id, source as InputSource);
     }
 
-    roll(x: number, y: number, source?: InputSource): Promise<void> {
+    public roll(x: number, y: number, source?: InputSource): Promise<void> {
         return this.client.roll(this.id, x, y, source as InputSource);
     }
 
-    custom<T, P extends unknown[] = unknown[]>(
+    public custom<T, P extends unknown[] = unknown[]>(
         CustomCommand: TransportCommandConstruct<T, P>,
         ...args: P
     ): Promise<T> {
@@ -330,47 +334,55 @@ export class Device implements IDevice {
         );
     }
 
-    openMonkey(): Promise<Monkey> {
+    public openMonkey(): Promise<Monkey> {
         return this.client.openMonkey(this.id);
     }
 
-    killApp(pkg: string): Promise<void> {
+    public killApp(pkg: string): Promise<void> {
         return this.client.killApp(this.id, pkg);
     }
 
-    exec(cmd: string): Promise<string> {
+    public exec(cmd: string): Promise<string> {
         return this.client.execDevice(this.id, cmd);
     }
 
-    execShell(cmd: string): Promise<string> {
+    public execShell(cmd: string): Promise<string> {
         return this.client.execDeviceShell(this.id, cmd);
     }
 
-    batteryStatus(): Promise<PropertyMap> {
+    public batteryStatus(): Promise<PropertyMap> {
         return this.client.batteryStatus(this.id);
     }
 
-    rm(path: string, options?: RmOptions): Promise<void> {
+    public rm(path: string, options?: RmOptions): Promise<void> {
         return this.client.rm(this.id, path, options as RmOptions);
     }
 
-    mkdir(path: string, options?: MkDirOptions): Promise<void> {
-        return this.client.mkdir(this.id, path, options);
+    public mkdir(path: string, options?: MkDirOptions): Promise<void> {
+        return this.client.mkdir(this.id, path, options as MkDirOptions);
     }
 
-    touch(path: string, options?: TouchOptions): Promise<void> {
+    public touch(path: string, options?: TouchOptions): Promise<void> {
         return this.client.touch(this.id, path, options as TouchOptions);
     }
 
-    mv(srcPath: string, destPath: string, options?: MvOptions): Promise<void> {
+    public mv(
+        srcPath: string,
+        destPath: string,
+        options?: MvOptions
+    ): Promise<void> {
         return this.client.mv(this.id, srcPath, destPath, options as MvOptions);
     }
 
-    cp(srcPath: string, destPath: string, options?: CpOptions): Promise<void> {
+    public cp(
+        srcPath: string,
+        destPath: string,
+        options?: CpOptions
+    ): Promise<void> {
         return this.client.cp(this.id, srcPath, destPath, options as CpOptions);
     }
 
-    fileStat(path: string): Promise<FileStat> {
+    public fileStat(path: string): Promise<FileStat> {
         return this.client.fileStat(this.id, path);
     }
 }
