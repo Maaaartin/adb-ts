@@ -180,6 +180,7 @@ export class Sync extends EventEmitter {
     public push(
         contents: string | Readable,
         path: string,
+        // TODO should be void?
         mode: SyncMode | null = null
     ): PushTransfer {
         if (typeof contents === 'string') {

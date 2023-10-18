@@ -774,165 +774,107 @@ export class Client {
      * Uninstalls a package from the device.
      * Analogous to `adb uninstall`.
      */
-    uninstall(serial: string, pkg: string): Promise<void>;
-    uninstall(
+    public async uninstall(serial: string, pkg: string): Promise<void>;
+    public async uninstall(
         serial: string,
         pkg: string,
         options: UninstallOptions
     ): Promise<void>;
-    uninstall(serial: string, pkg: string, cb: Callback): void;
-    uninstall(
+    public async uninstall(
         serial: string,
         pkg: string,
-        options: UninstallOptions,
-        cb: Callback
-    ): void;
-    uninstall(
-        serial: string,
-        pkg: string,
-        options?: Callback | UninstallOptions,
-        cb?: Callback
-    ): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new UninstallCommand(
-                    conn,
-                    serial,
-                    pkg,
-                    parseValueParam(options)
-                ).execute();
-            }),
-            parseCbParam(options, cb)
-        );
+        options?: UninstallOptions
+    ): Promise<void> {
+        return new UninstallCommand(
+            await this.connection(),
+            serial,
+            pkg,
+            options
+        ).execute();
     }
 
     /**
      * Tells if a package is installed or not.
      */
-    isInstalled(serial: string, pkg: string): Promise<boolean>;
-    isInstalled(serial: string, pkg: string, cb: ValueCallback<boolean>): void;
-    isInstalled(
-        serial: string,
-        pkg: string,
-        cb?: ValueCallback<boolean>
-    ): Promise<boolean> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new IsInstalledCommand(conn, serial, pkg).execute();
-            }),
-            cb
-        );
+    public async isInstalled(serial: string, pkg: string): Promise<boolean> {
+        return new IsInstalledCommand(
+            await this.connection(),
+            serial,
+            pkg
+        ).execute();
     }
 
     /**
      * Starts a new activity with options.
      * Analogous to `adb shell am start <pkg./activity>`.
      */
-    startActivity(serial: string, pkg: string, activity: string): Promise<void>;
-    startActivity(
+    public async startActivity(
+        serial: string,
+        pkg: string,
+        activity: string
+    ): Promise<void>;
+    public async startActivity(
         serial: string,
         pkg: string,
         activity: string,
         options: StartActivityOptions
     ): Promise<void>;
-    startActivity(
+    public async startActivity(
         serial: string,
         pkg: string,
         activity: string,
-        cb: Callback
-    ): void;
-    startActivity(
-        serial: string,
-        pkg: string,
-        activity: string,
-        options: StartActivityOptions,
-        cb: Callback
-    ): void;
-    startActivity(
-        serial: string,
-        pkg: string,
-        activity: string,
-        options?: StartActivityOptions | Callback,
-        cb?: Callback
-    ): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new StartActivityCommand(
-                    conn,
-                    serial,
-                    pkg,
-                    activity,
-                    parseValueParam(options)
-                ).execute();
-            }),
-            parseCbParam(options, cb)
-        );
+        options?: StartActivityOptions
+    ): Promise<void> {
+        return new StartActivityCommand(
+            await this.connection(),
+            serial,
+            pkg,
+            activity,
+            options
+        ).execute();
     }
 
     /**
      * Starts a new service with options.
      * Analogous to `adb shell am startservice <pkg> <service>`.
      */
-    startService(serial: string, pkg: string, service: string): Promise<void>;
-    startService(
+    public async startService(
+        serial: string,
+        pkg: string,
+        service: string
+    ): Promise<void>;
+    public async startService(
         serial: string,
         pkg: string,
         service: string,
         options: StartServiceOptions
     ): Promise<void>;
-    startService(
+    public async startService(
         serial: string,
         pkg: string,
         service: string,
-        cb: Callback
-    ): void;
-    startService(
-        serial: string,
-        pkg: string,
-        service: string,
-        options: StartServiceOptions,
-        cb: Callback
-    ): void;
-    startService(
-        serial: string,
-        pkg: string,
-        service: string,
-        options?: StartServiceOptions | Callback,
-        cb?: Callback
-    ): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new StartServiceCommand(
-                    conn,
-                    serial,
-                    pkg,
-                    service,
-                    parseValueParam(options)
-                ).execute();
-            }),
-            parseCbParam(options, cb)
-        );
+        options?: StartServiceOptions
+    ): Promise<void> {
+        return new StartServiceCommand(
+            await this.connection(),
+            serial,
+            pkg,
+            service,
+            options
+        ).execute();
     }
 
     /**
      * Reads given directory.
      * The path should start with `/`.
      */
-    readDir(serial: string, path: string): Promise<SyncEntry[]>;
-    readDir(serial: string, path: string, cb: ValueCallback<SyncEntry[]>): void;
-    readDir(
-        serial: string,
-        path: string,
-        cb?: ValueCallback<SyncEntry[]>
-    ): Promise<SyncEntry[]> | void {
-        return nodeify(
-            this.syncService(serial).then((sync) => {
-                return sync.readDir(path).finally(() => {
-                    return sync.end();
-                });
-            }),
-            cb
-        );
+    public async readDir(serial: string, path: string): Promise<SyncEntry[]> {
+        const sync = await this.syncService(serial);
+        try {
+            return await sync.readDir(path);
+        } finally {
+            sync.end();
+        }
     }
 
     /**
@@ -948,22 +890,9 @@ export class Client {
      *     console.log(data);
      * });
      */
-    pull(serial: string, path: string): Promise<PullTransfer>;
-    pull(serial: string, path: string, cb: ValueCallback<PullTransfer>): void;
-
-    pull(
-        serial: string,
-        path: string,
-        cb?: ValueCallback<PullTransfer>
-    ): Promise<PullTransfer> | void {
-        return nodeify(
-            this.syncService(serial).then((sync) => {
-                return sync.pull(path).on('end', () => {
-                    sync.end();
-                });
-            }),
-            cb
-        );
+    public async pull(serial: string, path: string): Promise<PullTransfer> {
+        const sync = await this.syncService(serial);
+        return sync.pull(path).on('end', () => sync.end());
     }
 
     /**
@@ -973,47 +902,25 @@ export class Client {
      * const transfer = await adb.push('serial', '/path-src', '/path-dest')
      * transfer.on('end', () => { });
      */
-    push(
+    public async push(
         serial: string,
         srcPath: string | Readable,
         destPath: string
     ): Promise<PushTransfer>;
-    push(
+    public async push(
         serial: string,
         srcPath: string | Readable,
         destPath: string,
         mode: SyncMode
     ): Promise<PushTransfer>;
-    push(
+    public async push(
         serial: string,
         srcPath: string | Readable,
         destPath: string,
-        cb: ValueCallback<PushTransfer>
-    ): void;
-    push(
-        serial: string,
-        srcPath: string | Readable,
-        destPath: string,
-        mode: SyncMode,
-        cb: ValueCallback<PushTransfer>
-    ): void;
-    push(
-        serial: string,
-        srcPath: string | Readable,
-        destPath: string,
-        mode?: ValueCallback<PushTransfer> | SyncMode,
-        cb?: ValueCallback<PushTransfer>
-    ): Promise<PushTransfer> | void {
-        return nodeify(
-            this.syncService(serial).then((sync) => {
-                return sync
-                    .push(srcPath, destPath, parseValueParam(mode))
-                    .on('end', () => {
-                        sync.end();
-                    });
-            }),
-            parseCbParam(mode, cb)
-        );
+        mode?: SyncMode
+    ): Promise<PushTransfer> {
+        const sync = await this.syncService(serial);
+        return sync.push(srcPath, destPath, mode).on('end', () => sync.end());
     }
 
     private async awaitActiveDevice(serial: string): Promise<void> {
@@ -1037,14 +944,14 @@ export class Client {
                 });
             });
         };
-        const tracker_2 = await this.trackDevices();
+        const tracker = await this.trackDevices();
         try {
             return await Promise.race([
                 T.setTimeout(5000, undefined, { ref: false }),
-                track(tracker_2)
+                track(tracker)
             ]);
         } finally {
-            tracker_2.end();
+            tracker.end();
         }
     }
 
@@ -1053,86 +960,58 @@ export class Client {
      * Afterwards it is possible to use `connect` method.
      * Analogous to `adb tcpip 5555`.
      */
-    tcpip(serial: string): Promise<void>;
-    tcpip(serial: string, port: number): Promise<void>;
-    tcpip(serial: string, cb: Callback): void;
-    tcpip(serial: string, port: number, cb: Callback): void;
-    tcpip(
-        serial: string,
-        port?: Callback | number,
-        cb?: Callback
-    ): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new TcpIpCommand(
-                    conn,
-                    serial,
-                    this.awaitActiveDevice(serial),
-                    parsePrimitiveParam(ADB_DEFAULT_PORT, parseValueParam(port))
-                ).execute();
-            }),
-            parseCbParam(port, cb)
-        );
+    public async tcpip(serial: string): Promise<void>;
+    public async tcpip(serial: string, port: number): Promise<void>;
+    public async tcpip(serial: string, port?: number): Promise<void> {
+        return new TcpIpCommand(
+            await this.connection(),
+            serial,
+            this.awaitActiveDevice(serial),
+            parsePrimitiveParam(ADB_DEFAULT_PORT, port)
+        ).execute();
     }
 
     /**
      * Sets the device transport back to usb.
      */
-    usb(serial: string): Promise<void>;
-    usb(serial: string, cb: Callback): void;
-    usb(serial: string, cb?: Callback): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new UsbCommand(
-                    conn,
-                    serial,
-                    this.awaitActiveDevice(serial)
-                ).execute();
-            }),
-            cb
-        );
+    public async usb(serial: string): Promise<void> {
+        return new UsbCommand(
+            await this.connection(),
+            serial,
+            this.awaitActiveDevice(serial)
+        ).execute();
     }
 
     /**
      * Waits until the device has finished booting.
      */
-    waitBootComplete(serial: string): Promise<void>;
-    waitBootComplete(serial: string, cb: Callback): void;
-    waitBootComplete(serial: string, cb?: Callback): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new WaitBootCompleteCommand(conn, serial).execute();
-            }),
-            cb
-        );
+    public async waitBootComplete(serial: string): Promise<void> {
+        return new WaitBootCompleteCommand(
+            await this.connection(),
+            serial
+        ).execute();
     }
 
     /**
      * Waits until the device is in the given state.
      * Analogous to `adb wait-for-<transport>-<state>`.
      */
-    waitFor(transport: WaitForType, state: WaitForState): Promise<void>;
-    waitFor(transport: WaitForType, state: WaitForState, cb?: Callback): void;
-    waitFor(
+    public async waitFor(
         transport: WaitForType,
-        state: WaitForState,
-        cb?: Callback
-    ): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new WaitFor(conn, transport, state).execute();
-            }),
-            cb
-        );
+        state: WaitForState
+    ): Promise<void> {
+        return new WaitFor(await this.connection(), transport, state).execute();
     }
 
     /**
      * Maps through all connected devices.
      */
-    async map<T>(mapper: (device: Device) => Promise<T> | T): Promise<T[]> {
+    public async map<T>(
+        mapper: (device: Device) => Promise<T> | T
+    ): Promise<T[]> {
         const devices = await this.listDevices();
         return Promise.all(
-            devices.map((device_1) => mapper(new Device(this, device_1)))
+            devices.map((device) => mapper(new Device(this, device)))
         );
     }
 
@@ -1141,7 +1020,7 @@ export class Client {
         data: string | Readable,
         dest: string
     ): Promise<void> {
-        const transfer = await this.push(serial, data, `${dest}`);
+        const transfer = await this.push(serial, data, dest);
         return new Promise((resolve, reject) => {
             transfer.once('end', resolve);
             transfer.once('error', reject);
@@ -1151,283 +1030,163 @@ export class Client {
     /**
      * Wraps {@link push} method, provides API for quick data writing.
      */
-    pushDataToFile(
+    public pushDataToFile(
         serial: string,
         data: string | Buffer | Readable,
         destPath: string
-    ): Promise<void>;
-    pushDataToFile(
-        serial: string,
-        data: string | Buffer | Readable,
-        destPath: string,
-        cb: Callback
-    ): void;
-    pushDataToFile(
-        serial: string,
-        data: string | Buffer | Readable,
-        destPath: string,
-        cb?: Callback
-    ): Promise<void> | void {
-        return nodeify(
-            this.pushInternal(
-                serial,
-                Readable.from(
-                    typeof data === 'string' ? Buffer.from(data, 'utf-8') : data
-                ),
-                destPath
+    ): Promise<void> {
+        return this.pushInternal(
+            serial,
+            Readable.from(
+                typeof data === 'string' ? Buffer.from(data, 'utf-8') : data
             ),
-            cb
+            destPath
         );
     }
 
     /**
      * Wraps {@link push} method, reads the content of file on the host to a file on the device.
      */
-    pushFile(serial: string, srcPath: string, destPath: string): Promise<void>;
-    pushFile(
+    public pushFile(
         serial: string,
         srcPath: string,
-        destPath: string,
-        cb: Callback
-    ): void;
-    pushFile(
-        serial: string,
-        srcPath: string,
-        destPath: string,
-        cb?: Callback
-    ): Promise<void> | void {
-        return nodeify(this.pushInternal(serial, srcPath, destPath), cb);
+        destPath: string
+    ): Promise<void> {
+        return this.pushInternal(serial, srcPath, destPath);
     }
 
     /**
      * Wraps {@link pull} method, reads the file content and resolves with the output.
      */
-    pullDataFromFile(serial: string, srcPath: string): Promise<Buffer>;
-    pullDataFromFile(
+    public async pullDataFromFile(
         serial: string,
-        srcPath: string,
-        cb: ValueCallback<Buffer>
-    ): void;
-    pullDataFromFile(
-        serial: string,
-        srcPath: string,
-        cb?: ValueCallback<Buffer>
-    ): Promise<Buffer> | void {
-        return nodeify(
-            this.pull(serial, `${srcPath}`).then(
-                (transfer: PullTransfer): Promise<Buffer> => {
-                    return new Promise((resolve, reject) => {
-                        let data = Buffer.alloc(0);
-                        transfer.on('data', (chunk) => {
-                            data = Buffer.isBuffer(chunk)
-                                ? Buffer.concat([data, chunk])
-                                : data;
-                        });
-                        transfer.on('end', () => {
-                            resolve(data);
-                        });
-                        transfer.on('error', reject);
-                    });
-                }
-            ),
-            cb
-        );
+        srcPath: string
+    ): Promise<Buffer> {
+        const transfer = await this.pull(serial, srcPath);
+        return new Promise((resolve, reject) => {
+            let data = Buffer.alloc(0);
+            transfer.on('data', (chunk) => {
+                data = Buffer.isBuffer(chunk)
+                    ? Buffer.concat([data, chunk])
+                    : data;
+            });
+            transfer.on('end', () => resolve(data));
+            transfer.on('error', reject);
+        });
     }
 
     /**
      * Wraps {@link pull} method, reads the content of file on the device and write it to a file on the machine.
      */
-    pullFile(serial: string, srcPath: string, destPath: string): Promise<void>;
-    pullFile(
+    public async pullFile(
         serial: string,
         srcPath: string,
-        destPath: string,
-        cb: Callback
-    ): void;
-    pullFile(
-        serial: string,
-        srcPath: string,
-        destPath: string,
-        cb?: Callback
-    ): Promise<void> | void {
-        return nodeify(
-            this.pull(serial, srcPath).then(
-                async (transfer: PullTransfer): Promise<void> => {
-                    const eventUnregister = new EventUnregister(transfer);
-                    const promise = new Promise<void>((resolve, reject) => {
-                        eventUnregister.register((transfer_) =>
-                            transfer_
-                                .once('readable', () =>
-                                    transfer_.pipe(
-                                        fs.createWriteStream(destPath)
-                                    )
-                                )
-                                .once('end', resolve)
-                                .once('error', reject)
-                        );
-                    });
-
-                    return eventUnregister.unregisterAfter(promise);
-                }
-            ),
-            cb
-        );
+        destPath: string
+    ): Promise<void> {
+        const transfer = await this.pull(serial, srcPath),
+            eventUnregister = new EventUnregister(transfer),
+            promise = new Promise<void>((resolve, reject) => {
+                eventUnregister.register((transfer_) =>
+                    transfer_
+                        .once('readable', () =>
+                            transfer_.pipe(fs.createWriteStream(destPath))
+                        )
+                        .once('end', resolve)
+                        .once('error', reject)
+                );
+            });
+        eventUnregister.unregisterAfter(promise);
     }
 
     /**
      * Sets property on the device.
      * Analogues to `adb shell setprop <prop> <value>`.
      */
-    setProp(serial: string, prop: string, value: PrimitiveType): Promise<void>;
-    setProp(
+    public async setProp(
         serial: string,
         prop: string,
-        value: PrimitiveType,
-        cb?: Callback
-    ): void;
-    setProp(
-        serial: string,
-        prop: string,
-        value: PrimitiveType,
-        cb?: Callback
-    ): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) =>
-                new SetProp(conn, serial, prop, value).execute()
-            ),
-            cb
-        );
+        value: PrimitiveType
+    ): Promise<void> {
+        return new SetProp(
+            await this.connection(),
+            serial,
+            prop,
+            value
+        ).execute();
     }
 
     /**
      * Gets property from the device.
      * Analogues to `adb shell getprop <prop>`.
      */
-    getProp(serial: string, prop: string): Promise<PropertyValue>;
-    getProp(
-        serial: string,
-        prop: string,
-        cb: ValueCallback<PropertyValue>
-    ): void;
-    getProp(
-        serial: string,
-        prop: string,
-        cb?: ValueCallback<PropertyValue>
-    ): Promise<PropertyValue> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new GetPropertyCommand(conn, serial, prop).execute();
-            }),
-            cb
-        );
+    public async getProp(serial: string, prop: string): Promise<PropertyValue> {
+        return new GetPropertyCommand(
+            await this.connection(),
+            serial,
+            prop
+        ).execute();
     }
 
     /**
      * Puts setting on the device.
      * Analogues to `adb shell settings put <mode> <name> <value>`.
      */
-    putSetting(
+    public async putSetting(
         serial: string,
         mode: SettingsMode,
         name: string,
         value: PrimitiveType
-    ): Promise<void>;
-    putSetting(
-        serial: string,
-        mode: SettingsMode,
-        name: string,
-        value: PrimitiveType,
-        cb: Callback
-    ): void;
-    putSetting(
-        serial: string,
-        mode: SettingsMode,
-        name: string,
-        value: PrimitiveType,
-        cb?: Callback
-    ): Promise<void> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new PutSetting(
-                    conn,
-                    serial,
-                    mode,
-                    name,
-                    value
-                ).execute();
-            }),
-            cb
-        );
+    ): Promise<void> {
+        return new PutSetting(
+            await this.connection(),
+            serial,
+            mode,
+            name,
+            value
+        ).execute();
     }
 
     /**
      * Lists settings of the device.
      * Analogues to `adb shell settings list <mode>`.
      */
-    listSettings(serial: string, mode: SettingsMode): Promise<PropertyMap>;
-    listSettings(
+    public async listSettings(
         serial: string,
-        mode: SettingsMode,
-        cb: ValueCallback<PropertyMap>
-    ): void;
-    listSettings(
-        serial: string,
-        mode: SettingsMode,
-        cb?: ValueCallback<PropertyMap>
-    ): Promise<PropertyMap> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new ListSettingsCommand(conn, serial, mode).execute();
-            }),
-            cb
-        );
+        mode: SettingsMode
+    ): Promise<PropertyMap> {
+        return new ListSettingsCommand(
+            await this.connection(),
+            serial,
+            mode
+        ).execute();
     }
 
     /**
      * Gets setting from the device.
      * Analogues to `adb shell settings get <mode> <name>`.
      */
-    getSetting(
+    public async getSetting(
         serial: string,
         mode: SettingsMode,
         name: string
-    ): Promise<PropertyValue>;
-    getSetting(
-        serial: string,
-        mode: SettingsMode,
-        name: string,
-        cb: ValueCallback<PropertyValue>
-    ): void;
-    getSetting(
-        serial: string,
-        mode: SettingsMode,
-        name: string,
-        cb?: ValueCallback<PropertyValue>
-    ): Promise<PropertyValue> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new GetSetting(conn, serial, mode, name).execute();
-            }),
-            cb
-        );
+    ): Promise<PropertyValue> {
+        return new GetSetting(
+            await this.connection(),
+            serial,
+            mode,
+            name
+        ).execute();
     }
 
     /**
      * Executes a given shell command via adb console interface. Analogous to `adb -s <serial> shell <command>`.
      */
-    shell(serial: string, command: string): Promise<string>;
-    shell(serial: string, command: string, cb: ValueCallback<string>): void;
-    shell(
-        serial: string,
-        command: string,
-        cb?: ValueCallback<string>
-    ): Promise<string> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new ShellCommand(conn, serial, command).execute();
-            }),
-            cb
-        );
+    public async shell(serial: string, command: string): Promise<string> {
+        return new ShellCommand(
+            await this.connection(),
+            serial,
+            command
+        ).execute();
     }
 
     /**
@@ -1454,7 +1213,7 @@ export class Client {
      *      }
      *  }
      */
-    async custom<T, P extends unknown[] = unknown[]>(
+    public async custom<T, P extends unknown[] = unknown[]>(
         CustomCommand: CommandConstruct<T, P>,
         ...args: P
     ): Promise<T> {
@@ -1480,25 +1239,19 @@ export class Client {
      *    }
      * }
      */
-    customTransport<T, P extends unknown[] = unknown[]>(
+    public async customTransport<T, P extends unknown[] = unknown[]>(
         CustomCommand: TransportCommandConstruct<T, P>,
         serial: string,
         ...args: P
     ): Promise<T> {
-        return this.connection().then((conn) => {
-            return new CustomCommand(conn, serial, ...args).execute();
-        });
+        const conn = await this.connection();
+        return new CustomCommand(conn, serial, ...args).execute();
     }
 
     /**
      * Establishes a new monkey connection on port `1080`.
      */
-    openMonkey(serial: string): Promise<Monkey>;
-    openMonkey(serial: string, cb: ValueCallback<Monkey>): void;
-    openMonkey(
-        serial: string,
-        cb?: ValueCallback<Monkey>
-    ): Promise<Monkey> | void {
+    public openMonkey(serial: string): Promise<Monkey> {
         const tryConnect = async (times: number): Promise<Monkey> => {
             try {
                 const stream = await this.openTcp(serial, 1080);
@@ -1548,22 +1301,15 @@ export class Client {
                 }
             );
         };
-        return nodeify(establishConnection(3), cb);
+        return establishConnection(3);
     }
 
     /**
      * Force stops given package.
      * Analogous to `adb shell am force-stop <package>`.
      */
-    killApp(serial: string, pkg: string): Promise<void>;
-    killApp(serial: string, pkg: string, cb: Callback): void;
-    killApp(serial: string, pkg: string, cb?: Callback): Promise<void> | void {
-        return nodeify(
-            this.shell(serial, `am force-stop ${pkg}`).then(() => {
-                return;
-            }),
-            cb
-        );
+    public async killApp(serial: string, pkg: string): Promise<void> {
+        await this.shell(serial, `am force-stop ${pkg}`);
     }
 
     private execInternal(...args: ReadonlyArray<string>): Promise<string> {
@@ -1590,237 +1336,178 @@ export class Client {
     /**
      * Executes a given command via adb console interface.
      */
-    exec(cmd: string): Promise<string>;
-    exec(cmd: string, cb: ValueCallback<string>): void;
-    exec(cmd: string, cb?: ValueCallback<string>): Promise<string> | void {
-        return nodeify(this.execInternal(cmd), cb);
+    public exec(cmd: string): Promise<string> {
+        return this.execInternal(cmd);
     }
 
     /**
      * Executes a given command on specific device via adb console interface.
      *  Analogous to `adb -s <serial> <command>`.
      */
-    execDevice(serial: string, cmd: string): Promise<string>;
-    execDevice(serial: string, cmd: string, cb: ValueCallback<string>): void;
-    execDevice(
-        serial: string,
-        cmd: string,
-        cb?: ValueCallback<string>
-    ): Promise<string> | void {
-        return nodeify(this.execInternal(...['-s', serial, cmd]), cb);
+    public execDevice(serial: string, cmd: string): Promise<string> {
+        return this.execInternal(...['-s', serial, cmd]);
     }
 
     /**
      * Executes a given command on specific device shell via adb console interface.
      * Analogous to `adb -s <serial> shell <command>` .
      */
-    execDeviceShell(serial: string, cmd: string): Promise<string>;
-    execDeviceShell(
-        serial: string,
-        cmd: string,
-        cb: ValueCallback<string>
-    ): void;
-    execDeviceShell(
-        serial: string,
-        cmd: string,
-        cb?: ValueCallback<string>
-    ): Promise<string> | void {
-        return nodeify(this.execInternal(...['-s', serial, 'shell', cmd]), cb);
+    public execDeviceShell(serial: string, cmd: string): Promise<string> {
+        return this.execInternal(...['-s', serial, 'shell', cmd]);
     }
 
     /**
      * Retrieves current battery status.
      * Analogous to `adb -s <serial> shell dumpsys battery` .
      */
-    batteryStatus(serial: string): Promise<PropertyMap>;
-    batteryStatus(serial: string, cb: ValueCallback<PropertyMap>): void;
-    batteryStatus(
-        serial: string,
-        cb?: ValueCallback<PropertyMap>
-    ): Promise<PropertyMap> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new BatteryStatusCommand(conn, serial).execute();
-            }),
-            cb
-        );
+    public async batteryStatus(serial: string): Promise<PropertyMap> {
+        return new BatteryStatusCommand(
+            await this.connection(),
+            serial
+        ).execute();
     }
 
     /**
      * Removes file/folder specified by `path` parameter.
      * Analogous to `adb shell rm <path>`.
      */
-    rm(serial: string, path: string): Promise<void>;
-    rm(serial: string, path: string, options: RmOptions): Promise<void>;
-    rm(serial: string, path: string, cb: Callback): void;
-    rm(serial: string, path: string, options: RmOptions, cb: Callback): void;
-    rm(
+    public async rm(serial: string, path: string): Promise<void>;
+    public async rm(
         serial: string,
         path: string,
-        options?: RmOptions | Callback,
-        cb?: Callback
-    ): Promise<void> | void {
-        const { options_, cb_ } = buildFsParams(options, cb);
-        return nodeify(
-            this.connection().then((conn) => {
-                return new RmCommand(conn, serial, path, options_).execute();
-            }),
-            cb_
-        );
+        options: RmOptions
+    ): Promise<void>;
+    public async rm(
+        serial: string,
+        path: string,
+        options?: RmOptions
+    ): Promise<void> {
+        const { options_ } = buildFsParams(options, undefined);
+        return new RmCommand(
+            await this.connection(),
+            serial,
+            path,
+            options_
+        ).execute();
     }
 
     /**
      * Creates directory specified by `path` parameter.
      * Analogous to `adb shell mkdir <path>`.
      */
-    mkdir(serial: string, path: string): Promise<void>;
-    mkdir(serial: string, path: string, options?: MkDirOptions): Promise<void>;
-    mkdir(serial: string, path: string, cb: Callback): void;
-    mkdir(
+    public async mkdir(serial: string, path: string): Promise<void>;
+    public async mkdir(
         serial: string,
         path: string,
-        options: MkDirOptions,
-        cb: Callback
-    ): void;
-    mkdir(
+        options: MkDirOptions
+    ): Promise<void>;
+    public async mkdir(
         serial: string,
         path: string,
-        options?: MkDirOptions | Callback,
-        cb?: Callback
-    ): Promise<void> | void {
-        const { options_, cb_ } = buildFsParams(options, cb);
-        return nodeify(
-            this.connection().then((conn) => {
-                return new MkDirCommand(conn, serial, path, options_).execute();
-            }),
-            cb_
-        );
+        options?: MkDirOptions
+    ): Promise<void> {
+        const { options_ } = buildFsParams(options, undefined);
+        return new MkDirCommand(
+            await this.connection(),
+            serial,
+            path,
+            options_
+        ).execute();
     }
 
     /**
      * Updates access and modification times of file specified by `path` parameter, or creates a new file.
      * Analogous to `adb shell touch <filename>`.
      */
-    touch(serial: string, path: string): Promise<void>;
-    touch(serial: string, path: string, options: TouchOptions): Promise<void>;
-    touch(serial: string, path: string, cb: Callback): void;
-    touch(
+    public async touch(serial: string, path: string): Promise<void>;
+    public async touch(
         serial: string,
         path: string,
-        options: TouchOptions,
-        cb: Callback
-    ): void;
-    touch(
+        options: TouchOptions
+    ): Promise<void>;
+    public async touch(
         serial: string,
         path: string,
-        options?: TouchOptions | Callback,
-        cb?: Callback
-    ): Promise<void> | void {
-        const { options_, cb_ } = buildFsParams(options, cb);
-        return nodeify(
-            this.connection().then((conn) => {
-                return new TouchCommand(conn, serial, path, options_).execute();
-            }),
-            cb_
-        );
+        options?: TouchOptions
+    ): Promise<void> {
+        const { options_ } = buildFsParams(options, undefined);
+        return new TouchCommand(
+            await this.connection(),
+            serial,
+            path,
+            options_
+        ).execute();
     }
 
     /**
      * Moves data with `srcPath` to `destPath` parameter.
      * Analogous to `adb shell mv <src> <dest>`.
      */
-    mv(serial: string, srcPath: string, destPath: string): Promise<void>;
-    mv(
+    public async mv(
+        serial: string,
+        srcPath: string,
+        destPath: string
+    ): Promise<void>;
+    public async mv(
         serial: string,
         srcPath: string,
         destPath: string,
         options: MvOptions
     ): Promise<void>;
-    mv(serial: string, srcPath: string, destPath: string, cb: Callback): void;
-    mv(
+    public async mv(
         serial: string,
         srcPath: string,
         destPath: string,
-        options: MvOptions,
-        cb: Callback
-    ): void;
-    mv(
-        serial: string,
-        srcPath: string,
-        destPath: string,
-        options?: Callback | MvOptions,
-        cb?: Callback
-    ): Promise<void> | void {
-        const { options_, cb_ } = buildFsParams(options, cb);
-        return nodeify(
-            this.connection().then((conn) => {
-                return new MvCommand(
-                    conn,
-                    serial,
-                    [srcPath, destPath],
-                    options_
-                ).execute();
-            }),
-            cb_
-        );
+        options?: MvOptions
+    ): Promise<void> {
+        const { options_ } = buildFsParams(options, undefined);
+        return new MvCommand(
+            await this.connection(),
+            serial,
+            [srcPath, destPath],
+            options_
+        ).execute();
     }
 
     /**
      * Copies data with `srcPath` to `destPath` parameter.
      * Analogous to `adb shell cp <src> <dest>`.
      */
-    cp(serial: string, srcPath: string, destPath: string): Promise<void>;
-    cp(
+    public async cp(
+        serial: string,
+        srcPath: string,
+        destPath: string
+    ): Promise<void>;
+    public async cp(
         serial: string,
         srcPath: string,
         destPath: string,
         options: CpOptions
     ): Promise<void>;
-    cp(serial: string, srcPath: string, destPath: string, cb: Callback): void;
-    cp(
+    public async cp(
         serial: string,
         srcPath: string,
         destPath: string,
-        options: CpOptions,
-        cb: Callback
-    ): void;
-    cp(
-        serial: string,
-        srcPath: string,
-        destPath: string,
-        options?: Callback | CpOptions,
-        cb?: Callback
-    ): Promise<void> | void {
-        const { options_, cb_ } = buildFsParams(options, cb);
-        return nodeify(
-            this.connection().then((conn) => {
-                return new CpCommand(
-                    conn,
-                    serial,
-                    [srcPath, destPath],
-                    options_
-                ).execute();
-            }),
-            cb_
-        );
+        options?: CpOptions
+    ): Promise<void> {
+        const { options_ } = buildFsParams(options, undefined);
+        return new CpCommand(
+            await this.connection(),
+            serial,
+            [srcPath, destPath],
+            options_
+        ).execute();
     }
 
     /**
      * Gets file stats for specified path.
      * Analogous to `adb stat <filepath>`.
      */
-    fileStat(serial: string, path: string): Promise<FileStat>;
-    fileStat(serial: string, path: string, cb: ValueCallback<FileStat>): void;
-    fileStat(
-        serial: string,
-        path: string,
-        cb?: ValueCallback<FileStat>
-    ): Promise<FileStat> | void {
-        return nodeify(
-            this.connection().then((conn) => {
-                return new FileStatCommand(conn, serial, path).execute();
-            }),
-            cb
-        );
+    public async fileStat(serial: string, path: string): Promise<FileStat> {
+        return new FileStatCommand(
+            await this.connection(),
+            serial,
+            path
+        ).execute();
     }
 }
