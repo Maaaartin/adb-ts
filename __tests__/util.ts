@@ -3,14 +3,11 @@ import {
     encodeLength,
     encodeData,
     stringToType,
-    parseValueParam,
     parsePrimitiveParam,
     findMatches,
-    buildInputParams,
     PropertyValue,
     escape,
-    escapeCompat,
-    buildFsParams
+    escapeCompat
 } from '../lib/util';
 
 describe('Encode/decode length', () => {
@@ -105,23 +102,6 @@ describe('String to type', () => {
     });
 });
 
-describe('Parse value param', () => {
-    it('undefined', () => {
-        const result = parseValueParam(undefined);
-        expect(result).toBeUndefined();
-    });
-
-    it('function', () => {
-        const result = parseValueParam(() => null);
-        expect(result).toBeUndefined();
-    });
-
-    it('object', () => {
-        const result = parseValueParam({ one: 1 });
-        expect(result).toEqual({ one: 1 });
-    });
-});
-
 describe('Parse primitive type', () => {
     it('undefined', () => {
         const result = parsePrimitiveParam(1, undefined);
@@ -131,26 +111,6 @@ describe('Parse primitive type', () => {
     it('non undefined', () => {
         const result = parsePrimitiveParam(1, 2);
         expect(result).toBe(2);
-    });
-});
-
-describe('Build fs params', () => {
-    it('Options is function, cb is undefined', () => {
-        const { options_, cb_ } = buildFsParams(() => undefined, undefined);
-        expect(options_).toBeUndefined();
-        expect(typeof cb_).toBe('function');
-    });
-
-    it('Options is object, cb is undefined', () => {
-        const { options_, cb_ } = buildFsParams({}, undefined);
-        expect(options_).toEqual({});
-        expect(cb_).toBeUndefined();
-    });
-
-    it('Options is object, cb is function', () => {
-        const { options_, cb_ } = buildFsParams({}, () => undefined);
-        expect(options_).toEqual({});
-        expect(typeof cb_).toBe('function');
     });
 });
 
@@ -237,35 +197,6 @@ describe('Find matches', () => {
             'seven',
             'eight'
         ]);
-    });
-});
-
-describe('Build input params', () => {
-    it('Params is function, cb is undefined', () => {
-        const { params, cb_ } = buildInputParams(() => undefined, undefined);
-        expect(params).toBeUndefined();
-        expect(typeof cb_).toBe('function');
-    });
-
-    it('Params is InputOptions, cb is function', () => {
-        const { params, cb_ } = buildInputParams(
-            { source: 'dpad' },
-            () => undefined
-        );
-        expect(params).toEqual({ source: 'dpad' });
-        expect(typeof cb_).toBe('function');
-    });
-
-    it('Params is InputSource, cb is function', () => {
-        const { params, cb_ } = buildInputParams('dpad', () => undefined);
-        expect(params).toEqual('dpad');
-        expect(typeof cb_).toBe('function');
-    });
-
-    it('Params is InputSource, cb is undefined', () => {
-        const { params, cb_ } = buildInputParams('dpad', undefined);
-        expect(params).toEqual('dpad');
-        expect(typeof cb_).toBe('undefined');
     });
 });
 

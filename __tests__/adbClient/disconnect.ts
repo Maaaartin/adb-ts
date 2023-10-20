@@ -1,6 +1,5 @@
 import { AdbMock } from '../../mockery/mockAdbServer';
 import { Client } from '../../lib/client';
-import { promisify } from 'util';
 
 describe('Disconnect', () => {
     it('Disconnect from default port', async () => {
@@ -87,25 +86,6 @@ describe('Disconnect', () => {
             await expect(adb.disconnect('127.0.0.1', 4444)).rejects.toEqual(
                 new Error('Failure')
             );
-        } finally {
-            await adbMock.end();
-        }
-    });
-
-    it('Connect callback overload', async () => {
-        const adbMock = new AdbMock([
-            {
-                cmd: 'host:disconnect:127.0.0.1:4444',
-                res: 'disconnected'
-            }
-        ]);
-        try {
-            const port = await adbMock.start();
-            const adb = new Client({ noAutoStart: true, port });
-            const result = await promisify<string>((cb) => {
-                adb.disconnect('127.0.0.1', 4444, cb);
-            })();
-            expect(result).toBe('127.0.0.1:4444');
         } finally {
             await adbMock.end();
         }

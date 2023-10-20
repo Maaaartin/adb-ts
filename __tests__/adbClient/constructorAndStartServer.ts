@@ -29,30 +29,4 @@ describe('Start server tests', () => {
         const client = new Client();
         await expect(client.startServer()).resolves.toBeUndefined();
     });
-
-    it('Start adb server error', async () => {
-        try {
-            mockExec(new Error('message'));
-            const client = new Client();
-            await client.startServer();
-        } catch (e: unknown) {
-            expect(e).toEqual(new Error('message'));
-        }
-    });
-
-    it('Start adb server callback overload', () => {
-        mockExec(null);
-        const client = new Client();
-        client.startServer((err) => {
-            expect(err).toBeNull();
-        });
-    });
-
-    it('Start adb server callback overload error', () => {
-        mockExec(new Error('message'));
-        const client = new Client();
-        client.startServer((err) => {
-            expect(err).toBeInstanceOf(Error);
-        });
-    });
 });
