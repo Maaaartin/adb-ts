@@ -1065,8 +1065,9 @@ export class Client {
         destPath: string
     ): Promise<void> {
         const transfer = await this.pull(serial, srcPath),
-            eventUnregister = new EventUnregister(transfer),
-            promise = new Promise<void>((resolve, reject) => {
+            eventUnregister = new EventUnregister(transfer);
+        return eventUnregister.unregisterAfter(
+            new Promise<void>((resolve, reject) => {
                 eventUnregister.register((transfer_) =>
                     transfer_
                         .once('readable', () =>
@@ -1075,8 +1076,8 @@ export class Client {
                         .once('end', resolve)
                         .once('error', reject)
                 );
-            });
-        eventUnregister.unregisterAfter(promise);
+            })
+        );
     }
 
     /**
