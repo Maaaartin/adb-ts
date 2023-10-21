@@ -710,7 +710,6 @@ export class Client {
         ).execute();
         return this.deleteApk(serial, apk);
     }
-
     /**
      * Installs an apk to the device.
      * Analogous to `adb install <pkg>`.
@@ -738,25 +737,18 @@ export class Client {
     ): Promise<void> {
         const temp = Sync.temp(typeof apk === 'string' ? apk : '_stream.apk'),
             transfer = await this.push(serial, apk, temp),
-            eventUnregister = new EventUnregister(transfer),
-            doInstall = promisify<void>((cb) => {
+            eventUnregister = new EventUnregister(transfer);
+        return eventUnregister.unregisterAfter(
+            new Promise<void>((resolve, reject) => {
                 eventUnregister.register((transfer) =>
-                    transfer.on('error', cb).on('end', async () => {
-                        try {
-                            await this.installRemote(
-                                serial,
-                                temp,
-                                options,
-                                args
-                            );
-                            cb(null);
-                        } catch (error) {
-                            cb(error);
-                        }
+                    transfer.on('error', reject).on('end', () => {
+                        this.installRemote(serial, temp, options, args)
+                            .then(resolve)
+                            .catch(reject);
                     })
                 );
-            });
-        eventUnregister.unregisterAfter(doInstall());
+            })
+        );
     }
 
     /**
