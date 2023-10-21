@@ -6,7 +6,6 @@ on:
         types:
             - closed
 jobs:
-    if: ${{ false }} # disable for now
     release:
         name: Build and release
         if: github.event.pull_request.merged == true

@@ -1,7 +1,6 @@
 name: Build and test
 on: push
 jobs:
-    if: ${{ false }} # disable for now
     test:
         name: Test and lint
         runs-on: ubuntu-latest
