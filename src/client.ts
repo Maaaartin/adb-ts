@@ -29,7 +29,8 @@ import {
     TransportCommandConstruct,
     KeyCode,
     parsePrimitiveParam,
-    AdbExecError
+    AdbExecError,
+    autoUnregister
 } from './util';
 import { Sync, SyncMode } from './sync';
 import { execFile } from 'child_process';
@@ -102,7 +103,6 @@ import Swipe from './commands/host-transport/input/swipe';
 import Press from './commands/host-transport/input/press';
 import KeyEvent from './commands/host-transport/input/keyEvent';
 import Tap from './commands/host-transport/input/tap';
-import EventUnregister, { autoUnregister } from './util/eventUnregister';
 
 const ADB_DEFAULT_PORT = 5555;
 const DEFAULT_OPTIONS = {
@@ -1062,19 +1062,17 @@ export class Client {
         srcPath: string,
         destPath: string
     ): Promise<void> {
-        const transfer = await this.pull(serial, srcPath),
-            eventUnregister = new EventUnregister(transfer);
-        return eventUnregister.unregisterAfter(
-            new Promise<void>((resolve, reject) => {
-                eventUnregister.register((transfer_) =>
-                    transfer_
+        return autoUnregister(
+            this.pull(serial, srcPath),
+            (transfer) =>
+                new Promise<void>((resolve, reject) => {
+                    transfer
                         .once('readable', () =>
-                            transfer_.pipe(fs.createWriteStream(destPath))
+                            transfer.pipe(fs.createWriteStream(destPath))
                         )
                         .once('end', resolve)
-                        .once('error', reject)
-                );
-            })
+                        .once('error', reject);
+                })
         );
     }
 

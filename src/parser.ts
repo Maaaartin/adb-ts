@@ -1,9 +1,8 @@
 import { decodeLength } from './util//functions';
-import { PrematureEOFError, UnexpectedDataError } from './util';
+import { PrematureEOFError, UnexpectedDataError, autoUnregister } from './util';
 import { Writable } from 'stream';
 import { Socket } from 'net';
 import T from 'timers/promises';
-import EventUnregister from './util/eventUnregister';
 
 export class Parser {
     public readonly socket: Socket;
@@ -12,65 +11,61 @@ export class Parser {
         this.socket = socket;
     }
     public readBytes(howMany: number): Promise<Buffer> {
-        const eventUnregister = new EventUnregister(this.socket);
-        const promise = new Promise<Buffer>((resolve, reject) => {
-            const tryRead = (): void => {
-                if (!howMany) {
-                    return resolve(Buffer.alloc(0));
-                }
+        return autoUnregister(
+            this.socket,
+            (socket) =>
+                new Promise<Buffer>((resolve, reject) => {
+                    const tryRead = (): void => {
+                        if (!howMany) {
+                            return resolve(Buffer.alloc(0));
+                        }
+                        const chunk = this.socket.read(howMany);
+                        if (chunk) {
+                            howMany -= chunk.length;
+                            if (howMany === 0) {
+                                return resolve(chunk);
+                            }
+                        }
 
-                const chunk = this.socket.read(howMany);
-                if (chunk) {
-                    howMany -= chunk.length;
-                    if (howMany === 0) {
-                        return resolve(chunk);
-                    }
-                }
-
-                if (this.ended) {
-                    return reject(new PrematureEOFError(howMany));
-                }
-            };
-
-            eventUnregister.register((socket) =>
-                socket
-                    .on('readable', tryRead)
-                    .on('error', reject)
-                    .on('end', (): void => {
-                        this.ended = true;
-                        reject(new PrematureEOFError(howMany));
-                    })
-            );
-
-            tryRead();
-        });
-        return eventUnregister.unregisterAfter(promise);
+                        if (this.ended) {
+                            return reject(new PrematureEOFError(howMany));
+                        }
+                    };
+                    socket
+                        .on('readable', tryRead)
+                        .on('error', reject)
+                        .on('end', (): void => {
+                            this.ended = true;
+                            reject(new PrematureEOFError(howMany));
+                        });
+                    tryRead();
+                })
+        );
     }
 
     public end(): Promise<void> {
-        const eventUnregister = new EventUnregister(this.socket);
-        const promise = new Promise<void>((resolve, reject) => {
-            eventUnregister.register((socket) =>
-                socket
-                    .on('readable', (): void => {
-                        while (this.socket.read()) {
-                            continue;
-                        }
-                    })
-                    .on('error', reject)
-                    .on('end', (): void => {
-                        this.ended = true;
-                        resolve();
-                    })
-            );
-            if (this.ended) {
-                return resolve();
-            }
-
-            this.socket.read(0);
-            this.socket.end();
-        });
-        return eventUnregister.unregisterAfter(promise);
+        return autoUnregister(
+            this.socket,
+            (socket) =>
+                new Promise<void>((resolve, reject) => {
+                    socket
+                        .on('readable', (): void => {
+                            while (this.socket.read()) {
+                                continue;
+                            }
+                        })
+                        .on('error', reject)
+                        .on('end', (): void => {
+                            this.ended = true;
+                            resolve();
+                        });
+                    if (this.ended) {
+                        return resolve();
+                    }
+                    this.socket.read(0);
+                    this.socket.end();
+                })
+        );
     }
 
     public async readAscii(howMany: number): Promise<string> {
@@ -100,42 +95,44 @@ export class Parser {
         howMany: number,
         targetStream: Writable
     ): Promise<void> {
-        const eventUnregister = new EventUnregister(this.socket);
-        const promise = new Promise<void>((resolve, reject) => {
-            const tryRead = (): void => {
-                if (!howMany) {
-                    return resolve();
-                }
+        return autoUnregister(
+            this.socket,
+            (socket) =>
+                new Promise<void>((resolve, reject) => {
+                    const tryRead = (): void => {
+                        if (!howMany) {
+                            return resolve();
+                        }
 
-                const readAll = (
-                    chunk = this.socket.read(howMany) || this.socket.read()
-                ): boolean => {
-                    if (!chunk) {
-                        return false;
-                    }
-                    howMany -= chunk.length;
-                    targetStream.write(chunk);
-                    return howMany === 0 || readAll();
-                };
-                if (readAll()) {
-                    return resolve();
-                }
-                if (this.ended) {
-                    return reject(new PrematureEOFError(howMany));
-                }
-            };
-            eventUnregister.register((socket) =>
-                socket
-                    .on('readable', tryRead)
-                    .on('error', reject)
-                    .on('end', (): void => {
-                        this.ended = true;
-                        reject(new PrematureEOFError(howMany));
-                    })
-            );
-            tryRead();
-        });
-        return eventUnregister.unregisterAfter(promise);
+                        const readAll = (
+                            chunk = this.socket.read(howMany) ||
+                                this.socket.read()
+                        ): boolean => {
+                            if (!chunk) {
+                                return false;
+                            }
+                            howMany -= chunk.length;
+                            targetStream.write(chunk);
+                            return howMany === 0 || readAll();
+                        };
+                        if (readAll()) {
+                            return resolve();
+                        }
+                        if (this.ended) {
+                            return reject(new PrematureEOFError(howMany));
+                        }
+                    };
+                    socket
+                        .on('readable', tryRead)
+                        .on('error', reject)
+                        .on('end', (): void => {
+                            this.ended = true;
+                            reject(new PrematureEOFError(howMany));
+                        });
+
+                    tryRead();
+                })
+        );
     }
 
     private readUntil(code: number): Promise<Buffer> {
@@ -173,33 +170,33 @@ export class Parser {
     }
 
     public readAll(): Promise<Buffer> {
-        const eventUnregister = new EventUnregister(this.socket);
-        const promise = new Promise<Buffer>((resolve, reject) => {
-            let all = Buffer.alloc(0);
-            const tryRead = (): void => {
-                const read = (acc: Buffer): Buffer => {
-                    const chunk = this.socket.read();
-                    if (chunk) {
-                        return read(Buffer.concat([acc, chunk]));
-                    }
-                    return acc;
-                };
-                all = read(all);
+        return autoUnregister(
+            this.socket,
+            (socket) =>
+                new Promise<Buffer>((resolve, reject) => {
+                    let all = Buffer.alloc(0);
+                    const tryRead = (): void => {
+                        const read = (acc: Buffer): Buffer => {
+                            const chunk = this.socket.read();
+                            if (chunk) {
+                                return read(Buffer.concat([acc, chunk]));
+                            }
+                            return acc;
+                        };
+                        all = read(all);
 
-                if (this.ended) {
-                    return resolve(all);
-                }
-            };
-            eventUnregister.register((socket) =>
-                socket
-                    .on('readable', tryRead)
-                    .on('error', reject)
-                    .on('end', (): void => {
-                        this.ended = true;
-                        return resolve(all);
-                    })
-            );
-        });
-        return eventUnregister.unregisterAfter(promise);
+                        if (this.ended) {
+                            return resolve(all);
+                        }
+                    };
+                    socket
+                        .on('readable', tryRead)
+                        .on('error', reject)
+                        .on('end', (): void => {
+                            this.ended = true;
+                            return resolve(all);
+                        });
+                })
+        );
     }
 }
