@@ -1,3 +1,4 @@
+import { EventEmitter } from 'events';
 import {
     decodeLength,
     encodeLength,
@@ -7,7 +8,8 @@ import {
     findMatches,
     PropertyValue,
     escape,
-    escapeCompat
+    escapeCompat,
+    autoUnregister
 } from '../lib/util';
 
 describe('Encode/decode length', () => {
@@ -243,5 +245,41 @@ describe('Escape compat tests', () => {
     it('escape bool', () => {
         const result = escapeCompat(true);
         expect(result).toBe(`${true}`);
+    });
+});
+
+describe('Auto unregister', () => {
+    it('Unregister after success', async () => {
+        const emitter = new EventEmitter();
+        const listener1 = jest.fn();
+        emitter.on('test', listener1);
+        await autoUnregister(emitter, async (emitter) => {
+            const listener2 = jest.fn();
+            emitter.on('test', listener2);
+        });
+        const listeners = emitter
+            .eventNames()
+            .flatMap((event) => emitter.listeners(event));
+        expect(listeners).toEqual([listener1]);
+    });
+
+    it('Unregister after error', async () => {
+        const emitter = new EventEmitter();
+        const listener1 = jest.fn();
+        emitter.on('test', listener1);
+        try {
+            await autoUnregister(emitter, async (emitter) => {
+                const listener2 = jest.fn();
+                emitter.on('test', listener2);
+                throw new Error('Test');
+            });
+        } catch {
+            /* empty */
+        } finally {
+            const listeners = emitter
+                .eventNames()
+                .flatMap((event) => emitter.listeners(event));
+            expect(listeners).toEqual([listener1]);
+        }
     });
 });

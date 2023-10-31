@@ -102,7 +102,7 @@ import Swipe from './commands/host-transport/input/swipe';
 import Press from './commands/host-transport/input/press';
 import KeyEvent from './commands/host-transport/input/keyEvent';
 import Tap from './commands/host-transport/input/tap';
-import EventUnregister from './util/eventUnregister';
+import EventUnregister, { autoUnregister } from './util/eventUnregister';
 
 const ADB_DEFAULT_PORT = 5555;
 const DEFAULT_OPTIONS = {
@@ -735,19 +735,17 @@ export class Client {
         options?: InstallOptions,
         args?: string
     ): Promise<void> {
-        const temp = Sync.temp(typeof apk === 'string' ? apk : '_stream.apk'),
-            transfer = await this.push(serial, apk, temp),
-            eventUnregister = new EventUnregister(transfer);
-        return eventUnregister.unregisterAfter(
-            new Promise<void>((resolve, reject) => {
-                eventUnregister.register((transfer) =>
+        const temp = Sync.temp(typeof apk === 'string' ? apk : '_stream.apk');
+        return autoUnregister(
+            await this.push(serial, apk, temp),
+            (transfer) =>
+                new Promise<void>((resolve, reject) => {
                     transfer.on('error', reject).on('end', () => {
                         this.installRemote(serial, temp, options, args)
                             .then(resolve)
                             .catch(reject);
-                    })
-                );
-            })
+                    });
+                })
         );
     }
 
