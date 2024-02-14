@@ -174,19 +174,13 @@ export class Parser {
             this.socket,
             (socket) =>
                 new Promise<Buffer>((resolve, reject) => {
-                    let all = Buffer.alloc(0);
+                    const chunks: Buffer[] = [];
                     const tryRead = (): void => {
-                        const read = (acc: Buffer): Buffer => {
-                            const chunk = this.socket.read();
-                            if (chunk) {
-                                return read(Buffer.concat([acc, chunk]));
-                            }
-                            return acc;
-                        };
-                        all = read(all);
-
+                        while (this.socket.readableLength) {
+                            chunks.push(this.socket.read());
+                        }
                         if (this.ended) {
-                            return resolve(all);
+                            return resolve(Buffer.concat(chunks));
                         }
                     };
                     socket
@@ -194,7 +188,7 @@ export class Parser {
                         .on('error', reject)
                         .on('end', (): void => {
                             this.ended = true;
-                            return resolve(all);
+                            return resolve(Buffer.concat(chunks));
                         });
                 })
         );
