@@ -1043,13 +1043,11 @@ export class Client {
     ): Promise<Buffer> {
         const transfer = await this.pull(serial, srcPath);
         return new Promise((resolve, reject) => {
-            let data = Buffer.alloc(0);
+            const chunks: Buffer[] = [];
             transfer.on('data', (chunk) => {
-                data = Buffer.isBuffer(chunk)
-                    ? Buffer.concat([data, chunk])
-                    : data;
+                Buffer.isBuffer(chunk) && chunks.push(chunk);
             });
-            transfer.on('end', () => resolve(data));
+            transfer.on('end', () => resolve(Buffer.concat(chunks)));
             transfer.on('error', reject);
         });
     }
