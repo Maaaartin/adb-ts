@@ -15,7 +15,7 @@ export const encodeData = (data: Buffer | string): Buffer => {
     ]);
 };
 
-export const stringToType = (value = ''): PropertyValue => {
+export const stringToType = (value: string): PropertyValue => {
     try {
         const parsed = JSON.parse(value);
         if (
