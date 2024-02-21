@@ -83,7 +83,7 @@ export class Parser {
             T.setTimeout(1000, new Error('Could not read error'), {
                 ref: false
             }),
-            this.readValue().then((value) => new Error(value.toString()))
+            this.readValue().then(String).then(Error)
         ]);
     }
 

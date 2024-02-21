@@ -380,10 +380,12 @@ export class Client {
         ).execute();
     }
 
-    private deleteApk(serial: string, pathToApk: string): Promise<void> {
-        return this.connection().then((conn) => {
-            return new DeleteApk(conn, serial, pathToApk).execute();
-        });
+    private async deleteApk(serial: string, pathToApk: string): Promise<void> {
+        return new DeleteApk(
+            await this.connection(),
+            serial,
+            pathToApk
+        ).execute();
     }
 
     /**
