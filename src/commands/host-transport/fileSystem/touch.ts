@@ -32,7 +32,7 @@ export default class TouchCommand extends FileSystemCommand<
         ],
         time: (value: Date | string): string[] => [
             '-t',
-            escape(formatToTimeFlag(new Date(value)))
+            escape(formatToTimeFlag(value))
         ],
         reference: (value: string): string[] => ['-r', escape(value)]
     };
