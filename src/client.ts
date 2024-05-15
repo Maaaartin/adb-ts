@@ -243,17 +243,15 @@ export class Client {
     /**
      * Kills the adb server.
      */
-    public async kill(): Promise<void> {
-        try {
-            await new KillCommand(await this.connection()).execute();
-        } catch (error) {
-            if (
-                !(error instanceof Error) ||
-                (error as NodeJS.ErrnoException).code !== 'ECONNREFUSED'
-            ) {
-                throw error;
-            }
-        }
+    public kill(): Promise<void> {
+        // TODO try catch
+        return this.connection()
+            .catch((error) => {
+                if (error.code !== 'ECONNREFUSED') {
+                    throw error;
+                }
+            })
+            .then((conn) => conn && new KillCommand(conn).execute());
     }
 
     /**
