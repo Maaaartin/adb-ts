@@ -149,7 +149,7 @@ export class Sync extends EventEmitter {
     private pushStream(
         stream: Readable,
         path: string,
-        mode?: SyncMode | null
+        mode?: SyncMode
     ): PushTransfer {
         if (mode == null) {
             mode = SyncMode.DEFAULT_CHMOD;
@@ -162,7 +162,7 @@ export class Sync extends EventEmitter {
     private pushFile(
         file: string,
         path: string,
-        mode?: SyncMode | null
+        mode?: SyncMode | void
     ): PushTransfer {
         if (mode === null) {
             mode = SyncMode.DEFAULT_CHMOD;
@@ -174,8 +174,7 @@ export class Sync extends EventEmitter {
     public push(
         contents: string | Readable,
         path: string,
-        // TODO should be void?
-        mode: SyncMode | null = null
+        mode?: SyncMode
     ): PushTransfer {
         if (typeof contents === 'string') {
             return this.pushFile(contents, path, mode);
