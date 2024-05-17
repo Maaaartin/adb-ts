@@ -10,7 +10,7 @@ export class Tracker extends EventEmitter {
     private readonly command: TrackCommand;
     private ended = false;
     // assigning to null prevents emitting 'add' events on first read
-    private deviceMap: Map<string, IDevice> | null = null;
+    private deviceMap: Map<string, Device> | null = null;
     private readonly client: Client;
     /** @ignore */
     constructor(command: TrackCommand, client: Client) {
@@ -18,6 +18,10 @@ export class Tracker extends EventEmitter {
         this.command = command;
         this.client = client;
         this.hook();
+    }
+
+    public get Devices(): IDevice[] {
+        return Array.from(this.deviceMap?.values() || []);
     }
 
     private async hook(): Promise<void> {
@@ -56,16 +60,19 @@ export class Tracker extends EventEmitter {
 
     private update(list: IDevice[]): void {
         const newMap = list.reduce((map, d) => {
-            const oldDevice = this.deviceMap?.get(d.id);
-            map.set(d.id, d);
+            const currentDevice =
+                this.deviceMap?.get(d.id) || new Device(this.client, d);
 
-            if (oldDevice && d.state !== oldDevice.state) {
-                this.emit('change', new Device(this.client, d));
+            map.set(d.id, currentDevice);
+
+            if (currentDevice && d.state !== currentDevice.state) {
+                (currentDevice as IDevice).state = d.state;
+                this.emit('change', currentDevice);
                 return map;
             }
 
             if (this.deviceMap) {
-                this.emit('add', new Device(this.client, d));
+                this.emit('add', currentDevice);
                 return map;
             }
 
@@ -74,7 +81,7 @@ export class Tracker extends EventEmitter {
 
         this.deviceMap?.forEach((d) => {
             if (!newMap.has(d.id)) {
-                this.emit('remove', d);
+                this.emit('remove', { ...d, client: undefined });
             }
         });
 

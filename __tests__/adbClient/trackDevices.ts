@@ -141,6 +141,7 @@ describe('Track devices', () => {
                 );
             })();
             try {
+                expect(result === tracker.Devices[0]).toBe(true);
                 expect(result).toEqual(
                     new Device(adb, {
                         id: 'b137f5dc',
