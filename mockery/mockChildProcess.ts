@@ -25,6 +25,7 @@ export class ChildProcessMock implements ChildProcess {
     exitCode!: number | null;
     signalCode!: NodeJS.Signals | null;
     spawnargs!: string[];
+    [Symbol.dispose](): void {}
     spawnfile!: string;
     kill(): boolean {
         throw new Error('Method not implemented.');
