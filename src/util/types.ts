@@ -322,23 +322,24 @@ export interface MkDirOptions {
 
 export interface TouchOptions extends SymlinkFSoption {
     /**
-     * Adds `-a` flag. Changes access time.
+     * Adds `-a` flag. Changes access time. UTC time.
      */
     aTime?: boolean;
     /**
-     * Adds `-m` flag. Changes modification time.
+     * Adds `-m` flag. Changes modification time. UTC time.
      */
     mTime?: boolean;
     /**
      * Adds `-m` flag. Does not create file. Does not create file.
      */
     noCreate?: boolean;
+    // TODO add test to ensure UTC
     /**
-     * Adds `-d <date>` flag.
+     * Adds `-d <date>` flag. UTC time.
      */
     date?: Date | string;
     /**
-     * Adds `-t <time>` flag.
+     * Adds `-t <time>` flag. UTC time.
      */
     time?: Date | string;
     /**
