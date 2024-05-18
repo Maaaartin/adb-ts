@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-import moment from 'moment';
 import { UnexpectedDataError } from '../../lib/util';
 import { Client } from '../../lib/client';
 import { AdbMock } from '../../mockery/mockAdbServer';
@@ -10,7 +9,7 @@ beforeAll(() => {
     });
 });
 const date = new Date('2022-12-13T12:41:42.418Z');
-const formattedTime = moment(date).format('YYYYMMDDHHmm[.]ssSSS');
+const formattedTime = '202212131341.42418';
 describe('Touch OKAY tests', () => {
     it('Should execute without parameters', async () => {
         const adbMock = new AdbMock([
