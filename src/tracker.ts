@@ -20,7 +20,7 @@ export class Tracker extends EventEmitter {
         this.hook();
     }
 
-    public get Devices(): IDevice[] {
+    public get Devices(): Device[] {
         return Array.from(this.deviceMap?.values() || []);
     }
 
@@ -65,7 +65,7 @@ export class Tracker extends EventEmitter {
 
             map.set(d.id, currentDevice);
 
-            if (currentDevice && d.state !== currentDevice.state) {
+            if (d.state !== currentDevice.state) {
                 (currentDevice as IDevice).state = d.state;
                 this.emit('change', currentDevice);
                 return map;
