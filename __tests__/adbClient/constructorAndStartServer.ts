@@ -6,7 +6,7 @@ describe('Client constructor tests', () => {
         const client = new Client();
         expect(client['options']).toEqual({
             port: 5037,
-            host: 'localhost',
+            host: '127.0.0.1',
             bin: 'adb',
             noAutoStart: false
         });
@@ -16,7 +16,7 @@ describe('Client constructor tests', () => {
         const client = new Client({ bin: undefined, port: 5036 });
         expect(client['options']).toEqual({
             port: 5036,
-            host: 'localhost',
+            host: '127.0.0.1',
             bin: 'adb',
             noAutoStart: false
         });

@@ -107,7 +107,7 @@ import Tap from './commands/host-transport/input/tap';
 const ADB_DEFAULT_PORT = 5555;
 const DEFAULT_OPTIONS = {
     port: 5037,
-    host: 'localhost',
+    host: '127.0.0.1',
     bin: 'adb',
     noAutoStart: false
 } as const;
