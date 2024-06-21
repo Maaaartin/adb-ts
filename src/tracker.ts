@@ -71,7 +71,6 @@ export class Tracker extends EventEmitter {
                 return map;
             }
 
-            // TODO write better test for this
             if (this.deviceMap && !this.deviceMap.has(d.id)) {
                 this.emit('add', currentDevice);
                 return map;

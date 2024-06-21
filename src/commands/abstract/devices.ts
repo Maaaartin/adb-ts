@@ -71,8 +71,7 @@ export default abstract class DevicesCommand extends Command<IDevice[]> {
     }
 
     private parse(value: string): IDevice[] {
-        const lines = value.split('\n').filter(Boolean);
-        return lines.map(constructDevice);
+        return value.split('\n').filter(Boolean).map(constructDevice);
     }
 
     public async readDevices(): Promise<IDevice[]> {
