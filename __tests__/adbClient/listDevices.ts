@@ -143,4 +143,48 @@ describe('List devices', () => {
             await adbMock.end();
         }
     });
+
+    it('Should throw unexpected error for missing state or id', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:devices-l',
+                res: 'usb:337641472X'
+            }
+        ]);
+
+        try {
+            const port = await adbMock.start();
+            const adb = new Client({ port, noAutoStart: true });
+            await expect(() => adb.listDevices()).rejects.toEqual(
+                new UnexpectedDataError(
+                    'usb:337641472X',
+                    '<id> <state> <usb|product|model|device|transport_id>:<value>'
+                )
+            );
+        } finally {
+            await adbMock.end();
+        }
+    });
+
+    it('Should throw unexpected error for transport_id', async () => {
+        const adbMock = new AdbMock([
+            {
+                cmd: 'host:devices-l',
+                res: 'b137f5dc               unauthorized usb:337641472X'
+            }
+        ]);
+
+        try {
+            const port = await adbMock.start();
+            const adb = new Client({ port, noAutoStart: true });
+            await expect(() => adb.listDevices()).rejects.toEqual(
+                new UnexpectedDataError(
+                    'b137f5dc               unauthorized usb:337641472X',
+                    '<id> <state> <usb|product|model|device|transport_id>:<value>'
+                )
+            );
+        } finally {
+            await adbMock.end();
+        }
+    });
 });

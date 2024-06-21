@@ -11,7 +11,7 @@ const expectedKeys = [
     'device',
     'transport_id'
 ] as const;
-// TODO add unexpected test
+
 const throwUnexpected = (received: string): never => {
     throw new UnexpectedDataError(
         received,
@@ -33,17 +33,17 @@ const parseProps = (values: string[]): Record<string, string | undefined> => {
     }, {});
 };
 
-export function constructDevice(values: string[]): IDevice {
+export function constructDevice(line: string): IDevice {
+    const values = line.split(/\s+/);
     const [id, state] = values;
     if (!id || !state) {
-        return throwUnexpected(values.join(''));
+        return throwUnexpected(line);
     }
 
     const { usb, product, model, device, transport_id } = parseProps(
         values.slice(2)
     );
-    if (typeof transport_id === 'undefined')
-        return throwUnexpected(values.join(''));
+    if (typeof transport_id === 'undefined') return throwUnexpected(line);
     return {
         id: id,
         state:
@@ -72,7 +72,7 @@ export default abstract class DevicesCommand extends Command<IDevice[]> {
 
     private parse(value: string): IDevice[] {
         const lines = value.split('\n').filter(Boolean);
-        return lines.map((line) => constructDevice(line.split(/\s+/)));
+        return lines.map(constructDevice);
     }
 
     public async readDevices(): Promise<IDevice[]> {
