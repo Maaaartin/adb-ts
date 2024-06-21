@@ -921,8 +921,8 @@ export class Client {
                 tracker.once('error', reject);
                 tracker.once('remove', (device) => {
                     if (device.id === serial) {
-                        tracker.on('add', activeDeviceListener);
-                        tracker.on('change', activeDeviceListener);
+                        tracker.once('add', activeDeviceListener);
+                        tracker.once('change', activeDeviceListener);
                     }
                 });
             });
