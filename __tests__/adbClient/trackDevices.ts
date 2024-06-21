@@ -165,7 +165,7 @@ describe('Track devices', () => {
     it('Error', async () => {
         const adbMock = new AdbMock({
             cmd: 'host:track-devices-l',
-            res: 'b137f5dc               unauthorized usb337641472X transport_id:1'
+            res: 'b137f5dc               unauthorized usb:337641472X transport_id1'
         });
 
         try {
@@ -190,7 +190,7 @@ describe('Track devices', () => {
     it('End after error', async () => {
         const adbMock = new AdbMock({
             cmd: 'host:track-devices-l',
-            res: 'b137f5dc               unauthorized usb337641472X transport_id:1'
+            res: 'b137f5dc               unauthorized usb:337641472X transport_id1'
         });
 
         try {
@@ -198,7 +198,9 @@ describe('Track devices', () => {
             const adb = new Client({ noAutoStart: true, port });
             const tracker = await adb.trackDevices();
             const result = await promisify((cb) => {
-                tracker.on('error', () => null);
+                tracker.on('error', (error) => {
+                    console.log(error);
+                });
                 tracker.on('end', () => {
                     cb(null, undefined);
                 });
