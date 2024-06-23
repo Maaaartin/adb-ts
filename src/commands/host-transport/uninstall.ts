@@ -1,31 +1,26 @@
 import { Connection } from '../../connection';
 import { UninstallOptions } from '../../util';
-import TransportCommand from '../abstract/transport';
+import PackageCommand from '../abstract/package';
 
-export default class UninstallCommand extends TransportCommand<void> {
-    protected keepAlive = false;
+export default class UninstallCommand extends PackageCommand {
     protected Cmd: string;
 
     constructor(
         connection: Connection,
         serial: string,
         pkg: string,
-        options: UninstallOptions = {}
+        options: UninstallOptions | void
     ) {
-        super(connection, serial);
+        super(connection, serial, pkg);
         this.Cmd = ['shell:pm uninstall']
-            .concat(options.keepCache ? '-k' : [])
+            .concat(options?.keepCache ? '-k' : [])
             .concat(pkg)
             .join(' ');
     }
 
-    protected async postExecute(): Promise<void> {
-        try {
-            await this.parser.searchLine(
-                /^(Success|Failure.*|.*Unknown package:.*)$/
-            );
-        } finally {
-            await this.parser.readAll();
-        }
+    protected throwError(code: string): never {
+        throw new Error(
+            `${this.packageOrPath} could not be uninstalled [${code}]`
+        );
     }
 }

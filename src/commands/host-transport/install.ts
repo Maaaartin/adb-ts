@@ -1,13 +1,10 @@
 import { Connection } from '../../connection';
 import { escapeCompat } from '../../util';
 import { InstallOptions } from '../../util';
-import TransportCommand from '../abstract/transport';
+import PackageCommand from '../abstract/package';
 
-export default class InstallCommand extends TransportCommand<void> {
+export default class InstallCommand extends PackageCommand {
     protected Cmd: string;
-    private apk: string;
-    protected keepAlive = false;
-
     constructor(
         connection: Connection,
         serial: string,
@@ -15,31 +12,23 @@ export default class InstallCommand extends TransportCommand<void> {
         options: InstallOptions | void,
         args: string | void
     ) {
-        super(connection, serial);
-        this.apk = apk;
+        super(connection, serial, apk);
         this.Cmd = [
             'shell:pm install',
             ...this.intentArgs(options),
-            escapeCompat(this.apk),
+            escapeCompat(apk),
             args
         ]
             .filter(Boolean)
             .join(' ');
     }
 
-    protected async postExecute(): Promise<void> {
-        try {
-            const [, result, code] = await this.parser.searchLine(
-                /^(Success|Failure \[(.*?)\])$/
-            );
-            if (result !== 'Success') {
-                throw new Error(`${this.apk} could not be installed [${code}]`);
-            }
-        } finally {
-            await this.parser.readAll();
-            this.endConnection();
-        }
+    protected throwError(code: string): never {
+        throw new Error(
+            `${this.packageOrPath} could not be installed [${code}]`
+        );
     }
+
     private intentArgs(options: InstallOptions | void): string[] {
         const args: string[] = [];
         if (!options) {

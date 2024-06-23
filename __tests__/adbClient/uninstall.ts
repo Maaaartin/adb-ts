@@ -51,7 +51,7 @@ describe('Uninstall', () => {
         }
     });
 
-    it('OKAY with Failure response', async () => {
+    it('Should throw error on Failure response', async () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
@@ -60,15 +60,18 @@ describe('Uninstall', () => {
             },
             {
                 cmd: `shell:pm uninstall com.package`,
-                res: 'Failure\n',
+                res: 'Failure [CODE]\n',
                 rawRes: true
             }
         ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            const result = await adb.uninstall('serial', 'com.package');
-            expect(result).toBeUndefined();
+            await expect(
+                adb.uninstall('serial', 'com.package')
+            ).rejects.toThrow(
+                new Error('com.package could not be uninstalled [CODE]')
+            );
         } finally {
             await adbMock.end();
         }
@@ -90,8 +93,14 @@ describe('Uninstall', () => {
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            const result = await adb.uninstall('serial', 'com.package');
-            expect(result).toBeUndefined();
+            await expect(
+                adb.uninstall('serial', 'com.package')
+            ).rejects.toThrow(
+                new UnexpectedDataError(
+                    'Unknown package:',
+                    /^(Success|Failure \[(.*?)\])$/.toString()
+                )
+            );
         } finally {
             await adbMock.end();
         }
