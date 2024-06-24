@@ -37,7 +37,9 @@ jobs:
                   yarn test
 
             - name: Git config
-              run: git config --global user.email "bot@google.com" && git config --global user.name "bot"
+              run: |
+                  git config --global user.email "bot@google.com" && git config --global user.name "bot"
+                  password=${{ secrets.GITHUB_TOKEN }}
 
             - name: Apply version major
               if: contains(github.event.pull_request.labels.*.name, 'major')
