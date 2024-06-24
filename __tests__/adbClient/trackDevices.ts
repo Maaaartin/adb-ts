@@ -137,6 +137,9 @@ describe('Track devices', () => {
                 adbMock.forceWrite('');
             })();
             try {
+                expect(
+                    Object.prototype.hasOwnProperty.call(result, 'client')
+                ).toBe(false);
                 expect(result).toEqual({
                     id: 'b137f5dc',
                     state: 'unauthorized',

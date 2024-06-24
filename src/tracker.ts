@@ -81,7 +81,9 @@ export class Tracker extends EventEmitter {
 
         this.deviceMap?.forEach((d) => {
             if (!newMap.has(d.id)) {
-                this.emit('remove', { ...d, client: undefined });
+                const deviceObject = { ...d } as Record<string, unknown>;
+                delete deviceObject.client;
+                this.emit('remove', deviceObject);
             }
         });
 
