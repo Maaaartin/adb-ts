@@ -238,9 +238,7 @@ describe('Track devices', () => {
             const adb = new Client({ noAutoStart: true, port });
             const tracker = await adb.trackDevices();
             const result = await promisify((cb) => {
-                tracker.on('error', (error) => {
-                    console.log(error);
-                });
+                tracker.on('error', () => {});
                 tracker.on('end', () => {
                     cb(null, undefined);
                 });
