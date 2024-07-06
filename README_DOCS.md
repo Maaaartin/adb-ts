@@ -83,3 +83,9 @@ adb.listDevices((devices) => {
     console.log(devices);
 });
 ```
+
+## Change log
+
+Touch converts to UTC.
+Tracker has device instances.
+Install/uninstall validates response.
