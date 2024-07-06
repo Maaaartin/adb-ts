@@ -1,7 +1,7 @@
 name: Build and test
 on: push
 jobs:
-    test:
+    build:
         name: Test and lint
         runs-on: ubuntu-latest
         steps:
@@ -33,7 +33,7 @@ jobs:
                   name: lib
                   path: ./lib
     test-versions:
-        needs: test
+        needs: build
         runs-on: ubuntu-latest
         strategy:
             matrix:
