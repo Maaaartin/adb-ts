@@ -333,7 +333,6 @@ export interface TouchOptions extends SymlinkFSoption {
      * Adds `-m` flag. Does not create file. Does not create file.
      */
     noCreate?: boolean;
-    // TODO add test to ensure UTC
     /**
      * Adds `-d <date>` flag. UTC time.
      */

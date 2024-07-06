@@ -262,7 +262,6 @@ export class Client {
      * Analogous to `adb shell getprop ro.serialno`.
      */
     public async getSerialNo(serial: string): Promise<string> {
-        // TODO should trim
         const serialNo = await this.getProp(serial, 'ro.serialno');
         return String(serialNo);
     }
