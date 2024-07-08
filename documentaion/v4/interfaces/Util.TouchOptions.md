@@ -6,21 +6,21 @@
 
 ## Hierarchy
 
-- [`SymlinkFSoption`](Util.SymlinkFSoption.md)
+-   [`SymlinkFSoption`](Util.SymlinkFSoption.md)
 
-  ↳ **`TouchOptions`**
+    ↳ **`TouchOptions`**
 
 ## Table of contents
 
 ### Properties
 
-- [aTime](Util.TouchOptions.md#atime)
-- [date](Util.TouchOptions.md#date)
-- [mTime](Util.TouchOptions.md#mtime)
-- [noCreate](Util.TouchOptions.md#nocreate)
-- [reference](Util.TouchOptions.md#reference)
-- [symlink](Util.TouchOptions.md#symlink)
-- [time](Util.TouchOptions.md#time)
+-   [aTime](Util.TouchOptions.md#atime)
+-   [date](Util.TouchOptions.md#date)
+-   [mTime](Util.TouchOptions.md#mtime)
+-   [noCreate](Util.TouchOptions.md#nocreate)
+-   [reference](Util.TouchOptions.md#reference)
+-   [symlink](Util.TouchOptions.md#symlink)
+-   [time](Util.TouchOptions.md#time)
 
 ## Properties
 
@@ -34,7 +34,7 @@ Adds `-a` flag. Changes access time.
 
 [src/util/types.ts:331](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L331)
 
-___
+---
 
 ### date
 
@@ -46,7 +46,7 @@ Adds `-d <date>` flag.
 
 [src/util/types.ts:343](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L343)
 
-___
+---
 
 ### mTime
 
@@ -58,7 +58,7 @@ Adds `-m` flag. Changes modification time.
 
 [src/util/types.ts:335](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L335)
 
-___
+---
 
 ### noCreate
 
@@ -70,7 +70,7 @@ Adds `-m` flag. Does not create file. Does not create file.
 
 [src/util/types.ts:339](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L339)
 
-___
+---
 
 ### reference
 
@@ -82,7 +82,7 @@ Adds `-r <reference>` flag.
 
 [src/util/types.ts:351](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L351)
 
-___
+---
 
 ### symlink
 
@@ -99,7 +99,7 @@ Creates symlink.
 
 [src/util/types.ts:304](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L304)
 
-___
+---
 
 ### time
 

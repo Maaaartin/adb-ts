@@ -7,30 +7,30 @@
 ## Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 ## Hierarchy
 
-- [`BaseCommand`](Monkey.BaseCommand.md)<`T`\>
+-   [`BaseCommand`](Monkey.BaseCommand.md)<`T`\>
 
-  ↳ **`ParsableCommand`**
+    ↳ **`ParsableCommand`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Monkey.ParsableCommand.md#constructor)
+-   [constructor](Monkey.ParsableCommand.md#constructor)
 
 ### Properties
 
-- [callback](Monkey.ParsableCommand.md#callback)
-- [command](Monkey.ParsableCommand.md#command)
-- [parser](Monkey.ParsableCommand.md#parser)
+-   [callback](Monkey.ParsableCommand.md#callback)
+-   [command](Monkey.ParsableCommand.md#command)
+-   [parser](Monkey.ParsableCommand.md#parser)
 
 ### Methods
 
-- [isParsable](Monkey.ParsableCommand.md#isparsable)
+-   [isParsable](Monkey.ParsableCommand.md#isparsable)
 
 ## Constructors
 
@@ -41,16 +41,16 @@
 #### Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `command` | `string` |
+| Name       | Type                                                        |
+| :--------- | :---------------------------------------------------------- |
+| `command`  | `string`                                                    |
 | `callback` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`T`\> |
-| `parser` | (`data`: ``null`` \| `string`) => `T` |
+| `parser`   | (`data`: `null` \| `string`) => `T`                         |
 
 #### Overrides
 
@@ -74,7 +74,7 @@
 
 [src/monkey/command.ts:5](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/command.ts#L5)
 
-___
+---
 
 ### command
 
@@ -88,11 +88,11 @@ ___
 
 [src/monkey/command.ts:4](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/command.ts#L4)
 
-___
+---
 
 ### parser
 
-• `Readonly` **parser**: (`data`: ``null`` \| `string`) => `T`
+• `Readonly` **parser**: (`data`: `null` \| `string`) => `T`
 
 #### Type declaration
 
@@ -100,9 +100,9 @@ ___
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `data` | ``null`` \| `string` |
+| Name   | Type               |
+| :----- | :----------------- |
+| `data` | `null` \| `string` |
 
 ##### Returns
 

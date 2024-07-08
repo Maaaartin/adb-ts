@@ -5,4 +5,4 @@ export { Client } from './client';
 export { Device } from './device';
 export { Tracker } from './tracker';
 export { Priority } from './logcat';
-export { Connection } from './connection';  
+export { Connection } from './connection';

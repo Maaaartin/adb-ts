@@ -6,20 +6,20 @@
 
 ## Implemented by
 
-- [`Device`](../classes/Device.Device.md)
+-   [`Device`](../classes/Device.Device.md)
 
 ## Table of contents
 
 ### Properties
 
-- [device](Util.IDevice.md#device)
-- [id](Util.IDevice.md#id)
-- [model](Util.IDevice.md#model)
-- [path](Util.IDevice.md#path)
-- [product](Util.IDevice.md#product)
-- [state](Util.IDevice.md#state)
-- [transport](Util.IDevice.md#transport)
-- [transportId](Util.IDevice.md#transportid)
+-   [device](Util.IDevice.md#device)
+-   [id](Util.IDevice.md#id)
+-   [model](Util.IDevice.md#model)
+-   [path](Util.IDevice.md#path)
+-   [product](Util.IDevice.md#product)
+-   [state](Util.IDevice.md#state)
+-   [transport](Util.IDevice.md#transport)
+-   [transportId](Util.IDevice.md#transportid)
 
 ## Properties
 
@@ -31,7 +31,7 @@
 
 [src/util/types.ts:110](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L110)
 
-___
+---
 
 ### id
 
@@ -41,7 +41,7 @@ ___
 
 [src/util/types.ts:107](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L107)
 
-___
+---
 
 ### model
 
@@ -51,7 +51,7 @@ ___
 
 [src/util/types.ts:111](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L111)
 
-___
+---
 
 ### path
 
@@ -61,7 +61,7 @@ ___
 
 [src/util/types.ts:109](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L109)
 
-___
+---
 
 ### product
 
@@ -71,7 +71,7 @@ ___
 
 [src/util/types.ts:112](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L112)
 
-___
+---
 
 ### state
 
@@ -81,7 +81,7 @@ ___
 
 [src/util/types.ts:108](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L108)
 
-___
+---
 
 ### transport
 
@@ -91,7 +91,7 @@ ___
 
 [src/util/types.ts:114](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L114)
 
-___
+---
 
 ### transportId
 

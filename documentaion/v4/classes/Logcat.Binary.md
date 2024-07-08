@@ -6,27 +6,27 @@
 
 ## Hierarchy
 
-- [`Parser`](Logcat.Parser.md)
+-   [`Parser`](Logcat.Parser.md)
 
-  ↳ **`Binary`**
+    ↳ **`Binary`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Logcat.Binary.md#constructor)
+-   [constructor](Logcat.Binary.md#constructor)
 
 ### Properties
 
-- [HEADER\_SIZE\_MAX](Logcat.Binary.md#header_size_max)
-- [HEADER\_SIZE\_V1](Logcat.Binary.md#header_size_v1)
-- [buffer](Logcat.Binary.md#buffer)
+-   [HEADER_SIZE_MAX](Logcat.Binary.md#header_size_max)
+-   [HEADER_SIZE_V1](Logcat.Binary.md#header_size_v1)
+-   [buffer](Logcat.Binary.md#buffer)
 
 ### Methods
 
-- [on](Logcat.Binary.md#on)
-- [parse](Logcat.Binary.md#parse)
-- [processEntry](Logcat.Binary.md#processentry)
+-   [on](Logcat.Binary.md#on)
+-   [parse](Logcat.Binary.md#parse)
+-   [processEntry](Logcat.Binary.md#processentry)
 
 ## Constructors
 
@@ -36,8 +36,8 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name       | Type                  |
+| :--------- | :-------------------- |
 | `options?` | `EventEmitterOptions` |
 
 #### Inherited from
@@ -50,25 +50,25 @@ node_modules/@types/node/events.d.ts:76
 
 ## Properties
 
-### HEADER\_SIZE\_MAX
+### HEADER_SIZE_MAX
 
-• `Private` `Readonly` **HEADER\_SIZE\_MAX**: ``100``
+• `Private` `Readonly` **HEADER_SIZE_MAX**: `100`
 
 #### Defined in
 
 [src/logcat/parser/binary.ts:7](https://github.com/Maaaartin/adb-ts/blob/5393493/src/logcat/parser/binary.ts#L7)
 
-___
+---
 
-### HEADER\_SIZE\_V1
+### HEADER_SIZE_V1
 
-• `Private` `Readonly` **HEADER\_SIZE\_V1**: ``20``
+• `Private` `Readonly` **HEADER_SIZE_V1**: `20`
 
 #### Defined in
 
 [src/logcat/parser/binary.ts:6](https://github.com/Maaaartin/adb-ts/blob/5393493/src/logcat/parser/binary.ts#L6)
 
-___
+---
 
 ### buffer
 
@@ -86,9 +86,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"entry"`` |
+| Name       | Type                                                        |
+| :--------- | :---------------------------------------------------------- |
+| `event`    | `"entry"`                                                   |
 | `listener` | (`entry`: [`LogcatEntry`](Logcat.LogcatEntry.md)) => `void` |
 
 #### Returns
@@ -107,9 +107,9 @@ Parser.on
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"error"`` |
+| Name       | Type                       |
+| :--------- | :------------------------- |
+| `event`    | `"error"`                  |
 | `listener` | (`err`: `Error`) => `void` |
 
 #### Returns
@@ -128,10 +128,10 @@ Parser.on
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"drain"`` \| ``"wait"`` |
-| `listener` | () => `void` |
+| Name       | Type                  |
+| :--------- | :-------------------- |
+| `event`    | `"drain"` \| `"wait"` |
+| `listener` | () => `void`          |
 
 #### Returns
 
@@ -145,7 +145,7 @@ Parser.on
 
 [src/logcat/parser/binary.ts:72](https://github.com/Maaaartin/adb-ts/blob/5393493/src/logcat/parser/binary.ts#L72)
 
-___
+---
 
 ### parse
 
@@ -153,8 +153,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type     |
+| :------ | :------- |
 | `chunk` | `Buffer` |
 
 #### Returns
@@ -169,7 +169,7 @@ ___
 
 [src/logcat/parser/binary.ts:9](https://github.com/Maaaartin/adb-ts/blob/5393493/src/logcat/parser/binary.ts#L9)
 
-___
+---
 
 ### processEntry
 
@@ -177,10 +177,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type                                   |
+| :------ | :------------------------------------- |
 | `entry` | [`LogcatEntry`](Logcat.LogcatEntry.md) |
-| `data` | `Buffer` |
+| `data`  | `Buffer`                               |
 
 #### Returns
 

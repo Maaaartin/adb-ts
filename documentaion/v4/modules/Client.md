@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [Client](../classes/Client.Client.md)
+-   [Client](../classes/Client.Client.md)

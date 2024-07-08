@@ -6,20 +6,20 @@
 
 ## Hierarchy
 
-- `Error`
+-   `Error`
 
-  ↳ **`NotConnectedError`**
+    ↳ **`NotConnectedError`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Util.NotConnectedError.md#constructor)
+-   [constructor](Util.NotConnectedError.md#constructor)
 
 ### Properties
 
-- [message](Util.NotConnectedError.md#message)
-- [name](Util.NotConnectedError.md#name)
+-   [message](Util.NotConnectedError.md#message)
+-   [name](Util.NotConnectedError.md#name)
 
 ## Constructors
 
@@ -29,8 +29,8 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name       | Type     |
+| :--------- | :------- |
 | `message?` | `string` |
 
 #### Inherited from
@@ -55,7 +55,7 @@ Error.message
 
 [src/util/errors.ts:25](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/errors.ts#L25)
 
-___
+---
 
 ### name
 

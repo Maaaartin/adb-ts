@@ -6,17 +6,17 @@
 
 ## Hierarchy
 
-- **`RecursiveFSOption`**
+-   **`RecursiveFSOption`**
 
-  ↳ [`RmOptions`](Util.RmOptions.md)
+    ↳ [`RmOptions`](Util.RmOptions.md)
 
-  ↳ [`CpOptions`](Util.CpOptions.md)
+    ↳ [`CpOptions`](Util.CpOptions.md)
 
 ## Table of contents
 
 ### Properties
 
-- [recursive](Util.RecursiveFSOption.md#recursive)
+-   [recursive](Util.RecursiveFSOption.md#recursive)
 
 ## Properties
 

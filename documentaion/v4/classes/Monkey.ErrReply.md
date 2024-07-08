@@ -6,24 +6,24 @@
 
 ## Hierarchy
 
-- [`Reply`](Monkey.Reply.md)
+-   [`Reply`](Monkey.Reply.md)
 
-  ↳ **`ErrReply`**
+    ↳ **`ErrReply`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Monkey.ErrReply.md#constructor)
+-   [constructor](Monkey.ErrReply.md#constructor)
 
 ### Properties
 
-- [value](Monkey.ErrReply.md#value)
+-   [value](Monkey.ErrReply.md#value)
 
 ### Methods
 
-- [isError](Monkey.ErrReply.md#iserror)
-- [toError](Monkey.ErrReply.md#toerror)
+-   [isError](Monkey.ErrReply.md#iserror)
+-   [toError](Monkey.ErrReply.md#toerror)
 
 ## Constructors
 
@@ -33,9 +33,9 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | ``null`` \| `string` |
+| Name    | Type               |
+| :------ | :----------------- |
+| `value` | `null` \| `string` |
 
 #### Overrides
 
@@ -49,7 +49,7 @@
 
 ### value
 
-• **value**: ``null`` \| `string`
+• **value**: `null` \| `string`
 
 #### Overrides
 
@@ -77,7 +77,7 @@ this is ErrReply
 
 [src/monkey/reply.ts:25](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/reply.ts#L25)
 
-___
+---
 
 ### toError
 

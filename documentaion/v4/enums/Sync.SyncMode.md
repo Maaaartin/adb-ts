@@ -8,24 +8,24 @@
 
 ### Enumeration Members
 
-- [DATA\_MAX\_LENGTH](Sync.SyncMode.md#data_max_length)
-- [DEFAULT\_CHMOD](Sync.SyncMode.md#default_chmod)
+-   [DATA_MAX_LENGTH](Sync.SyncMode.md#data_max_length)
+-   [DEFAULT_CHMOD](Sync.SyncMode.md#default_chmod)
 
 ## Enumeration Members
 
-### DATA\_MAX\_LENGTH
+### DATA_MAX_LENGTH
 
-• **DATA\_MAX\_LENGTH** = ``65536``
+• **DATA_MAX_LENGTH** = `65536`
 
 #### Defined in
 
 [src/sync/sync.ts:17](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/sync.ts#L17)
 
-___
+---
 
-### DEFAULT\_CHMOD
+### DEFAULT_CHMOD
 
-• **DEFAULT\_CHMOD** = ``420``
+• **DEFAULT_CHMOD** = `420`
 
 #### Defined in
 

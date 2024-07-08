@@ -6,26 +6,26 @@
 
 ## Hierarchy
 
-- `EventEmitter`
+-   `EventEmitter`
 
-  ↳ **`Parser`**
+    ↳ **`Parser`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Monkey.Parser.md#constructor)
+-   [constructor](Monkey.Parser.md#constructor)
 
 ### Properties
 
-- [buffer](Monkey.Parser.md#buffer)
-- [column](Monkey.Parser.md#column)
+-   [buffer](Monkey.Parser.md#buffer)
+-   [column](Monkey.Parser.md#column)
 
 ### Methods
 
-- [on](Monkey.Parser.md#on)
-- [parse](Monkey.Parser.md#parse)
-- [parseLine](Monkey.Parser.md#parseline)
+-   [on](Monkey.Parser.md#on)
+-   [parse](Monkey.Parser.md#parse)
+-   [parseLine](Monkey.Parser.md#parseline)
 
 ## Constructors
 
@@ -35,8 +35,8 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name       | Type                  |
+| :--------- | :-------------------- |
 | `options?` | `EventEmitterOptions` |
 
 #### Inherited from
@@ -57,7 +57,7 @@ node_modules/@types/node/events.d.ts:76
 
 [src/monkey/parser.ts:6](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/parser.ts#L6)
 
-___
+---
 
 ### column
 
@@ -75,9 +75,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"reply"`` |
+| Name       | Type                                            |
+| :--------- | :---------------------------------------------- |
+| `event`    | `"reply"`                                       |
 | `listener` | (`reply`: [`Reply`](Monkey.Reply.md)) => `void` |
 
 #### Returns
@@ -96,9 +96,9 @@ EventEmitter.on
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"error"`` |
+| Name       | Type                         |
+| :--------- | :--------------------------- |
+| `event`    | `"error"`                    |
 | `listener` | (`error`: `Error`) => `void` |
 
 #### Returns
@@ -113,7 +113,7 @@ EventEmitter.on
 
 [src/monkey/parser.ts:48](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/parser.ts#L48)
 
-___
+---
 
 ### parse
 
@@ -121,8 +121,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type     |
+| :------ | :------- |
 | `chunk` | `Buffer` |
 
 #### Returns
@@ -133,7 +133,7 @@ ___
 
 [src/monkey/parser.ts:8](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/parser.ts#L8)
 
-___
+---
 
 ### parseLine
 
@@ -141,8 +141,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `line` | `Buffer` |
 
 #### Returns

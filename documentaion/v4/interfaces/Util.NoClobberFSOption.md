@@ -6,17 +6,17 @@
 
 ## Hierarchy
 
-- **`NoClobberFSOption`**
+-   **`NoClobberFSOption`**
 
-  ↳ [`MvOptions`](Util.MvOptions.md)
+    ↳ [`MvOptions`](Util.MvOptions.md)
 
-  ↳ [`CpOptions`](Util.CpOptions.md)
+    ↳ [`CpOptions`](Util.CpOptions.md)
 
 ## Table of contents
 
 ### Properties
 
-- [noClobber](Util.NoClobberFSOption.md#noclobber)
+-   [noClobber](Util.NoClobberFSOption.md#noclobber)
 
 ## Properties
 

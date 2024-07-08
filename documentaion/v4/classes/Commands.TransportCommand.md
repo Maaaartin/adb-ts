@@ -7,39 +7,39 @@
 ## Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 ## Hierarchy
 
-- `default`<`T`\>
+-   `default`<`T`\>
 
-  ↳ **`TransportCommand`**
+    ↳ **`TransportCommand`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Commands.TransportCommand.md#constructor)
+-   [constructor](Commands.TransportCommand.md#constructor)
 
 ### Properties
 
-- [Cmd](Commands.TransportCommand.md#cmd)
-- [autoEnd](Commands.TransportCommand.md#autoend)
-- [connection](Commands.TransportCommand.md#connection)
-- [keepAlive](Commands.TransportCommand.md#keepalive)
-- [parser](Commands.TransportCommand.md#parser)
-- [serial](Commands.TransportCommand.md#serial)
+-   [Cmd](Commands.TransportCommand.md#cmd)
+-   [autoEnd](Commands.TransportCommand.md#autoend)
+-   [connection](Commands.TransportCommand.md#connection)
+-   [keepAlive](Commands.TransportCommand.md#keepalive)
+-   [parser](Commands.TransportCommand.md#parser)
+-   [serial](Commands.TransportCommand.md#serial)
 
 ### Methods
 
-- [endConnection](Commands.TransportCommand.md#endconnection)
-- [execute](Commands.TransportCommand.md#execute)
-- [initAndValidateReply](Commands.TransportCommand.md#initandvalidatereply)
-- [initExecute](Commands.TransportCommand.md#initexecute)
-- [postExecute](Commands.TransportCommand.md#postexecute)
-- [readAndValidateReply](Commands.TransportCommand.md#readandvalidatereply)
-- [validateReply](Commands.TransportCommand.md#validatereply)
+-   [endConnection](Commands.TransportCommand.md#endconnection)
+-   [execute](Commands.TransportCommand.md#execute)
+-   [initAndValidateReply](Commands.TransportCommand.md#initandvalidatereply)
+-   [initExecute](Commands.TransportCommand.md#initexecute)
+-   [postExecute](Commands.TransportCommand.md#postexecute)
+-   [readAndValidateReply](Commands.TransportCommand.md#readandvalidatereply)
+-   [validateReply](Commands.TransportCommand.md#validatereply)
 
 ## Constructors
 
@@ -50,15 +50,15 @@
 #### Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name         | Type                                     |
+| :----------- | :--------------------------------------- |
 | `connection` | [`Connection`](Connection.Connection.md) |
-| `serial` | `string` |
+| `serial`     | `string`                                 |
 
 #### Overrides
 
@@ -82,7 +82,7 @@ Cmd.Cmd
 
 [src/commands/abstract/cmd.ts:4](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/abstract/cmd.ts#L4)
 
-___
+---
 
 ### autoEnd
 
@@ -96,7 +96,7 @@ Cmd.autoEnd
 
 [src/commands/abstract/transport.ts:6](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/abstract/transport.ts#L6)
 
-___
+---
 
 ### connection
 
@@ -110,7 +110,7 @@ Cmd.connection
 
 [src/commands/command.ts:7](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/command.ts#L7)
 
-___
+---
 
 ### keepAlive
 
@@ -120,7 +120,7 @@ ___
 
 [src/commands/abstract/transport.ts:7](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/abstract/transport.ts#L7)
 
-___
+---
 
 ### parser
 
@@ -134,7 +134,7 @@ Cmd.parser
 
 [src/commands/command.ts:8](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/command.ts#L8)
 
-___
+---
 
 ### serial
 
@@ -162,7 +162,7 @@ Cmd.endConnection
 
 [src/commands/command.ts:34](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/command.ts#L34)
 
-___
+---
 
 ### execute
 
@@ -182,7 +182,7 @@ Cmd.execute
 
 [src/commands/abstract/transport.ts:21](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/abstract/transport.ts#L21)
 
-___
+---
 
 ### initAndValidateReply
 
@@ -190,8 +190,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `args` | `string` |
 
 #### Returns
@@ -206,7 +206,7 @@ Cmd.initAndValidateReply
 
 [src/commands/command.ts:38](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/command.ts#L38)
 
-___
+---
 
 ### initExecute
 
@@ -214,8 +214,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `args` | `string` |
 
 #### Returns
@@ -230,7 +230,7 @@ Cmd.initExecute
 
 [src/commands/command.ts:46](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/command.ts#L46)
 
-___
+---
 
 ### postExecute
 
@@ -246,7 +246,7 @@ Executed when [execute](Commands.TransportCommand.md#execute) was successful
 
 [src/commands/abstract/transport.ts:17](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/abstract/transport.ts#L17)
 
-___
+---
 
 ### readAndValidateReply
 
@@ -264,7 +264,7 @@ Cmd.readAndValidateReply
 
 [src/commands/command.ts:30](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/command.ts#L30)
 
-___
+---
 
 ### validateReply
 
@@ -272,8 +272,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type                 |
+| :------ | :------------------- |
 | `reply` | `string` \| `Buffer` |
 
 #### Returns

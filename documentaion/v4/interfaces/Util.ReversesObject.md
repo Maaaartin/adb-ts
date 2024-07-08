@@ -6,17 +6,17 @@
 
 ## Hierarchy
 
-- [`ReversesForwardsBase`](Util.ReversesForwardsBase.md)
+-   [`ReversesForwardsBase`](Util.ReversesForwardsBase.md)
 
-  ↳ **`ReversesObject`**
+    ↳ **`ReversesObject`**
 
 ## Table of contents
 
 ### Properties
 
-- [host](Util.ReversesObject.md#host)
-- [local](Util.ReversesObject.md#local)
-- [remote](Util.ReversesObject.md#remote)
+-   [host](Util.ReversesObject.md#host)
+-   [local](Util.ReversesObject.md#local)
+-   [remote](Util.ReversesObject.md#remote)
 
 ## Properties
 
@@ -28,7 +28,7 @@
 
 [src/util/types.ts:127](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L127)
 
-___
+---
 
 ### local
 
@@ -42,7 +42,7 @@ ___
 
 [src/util/types.ts:122](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L122)
 
-___
+---
 
 ### remote
 

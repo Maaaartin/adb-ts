@@ -6,16 +6,16 @@
 
 ## Hierarchy
 
-- [`InputOptions`](Util.InputOptions.md)
+-   [`InputOptions`](Util.InputOptions.md)
 
-  ↳ **`InputDurationOptions`**
+    ↳ **`InputDurationOptions`**
 
 ## Table of contents
 
 ### Properties
 
-- [duration](Util.InputDurationOptions.md#duration)
-- [source](Util.InputDurationOptions.md#source)
+-   [duration](Util.InputDurationOptions.md#duration)
+-   [source](Util.InputDurationOptions.md#source)
 
 ## Properties
 
@@ -29,7 +29,7 @@ Duration in milliseconds.
 
 [src/util/types.ts:260](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L260)
 
-___
+---
 
 ### source
 

@@ -8,297 +8,297 @@
 
 ### Enumeration Members
 
-- [KEYCODE\_0](Util.KeyCode.md#keycode_0)
-- [KEYCODE\_1](Util.KeyCode.md#keycode_1)
-- [KEYCODE\_11](Util.KeyCode.md#keycode_11)
-- [KEYCODE\_12](Util.KeyCode.md#keycode_12)
-- [KEYCODE\_2](Util.KeyCode.md#keycode_2)
-- [KEYCODE\_3](Util.KeyCode.md#keycode_3)
-- [KEYCODE\_3D\_MODE](Util.KeyCode.md#keycode_3d_mode)
-- [KEYCODE\_4](Util.KeyCode.md#keycode_4)
-- [KEYCODE\_5](Util.KeyCode.md#keycode_5)
-- [KEYCODE\_6](Util.KeyCode.md#keycode_6)
-- [KEYCODE\_7](Util.KeyCode.md#keycode_7)
-- [KEYCODE\_8](Util.KeyCode.md#keycode_8)
-- [KEYCODE\_9](Util.KeyCode.md#keycode_9)
-- [KEYCODE\_A](Util.KeyCode.md#keycode_a)
-- [KEYCODE\_ALL\_APPS](Util.KeyCode.md#keycode_all_apps)
-- [KEYCODE\_ALT\_LEFT](Util.KeyCode.md#keycode_alt_left)
-- [KEYCODE\_ALT\_RIGHT](Util.KeyCode.md#keycode_alt_right)
-- [KEYCODE\_APOSTROPHE](Util.KeyCode.md#keycode_apostrophe)
-- [KEYCODE\_APP\_SWITCH](Util.KeyCode.md#keycode_app_switch)
-- [KEYCODE\_ASSIST](Util.KeyCode.md#keycode_assist)
-- [KEYCODE\_AT](Util.KeyCode.md#keycode_at)
-- [KEYCODE\_AVR\_INPUT](Util.KeyCode.md#keycode_avr_input)
-- [KEYCODE\_AVR\_POWER](Util.KeyCode.md#keycode_avr_power)
-- [KEYCODE\_B](Util.KeyCode.md#keycode_b)
-- [KEYCODE\_BACK](Util.KeyCode.md#keycode_back)
-- [KEYCODE\_BACKSLASH](Util.KeyCode.md#keycode_backslash)
-- [KEYCODE\_BOOKMARK](Util.KeyCode.md#keycode_bookmark)
-- [KEYCODE\_BREAK](Util.KeyCode.md#keycode_break)
-- [KEYCODE\_BRIGHTNESS\_DOWN](Util.KeyCode.md#keycode_brightness_down)
-- [KEYCODE\_BRIGHTNESS\_UP](Util.KeyCode.md#keycode_brightness_up)
-- [KEYCODE\_BUTTON\_1](Util.KeyCode.md#keycode_button_1)
-- [KEYCODE\_BUTTON\_10](Util.KeyCode.md#keycode_button_10)
-- [KEYCODE\_BUTTON\_11](Util.KeyCode.md#keycode_button_11)
-- [KEYCODE\_BUTTON\_12](Util.KeyCode.md#keycode_button_12)
-- [KEYCODE\_BUTTON\_13](Util.KeyCode.md#keycode_button_13)
-- [KEYCODE\_BUTTON\_14](Util.KeyCode.md#keycode_button_14)
-- [KEYCODE\_BUTTON\_15](Util.KeyCode.md#keycode_button_15)
-- [KEYCODE\_BUTTON\_16](Util.KeyCode.md#keycode_button_16)
-- [KEYCODE\_BUTTON\_2](Util.KeyCode.md#keycode_button_2)
-- [KEYCODE\_BUTTON\_3](Util.KeyCode.md#keycode_button_3)
-- [KEYCODE\_BUTTON\_4](Util.KeyCode.md#keycode_button_4)
-- [KEYCODE\_BUTTON\_5](Util.KeyCode.md#keycode_button_5)
-- [KEYCODE\_BUTTON\_6](Util.KeyCode.md#keycode_button_6)
-- [KEYCODE\_BUTTON\_7](Util.KeyCode.md#keycode_button_7)
-- [KEYCODE\_BUTTON\_8](Util.KeyCode.md#keycode_button_8)
-- [KEYCODE\_BUTTON\_9](Util.KeyCode.md#keycode_button_9)
-- [KEYCODE\_BUTTON\_A](Util.KeyCode.md#keycode_button_a)
-- [KEYCODE\_BUTTON\_B](Util.KeyCode.md#keycode_button_b)
-- [KEYCODE\_BUTTON\_C](Util.KeyCode.md#keycode_button_c)
-- [KEYCODE\_BUTTON\_L1](Util.KeyCode.md#keycode_button_l1)
-- [KEYCODE\_BUTTON\_L2](Util.KeyCode.md#keycode_button_l2)
-- [KEYCODE\_BUTTON\_MODE](Util.KeyCode.md#keycode_button_mode)
-- [KEYCODE\_BUTTON\_R1](Util.KeyCode.md#keycode_button_r1)
-- [KEYCODE\_BUTTON\_R2](Util.KeyCode.md#keycode_button_r2)
-- [KEYCODE\_BUTTON\_SELECT](Util.KeyCode.md#keycode_button_select)
-- [KEYCODE\_BUTTON\_START](Util.KeyCode.md#keycode_button_start)
-- [KEYCODE\_BUTTON\_THUMBL](Util.KeyCode.md#keycode_button_thumbl)
-- [KEYCODE\_BUTTON\_THUMBR](Util.KeyCode.md#keycode_button_thumbr)
-- [KEYCODE\_BUTTON\_X](Util.KeyCode.md#keycode_button_x)
-- [KEYCODE\_BUTTON\_Y](Util.KeyCode.md#keycode_button_y)
-- [KEYCODE\_BUTTON\_Z](Util.KeyCode.md#keycode_button_z)
-- [KEYCODE\_C](Util.KeyCode.md#keycode_c)
-- [KEYCODE\_CALCULATOR](Util.KeyCode.md#keycode_calculator)
-- [KEYCODE\_CALENDAR](Util.KeyCode.md#keycode_calendar)
-- [KEYCODE\_CALL](Util.KeyCode.md#keycode_call)
-- [KEYCODE\_CAMERA](Util.KeyCode.md#keycode_camera)
-- [KEYCODE\_CAPS\_LOCK](Util.KeyCode.md#keycode_caps_lock)
-- [KEYCODE\_CAPTIONS](Util.KeyCode.md#keycode_captions)
-- [KEYCODE\_CHANNEL\_DOWN](Util.KeyCode.md#keycode_channel_down)
-- [KEYCODE\_CHANNEL\_UP](Util.KeyCode.md#keycode_channel_up)
-- [KEYCODE\_CLEAR](Util.KeyCode.md#keycode_clear)
-- [KEYCODE\_COMMA](Util.KeyCode.md#keycode_comma)
-- [KEYCODE\_CONTACTS](Util.KeyCode.md#keycode_contacts)
-- [KEYCODE\_COPY](Util.KeyCode.md#keycode_copy)
-- [KEYCODE\_CTRL\_LEFT](Util.KeyCode.md#keycode_ctrl_left)
-- [KEYCODE\_CTRL\_RIGHT](Util.KeyCode.md#keycode_ctrl_right)
-- [KEYCODE\_CUT](Util.KeyCode.md#keycode_cut)
-- [KEYCODE\_D](Util.KeyCode.md#keycode_d)
-- [KEYCODE\_DEL](Util.KeyCode.md#keycode_del)
-- [KEYCODE\_DPAD\_CENTER](Util.KeyCode.md#keycode_dpad_center)
-- [KEYCODE\_DPAD\_DOWN](Util.KeyCode.md#keycode_dpad_down)
-- [KEYCODE\_DPAD\_DOWN\_LEFT](Util.KeyCode.md#keycode_dpad_down_left)
-- [KEYCODE\_DPAD\_DOWN\_RIGHT](Util.KeyCode.md#keycode_dpad_down_right)
-- [KEYCODE\_DPAD\_LEFT](Util.KeyCode.md#keycode_dpad_left)
-- [KEYCODE\_DPAD\_RIGHT](Util.KeyCode.md#keycode_dpad_right)
-- [KEYCODE\_DPAD\_UP](Util.KeyCode.md#keycode_dpad_up)
-- [KEYCODE\_DPAD\_UP\_LEFT](Util.KeyCode.md#keycode_dpad_up_left)
-- [KEYCODE\_DPAD\_UP\_RIGHT](Util.KeyCode.md#keycode_dpad_up_right)
-- [KEYCODE\_DVR](Util.KeyCode.md#keycode_dvr)
-- [KEYCODE\_E](Util.KeyCode.md#keycode_e)
-- [KEYCODE\_EISU](Util.KeyCode.md#keycode_eisu)
-- [KEYCODE\_ENDCALL](Util.KeyCode.md#keycode_endcall)
-- [KEYCODE\_ENTER](Util.KeyCode.md#keycode_enter)
-- [KEYCODE\_ENVELOPE](Util.KeyCode.md#keycode_envelope)
-- [KEYCODE\_EQUALS](Util.KeyCode.md#keycode_equals)
-- [KEYCODE\_ESCAPE](Util.KeyCode.md#keycode_escape)
-- [KEYCODE\_EXPLORER](Util.KeyCode.md#keycode_explorer)
-- [KEYCODE\_F](Util.KeyCode.md#keycode_f)
-- [KEYCODE\_F1](Util.KeyCode.md#keycode_f1)
-- [KEYCODE\_F10](Util.KeyCode.md#keycode_f10)
-- [KEYCODE\_F11](Util.KeyCode.md#keycode_f11)
-- [KEYCODE\_F12](Util.KeyCode.md#keycode_f12)
-- [KEYCODE\_F2](Util.KeyCode.md#keycode_f2)
-- [KEYCODE\_F3](Util.KeyCode.md#keycode_f3)
-- [KEYCODE\_F4](Util.KeyCode.md#keycode_f4)
-- [KEYCODE\_F5](Util.KeyCode.md#keycode_f5)
-- [KEYCODE\_F6](Util.KeyCode.md#keycode_f6)
-- [KEYCODE\_F7](Util.KeyCode.md#keycode_f7)
-- [KEYCODE\_F8](Util.KeyCode.md#keycode_f8)
-- [KEYCODE\_F9](Util.KeyCode.md#keycode_f9)
-- [KEYCODE\_FOCUS](Util.KeyCode.md#keycode_focus)
-- [KEYCODE\_FORWARD](Util.KeyCode.md#keycode_forward)
-- [KEYCODE\_FORWARD\_DEL](Util.KeyCode.md#keycode_forward_del)
-- [KEYCODE\_FUNCTION](Util.KeyCode.md#keycode_function)
-- [KEYCODE\_G](Util.KeyCode.md#keycode_g)
-- [KEYCODE\_GRAVE](Util.KeyCode.md#keycode_grave)
-- [KEYCODE\_GUIDE](Util.KeyCode.md#keycode_guide)
-- [KEYCODE\_H](Util.KeyCode.md#keycode_h)
-- [KEYCODE\_HEADSETHOOK](Util.KeyCode.md#keycode_headsethook)
-- [KEYCODE\_HELP](Util.KeyCode.md#keycode_help)
-- [KEYCODE\_HENKAN](Util.KeyCode.md#keycode_henkan)
-- [KEYCODE\_HOME](Util.KeyCode.md#keycode_home)
-- [KEYCODE\_I](Util.KeyCode.md#keycode_i)
-- [KEYCODE\_INFO](Util.KeyCode.md#keycode_info)
-- [KEYCODE\_INSERT](Util.KeyCode.md#keycode_insert)
-- [KEYCODE\_J](Util.KeyCode.md#keycode_j)
-- [KEYCODE\_K](Util.KeyCode.md#keycode_k)
-- [KEYCODE\_KANA](Util.KeyCode.md#keycode_kana)
-- [KEYCODE\_KATAKANA\_HIRAGANA](Util.KeyCode.md#keycode_katakana_hiragana)
-- [KEYCODE\_L](Util.KeyCode.md#keycode_l)
-- [KEYCODE\_LANGUAGE\_SWITCH](Util.KeyCode.md#keycode_language_switch)
-- [KEYCODE\_LAST\_CHANNEL](Util.KeyCode.md#keycode_last_channel)
-- [KEYCODE\_LEFT\_BRACKET](Util.KeyCode.md#keycode_left_bracket)
-- [KEYCODE\_M](Util.KeyCode.md#keycode_m)
-- [KEYCODE\_MANNER\_MODE](Util.KeyCode.md#keycode_manner_mode)
-- [KEYCODE\_MEDIA\_AUDIO\_TRACK](Util.KeyCode.md#keycode_media_audio_track)
-- [KEYCODE\_MEDIA\_CLOSE](Util.KeyCode.md#keycode_media_close)
-- [KEYCODE\_MEDIA\_EJECT](Util.KeyCode.md#keycode_media_eject)
-- [KEYCODE\_MEDIA\_FAST\_FORWARD](Util.KeyCode.md#keycode_media_fast_forward)
-- [KEYCODE\_MEDIA\_NEXT](Util.KeyCode.md#keycode_media_next)
-- [KEYCODE\_MEDIA\_PAUSE](Util.KeyCode.md#keycode_media_pause)
-- [KEYCODE\_MEDIA\_PLAY](Util.KeyCode.md#keycode_media_play)
-- [KEYCODE\_MEDIA\_PLAY\_PAUSE](Util.KeyCode.md#keycode_media_play_pause)
-- [KEYCODE\_MEDIA\_PREVIOUS](Util.KeyCode.md#keycode_media_previous)
-- [KEYCODE\_MEDIA\_RECORD](Util.KeyCode.md#keycode_media_record)
-- [KEYCODE\_MEDIA\_REWIND](Util.KeyCode.md#keycode_media_rewind)
-- [KEYCODE\_MEDIA\_SKIP\_BACKWARD](Util.KeyCode.md#keycode_media_skip_backward)
-- [KEYCODE\_MEDIA\_SKIP\_FORWARD](Util.KeyCode.md#keycode_media_skip_forward)
-- [KEYCODE\_MEDIA\_STEP\_BACKWARD](Util.KeyCode.md#keycode_media_step_backward)
-- [KEYCODE\_MEDIA\_STEP\_FORWARD](Util.KeyCode.md#keycode_media_step_forward)
-- [KEYCODE\_MEDIA\_STOP](Util.KeyCode.md#keycode_media_stop)
-- [KEYCODE\_MEDIA\_TOP\_MENU](Util.KeyCode.md#keycode_media_top_menu)
-- [KEYCODE\_MENU](Util.KeyCode.md#keycode_menu)
-- [KEYCODE\_META\_LEFT](Util.KeyCode.md#keycode_meta_left)
-- [KEYCODE\_META\_RIGHT](Util.KeyCode.md#keycode_meta_right)
-- [KEYCODE\_MINUS](Util.KeyCode.md#keycode_minus)
-- [KEYCODE\_MOVE\_END](Util.KeyCode.md#keycode_move_end)
-- [KEYCODE\_MOVE\_HOME](Util.KeyCode.md#keycode_move_home)
-- [KEYCODE\_MUHENKAN](Util.KeyCode.md#keycode_muhenkan)
-- [KEYCODE\_MUSIC](Util.KeyCode.md#keycode_music)
-- [KEYCODE\_MUTE](Util.KeyCode.md#keycode_mute)
-- [KEYCODE\_N](Util.KeyCode.md#keycode_n)
-- [KEYCODE\_NAVIGATE\_IN](Util.KeyCode.md#keycode_navigate_in)
-- [KEYCODE\_NAVIGATE\_NEXT](Util.KeyCode.md#keycode_navigate_next)
-- [KEYCODE\_NAVIGATE\_OUT](Util.KeyCode.md#keycode_navigate_out)
-- [KEYCODE\_NAVIGATE\_PREVIOUS](Util.KeyCode.md#keycode_navigate_previous)
-- [KEYCODE\_NOTIFICATION](Util.KeyCode.md#keycode_notification)
-- [KEYCODE\_NUM](Util.KeyCode.md#keycode_num)
-- [KEYCODE\_NUMPAD\_0](Util.KeyCode.md#keycode_numpad_0)
-- [KEYCODE\_NUMPAD\_1](Util.KeyCode.md#keycode_numpad_1)
-- [KEYCODE\_NUMPAD\_2](Util.KeyCode.md#keycode_numpad_2)
-- [KEYCODE\_NUMPAD\_3](Util.KeyCode.md#keycode_numpad_3)
-- [KEYCODE\_NUMPAD\_4](Util.KeyCode.md#keycode_numpad_4)
-- [KEYCODE\_NUMPAD\_5](Util.KeyCode.md#keycode_numpad_5)
-- [KEYCODE\_NUMPAD\_6](Util.KeyCode.md#keycode_numpad_6)
-- [KEYCODE\_NUMPAD\_7](Util.KeyCode.md#keycode_numpad_7)
-- [KEYCODE\_NUMPAD\_8](Util.KeyCode.md#keycode_numpad_8)
-- [KEYCODE\_NUMPAD\_9](Util.KeyCode.md#keycode_numpad_9)
-- [KEYCODE\_NUMPAD\_ADD](Util.KeyCode.md#keycode_numpad_add)
-- [KEYCODE\_NUMPAD\_COMMA](Util.KeyCode.md#keycode_numpad_comma)
-- [KEYCODE\_NUMPAD\_DIVIDE](Util.KeyCode.md#keycode_numpad_divide)
-- [KEYCODE\_NUMPAD\_DOT](Util.KeyCode.md#keycode_numpad_dot)
-- [KEYCODE\_NUMPAD\_ENTER](Util.KeyCode.md#keycode_numpad_enter)
-- [KEYCODE\_NUMPAD\_EQUALS](Util.KeyCode.md#keycode_numpad_equals)
-- [KEYCODE\_NUMPAD\_LEFT\_PAREN](Util.KeyCode.md#keycode_numpad_left_paren)
-- [KEYCODE\_NUMPAD\_MULTIPLY](Util.KeyCode.md#keycode_numpad_multiply)
-- [KEYCODE\_NUMPAD\_RIGHT\_PAREN](Util.KeyCode.md#keycode_numpad_right_paren)
-- [KEYCODE\_NUMPAD\_SUBTRACT](Util.KeyCode.md#keycode_numpad_subtract)
-- [KEYCODE\_NUM\_LOCK](Util.KeyCode.md#keycode_num_lock)
-- [KEYCODE\_O](Util.KeyCode.md#keycode_o)
-- [KEYCODE\_P](Util.KeyCode.md#keycode_p)
-- [KEYCODE\_PAGE\_DOWN](Util.KeyCode.md#keycode_page_down)
-- [KEYCODE\_PAGE\_UP](Util.KeyCode.md#keycode_page_up)
-- [KEYCODE\_PAIRING](Util.KeyCode.md#keycode_pairing)
-- [KEYCODE\_PASTE](Util.KeyCode.md#keycode_paste)
-- [KEYCODE\_PERIOD](Util.KeyCode.md#keycode_period)
-- [KEYCODE\_PICTSYMBOLS](Util.KeyCode.md#keycode_pictsymbols)
-- [KEYCODE\_PLUS](Util.KeyCode.md#keycode_plus)
-- [KEYCODE\_POUND](Util.KeyCode.md#keycode_pound)
-- [KEYCODE\_POWER](Util.KeyCode.md#keycode_power)
-- [KEYCODE\_PROG\_BLUE](Util.KeyCode.md#keycode_prog_blue)
-- [KEYCODE\_PROG\_GREEN](Util.KeyCode.md#keycode_prog_green)
-- [KEYCODE\_PROG\_RED](Util.KeyCode.md#keycode_prog_red)
-- [KEYCODE\_PROG\_YELLOW](Util.KeyCode.md#keycode_prog_yellow)
-- [KEYCODE\_Q](Util.KeyCode.md#keycode_q)
-- [KEYCODE\_R](Util.KeyCode.md#keycode_r)
-- [KEYCODE\_RIGHT\_BRACKET](Util.KeyCode.md#keycode_right_bracket)
-- [KEYCODE\_RO](Util.KeyCode.md#keycode_ro)
-- [KEYCODE\_S](Util.KeyCode.md#keycode_s)
-- [KEYCODE\_SCROLL\_LOCK](Util.KeyCode.md#keycode_scroll_lock)
-- [KEYCODE\_SEARCH](Util.KeyCode.md#keycode_search)
-- [KEYCODE\_SEMICOLON](Util.KeyCode.md#keycode_semicolon)
-- [KEYCODE\_SETTINGS](Util.KeyCode.md#keycode_settings)
-- [KEYCODE\_SHIFT\_LEFT](Util.KeyCode.md#keycode_shift_left)
-- [KEYCODE\_SHIFT\_RIGHT](Util.KeyCode.md#keycode_shift_right)
-- [KEYCODE\_SLASH](Util.KeyCode.md#keycode_slash)
-- [KEYCODE\_SLEEP](Util.KeyCode.md#keycode_sleep)
-- [KEYCODE\_SOFT\_LEFT](Util.KeyCode.md#keycode_soft_left)
-- [KEYCODE\_SOFT\_RIGHT](Util.KeyCode.md#keycode_soft_right)
-- [KEYCODE\_SOFT\_SLEEP](Util.KeyCode.md#keycode_soft_sleep)
-- [KEYCODE\_SPACE](Util.KeyCode.md#keycode_space)
-- [KEYCODE\_STAR](Util.KeyCode.md#keycode_star)
-- [KEYCODE\_STB\_INPUT](Util.KeyCode.md#keycode_stb_input)
-- [KEYCODE\_STB\_POWER](Util.KeyCode.md#keycode_stb_power)
-- [KEYCODE\_STEM\_1](Util.KeyCode.md#keycode_stem_1)
-- [KEYCODE\_STEM\_2](Util.KeyCode.md#keycode_stem_2)
-- [KEYCODE\_STEM\_3](Util.KeyCode.md#keycode_stem_3)
-- [KEYCODE\_STEM\_PRIMARY](Util.KeyCode.md#keycode_stem_primary)
-- [KEYCODE\_SWITCH\_CHARSET](Util.KeyCode.md#keycode_switch_charset)
-- [KEYCODE\_SYM](Util.KeyCode.md#keycode_sym)
-- [KEYCODE\_SYSRQ](Util.KeyCode.md#keycode_sysrq)
-- [KEYCODE\_SYSTEM\_NAVIGATION\_DOWN](Util.KeyCode.md#keycode_system_navigation_down)
-- [KEYCODE\_SYSTEM\_NAVIGATION\_LEFT](Util.KeyCode.md#keycode_system_navigation_left)
-- [KEYCODE\_SYSTEM\_NAVIGATION\_RIGHT](Util.KeyCode.md#keycode_system_navigation_right)
-- [KEYCODE\_SYSTEM\_NAVIGATION\_UP](Util.KeyCode.md#keycode_system_navigation_up)
-- [KEYCODE\_T](Util.KeyCode.md#keycode_t)
-- [KEYCODE\_TAB](Util.KeyCode.md#keycode_tab)
-- [KEYCODE\_TV](Util.KeyCode.md#keycode_tv)
-- [KEYCODE\_TV\_ANTENNA\_CABLE](Util.KeyCode.md#keycode_tv_antenna_cable)
-- [KEYCODE\_TV\_AUDIO\_DESCRIPTION](Util.KeyCode.md#keycode_tv_audio_description)
-- [KEYCODE\_TV\_AUDIO\_DESCRIPTION\_MIX\_DOWN](Util.KeyCode.md#keycode_tv_audio_description_mix_down)
-- [KEYCODE\_TV\_AUDIO\_DESCRIPTION\_MIX\_UP](Util.KeyCode.md#keycode_tv_audio_description_mix_up)
-- [KEYCODE\_TV\_CONTENTS\_MENU](Util.KeyCode.md#keycode_tv_contents_menu)
-- [KEYCODE\_TV\_DATA\_SERVICE](Util.KeyCode.md#keycode_tv_data_service)
-- [KEYCODE\_TV\_INPUT](Util.KeyCode.md#keycode_tv_input)
-- [KEYCODE\_TV\_INPUT\_COMPONENT\_1](Util.KeyCode.md#keycode_tv_input_component_1)
-- [KEYCODE\_TV\_INPUT\_COMPONENT\_2](Util.KeyCode.md#keycode_tv_input_component_2)
-- [KEYCODE\_TV\_INPUT\_COMPOSITE\_1](Util.KeyCode.md#keycode_tv_input_composite_1)
-- [KEYCODE\_TV\_INPUT\_COMPOSITE\_2](Util.KeyCode.md#keycode_tv_input_composite_2)
-- [KEYCODE\_TV\_INPUT\_HDMI\_1](Util.KeyCode.md#keycode_tv_input_hdmi_1)
-- [KEYCODE\_TV\_INPUT\_HDMI\_2](Util.KeyCode.md#keycode_tv_input_hdmi_2)
-- [KEYCODE\_TV\_INPUT\_HDMI\_3](Util.KeyCode.md#keycode_tv_input_hdmi_3)
-- [KEYCODE\_TV\_INPUT\_HDMI\_4](Util.KeyCode.md#keycode_tv_input_hdmi_4)
-- [KEYCODE\_TV\_INPUT\_VGA\_1](Util.KeyCode.md#keycode_tv_input_vga_1)
-- [KEYCODE\_TV\_MEDIA\_CONTEXT\_MENU](Util.KeyCode.md#keycode_tv_media_context_menu)
-- [KEYCODE\_TV\_NETWORK](Util.KeyCode.md#keycode_tv_network)
-- [KEYCODE\_TV\_NUMBER\_ENTRY](Util.KeyCode.md#keycode_tv_number_entry)
-- [KEYCODE\_TV\_POWER](Util.KeyCode.md#keycode_tv_power)
-- [KEYCODE\_TV\_RADIO\_SERVICE](Util.KeyCode.md#keycode_tv_radio_service)
-- [KEYCODE\_TV\_SATELLITE](Util.KeyCode.md#keycode_tv_satellite)
-- [KEYCODE\_TV\_SATELLITE\_BS](Util.KeyCode.md#keycode_tv_satellite_bs)
-- [KEYCODE\_TV\_SATELLITE\_CS](Util.KeyCode.md#keycode_tv_satellite_cs)
-- [KEYCODE\_TV\_SATELLITE\_SERVICE](Util.KeyCode.md#keycode_tv_satellite_service)
-- [KEYCODE\_TV\_TELETEXT](Util.KeyCode.md#keycode_tv_teletext)
-- [KEYCODE\_TV\_TERRESTRIAL\_ANALOG](Util.KeyCode.md#keycode_tv_terrestrial_analog)
-- [KEYCODE\_TV\_TERRESTRIAL\_DIGITAL](Util.KeyCode.md#keycode_tv_terrestrial_digital)
-- [KEYCODE\_TV\_TIMER\_PROGRAMMING](Util.KeyCode.md#keycode_tv_timer_programming)
-- [KEYCODE\_TV\_ZOOM\_MODE](Util.KeyCode.md#keycode_tv_zoom_mode)
-- [KEYCODE\_U](Util.KeyCode.md#keycode_u)
-- [KEYCODE\_UNKNOWN](Util.KeyCode.md#keycode_unknown)
-- [KEYCODE\_V](Util.KeyCode.md#keycode_v)
-- [KEYCODE\_VOICE\_ASSIST](Util.KeyCode.md#keycode_voice_assist)
-- [KEYCODE\_VOLUME\_DOWN](Util.KeyCode.md#keycode_volume_down)
-- [KEYCODE\_VOLUME\_MUTE](Util.KeyCode.md#keycode_volume_mute)
-- [KEYCODE\_VOLUME\_UP](Util.KeyCode.md#keycode_volume_up)
-- [KEYCODE\_W](Util.KeyCode.md#keycode_w)
-- [KEYCODE\_WAKEUP](Util.KeyCode.md#keycode_wakeup)
-- [KEYCODE\_WINDOW](Util.KeyCode.md#keycode_window)
-- [KEYCODE\_X](Util.KeyCode.md#keycode_x)
-- [KEYCODE\_Y](Util.KeyCode.md#keycode_y)
-- [KEYCODE\_YEN](Util.KeyCode.md#keycode_yen)
-- [KEYCODE\_Z](Util.KeyCode.md#keycode_z)
-- [KEYCODE\_ZENKAKU\_HANKAKU](Util.KeyCode.md#keycode_zenkaku_hankaku)
-- [KEYCODE\_ZOOM\_IN](Util.KeyCode.md#keycode_zoom_in)
-- [KEYCODE\_ZOOM\_OUT](Util.KeyCode.md#keycode_zoom_out)
+-   [KEYCODE_0](Util.KeyCode.md#keycode_0)
+-   [KEYCODE_1](Util.KeyCode.md#keycode_1)
+-   [KEYCODE_11](Util.KeyCode.md#keycode_11)
+-   [KEYCODE_12](Util.KeyCode.md#keycode_12)
+-   [KEYCODE_2](Util.KeyCode.md#keycode_2)
+-   [KEYCODE_3](Util.KeyCode.md#keycode_3)
+-   [KEYCODE_3D_MODE](Util.KeyCode.md#keycode_3d_mode)
+-   [KEYCODE_4](Util.KeyCode.md#keycode_4)
+-   [KEYCODE_5](Util.KeyCode.md#keycode_5)
+-   [KEYCODE_6](Util.KeyCode.md#keycode_6)
+-   [KEYCODE_7](Util.KeyCode.md#keycode_7)
+-   [KEYCODE_8](Util.KeyCode.md#keycode_8)
+-   [KEYCODE_9](Util.KeyCode.md#keycode_9)
+-   [KEYCODE_A](Util.KeyCode.md#keycode_a)
+-   [KEYCODE_ALL_APPS](Util.KeyCode.md#keycode_all_apps)
+-   [KEYCODE_ALT_LEFT](Util.KeyCode.md#keycode_alt_left)
+-   [KEYCODE_ALT_RIGHT](Util.KeyCode.md#keycode_alt_right)
+-   [KEYCODE_APOSTROPHE](Util.KeyCode.md#keycode_apostrophe)
+-   [KEYCODE_APP_SWITCH](Util.KeyCode.md#keycode_app_switch)
+-   [KEYCODE_ASSIST](Util.KeyCode.md#keycode_assist)
+-   [KEYCODE_AT](Util.KeyCode.md#keycode_at)
+-   [KEYCODE_AVR_INPUT](Util.KeyCode.md#keycode_avr_input)
+-   [KEYCODE_AVR_POWER](Util.KeyCode.md#keycode_avr_power)
+-   [KEYCODE_B](Util.KeyCode.md#keycode_b)
+-   [KEYCODE_BACK](Util.KeyCode.md#keycode_back)
+-   [KEYCODE_BACKSLASH](Util.KeyCode.md#keycode_backslash)
+-   [KEYCODE_BOOKMARK](Util.KeyCode.md#keycode_bookmark)
+-   [KEYCODE_BREAK](Util.KeyCode.md#keycode_break)
+-   [KEYCODE_BRIGHTNESS_DOWN](Util.KeyCode.md#keycode_brightness_down)
+-   [KEYCODE_BRIGHTNESS_UP](Util.KeyCode.md#keycode_brightness_up)
+-   [KEYCODE_BUTTON_1](Util.KeyCode.md#keycode_button_1)
+-   [KEYCODE_BUTTON_10](Util.KeyCode.md#keycode_button_10)
+-   [KEYCODE_BUTTON_11](Util.KeyCode.md#keycode_button_11)
+-   [KEYCODE_BUTTON_12](Util.KeyCode.md#keycode_button_12)
+-   [KEYCODE_BUTTON_13](Util.KeyCode.md#keycode_button_13)
+-   [KEYCODE_BUTTON_14](Util.KeyCode.md#keycode_button_14)
+-   [KEYCODE_BUTTON_15](Util.KeyCode.md#keycode_button_15)
+-   [KEYCODE_BUTTON_16](Util.KeyCode.md#keycode_button_16)
+-   [KEYCODE_BUTTON_2](Util.KeyCode.md#keycode_button_2)
+-   [KEYCODE_BUTTON_3](Util.KeyCode.md#keycode_button_3)
+-   [KEYCODE_BUTTON_4](Util.KeyCode.md#keycode_button_4)
+-   [KEYCODE_BUTTON_5](Util.KeyCode.md#keycode_button_5)
+-   [KEYCODE_BUTTON_6](Util.KeyCode.md#keycode_button_6)
+-   [KEYCODE_BUTTON_7](Util.KeyCode.md#keycode_button_7)
+-   [KEYCODE_BUTTON_8](Util.KeyCode.md#keycode_button_8)
+-   [KEYCODE_BUTTON_9](Util.KeyCode.md#keycode_button_9)
+-   [KEYCODE_BUTTON_A](Util.KeyCode.md#keycode_button_a)
+-   [KEYCODE_BUTTON_B](Util.KeyCode.md#keycode_button_b)
+-   [KEYCODE_BUTTON_C](Util.KeyCode.md#keycode_button_c)
+-   [KEYCODE_BUTTON_L1](Util.KeyCode.md#keycode_button_l1)
+-   [KEYCODE_BUTTON_L2](Util.KeyCode.md#keycode_button_l2)
+-   [KEYCODE_BUTTON_MODE](Util.KeyCode.md#keycode_button_mode)
+-   [KEYCODE_BUTTON_R1](Util.KeyCode.md#keycode_button_r1)
+-   [KEYCODE_BUTTON_R2](Util.KeyCode.md#keycode_button_r2)
+-   [KEYCODE_BUTTON_SELECT](Util.KeyCode.md#keycode_button_select)
+-   [KEYCODE_BUTTON_START](Util.KeyCode.md#keycode_button_start)
+-   [KEYCODE_BUTTON_THUMBL](Util.KeyCode.md#keycode_button_thumbl)
+-   [KEYCODE_BUTTON_THUMBR](Util.KeyCode.md#keycode_button_thumbr)
+-   [KEYCODE_BUTTON_X](Util.KeyCode.md#keycode_button_x)
+-   [KEYCODE_BUTTON_Y](Util.KeyCode.md#keycode_button_y)
+-   [KEYCODE_BUTTON_Z](Util.KeyCode.md#keycode_button_z)
+-   [KEYCODE_C](Util.KeyCode.md#keycode_c)
+-   [KEYCODE_CALCULATOR](Util.KeyCode.md#keycode_calculator)
+-   [KEYCODE_CALENDAR](Util.KeyCode.md#keycode_calendar)
+-   [KEYCODE_CALL](Util.KeyCode.md#keycode_call)
+-   [KEYCODE_CAMERA](Util.KeyCode.md#keycode_camera)
+-   [KEYCODE_CAPS_LOCK](Util.KeyCode.md#keycode_caps_lock)
+-   [KEYCODE_CAPTIONS](Util.KeyCode.md#keycode_captions)
+-   [KEYCODE_CHANNEL_DOWN](Util.KeyCode.md#keycode_channel_down)
+-   [KEYCODE_CHANNEL_UP](Util.KeyCode.md#keycode_channel_up)
+-   [KEYCODE_CLEAR](Util.KeyCode.md#keycode_clear)
+-   [KEYCODE_COMMA](Util.KeyCode.md#keycode_comma)
+-   [KEYCODE_CONTACTS](Util.KeyCode.md#keycode_contacts)
+-   [KEYCODE_COPY](Util.KeyCode.md#keycode_copy)
+-   [KEYCODE_CTRL_LEFT](Util.KeyCode.md#keycode_ctrl_left)
+-   [KEYCODE_CTRL_RIGHT](Util.KeyCode.md#keycode_ctrl_right)
+-   [KEYCODE_CUT](Util.KeyCode.md#keycode_cut)
+-   [KEYCODE_D](Util.KeyCode.md#keycode_d)
+-   [KEYCODE_DEL](Util.KeyCode.md#keycode_del)
+-   [KEYCODE_DPAD_CENTER](Util.KeyCode.md#keycode_dpad_center)
+-   [KEYCODE_DPAD_DOWN](Util.KeyCode.md#keycode_dpad_down)
+-   [KEYCODE_DPAD_DOWN_LEFT](Util.KeyCode.md#keycode_dpad_down_left)
+-   [KEYCODE_DPAD_DOWN_RIGHT](Util.KeyCode.md#keycode_dpad_down_right)
+-   [KEYCODE_DPAD_LEFT](Util.KeyCode.md#keycode_dpad_left)
+-   [KEYCODE_DPAD_RIGHT](Util.KeyCode.md#keycode_dpad_right)
+-   [KEYCODE_DPAD_UP](Util.KeyCode.md#keycode_dpad_up)
+-   [KEYCODE_DPAD_UP_LEFT](Util.KeyCode.md#keycode_dpad_up_left)
+-   [KEYCODE_DPAD_UP_RIGHT](Util.KeyCode.md#keycode_dpad_up_right)
+-   [KEYCODE_DVR](Util.KeyCode.md#keycode_dvr)
+-   [KEYCODE_E](Util.KeyCode.md#keycode_e)
+-   [KEYCODE_EISU](Util.KeyCode.md#keycode_eisu)
+-   [KEYCODE_ENDCALL](Util.KeyCode.md#keycode_endcall)
+-   [KEYCODE_ENTER](Util.KeyCode.md#keycode_enter)
+-   [KEYCODE_ENVELOPE](Util.KeyCode.md#keycode_envelope)
+-   [KEYCODE_EQUALS](Util.KeyCode.md#keycode_equals)
+-   [KEYCODE_ESCAPE](Util.KeyCode.md#keycode_escape)
+-   [KEYCODE_EXPLORER](Util.KeyCode.md#keycode_explorer)
+-   [KEYCODE_F](Util.KeyCode.md#keycode_f)
+-   [KEYCODE_F1](Util.KeyCode.md#keycode_f1)
+-   [KEYCODE_F10](Util.KeyCode.md#keycode_f10)
+-   [KEYCODE_F11](Util.KeyCode.md#keycode_f11)
+-   [KEYCODE_F12](Util.KeyCode.md#keycode_f12)
+-   [KEYCODE_F2](Util.KeyCode.md#keycode_f2)
+-   [KEYCODE_F3](Util.KeyCode.md#keycode_f3)
+-   [KEYCODE_F4](Util.KeyCode.md#keycode_f4)
+-   [KEYCODE_F5](Util.KeyCode.md#keycode_f5)
+-   [KEYCODE_F6](Util.KeyCode.md#keycode_f6)
+-   [KEYCODE_F7](Util.KeyCode.md#keycode_f7)
+-   [KEYCODE_F8](Util.KeyCode.md#keycode_f8)
+-   [KEYCODE_F9](Util.KeyCode.md#keycode_f9)
+-   [KEYCODE_FOCUS](Util.KeyCode.md#keycode_focus)
+-   [KEYCODE_FORWARD](Util.KeyCode.md#keycode_forward)
+-   [KEYCODE_FORWARD_DEL](Util.KeyCode.md#keycode_forward_del)
+-   [KEYCODE_FUNCTION](Util.KeyCode.md#keycode_function)
+-   [KEYCODE_G](Util.KeyCode.md#keycode_g)
+-   [KEYCODE_GRAVE](Util.KeyCode.md#keycode_grave)
+-   [KEYCODE_GUIDE](Util.KeyCode.md#keycode_guide)
+-   [KEYCODE_H](Util.KeyCode.md#keycode_h)
+-   [KEYCODE_HEADSETHOOK](Util.KeyCode.md#keycode_headsethook)
+-   [KEYCODE_HELP](Util.KeyCode.md#keycode_help)
+-   [KEYCODE_HENKAN](Util.KeyCode.md#keycode_henkan)
+-   [KEYCODE_HOME](Util.KeyCode.md#keycode_home)
+-   [KEYCODE_I](Util.KeyCode.md#keycode_i)
+-   [KEYCODE_INFO](Util.KeyCode.md#keycode_info)
+-   [KEYCODE_INSERT](Util.KeyCode.md#keycode_insert)
+-   [KEYCODE_J](Util.KeyCode.md#keycode_j)
+-   [KEYCODE_K](Util.KeyCode.md#keycode_k)
+-   [KEYCODE_KANA](Util.KeyCode.md#keycode_kana)
+-   [KEYCODE_KATAKANA_HIRAGANA](Util.KeyCode.md#keycode_katakana_hiragana)
+-   [KEYCODE_L](Util.KeyCode.md#keycode_l)
+-   [KEYCODE_LANGUAGE_SWITCH](Util.KeyCode.md#keycode_language_switch)
+-   [KEYCODE_LAST_CHANNEL](Util.KeyCode.md#keycode_last_channel)
+-   [KEYCODE_LEFT_BRACKET](Util.KeyCode.md#keycode_left_bracket)
+-   [KEYCODE_M](Util.KeyCode.md#keycode_m)
+-   [KEYCODE_MANNER_MODE](Util.KeyCode.md#keycode_manner_mode)
+-   [KEYCODE_MEDIA_AUDIO_TRACK](Util.KeyCode.md#keycode_media_audio_track)
+-   [KEYCODE_MEDIA_CLOSE](Util.KeyCode.md#keycode_media_close)
+-   [KEYCODE_MEDIA_EJECT](Util.KeyCode.md#keycode_media_eject)
+-   [KEYCODE_MEDIA_FAST_FORWARD](Util.KeyCode.md#keycode_media_fast_forward)
+-   [KEYCODE_MEDIA_NEXT](Util.KeyCode.md#keycode_media_next)
+-   [KEYCODE_MEDIA_PAUSE](Util.KeyCode.md#keycode_media_pause)
+-   [KEYCODE_MEDIA_PLAY](Util.KeyCode.md#keycode_media_play)
+-   [KEYCODE_MEDIA_PLAY_PAUSE](Util.KeyCode.md#keycode_media_play_pause)
+-   [KEYCODE_MEDIA_PREVIOUS](Util.KeyCode.md#keycode_media_previous)
+-   [KEYCODE_MEDIA_RECORD](Util.KeyCode.md#keycode_media_record)
+-   [KEYCODE_MEDIA_REWIND](Util.KeyCode.md#keycode_media_rewind)
+-   [KEYCODE_MEDIA_SKIP_BACKWARD](Util.KeyCode.md#keycode_media_skip_backward)
+-   [KEYCODE_MEDIA_SKIP_FORWARD](Util.KeyCode.md#keycode_media_skip_forward)
+-   [KEYCODE_MEDIA_STEP_BACKWARD](Util.KeyCode.md#keycode_media_step_backward)
+-   [KEYCODE_MEDIA_STEP_FORWARD](Util.KeyCode.md#keycode_media_step_forward)
+-   [KEYCODE_MEDIA_STOP](Util.KeyCode.md#keycode_media_stop)
+-   [KEYCODE_MEDIA_TOP_MENU](Util.KeyCode.md#keycode_media_top_menu)
+-   [KEYCODE_MENU](Util.KeyCode.md#keycode_menu)
+-   [KEYCODE_META_LEFT](Util.KeyCode.md#keycode_meta_left)
+-   [KEYCODE_META_RIGHT](Util.KeyCode.md#keycode_meta_right)
+-   [KEYCODE_MINUS](Util.KeyCode.md#keycode_minus)
+-   [KEYCODE_MOVE_END](Util.KeyCode.md#keycode_move_end)
+-   [KEYCODE_MOVE_HOME](Util.KeyCode.md#keycode_move_home)
+-   [KEYCODE_MUHENKAN](Util.KeyCode.md#keycode_muhenkan)
+-   [KEYCODE_MUSIC](Util.KeyCode.md#keycode_music)
+-   [KEYCODE_MUTE](Util.KeyCode.md#keycode_mute)
+-   [KEYCODE_N](Util.KeyCode.md#keycode_n)
+-   [KEYCODE_NAVIGATE_IN](Util.KeyCode.md#keycode_navigate_in)
+-   [KEYCODE_NAVIGATE_NEXT](Util.KeyCode.md#keycode_navigate_next)
+-   [KEYCODE_NAVIGATE_OUT](Util.KeyCode.md#keycode_navigate_out)
+-   [KEYCODE_NAVIGATE_PREVIOUS](Util.KeyCode.md#keycode_navigate_previous)
+-   [KEYCODE_NOTIFICATION](Util.KeyCode.md#keycode_notification)
+-   [KEYCODE_NUM](Util.KeyCode.md#keycode_num)
+-   [KEYCODE_NUMPAD_0](Util.KeyCode.md#keycode_numpad_0)
+-   [KEYCODE_NUMPAD_1](Util.KeyCode.md#keycode_numpad_1)
+-   [KEYCODE_NUMPAD_2](Util.KeyCode.md#keycode_numpad_2)
+-   [KEYCODE_NUMPAD_3](Util.KeyCode.md#keycode_numpad_3)
+-   [KEYCODE_NUMPAD_4](Util.KeyCode.md#keycode_numpad_4)
+-   [KEYCODE_NUMPAD_5](Util.KeyCode.md#keycode_numpad_5)
+-   [KEYCODE_NUMPAD_6](Util.KeyCode.md#keycode_numpad_6)
+-   [KEYCODE_NUMPAD_7](Util.KeyCode.md#keycode_numpad_7)
+-   [KEYCODE_NUMPAD_8](Util.KeyCode.md#keycode_numpad_8)
+-   [KEYCODE_NUMPAD_9](Util.KeyCode.md#keycode_numpad_9)
+-   [KEYCODE_NUMPAD_ADD](Util.KeyCode.md#keycode_numpad_add)
+-   [KEYCODE_NUMPAD_COMMA](Util.KeyCode.md#keycode_numpad_comma)
+-   [KEYCODE_NUMPAD_DIVIDE](Util.KeyCode.md#keycode_numpad_divide)
+-   [KEYCODE_NUMPAD_DOT](Util.KeyCode.md#keycode_numpad_dot)
+-   [KEYCODE_NUMPAD_ENTER](Util.KeyCode.md#keycode_numpad_enter)
+-   [KEYCODE_NUMPAD_EQUALS](Util.KeyCode.md#keycode_numpad_equals)
+-   [KEYCODE_NUMPAD_LEFT_PAREN](Util.KeyCode.md#keycode_numpad_left_paren)
+-   [KEYCODE_NUMPAD_MULTIPLY](Util.KeyCode.md#keycode_numpad_multiply)
+-   [KEYCODE_NUMPAD_RIGHT_PAREN](Util.KeyCode.md#keycode_numpad_right_paren)
+-   [KEYCODE_NUMPAD_SUBTRACT](Util.KeyCode.md#keycode_numpad_subtract)
+-   [KEYCODE_NUM_LOCK](Util.KeyCode.md#keycode_num_lock)
+-   [KEYCODE_O](Util.KeyCode.md#keycode_o)
+-   [KEYCODE_P](Util.KeyCode.md#keycode_p)
+-   [KEYCODE_PAGE_DOWN](Util.KeyCode.md#keycode_page_down)
+-   [KEYCODE_PAGE_UP](Util.KeyCode.md#keycode_page_up)
+-   [KEYCODE_PAIRING](Util.KeyCode.md#keycode_pairing)
+-   [KEYCODE_PASTE](Util.KeyCode.md#keycode_paste)
+-   [KEYCODE_PERIOD](Util.KeyCode.md#keycode_period)
+-   [KEYCODE_PICTSYMBOLS](Util.KeyCode.md#keycode_pictsymbols)
+-   [KEYCODE_PLUS](Util.KeyCode.md#keycode_plus)
+-   [KEYCODE_POUND](Util.KeyCode.md#keycode_pound)
+-   [KEYCODE_POWER](Util.KeyCode.md#keycode_power)
+-   [KEYCODE_PROG_BLUE](Util.KeyCode.md#keycode_prog_blue)
+-   [KEYCODE_PROG_GREEN](Util.KeyCode.md#keycode_prog_green)
+-   [KEYCODE_PROG_RED](Util.KeyCode.md#keycode_prog_red)
+-   [KEYCODE_PROG_YELLOW](Util.KeyCode.md#keycode_prog_yellow)
+-   [KEYCODE_Q](Util.KeyCode.md#keycode_q)
+-   [KEYCODE_R](Util.KeyCode.md#keycode_r)
+-   [KEYCODE_RIGHT_BRACKET](Util.KeyCode.md#keycode_right_bracket)
+-   [KEYCODE_RO](Util.KeyCode.md#keycode_ro)
+-   [KEYCODE_S](Util.KeyCode.md#keycode_s)
+-   [KEYCODE_SCROLL_LOCK](Util.KeyCode.md#keycode_scroll_lock)
+-   [KEYCODE_SEARCH](Util.KeyCode.md#keycode_search)
+-   [KEYCODE_SEMICOLON](Util.KeyCode.md#keycode_semicolon)
+-   [KEYCODE_SETTINGS](Util.KeyCode.md#keycode_settings)
+-   [KEYCODE_SHIFT_LEFT](Util.KeyCode.md#keycode_shift_left)
+-   [KEYCODE_SHIFT_RIGHT](Util.KeyCode.md#keycode_shift_right)
+-   [KEYCODE_SLASH](Util.KeyCode.md#keycode_slash)
+-   [KEYCODE_SLEEP](Util.KeyCode.md#keycode_sleep)
+-   [KEYCODE_SOFT_LEFT](Util.KeyCode.md#keycode_soft_left)
+-   [KEYCODE_SOFT_RIGHT](Util.KeyCode.md#keycode_soft_right)
+-   [KEYCODE_SOFT_SLEEP](Util.KeyCode.md#keycode_soft_sleep)
+-   [KEYCODE_SPACE](Util.KeyCode.md#keycode_space)
+-   [KEYCODE_STAR](Util.KeyCode.md#keycode_star)
+-   [KEYCODE_STB_INPUT](Util.KeyCode.md#keycode_stb_input)
+-   [KEYCODE_STB_POWER](Util.KeyCode.md#keycode_stb_power)
+-   [KEYCODE_STEM_1](Util.KeyCode.md#keycode_stem_1)
+-   [KEYCODE_STEM_2](Util.KeyCode.md#keycode_stem_2)
+-   [KEYCODE_STEM_3](Util.KeyCode.md#keycode_stem_3)
+-   [KEYCODE_STEM_PRIMARY](Util.KeyCode.md#keycode_stem_primary)
+-   [KEYCODE_SWITCH_CHARSET](Util.KeyCode.md#keycode_switch_charset)
+-   [KEYCODE_SYM](Util.KeyCode.md#keycode_sym)
+-   [KEYCODE_SYSRQ](Util.KeyCode.md#keycode_sysrq)
+-   [KEYCODE_SYSTEM_NAVIGATION_DOWN](Util.KeyCode.md#keycode_system_navigation_down)
+-   [KEYCODE_SYSTEM_NAVIGATION_LEFT](Util.KeyCode.md#keycode_system_navigation_left)
+-   [KEYCODE_SYSTEM_NAVIGATION_RIGHT](Util.KeyCode.md#keycode_system_navigation_right)
+-   [KEYCODE_SYSTEM_NAVIGATION_UP](Util.KeyCode.md#keycode_system_navigation_up)
+-   [KEYCODE_T](Util.KeyCode.md#keycode_t)
+-   [KEYCODE_TAB](Util.KeyCode.md#keycode_tab)
+-   [KEYCODE_TV](Util.KeyCode.md#keycode_tv)
+-   [KEYCODE_TV_ANTENNA_CABLE](Util.KeyCode.md#keycode_tv_antenna_cable)
+-   [KEYCODE_TV_AUDIO_DESCRIPTION](Util.KeyCode.md#keycode_tv_audio_description)
+-   [KEYCODE_TV_AUDIO_DESCRIPTION_MIX_DOWN](Util.KeyCode.md#keycode_tv_audio_description_mix_down)
+-   [KEYCODE_TV_AUDIO_DESCRIPTION_MIX_UP](Util.KeyCode.md#keycode_tv_audio_description_mix_up)
+-   [KEYCODE_TV_CONTENTS_MENU](Util.KeyCode.md#keycode_tv_contents_menu)
+-   [KEYCODE_TV_DATA_SERVICE](Util.KeyCode.md#keycode_tv_data_service)
+-   [KEYCODE_TV_INPUT](Util.KeyCode.md#keycode_tv_input)
+-   [KEYCODE_TV_INPUT_COMPONENT_1](Util.KeyCode.md#keycode_tv_input_component_1)
+-   [KEYCODE_TV_INPUT_COMPONENT_2](Util.KeyCode.md#keycode_tv_input_component_2)
+-   [KEYCODE_TV_INPUT_COMPOSITE_1](Util.KeyCode.md#keycode_tv_input_composite_1)
+-   [KEYCODE_TV_INPUT_COMPOSITE_2](Util.KeyCode.md#keycode_tv_input_composite_2)
+-   [KEYCODE_TV_INPUT_HDMI_1](Util.KeyCode.md#keycode_tv_input_hdmi_1)
+-   [KEYCODE_TV_INPUT_HDMI_2](Util.KeyCode.md#keycode_tv_input_hdmi_2)
+-   [KEYCODE_TV_INPUT_HDMI_3](Util.KeyCode.md#keycode_tv_input_hdmi_3)
+-   [KEYCODE_TV_INPUT_HDMI_4](Util.KeyCode.md#keycode_tv_input_hdmi_4)
+-   [KEYCODE_TV_INPUT_VGA_1](Util.KeyCode.md#keycode_tv_input_vga_1)
+-   [KEYCODE_TV_MEDIA_CONTEXT_MENU](Util.KeyCode.md#keycode_tv_media_context_menu)
+-   [KEYCODE_TV_NETWORK](Util.KeyCode.md#keycode_tv_network)
+-   [KEYCODE_TV_NUMBER_ENTRY](Util.KeyCode.md#keycode_tv_number_entry)
+-   [KEYCODE_TV_POWER](Util.KeyCode.md#keycode_tv_power)
+-   [KEYCODE_TV_RADIO_SERVICE](Util.KeyCode.md#keycode_tv_radio_service)
+-   [KEYCODE_TV_SATELLITE](Util.KeyCode.md#keycode_tv_satellite)
+-   [KEYCODE_TV_SATELLITE_BS](Util.KeyCode.md#keycode_tv_satellite_bs)
+-   [KEYCODE_TV_SATELLITE_CS](Util.KeyCode.md#keycode_tv_satellite_cs)
+-   [KEYCODE_TV_SATELLITE_SERVICE](Util.KeyCode.md#keycode_tv_satellite_service)
+-   [KEYCODE_TV_TELETEXT](Util.KeyCode.md#keycode_tv_teletext)
+-   [KEYCODE_TV_TERRESTRIAL_ANALOG](Util.KeyCode.md#keycode_tv_terrestrial_analog)
+-   [KEYCODE_TV_TERRESTRIAL_DIGITAL](Util.KeyCode.md#keycode_tv_terrestrial_digital)
+-   [KEYCODE_TV_TIMER_PROGRAMMING](Util.KeyCode.md#keycode_tv_timer_programming)
+-   [KEYCODE_TV_ZOOM_MODE](Util.KeyCode.md#keycode_tv_zoom_mode)
+-   [KEYCODE_U](Util.KeyCode.md#keycode_u)
+-   [KEYCODE_UNKNOWN](Util.KeyCode.md#keycode_unknown)
+-   [KEYCODE_V](Util.KeyCode.md#keycode_v)
+-   [KEYCODE_VOICE_ASSIST](Util.KeyCode.md#keycode_voice_assist)
+-   [KEYCODE_VOLUME_DOWN](Util.KeyCode.md#keycode_volume_down)
+-   [KEYCODE_VOLUME_MUTE](Util.KeyCode.md#keycode_volume_mute)
+-   [KEYCODE_VOLUME_UP](Util.KeyCode.md#keycode_volume_up)
+-   [KEYCODE_W](Util.KeyCode.md#keycode_w)
+-   [KEYCODE_WAKEUP](Util.KeyCode.md#keycode_wakeup)
+-   [KEYCODE_WINDOW](Util.KeyCode.md#keycode_window)
+-   [KEYCODE_X](Util.KeyCode.md#keycode_x)
+-   [KEYCODE_Y](Util.KeyCode.md#keycode_y)
+-   [KEYCODE_YEN](Util.KeyCode.md#keycode_yen)
+-   [KEYCODE_Z](Util.KeyCode.md#keycode_z)
+-   [KEYCODE_ZENKAKU_HANKAKU](Util.KeyCode.md#keycode_zenkaku_hankaku)
+-   [KEYCODE_ZOOM_IN](Util.KeyCode.md#keycode_zoom_in)
+-   [KEYCODE_ZOOM_OUT](Util.KeyCode.md#keycode_zoom_out)
 
 ## Enumeration Members
 
-### KEYCODE\_0
+### KEYCODE_0
 
-• **KEYCODE\_0** = ``7``
+• **KEYCODE_0** = `7`
 
 Key code constant: '0' key.
 
@@ -306,11 +306,11 @@ Key code constant: '0' key.
 
 [src/util/keycode.ts:23](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L23)
 
-___
+---
 
-### KEYCODE\_1
+### KEYCODE_1
 
-• **KEYCODE\_1** = ``8``
+• **KEYCODE_1** = `8`
 
 Key code constant: '1' key.
 
@@ -318,11 +318,11 @@ Key code constant: '1' key.
 
 [src/util/keycode.ts:25](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L25)
 
-___
+---
 
-### KEYCODE\_11
+### KEYCODE_11
 
-• **KEYCODE\_11** = ``227``
+• **KEYCODE_11** = `227`
 
 Key code constant: '11' key.
 
@@ -330,11 +330,11 @@ Key code constant: '11' key.
 
 [src/util/keycode.ts:570](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L570)
 
-___
+---
 
-### KEYCODE\_12
+### KEYCODE_12
 
-• **KEYCODE\_12** = ``228``
+• **KEYCODE_12** = `228`
 
 Key code constant: '12' key.
 
@@ -342,11 +342,11 @@ Key code constant: '12' key.
 
 [src/util/keycode.ts:572](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L572)
 
-___
+---
 
-### KEYCODE\_2
+### KEYCODE_2
 
-• **KEYCODE\_2** = ``9``
+• **KEYCODE_2** = `9`
 
 Key code constant: '2' key.
 
@@ -354,11 +354,11 @@ Key code constant: '2' key.
 
 [src/util/keycode.ts:27](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L27)
 
-___
+---
 
-### KEYCODE\_3
+### KEYCODE_3
 
-• **KEYCODE\_3** = ``10``
+• **KEYCODE_3** = `10`
 
 Key code constant: '3' key.
 
@@ -366,11 +366,11 @@ Key code constant: '3' key.
 
 [src/util/keycode.ts:29](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L29)
 
-___
+---
 
-### KEYCODE\_3D\_MODE
+### KEYCODE_3D_MODE
 
-• **KEYCODE\_3D\_MODE** = ``206``
+• **KEYCODE_3D_MODE** = `206`
 
 Key code constant: 3D Mode key.
 Toggles the display between 2D and 3D mode.
@@ -379,11 +379,11 @@ Toggles the display between 2D and 3D mode.
 
 [src/util/keycode.ts:512](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L512)
 
-___
+---
 
-### KEYCODE\_4
+### KEYCODE_4
 
-• **KEYCODE\_4** = ``11``
+• **KEYCODE_4** = `11`
 
 Key code constant: '4' key.
 
@@ -391,11 +391,11 @@ Key code constant: '4' key.
 
 [src/util/keycode.ts:31](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L31)
 
-___
+---
 
-### KEYCODE\_5
+### KEYCODE_5
 
-• **KEYCODE\_5** = ``12``
+• **KEYCODE_5** = `12`
 
 Key code constant: '5' key.
 
@@ -403,11 +403,11 @@ Key code constant: '5' key.
 
 [src/util/keycode.ts:33](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L33)
 
-___
+---
 
-### KEYCODE\_6
+### KEYCODE_6
 
-• **KEYCODE\_6** = ``13``
+• **KEYCODE_6** = `13`
 
 Key code constant: '6' key.
 
@@ -415,11 +415,11 @@ Key code constant: '6' key.
 
 [src/util/keycode.ts:35](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L35)
 
-___
+---
 
-### KEYCODE\_7
+### KEYCODE_7
 
-• **KEYCODE\_7** = ``14``
+• **KEYCODE_7** = `14`
 
 Key code constant: '7' key.
 
@@ -427,11 +427,11 @@ Key code constant: '7' key.
 
 [src/util/keycode.ts:37](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L37)
 
-___
+---
 
-### KEYCODE\_8
+### KEYCODE_8
 
-• **KEYCODE\_8** = ``15``
+• **KEYCODE_8** = `15`
 
 Key code constant: '8' key.
 
@@ -439,11 +439,11 @@ Key code constant: '8' key.
 
 [src/util/keycode.ts:39](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L39)
 
-___
+---
 
-### KEYCODE\_9
+### KEYCODE_9
 
-• **KEYCODE\_9** = ``16``
+• **KEYCODE_9** = `16`
 
 Key code constant: '9' key.
 
@@ -451,11 +451,11 @@ Key code constant: '9' key.
 
 [src/util/keycode.ts:41](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L41)
 
-___
+---
 
-### KEYCODE\_A
+### KEYCODE_A
 
-• **KEYCODE\_A** = ``29``
+• **KEYCODE_A** = `29`
 
 Key code constant: 'A' key.
 
@@ -463,11 +463,11 @@ Key code constant: 'A' key.
 
 [src/util/keycode.ts:75](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L75)
 
-___
+---
 
-### KEYCODE\_ALL\_APPS
+### KEYCODE_ALL_APPS
 
-• **KEYCODE\_ALL\_APPS** = ``284``
+• **KEYCODE_ALL_APPS** = `284`
 
 Key code constant: Show all apps
 
@@ -475,11 +475,11 @@ Key code constant: Show all apps
 
 [src/util/keycode.ts:729](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L729)
 
-___
+---
 
-### KEYCODE\_ALT\_LEFT
+### KEYCODE_ALT_LEFT
 
-• **KEYCODE\_ALT\_LEFT** = ``57``
+• **KEYCODE_ALT_LEFT** = `57`
 
 Key code constant: Left Alt modifier key.
 
@@ -487,11 +487,11 @@ Key code constant: Left Alt modifier key.
 
 [src/util/keycode.ts:131](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L131)
 
-___
+---
 
-### KEYCODE\_ALT\_RIGHT
+### KEYCODE_ALT_RIGHT
 
-• **KEYCODE\_ALT\_RIGHT** = ``58``
+• **KEYCODE_ALT_RIGHT** = `58`
 
 Key code constant: Right Alt modifier key.
 
@@ -499,11 +499,11 @@ Key code constant: Right Alt modifier key.
 
 [src/util/keycode.ts:133](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L133)
 
-___
+---
 
-### KEYCODE\_APOSTROPHE
+### KEYCODE_APOSTROPHE
 
-• **KEYCODE\_APOSTROPHE** = ``75``
+• **KEYCODE_APOSTROPHE** = `75`
 
 Key code constant: ''' (apostrophe) key.
 
@@ -511,11 +511,11 @@ Key code constant: ''' (apostrophe) key.
 
 [src/util/keycode.ts:171](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L171)
 
-___
+---
 
-### KEYCODE\_APP\_SWITCH
+### KEYCODE_APP_SWITCH
 
-• **KEYCODE\_APP\_SWITCH** = ``187``
+• **KEYCODE_APP_SWITCH** = `187`
 
 Key code constant: App switch key.
 Should bring up the application switcher dialog.
@@ -524,24 +524,24 @@ Should bring up the application switcher dialog.
 
 [src/util/keycode.ts:467](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L467)
 
-___
+---
 
-### KEYCODE\_ASSIST
+### KEYCODE_ASSIST
 
-• **KEYCODE\_ASSIST** = ``219``
+• **KEYCODE_ASSIST** = `219`
 
 Key code constant: Assist key.
-Launches the global assist activity.  Not delivered to applications.
+Launches the global assist activity. Not delivered to applications.
 
 #### Defined in
 
 [src/util/keycode.ts:543](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L543)
 
-___
+---
 
-### KEYCODE\_AT
+### KEYCODE_AT
 
-• **KEYCODE\_AT** = ``77``
+• **KEYCODE_AT** = `77`
 
 Key code constant: '@' key.
 
@@ -549,11 +549,11 @@ Key code constant: '@' key.
 
 [src/util/keycode.ts:175](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L175)
 
-___
+---
 
-### KEYCODE\_AVR\_INPUT
+### KEYCODE_AVR_INPUT
 
-• **KEYCODE\_AVR\_INPUT** = ``182``
+• **KEYCODE_AVR_INPUT** = `182`
 
 Key code constant: A/V Receiver input key.
 On TV remotes, switches the input mode on an external A/V Receiver.
@@ -562,11 +562,11 @@ On TV remotes, switches the input mode on an external A/V Receiver.
 
 [src/util/keycode.ts:452](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L452)
 
-___
+---
 
-### KEYCODE\_AVR\_POWER
+### KEYCODE_AVR_POWER
 
-• **KEYCODE\_AVR\_POWER** = ``181``
+• **KEYCODE_AVR_POWER** = `181`
 
 Key code constant: A/V Receiver power key.
 On TV remotes, toggles the power on an external A/V Receiver.
@@ -575,11 +575,11 @@ On TV remotes, toggles the power on an external A/V Receiver.
 
 [src/util/keycode.ts:449](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L449)
 
-___
+---
 
-### KEYCODE\_B
+### KEYCODE_B
 
-• **KEYCODE\_B** = ``30``
+• **KEYCODE_B** = `30`
 
 Key code constant: 'B' key.
 
@@ -587,11 +587,11 @@ Key code constant: 'B' key.
 
 [src/util/keycode.ts:77](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L77)
 
-___
+---
 
-### KEYCODE\_BACK
+### KEYCODE_BACK
 
-• **KEYCODE\_BACK** = ``4``
+• **KEYCODE_BACK** = `4`
 
 Key code constant: Back key.
 
@@ -599,11 +599,11 @@ Key code constant: Back key.
 
 [src/util/keycode.ts:17](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L17)
 
-___
+---
 
-### KEYCODE\_BACKSLASH
+### KEYCODE_BACKSLASH
 
-• **KEYCODE\_BACKSLASH** = ``73``
+• **KEYCODE_BACKSLASH** = `73`
 
 Key code constant: '\' key.
 
@@ -611,11 +611,11 @@ Key code constant: '\' key.
 
 [src/util/keycode.ts:167](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L167)
 
-___
+---
 
-### KEYCODE\_BOOKMARK
+### KEYCODE_BOOKMARK
 
-• **KEYCODE\_BOOKMARK** = ``174``
+• **KEYCODE_BOOKMARK** = `174`
 
 Key code constant: Bookmark key.
 On some TV remotes, bookmarks content or web pages.
@@ -624,11 +624,11 @@ On some TV remotes, bookmarks content or web pages.
 
 [src/util/keycode.ts:428](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L428)
 
-___
+---
 
-### KEYCODE\_BREAK
+### KEYCODE_BREAK
 
-• **KEYCODE\_BREAK** = ``121``
+• **KEYCODE_BREAK** = `121`
 
 Key code constant: Break / Pause key.
 
@@ -636,11 +636,11 @@ Key code constant: Break / Pause key.
 
 [src/util/keycode.ts:299](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L299)
 
-___
+---
 
-### KEYCODE\_BRIGHTNESS\_DOWN
+### KEYCODE_BRIGHTNESS_DOWN
 
-• **KEYCODE\_BRIGHTNESS\_DOWN** = ``220``
+• **KEYCODE_BRIGHTNESS_DOWN** = `220`
 
 Key code constant: Brightness Down key.
 Adjusts the screen brightness down.
@@ -649,11 +649,11 @@ Adjusts the screen brightness down.
 
 [src/util/keycode.ts:546](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L546)
 
-___
+---
 
-### KEYCODE\_BRIGHTNESS\_UP
+### KEYCODE_BRIGHTNESS_UP
 
-• **KEYCODE\_BRIGHTNESS\_UP** = ``221``
+• **KEYCODE_BRIGHTNESS_UP** = `221`
 
 Key code constant: Brightness Up key.
 Adjusts the screen brightness up.
@@ -662,11 +662,11 @@ Adjusts the screen brightness up.
 
 [src/util/keycode.ts:549](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L549)
 
-___
+---
 
-### KEYCODE\_BUTTON\_1
+### KEYCODE_BUTTON_1
 
-• **KEYCODE\_BUTTON\_1** = ``188``
+• **KEYCODE_BUTTON_1** = `188`
 
 Key code constant: Generic Game Pad Button #1.
 
@@ -674,11 +674,11 @@ Key code constant: Generic Game Pad Button #1.
 
 [src/util/keycode.ts:469](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L469)
 
-___
+---
 
-### KEYCODE\_BUTTON\_10
+### KEYCODE_BUTTON_10
 
-• **KEYCODE\_BUTTON\_10** = ``197``
+• **KEYCODE_BUTTON_10** = `197`
 
 Key code constant: Generic Game Pad Button #10.
 
@@ -686,11 +686,11 @@ Key code constant: Generic Game Pad Button #10.
 
 [src/util/keycode.ts:487](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L487)
 
-___
+---
 
-### KEYCODE\_BUTTON\_11
+### KEYCODE_BUTTON_11
 
-• **KEYCODE\_BUTTON\_11** = ``198``
+• **KEYCODE_BUTTON_11** = `198`
 
 Key code constant: Generic Game Pad Button #11.
 
@@ -698,11 +698,11 @@ Key code constant: Generic Game Pad Button #11.
 
 [src/util/keycode.ts:489](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L489)
 
-___
+---
 
-### KEYCODE\_BUTTON\_12
+### KEYCODE_BUTTON_12
 
-• **KEYCODE\_BUTTON\_12** = ``199``
+• **KEYCODE_BUTTON_12** = `199`
 
 Key code constant: Generic Game Pad Button #12.
 
@@ -710,11 +710,11 @@ Key code constant: Generic Game Pad Button #12.
 
 [src/util/keycode.ts:491](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L491)
 
-___
+---
 
-### KEYCODE\_BUTTON\_13
+### KEYCODE_BUTTON_13
 
-• **KEYCODE\_BUTTON\_13** = ``200``
+• **KEYCODE_BUTTON_13** = `200`
 
 Key code constant: Generic Game Pad Button #13.
 
@@ -722,11 +722,11 @@ Key code constant: Generic Game Pad Button #13.
 
 [src/util/keycode.ts:493](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L493)
 
-___
+---
 
-### KEYCODE\_BUTTON\_14
+### KEYCODE_BUTTON_14
 
-• **KEYCODE\_BUTTON\_14** = ``201``
+• **KEYCODE_BUTTON_14** = `201`
 
 Key code constant: Generic Game Pad Button #14.
 
@@ -734,11 +734,11 @@ Key code constant: Generic Game Pad Button #14.
 
 [src/util/keycode.ts:495](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L495)
 
-___
+---
 
-### KEYCODE\_BUTTON\_15
+### KEYCODE_BUTTON_15
 
-• **KEYCODE\_BUTTON\_15** = ``202``
+• **KEYCODE_BUTTON_15** = `202`
 
 Key code constant: Generic Game Pad Button #15.
 
@@ -746,11 +746,11 @@ Key code constant: Generic Game Pad Button #15.
 
 [src/util/keycode.ts:497](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L497)
 
-___
+---
 
-### KEYCODE\_BUTTON\_16
+### KEYCODE_BUTTON_16
 
-• **KEYCODE\_BUTTON\_16** = ``203``
+• **KEYCODE_BUTTON_16** = `203`
 
 Key code constant: Generic Game Pad Button #16.
 
@@ -758,11 +758,11 @@ Key code constant: Generic Game Pad Button #16.
 
 [src/util/keycode.ts:499](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L499)
 
-___
+---
 
-### KEYCODE\_BUTTON\_2
+### KEYCODE_BUTTON_2
 
-• **KEYCODE\_BUTTON\_2** = ``189``
+• **KEYCODE_BUTTON_2** = `189`
 
 Key code constant: Generic Game Pad Button #2.
 
@@ -770,11 +770,11 @@ Key code constant: Generic Game Pad Button #2.
 
 [src/util/keycode.ts:471](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L471)
 
-___
+---
 
-### KEYCODE\_BUTTON\_3
+### KEYCODE_BUTTON_3
 
-• **KEYCODE\_BUTTON\_3** = ``190``
+• **KEYCODE_BUTTON_3** = `190`
 
 Key code constant: Generic Game Pad Button #3.
 
@@ -782,11 +782,11 @@ Key code constant: Generic Game Pad Button #3.
 
 [src/util/keycode.ts:473](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L473)
 
-___
+---
 
-### KEYCODE\_BUTTON\_4
+### KEYCODE_BUTTON_4
 
-• **KEYCODE\_BUTTON\_4** = ``191``
+• **KEYCODE_BUTTON_4** = `191`
 
 Key code constant: Generic Game Pad Button #4.
 
@@ -794,11 +794,11 @@ Key code constant: Generic Game Pad Button #4.
 
 [src/util/keycode.ts:475](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L475)
 
-___
+---
 
-### KEYCODE\_BUTTON\_5
+### KEYCODE_BUTTON_5
 
-• **KEYCODE\_BUTTON\_5** = ``192``
+• **KEYCODE_BUTTON_5** = `192`
 
 Key code constant: Generic Game Pad Button #5.
 
@@ -806,11 +806,11 @@ Key code constant: Generic Game Pad Button #5.
 
 [src/util/keycode.ts:477](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L477)
 
-___
+---
 
-### KEYCODE\_BUTTON\_6
+### KEYCODE_BUTTON_6
 
-• **KEYCODE\_BUTTON\_6** = ``193``
+• **KEYCODE_BUTTON_6** = `193`
 
 Key code constant: Generic Game Pad Button #6.
 
@@ -818,11 +818,11 @@ Key code constant: Generic Game Pad Button #6.
 
 [src/util/keycode.ts:479](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L479)
 
-___
+---
 
-### KEYCODE\_BUTTON\_7
+### KEYCODE_BUTTON_7
 
-• **KEYCODE\_BUTTON\_7** = ``194``
+• **KEYCODE_BUTTON_7** = `194`
 
 Key code constant: Generic Game Pad Button #7.
 
@@ -830,11 +830,11 @@ Key code constant: Generic Game Pad Button #7.
 
 [src/util/keycode.ts:481](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L481)
 
-___
+---
 
-### KEYCODE\_BUTTON\_8
+### KEYCODE_BUTTON_8
 
-• **KEYCODE\_BUTTON\_8** = ``195``
+• **KEYCODE_BUTTON_8** = `195`
 
 Key code constant: Generic Game Pad Button #8.
 
@@ -842,11 +842,11 @@ Key code constant: Generic Game Pad Button #8.
 
 [src/util/keycode.ts:483](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L483)
 
-___
+---
 
-### KEYCODE\_BUTTON\_9
+### KEYCODE_BUTTON_9
 
-• **KEYCODE\_BUTTON\_9** = ``196``
+• **KEYCODE_BUTTON_9** = `196`
 
 Key code constant: Generic Game Pad Button #9.
 
@@ -854,11 +854,11 @@ Key code constant: Generic Game Pad Button #9.
 
 [src/util/keycode.ts:485](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L485)
 
-___
+---
 
-### KEYCODE\_BUTTON\_A
+### KEYCODE_BUTTON_A
 
-• **KEYCODE\_BUTTON\_A** = ``96``
+• **KEYCODE_BUTTON_A** = `96`
 
 Key code constant: A Button key.
 On a game controller, the A button should be either the button labeled A
@@ -868,11 +868,11 @@ or the first button on the bottom row of controller buttons.
 
 [src/util/keycode.ts:223](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L223)
 
-___
+---
 
-### KEYCODE\_BUTTON\_B
+### KEYCODE_BUTTON_B
 
-• **KEYCODE\_BUTTON\_B** = ``97``
+• **KEYCODE_BUTTON_B** = `97`
 
 Key code constant: B Button key.
 On a game controller, the B button should be either the button labeled B
@@ -882,11 +882,11 @@ or the second button on the bottom row of controller buttons.
 
 [src/util/keycode.ts:227](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L227)
 
-___
+---
 
-### KEYCODE\_BUTTON\_C
+### KEYCODE_BUTTON_C
 
-• **KEYCODE\_BUTTON\_C** = ``98``
+• **KEYCODE_BUTTON_C** = `98`
 
 Key code constant: C Button key.
 On a game controller, the C button should be either the button labeled C
@@ -896,11 +896,11 @@ or the third button on the bottom row of controller buttons.
 
 [src/util/keycode.ts:231](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L231)
 
-___
+---
 
-### KEYCODE\_BUTTON\_L1
+### KEYCODE_BUTTON_L1
 
-• **KEYCODE\_BUTTON\_L1** = ``102``
+• **KEYCODE_BUTTON_L1** = `102`
 
 Key code constant: L1 Button key.
 On a game controller, the L1 button should be either the button labeled L1 (or L)
@@ -910,11 +910,11 @@ or the top left trigger button.
 
 [src/util/keycode.ts:247](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L247)
 
-___
+---
 
-### KEYCODE\_BUTTON\_L2
+### KEYCODE_BUTTON_L2
 
-• **KEYCODE\_BUTTON\_L2** = ``104``
+• **KEYCODE_BUTTON_L2** = `104`
 
 Key code constant: L2 Button key.
 On a game controller, the L2 button should be either the button labeled L2
@@ -924,11 +924,11 @@ or the bottom left trigger button.
 
 [src/util/keycode.ts:255](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L255)
 
-___
+---
 
-### KEYCODE\_BUTTON\_MODE
+### KEYCODE_BUTTON_MODE
 
-• **KEYCODE\_BUTTON\_MODE** = ``110``
+• **KEYCODE_BUTTON_MODE** = `110`
 
 Key code constant: Mode Button key.
 On a game controller, the button labeled Mode.
@@ -937,11 +937,11 @@ On a game controller, the button labeled Mode.
 
 [src/util/keycode.ts:276](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L276)
 
-___
+---
 
-### KEYCODE\_BUTTON\_R1
+### KEYCODE_BUTTON_R1
 
-• **KEYCODE\_BUTTON\_R1** = ``103``
+• **KEYCODE_BUTTON_R1** = `103`
 
 Key code constant: R1 Button key.
 On a game controller, the R1 button should be either the button labeled R1 (or R)
@@ -951,11 +951,11 @@ or the top right trigger button.
 
 [src/util/keycode.ts:251](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L251)
 
-___
+---
 
-### KEYCODE\_BUTTON\_R2
+### KEYCODE_BUTTON_R2
 
-• **KEYCODE\_BUTTON\_R2** = ``105``
+• **KEYCODE_BUTTON_R2** = `105`
 
 Key code constant: R2 Button key.
 On a game controller, the R2 button should be either the button labeled R2
@@ -965,11 +965,11 @@ or the bottom right trigger button.
 
 [src/util/keycode.ts:259](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L259)
 
-___
+---
 
-### KEYCODE\_BUTTON\_SELECT
+### KEYCODE_BUTTON_SELECT
 
-• **KEYCODE\_BUTTON\_SELECT** = ``109``
+• **KEYCODE_BUTTON_SELECT** = `109`
 
 Key code constant: Select Button key.
 On a game controller, the button labeled Select.
@@ -978,11 +978,11 @@ On a game controller, the button labeled Select.
 
 [src/util/keycode.ts:273](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L273)
 
-___
+---
 
-### KEYCODE\_BUTTON\_START
+### KEYCODE_BUTTON_START
 
-• **KEYCODE\_BUTTON\_START** = ``108``
+• **KEYCODE_BUTTON_START** = `108`
 
 Key code constant: Start Button key.
 On a game controller, the button labeled Start.
@@ -991,11 +991,11 @@ On a game controller, the button labeled Start.
 
 [src/util/keycode.ts:270](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L270)
 
-___
+---
 
-### KEYCODE\_BUTTON\_THUMBL
+### KEYCODE_BUTTON_THUMBL
 
-• **KEYCODE\_BUTTON\_THUMBL** = ``106``
+• **KEYCODE_BUTTON_THUMBL** = `106`
 
 Key code constant: Left Thumb Button key.
 On a game controller, the left thumb button indicates that the left (or only)
@@ -1005,11 +1005,11 @@ joystick is pressed.
 
 [src/util/keycode.ts:263](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L263)
 
-___
+---
 
-### KEYCODE\_BUTTON\_THUMBR
+### KEYCODE_BUTTON_THUMBR
 
-• **KEYCODE\_BUTTON\_THUMBR** = ``107``
+• **KEYCODE_BUTTON_THUMBR** = `107`
 
 Key code constant: Right Thumb Button key.
 On a game controller, the right thumb button indicates that the right
@@ -1019,11 +1019,11 @@ joystick is pressed.
 
 [src/util/keycode.ts:267](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L267)
 
-___
+---
 
-### KEYCODE\_BUTTON\_X
+### KEYCODE_BUTTON_X
 
-• **KEYCODE\_BUTTON\_X** = ``99``
+• **KEYCODE_BUTTON_X** = `99`
 
 Key code constant: X Button key.
 On a game controller, the X button should be either the button labeled X
@@ -1033,11 +1033,11 @@ or the first button on the upper row of controller buttons.
 
 [src/util/keycode.ts:235](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L235)
 
-___
+---
 
-### KEYCODE\_BUTTON\_Y
+### KEYCODE_BUTTON_Y
 
-• **KEYCODE\_BUTTON\_Y** = ``100``
+• **KEYCODE_BUTTON_Y** = `100`
 
 Key code constant: Y Button key.
 On a game controller, the Y button should be either the button labeled Y
@@ -1047,11 +1047,11 @@ or the second button on the upper row of controller buttons.
 
 [src/util/keycode.ts:239](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L239)
 
-___
+---
 
-### KEYCODE\_BUTTON\_Z
+### KEYCODE_BUTTON_Z
 
-• **KEYCODE\_BUTTON\_Z** = ``101``
+• **KEYCODE_BUTTON_Z** = `101`
 
 Key code constant: Z Button key.
 On a game controller, the Z button should be either the button labeled Z
@@ -1061,11 +1061,11 @@ or the third button on the upper row of controller buttons.
 
 [src/util/keycode.ts:243](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L243)
 
-___
+---
 
-### KEYCODE\_C
+### KEYCODE_C
 
-• **KEYCODE\_C** = ``31``
+• **KEYCODE_C** = `31`
 
 Key code constant: 'C' key.
 
@@ -1073,11 +1073,11 @@ Key code constant: 'C' key.
 
 [src/util/keycode.ts:79](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L79)
 
-___
+---
 
-### KEYCODE\_CALCULATOR
+### KEYCODE_CALCULATOR
 
-• **KEYCODE\_CALCULATOR** = ``210``
+• **KEYCODE_CALCULATOR** = `210`
 
 Key code constant: Calculator special function key.
 Used to launch a calculator application.
@@ -1086,11 +1086,11 @@ Used to launch a calculator application.
 
 [src/util/keycode.ts:524](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L524)
 
-___
+---
 
-### KEYCODE\_CALENDAR
+### KEYCODE_CALENDAR
 
-• **KEYCODE\_CALENDAR** = ``208``
+• **KEYCODE_CALENDAR** = `208`
 
 Key code constant: Calendar special function key.
 Used to launch a calendar application.
@@ -1099,11 +1099,11 @@ Used to launch a calendar application.
 
 [src/util/keycode.ts:518](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L518)
 
-___
+---
 
-### KEYCODE\_CALL
+### KEYCODE_CALL
 
-• **KEYCODE\_CALL** = ``5``
+• **KEYCODE_CALL** = `5`
 
 Key code constant: Call key.
 
@@ -1111,11 +1111,11 @@ Key code constant: Call key.
 
 [src/util/keycode.ts:19](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L19)
 
-___
+---
 
-### KEYCODE\_CAMERA
+### KEYCODE_CAMERA
 
-• **KEYCODE\_CAMERA** = ``27``
+• **KEYCODE_CAMERA** = `27`
 
 Key code constant: Camera key.
 Used to launch a camera application or take pictures.
@@ -1124,11 +1124,11 @@ Used to launch a camera application or take pictures.
 
 [src/util/keycode.ts:71](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L71)
 
-___
+---
 
-### KEYCODE\_CAPS\_LOCK
+### KEYCODE_CAPS_LOCK
 
-• **KEYCODE\_CAPS\_LOCK** = ``115``
+• **KEYCODE_CAPS_LOCK** = `115`
 
 Key code constant: Caps Lock key.
 
@@ -1136,11 +1136,11 @@ Key code constant: Caps Lock key.
 
 [src/util/keycode.ts:287](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L287)
 
-___
+---
 
-### KEYCODE\_CAPTIONS
+### KEYCODE_CAPTIONS
 
-• **KEYCODE\_CAPTIONS** = ``175``
+• **KEYCODE_CAPTIONS** = `175`
 
 Key code constant: Toggle captions key.
 Switches the mode for closed-captioning text, for example during television shows.
@@ -1149,11 +1149,11 @@ Switches the mode for closed-captioning text, for example during television show
 
 [src/util/keycode.ts:431](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L431)
 
-___
+---
 
-### KEYCODE\_CHANNEL\_DOWN
+### KEYCODE_CHANNEL_DOWN
 
-• **KEYCODE\_CHANNEL\_DOWN** = ``167``
+• **KEYCODE_CHANNEL_DOWN** = `167`
 
 Key code constant: Channel down key.
 On TV remotes, decrements the television channel.
@@ -1162,11 +1162,11 @@ On TV remotes, decrements the television channel.
 
 [src/util/keycode.ts:408](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L408)
 
-___
+---
 
-### KEYCODE\_CHANNEL\_UP
+### KEYCODE_CHANNEL_UP
 
-• **KEYCODE\_CHANNEL\_UP** = ``166``
+• **KEYCODE_CHANNEL_UP** = `166`
 
 Key code constant: Channel up key.
 On TV remotes, increments the television channel.
@@ -1175,11 +1175,11 @@ On TV remotes, increments the television channel.
 
 [src/util/keycode.ts:405](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L405)
 
-___
+---
 
-### KEYCODE\_CLEAR
+### KEYCODE_CLEAR
 
-• **KEYCODE\_CLEAR** = ``28``
+• **KEYCODE_CLEAR** = `28`
 
 Key code constant: Clear key.
 
@@ -1187,11 +1187,11 @@ Key code constant: Clear key.
 
 [src/util/keycode.ts:73](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L73)
 
-___
+---
 
-### KEYCODE\_COMMA
+### KEYCODE_COMMA
 
-• **KEYCODE\_COMMA** = ``55``
+• **KEYCODE_COMMA** = `55`
 
 Key code constant: ',' key.
 
@@ -1199,11 +1199,11 @@ Key code constant: ',' key.
 
 [src/util/keycode.ts:127](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L127)
 
-___
+---
 
-### KEYCODE\_CONTACTS
+### KEYCODE_CONTACTS
 
-• **KEYCODE\_CONTACTS** = ``207``
+• **KEYCODE_CONTACTS** = `207`
 
 Key code constant: Contacts special function key.
 Used to launch an address book application.
@@ -1212,11 +1212,11 @@ Used to launch an address book application.
 
 [src/util/keycode.ts:515](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L515)
 
-___
+---
 
-### KEYCODE\_COPY
+### KEYCODE_COPY
 
-• **KEYCODE\_COPY** = ``278``
+• **KEYCODE_COPY** = `278`
 
 Key code constant: Copy key.
 
@@ -1224,11 +1224,11 @@ Key code constant: Copy key.
 
 [src/util/keycode.ts:716](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L716)
 
-___
+---
 
-### KEYCODE\_CTRL\_LEFT
+### KEYCODE_CTRL_LEFT
 
-• **KEYCODE\_CTRL\_LEFT** = ``113``
+• **KEYCODE_CTRL_LEFT** = `113`
 
 Key code constant: Left Control modifier key.
 
@@ -1236,11 +1236,11 @@ Key code constant: Left Control modifier key.
 
 [src/util/keycode.ts:283](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L283)
 
-___
+---
 
-### KEYCODE\_CTRL\_RIGHT
+### KEYCODE_CTRL_RIGHT
 
-• **KEYCODE\_CTRL\_RIGHT** = ``114``
+• **KEYCODE_CTRL_RIGHT** = `114`
 
 Key code constant: Right Control modifier key.
 
@@ -1248,11 +1248,11 @@ Key code constant: Right Control modifier key.
 
 [src/util/keycode.ts:285](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L285)
 
-___
+---
 
-### KEYCODE\_CUT
+### KEYCODE_CUT
 
-• **KEYCODE\_CUT** = ``277``
+• **KEYCODE_CUT** = `277`
 
 Key code constant: Cut key.
 
@@ -1260,11 +1260,11 @@ Key code constant: Cut key.
 
 [src/util/keycode.ts:714](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L714)
 
-___
+---
 
-### KEYCODE\_D
+### KEYCODE_D
 
-• **KEYCODE\_D** = ``32``
+• **KEYCODE_D** = `32`
 
 Key code constant: 'D' key.
 
@@ -1272,11 +1272,11 @@ Key code constant: 'D' key.
 
 [src/util/keycode.ts:81](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L81)
 
-___
+---
 
-### KEYCODE\_DEL
+### KEYCODE_DEL
 
-• **KEYCODE\_DEL** = ``67``
+• **KEYCODE_DEL** = `67`
 
 Key code constant: Backspace key.
 Deletes characters before the insertion po , unlike `KEYCODE_FORWARD_DEL`.
@@ -1285,11 +1285,11 @@ Deletes characters before the insertion po , unlike `KEYCODE_FORWARD_DEL`.
 
 [src/util/keycode.ts:155](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L155)
 
-___
+---
 
-### KEYCODE\_DPAD\_CENTER
+### KEYCODE_DPAD_CENTER
 
-• **KEYCODE\_DPAD\_CENTER** = ``23``
+• **KEYCODE_DPAD_CENTER** = `23`
 
 Key code constant: Directional Pad Center key.
 May also be synthesized from trackball motions.
@@ -1298,11 +1298,11 @@ May also be synthesized from trackball motions.
 
 [src/util/keycode.ts:60](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L60)
 
-___
+---
 
-### KEYCODE\_DPAD\_DOWN
+### KEYCODE_DPAD_DOWN
 
-• **KEYCODE\_DPAD\_DOWN** = ``20``
+• **KEYCODE_DPAD_DOWN** = `20`
 
 Key code constant: Directional Pad Down key.
 May also be synthesized from trackball motions.
@@ -1311,11 +1311,11 @@ May also be synthesized from trackball motions.
 
 [src/util/keycode.ts:51](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L51)
 
-___
+---
 
-### KEYCODE\_DPAD\_DOWN\_LEFT
+### KEYCODE_DPAD_DOWN_LEFT
 
-• **KEYCODE\_DPAD\_DOWN\_LEFT** = ``269``
+• **KEYCODE_DPAD_DOWN_LEFT** = `269`
 
 Key code constant: Directional Pad Down-Left
 
@@ -1323,11 +1323,11 @@ Key code constant: Directional Pad Down-Left
 
 [src/util/keycode.ts:696](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L696)
 
-___
+---
 
-### KEYCODE\_DPAD\_DOWN\_RIGHT
+### KEYCODE_DPAD_DOWN_RIGHT
 
-• **KEYCODE\_DPAD\_DOWN\_RIGHT** = ``271``
+• **KEYCODE_DPAD_DOWN_RIGHT** = `271`
 
 Key code constant: Directional Pad Down-Right
 
@@ -1335,11 +1335,11 @@ Key code constant: Directional Pad Down-Right
 
 [src/util/keycode.ts:700](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L700)
 
-___
+---
 
-### KEYCODE\_DPAD\_LEFT
+### KEYCODE_DPAD_LEFT
 
-• **KEYCODE\_DPAD\_LEFT** = ``21``
+• **KEYCODE_DPAD_LEFT** = `21`
 
 Key code constant: Directional Pad Left key.
 May also be synthesized from trackball motions.
@@ -1348,11 +1348,11 @@ May also be synthesized from trackball motions.
 
 [src/util/keycode.ts:54](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L54)
 
-___
+---
 
-### KEYCODE\_DPAD\_RIGHT
+### KEYCODE_DPAD_RIGHT
 
-• **KEYCODE\_DPAD\_RIGHT** = ``22``
+• **KEYCODE_DPAD_RIGHT** = `22`
 
 Key code constant: Directional Pad Right key.
 May also be synthesized from trackball motions.
@@ -1361,11 +1361,11 @@ May also be synthesized from trackball motions.
 
 [src/util/keycode.ts:57](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L57)
 
-___
+---
 
-### KEYCODE\_DPAD\_UP
+### KEYCODE_DPAD_UP
 
-• **KEYCODE\_DPAD\_UP** = ``19``
+• **KEYCODE_DPAD_UP** = `19`
 
 Key code constant: Directional Pad Up key.
 May also be synthesized from trackball motions.
@@ -1374,11 +1374,11 @@ May also be synthesized from trackball motions.
 
 [src/util/keycode.ts:48](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L48)
 
-___
+---
 
-### KEYCODE\_DPAD\_UP\_LEFT
+### KEYCODE_DPAD_UP_LEFT
 
-• **KEYCODE\_DPAD\_UP\_LEFT** = ``268``
+• **KEYCODE_DPAD_UP_LEFT** = `268`
 
 Key code constant: Directional Pad Up-Left
 
@@ -1386,11 +1386,11 @@ Key code constant: Directional Pad Up-Left
 
 [src/util/keycode.ts:694](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L694)
 
-___
+---
 
-### KEYCODE\_DPAD\_UP\_RIGHT
+### KEYCODE_DPAD_UP_RIGHT
 
-• **KEYCODE\_DPAD\_UP\_RIGHT** = ``270``
+• **KEYCODE_DPAD_UP_RIGHT** = `270`
 
 Key code constant: Directional Pad Up-Right
 
@@ -1398,11 +1398,11 @@ Key code constant: Directional Pad Up-Right
 
 [src/util/keycode.ts:698](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L698)
 
-___
+---
 
-### KEYCODE\_DVR
+### KEYCODE_DVR
 
-• **KEYCODE\_DVR** = ``173``
+• **KEYCODE_DVR** = `173`
 
 Key code constant: DVR key.
 On some TV remotes, switches to a DVR mode for recorded shows.
@@ -1411,11 +1411,11 @@ On some TV remotes, switches to a DVR mode for recorded shows.
 
 [src/util/keycode.ts:425](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L425)
 
-___
+---
 
-### KEYCODE\_E
+### KEYCODE_E
 
-• **KEYCODE\_E** = ``33``
+• **KEYCODE_E** = `33`
 
 Key code constant: 'E' key.
 
@@ -1423,11 +1423,11 @@ Key code constant: 'E' key.
 
 [src/util/keycode.ts:83](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L83)
 
-___
+---
 
-### KEYCODE\_EISU
+### KEYCODE_EISU
 
-• **KEYCODE\_EISU** = ``212``
+• **KEYCODE_EISU** = `212`
 
 Key code constant: Japanese alphanumeric key.
 
@@ -1435,11 +1435,11 @@ Key code constant: Japanese alphanumeric key.
 
 [src/util/keycode.ts:528](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L528)
 
-___
+---
 
-### KEYCODE\_ENDCALL
+### KEYCODE_ENDCALL
 
-• **KEYCODE\_ENDCALL** = ``6``
+• **KEYCODE_ENDCALL** = `6`
 
 Key code constant: End Call key.
 
@@ -1447,11 +1447,11 @@ Key code constant: End Call key.
 
 [src/util/keycode.ts:21](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L21)
 
-___
+---
 
-### KEYCODE\_ENTER
+### KEYCODE_ENTER
 
-• **KEYCODE\_ENTER** = ``66``
+• **KEYCODE_ENTER** = `66`
 
 Key code constant: Enter key.
 
@@ -1459,11 +1459,11 @@ Key code constant: Enter key.
 
 [src/util/keycode.ts:152](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L152)
 
-___
+---
 
-### KEYCODE\_ENVELOPE
+### KEYCODE_ENVELOPE
 
-• **KEYCODE\_ENVELOPE** = ``65``
+• **KEYCODE_ENVELOPE** = `65`
 
 Key code constant: Envelope special function key.
 Used to launch a mail application.
@@ -1472,11 +1472,11 @@ Used to launch a mail application.
 
 [src/util/keycode.ts:150](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L150)
 
-___
+---
 
-### KEYCODE\_EQUALS
+### KEYCODE_EQUALS
 
-• **KEYCODE\_EQUALS** = ``70``
+• **KEYCODE_EQUALS** = `70`
 
 Key code constant: '=' key.
 
@@ -1484,11 +1484,11 @@ Key code constant: '=' key.
 
 [src/util/keycode.ts:161](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L161)
 
-___
+---
 
-### KEYCODE\_ESCAPE
+### KEYCODE_ESCAPE
 
-• **KEYCODE\_ESCAPE** = ``111``
+• **KEYCODE_ESCAPE** = `111`
 
 Key code constant: Escape key.
 
@@ -1496,11 +1496,11 @@ Key code constant: Escape key.
 
 [src/util/keycode.ts:278](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L278)
 
-___
+---
 
-### KEYCODE\_EXPLORER
+### KEYCODE_EXPLORER
 
-• **KEYCODE\_EXPLORER** = ``64``
+• **KEYCODE_EXPLORER** = `64`
 
 Key code constant: Explorer special function key.
 Used to launch a browser application.
@@ -1509,11 +1509,11 @@ Used to launch a browser application.
 
 [src/util/keycode.ts:147](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L147)
 
-___
+---
 
-### KEYCODE\_F
+### KEYCODE_F
 
-• **KEYCODE\_F** = ``34``
+• **KEYCODE_F** = `34`
 
 Key code constant: 'F' key.
 
@@ -1521,11 +1521,11 @@ Key code constant: 'F' key.
 
 [src/util/keycode.ts:85](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L85)
 
-___
+---
 
-### KEYCODE\_F1
+### KEYCODE_F1
 
-• **KEYCODE\_F1** = ``131``
+• **KEYCODE_F1** = `131`
 
 Key code constant: F1 key.
 
@@ -1533,11 +1533,11 @@ Key code constant: F1 key.
 
 [src/util/keycode.ts:327](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L327)
 
-___
+---
 
-### KEYCODE\_F10
+### KEYCODE_F10
 
-• **KEYCODE\_F10** = ``140``
+• **KEYCODE_F10** = `140`
 
 Key code constant: F10 key.
 
@@ -1545,11 +1545,11 @@ Key code constant: F10 key.
 
 [src/util/keycode.ts:345](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L345)
 
-___
+---
 
-### KEYCODE\_F11
+### KEYCODE_F11
 
-• **KEYCODE\_F11** = ``141``
+• **KEYCODE_F11** = `141`
 
 Key code constant: F11 key.
 
@@ -1557,11 +1557,11 @@ Key code constant: F11 key.
 
 [src/util/keycode.ts:347](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L347)
 
-___
+---
 
-### KEYCODE\_F12
+### KEYCODE_F12
 
-• **KEYCODE\_F12** = ``142``
+• **KEYCODE_F12** = `142`
 
 Key code constant: F12 key.
 
@@ -1569,11 +1569,11 @@ Key code constant: F12 key.
 
 [src/util/keycode.ts:349](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L349)
 
-___
+---
 
-### KEYCODE\_F2
+### KEYCODE_F2
 
-• **KEYCODE\_F2** = ``132``
+• **KEYCODE_F2** = `132`
 
 Key code constant: F2 key.
 
@@ -1581,11 +1581,11 @@ Key code constant: F2 key.
 
 [src/util/keycode.ts:329](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L329)
 
-___
+---
 
-### KEYCODE\_F3
+### KEYCODE_F3
 
-• **KEYCODE\_F3** = ``133``
+• **KEYCODE_F3** = `133`
 
 Key code constant: F3 key.
 
@@ -1593,11 +1593,11 @@ Key code constant: F3 key.
 
 [src/util/keycode.ts:331](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L331)
 
-___
+---
 
-### KEYCODE\_F4
+### KEYCODE_F4
 
-• **KEYCODE\_F4** = ``134``
+• **KEYCODE_F4** = `134`
 
 Key code constant: F4 key.
 
@@ -1605,11 +1605,11 @@ Key code constant: F4 key.
 
 [src/util/keycode.ts:333](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L333)
 
-___
+---
 
-### KEYCODE\_F5
+### KEYCODE_F5
 
-• **KEYCODE\_F5** = ``135``
+• **KEYCODE_F5** = `135`
 
 Key code constant: F5 key.
 
@@ -1617,11 +1617,11 @@ Key code constant: F5 key.
 
 [src/util/keycode.ts:335](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L335)
 
-___
+---
 
-### KEYCODE\_F6
+### KEYCODE_F6
 
-• **KEYCODE\_F6** = ``136``
+• **KEYCODE_F6** = `136`
 
 Key code constant: F6 key.
 
@@ -1629,11 +1629,11 @@ Key code constant: F6 key.
 
 [src/util/keycode.ts:337](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L337)
 
-___
+---
 
-### KEYCODE\_F7
+### KEYCODE_F7
 
-• **KEYCODE\_F7** = ``137``
+• **KEYCODE_F7** = `137`
 
 Key code constant: F7 key.
 
@@ -1641,11 +1641,11 @@ Key code constant: F7 key.
 
 [src/util/keycode.ts:339](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L339)
 
-___
+---
 
-### KEYCODE\_F8
+### KEYCODE_F8
 
-• **KEYCODE\_F8** = ``138``
+• **KEYCODE_F8** = `138`
 
 Key code constant: F8 key.
 
@@ -1653,11 +1653,11 @@ Key code constant: F8 key.
 
 [src/util/keycode.ts:341](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L341)
 
-___
+---
 
-### KEYCODE\_F9
+### KEYCODE_F9
 
-• **KEYCODE\_F9** = ``139``
+• **KEYCODE_F9** = `139`
 
 Key code constant: F9 key.
 
@@ -1665,11 +1665,11 @@ Key code constant: F9 key.
 
 [src/util/keycode.ts:343](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L343)
 
-___
+---
 
-### KEYCODE\_FOCUS
+### KEYCODE_FOCUS
 
-• **KEYCODE\_FOCUS** = ``80``
+• **KEYCODE_FOCUS** = `80`
 
 Key code constant: Camera Focus key.
 Used to focus the camera.
@@ -1678,24 +1678,24 @@ Used to focus the camera.
 
 [src/util/keycode.ts:186](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L186)
 
-___
+---
 
-### KEYCODE\_FORWARD
+### KEYCODE_FORWARD
 
-• **KEYCODE\_FORWARD** = ``125``
+• **KEYCODE_FORWARD** = `125`
 
 Key code constant: Forward key.
-Navigates forward in the history stack.  Complement of `KEYCODE_BACK`.
+Navigates forward in the history stack. Complement of `KEYCODE_BACK`.
 
 #### Defined in
 
 [src/util/keycode.ts:313](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L313)
 
-___
+---
 
-### KEYCODE\_FORWARD\_DEL
+### KEYCODE_FORWARD_DEL
 
-• **KEYCODE\_FORWARD\_DEL** = ``112``
+• **KEYCODE_FORWARD_DEL** = `112`
 
 Key code constant: Forward Delete key.
 Deletes characters ahead of the insertion po , unlike `KEYCODE_DEL`.
@@ -1704,11 +1704,11 @@ Deletes characters ahead of the insertion po , unlike `KEYCODE_DEL`.
 
 [src/util/keycode.ts:281](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L281)
 
-___
+---
 
-### KEYCODE\_FUNCTION
+### KEYCODE_FUNCTION
 
-• **KEYCODE\_FUNCTION** = ``119``
+• **KEYCODE_FUNCTION** = `119`
 
 Key code constant: Function modifier key.
 
@@ -1716,11 +1716,11 @@ Key code constant: Function modifier key.
 
 [src/util/keycode.ts:295](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L295)
 
-___
+---
 
-### KEYCODE\_G
+### KEYCODE_G
 
-• **KEYCODE\_G** = ``35``
+• **KEYCODE_G** = `35`
 
 Key code constant: 'G' key.
 
@@ -1728,11 +1728,11 @@ Key code constant: 'G' key.
 
 [src/util/keycode.ts:87](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L87)
 
-___
+---
 
-### KEYCODE\_GRAVE
+### KEYCODE_GRAVE
 
-• **KEYCODE\_GRAVE** = ``68``
+• **KEYCODE_GRAVE** = `68`
 
 Key code constant: '`' (backtick) key.
 
@@ -1740,11 +1740,11 @@ Key code constant: '`' (backtick) key.
 
 [src/util/keycode.ts:157](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L157)
 
-___
+---
 
-### KEYCODE\_GUIDE
+### KEYCODE_GUIDE
 
-• **KEYCODE\_GUIDE** = ``172``
+• **KEYCODE_GUIDE** = `172`
 
 Key code constant: Guide key.
 On TV remotes, shows a programming guide.
@@ -1753,11 +1753,11 @@ On TV remotes, shows a programming guide.
 
 [src/util/keycode.ts:422](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L422)
 
-___
+---
 
-### KEYCODE\_H
+### KEYCODE_H
 
-• **KEYCODE\_H** = ``36``
+• **KEYCODE_H** = `36`
 
 Key code constant: 'H' key.
 
@@ -1765,11 +1765,11 @@ Key code constant: 'H' key.
 
 [src/util/keycode.ts:89](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L89)
 
-___
+---
 
-### KEYCODE\_HEADSETHOOK
+### KEYCODE_HEADSETHOOK
 
-• **KEYCODE\_HEADSETHOOK** = ``79``
+• **KEYCODE_HEADSETHOOK** = `79`
 
 Key code constant: Headset Hook key.
 Used to hang up calls and stop media.
@@ -1778,11 +1778,11 @@ Used to hang up calls and stop media.
 
 [src/util/keycode.ts:183](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L183)
 
-___
+---
 
-### KEYCODE\_HELP
+### KEYCODE_HELP
 
-• **KEYCODE\_HELP** = ``259``
+• **KEYCODE_HELP** = `259`
 
 Key code constant: Help key.
 
@@ -1790,11 +1790,11 @@ Key code constant: Help key.
 
 [src/util/keycode.ts:669](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L669)
 
-___
+---
 
-### KEYCODE\_HENKAN
+### KEYCODE_HENKAN
 
-• **KEYCODE\_HENKAN** = ``214``
+• **KEYCODE_HENKAN** = `214`
 
 Key code constant: Japanese conversion key.
 
@@ -1802,11 +1802,11 @@ Key code constant: Japanese conversion key.
 
 [src/util/keycode.ts:532](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L532)
 
-___
+---
 
-### KEYCODE\_HOME
+### KEYCODE_HOME
 
-• **KEYCODE\_HOME** = ``3``
+• **KEYCODE_HOME** = `3`
 
 Key code constant: Home key.
 This key is handled by the framework and is never delivered to applications.
@@ -1815,11 +1815,11 @@ This key is handled by the framework and is never delivered to applications.
 
 [src/util/keycode.ts:15](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L15)
 
-___
+---
 
-### KEYCODE\_I
+### KEYCODE_I
 
-• **KEYCODE\_I** = ``37``
+• **KEYCODE_I** = `37`
 
 Key code constant: 'I' key.
 
@@ -1827,11 +1827,11 @@ Key code constant: 'I' key.
 
 [src/util/keycode.ts:91](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L91)
 
-___
+---
 
-### KEYCODE\_INFO
+### KEYCODE_INFO
 
-• **KEYCODE\_INFO** = ``165``
+• **KEYCODE_INFO** = `165`
 
 Key code constant: Info key.
 Common on TV remotes to show additional information related to what is
@@ -1841,11 +1841,11 @@ currently being viewed.
 
 [src/util/keycode.ts:402](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L402)
 
-___
+---
 
-### KEYCODE\_INSERT
+### KEYCODE_INSERT
 
-• **KEYCODE\_INSERT** = ``124``
+• **KEYCODE_INSERT** = `124`
 
 Key code constant: Insert key.
 Toggles insert / overwrite edit mode.
@@ -1854,11 +1854,11 @@ Toggles insert / overwrite edit mode.
 
 [src/util/keycode.ts:310](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L310)
 
-___
+---
 
-### KEYCODE\_J
+### KEYCODE_J
 
-• **KEYCODE\_J** = ``38``
+• **KEYCODE_J** = `38`
 
 Key code constant: 'J' key.
 
@@ -1866,11 +1866,11 @@ Key code constant: 'J' key.
 
 [src/util/keycode.ts:93](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L93)
 
-___
+---
 
-### KEYCODE\_K
+### KEYCODE_K
 
-• **KEYCODE\_K** = ``39``
+• **KEYCODE_K** = `39`
 
 Key code constant: 'K' key.
 
@@ -1878,11 +1878,11 @@ Key code constant: 'K' key.
 
 [src/util/keycode.ts:95](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L95)
 
-___
+---
 
-### KEYCODE\_KANA
+### KEYCODE_KANA
 
-• **KEYCODE\_KANA** = ``218``
+• **KEYCODE_KANA** = `218`
 
 Key code constant: Japanese kana key.
 
@@ -1890,11 +1890,11 @@ Key code constant: Japanese kana key.
 
 [src/util/keycode.ts:540](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L540)
 
-___
+---
 
-### KEYCODE\_KATAKANA\_HIRAGANA
+### KEYCODE_KATAKANA_HIRAGANA
 
-• **KEYCODE\_KATAKANA\_HIRAGANA** = ``215``
+• **KEYCODE_KATAKANA_HIRAGANA** = `215`
 
 Key code constant: Japanese katakana / hiragana key.
 
@@ -1902,11 +1902,11 @@ Key code constant: Japanese katakana / hiragana key.
 
 [src/util/keycode.ts:534](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L534)
 
-___
+---
 
-### KEYCODE\_L
+### KEYCODE_L
 
-• **KEYCODE\_L** = ``40``
+• **KEYCODE_L** = `40`
 
 Key code constant: 'L' key.
 
@@ -1914,26 +1914,26 @@ Key code constant: 'L' key.
 
 [src/util/keycode.ts:97](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L97)
 
-___
+---
 
-### KEYCODE\_LANGUAGE\_SWITCH
+### KEYCODE_LANGUAGE_SWITCH
 
-• **KEYCODE\_LANGUAGE\_SWITCH** = ``204``
+• **KEYCODE_LANGUAGE_SWITCH** = `204`
 
 Key code constant: Language Switch key.
 Toggles the current input language such as switching between English and Japanese on
-a QWERTY keyboard.  On some devices, the same function may be performed by
+a QWERTY keyboard. On some devices, the same function may be performed by
 pressing Shift+Spacebar.
 
 #### Defined in
 
 [src/util/keycode.ts:504](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L504)
 
-___
+---
 
-### KEYCODE\_LAST\_CHANNEL
+### KEYCODE_LAST_CHANNEL
 
-• **KEYCODE\_LAST\_CHANNEL** = ``229``
+• **KEYCODE_LAST_CHANNEL** = `229`
 
 Key code constant: Last Channel key.
 Goes to the last viewed channel.
@@ -1942,11 +1942,11 @@ Goes to the last viewed channel.
 
 [src/util/keycode.ts:575](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L575)
 
-___
+---
 
-### KEYCODE\_LEFT\_BRACKET
+### KEYCODE_LEFT_BRACKET
 
-• **KEYCODE\_LEFT\_BRACKET** = ``71``
+• **KEYCODE_LEFT_BRACKET** = `71`
 
 Key code constant: '[' key.
 
@@ -1954,11 +1954,11 @@ Key code constant: '[' key.
 
 [src/util/keycode.ts:163](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L163)
 
-___
+---
 
-### KEYCODE\_M
+### KEYCODE_M
 
-• **KEYCODE\_M** = ``41``
+• **KEYCODE_M** = `41`
 
 Key code constant: 'M' key.
 
@@ -1966,26 +1966,26 @@ Key code constant: 'M' key.
 
 [src/util/keycode.ts:99](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L99)
 
-___
+---
 
-### KEYCODE\_MANNER\_MODE
+### KEYCODE_MANNER_MODE
 
-• **KEYCODE\_MANNER\_MODE** = ``205``
+• **KEYCODE_MANNER_MODE** = `205`
 
 Key code constant: Manner Mode key.
 Toggles silent or vibrate mode on and off to make the device behave more politely
-in certain settings such as on a crowded train.  On some devices, the key may only
+in certain settings such as on a crowded train. On some devices, the key may only
 operate when long-pressed.
 
 #### Defined in
 
 [src/util/keycode.ts:509](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L509)
 
-___
+---
 
-### KEYCODE\_MEDIA\_AUDIO\_TRACK
+### KEYCODE_MEDIA_AUDIO_TRACK
 
-• **KEYCODE\_MEDIA\_AUDIO\_TRACK** = ``222``
+• **KEYCODE_MEDIA_AUDIO_TRACK** = `222`
 
 Key code constant: Audio Track key.
 Switches the audio tracks.
@@ -1994,11 +1994,11 @@ Switches the audio tracks.
 
 [src/util/keycode.ts:552](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L552)
 
-___
+---
 
-### KEYCODE\_MEDIA\_CLOSE
+### KEYCODE_MEDIA_CLOSE
 
-• **KEYCODE\_MEDIA\_CLOSE** = ``128``
+• **KEYCODE_MEDIA_CLOSE** = `128`
 
 Key code constant: Close media key.
 May be used to close a CD tray, for example.
@@ -2007,11 +2007,11 @@ May be used to close a CD tray, for example.
 
 [src/util/keycode.ts:320](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L320)
 
-___
+---
 
-### KEYCODE\_MEDIA\_EJECT
+### KEYCODE_MEDIA_EJECT
 
-• **KEYCODE\_MEDIA\_EJECT** = ``129``
+• **KEYCODE_MEDIA_EJECT** = `129`
 
 Key code constant: Eject media key.
 May be used to eject a CD tray, for example.
@@ -2020,11 +2020,11 @@ May be used to eject a CD tray, for example.
 
 [src/util/keycode.ts:323](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L323)
 
-___
+---
 
-### KEYCODE\_MEDIA\_FAST\_FORWARD
+### KEYCODE_MEDIA_FAST_FORWARD
 
-• **KEYCODE\_MEDIA\_FAST\_FORWARD** = ``90``
+• **KEYCODE_MEDIA_FAST_FORWARD** = `90`
 
 Key code constant: Fast Forward media key.
 
@@ -2032,11 +2032,11 @@ Key code constant: Fast Forward media key.
 
 [src/util/keycode.ts:206](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L206)
 
-___
+---
 
-### KEYCODE\_MEDIA\_NEXT
+### KEYCODE_MEDIA_NEXT
 
-• **KEYCODE\_MEDIA\_NEXT** = ``87``
+• **KEYCODE_MEDIA_NEXT** = `87`
 
 Key code constant: Play Next media key.
 
@@ -2044,11 +2044,11 @@ Key code constant: Play Next media key.
 
 [src/util/keycode.ts:200](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L200)
 
-___
+---
 
-### KEYCODE\_MEDIA\_PAUSE
+### KEYCODE_MEDIA_PAUSE
 
-• **KEYCODE\_MEDIA\_PAUSE** = ``127``
+• **KEYCODE_MEDIA_PAUSE** = `127`
 
 Key code constant: Pause media key.
 
@@ -2056,11 +2056,11 @@ Key code constant: Pause media key.
 
 [src/util/keycode.ts:317](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L317)
 
-___
+---
 
-### KEYCODE\_MEDIA\_PLAY
+### KEYCODE_MEDIA_PLAY
 
-• **KEYCODE\_MEDIA\_PLAY** = ``126``
+• **KEYCODE_MEDIA_PLAY** = `126`
 
 Key code constant: Play media key.
 
@@ -2068,11 +2068,11 @@ Key code constant: Play media key.
 
 [src/util/keycode.ts:315](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L315)
 
-___
+---
 
-### KEYCODE\_MEDIA\_PLAY\_PAUSE
+### KEYCODE_MEDIA_PLAY_PAUSE
 
-• **KEYCODE\_MEDIA\_PLAY\_PAUSE** = ``85``
+• **KEYCODE_MEDIA_PLAY_PAUSE** = `85`
 
 Key code constant: Play/Pause media key.
 
@@ -2080,11 +2080,11 @@ Key code constant: Play/Pause media key.
 
 [src/util/keycode.ts:196](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L196)
 
-___
+---
 
-### KEYCODE\_MEDIA\_PREVIOUS
+### KEYCODE_MEDIA_PREVIOUS
 
-• **KEYCODE\_MEDIA\_PREVIOUS** = ``88``
+• **KEYCODE_MEDIA_PREVIOUS** = `88`
 
 Key code constant: Play Previous media key.
 
@@ -2092,11 +2092,11 @@ Key code constant: Play Previous media key.
 
 [src/util/keycode.ts:202](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L202)
 
-___
+---
 
-### KEYCODE\_MEDIA\_RECORD
+### KEYCODE_MEDIA_RECORD
 
-• **KEYCODE\_MEDIA\_RECORD** = ``130``
+• **KEYCODE_MEDIA_RECORD** = `130`
 
 Key code constant: Record media key.
 
@@ -2104,11 +2104,11 @@ Key code constant: Record media key.
 
 [src/util/keycode.ts:325](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L325)
 
-___
+---
 
-### KEYCODE\_MEDIA\_REWIND
+### KEYCODE_MEDIA_REWIND
 
-• **KEYCODE\_MEDIA\_REWIND** = ``89``
+• **KEYCODE_MEDIA_REWIND** = `89`
 
 Key code constant: Rewind media key.
 
@@ -2116,11 +2116,11 @@ Key code constant: Rewind media key.
 
 [src/util/keycode.ts:204](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L204)
 
-___
+---
 
-### KEYCODE\_MEDIA\_SKIP\_BACKWARD
+### KEYCODE_MEDIA_SKIP_BACKWARD
 
-• **KEYCODE\_MEDIA\_SKIP\_BACKWARD** = ``273``
+• **KEYCODE_MEDIA_SKIP_BACKWARD** = `273`
 
 Key code constant: Skip backward media key.
 
@@ -2128,11 +2128,11 @@ Key code constant: Skip backward media key.
 
 [src/util/keycode.ts:704](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L704)
 
-___
+---
 
-### KEYCODE\_MEDIA\_SKIP\_FORWARD
+### KEYCODE_MEDIA_SKIP_FORWARD
 
-• **KEYCODE\_MEDIA\_SKIP\_FORWARD** = ``272``
+• **KEYCODE_MEDIA_SKIP_FORWARD** = `272`
 
 Key code constant: Skip forward media key.
 
@@ -2140,11 +2140,11 @@ Key code constant: Skip forward media key.
 
 [src/util/keycode.ts:702](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L702)
 
-___
+---
 
-### KEYCODE\_MEDIA\_STEP\_BACKWARD
+### KEYCODE_MEDIA_STEP_BACKWARD
 
-• **KEYCODE\_MEDIA\_STEP\_BACKWARD** = ``275``
+• **KEYCODE_MEDIA_STEP_BACKWARD** = `275`
 
 Key code constant: Step backward media key.
 Steps media backward, one frame at a time.
@@ -2153,11 +2153,11 @@ Steps media backward, one frame at a time.
 
 [src/util/keycode.ts:710](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L710)
 
-___
+---
 
-### KEYCODE\_MEDIA\_STEP\_FORWARD
+### KEYCODE_MEDIA_STEP_FORWARD
 
-• **KEYCODE\_MEDIA\_STEP\_FORWARD** = ``274``
+• **KEYCODE_MEDIA_STEP_FORWARD** = `274`
 
 Key code constant: Step forward media key.
 Steps media forward, one frame at a time.
@@ -2166,11 +2166,11 @@ Steps media forward, one frame at a time.
 
 [src/util/keycode.ts:707](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L707)
 
-___
+---
 
-### KEYCODE\_MEDIA\_STOP
+### KEYCODE_MEDIA_STOP
 
-• **KEYCODE\_MEDIA\_STOP** = ``86``
+• **KEYCODE_MEDIA_STOP** = `86`
 
 Key code constant: Stop media key.
 
@@ -2178,11 +2178,11 @@ Key code constant: Stop media key.
 
 [src/util/keycode.ts:198](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L198)
 
-___
+---
 
-### KEYCODE\_MEDIA\_TOP\_MENU
+### KEYCODE_MEDIA_TOP_MENU
 
-• **KEYCODE\_MEDIA\_TOP\_MENU** = ``226``
+• **KEYCODE_MEDIA_TOP_MENU** = `226`
 
 Key code constant: Media Top Menu key.
 Goes to the top of media menu.
@@ -2191,11 +2191,11 @@ Goes to the top of media menu.
 
 [src/util/keycode.ts:568](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L568)
 
-___
+---
 
-### KEYCODE\_MENU
+### KEYCODE_MENU
 
-• **KEYCODE\_MENU** = ``82``
+• **KEYCODE_MENU** = `82`
 
 Key code constant: Menu key.
 
@@ -2203,11 +2203,11 @@ Key code constant: Menu key.
 
 [src/util/keycode.ts:190](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L190)
 
-___
+---
 
-### KEYCODE\_META\_LEFT
+### KEYCODE_META_LEFT
 
-• **KEYCODE\_META\_LEFT** = ``117``
+• **KEYCODE_META_LEFT** = `117`
 
 Key code constant: Left Meta modifier key.
 
@@ -2215,11 +2215,11 @@ Key code constant: Left Meta modifier key.
 
 [src/util/keycode.ts:291](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L291)
 
-___
+---
 
-### KEYCODE\_META\_RIGHT
+### KEYCODE_META_RIGHT
 
-• **KEYCODE\_META\_RIGHT** = ``118``
+• **KEYCODE_META_RIGHT** = `118`
 
 Key code constant: Right Meta modifier key.
 
@@ -2227,11 +2227,11 @@ Key code constant: Right Meta modifier key.
 
 [src/util/keycode.ts:293](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L293)
 
-___
+---
 
-### KEYCODE\_MINUS
+### KEYCODE_MINUS
 
-• **KEYCODE\_MINUS** = ``69``
+• **KEYCODE_MINUS** = `69`
 
 Key code constant: '-'.
 
@@ -2239,11 +2239,11 @@ Key code constant: '-'.
 
 [src/util/keycode.ts:159](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L159)
 
-___
+---
 
-### KEYCODE\_MOVE\_END
+### KEYCODE_MOVE_END
 
-• **KEYCODE\_MOVE\_END** = ``123``
+• **KEYCODE_MOVE_END** = `123`
 
 Key code constant: End Movement key.
 Used for scrolling or moving the cursor around to the end of a line
@@ -2253,11 +2253,11 @@ or to the bottom of a list.
 
 [src/util/keycode.ts:307](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L307)
 
-___
+---
 
-### KEYCODE\_MOVE\_HOME
+### KEYCODE_MOVE_HOME
 
-• **KEYCODE\_MOVE\_HOME** = ``122``
+• **KEYCODE_MOVE_HOME** = `122`
 
 Key code constant: Home Movement key.
 Used for scrolling or moving the cursor around to the start of a line
@@ -2267,11 +2267,11 @@ or to the top of a list.
 
 [src/util/keycode.ts:303](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L303)
 
-___
+---
 
-### KEYCODE\_MUHENKAN
+### KEYCODE_MUHENKAN
 
-• **KEYCODE\_MUHENKAN** = ``213``
+• **KEYCODE_MUHENKAN** = `213`
 
 Key code constant: Japanese non-conversion key.
 
@@ -2279,11 +2279,11 @@ Key code constant: Japanese non-conversion key.
 
 [src/util/keycode.ts:530](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L530)
 
-___
+---
 
-### KEYCODE\_MUSIC
+### KEYCODE_MUSIC
 
-• **KEYCODE\_MUSIC** = ``209``
+• **KEYCODE_MUSIC** = `209`
 
 Key code constant: Music special function key.
 Used to launch a music player application.
@@ -2292,11 +2292,11 @@ Used to launch a music player application.
 
 [src/util/keycode.ts:521](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L521)
 
-___
+---
 
-### KEYCODE\_MUTE
+### KEYCODE_MUTE
 
-• **KEYCODE\_MUTE** = ``91``
+• **KEYCODE_MUTE** = `91`
 
 Key code constant: Mute key.
 Mutes the microphone, unlike `KEYCODE_VOLUME_MUTE`.
@@ -2305,11 +2305,11 @@ Mutes the microphone, unlike `KEYCODE_VOLUME_MUTE`.
 
 [src/util/keycode.ts:209](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L209)
 
-___
+---
 
-### KEYCODE\_N
+### KEYCODE_N
 
-• **KEYCODE\_N** = ``42``
+• **KEYCODE_N** = `42`
 
 Key code constant: 'N' key.
 
@@ -2317,11 +2317,11 @@ Key code constant: 'N' key.
 
 [src/util/keycode.ts:101](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L101)
 
-___
+---
 
-### KEYCODE\_NAVIGATE\_IN
+### KEYCODE_NAVIGATE_IN
 
-• **KEYCODE\_NAVIGATE\_IN** = ``262``
+• **KEYCODE_NAVIGATE_IN** = `262`
 
 Key code constant: Navigate in key.
 Activates the item that currently has focus or expands to the next level of a navigation
@@ -2331,11 +2331,11 @@ hierarchy.
 
 [src/util/keycode.ts:679](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L679)
 
-___
+---
 
-### KEYCODE\_NAVIGATE\_NEXT
+### KEYCODE_NAVIGATE_NEXT
 
-• **KEYCODE\_NAVIGATE\_NEXT** = ``261``
+• **KEYCODE_NAVIGATE_NEXT** = `261`
 
 Key code constant: Navigate to next key.
 Advances to the next item in an ordered collection of items.
@@ -2344,11 +2344,11 @@ Advances to the next item in an ordered collection of items.
 
 [src/util/keycode.ts:675](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L675)
 
-___
+---
 
-### KEYCODE\_NAVIGATE\_OUT
+### KEYCODE_NAVIGATE_OUT
 
-• **KEYCODE\_NAVIGATE\_OUT** = ``263``
+• **KEYCODE_NAVIGATE_OUT** = `263`
 
 Key code constant: Navigate out key.
 Backs out one level of a navigation hierarchy or collapses the item that currently has
@@ -2358,11 +2358,11 @@ focus.
 
 [src/util/keycode.ts:683](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L683)
 
-___
+---
 
-### KEYCODE\_NAVIGATE\_PREVIOUS
+### KEYCODE_NAVIGATE_PREVIOUS
 
-• **KEYCODE\_NAVIGATE\_PREVIOUS** = ``260``
+• **KEYCODE_NAVIGATE_PREVIOUS** = `260`
 
 Key code constant: Navigate to previous key.
 Goes backward by one item in an ordered collection of items.
@@ -2371,11 +2371,11 @@ Goes backward by one item in an ordered collection of items.
 
 [src/util/keycode.ts:672](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L672)
 
-___
+---
 
-### KEYCODE\_NOTIFICATION
+### KEYCODE_NOTIFICATION
 
-• **KEYCODE\_NOTIFICATION** = ``83``
+• **KEYCODE_NOTIFICATION** = `83`
 
 Key code constant: Notification key.
 
@@ -2383,26 +2383,26 @@ Key code constant: Notification key.
 
 [src/util/keycode.ts:192](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L192)
 
-___
+---
 
-### KEYCODE\_NUM
+### KEYCODE_NUM
 
-• **KEYCODE\_NUM** = ``78``
+• **KEYCODE_NUM** = `78`
 
 Key code constant: Number modifier key.
 Used to enter numeric symbols.
 This key is not Num Lock , it is more like `KEYCODE_ALT_LEFT` and is
- interpreted as an ALT key by `android.text.method.MetaKeyKeyListener`.
+interpreted as an ALT key by `android.text.method.MetaKeyKeyListener`.
 
 #### Defined in
 
 [src/util/keycode.ts:180](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L180)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_0
+### KEYCODE_NUMPAD_0
 
-• **KEYCODE\_NUMPAD\_0** = ``144``
+• **KEYCODE_NUMPAD_0** = `144`
 
 Key code constant: Numeric keypad '0' key.
 
@@ -2410,11 +2410,11 @@ Key code constant: Numeric keypad '0' key.
 
 [src/util/keycode.ts:355](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L355)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_1
+### KEYCODE_NUMPAD_1
 
-• **KEYCODE\_NUMPAD\_1** = ``145``
+• **KEYCODE_NUMPAD_1** = `145`
 
 Key code constant: Numeric keypad '1' key.
 
@@ -2422,11 +2422,11 @@ Key code constant: Numeric keypad '1' key.
 
 [src/util/keycode.ts:357](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L357)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_2
+### KEYCODE_NUMPAD_2
 
-• **KEYCODE\_NUMPAD\_2** = ``146``
+• **KEYCODE_NUMPAD_2** = `146`
 
 Key code constant: Numeric keypad '2' key.
 
@@ -2434,11 +2434,11 @@ Key code constant: Numeric keypad '2' key.
 
 [src/util/keycode.ts:359](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L359)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_3
+### KEYCODE_NUMPAD_3
 
-• **KEYCODE\_NUMPAD\_3** = ``147``
+• **KEYCODE_NUMPAD_3** = `147`
 
 Key code constant: Numeric keypad '3' key.
 
@@ -2446,11 +2446,11 @@ Key code constant: Numeric keypad '3' key.
 
 [src/util/keycode.ts:361](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L361)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_4
+### KEYCODE_NUMPAD_4
 
-• **KEYCODE\_NUMPAD\_4** = ``148``
+• **KEYCODE_NUMPAD_4** = `148`
 
 Key code constant: Numeric keypad '4' key.
 
@@ -2458,11 +2458,11 @@ Key code constant: Numeric keypad '4' key.
 
 [src/util/keycode.ts:363](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L363)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_5
+### KEYCODE_NUMPAD_5
 
-• **KEYCODE\_NUMPAD\_5** = ``149``
+• **KEYCODE_NUMPAD_5** = `149`
 
 Key code constant: Numeric keypad '5' key.
 
@@ -2470,11 +2470,11 @@ Key code constant: Numeric keypad '5' key.
 
 [src/util/keycode.ts:365](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L365)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_6
+### KEYCODE_NUMPAD_6
 
-• **KEYCODE\_NUMPAD\_6** = ``150``
+• **KEYCODE_NUMPAD_6** = `150`
 
 Key code constant: Numeric keypad '6' key.
 
@@ -2482,11 +2482,11 @@ Key code constant: Numeric keypad '6' key.
 
 [src/util/keycode.ts:367](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L367)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_7
+### KEYCODE_NUMPAD_7
 
-• **KEYCODE\_NUMPAD\_7** = ``151``
+• **KEYCODE_NUMPAD_7** = `151`
 
 Key code constant: Numeric keypad '7' key.
 
@@ -2494,11 +2494,11 @@ Key code constant: Numeric keypad '7' key.
 
 [src/util/keycode.ts:369](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L369)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_8
+### KEYCODE_NUMPAD_8
 
-• **KEYCODE\_NUMPAD\_8** = ``152``
+• **KEYCODE_NUMPAD_8** = `152`
 
 Key code constant: Numeric keypad '8' key.
 
@@ -2506,11 +2506,11 @@ Key code constant: Numeric keypad '8' key.
 
 [src/util/keycode.ts:371](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L371)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_9
+### KEYCODE_NUMPAD_9
 
-• **KEYCODE\_NUMPAD\_9** = ``153``
+• **KEYCODE_NUMPAD_9** = `153`
 
 Key code constant: Numeric keypad '9' key.
 
@@ -2518,11 +2518,11 @@ Key code constant: Numeric keypad '9' key.
 
 [src/util/keycode.ts:373](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L373)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_ADD
+### KEYCODE_NUMPAD_ADD
 
-• **KEYCODE\_NUMPAD\_ADD** = ``157``
+• **KEYCODE_NUMPAD_ADD** = `157`
 
 Key code constant: Numeric keypad '+' key (for addition).
 
@@ -2530,11 +2530,11 @@ Key code constant: Numeric keypad '+' key (for addition).
 
 [src/util/keycode.ts:381](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L381)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_COMMA
+### KEYCODE_NUMPAD_COMMA
 
-• **KEYCODE\_NUMPAD\_COMMA** = ``159``
+• **KEYCODE_NUMPAD_COMMA** = `159`
 
 Key code constant: Numeric keypad ',' key (for decimals or digit grouping).
 
@@ -2542,11 +2542,11 @@ Key code constant: Numeric keypad ',' key (for decimals or digit grouping).
 
 [src/util/keycode.ts:385](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L385)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_DIVIDE
+### KEYCODE_NUMPAD_DIVIDE
 
-• **KEYCODE\_NUMPAD\_DIVIDE** = ``154``
+• **KEYCODE_NUMPAD_DIVIDE** = `154`
 
 Key code constant: Numeric keypad '/' key (for division).
 
@@ -2554,11 +2554,11 @@ Key code constant: Numeric keypad '/' key (for division).
 
 [src/util/keycode.ts:375](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L375)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_DOT
+### KEYCODE_NUMPAD_DOT
 
-• **KEYCODE\_NUMPAD\_DOT** = ``158``
+• **KEYCODE_NUMPAD_DOT** = `158`
 
 Key code constant: Numeric keypad '.' key (for decimals or digit grouping).
 
@@ -2566,11 +2566,11 @@ Key code constant: Numeric keypad '.' key (for decimals or digit grouping).
 
 [src/util/keycode.ts:383](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L383)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_ENTER
+### KEYCODE_NUMPAD_ENTER
 
-• **KEYCODE\_NUMPAD\_ENTER** = ``160``
+• **KEYCODE_NUMPAD_ENTER** = `160`
 
 Key code constant: Numeric keypad Enter key.
 
@@ -2578,11 +2578,11 @@ Key code constant: Numeric keypad Enter key.
 
 [src/util/keycode.ts:387](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L387)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_EQUALS
+### KEYCODE_NUMPAD_EQUALS
 
-• **KEYCODE\_NUMPAD\_EQUALS** = ``161``
+• **KEYCODE_NUMPAD_EQUALS** = `161`
 
 Key code constant: Numeric keypad '=' key.
 
@@ -2590,11 +2590,11 @@ Key code constant: Numeric keypad '=' key.
 
 [src/util/keycode.ts:389](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L389)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_LEFT\_PAREN
+### KEYCODE_NUMPAD_LEFT_PAREN
 
-• **KEYCODE\_NUMPAD\_LEFT\_PAREN** = ``162``
+• **KEYCODE_NUMPAD_LEFT_PAREN** = `162`
 
 Key code constant: Numeric keypad '(' key.
 
@@ -2602,23 +2602,23 @@ Key code constant: Numeric keypad '(' key.
 
 [src/util/keycode.ts:391](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L391)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_MULTIPLY
+### KEYCODE_NUMPAD_MULTIPLY
 
-• **KEYCODE\_NUMPAD\_MULTIPLY** = ``155``
+• **KEYCODE_NUMPAD_MULTIPLY** = `155`
 
-Key code constant: Numeric keypad '*' key (for multiplication).
+Key code constant: Numeric keypad '\*' key (for multiplication).
 
 #### Defined in
 
 [src/util/keycode.ts:377](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L377)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_RIGHT\_PAREN
+### KEYCODE_NUMPAD_RIGHT_PAREN
 
-• **KEYCODE\_NUMPAD\_RIGHT\_PAREN** = ``163``
+• **KEYCODE_NUMPAD_RIGHT_PAREN** = `163`
 
 Key code constant: Numeric keypad ')' key.
 
@@ -2626,11 +2626,11 @@ Key code constant: Numeric keypad ')' key.
 
 [src/util/keycode.ts:393](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L393)
 
-___
+---
 
-### KEYCODE\_NUMPAD\_SUBTRACT
+### KEYCODE_NUMPAD_SUBTRACT
 
-• **KEYCODE\_NUMPAD\_SUBTRACT** = ``156``
+• **KEYCODE_NUMPAD_SUBTRACT** = `156`
 
 Key code constant: Numeric keypad '-' key (for subtraction).
 
@@ -2638,11 +2638,11 @@ Key code constant: Numeric keypad '-' key (for subtraction).
 
 [src/util/keycode.ts:379](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L379)
 
-___
+---
 
-### KEYCODE\_NUM\_LOCK
+### KEYCODE_NUM_LOCK
 
-• **KEYCODE\_NUM\_LOCK** = ``143``
+• **KEYCODE_NUM_LOCK** = `143`
 
 Key code constant: Num Lock key.
 This is the Num Lock key , it is different from `KEYCODE_NUM`.
@@ -2652,11 +2652,11 @@ This key alters the behavior of other keys on the numeric keypad.
 
 [src/util/keycode.ts:353](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L353)
 
-___
+---
 
-### KEYCODE\_O
+### KEYCODE_O
 
-• **KEYCODE\_O** = ``43``
+• **KEYCODE_O** = `43`
 
 Key code constant: 'O' key.
 
@@ -2664,11 +2664,11 @@ Key code constant: 'O' key.
 
 [src/util/keycode.ts:103](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L103)
 
-___
+---
 
-### KEYCODE\_P
+### KEYCODE_P
 
-• **KEYCODE\_P** = ``44``
+• **KEYCODE_P** = `44`
 
 Key code constant: 'P' key.
 
@@ -2676,11 +2676,11 @@ Key code constant: 'P' key.
 
 [src/util/keycode.ts:105](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L105)
 
-___
+---
 
-### KEYCODE\_PAGE\_DOWN
+### KEYCODE_PAGE_DOWN
 
-• **KEYCODE\_PAGE\_DOWN** = ``93``
+• **KEYCODE_PAGE_DOWN** = `93`
 
 Key code constant: Page Down key.
 
@@ -2688,11 +2688,11 @@ Key code constant: Page Down key.
 
 [src/util/keycode.ts:213](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L213)
 
-___
+---
 
-### KEYCODE\_PAGE\_UP
+### KEYCODE_PAGE_UP
 
-• **KEYCODE\_PAGE\_UP** = ``92``
+• **KEYCODE_PAGE_UP** = `92`
 
 Key code constant: Page Up key.
 
@@ -2700,11 +2700,11 @@ Key code constant: Page Up key.
 
 [src/util/keycode.ts:211](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L211)
 
-___
+---
 
-### KEYCODE\_PAIRING
+### KEYCODE_PAIRING
 
-• **KEYCODE\_PAIRING** = ``225``
+• **KEYCODE_PAIRING** = `225`
 
 Key code constant: Pairing key.
 Initiates peripheral pairing mode. Useful for pairing remote control
@@ -2715,11 +2715,11 @@ available.
 
 [src/util/keycode.ts:565](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L565)
 
-___
+---
 
-### KEYCODE\_PASTE
+### KEYCODE_PASTE
 
-• **KEYCODE\_PASTE** = ``279``
+• **KEYCODE_PASTE** = `279`
 
 Key code constant: Paste key.
 
@@ -2727,11 +2727,11 @@ Key code constant: Paste key.
 
 [src/util/keycode.ts:718](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L718)
 
-___
+---
 
-### KEYCODE\_PERIOD
+### KEYCODE_PERIOD
 
-• **KEYCODE\_PERIOD** = ``56``
+• **KEYCODE_PERIOD** = `56`
 
 Key code constant: '.' key.
 
@@ -2739,11 +2739,11 @@ Key code constant: '.' key.
 
 [src/util/keycode.ts:129](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L129)
 
-___
+---
 
-### KEYCODE\_PICTSYMBOLS
+### KEYCODE_PICTSYMBOLS
 
-• **KEYCODE\_PICTSYMBOLS** = ``94``
+• **KEYCODE_PICTSYMBOLS** = `94`
 
 Key code constant: Picture Symbols modifier key.
 Used to switch symbol sets (Emoji, Kao-moji).
@@ -2752,11 +2752,11 @@ Used to switch symbol sets (Emoji, Kao-moji).
 
 [src/util/keycode.ts:216](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L216)
 
-___
+---
 
-### KEYCODE\_PLUS
+### KEYCODE_PLUS
 
-• **KEYCODE\_PLUS** = ``81``
+• **KEYCODE_PLUS** = `81`
 
 Key code constant: '+' key.
 
@@ -2764,11 +2764,11 @@ Key code constant: '+' key.
 
 [src/util/keycode.ts:188](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L188)
 
-___
+---
 
-### KEYCODE\_POUND
+### KEYCODE_POUND
 
-• **KEYCODE\_POUND** = ``18``
+• **KEYCODE_POUND** = `18`
 
 Key code constant: '#' key.
 
@@ -2776,11 +2776,11 @@ Key code constant: '#' key.
 
 [src/util/keycode.ts:45](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L45)
 
-___
+---
 
-### KEYCODE\_POWER
+### KEYCODE_POWER
 
-• **KEYCODE\_POWER** = ``26``
+• **KEYCODE_POWER** = `26`
 
 Key code constant: Power key.
 
@@ -2788,11 +2788,11 @@ Key code constant: Power key.
 
 [src/util/keycode.ts:68](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L68)
 
-___
+---
 
-### KEYCODE\_PROG\_BLUE
+### KEYCODE_PROG_BLUE
 
-• **KEYCODE\_PROG\_BLUE** = ``186``
+• **KEYCODE_PROG_BLUE** = `186`
 
 Key code constant: Blue "programmable" key.
 On TV remotes, acts as a contextual/programmable key.
@@ -2801,11 +2801,11 @@ On TV remotes, acts as a contextual/programmable key.
 
 [src/util/keycode.ts:464](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L464)
 
-___
+---
 
-### KEYCODE\_PROG\_GREEN
+### KEYCODE_PROG_GREEN
 
-• **KEYCODE\_PROG\_GREEN** = ``184``
+• **KEYCODE_PROG_GREEN** = `184`
 
 Key code constant: Green "programmable" key.
 On TV remotes, actsas a contextual/programmable key.
@@ -2814,11 +2814,11 @@ On TV remotes, actsas a contextual/programmable key.
 
 [src/util/keycode.ts:458](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L458)
 
-___
+---
 
-### KEYCODE\_PROG\_RED
+### KEYCODE_PROG_RED
 
-• **KEYCODE\_PROG\_RED** = ``183``
+• **KEYCODE_PROG_RED** = `183`
 
 Key code constant: Red "programmable" key.
 On TV remotes, acts as a contextual/programmable key.
@@ -2827,11 +2827,11 @@ On TV remotes, acts as a contextual/programmable key.
 
 [src/util/keycode.ts:455](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L455)
 
-___
+---
 
-### KEYCODE\_PROG\_YELLOW
+### KEYCODE_PROG_YELLOW
 
-• **KEYCODE\_PROG\_YELLOW** = ``185``
+• **KEYCODE_PROG_YELLOW** = `185`
 
 Key code constant: Yellow "programmable" key.
 On TV remotes, acts as a contextual/programmable key.
@@ -2840,11 +2840,11 @@ On TV remotes, acts as a contextual/programmable key.
 
 [src/util/keycode.ts:461](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L461)
 
-___
+---
 
-### KEYCODE\_Q
+### KEYCODE_Q
 
-• **KEYCODE\_Q** = ``45``
+• **KEYCODE_Q** = `45`
 
 Key code constant: 'Q' key.
 
@@ -2852,11 +2852,11 @@ Key code constant: 'Q' key.
 
 [src/util/keycode.ts:107](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L107)
 
-___
+---
 
-### KEYCODE\_R
+### KEYCODE_R
 
-• **KEYCODE\_R** = ``46``
+• **KEYCODE_R** = `46`
 
 Key code constant: 'R' key.
 
@@ -2864,11 +2864,11 @@ Key code constant: 'R' key.
 
 [src/util/keycode.ts:109](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L109)
 
-___
+---
 
-### KEYCODE\_RIGHT\_BRACKET
+### KEYCODE_RIGHT_BRACKET
 
-• **KEYCODE\_RIGHT\_BRACKET** = ``72``
+• **KEYCODE_RIGHT_BRACKET** = `72`
 
 Key code constant: ']' key.
 
@@ -2876,11 +2876,11 @@ Key code constant: ']' key.
 
 [src/util/keycode.ts:165](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L165)
 
-___
+---
 
-### KEYCODE\_RO
+### KEYCODE_RO
 
-• **KEYCODE\_RO** = ``217``
+• **KEYCODE_RO** = `217`
 
 Key code constant: Japanese Ro key.
 
@@ -2888,11 +2888,11 @@ Key code constant: Japanese Ro key.
 
 [src/util/keycode.ts:538](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L538)
 
-___
+---
 
-### KEYCODE\_S
+### KEYCODE_S
 
-• **KEYCODE\_S** = ``47``
+• **KEYCODE_S** = `47`
 
 Key code constant: 'S' key.
 
@@ -2900,11 +2900,11 @@ Key code constant: 'S' key.
 
 [src/util/keycode.ts:111](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L111)
 
-___
+---
 
-### KEYCODE\_SCROLL\_LOCK
+### KEYCODE_SCROLL_LOCK
 
-• **KEYCODE\_SCROLL\_LOCK** = ``116``
+• **KEYCODE_SCROLL_LOCK** = `116`
 
 Key code constant: Scroll Lock key.
 
@@ -2912,11 +2912,11 @@ Key code constant: Scroll Lock key.
 
 [src/util/keycode.ts:289](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L289)
 
-___
+---
 
-### KEYCODE\_SEARCH
+### KEYCODE_SEARCH
 
-• **KEYCODE\_SEARCH** = ``84``
+• **KEYCODE_SEARCH** = `84`
 
 Key code constant: Search key.
 
@@ -2924,11 +2924,11 @@ Key code constant: Search key.
 
 [src/util/keycode.ts:194](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L194)
 
-___
+---
 
-### KEYCODE\_SEMICOLON
+### KEYCODE_SEMICOLON
 
-• **KEYCODE\_SEMICOLON** = ``74``
+• **KEYCODE_SEMICOLON** = `74`
 
 Key code constant: ' ,' key.
 
@@ -2936,11 +2936,11 @@ Key code constant: ' ,' key.
 
 [src/util/keycode.ts:169](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L169)
 
-___
+---
 
-### KEYCODE\_SETTINGS
+### KEYCODE_SETTINGS
 
-• **KEYCODE\_SETTINGS** = ``176``
+• **KEYCODE_SETTINGS** = `176`
 
 Key code constant: Settings key.
 Starts the system settings activity.
@@ -2949,11 +2949,11 @@ Starts the system settings activity.
 
 [src/util/keycode.ts:434](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L434)
 
-___
+---
 
-### KEYCODE\_SHIFT\_LEFT
+### KEYCODE_SHIFT_LEFT
 
-• **KEYCODE\_SHIFT\_LEFT** = ``59``
+• **KEYCODE_SHIFT_LEFT** = `59`
 
 Key code constant: Left Shift modifier key.
 
@@ -2961,11 +2961,11 @@ Key code constant: Left Shift modifier key.
 
 [src/util/keycode.ts:135](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L135)
 
-___
+---
 
-### KEYCODE\_SHIFT\_RIGHT
+### KEYCODE_SHIFT_RIGHT
 
-• **KEYCODE\_SHIFT\_RIGHT** = ``60``
+• **KEYCODE_SHIFT_RIGHT** = `60`
 
 Key code constant: Right Shift modifier key.
 
@@ -2973,11 +2973,11 @@ Key code constant: Right Shift modifier key.
 
 [src/util/keycode.ts:137](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L137)
 
-___
+---
 
-### KEYCODE\_SLASH
+### KEYCODE_SLASH
 
-• **KEYCODE\_SLASH** = ``76``
+• **KEYCODE_SLASH** = `76`
 
 Key code constant: '/' key.
 
@@ -2985,25 +2985,25 @@ Key code constant: '/' key.
 
 [src/util/keycode.ts:173](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L173)
 
-___
+---
 
-### KEYCODE\_SLEEP
+### KEYCODE_SLEEP
 
-• **KEYCODE\_SLEEP** = ``223``
+• **KEYCODE_SLEEP** = `223`
 
 Key code constant: Sleep key.
-Puts the device to sleep.  Behaves somewhat like `KEYCODE_POWER` but it
+Puts the device to sleep. Behaves somewhat like `KEYCODE_POWER` but it
 has no effect if the device is already asleep.
 
 #### Defined in
 
 [src/util/keycode.ts:556](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L556)
 
-___
+---
 
-### KEYCODE\_SOFT\_LEFT
+### KEYCODE_SOFT_LEFT
 
-• **KEYCODE\_SOFT\_LEFT** = ``1``
+• **KEYCODE_SOFT_LEFT** = `1`
 
 Key code constant: Soft Left key.
 Usually situated below the display on phones and used as a multi-function
@@ -3014,11 +3014,11 @@ of the display.
 
 [src/util/keycode.ts:7](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L7)
 
-___
+---
 
-### KEYCODE\_SOFT\_RIGHT
+### KEYCODE_SOFT_RIGHT
 
-• **KEYCODE\_SOFT\_RIGHT** = ``2``
+• **KEYCODE_SOFT_RIGHT** = `2`
 
 Key code constant: Soft Right key.
 Usually situated below the display on phones and used as a multi-function
@@ -3029,11 +3029,11 @@ of the display.
 
 [src/util/keycode.ts:12](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L12)
 
-___
+---
 
-### KEYCODE\_SOFT\_SLEEP
+### KEYCODE_SOFT_SLEEP
 
-• **KEYCODE\_SOFT\_SLEEP** = ``276``
+• **KEYCODE_SOFT_SLEEP** = `276`
 
 Key code constant: put device to sleep unless a wakelock is held.
 
@@ -3041,11 +3041,11 @@ Key code constant: put device to sleep unless a wakelock is held.
 
 [src/util/keycode.ts:712](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L712)
 
-___
+---
 
-### KEYCODE\_SPACE
+### KEYCODE_SPACE
 
-• **KEYCODE\_SPACE** = ``62``
+• **KEYCODE_SPACE** = `62`
 
 Key code constant: Space key.
 
@@ -3053,23 +3053,23 @@ Key code constant: Space key.
 
 [src/util/keycode.ts:141](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L141)
 
-___
+---
 
-### KEYCODE\_STAR
+### KEYCODE_STAR
 
-• **KEYCODE\_STAR** = ``17``
+• **KEYCODE_STAR** = `17`
 
-Key code constant: '*' key.
+Key code constant: '\*' key.
 
 #### Defined in
 
 [src/util/keycode.ts:43](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L43)
 
-___
+---
 
-### KEYCODE\_STB\_INPUT
+### KEYCODE_STB_INPUT
 
-• **KEYCODE\_STB\_INPUT** = ``180``
+• **KEYCODE_STB_INPUT** = `180`
 
 Key code constant: Set-top-box input key.
 On TV remotes, switches the input mode on an external Set-top-box.
@@ -3078,11 +3078,11 @@ On TV remotes, switches the input mode on an external Set-top-box.
 
 [src/util/keycode.ts:446](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L446)
 
-___
+---
 
-### KEYCODE\_STB\_POWER
+### KEYCODE_STB_POWER
 
-• **KEYCODE\_STB\_POWER** = ``179``
+• **KEYCODE_STB_POWER** = `179`
 
 Key code constant: Set-top-box power key.
 On TV remotes, toggles the power on an external Set-top-box.
@@ -3091,11 +3091,11 @@ On TV remotes, toggles the power on an external Set-top-box.
 
 [src/util/keycode.ts:443](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L443)
 
-___
+---
 
-### KEYCODE\_STEM\_1
+### KEYCODE_STEM_1
 
-• **KEYCODE\_STEM\_1** = ``265``
+• **KEYCODE_STEM_1** = `265`
 
 Key code constant: Generic stem key 1 for Wear
 
@@ -3103,11 +3103,11 @@ Key code constant: Generic stem key 1 for Wear
 
 [src/util/keycode.ts:688](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L688)
 
-___
+---
 
-### KEYCODE\_STEM\_2
+### KEYCODE_STEM_2
 
-• **KEYCODE\_STEM\_2** = ``266``
+• **KEYCODE_STEM_2** = `266`
 
 Key code constant: Generic stem key 2 for Wear
 
@@ -3115,11 +3115,11 @@ Key code constant: Generic stem key 2 for Wear
 
 [src/util/keycode.ts:690](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L690)
 
-___
+---
 
-### KEYCODE\_STEM\_3
+### KEYCODE_STEM_3
 
-• **KEYCODE\_STEM\_3** = ``267``
+• **KEYCODE_STEM_3** = `267`
 
 Key code constant: Generic stem key 3 for Wear
 
@@ -3127,11 +3127,11 @@ Key code constant: Generic stem key 3 for Wear
 
 [src/util/keycode.ts:692](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L692)
 
-___
+---
 
-### KEYCODE\_STEM\_PRIMARY
+### KEYCODE_STEM_PRIMARY
 
-• **KEYCODE\_STEM\_PRIMARY** = ``264``
+• **KEYCODE_STEM_PRIMARY** = `264`
 
 Key code constant: Primary stem key for Wear
 Main power/reset button on watch.
@@ -3140,11 +3140,11 @@ Main power/reset button on watch.
 
 [src/util/keycode.ts:686](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L686)
 
-___
+---
 
-### KEYCODE\_SWITCH\_CHARSET
+### KEYCODE_SWITCH_CHARSET
 
-• **KEYCODE\_SWITCH\_CHARSET** = ``95``
+• **KEYCODE_SWITCH_CHARSET** = `95`
 
 Key code constant: Switch Charset modifier key.
 Used to switch character sets (Kanji, Katakana).
@@ -3153,11 +3153,11 @@ Used to switch character sets (Kanji, Katakana).
 
 [src/util/keycode.ts:219](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L219)
 
-___
+---
 
-### KEYCODE\_SYM
+### KEYCODE_SYM
 
-• **KEYCODE\_SYM** = ``63``
+• **KEYCODE_SYM** = `63`
 
 Key code constant: Symbol modifier key.
 Used to enter alternate symbols.
@@ -3166,23 +3166,23 @@ Used to enter alternate symbols.
 
 [src/util/keycode.ts:144](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L144)
 
-___
+---
 
-### KEYCODE\_SYSRQ
+### KEYCODE_SYSRQ
 
-• **KEYCODE\_SYSRQ** = ``120``
+• **KEYCODE_SYSRQ** = `120`
 
-Key code constant: System Request / Pr  Screen key.
+Key code constant: System Request / Pr Screen key.
 
 #### Defined in
 
 [src/util/keycode.ts:297](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L297)
 
-___
+---
 
-### KEYCODE\_SYSTEM\_NAVIGATION\_DOWN
+### KEYCODE_SYSTEM_NAVIGATION_DOWN
 
-• **KEYCODE\_SYSTEM\_NAVIGATION\_DOWN** = ``281``
+• **KEYCODE_SYSTEM_NAVIGATION_DOWN** = `281`
 
 Key code constant: Consumed by the system for navigation down
 
@@ -3190,11 +3190,11 @@ Key code constant: Consumed by the system for navigation down
 
 [src/util/keycode.ts:722](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L722)
 
-___
+---
 
-### KEYCODE\_SYSTEM\_NAVIGATION\_LEFT
+### KEYCODE_SYSTEM_NAVIGATION_LEFT
 
-• **KEYCODE\_SYSTEM\_NAVIGATION\_LEFT** = ``282``
+• **KEYCODE_SYSTEM_NAVIGATION_LEFT** = `282`
 
 Key code constant: Consumed by the system for navigation left
 
@@ -3202,11 +3202,11 @@ Key code constant: Consumed by the system for navigation left
 
 [src/util/keycode.ts:724](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L724)
 
-___
+---
 
-### KEYCODE\_SYSTEM\_NAVIGATION\_RIGHT
+### KEYCODE_SYSTEM_NAVIGATION_RIGHT
 
-• **KEYCODE\_SYSTEM\_NAVIGATION\_RIGHT** = ``283``
+• **KEYCODE_SYSTEM_NAVIGATION_RIGHT** = `283`
 
 Key code constant: Consumed by the system for navigation right
 
@@ -3214,11 +3214,11 @@ Key code constant: Consumed by the system for navigation right
 
 [src/util/keycode.ts:726](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L726)
 
-___
+---
 
-### KEYCODE\_SYSTEM\_NAVIGATION\_UP
+### KEYCODE_SYSTEM_NAVIGATION_UP
 
-• **KEYCODE\_SYSTEM\_NAVIGATION\_UP** = ``280``
+• **KEYCODE_SYSTEM_NAVIGATION_UP** = `280`
 
 Key code constant: Consumed by the system for navigation up
 
@@ -3226,11 +3226,11 @@ Key code constant: Consumed by the system for navigation up
 
 [src/util/keycode.ts:720](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L720)
 
-___
+---
 
-### KEYCODE\_T
+### KEYCODE_T
 
-• **KEYCODE\_T** = ``48``
+• **KEYCODE_T** = `48`
 
 Key code constant: 'T' key.
 
@@ -3238,11 +3238,11 @@ Key code constant: 'T' key.
 
 [src/util/keycode.ts:113](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L113)
 
-___
+---
 
-### KEYCODE\_TAB
+### KEYCODE_TAB
 
-• **KEYCODE\_TAB** = ``61``
+• **KEYCODE_TAB** = `61`
 
 Key code constant: Tab key.
 
@@ -3250,11 +3250,11 @@ Key code constant: Tab key.
 
 [src/util/keycode.ts:139](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L139)
 
-___
+---
 
-### KEYCODE\_TV
+### KEYCODE_TV
 
-• **KEYCODE\_TV** = ``170``
+• **KEYCODE_TV** = `170`
 
 Key code constant: TV key.
 On TV remotes, switches to viewing live TV.
@@ -3263,11 +3263,11 @@ On TV remotes, switches to viewing live TV.
 
 [src/util/keycode.ts:415](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L415)
 
-___
+---
 
-### KEYCODE\_TV\_ANTENNA\_CABLE
+### KEYCODE_TV_ANTENNA_CABLE
 
-• **KEYCODE\_TV\_ANTENNA\_CABLE** = ``242``
+• **KEYCODE_TV_ANTENNA_CABLE** = `242`
 
 Key code constant: Antenna/Cable key.
 Toggles broadcast input source between antenna and cable.
@@ -3276,11 +3276,11 @@ Toggles broadcast input source between antenna and cable.
 
 [src/util/keycode.ts:616](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L616)
 
-___
+---
 
-### KEYCODE\_TV\_AUDIO\_DESCRIPTION
+### KEYCODE_TV_AUDIO_DESCRIPTION
 
-• **KEYCODE\_TV\_AUDIO\_DESCRIPTION** = ``252``
+• **KEYCODE_TV_AUDIO_DESCRIPTION** = `252`
 
 Key code constant: Audio description key.
 Toggles audio description off / on.
@@ -3289,11 +3289,11 @@ Toggles audio description off / on.
 
 [src/util/keycode.ts:646](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L646)
 
-___
+---
 
-### KEYCODE\_TV\_AUDIO\_DESCRIPTION\_MIX\_DOWN
+### KEYCODE_TV_AUDIO_DESCRIPTION_MIX_DOWN
 
-• **KEYCODE\_TV\_AUDIO\_DESCRIPTION\_MIX\_DOWN** = ``254``
+• **KEYCODE_TV_AUDIO_DESCRIPTION_MIX_DOWN** = `254`
 
 Key code constant: Audio description mixing volume down key.
 Lessen audio description volume as compared with normal audio volume.
@@ -3302,11 +3302,11 @@ Lessen audio description volume as compared with normal audio volume.
 
 [src/util/keycode.ts:652](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L652)
 
-___
+---
 
-### KEYCODE\_TV\_AUDIO\_DESCRIPTION\_MIX\_UP
+### KEYCODE_TV_AUDIO_DESCRIPTION_MIX_UP
 
-• **KEYCODE\_TV\_AUDIO\_DESCRIPTION\_MIX\_UP** = ``253``
+• **KEYCODE_TV_AUDIO_DESCRIPTION_MIX_UP** = `253`
 
 Key code constant: Audio description mixing volume up key.
 Louden audio description volume as compared with normal audio volume.
@@ -3315,11 +3315,11 @@ Louden audio description volume as compared with normal audio volume.
 
 [src/util/keycode.ts:649](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L649)
 
-___
+---
 
-### KEYCODE\_TV\_CONTENTS\_MENU
+### KEYCODE_TV_CONTENTS_MENU
 
-• **KEYCODE\_TV\_CONTENTS\_MENU** = ``256``
+• **KEYCODE_TV_CONTENTS_MENU** = `256`
 
 Key code constant: Contents menu key.
 Goes to the title list. Corresponds to Contents Menu (0x0B) of CEC User Control
@@ -3329,11 +3329,11 @@ Code
 
 [src/util/keycode.ts:659](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L659)
 
-___
+---
 
-### KEYCODE\_TV\_DATA\_SERVICE
+### KEYCODE_TV_DATA_SERVICE
 
-• **KEYCODE\_TV\_DATA\_SERVICE** = ``230``
+• **KEYCODE_TV_DATA_SERVICE** = `230`
 
 Key code constant: TV data service key.
 Displays data services like weather, sports.
@@ -3342,11 +3342,11 @@ Displays data services like weather, sports.
 
 [src/util/keycode.ts:578](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L578)
 
-___
+---
 
-### KEYCODE\_TV\_INPUT
+### KEYCODE_TV_INPUT
 
-• **KEYCODE\_TV\_INPUT** = ``178``
+• **KEYCODE_TV_INPUT** = `178`
 
 Key code constant: TV input key.
 On TV remotes, switches the input on a television screen.
@@ -3355,11 +3355,11 @@ On TV remotes, switches the input on a television screen.
 
 [src/util/keycode.ts:440](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L440)
 
-___
+---
 
-### KEYCODE\_TV\_INPUT\_COMPONENT\_1
+### KEYCODE_TV_INPUT_COMPONENT_1
 
-• **KEYCODE\_TV\_INPUT\_COMPONENT\_1** = ``249``
+• **KEYCODE_TV_INPUT_COMPONENT_1** = `249`
 
 Key code constant: Component #1 key.
 Switches to component video input #1.
@@ -3368,11 +3368,11 @@ Switches to component video input #1.
 
 [src/util/keycode.ts:637](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L637)
 
-___
+---
 
-### KEYCODE\_TV\_INPUT\_COMPONENT\_2
+### KEYCODE_TV_INPUT_COMPONENT_2
 
-• **KEYCODE\_TV\_INPUT\_COMPONENT\_2** = ``250``
+• **KEYCODE_TV_INPUT_COMPONENT_2** = `250`
 
 Key code constant: Component #2 key.
 Switches to component video input #2.
@@ -3381,11 +3381,11 @@ Switches to component video input #2.
 
 [src/util/keycode.ts:640](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L640)
 
-___
+---
 
-### KEYCODE\_TV\_INPUT\_COMPOSITE\_1
+### KEYCODE_TV_INPUT_COMPOSITE_1
 
-• **KEYCODE\_TV\_INPUT\_COMPOSITE\_1** = ``247``
+• **KEYCODE_TV_INPUT_COMPOSITE_1** = `247`
 
 Key code constant: Composite #1 key.
 Switches to composite video input #1.
@@ -3394,11 +3394,11 @@ Switches to composite video input #1.
 
 [src/util/keycode.ts:631](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L631)
 
-___
+---
 
-### KEYCODE\_TV\_INPUT\_COMPOSITE\_2
+### KEYCODE_TV_INPUT_COMPOSITE_2
 
-• **KEYCODE\_TV\_INPUT\_COMPOSITE\_2** = ``248``
+• **KEYCODE_TV_INPUT_COMPOSITE_2** = `248`
 
 Key code constant: Composite #2 key.
 Switches to composite video input #2.
@@ -3407,11 +3407,11 @@ Switches to composite video input #2.
 
 [src/util/keycode.ts:634](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L634)
 
-___
+---
 
-### KEYCODE\_TV\_INPUT\_HDMI\_1
+### KEYCODE_TV_INPUT_HDMI_1
 
-• **KEYCODE\_TV\_INPUT\_HDMI\_1** = ``243``
+• **KEYCODE_TV_INPUT_HDMI_1** = `243`
 
 Key code constant: HDMI #1 key.
 Switches to HDMI input #1.
@@ -3420,11 +3420,11 @@ Switches to HDMI input #1.
 
 [src/util/keycode.ts:619](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L619)
 
-___
+---
 
-### KEYCODE\_TV\_INPUT\_HDMI\_2
+### KEYCODE_TV_INPUT_HDMI_2
 
-• **KEYCODE\_TV\_INPUT\_HDMI\_2** = ``244``
+• **KEYCODE_TV_INPUT_HDMI_2** = `244`
 
 Key code constant: HDMI #2 key.
 Switches to HDMI input #2.
@@ -3433,11 +3433,11 @@ Switches to HDMI input #2.
 
 [src/util/keycode.ts:622](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L622)
 
-___
+---
 
-### KEYCODE\_TV\_INPUT\_HDMI\_3
+### KEYCODE_TV_INPUT_HDMI_3
 
-• **KEYCODE\_TV\_INPUT\_HDMI\_3** = ``245``
+• **KEYCODE_TV_INPUT_HDMI_3** = `245`
 
 Key code constant: HDMI #3 key.
 Switches to HDMI input #3.
@@ -3446,11 +3446,11 @@ Switches to HDMI input #3.
 
 [src/util/keycode.ts:625](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L625)
 
-___
+---
 
-### KEYCODE\_TV\_INPUT\_HDMI\_4
+### KEYCODE_TV_INPUT_HDMI_4
 
-• **KEYCODE\_TV\_INPUT\_HDMI\_4** = ``246``
+• **KEYCODE_TV_INPUT_HDMI_4** = `246`
 
 Key code constant: HDMI #4 key.
 Switches to HDMI input #4.
@@ -3459,11 +3459,11 @@ Switches to HDMI input #4.
 
 [src/util/keycode.ts:628](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L628)
 
-___
+---
 
-### KEYCODE\_TV\_INPUT\_VGA\_1
+### KEYCODE_TV_INPUT_VGA_1
 
-• **KEYCODE\_TV\_INPUT\_VGA\_1** = ``251``
+• **KEYCODE_TV_INPUT_VGA_1** = `251`
 
 Key code constant: VGA #1 key.
 Switches to VGA (analog RGB) input #1.
@@ -3472,11 +3472,11 @@ Switches to VGA (analog RGB) input #1.
 
 [src/util/keycode.ts:643](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L643)
 
-___
+---
 
-### KEYCODE\_TV\_MEDIA\_CONTEXT\_MENU
+### KEYCODE_TV_MEDIA_CONTEXT_MENU
 
-• **KEYCODE\_TV\_MEDIA\_CONTEXT\_MENU** = ``257``
+• **KEYCODE_TV_MEDIA_CONTEXT_MENU** = `257`
 
 Key code constant: Media context menu key.
 Goes to the context menu of media contents. Corresponds to Media Context-sensitive
@@ -3486,11 +3486,11 @@ Menu (0x11) of CEC User Control Code.
 
 [src/util/keycode.ts:663](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L663)
 
-___
+---
 
-### KEYCODE\_TV\_NETWORK
+### KEYCODE_TV_NETWORK
 
-• **KEYCODE\_TV\_NETWORK** = ``241``
+• **KEYCODE_TV_NETWORK** = `241`
 
 Key code constant: Toggle Network key.
 Toggles selecting broacast services.
@@ -3499,11 +3499,11 @@ Toggles selecting broacast services.
 
 [src/util/keycode.ts:613](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L613)
 
-___
+---
 
-### KEYCODE\_TV\_NUMBER\_ENTRY
+### KEYCODE_TV_NUMBER_ENTRY
 
-• **KEYCODE\_TV\_NUMBER\_ENTRY** = ``234``
+• **KEYCODE_TV_NUMBER_ENTRY** = `234`
 
 Key code constant: Number entry key.
 Initiates to enter multi-digit channel nubmber when each digit key is assigned
@@ -3514,11 +3514,11 @@ User Control Code.
 
 [src/util/keycode.ts:592](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L592)
 
-___
+---
 
-### KEYCODE\_TV\_POWER
+### KEYCODE_TV_POWER
 
-• **KEYCODE\_TV\_POWER** = ``177``
+• **KEYCODE_TV_POWER** = `177`
 
 Key code constant: TV power key.
 On TV remotes, toggles the power on a television screen.
@@ -3527,11 +3527,11 @@ On TV remotes, toggles the power on a television screen.
 
 [src/util/keycode.ts:437](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L437)
 
-___
+---
 
-### KEYCODE\_TV\_RADIO\_SERVICE
+### KEYCODE_TV_RADIO_SERVICE
 
-• **KEYCODE\_TV\_RADIO\_SERVICE** = ``232``
+• **KEYCODE_TV_RADIO_SERVICE** = `232`
 
 Key code constant: Radio key.
 Toggles TV service / Radio service.
@@ -3540,11 +3540,11 @@ Toggles TV service / Radio service.
 
 [src/util/keycode.ts:584](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L584)
 
-___
+---
 
-### KEYCODE\_TV\_SATELLITE
+### KEYCODE_TV_SATELLITE
 
-• **KEYCODE\_TV\_SATELLITE** = ``237``
+• **KEYCODE_TV_SATELLITE** = `237`
 
 Key code constant: Satellite key.
 Switches to digital satellite broadcast service.
@@ -3553,11 +3553,11 @@ Switches to digital satellite broadcast service.
 
 [src/util/keycode.ts:601](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L601)
 
-___
+---
 
-### KEYCODE\_TV\_SATELLITE\_BS
+### KEYCODE_TV_SATELLITE_BS
 
-• **KEYCODE\_TV\_SATELLITE\_BS** = ``238``
+• **KEYCODE_TV_SATELLITE_BS** = `238`
 
 Key code constant: BS key.
 Switches to BS digital satellite broadcasting service available in Japan.
@@ -3566,11 +3566,11 @@ Switches to BS digital satellite broadcasting service available in Japan.
 
 [src/util/keycode.ts:604](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L604)
 
-___
+---
 
-### KEYCODE\_TV\_SATELLITE\_CS
+### KEYCODE_TV_SATELLITE_CS
 
-• **KEYCODE\_TV\_SATELLITE\_CS** = ``239``
+• **KEYCODE_TV_SATELLITE_CS** = `239`
 
 Key code constant: CS key.
 Switches to CS digital satellite broadcasting service available in Japan.
@@ -3579,11 +3579,11 @@ Switches to CS digital satellite broadcasting service available in Japan.
 
 [src/util/keycode.ts:607](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L607)
 
-___
+---
 
-### KEYCODE\_TV\_SATELLITE\_SERVICE
+### KEYCODE_TV_SATELLITE_SERVICE
 
-• **KEYCODE\_TV\_SATELLITE\_SERVICE** = ``240``
+• **KEYCODE_TV_SATELLITE_SERVICE** = `240`
 
 Key code constant: BS/CS key.
 Toggles between BS and CS digital satellite services.
@@ -3592,11 +3592,11 @@ Toggles between BS and CS digital satellite services.
 
 [src/util/keycode.ts:610](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L610)
 
-___
+---
 
-### KEYCODE\_TV\_TELETEXT
+### KEYCODE_TV_TELETEXT
 
-• **KEYCODE\_TV\_TELETEXT** = ``233``
+• **KEYCODE_TV_TELETEXT** = `233`
 
 Key code constant: Teletext key.
 Displays Teletext service.
@@ -3605,11 +3605,11 @@ Displays Teletext service.
 
 [src/util/keycode.ts:587](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L587)
 
-___
+---
 
-### KEYCODE\_TV\_TERRESTRIAL\_ANALOG
+### KEYCODE_TV_TERRESTRIAL_ANALOG
 
-• **KEYCODE\_TV\_TERRESTRIAL\_ANALOG** = ``235``
+• **KEYCODE_TV_TERRESTRIAL_ANALOG** = `235`
 
 Key code constant: Analog Terrestrial key.
 Switches to analog terrestrial broadcast service.
@@ -3618,11 +3618,11 @@ Switches to analog terrestrial broadcast service.
 
 [src/util/keycode.ts:595](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L595)
 
-___
+---
 
-### KEYCODE\_TV\_TERRESTRIAL\_DIGITAL
+### KEYCODE_TV_TERRESTRIAL_DIGITAL
 
-• **KEYCODE\_TV\_TERRESTRIAL\_DIGITAL** = ``236``
+• **KEYCODE_TV_TERRESTRIAL_DIGITAL** = `236`
 
 Key code constant: Digital Terrestrial key.
 Switches to digital terrestrial broadcast service.
@@ -3631,11 +3631,11 @@ Switches to digital terrestrial broadcast service.
 
 [src/util/keycode.ts:598](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L598)
 
-___
+---
 
-### KEYCODE\_TV\_TIMER\_PROGRAMMING
+### KEYCODE_TV_TIMER_PROGRAMMING
 
-• **KEYCODE\_TV\_TIMER\_PROGRAMMING** = ``258``
+• **KEYCODE_TV_TIMER_PROGRAMMING** = `258`
 
 Key code constant: Timer programming key.
 Goes to the timer recording menu. Corresponds to Timer Programming (0x54) of
@@ -3645,11 +3645,11 @@ CEC User Control Code.
 
 [src/util/keycode.ts:667](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L667)
 
-___
+---
 
-### KEYCODE\_TV\_ZOOM\_MODE
+### KEYCODE_TV_ZOOM_MODE
 
-• **KEYCODE\_TV\_ZOOM\_MODE** = ``255``
+• **KEYCODE_TV_ZOOM_MODE** = `255`
 
 Key code constant: Zoom mode key.
 Changes Zoom mode (Normal, Full, Zoom, Wide-zoom, etc.)
@@ -3658,11 +3658,11 @@ Changes Zoom mode (Normal, Full, Zoom, Wide-zoom, etc.)
 
 [src/util/keycode.ts:655](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L655)
 
-___
+---
 
-### KEYCODE\_U
+### KEYCODE_U
 
-• **KEYCODE\_U** = ``49``
+• **KEYCODE_U** = `49`
 
 Key code constant: 'U' key.
 
@@ -3670,21 +3670,21 @@ Key code constant: 'U' key.
 
 [src/util/keycode.ts:115](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L115)
 
-___
+---
 
-### KEYCODE\_UNKNOWN
+### KEYCODE_UNKNOWN
 
-• **KEYCODE\_UNKNOWN** = ``0``
+• **KEYCODE_UNKNOWN** = `0`
 
 #### Defined in
 
 [src/util/keycode.ts:2](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L2)
 
-___
+---
 
-### KEYCODE\_V
+### KEYCODE_V
 
-• **KEYCODE\_V** = ``50``
+• **KEYCODE_V** = `50`
 
 Key code constant: 'V' key.
 
@@ -3692,11 +3692,11 @@ Key code constant: 'V' key.
 
 [src/util/keycode.ts:117](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L117)
 
-___
+---
 
-### KEYCODE\_VOICE\_ASSIST
+### KEYCODE_VOICE_ASSIST
 
-• **KEYCODE\_VOICE\_ASSIST** = ``231``
+• **KEYCODE_VOICE_ASSIST** = `231`
 
 Key code constant: Voice Assist key.
 Launches the global voice assist activity. Not delivered to applications.
@@ -3705,11 +3705,11 @@ Launches the global voice assist activity. Not delivered to applications.
 
 [src/util/keycode.ts:581](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L581)
 
-___
+---
 
-### KEYCODE\_VOLUME\_DOWN
+### KEYCODE_VOLUME_DOWN
 
-• **KEYCODE\_VOLUME\_DOWN** = ``25``
+• **KEYCODE_VOLUME_DOWN** = `25`
 
 Key code constant: Volume Down key.
 Adjusts the speaker volume down.
@@ -3718,11 +3718,11 @@ Adjusts the speaker volume down.
 
 [src/util/keycode.ts:66](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L66)
 
-___
+---
 
-### KEYCODE\_VOLUME\_MUTE
+### KEYCODE_VOLUME_MUTE
 
-• **KEYCODE\_VOLUME\_MUTE** = ``164``
+• **KEYCODE_VOLUME_MUTE** = `164`
 
 Key code constant: Volume Mute key.
 Mutes the speaker, unlike `KEYCODE_MUTE`.
@@ -3733,11 +3733,11 @@ mutes the speaker and the second press restores the original volume.
 
 [src/util/keycode.ts:398](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L398)
 
-___
+---
 
-### KEYCODE\_VOLUME\_UP
+### KEYCODE_VOLUME_UP
 
-• **KEYCODE\_VOLUME\_UP** = ``24``
+• **KEYCODE_VOLUME_UP** = `24`
 
 Key code constant: Volume Up key.
 Adjusts the speaker volume up.
@@ -3746,11 +3746,11 @@ Adjusts the speaker volume up.
 
 [src/util/keycode.ts:63](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L63)
 
-___
+---
 
-### KEYCODE\_W
+### KEYCODE_W
 
-• **KEYCODE\_W** = ``51``
+• **KEYCODE_W** = `51`
 
 Key code constant: 'W' key.
 
@@ -3758,25 +3758,25 @@ Key code constant: 'W' key.
 
 [src/util/keycode.ts:119](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L119)
 
-___
+---
 
-### KEYCODE\_WAKEUP
+### KEYCODE_WAKEUP
 
-• **KEYCODE\_WAKEUP** = ``224``
+• **KEYCODE_WAKEUP** = `224`
 
 Key code constant: Wakeup key.
-Wakes up the device.  Behaves somewhat like `KEYCODE_POWER` but it
+Wakes up the device. Behaves somewhat like `KEYCODE_POWER` but it
 has no effect if the device is already awake.
 
 #### Defined in
 
 [src/util/keycode.ts:560](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L560)
 
-___
+---
 
-### KEYCODE\_WINDOW
+### KEYCODE_WINDOW
 
-• **KEYCODE\_WINDOW** = ``171``
+• **KEYCODE_WINDOW** = `171`
 
 Key code constant: Window key.
 On TV remotes, toggles picture-in-picture mode or other windowing functions.
@@ -3786,11 +3786,11 @@ On Android Wear devices, triggers a display offset.
 
 [src/util/keycode.ts:419](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L419)
 
-___
+---
 
-### KEYCODE\_X
+### KEYCODE_X
 
-• **KEYCODE\_X** = ``52``
+• **KEYCODE_X** = `52`
 
 Key code constant: 'X' key.
 
@@ -3798,11 +3798,11 @@ Key code constant: 'X' key.
 
 [src/util/keycode.ts:121](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L121)
 
-___
+---
 
-### KEYCODE\_Y
+### KEYCODE_Y
 
-• **KEYCODE\_Y** = ``53``
+• **KEYCODE_Y** = `53`
 
 Key code constant: 'Y' key.
 
@@ -3810,11 +3810,11 @@ Key code constant: 'Y' key.
 
 [src/util/keycode.ts:123](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L123)
 
-___
+---
 
-### KEYCODE\_YEN
+### KEYCODE_YEN
 
-• **KEYCODE\_YEN** = ``216``
+• **KEYCODE_YEN** = `216`
 
 Key code constant: Japanese Yen key.
 
@@ -3822,11 +3822,11 @@ Key code constant: Japanese Yen key.
 
 [src/util/keycode.ts:536](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L536)
 
-___
+---
 
-### KEYCODE\_Z
+### KEYCODE_Z
 
-• **KEYCODE\_Z** = ``54``
+• **KEYCODE_Z** = `54`
 
 Key code constant: 'Z' key.
 
@@ -3834,11 +3834,11 @@ Key code constant: 'Z' key.
 
 [src/util/keycode.ts:125](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L125)
 
-___
+---
 
-### KEYCODE\_ZENKAKU\_HANKAKU
+### KEYCODE_ZENKAKU_HANKAKU
 
-• **KEYCODE\_ZENKAKU\_HANKAKU** = ``211``
+• **KEYCODE_ZENKAKU_HANKAKU** = `211`
 
 Key code constant: Japanese full-width / half-width key.
 
@@ -3846,11 +3846,11 @@ Key code constant: Japanese full-width / half-width key.
 
 [src/util/keycode.ts:526](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L526)
 
-___
+---
 
-### KEYCODE\_ZOOM\_IN
+### KEYCODE_ZOOM_IN
 
-• **KEYCODE\_ZOOM\_IN** = ``168``
+• **KEYCODE_ZOOM_IN** = `168`
 
 Key code constant: Zoom in key.
 
@@ -3858,11 +3858,11 @@ Key code constant: Zoom in key.
 
 [src/util/keycode.ts:410](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/keycode.ts#L410)
 
-___
+---
 
-### KEYCODE\_ZOOM\_OUT
+### KEYCODE_ZOOM_OUT
 
-• **KEYCODE\_ZOOM\_OUT** = ``169``
+• **KEYCODE_ZOOM_OUT** = `169`
 
 Key code constant: Zoom out key.
 

@@ -6,17 +6,17 @@
 
 ## Hierarchy
 
-- **`SymlinkFSoption`**
+-   **`SymlinkFSoption`**
 
-  ↳ [`TouchOptions`](Util.TouchOptions.md)
+    ↳ [`TouchOptions`](Util.TouchOptions.md)
 
-  ↳ [`CpOptions`](Util.CpOptions.md)
+    ↳ [`CpOptions`](Util.CpOptions.md)
 
 ## Table of contents
 
 ### Properties
 
-- [symlink](Util.SymlinkFSoption.md#symlink)
+-   [symlink](Util.SymlinkFSoption.md#symlink)
 
 ## Properties
 

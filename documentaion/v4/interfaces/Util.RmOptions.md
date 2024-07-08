@@ -6,18 +6,18 @@
 
 ## Hierarchy
 
-- [`ForceFSOption`](Util.ForceFSOption.md)
+-   [`ForceFSOption`](Util.ForceFSOption.md)
 
-- [`RecursiveFSOption`](Util.RecursiveFSOption.md)
+-   [`RecursiveFSOption`](Util.RecursiveFSOption.md)
 
-  ↳ **`RmOptions`**
+    ↳ **`RmOptions`**
 
 ## Table of contents
 
 ### Properties
 
-- [force](Util.RmOptions.md#force)
-- [recursive](Util.RmOptions.md#recursive)
+-   [force](Util.RmOptions.md#force)
+-   [recursive](Util.RmOptions.md#recursive)
 
 ## Properties
 
@@ -35,7 +35,7 @@ Adds `-f` flag.
 
 [src/util/types.ts:290](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L290)
 
-___
+---
 
 ### recursive
 

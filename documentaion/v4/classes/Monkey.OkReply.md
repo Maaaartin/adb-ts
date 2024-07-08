@@ -6,23 +6,23 @@
 
 ## Hierarchy
 
-- [`Reply`](Monkey.Reply.md)
+-   [`Reply`](Monkey.Reply.md)
 
-  ↳ **`OkReply`**
+    ↳ **`OkReply`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Monkey.OkReply.md#constructor)
+-   [constructor](Monkey.OkReply.md#constructor)
 
 ### Properties
 
-- [value](Monkey.OkReply.md#value)
+-   [value](Monkey.OkReply.md#value)
 
 ### Methods
 
-- [isError](Monkey.OkReply.md#iserror)
+-   [isError](Monkey.OkReply.md#iserror)
 
 ## Constructors
 
@@ -32,9 +32,9 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | ``null`` \| `string` |
+| Name    | Type               |
+| :------ | :----------------- |
+| `value` | `null` \| `string` |
 
 #### Overrides
 
@@ -48,7 +48,7 @@
 
 ### value
 
-• **value**: ``null`` \| `string`
+• **value**: `null` \| `string`
 
 #### Overrides
 

@@ -6,20 +6,20 @@
 
 ## Hierarchy
 
-- `Error`
+-   `Error`
 
-  ↳ **`PrematureEOFError`**
+    ↳ **`PrematureEOFError`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Util.PrematureEOFError.md#constructor)
+-   [constructor](Util.PrematureEOFError.md#constructor)
 
 ### Properties
 
-- [missingBytes](Util.PrematureEOFError.md#missingbytes)
-- [name](Util.PrematureEOFError.md#name)
+-   [missingBytes](Util.PrematureEOFError.md#missingbytes)
+-   [name](Util.PrematureEOFError.md#name)
 
 ## Constructors
 
@@ -29,8 +29,8 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name             | Type     |
+| :--------------- | :------- |
 | `howManyMissing` | `number` |
 
 #### Overrides
@@ -51,7 +51,7 @@ Error.constructor
 
 [src/util/errors.ts:14](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/errors.ts#L14)
 
-___
+---
 
 ### name
 

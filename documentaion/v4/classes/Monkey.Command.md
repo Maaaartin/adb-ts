@@ -6,24 +6,24 @@
 
 ## Hierarchy
 
-- [`BaseCommand`](Monkey.BaseCommand.md)<``null``\>
+-   [`BaseCommand`](Monkey.BaseCommand.md)<`null`\>
 
-  ↳ **`Command`**
+    ↳ **`Command`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Monkey.Command.md#constructor)
+-   [constructor](Monkey.Command.md#constructor)
 
 ### Properties
 
-- [callback](Monkey.Command.md#callback)
-- [command](Monkey.Command.md#command)
+-   [callback](Monkey.Command.md#callback)
+-   [command](Monkey.Command.md#command)
 
 ### Methods
 
-- [isParsable](Monkey.Command.md#isparsable)
+-   [isParsable](Monkey.Command.md#isparsable)
 
 ## Constructors
 
@@ -33,10 +33,10 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `command` | `string` |
-| `callback` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null``\> |
+| Name       | Type                                                           |
+| :--------- | :------------------------------------------------------------- |
+| `command`  | `string`                                                       |
+| `callback` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null`\> |
 
 #### Inherited from
 
@@ -50,7 +50,7 @@
 
 ### callback
 
-• `Readonly` **callback**: [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null``\>
+• `Readonly` **callback**: [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null`\>
 
 #### Inherited from
 
@@ -60,7 +60,7 @@
 
 [src/monkey/command.ts:5](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/command.ts#L5)
 
-___
+---
 
 ### command
 

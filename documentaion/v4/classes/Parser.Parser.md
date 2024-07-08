@@ -8,26 +8,26 @@
 
 ### Constructors
 
-- [constructor](Parser.Parser.md#constructor)
+-   [constructor](Parser.Parser.md#constructor)
 
 ### Properties
 
-- [ended](Parser.Parser.md#ended)
-- [socket](Parser.Parser.md#socket)
+-   [ended](Parser.Parser.md#ended)
+-   [socket](Parser.Parser.md#socket)
 
 ### Methods
 
-- [end](Parser.Parser.md#end)
-- [readAll](Parser.Parser.md#readall)
-- [readAscii](Parser.Parser.md#readascii)
-- [readByteFlow](Parser.Parser.md#readbyteflow)
-- [readBytes](Parser.Parser.md#readbytes)
-- [readError](Parser.Parser.md#readerror)
-- [readUntil](Parser.Parser.md#readuntil)
-- [readValue](Parser.Parser.md#readvalue)
-- [readline](Parser.Parser.md#readline)
-- [searchLine](Parser.Parser.md#searchline)
-- [unexpected](Parser.Parser.md#unexpected)
+-   [end](Parser.Parser.md#end)
+-   [readAll](Parser.Parser.md#readall)
+-   [readAscii](Parser.Parser.md#readascii)
+-   [readByteFlow](Parser.Parser.md#readbyteflow)
+-   [readBytes](Parser.Parser.md#readbytes)
+-   [readError](Parser.Parser.md#readerror)
+-   [readUntil](Parser.Parser.md#readuntil)
+-   [readValue](Parser.Parser.md#readvalue)
+-   [readline](Parser.Parser.md#readline)
+-   [searchLine](Parser.Parser.md#searchline)
+-   [unexpected](Parser.Parser.md#unexpected)
 
 ## Constructors
 
@@ -37,8 +37,8 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `socket` | `Socket` |
 
 #### Defined in
@@ -55,7 +55,7 @@
 
 [src/parser.ts:10](https://github.com/Maaaartin/adb-ts/blob/5393493/src/parser.ts#L10)
 
-___
+---
 
 ### socket
 
@@ -79,7 +79,7 @@ ___
 
 [src/parser.ts:50](https://github.com/Maaaartin/adb-ts/blob/5393493/src/parser.ts#L50)
 
-___
+---
 
 ### readAll
 
@@ -93,7 +93,7 @@ ___
 
 [src/parser.ts:175](https://github.com/Maaaartin/adb-ts/blob/5393493/src/parser.ts#L175)
 
-___
+---
 
 ### readAscii
 
@@ -101,8 +101,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type     |
+| :-------- | :------- |
 | `howMany` | `number` |
 
 #### Returns
@@ -113,7 +113,7 @@ ___
 
 [src/parser.ts:76](https://github.com/Maaaartin/adb-ts/blob/5393493/src/parser.ts#L76)
 
-___
+---
 
 ### readByteFlow
 
@@ -121,9 +121,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `howMany` | `number` |
+| Name           | Type       |
+| :------------- | :--------- |
+| `howMany`      | `number`   |
 | `targetStream` | `Writable` |
 
 #### Returns
@@ -134,7 +134,7 @@ ___
 
 [src/parser.ts:99](https://github.com/Maaaartin/adb-ts/blob/5393493/src/parser.ts#L99)
 
-___
+---
 
 ### readBytes
 
@@ -142,8 +142,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type     |
+| :-------- | :------- |
 | `howMany` | `number` |
 
 #### Returns
@@ -154,7 +154,7 @@ ___
 
 [src/parser.ts:14](https://github.com/Maaaartin/adb-ts/blob/5393493/src/parser.ts#L14)
 
-___
+---
 
 ### readError
 
@@ -168,7 +168,7 @@ ___
 
 [src/parser.ts:86](https://github.com/Maaaartin/adb-ts/blob/5393493/src/parser.ts#L86)
 
-___
+---
 
 ### readUntil
 
@@ -176,8 +176,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `code` | `number` |
 
 #### Returns
@@ -188,7 +188,7 @@ ___
 
 [src/parser.ts:141](https://github.com/Maaaartin/adb-ts/blob/5393493/src/parser.ts#L141)
 
-___
+---
 
 ### readValue
 
@@ -202,7 +202,7 @@ ___
 
 [src/parser.ts:80](https://github.com/Maaaartin/adb-ts/blob/5393493/src/parser.ts#L80)
 
-___
+---
 
 ### readline
 
@@ -216,7 +216,7 @@ ___
 
 [src/parser.ts:152](https://github.com/Maaaartin/adb-ts/blob/5393493/src/parser.ts#L152)
 
-___
+---
 
 ### searchLine
 
@@ -224,10 +224,10 @@ ___
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `regExp` | `RegExp` | `undefined` |
-| `retry` | `boolean` | `true` |
+| Name     | Type      | Default value |
+| :------- | :-------- | :------------ |
+| `regExp` | `RegExp`  | `undefined`   |
+| `retry`  | `boolean` | `true`        |
 
 #### Returns
 
@@ -237,7 +237,7 @@ ___
 
 [src/parser.ts:160](https://github.com/Maaaartin/adb-ts/blob/5393493/src/parser.ts#L160)
 
-___
+---
 
 ### unexpected
 
@@ -245,9 +245,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `data` | `string` |
+| Name       | Type     |
+| :--------- | :------- |
+| `data`     | `string` |
 | `expected` | `string` |
 
 #### Returns

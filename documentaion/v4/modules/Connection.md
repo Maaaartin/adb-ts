@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [Connection](../classes/Connection.Connection.md)
+-   [Connection](../classes/Connection.Connection.md)

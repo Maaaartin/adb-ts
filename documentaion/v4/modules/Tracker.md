@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [Tracker](../classes/Tracker.Tracker.md)
+-   [Tracker](../classes/Tracker.Tracker.md)

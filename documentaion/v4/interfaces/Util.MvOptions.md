@@ -6,18 +6,18 @@
 
 ## Hierarchy
 
-- [`NoClobberFSOption`](Util.NoClobberFSOption.md)
+-   [`NoClobberFSOption`](Util.NoClobberFSOption.md)
 
-- [`ForceFSOption`](Util.ForceFSOption.md)
+-   [`ForceFSOption`](Util.ForceFSOption.md)
 
-  ↳ **`MvOptions`**
+    ↳ **`MvOptions`**
 
 ## Table of contents
 
 ### Properties
 
-- [force](Util.MvOptions.md#force)
-- [noClobber](Util.MvOptions.md#noclobber)
+-   [force](Util.MvOptions.md#force)
+-   [noClobber](Util.MvOptions.md#noclobber)
 
 ## Properties
 
@@ -35,7 +35,7 @@ Adds `-f` flag.
 
 [src/util/types.ts:290](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L290)
 
-___
+---
 
 ### noClobber
 

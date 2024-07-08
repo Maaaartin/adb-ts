@@ -8,92 +8,92 @@
 
 ### Constructors
 
-- [constructor](Client.Client.md#constructor)
+-   [constructor](Client.Client.md#constructor)
 
 ### Properties
 
-- [options](Client.Client.md#options)
+-   [options](Client.Client.md#options)
 
 ### Methods
 
-- [awaitActiveDevice](Client.Client.md#awaitactivedevice)
-- [batteryStatus](Client.Client.md#batterystatus)
-- [clear](Client.Client.md#clear)
-- [connect](Client.Client.md#connect)
-- [connection](Client.Client.md#connection)
-- [cp](Client.Client.md#cp)
-- [custom](Client.Client.md#custom)
-- [customTransport](Client.Client.md#customtransport)
-- [deleteApk](Client.Client.md#deleteapk)
-- [disconnect](Client.Client.md#disconnect)
-- [dragAndDrop](Client.Client.md#draganddrop)
-- [exec](Client.Client.md#exec)
-- [execDevice](Client.Client.md#execdevice)
-- [execDeviceShell](Client.Client.md#execdeviceshell)
-- [execInternal](Client.Client.md#execinternal)
-- [fileStat](Client.Client.md#filestat)
-- [forward](Client.Client.md#forward)
-- [getDevicePath](Client.Client.md#getdevicepath)
-- [getIpAddress](Client.Client.md#getipaddress)
-- [getProp](Client.Client.md#getprop)
-- [getSerialNo](Client.Client.md#getserialno)
-- [getSetting](Client.Client.md#getsetting)
-- [install](Client.Client.md#install)
-- [installRemote](Client.Client.md#installremote)
-- [ipConnect](Client.Client.md#ipconnect)
-- [isInstalled](Client.Client.md#isinstalled)
-- [keyEvent](Client.Client.md#keyevent)
-- [kill](Client.Client.md#kill)
-- [killApp](Client.Client.md#killapp)
-- [listDevices](Client.Client.md#listdevices)
-- [listFeatures](Client.Client.md#listfeatures)
-- [listForwards](Client.Client.md#listforwards)
-- [listPackages](Client.Client.md#listpackages)
-- [listProperties](Client.Client.md#listproperties)
-- [listReverses](Client.Client.md#listreverses)
-- [listSettings](Client.Client.md#listsettings)
-- [map](Client.Client.md#map)
-- [mkdir](Client.Client.md#mkdir)
-- [mv](Client.Client.md#mv)
-- [openLogcat](Client.Client.md#openlogcat)
-- [openMonkey](Client.Client.md#openmonkey)
-- [openTcp](Client.Client.md#opentcp)
-- [press](Client.Client.md#press)
-- [pull](Client.Client.md#pull)
-- [pullDataFromFile](Client.Client.md#pulldatafromfile)
-- [pullFile](Client.Client.md#pullfile)
-- [push](Client.Client.md#push)
-- [pushDataToFile](Client.Client.md#pushdatatofile)
-- [pushFile](Client.Client.md#pushfile)
-- [pushInternal](Client.Client.md#pushinternal)
-- [putSetting](Client.Client.md#putsetting)
-- [readDir](Client.Client.md#readdir)
-- [reboot](Client.Client.md#reboot)
-- [remount](Client.Client.md#remount)
-- [reverse](Client.Client.md#reverse)
-- [rm](Client.Client.md#rm)
-- [roll](Client.Client.md#roll)
-- [root](Client.Client.md#root)
-- [screenshot](Client.Client.md#screenshot)
-- [setProp](Client.Client.md#setprop)
-- [shell](Client.Client.md#shell)
-- [shutdown](Client.Client.md#shutdown)
-- [startActivity](Client.Client.md#startactivity)
-- [startServer](Client.Client.md#startserver)
-- [startService](Client.Client.md#startservice)
-- [swipe](Client.Client.md#swipe)
-- [syncService](Client.Client.md#syncservice)
-- [tap](Client.Client.md#tap)
-- [tcpip](Client.Client.md#tcpip)
-- [text](Client.Client.md#text)
-- [touch](Client.Client.md#touch)
-- [trackDevices](Client.Client.md#trackdevices)
-- [transport](Client.Client.md#transport)
-- [uninstall](Client.Client.md#uninstall)
-- [usb](Client.Client.md#usb)
-- [version](Client.Client.md#version)
-- [waitBootComplete](Client.Client.md#waitbootcomplete)
-- [waitFor](Client.Client.md#waitfor)
+-   [awaitActiveDevice](Client.Client.md#awaitactivedevice)
+-   [batteryStatus](Client.Client.md#batterystatus)
+-   [clear](Client.Client.md#clear)
+-   [connect](Client.Client.md#connect)
+-   [connection](Client.Client.md#connection)
+-   [cp](Client.Client.md#cp)
+-   [custom](Client.Client.md#custom)
+-   [customTransport](Client.Client.md#customtransport)
+-   [deleteApk](Client.Client.md#deleteapk)
+-   [disconnect](Client.Client.md#disconnect)
+-   [dragAndDrop](Client.Client.md#draganddrop)
+-   [exec](Client.Client.md#exec)
+-   [execDevice](Client.Client.md#execdevice)
+-   [execDeviceShell](Client.Client.md#execdeviceshell)
+-   [execInternal](Client.Client.md#execinternal)
+-   [fileStat](Client.Client.md#filestat)
+-   [forward](Client.Client.md#forward)
+-   [getDevicePath](Client.Client.md#getdevicepath)
+-   [getIpAddress](Client.Client.md#getipaddress)
+-   [getProp](Client.Client.md#getprop)
+-   [getSerialNo](Client.Client.md#getserialno)
+-   [getSetting](Client.Client.md#getsetting)
+-   [install](Client.Client.md#install)
+-   [installRemote](Client.Client.md#installremote)
+-   [ipConnect](Client.Client.md#ipconnect)
+-   [isInstalled](Client.Client.md#isinstalled)
+-   [keyEvent](Client.Client.md#keyevent)
+-   [kill](Client.Client.md#kill)
+-   [killApp](Client.Client.md#killapp)
+-   [listDevices](Client.Client.md#listdevices)
+-   [listFeatures](Client.Client.md#listfeatures)
+-   [listForwards](Client.Client.md#listforwards)
+-   [listPackages](Client.Client.md#listpackages)
+-   [listProperties](Client.Client.md#listproperties)
+-   [listReverses](Client.Client.md#listreverses)
+-   [listSettings](Client.Client.md#listsettings)
+-   [map](Client.Client.md#map)
+-   [mkdir](Client.Client.md#mkdir)
+-   [mv](Client.Client.md#mv)
+-   [openLogcat](Client.Client.md#openlogcat)
+-   [openMonkey](Client.Client.md#openmonkey)
+-   [openTcp](Client.Client.md#opentcp)
+-   [press](Client.Client.md#press)
+-   [pull](Client.Client.md#pull)
+-   [pullDataFromFile](Client.Client.md#pulldatafromfile)
+-   [pullFile](Client.Client.md#pullfile)
+-   [push](Client.Client.md#push)
+-   [pushDataToFile](Client.Client.md#pushdatatofile)
+-   [pushFile](Client.Client.md#pushfile)
+-   [pushInternal](Client.Client.md#pushinternal)
+-   [putSetting](Client.Client.md#putsetting)
+-   [readDir](Client.Client.md#readdir)
+-   [reboot](Client.Client.md#reboot)
+-   [remount](Client.Client.md#remount)
+-   [reverse](Client.Client.md#reverse)
+-   [rm](Client.Client.md#rm)
+-   [roll](Client.Client.md#roll)
+-   [root](Client.Client.md#root)
+-   [screenshot](Client.Client.md#screenshot)
+-   [setProp](Client.Client.md#setprop)
+-   [shell](Client.Client.md#shell)
+-   [shutdown](Client.Client.md#shutdown)
+-   [startActivity](Client.Client.md#startactivity)
+-   [startServer](Client.Client.md#startserver)
+-   [startService](Client.Client.md#startservice)
+-   [swipe](Client.Client.md#swipe)
+-   [syncService](Client.Client.md#syncservice)
+-   [tap](Client.Client.md#tap)
+-   [tcpip](Client.Client.md#tcpip)
+-   [text](Client.Client.md#text)
+-   [touch](Client.Client.md#touch)
+-   [trackDevices](Client.Client.md#trackdevices)
+-   [transport](Client.Client.md#transport)
+-   [uninstall](Client.Client.md#uninstall)
+-   [usb](Client.Client.md#usb)
+-   [version](Client.Client.md#version)
+-   [waitBootComplete](Client.Client.md#waitbootcomplete)
+-   [waitFor](Client.Client.md#waitfor)
 
 ## Constructors
 
@@ -103,8 +103,8 @@
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
+| Name       | Type                                                      | Description                           |
+| :--------- | :-------------------------------------------------------- | :------------------------------------ |
 | `options?` | [`AdbClientOptions`](../modules/Util.md#adbclientoptions) | see AdbClientOptions for more details |
 
 #### Defined in
@@ -129,8 +129,8 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -141,7 +141,7 @@
 
 [src/client.ts:1340](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1340)
 
-___
+---
 
 ### batteryStatus
 
@@ -152,8 +152,8 @@ Analogous to `adb -s <serial> shell dumpsys battery` .
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -168,10 +168,10 @@ Analogous to `adb -s <serial> shell dumpsys battery` .
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PropertyMap`](../modules/Util.md#propertymap)\> |
+| Name     | Type                                                                                                  |
+| :------- | :---------------------------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                                              |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PropertyMap`](../modules/Util.md#propertymap)\> |
 
 #### Returns
 
@@ -181,7 +181,7 @@ Analogous to `adb -s <serial> shell dumpsys battery` .
 
 [src/client.ts:1957](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1957)
 
-___
+---
 
 ### clear
 
@@ -192,10 +192,10 @@ Analogous to `adb shell pm clear <pkg>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `pkg` | `string` |
+| `pkg`    | `string` |
 
 #### Returns
 
@@ -209,11 +209,11 @@ Analogous to `adb shell pm clear <pkg>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `pkg` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `pkg`    | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -223,7 +223,7 @@ Analogous to `adb shell pm clear <pkg>`.
 
 [src/client.ts:1006](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1006)
 
-___
+---
 
 ### connect
 
@@ -233,8 +233,8 @@ Connects to device over local network.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `host` | `string` |
 
 #### Returns
@@ -245,9 +245,9 @@ Connects to device over local network.
 
 ```ts
 adb.map(async (device) => {
-   await device.tcpip();
-   const [ip] = await device.getIpAddress();
-   await adb.connect(ip);
+    await device.tcpip();
+    const [ip] = await device.getIpAddress();
+    await adb.connect(ip);
 });
 ```
 
@@ -259,8 +259,8 @@ adb.map(async (device) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `host` | `string` |
 | `port` | `number` |
 
@@ -276,10 +276,10 @@ adb.map(async (device) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `host` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
+| Name   | Type                                                           |
+| :----- | :------------------------------------------------------------- |
+| `host` | `string`                                                       |
+| `cb`   | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
 
 #### Returns
 
@@ -293,11 +293,11 @@ adb.map(async (device) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `host` | `string` |
-| `port` | `number` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
+| Name   | Type                                                           |
+| :----- | :------------------------------------------------------------- |
+| `host` | `string`                                                       |
+| `port` | `number`                                                       |
+| `cb`   | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
 
 #### Returns
 
@@ -307,7 +307,7 @@ adb.map(async (device) => {
 
 [src/client.ts:241](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L241)
 
-___
+---
 
 ### connection
 
@@ -321,7 +321,7 @@ ___
 
 [src/client.ts:155](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L155)
 
-___
+---
 
 ### cp
 
@@ -332,10 +332,10 @@ Analogous to `adb shell cp <src> <dest>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` |
+| Name       | Type     |
+| :--------- | :------- |
+| `serial`   | `string` |
+| `srcPath`  | `string` |
 | `destPath` | `string` |
 
 #### Returns
@@ -350,12 +350,12 @@ Analogous to `adb shell cp <src> <dest>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` |
-| `destPath` | `string` |
-| `options` | [`CpOptions`](../interfaces/Util.CpOptions.md) |
+| Name       | Type                                           |
+| :--------- | :--------------------------------------------- |
+| `serial`   | `string`                                       |
+| `srcPath`  | `string`                                       |
+| `destPath` | `string`                                       |
+| `options`  | [`CpOptions`](../interfaces/Util.CpOptions.md) |
 
 #### Returns
 
@@ -369,12 +369,12 @@ Analogous to `adb shell cp <src> <dest>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` |
-| `destPath` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name       | Type                                      |
+| :--------- | :---------------------------------------- |
+| `serial`   | `string`                                  |
+| `srcPath`  | `string`                                  |
+| `destPath` | `string`                                  |
+| `cb`       | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -388,13 +388,13 @@ Analogous to `adb shell cp <src> <dest>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` |
-| `destPath` | `string` |
-| `options` | [`CpOptions`](../interfaces/Util.CpOptions.md) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name       | Type                                           |
+| :--------- | :--------------------------------------------- |
+| `serial`   | `string`                                       |
+| `srcPath`  | `string`                                       |
+| `destPath` | `string`                                       |
+| `options`  | [`CpOptions`](../interfaces/Util.CpOptions.md) |
+| `cb`       | [`Callback`](../modules/Util.md#callback)      |
 
 #### Returns
 
@@ -404,7 +404,7 @@ Analogous to `adb shell cp <src> <dest>`.
 
 [src/client.ts:2101](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L2101)
 
-___
+---
 
 ### custom
 
@@ -414,17 +414,17 @@ Enables to execute any custom command.
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `P` | extends `unknown`[] = `unknown`[] |
+| Name | Type                              |
+| :--- | :-------------------------------- |
+| `T`  | `T`                               |
+| `P`  | extends `unknown`[] = `unknown`[] |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name            | Type                                                                    |
+| :-------------- | :---------------------------------------------------------------------- |
 | `CustomCommand` | [`CommandConstruct`](../interfaces/Util.CommandConstruct.md)<`T`, `P`\> |
-| `...args` | `P` |
+| `...args`       | `P`                                                                     |
 
 #### Returns
 
@@ -434,32 +434,32 @@ Enables to execute any custom command.
 
 ```ts
 class MyCommand extends Command<number> {
-  protected autoEnd = true;
-  private arg: string;
-  constructor(connection: Connection, arg: string) {
-      super(connection);
-      this.arg = arg;
-  }
-  async execute(): Promise<number> {
-      const reply = await this.initExecute(this.arg);
-      switch (reply) {
-          case Reply.OKAY:
-              const value = await this.parser.readValue();
-              return parseInt(value.toString(), 10);
-          case Reply.FAIL:
-              throw await this.parser.readError();
-          default:
-              return parseInt(reply, 10);
-         }
-     }
- }
+    protected autoEnd = true;
+    private arg: string;
+    constructor(connection: Connection, arg: string) {
+        super(connection);
+        this.arg = arg;
+    }
+    async execute(): Promise<number> {
+        const reply = await this.initExecute(this.arg);
+        switch (reply) {
+            case Reply.OKAY:
+                const value = await this.parser.readValue();
+                return parseInt(value.toString(), 10);
+            case Reply.FAIL:
+                throw await this.parser.readError();
+            default:
+                return parseInt(reply, 10);
+        }
+    }
+}
 ```
 
 #### Defined in
 
 [src/client.ts:1778](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1778)
 
-___
+---
 
 ### customTransport
 
@@ -469,18 +469,18 @@ Enables to execute any custom transport command.
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `P` | extends `unknown`[] = `unknown`[] |
+| Name | Type                              |
+| :--- | :-------------------------------- |
+| `T`  | `T`                               |
+| `P`  | extends `unknown`[] = `unknown`[] |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name            | Type                                                                                      |
+| :-------------- | :---------------------------------------------------------------------------------------- |
 | `CustomCommand` | [`TransportCommandConstruct`](../interfaces/Util.TransportCommandConstruct.md)<`T`, `P`\> |
-| `serial` | `string` |
-| `...args` | `P` |
+| `serial`        | `string`                                                                                  |
+| `...args`       | `P`                                                                                       |
 
 #### Returns
 
@@ -490,18 +490,18 @@ Enables to execute any custom transport command.
 
 ```ts
 class MyCommand extends TransportCommand<null> {
-   protected keepAlive = false;
-   private arg: string;
-   constructor(connection: Connection, serial: string, arg: string) {
-       super(connection, serial);
-       this.arg = arg;
-   }
-   protected get Cmd() {
-       return 'test '.concat(this.arg);
-   }
-   protected postExecute(): null {
-       return null;
-   }
+    protected keepAlive = false;
+    private arg: string;
+    constructor(connection: Connection, serial: string, arg: string) {
+        super(connection, serial);
+        this.arg = arg;
+    }
+    protected get Cmd() {
+        return 'test '.concat(this.arg);
+    }
+    protected postExecute(): null {
+        return null;
+    }
 }
 ```
 
@@ -509,7 +509,7 @@ class MyCommand extends TransportCommand<null> {
 
 [src/client.ts:1804](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1804)
 
-___
+---
 
 ### deleteApk
 
@@ -517,9 +517,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
+| Name        | Type     |
+| :---------- | :------- |
+| `serial`    | `string` |
 | `pathToApk` | `string` |
 
 #### Returns
@@ -530,7 +530,7 @@ ___
 
 [src/client.ts:496](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L496)
 
-___
+---
 
 ### disconnect
 
@@ -540,8 +540,8 @@ Disconnects from the given device.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `host` | `string` |
 
 #### Returns
@@ -556,8 +556,8 @@ Disconnects from the given device.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `host` | `string` |
 | `port` | `number` |
 
@@ -573,10 +573,10 @@ Disconnects from the given device.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `host` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
+| Name   | Type                                                           |
+| :----- | :------------------------------------------------------------- |
+| `host` | `string`                                                       |
+| `cb`   | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
 
 #### Returns
 
@@ -590,11 +590,11 @@ Disconnects from the given device.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `host` | `string` |
-| `port` | `number` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
+| Name   | Type                                                           |
+| :----- | :------------------------------------------------------------- |
+| `host` | `string`                                                       |
+| `port` | `number`                                                       |
+| `cb`   | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
 
 #### Returns
 
@@ -604,7 +604,7 @@ Disconnects from the given device.
 
 [src/client.ts:256](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L256)
 
-___
+---
 
 ### dragAndDrop
 
@@ -616,13 +616,13 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `serial` | `string` | - |
-| `x1` | `number` | Horizontal starting coordinate. |
-| `y1` | `number` | Vertical starting coordinate. |
-| `x2` | `number` | Horizontal ending coordinate. |
-| `y2` | `number` | Vertical ending coordinate. |
+| Name     | Type     | Description                     |
+| :------- | :------- | :------------------------------ |
+| `serial` | `string` | -                               |
+| `x1`     | `number` | Horizontal starting coordinate. |
+| `y1`     | `number` | Vertical starting coordinate.   |
+| `x2`     | `number` | Horizontal ending coordinate.   |
+| `y2`     | `number` | Vertical ending coordinate.     |
 
 #### Returns
 
@@ -636,13 +636,13 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `x1` | `number` |
-| `y1` | `number` |
-| `x2` | `number` |
-| `y2` | `number` |
+| Name      | Type                                                                 |
+| :-------- | :------------------------------------------------------------------- |
+| `serial`  | `string`                                                             |
+| `x1`      | `number`                                                             |
+| `y1`      | `number`                                                             |
+| `x2`      | `number`                                                             |
+| `y2`      | `number`                                                             |
 | `options` | [`InputDurationOptions`](../interfaces/Util.InputDurationOptions.md) |
 
 #### Returns
@@ -657,14 +657,14 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `x1` | `number` |
-| `y1` | `number` |
-| `x2` | `number` |
-| `y2` | `number` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `x1`     | `number`                                  |
+| `y1`     | `number`                                  |
+| `x2`     | `number`                                  |
+| `y2`     | `number`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -678,15 +678,15 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `x1` | `number` |
-| `y1` | `number` |
-| `x2` | `number` |
-| `y2` | `number` |
+| Name      | Type                                                                 |
+| :-------- | :------------------------------------------------------------------- |
+| `serial`  | `string`                                                             |
+| `x1`      | `number`                                                             |
+| `y1`      | `number`                                                             |
+| `x2`      | `number`                                                             |
+| `y2`      | `number`                                                             |
 | `options` | [`InputDurationOptions`](../interfaces/Util.InputDurationOptions.md) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| `cb`      | [`Callback`](../modules/Util.md#callback)                            |
 
 #### Returns
 
@@ -696,7 +696,7 @@ Default input source is `touchscreen`.
 
 [src/client.ts:714](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L714)
 
-___
+---
 
 ### exec
 
@@ -706,8 +706,8 @@ Executes a given command via adb console interface.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type     |
+| :---- | :------- |
 | `cmd` | `string` |
 
 #### Returns
@@ -722,10 +722,10 @@ Executes a given command via adb console interface.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cmd` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
+| Name  | Type                                                           |
+| :---- | :------------------------------------------------------------- |
+| `cmd` | `string`                                                       |
+| `cb`  | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
 
 #### Returns
 
@@ -735,21 +735,21 @@ Executes a given command via adb console interface.
 
 [src/client.ts:1915](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1915)
 
-___
+---
 
 ### execDevice
 
 ▸ **execDevice**(`serial`, `cmd`): `Promise`<`string`\>
 
 Executes a given command on specific device via adb console interface.
- Analogous to `adb -s <serial> <command>`.
+Analogous to `adb -s <serial> <command>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `cmd` | `string` |
+| `cmd`    | `string` |
 
 #### Returns
 
@@ -763,11 +763,11 @@ Executes a given command on specific device via adb console interface.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cmd` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
+| Name     | Type                                                           |
+| :------- | :------------------------------------------------------------- |
+| `serial` | `string`                                                       |
+| `cmd`    | `string`                                                       |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
 
 #### Returns
 
@@ -777,7 +777,7 @@ Executes a given command on specific device via adb console interface.
 
 [src/client.ts:1925](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1925)
 
-___
+---
 
 ### execDeviceShell
 
@@ -788,10 +788,10 @@ Analogous to `adb -s <serial> shell <command>` .
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `cmd` | `string` |
+| `cmd`    | `string` |
 
 #### Returns
 
@@ -805,11 +805,11 @@ Analogous to `adb -s <serial> shell <command>` .
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cmd` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
+| Name     | Type                                                           |
+| :------- | :------------------------------------------------------------- |
+| `serial` | `string`                                                       |
+| `cmd`    | `string`                                                       |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
 
 #### Returns
 
@@ -819,7 +819,7 @@ Analogous to `adb -s <serial> shell <command>` .
 
 [src/client.ts:1939](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1939)
 
-___
+---
 
 ### execInternal
 
@@ -827,8 +827,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type                |
+| :-------- | :------------------ |
 | `...args` | readonly `string`[] |
 
 #### Returns
@@ -839,7 +839,7 @@ ___
 
 [src/client.ts:1890](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1890)
 
-___
+---
 
 ### fileStat
 
@@ -850,10 +850,10 @@ Analogous to `adb stat <filepath>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `path` | `string` |
+| `path`   | `string` |
 
 #### Returns
 
@@ -867,11 +867,11 @@ Analogous to `adb stat <filepath>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `path` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`FileStat`](FileStat.FileStat.md)\> |
+| Name     | Type                                                                                     |
+| :------- | :--------------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                                 |
+| `path`   | `string`                                                                                 |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<[`FileStat`](FileStat.FileStat.md)\> |
 
 #### Returns
 
@@ -881,7 +881,7 @@ Analogous to `adb stat <filepath>`.
 
 [src/client.ts:2134](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L2134)
 
-___
+---
 
 ### forward
 
@@ -892,10 +892,10 @@ Analogous to `adb forward <local> <remote>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `local` | `string` |
+| `local`  | `string` |
 | `remote` | `string` |
 
 #### Returns
@@ -905,7 +905,7 @@ Analogous to `adb forward <local> <remote>`.
 **`Example`**
 
 ```ts
-adb.forward('serial', 'tcp:9222', 'localabstract:chrome_devtools_remote')
+adb.forward('serial', 'tcp:9222', 'localabstract:chrome_devtools_remote');
 ```
 
 #### Defined in
@@ -916,12 +916,12 @@ adb.forward('serial', 'tcp:9222', 'localabstract:chrome_devtools_remote')
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `local` | `string` |
-| `remote` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `local`  | `string`                                  |
+| `remote` | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -931,7 +931,7 @@ adb.forward('serial', 'tcp:9222', 'localabstract:chrome_devtools_remote')
 
 [src/client.ts:423](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L423)
 
-___
+---
 
 ### getDevicePath
 
@@ -941,8 +941,8 @@ Gets the device path of the device identified by the device.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -957,10 +957,10 @@ Gets the device path of the device identified by the device.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
+| Name     | Type                                                           |
+| :------- | :------------------------------------------------------------- |
+| `serial` | `string`                                                       |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
 
 #### Returns
 
@@ -970,7 +970,7 @@ Gets the device path of the device identified by the device.
 
 [src/client.ts:332](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L332)
 
-___
+---
 
 ### getIpAddress
 
@@ -980,8 +980,8 @@ Gets the ipv4 addresses of default wlan interface.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -996,10 +996,10 @@ Gets the ipv4 addresses of default wlan interface.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`[]\> |
+| Name     | Type                                                             |
+| :------- | :--------------------------------------------------------------- |
+| `serial` | `string`                                                         |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`[]\> |
 
 #### Returns
 
@@ -1009,7 +1009,7 @@ Gets the ipv4 addresses of default wlan interface.
 
 [src/client.ts:403](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L403)
 
-___
+---
 
 ### getProp
 
@@ -1020,10 +1020,10 @@ Analogues to `adb shell getprop <prop>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `prop` | `string` |
+| `prop`   | `string` |
 
 #### Returns
 
@@ -1037,11 +1037,11 @@ Analogues to `adb shell getprop <prop>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `prop` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PropertyValue`](../modules/Util.md#propertyvalue)\> |
+| Name     | Type                                                                                                      |
+| :------- | :-------------------------------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                                                  |
+| `prop`   | `string`                                                                                                  |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PropertyValue`](../modules/Util.md#propertyvalue)\> |
 
 #### Returns
 
@@ -1051,7 +1051,7 @@ Analogues to `adb shell getprop <prop>`.
 
 [src/client.ts:1628](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1628)
 
-___
+---
 
 ### getSerialNo
 
@@ -1063,8 +1063,8 @@ Analogous to `adb shell getprop ro.serialno`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -1079,10 +1079,10 @@ Analogous to `adb shell getprop ro.serialno`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
+| Name     | Type                                                           |
+| :------- | :------------------------------------------------------------- |
+| `serial` | `string`                                                       |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
 
 #### Returns
 
@@ -1092,7 +1092,7 @@ Analogous to `adb shell getprop ro.serialno`.
 
 [src/client.ts:318](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L318)
 
-___
+---
 
 ### getSetting
 
@@ -1103,11 +1103,11 @@ Analogues to `adb shell settings get <mode> <name>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `mode` | [`SettingsMode`](../modules/Util.md#settingsmode) |
-| `name` | `string` |
+| Name     | Type                                              |
+| :------- | :------------------------------------------------ |
+| `serial` | `string`                                          |
+| `mode`   | [`SettingsMode`](../modules/Util.md#settingsmode) |
+| `name`   | `string`                                          |
 
 #### Returns
 
@@ -1121,12 +1121,12 @@ Analogues to `adb shell settings get <mode> <name>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `mode` | [`SettingsMode`](../modules/Util.md#settingsmode) |
-| `name` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PropertyValue`](../modules/Util.md#propertyvalue)\> |
+| Name     | Type                                                                                                      |
+| :------- | :-------------------------------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                                                  |
+| `mode`   | [`SettingsMode`](../modules/Util.md#settingsmode)                                                         |
+| `name`   | `string`                                                                                                  |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PropertyValue`](../modules/Util.md#propertyvalue)\> |
 
 #### Returns
 
@@ -1136,7 +1136,7 @@ Analogues to `adb shell settings get <mode> <name>`.
 
 [src/client.ts:1716](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1716)
 
-___
+---
 
 ### install
 
@@ -1147,10 +1147,10 @@ Analogous to `adb install <pkg>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `apk` | `string` \| `Readable` |
+| Name     | Type                   |
+| :------- | :--------------------- |
+| `serial` | `string`               |
+| `apk`    | `string` \| `Readable` |
 
 #### Returns
 
@@ -1164,10 +1164,10 @@ Analogous to `adb install <pkg>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `apk` | `string` \| `Readable` |
+| Name      | Type                                                  |
+| :-------- | :---------------------------------------------------- |
+| `serial`  | `string`                                              |
+| `apk`     | `string` \| `Readable`                                |
 | `options` | [`InstallOptions`](../modules/Util.md#installoptions) |
 
 #### Returns
@@ -1182,12 +1182,12 @@ Analogous to `adb install <pkg>`.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `serial` | `string` | - |
-| `apk` | `string` \| `Readable` | - |
-| `options` | [`InstallOptions`](../modules/Util.md#installoptions) | - |
-| `args` | `string` | Extra arguments. E.g. `--fastdeploy` flag. |
+| Name      | Type                                                  | Description                                |
+| :-------- | :---------------------------------------------------- | :----------------------------------------- |
+| `serial`  | `string`                                              | -                                          |
+| `apk`     | `string` \| `Readable`                                | -                                          |
+| `options` | [`InstallOptions`](../modules/Util.md#installoptions) | -                                          |
+| `args`    | `string`                                              | Extra arguments. E.g. `--fastdeploy` flag. |
 
 #### Returns
 
@@ -1201,11 +1201,11 @@ Analogous to `adb install <pkg>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `apk` | `string` \| `Readable` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `apk`    | `string` \| `Readable`                    |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -1219,12 +1219,12 @@ Analogous to `adb install <pkg>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `apk` | `string` \| `Readable` |
+| Name      | Type                                                  |
+| :-------- | :---------------------------------------------------- |
+| `serial`  | `string`                                              |
+| `apk`     | `string` \| `Readable`                                |
 | `options` | [`InstallOptions`](../modules/Util.md#installoptions) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| `cb`      | [`Callback`](../modules/Util.md#callback)             |
 
 #### Returns
 
@@ -1238,13 +1238,13 @@ Analogous to `adb install <pkg>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `apk` | `string` \| `Readable` |
+| Name      | Type                                                  |
+| :-------- | :---------------------------------------------------- |
+| `serial`  | `string`                                              |
+| `apk`     | `string` \| `Readable`                                |
 | `options` | [`InstallOptions`](../modules/Util.md#installoptions) |
-| `args` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| `args`    | `string`                                              |
+| `cb`      | [`Callback`](../modules/Util.md#callback)             |
 
 #### Returns
 
@@ -1254,7 +1254,7 @@ Analogous to `adb install <pkg>`.
 
 [src/client.ts:1055](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1055)
 
-___
+---
 
 ### installRemote
 
@@ -1262,12 +1262,12 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `apk` | `string` |
+| Name       | Type                                                  |
+| :--------- | :---------------------------------------------------- |
+| `serial`   | `string`                                              |
+| `apk`      | `string`                                              |
 | `options?` | [`InstallOptions`](../modules/Util.md#installoptions) |
-| `args?` | `string` |
+| `args?`    | `string`                                              |
 
 #### Returns
 
@@ -1277,7 +1277,7 @@ ___
 
 [src/client.ts:1016](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1016)
 
-___
+---
 
 ### ipConnect
 
@@ -1285,12 +1285,12 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `Construct` | [`IpConnectConstruct`](../interfaces/Util.IpConnectConstruct.md) |
-| `host` | `string` |
-| `port` | `undefined` \| `number` \| [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
-| `cb` | `undefined` \| [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
+| Name        | Type                                                                                      |
+| :---------- | :---------------------------------------------------------------------------------------- |
+| `Construct` | [`IpConnectConstruct`](../interfaces/Util.IpConnectConstruct.md)                          |
+| `host`      | `string`                                                                                  |
+| `port`      | `undefined` \| `number` \| [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
+| `cb`        | `undefined` \| [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\>             |
 
 #### Returns
 
@@ -1300,7 +1300,7 @@ ___
 
 [src/client.ts:205](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L205)
 
-___
+---
 
 ### isInstalled
 
@@ -1310,10 +1310,10 @@ Tells if a package is installed or not.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `pkg` | `string` |
+| `pkg`    | `string` |
 
 #### Returns
 
@@ -1327,11 +1327,11 @@ Tells if a package is installed or not.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `pkg` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`boolean`\> |
+| Name     | Type                                                            |
+| :------- | :-------------------------------------------------------------- |
+| `serial` | `string`                                                        |
+| `pkg`    | `string`                                                        |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<`boolean`\> |
 
 #### Returns
 
@@ -1341,7 +1341,7 @@ Tells if a package is installed or not.
 
 [src/client.ts:1134](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1134)
 
-___
+---
 
 ### keyEvent
 
@@ -1353,10 +1353,10 @@ Default input source is `keyboard`.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `serial` | `string` | - |
-| `code` | [`KeyCode`](../enums/Util.KeyCode.md) \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<[`KeyCode`](../enums/Util.KeyCode.md)\> | Key code to send. |
+| Name     | Type                                                                                                                                 | Description       |
+| :------- | :----------------------------------------------------------------------------------------------------------------------------------- | :---------------- |
+| `serial` | `string`                                                                                                                             | -                 |
+| `code`   | [`KeyCode`](../enums/Util.KeyCode.md) \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<[`KeyCode`](../enums/Util.KeyCode.md)\> | Key code to send. |
 
 #### Returns
 
@@ -1370,10 +1370,10 @@ Default input source is `keyboard`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `code` | `number` \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<`number`\> |
+| Name     | Type                                                                       |
+| :------- | :------------------------------------------------------------------------- |
+| `serial` | `string`                                                                   |
+| `code`   | `number` \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<`number`\> |
 
 #### Returns
 
@@ -1387,11 +1387,11 @@ Default input source is `keyboard`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `code` | [`KeyCode`](../enums/Util.KeyCode.md) \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<[`KeyCode`](../enums/Util.KeyCode.md)\> |
-| `options` | [`KeyEventOptions`](../interfaces/Util.KeyEventOptions.md) |
+| Name      | Type                                                                                                                                 |
+| :-------- | :----------------------------------------------------------------------------------------------------------------------------------- |
+| `serial`  | `string`                                                                                                                             |
+| `code`    | [`KeyCode`](../enums/Util.KeyCode.md) \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<[`KeyCode`](../enums/Util.KeyCode.md)\> |
+| `options` | [`KeyEventOptions`](../interfaces/Util.KeyEventOptions.md)                                                                           |
 
 #### Returns
 
@@ -1405,11 +1405,11 @@ Default input source is `keyboard`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `code` | `number` \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<`number`\> |
-| `options` | [`KeyEventOptions`](../interfaces/Util.KeyEventOptions.md) |
+| Name      | Type                                                                       |
+| :-------- | :------------------------------------------------------------------------- |
+| `serial`  | `string`                                                                   |
+| `code`    | `number` \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<`number`\> |
+| `options` | [`KeyEventOptions`](../interfaces/Util.KeyEventOptions.md)                 |
 
 #### Returns
 
@@ -1423,11 +1423,11 @@ Default input source is `keyboard`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `code` | [`KeyCode`](../enums/Util.KeyCode.md) \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<[`KeyCode`](../enums/Util.KeyCode.md)\> |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                                                                                                                 |
+| :------- | :----------------------------------------------------------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                                                                             |
+| `code`   | [`KeyCode`](../enums/Util.KeyCode.md) \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<[`KeyCode`](../enums/Util.KeyCode.md)\> |
+| `cb`     | [`Callback`](../modules/Util.md#callback)                                                                                            |
 
 #### Returns
 
@@ -1441,11 +1441,11 @@ Default input source is `keyboard`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `code` | `number` \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<`number`\> |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                                                       |
+| :------- | :------------------------------------------------------------------------- |
+| `serial` | `string`                                                                   |
+| `code`   | `number` \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<`number`\> |
+| `cb`     | [`Callback`](../modules/Util.md#callback)                                  |
 
 #### Returns
 
@@ -1459,12 +1459,12 @@ Default input source is `keyboard`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `code` | [`KeyCode`](../enums/Util.KeyCode.md) \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<[`KeyCode`](../enums/Util.KeyCode.md)\> |
-| `options` | [`KeyEventOptions`](../interfaces/Util.KeyEventOptions.md) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name      | Type                                                                                                                                 |
+| :-------- | :----------------------------------------------------------------------------------------------------------------------------------- |
+| `serial`  | `string`                                                                                                                             |
+| `code`    | [`KeyCode`](../enums/Util.KeyCode.md) \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<[`KeyCode`](../enums/Util.KeyCode.md)\> |
+| `options` | [`KeyEventOptions`](../interfaces/Util.KeyEventOptions.md)                                                                           |
+| `cb`      | [`Callback`](../modules/Util.md#callback)                                                                                            |
 
 #### Returns
 
@@ -1478,12 +1478,12 @@ Default input source is `keyboard`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `code` | `number` \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<`number`\> |
-| `options` | [`KeyEventOptions`](../interfaces/Util.KeyEventOptions.md) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name      | Type                                                                       |
+| :-------- | :------------------------------------------------------------------------- |
+| `serial`  | `string`                                                                   |
+| `code`    | `number` \| [`NonEmptyArray`](../modules/Util.md#nonemptyarray)<`number`\> |
+| `options` | [`KeyEventOptions`](../interfaces/Util.KeyEventOptions.md)                 |
+| `cb`      | [`Callback`](../modules/Util.md#callback)                                  |
 
 #### Returns
 
@@ -1493,7 +1493,7 @@ Default input source is `keyboard`.
 
 [src/client.ts:856](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L856)
 
-___
+---
 
 ### kill
 
@@ -1513,8 +1513,8 @@ Kills the adb server.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name | Type                                      |
+| :--- | :---------------------------------------- |
 | `cb` | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
@@ -1525,7 +1525,7 @@ Kills the adb server.
 
 [src/client.ts:298](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L298)
 
-___
+---
 
 ### killApp
 
@@ -1536,10 +1536,10 @@ Analogous to `adb shell am force-stop <package>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `pkg` | `string` |
+| `pkg`    | `string` |
 
 #### Returns
 
@@ -1553,11 +1553,11 @@ Analogous to `adb shell am force-stop <package>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `pkg` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `pkg`    | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -1567,7 +1567,7 @@ Analogous to `adb shell am force-stop <package>`.
 
 [src/client.ts:1880](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1880)
 
-___
+---
 
 ### listDevices
 
@@ -1587,8 +1587,8 @@ Gets the list of currently connected devices and emulators.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name | Type                                                                                               |
+| :--- | :------------------------------------------------------------------------------------------------- |
 | `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`IDevice`](../interfaces/Util.IDevice.md)[]\> |
 
 #### Returns
@@ -1599,7 +1599,7 @@ Gets the list of currently connected devices and emulators.
 
 [src/client.ts:269](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L269)
 
-___
+---
 
 ### listFeatures
 
@@ -1610,8 +1610,8 @@ Analogous to `adb shell pm list features`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -1626,10 +1626,10 @@ Analogous to `adb shell pm list features`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PropertyMap`](../modules/Util.md#propertymap)\> |
+| Name     | Type                                                                                                  |
+| :------- | :---------------------------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                                              |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PropertyMap`](../modules/Util.md#propertymap)\> |
 
 #### Returns
 
@@ -1639,7 +1639,7 @@ Analogous to `adb shell pm list features`.
 
 [src/client.ts:368](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L368)
 
-___
+---
 
 ### listForwards
 
@@ -1650,8 +1650,8 @@ Analogous to `adb forward --list`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -1666,10 +1666,10 @@ Analogous to `adb forward --list`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`ForwardsObject`](../interfaces/Util.ForwardsObject.md)[]\> |
+| Name     | Type                                                                                                             |
+| :------- | :--------------------------------------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                                                         |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<[`ForwardsObject`](../interfaces/Util.ForwardsObject.md)[]\> |
 
 #### Returns
 
@@ -1679,7 +1679,7 @@ Analogous to `adb forward --list`.
 
 [src/client.ts:443](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L443)
 
-___
+---
 
 ### listPackages
 
@@ -1690,8 +1690,8 @@ Analogous to `adb shell pm list packages`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -1706,10 +1706,10 @@ Analogous to `adb shell pm list packages`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`[]\> |
+| Name     | Type                                                             |
+| :------- | :--------------------------------------------------------------- |
+| `serial` | `string`                                                         |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`[]\> |
 
 #### Returns
 
@@ -1719,7 +1719,7 @@ Analogous to `adb shell pm list packages`.
 
 [src/client.ts:386](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L386)
 
-___
+---
 
 ### listProperties
 
@@ -1730,8 +1730,8 @@ Analogous to `adb shell getprop`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -1746,10 +1746,10 @@ Analogous to `adb shell getprop`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PropertyMap`](../modules/Util.md#propertymap)\> |
+| Name     | Type                                                                                                  |
+| :------- | :---------------------------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                                              |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PropertyMap`](../modules/Util.md#propertymap)\> |
 
 #### Returns
 
@@ -1759,7 +1759,7 @@ Analogous to `adb shell getprop`.
 
 [src/client.ts:350](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L350)
 
-___
+---
 
 ### listReverses
 
@@ -1770,8 +1770,8 @@ Analogous to `adb reverse --list`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -1786,10 +1786,10 @@ Analogous to `adb reverse --list`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`ReversesObject`](../interfaces/Util.ReversesObject.md)[]\> |
+| Name     | Type                                                                                                             |
+| :------- | :--------------------------------------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                                                         |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<[`ReversesObject`](../interfaces/Util.ReversesObject.md)[]\> |
 
 #### Returns
 
@@ -1799,7 +1799,7 @@ Analogous to `adb reverse --list`.
 
 [src/client.ts:483](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L483)
 
-___
+---
 
 ### listSettings
 
@@ -1810,10 +1810,10 @@ Analogues to `adb shell settings list <mode>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `mode` | [`SettingsMode`](../modules/Util.md#settingsmode) |
+| Name     | Type                                              |
+| :------- | :------------------------------------------------ |
+| `serial` | `string`                                          |
+| `mode`   | [`SettingsMode`](../modules/Util.md#settingsmode) |
 
 #### Returns
 
@@ -1827,11 +1827,11 @@ Analogues to `adb shell settings list <mode>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `mode` | [`SettingsMode`](../modules/Util.md#settingsmode) |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PropertyMap`](../modules/Util.md#propertymap)\> |
+| Name     | Type                                                                                                  |
+| :------- | :---------------------------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                                              |
+| `mode`   | [`SettingsMode`](../modules/Util.md#settingsmode)                                                     |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PropertyMap`](../modules/Util.md#propertymap)\> |
 
 #### Returns
 
@@ -1841,7 +1841,7 @@ Analogues to `adb shell settings list <mode>`.
 
 [src/client.ts:1689](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1689)
 
-___
+---
 
 ### map
 
@@ -1852,13 +1852,13 @@ Maps through all connected devices.
 #### Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                                                               |
+| :------- | :----------------------------------------------------------------- |
 | `mapper` | (`device`: [`Device`](Device.Device.md)) => `T` \| `Promise`<`T`\> |
 
 #### Returns
@@ -1869,7 +1869,7 @@ Maps through all connected devices.
 
 [src/client.ts:1453](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1453)
 
-___
+---
 
 ### mkdir
 
@@ -1880,10 +1880,10 @@ Analogous to `adb shell mkdir <path>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `path` | `string` |
+| `path`   | `string` |
 
 #### Returns
 
@@ -1897,10 +1897,10 @@ Analogous to `adb shell mkdir <path>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `path` | `string` |
+| Name       | Type                                                 |
+| :--------- | :--------------------------------------------------- |
+| `serial`   | `string`                                             |
+| `path`     | `string`                                             |
 | `options?` | [`MkDirOptions`](../interfaces/Util.MkDirOptions.md) |
 
 #### Returns
@@ -1915,11 +1915,11 @@ Analogous to `adb shell mkdir <path>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `path` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `path`   | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -1933,12 +1933,12 @@ Analogous to `adb shell mkdir <path>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `path` | `string` |
+| Name      | Type                                                 |
+| :-------- | :--------------------------------------------------- |
+| `serial`  | `string`                                             |
+| `path`    | `string`                                             |
 | `options` | [`MkDirOptions`](../interfaces/Util.MkDirOptions.md) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| `cb`      | [`Callback`](../modules/Util.md#callback)            |
 
 #### Returns
 
@@ -1948,7 +1948,7 @@ Analogous to `adb shell mkdir <path>`.
 
 [src/client.ts:2000](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L2000)
 
-___
+---
 
 ### mv
 
@@ -1959,10 +1959,10 @@ Analogous to `adb shell mv <src> <dest>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` |
+| Name       | Type     |
+| :--------- | :------- |
+| `serial`   | `string` |
+| `srcPath`  | `string` |
 | `destPath` | `string` |
 
 #### Returns
@@ -1977,12 +1977,12 @@ Analogous to `adb shell mv <src> <dest>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` |
-| `destPath` | `string` |
-| `options` | [`MvOptions`](../interfaces/Util.MvOptions.md) |
+| Name       | Type                                           |
+| :--------- | :--------------------------------------------- |
+| `serial`   | `string`                                       |
+| `srcPath`  | `string`                                       |
+| `destPath` | `string`                                       |
+| `options`  | [`MvOptions`](../interfaces/Util.MvOptions.md) |
 
 #### Returns
 
@@ -1996,12 +1996,12 @@ Analogous to `adb shell mv <src> <dest>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` |
-| `destPath` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name       | Type                                      |
+| :--------- | :---------------------------------------- |
+| `serial`   | `string`                                  |
+| `srcPath`  | `string`                                  |
+| `destPath` | `string`                                  |
+| `cb`       | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -2015,13 +2015,13 @@ Analogous to `adb shell mv <src> <dest>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` |
-| `destPath` | `string` |
-| `options` | [`MvOptions`](../interfaces/Util.MvOptions.md) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name       | Type                                           |
+| :--------- | :--------------------------------------------- |
+| `serial`   | `string`                                       |
+| `srcPath`  | `string`                                       |
+| `destPath` | `string`                                       |
+| `options`  | [`MvOptions`](../interfaces/Util.MvOptions.md) |
+| `cb`       | [`Callback`](../modules/Util.md#callback)      |
 
 #### Returns
 
@@ -2031,7 +2031,7 @@ Analogous to `adb shell mv <src> <dest>`.
 
 [src/client.ts:2061](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L2061)
 
-___
+---
 
 ### openLogcat
 
@@ -2042,8 +2042,8 @@ Analogous to `adb logcat`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -2075,9 +2075,9 @@ logcat.on('entry', (entry) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
+| Name      | Type                                                |
+| :-------- | :-------------------------------------------------- |
+| `serial`  | `string`                                            |
 | `options` | [`LogcatOptions`](../modules/Util.md#logcatoptions) |
 
 #### Returns
@@ -2092,10 +2092,10 @@ logcat.on('entry', (entry) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`LogcatReader`](Logcat.LogcatReader.md)\> |
+| Name     | Type                                                                                           |
+| :------- | :--------------------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                                       |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<[`LogcatReader`](Logcat.LogcatReader.md)\> |
 
 #### Returns
 
@@ -2109,11 +2109,11 @@ logcat.on('entry', (entry) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `options` | [`LogcatOptions`](../modules/Util.md#logcatoptions) |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`LogcatReader`](Logcat.LogcatReader.md)\> |
+| Name      | Type                                                                                           |
+| :-------- | :--------------------------------------------------------------------------------------------- |
+| `serial`  | `string`                                                                                       |
+| `options` | [`LogcatOptions`](../modules/Util.md#logcatoptions)                                            |
+| `cb`      | [`ValueCallback`](../modules/Util.md#valuecallback)<[`LogcatReader`](Logcat.LogcatReader.md)\> |
 
 #### Returns
 
@@ -2123,7 +2123,7 @@ logcat.on('entry', (entry) => {
 
 [src/client.ts:968](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L968)
 
-___
+---
 
 ### openMonkey
 
@@ -2133,8 +2133,8 @@ Establishes a new monkey connection on port `1080`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -2149,10 +2149,10 @@ Establishes a new monkey connection on port `1080`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`Monkey`](Monkey.Monkey.md)\> |
+| Name     | Type                                                                               |
+| :------- | :--------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                           |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<[`Monkey`](Monkey.Monkey.md)\> |
 
 #### Returns
 
@@ -2162,7 +2162,7 @@ Establishes a new monkey connection on port `1080`.
 
 [src/client.ts:1818](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1818)
 
-___
+---
 
 ### openTcp
 
@@ -2173,10 +2173,10 @@ Analogous to `adb tcp <port>:<host>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `port` | `number` |
+| `port`   | `number` |
 
 #### Returns
 
@@ -2197,11 +2197,11 @@ const socket = await adb.openTcp('serial', 5555);
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `port` | `number` |
-| `host` | `string` |
+| `port`   | `number` |
+| `host`   | `string` |
 
 #### Returns
 
@@ -2215,11 +2215,11 @@ const socket = await adb.openTcp('serial', 5555);
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `port` | `number` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`Connection`](Connection.Connection.md)\> |
+| Name     | Type                                                                                           |
+| :------- | :--------------------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                                       |
+| `port`   | `number`                                                                                       |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<[`Connection`](Connection.Connection.md)\> |
 
 #### Returns
 
@@ -2233,12 +2233,12 @@ const socket = await adb.openTcp('serial', 5555);
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `port` | `number` |
-| `host` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`Connection`](Connection.Connection.md)\> |
+| Name     | Type                                                                                           |
+| :------- | :--------------------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                                       |
+| `port`   | `number`                                                                                       |
+| `host`   | `string`                                                                                       |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<[`Connection`](Connection.Connection.md)\> |
 
 #### Returns
 
@@ -2248,7 +2248,7 @@ const socket = await adb.openTcp('serial', 5555);
 
 [src/client.ts:591](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L591)
 
-___
+---
 
 ### press
 
@@ -2260,8 +2260,8 @@ Default input source is `trackball`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -2276,9 +2276,9 @@ Default input source is `trackball`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
+| Name     | Type                                            |
+| :------- | :---------------------------------------------- |
+| `serial` | `string`                                        |
 | `source` | [`InputSource`](../modules/Util.md#inputsource) |
 
 #### Returns
@@ -2293,10 +2293,10 @@ Default input source is `trackball`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -2310,11 +2310,11 @@ Default input source is `trackball`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
+| Name     | Type                                            |
+| :------- | :---------------------------------------------- |
+| `serial` | `string`                                        |
 | `source` | [`InputSource`](../modules/Util.md#inputsource) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| `cb`     | [`Callback`](../modules/Util.md#callback)       |
 
 #### Returns
 
@@ -2324,7 +2324,7 @@ Default input source is `trackball`.
 
 [src/client.ts:667](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L667)
 
-___
+---
 
 ### pull
 
@@ -2334,10 +2334,10 @@ Gets a PullTransfer instance.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `path` | `string` |
+| `path`   | `string` |
 
 #### Returns
 
@@ -2351,7 +2351,7 @@ Gets a PullTransfer instance.
 
 ```ts
 let data = '';
-const transfer = await adb.pull('serial', '/path')
+const transfer = await adb.pull('serial', '/path');
 transfer.on('data', (chunk) => {
     data += chunk.toString();
 });
@@ -2368,11 +2368,11 @@ transfer.on('end', () => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `path` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PullTransfer`](Sync.PullTransfer.md)\> |
+| Name     | Type                                                                                         |
+| :------- | :------------------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                                     |
+| `path`   | `string`                                                                                     |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PullTransfer`](Sync.PullTransfer.md)\> |
 
 #### Returns
 
@@ -2382,7 +2382,7 @@ transfer.on('end', () => {
 
 [src/client.ts:1273](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1273)
 
-___
+---
 
 ### pullDataFromFile
 
@@ -2392,9 +2392,9 @@ Wraps [pull](Client.Client.md#pull) method, reads the file content and resolves 
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
+| Name      | Type     |
+| :-------- | :------- |
+| `serial`  | `string` |
 | `srcPath` | `string` |
 
 #### Returns
@@ -2409,11 +2409,11 @@ Wraps [pull](Client.Client.md#pull) method, reads the file content and resolves 
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`Buffer`\> |
+| Name      | Type                                                           |
+| :-------- | :------------------------------------------------------------- |
+| `serial`  | `string`                                                       |
+| `srcPath` | `string`                                                       |
+| `cb`      | [`ValueCallback`](../modules/Util.md#valuecallback)<`Buffer`\> |
 
 #### Returns
 
@@ -2423,7 +2423,7 @@ Wraps [pull](Client.Client.md#pull) method, reads the file content and resolves 
 
 [src/client.ts:1527](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1527)
 
-___
+---
 
 ### pullFile
 
@@ -2433,10 +2433,10 @@ Wraps [pull](Client.Client.md#pull) method, reads the content of file on the dev
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` |
+| Name       | Type     |
+| :--------- | :------- |
+| `serial`   | `string` |
+| `srcPath`  | `string` |
 | `destPath` | `string` |
 
 #### Returns
@@ -2451,12 +2451,12 @@ Wraps [pull](Client.Client.md#pull) method, reads the content of file on the dev
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` |
-| `destPath` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name       | Type                                      |
+| :--------- | :---------------------------------------- |
+| `serial`   | `string`                                  |
+| `srcPath`  | `string`                                  |
+| `destPath` | `string`                                  |
+| `cb`       | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -2466,7 +2466,7 @@ Wraps [pull](Client.Client.md#pull) method, reads the content of file on the dev
 
 [src/client.ts:1562](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1562)
 
-___
+---
 
 ### push
 
@@ -2476,11 +2476,11 @@ Gets a PushTransfer instance.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` \| `Readable` |
-| `destPath` | `string` |
+| Name       | Type                   |
+| :--------- | :--------------------- |
+| `serial`   | `string`               |
+| `srcPath`  | `string` \| `Readable` |
+| `destPath` | `string`               |
 
 #### Returns
 
@@ -2493,8 +2493,8 @@ Gets a PushTransfer instance.
 **`Example`**
 
 ```ts
-const transfer = await adb.push('serial', '/path-src', '/path-dest')
-transfer.on('end', () => { });
+const transfer = await adb.push('serial', '/path-src', '/path-dest');
+transfer.on('end', () => {});
 ```
 
 #### Defined in
@@ -2505,12 +2505,12 @@ transfer.on('end', () => { });
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` \| `Readable` |
-| `destPath` | `string` |
-| `mode` | [`SyncMode`](../enums/Sync.SyncMode.md) |
+| Name       | Type                                    |
+| :--------- | :-------------------------------------- |
+| `serial`   | `string`                                |
+| `srcPath`  | `string` \| `Readable`                  |
+| `destPath` | `string`                                |
+| `mode`     | [`SyncMode`](../enums/Sync.SyncMode.md) |
 
 #### Returns
 
@@ -2524,12 +2524,12 @@ transfer.on('end', () => { });
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` \| `Readable` |
-| `destPath` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PushTransfer`](Sync.PushTransfer.md)\> |
+| Name       | Type                                                                                         |
+| :--------- | :------------------------------------------------------------------------------------------- |
+| `serial`   | `string`                                                                                     |
+| `srcPath`  | `string` \| `Readable`                                                                       |
+| `destPath` | `string`                                                                                     |
+| `cb`       | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PushTransfer`](Sync.PushTransfer.md)\> |
 
 #### Returns
 
@@ -2543,13 +2543,13 @@ transfer.on('end', () => { });
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` \| `Readable` |
-| `destPath` | `string` |
-| `mode` | [`SyncMode`](../enums/Sync.SyncMode.md) |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PushTransfer`](Sync.PushTransfer.md)\> |
+| Name       | Type                                                                                         |
+| :--------- | :------------------------------------------------------------------------------------------- |
+| `serial`   | `string`                                                                                     |
+| `srcPath`  | `string` \| `Readable`                                                                       |
+| `destPath` | `string`                                                                                     |
+| `mode`     | [`SyncMode`](../enums/Sync.SyncMode.md)                                                      |
+| `cb`       | [`ValueCallback`](../modules/Util.md#valuecallback)<[`PushTransfer`](Sync.PushTransfer.md)\> |
 
 #### Returns
 
@@ -2559,7 +2559,7 @@ transfer.on('end', () => { });
 
 [src/client.ts:1314](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1314)
 
-___
+---
 
 ### pushDataToFile
 
@@ -2569,11 +2569,11 @@ Wraps [push](Client.Client.md#push) method, provides API for quick data writing.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `data` | `string` \| `Buffer` \| `Readable` |
-| `destPath` | `string` |
+| Name       | Type                               |
+| :--------- | :--------------------------------- |
+| `serial`   | `string`                           |
+| `data`     | `string` \| `Buffer` \| `Readable` |
+| `destPath` | `string`                           |
 
 #### Returns
 
@@ -2587,12 +2587,12 @@ Wraps [push](Client.Client.md#push) method, provides API for quick data writing.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `data` | `string` \| `Buffer` \| `Readable` |
-| `destPath` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name       | Type                                      |
+| :--------- | :---------------------------------------- |
+| `serial`   | `string`                                  |
+| `data`     | `string` \| `Buffer` \| `Readable`        |
+| `destPath` | `string`                                  |
+| `cb`       | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -2602,7 +2602,7 @@ Wraps [push](Client.Client.md#push) method, provides API for quick data writing.
 
 [src/client.ts:1480](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1480)
 
-___
+---
 
 ### pushFile
 
@@ -2612,10 +2612,10 @@ Wraps [push](Client.Client.md#push) method, reads the content of file on the hos
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` |
+| Name       | Type     |
+| :--------- | :------- |
+| `serial`   | `string` |
+| `srcPath`  | `string` |
 | `destPath` | `string` |
 
 #### Returns
@@ -2630,12 +2630,12 @@ Wraps [push](Client.Client.md#push) method, reads the content of file on the hos
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `srcPath` | `string` |
-| `destPath` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name       | Type                                      |
+| :--------- | :---------------------------------------- |
+| `serial`   | `string`                                  |
+| `srcPath`  | `string`                                  |
+| `destPath` | `string`                                  |
+| `cb`       | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -2645,7 +2645,7 @@ Wraps [push](Client.Client.md#push) method, reads the content of file on the hos
 
 [src/client.ts:1508](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1508)
 
-___
+---
 
 ### pushInternal
 
@@ -2653,11 +2653,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `data` | `string` \| `Readable` |
-| `dest` | `string` |
+| Name     | Type                   |
+| :------- | :--------------------- |
+| `serial` | `string`               |
+| `data`   | `string` \| `Readable` |
+| `dest`   | `string`               |
 
 #### Returns
 
@@ -2667,7 +2667,7 @@ ___
 
 [src/client.ts:1460](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1460)
 
-___
+---
 
 ### putSetting
 
@@ -2678,12 +2678,12 @@ Analogues to `adb shell settings put <mode> <name> <value>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `mode` | [`SettingsMode`](../modules/Util.md#settingsmode) |
-| `name` | `string` |
-| `value` | [`PrimitiveType`](../modules/Util.md#primitivetype) |
+| Name     | Type                                                |
+| :------- | :-------------------------------------------------- |
+| `serial` | `string`                                            |
+| `mode`   | [`SettingsMode`](../modules/Util.md#settingsmode)   |
+| `name`   | `string`                                            |
+| `value`  | [`PrimitiveType`](../modules/Util.md#primitivetype) |
 
 #### Returns
 
@@ -2697,13 +2697,13 @@ Analogues to `adb shell settings put <mode> <name> <value>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `mode` | [`SettingsMode`](../modules/Util.md#settingsmode) |
-| `name` | `string` |
-| `value` | [`PrimitiveType`](../modules/Util.md#primitivetype) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                                |
+| :------- | :-------------------------------------------------- |
+| `serial` | `string`                                            |
+| `mode`   | [`SettingsMode`](../modules/Util.md#settingsmode)   |
+| `name`   | `string`                                            |
+| `value`  | [`PrimitiveType`](../modules/Util.md#primitivetype) |
+| `cb`     | [`Callback`](../modules/Util.md#callback)           |
 
 #### Returns
 
@@ -2713,7 +2713,7 @@ Analogues to `adb shell settings put <mode> <name> <value>`.
 
 [src/client.ts:1656](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1656)
 
-___
+---
 
 ### readDir
 
@@ -2724,10 +2724,10 @@ The path should start with `/`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `path` | `string` |
+| `path`   | `string` |
 
 #### Returns
 
@@ -2741,11 +2741,11 @@ The path should start with `/`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `path` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`SyncEntry`](Sync.SyncEntry.md)[]\> |
+| Name     | Type                                                                                     |
+| :------- | :--------------------------------------------------------------------------------------- |
+| `serial` | `string`                                                                                 |
+| `path`   | `string`                                                                                 |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<[`SyncEntry`](Sync.SyncEntry.md)[]\> |
 
 #### Returns
 
@@ -2755,7 +2755,7 @@ The path should start with `/`.
 
 [src/client.ts:1243](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1243)
 
-___
+---
 
 ### reboot
 
@@ -2766,8 +2766,8 @@ Analogous to `adb reboot`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -2782,10 +2782,10 @@ Analogous to `adb reboot`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -2795,7 +2795,7 @@ Analogous to `adb reboot`.
 
 [src/client.ts:507](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L507)
 
-___
+---
 
 ### remount
 
@@ -2807,8 +2807,8 @@ Analogous to `adb remount`
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -2823,10 +2823,10 @@ Analogous to `adb remount`
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -2836,7 +2836,7 @@ Analogous to `adb remount`
 
 [src/client.ts:538](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L538)
 
-___
+---
 
 ### reverse
 
@@ -2847,10 +2847,10 @@ Analogous to `adb reverse <remote> <local>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `local` | `string` |
+| `local`  | `string` |
 | `remote` | `string` |
 
 #### Returns
@@ -2860,7 +2860,7 @@ Analogous to `adb reverse <remote> <local>`.
 **`Example`**
 
 ```ts
-adb.reverse('serial', 'localabstract:chrome_devtools_remote', 'tcp:9222')
+adb.reverse('serial', 'localabstract:chrome_devtools_remote', 'tcp:9222');
 ```
 
 #### Defined in
@@ -2871,12 +2871,12 @@ adb.reverse('serial', 'localabstract:chrome_devtools_remote', 'tcp:9222')
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `local` | `string` |
-| `remote` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `local`  | `string`                                  |
+| `remote` | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -2886,7 +2886,7 @@ adb.reverse('serial', 'localabstract:chrome_devtools_remote', 'tcp:9222')
 
 [src/client.ts:463](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L463)
 
-___
+---
 
 ### rm
 
@@ -2897,10 +2897,10 @@ Analogous to `adb shell rm <path>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `path` | `string` |
+| `path`   | `string` |
 
 #### Returns
 
@@ -2914,10 +2914,10 @@ Analogous to `adb shell rm <path>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `path` | `string` |
+| Name      | Type                                           |
+| :-------- | :--------------------------------------------- |
+| `serial`  | `string`                                       |
+| `path`    | `string`                                       |
 | `options` | [`RmOptions`](../interfaces/Util.RmOptions.md) |
 
 #### Returns
@@ -2932,11 +2932,11 @@ Analogous to `adb shell rm <path>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `path` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `path`   | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -2950,12 +2950,12 @@ Analogous to `adb shell rm <path>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `path` | `string` |
+| Name      | Type                                           |
+| :-------- | :--------------------------------------------- |
+| `serial`  | `string`                                       |
+| `path`    | `string`                                       |
 | `options` | [`RmOptions`](../interfaces/Util.RmOptions.md) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| `cb`      | [`Callback`](../modules/Util.md#callback)      |
 
 #### Returns
 
@@ -2965,7 +2965,7 @@ Analogous to `adb shell rm <path>`.
 
 [src/client.ts:1977](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1977)
 
-___
+---
 
 ### roll
 
@@ -2977,11 +2977,11 @@ Default input source is `trackball`.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `serial` | `string` | - |
-| `x` | `number` | Horizontal coordinate. |
-| `y` | `number` | Vertical coordinate. |
+| Name     | Type     | Description            |
+| :------- | :------- | :--------------------- |
+| `serial` | `string` | -                      |
+| `x`      | `number` | Horizontal coordinate. |
+| `y`      | `number` | Vertical coordinate.   |
 
 #### Returns
 
@@ -2995,11 +2995,11 @@ Default input source is `trackball`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `x` | `number` |
-| `y` | `number` |
+| Name     | Type                                            |
+| :------- | :---------------------------------------------- |
+| `serial` | `string`                                        |
+| `x`      | `number`                                        |
+| `y`      | `number`                                        |
 | `source` | [`InputSource`](../modules/Util.md#inputsource) |
 
 #### Returns
@@ -3014,12 +3014,12 @@ Default input source is `trackball`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `x` | `number` |
-| `y` | `number` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `x`      | `number`                                  |
+| `y`      | `number`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -3033,13 +3033,13 @@ Default input source is `trackball`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `x` | `number` |
-| `y` | `number` |
+| Name     | Type                                            |
+| :------- | :---------------------------------------------- |
+| `serial` | `string`                                        |
+| `x`      | `number`                                        |
+| `y`      | `number`                                        |
 | `source` | [`InputSource`](../modules/Util.md#inputsource) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| `cb`     | [`Callback`](../modules/Util.md#callback)       |
 
 #### Returns
 
@@ -3049,7 +3049,7 @@ Default input source is `trackball`.
 
 [src/client.ts:631](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L631)
 
-___
+---
 
 ### root
 
@@ -3060,8 +3060,8 @@ Analogous to `adb root`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -3076,10 +3076,10 @@ Analogous to `adb root`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -3089,7 +3089,7 @@ Analogous to `adb root`.
 
 [src/client.ts:553](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L553)
 
-___
+---
 
 ### screenshot
 
@@ -3100,8 +3100,8 @@ Analogous to `adb shell screencap -p`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -3116,10 +3116,10 @@ Analogous to `adb shell screencap -p`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`Buffer`\> |
+| Name     | Type                                                           |
+| :------- | :------------------------------------------------------------- |
+| `serial` | `string`                                                       |
+| `cb`     | [`ValueCallback`](../modules/Util.md#valuecallback)<`Buffer`\> |
 
 #### Returns
 
@@ -3129,7 +3129,7 @@ Analogous to `adb shell screencap -p`.
 
 [src/client.ts:568](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L568)
 
-___
+---
 
 ### setProp
 
@@ -3140,11 +3140,11 @@ Analogues to `adb shell setprop <prop> <value>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `prop` | `string` |
-| `value` | [`PrimitiveType`](../modules/Util.md#primitivetype) |
+| Name     | Type                                                |
+| :------- | :-------------------------------------------------- |
+| `serial` | `string`                                            |
+| `prop`   | `string`                                            |
+| `value`  | [`PrimitiveType`](../modules/Util.md#primitivetype) |
 
 #### Returns
 
@@ -3158,12 +3158,12 @@ Analogues to `adb shell setprop <prop> <value>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `prop` | `string` |
-| `value` | [`PrimitiveType`](../modules/Util.md#primitivetype) |
-| `cb?` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                                |
+| :------- | :-------------------------------------------------- |
+| `serial` | `string`                                            |
+| `prop`   | `string`                                            |
+| `value`  | [`PrimitiveType`](../modules/Util.md#primitivetype) |
+| `cb?`    | [`Callback`](../modules/Util.md#callback)           |
 
 #### Returns
 
@@ -3173,7 +3173,7 @@ Analogues to `adb shell setprop <prop> <value>`.
 
 [src/client.ts:1603](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1603)
 
-___
+---
 
 ### shell
 
@@ -3183,9 +3183,9 @@ Executes a given shell command via adb console interface. Analogous to `adb -s <
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
+| Name      | Type     |
+| :-------- | :------- |
+| `serial`  | `string` |
 | `command` | `string` |
 
 #### Returns
@@ -3200,11 +3200,11 @@ Executes a given shell command via adb console interface. Analogous to `adb -s <
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `command` | `string` |
-| `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
+| Name      | Type                                                           |
+| :-------- | :------------------------------------------------------------- |
+| `serial`  | `string`                                                       |
+| `command` | `string`                                                       |
+| `cb`      | [`ValueCallback`](../modules/Util.md#valuecallback)<`string`\> |
 
 #### Returns
 
@@ -3214,7 +3214,7 @@ Executes a given shell command via adb console interface. Analogous to `adb -s <
 
 [src/client.ts:1740](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1740)
 
-___
+---
 
 ### shutdown
 
@@ -3225,8 +3225,8 @@ Analogous to `adb reboot -p`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -3241,10 +3241,10 @@ Analogous to `adb reboot -p`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -3254,7 +3254,7 @@ Analogous to `adb reboot -p`.
 
 [src/client.ts:522](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L522)
 
-___
+---
 
 ### startActivity
 
@@ -3265,10 +3265,10 @@ Analogous to `adb shell am start <pkg./activity>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `pkg` | `string` |
+| Name       | Type     |
+| :--------- | :------- |
+| `serial`   | `string` |
+| `pkg`      | `string` |
 | `activity` | `string` |
 
 #### Returns
@@ -3283,12 +3283,12 @@ Analogous to `adb shell am start <pkg./activity>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `pkg` | `string` |
-| `activity` | `string` |
-| `options` | [`StartActivityOptions`](../interfaces/Util.StartActivityOptions.md) |
+| Name       | Type                                                                 |
+| :--------- | :------------------------------------------------------------------- |
+| `serial`   | `string`                                                             |
+| `pkg`      | `string`                                                             |
+| `activity` | `string`                                                             |
+| `options`  | [`StartActivityOptions`](../interfaces/Util.StartActivityOptions.md) |
 
 #### Returns
 
@@ -3302,12 +3302,12 @@ Analogous to `adb shell am start <pkg./activity>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `pkg` | `string` |
-| `activity` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name       | Type                                      |
+| :--------- | :---------------------------------------- |
+| `serial`   | `string`                                  |
+| `pkg`      | `string`                                  |
+| `activity` | `string`                                  |
+| `cb`       | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -3321,13 +3321,13 @@ Analogous to `adb shell am start <pkg./activity>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `pkg` | `string` |
-| `activity` | `string` |
-| `options` | [`StartActivityOptions`](../interfaces/Util.StartActivityOptions.md) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name       | Type                                                                 |
+| :--------- | :------------------------------------------------------------------- |
+| `serial`   | `string`                                                             |
+| `pkg`      | `string`                                                             |
+| `activity` | `string`                                                             |
+| `options`  | [`StartActivityOptions`](../interfaces/Util.StartActivityOptions.md) |
+| `cb`       | [`Callback`](../modules/Util.md#callback)                            |
 
 #### Returns
 
@@ -3337,7 +3337,7 @@ Analogous to `adb shell am start <pkg./activity>`.
 
 [src/client.ts:1165](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1165)
 
-___
+---
 
 ### startServer
 
@@ -3357,8 +3357,8 @@ Starts adb server if not running.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name | Type                                      |
+| :--- | :---------------------------------------- |
 | `cb` | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
@@ -3369,7 +3369,7 @@ Starts adb server if not running.
 
 [src/client.ts:143](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L143)
 
-___
+---
 
 ### startService
 
@@ -3380,10 +3380,10 @@ Analogous to `adb shell am startservice <pkg> <service>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `pkg` | `string` |
+| Name      | Type     |
+| :-------- | :------- |
+| `serial`  | `string` |
+| `pkg`     | `string` |
 | `service` | `string` |
 
 #### Returns
@@ -3398,11 +3398,11 @@ Analogous to `adb shell am startservice <pkg> <service>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `pkg` | `string` |
-| `service` | `string` |
+| Name      | Type                                                               |
+| :-------- | :----------------------------------------------------------------- |
+| `serial`  | `string`                                                           |
+| `pkg`     | `string`                                                           |
+| `service` | `string`                                                           |
 | `options` | [`StartServiceOptions`](../interfaces/Util.StartServiceOptions.md) |
 
 #### Returns
@@ -3417,12 +3417,12 @@ Analogous to `adb shell am startservice <pkg> <service>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `pkg` | `string` |
-| `service` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name      | Type                                      |
+| :-------- | :---------------------------------------- |
+| `serial`  | `string`                                  |
+| `pkg`     | `string`                                  |
+| `service` | `string`                                  |
+| `cb`      | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -3436,13 +3436,13 @@ Analogous to `adb shell am startservice <pkg> <service>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `pkg` | `string` |
-| `service` | `string` |
+| Name      | Type                                                               |
+| :-------- | :----------------------------------------------------------------- |
+| `serial`  | `string`                                                           |
+| `pkg`     | `string`                                                           |
+| `service` | `string`                                                           |
 | `options` | [`StartServiceOptions`](../interfaces/Util.StartServiceOptions.md) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| `cb`      | [`Callback`](../modules/Util.md#callback)                          |
 
 #### Returns
 
@@ -3452,7 +3452,7 @@ Analogous to `adb shell am startservice <pkg> <service>`.
 
 [src/client.ts:1210](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1210)
 
-___
+---
 
 ### swipe
 
@@ -3464,13 +3464,13 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `serial` | `string` | - |
-| `x1` | `number` | Horizontal starting coordinate. |
-| `y1` | `number` | Vertical starting coordinate. |
-| `x2` | `number` | Horizontal ending coordinate. |
-| `y2` | `number` | Vertical ending coordinate. |
+| Name     | Type     | Description                     |
+| :------- | :------- | :------------------------------ |
+| `serial` | `string` | -                               |
+| `x1`     | `number` | Horizontal starting coordinate. |
+| `y1`     | `number` | Vertical starting coordinate.   |
+| `x2`     | `number` | Horizontal ending coordinate.   |
+| `y2`     | `number` | Vertical ending coordinate.     |
 
 #### Returns
 
@@ -3484,13 +3484,13 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `x1` | `number` |
-| `y1` | `number` |
-| `x2` | `number` |
-| `y2` | `number` |
+| Name      | Type                                                                 |
+| :-------- | :------------------------------------------------------------------- |
+| `serial`  | `string`                                                             |
+| `x1`      | `number`                                                             |
+| `y1`      | `number`                                                             |
+| `x2`      | `number`                                                             |
+| `y2`      | `number`                                                             |
 | `options` | [`InputDurationOptions`](../interfaces/Util.InputDurationOptions.md) |
 
 #### Returns
@@ -3505,14 +3505,14 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `x1` | `number` |
-| `y1` | `number` |
-| `x2` | `number` |
-| `y2` | `number` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `x1`     | `number`                                  |
+| `y1`     | `number`                                  |
+| `x2`     | `number`                                  |
+| `y2`     | `number`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -3526,15 +3526,15 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `x1` | `number` |
-| `y1` | `number` |
-| `x2` | `number` |
-| `y2` | `number` |
+| Name      | Type                                                                 |
+| :-------- | :------------------------------------------------------------------- |
+| `serial`  | `string`                                                             |
+| `x1`      | `number`                                                             |
+| `y1`      | `number`                                                             |
+| `x2`      | `number`                                                             |
+| `y2`      | `number`                                                             |
 | `options` | [`InputDurationOptions`](../interfaces/Util.InputDurationOptions.md) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| `cb`      | [`Callback`](../modules/Util.md#callback)                            |
 
 #### Returns
 
@@ -3544,7 +3544,7 @@ Default input source is `touchscreen`.
 
 [src/client.ts:780](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L780)
 
-___
+---
 
 ### syncService
 
@@ -3552,8 +3552,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -3564,7 +3564,7 @@ ___
 
 [src/client.ts:995](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L995)
 
-___
+---
 
 ### tap
 
@@ -3576,11 +3576,11 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `serial` | `string` | - |
-| `x` | `number` | Horizontal coordinate. |
-| `y` | `number` | Vertical coordinate. |
+| Name     | Type     | Description            |
+| :------- | :------- | :--------------------- |
+| `serial` | `string` | -                      |
+| `x`      | `number` | Horizontal coordinate. |
+| `y`      | `number` | Vertical coordinate.   |
 
 #### Returns
 
@@ -3594,11 +3594,11 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `x` | `number` |
-| `y` | `number` |
+| Name     | Type                                            |
+| :------- | :---------------------------------------------- |
+| `serial` | `string`                                        |
+| `x`      | `number`                                        |
+| `y`      | `number`                                        |
 | `source` | [`InputSource`](../modules/Util.md#inputsource) |
 
 #### Returns
@@ -3613,12 +3613,12 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `x` | `number` |
-| `y` | `number` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `x`      | `number`                                  |
+| `y`      | `number`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -3632,13 +3632,13 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `x` | `number` |
-| `y` | `number` |
+| Name     | Type                                            |
+| :------- | :---------------------------------------------- |
+| `serial` | `string`                                        |
+| `x`      | `number`                                        |
+| `y`      | `number`                                        |
 | `source` | [`InputSource`](../modules/Util.md#inputsource) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| `cb`     | [`Callback`](../modules/Util.md#callback)       |
 
 #### Returns
 
@@ -3648,7 +3648,7 @@ Default input source is `touchscreen`.
 
 [src/client.ts:896](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L896)
 
-___
+---
 
 ### tcpip
 
@@ -3660,8 +3660,8 @@ Analogous to `adb tcpip 5555`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -3676,10 +3676,10 @@ Analogous to `adb tcpip 5555`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `port` | `number` |
+| `port`   | `number` |
 
 #### Returns
 
@@ -3693,10 +3693,10 @@ Analogous to `adb tcpip 5555`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -3710,11 +3710,11 @@ Analogous to `adb tcpip 5555`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `port` | `number` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `port`   | `number`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -3724,7 +3724,7 @@ Analogous to `adb tcpip 5555`.
 
 [src/client.ts:1380](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1380)
 
-___
+---
 
 ### text
 
@@ -3736,10 +3736,10 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `text` | `string` |
+| `text`   | `string` |
 
 #### Returns
 
@@ -3753,10 +3753,10 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `text` | `string` |
+| Name     | Type                                            |
+| :------- | :---------------------------------------------- |
+| `serial` | `string`                                        |
+| `text`   | `string`                                        |
 | `source` | [`InputSource`](../modules/Util.md#inputsource) |
 
 #### Returns
@@ -3771,11 +3771,11 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `text` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `text`   | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -3789,12 +3789,12 @@ Default input source is `touchscreen`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `text` | `string` |
+| Name     | Type                                            |
+| :------- | :---------------------------------------------- |
+| `serial` | `string`                                        |
+| `text`   | `string`                                        |
 | `source` | [`InputSource`](../modules/Util.md#inputsource) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| `cb`     | [`Callback`](../modules/Util.md#callback)       |
 
 #### Returns
 
@@ -3804,7 +3804,7 @@ Default input source is `touchscreen`.
 
 [src/client.ts:932](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L932)
 
-___
+---
 
 ### touch
 
@@ -3815,10 +3815,10 @@ Analogous to `adb shell touch <filename>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `path` | `string` |
+| `path`   | `string` |
 
 #### Returns
 
@@ -3832,10 +3832,10 @@ Analogous to `adb shell touch <filename>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `path` | `string` |
+| Name      | Type                                                 |
+| :-------- | :--------------------------------------------------- |
+| `serial`  | `string`                                             |
+| `path`    | `string`                                             |
 | `options` | [`TouchOptions`](../interfaces/Util.TouchOptions.md) |
 
 #### Returns
@@ -3850,11 +3850,11 @@ Analogous to `adb shell touch <filename>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `path` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `path`   | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -3868,12 +3868,12 @@ Analogous to `adb shell touch <filename>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `path` | `string` |
+| Name      | Type                                                 |
+| :-------- | :--------------------------------------------------- |
+| `serial`  | `string`                                             |
+| `path`    | `string`                                             |
 | `options` | [`TouchOptions`](../interfaces/Util.TouchOptions.md) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| `cb`      | [`Callback`](../modules/Util.md#callback)            |
 
 #### Returns
 
@@ -3883,7 +3883,7 @@ Analogous to `adb shell touch <filename>`.
 
 [src/client.ts:2028](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L2028)
 
-___
+---
 
 ### trackDevices
 
@@ -3903,8 +3903,8 @@ Tracks connection status of devices.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name | Type                                                                                  |
+| :--- | :------------------------------------------------------------------------------------ |
 | `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<[`Tracker`](Tracker.Tracker.md)\> |
 
 #### Returns
@@ -3915,7 +3915,7 @@ Tracks connection status of devices.
 
 [src/client.ts:283](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L283)
 
-___
+---
 
 ### transport
 
@@ -3923,8 +3923,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -3935,7 +3935,7 @@ ___
 
 [src/client.ts:185](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L185)
 
-___
+---
 
 ### uninstall
 
@@ -3946,10 +3946,10 @@ Analogous to `adb uninstall`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
-| `pkg` | `string` |
+| `pkg`    | `string` |
 
 #### Returns
 
@@ -3963,10 +3963,10 @@ Analogous to `adb uninstall`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `pkg` | `string` |
+| Name      | Type                                                      |
+| :-------- | :-------------------------------------------------------- |
+| `serial`  | `string`                                                  |
+| `pkg`     | `string`                                                  |
 | `options` | [`UninstallOptions`](../modules/Util.md#uninstalloptions) |
 
 #### Returns
@@ -3981,11 +3981,11 @@ Analogous to `adb uninstall`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `pkg` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `pkg`    | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -3999,12 +3999,12 @@ Analogous to `adb uninstall`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `pkg` | `string` |
+| Name      | Type                                                      |
+| :-------- | :-------------------------------------------------------- |
+| `serial`  | `string`                                                  |
+| `pkg`     | `string`                                                  |
 | `options` | [`UninstallOptions`](../modules/Util.md#uninstalloptions) |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| `cb`      | [`Callback`](../modules/Util.md#callback)                 |
 
 #### Returns
 
@@ -4014,7 +4014,7 @@ Analogous to `adb uninstall`.
 
 [src/client.ts:1105](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1105)
 
-___
+---
 
 ### usb
 
@@ -4024,8 +4024,8 @@ Sets the device transport back to usb.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -4040,10 +4040,10 @@ Sets the device transport back to usb.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -4053,7 +4053,7 @@ Sets the device transport back to usb.
 
 [src/client.ts:1403](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1403)
 
-___
+---
 
 ### version
 
@@ -4073,8 +4073,8 @@ Gets the adb server version.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name | Type                                                           |
+| :--- | :------------------------------------------------------------- |
 | `cb` | [`ValueCallback`](../modules/Util.md#valuecallback)<`number`\> |
 
 #### Returns
@@ -4085,7 +4085,7 @@ Gets the adb server version.
 
 [src/client.ts:195](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L195)
 
-___
+---
 
 ### waitBootComplete
 
@@ -4095,8 +4095,8 @@ Waits until the device has finished booting.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `serial` | `string` |
 
 #### Returns
@@ -4111,10 +4111,10 @@ Waits until the device has finished booting.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `serial` | `string` |
-| `cb` | [`Callback`](../modules/Util.md#callback) |
+| Name     | Type                                      |
+| :------- | :---------------------------------------- |
+| `serial` | `string`                                  |
+| `cb`     | [`Callback`](../modules/Util.md#callback) |
 
 #### Returns
 
@@ -4124,7 +4124,7 @@ Waits until the device has finished booting.
 
 [src/client.ts:1421](https://github.com/Maaaartin/adb-ts/blob/5393493/src/client.ts#L1421)
 
-___
+---
 
 ### waitFor
 
@@ -4135,10 +4135,10 @@ Analogous to `adb wait-for-<transport>-<state>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `transport` | [`WaitForType`](../modules/Util.md#waitfortype) |
-| `state` | [`WaitForState`](../modules/Util.md#waitforstate) |
+| Name        | Type                                              |
+| :---------- | :------------------------------------------------ |
+| `transport` | [`WaitForType`](../modules/Util.md#waitfortype)   |
+| `state`     | [`WaitForState`](../modules/Util.md#waitforstate) |
 
 #### Returns
 
@@ -4152,11 +4152,11 @@ Analogous to `adb wait-for-<transport>-<state>`.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `transport` | [`WaitForType`](../modules/Util.md#waitfortype) |
-| `state` | [`WaitForState`](../modules/Util.md#waitforstate) |
-| `cb?` | [`Callback`](../modules/Util.md#callback) |
+| Name        | Type                                              |
+| :---------- | :------------------------------------------------ |
+| `transport` | [`WaitForType`](../modules/Util.md#waitfortype)   |
+| `state`     | [`WaitForState`](../modules/Util.md#waitforstate) |
+| `cb?`       | [`Callback`](../modules/Util.md#callback)         |
 
 #### Returns
 

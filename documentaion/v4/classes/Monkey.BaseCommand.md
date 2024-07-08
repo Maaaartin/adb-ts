@@ -7,31 +7,31 @@
 ## Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 ## Hierarchy
 
-- **`BaseCommand`**
+-   **`BaseCommand`**
 
-  ↳ [`Command`](Monkey.Command.md)
+    ↳ [`Command`](Monkey.Command.md)
 
-  ↳ [`ParsableCommand`](Monkey.ParsableCommand.md)
+    ↳ [`ParsableCommand`](Monkey.ParsableCommand.md)
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Monkey.BaseCommand.md#constructor)
+-   [constructor](Monkey.BaseCommand.md#constructor)
 
 ### Properties
 
-- [callback](Monkey.BaseCommand.md#callback)
-- [command](Monkey.BaseCommand.md#command)
+-   [callback](Monkey.BaseCommand.md#callback)
+-   [command](Monkey.BaseCommand.md#command)
 
 ### Methods
 
-- [isParsable](Monkey.BaseCommand.md#isparsable)
+-   [isParsable](Monkey.BaseCommand.md#isparsable)
 
 ## Constructors
 
@@ -42,14 +42,14 @@
 #### Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `command` | `string` |
+| Name       | Type                                                        |
+| :--------- | :---------------------------------------------------------- |
+| `command`  | `string`                                                    |
 | `callback` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`T`\> |
 
 #### Defined in
@@ -66,7 +66,7 @@
 
 [src/monkey/command.ts:5](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/command.ts#L5)
 
-___
+---
 
 ### command
 

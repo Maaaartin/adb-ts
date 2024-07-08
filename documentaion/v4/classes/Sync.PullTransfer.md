@@ -6,25 +6,25 @@
 
 ## Hierarchy
 
-- `PassThrough`
+-   `PassThrough`
 
-  ↳ **`PullTransfer`**
+    ↳ **`PullTransfer`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Sync.PullTransfer.md#constructor)
+-   [constructor](Sync.PullTransfer.md#constructor)
 
 ### Properties
 
-- [stats](Sync.PullTransfer.md#stats)
+-   [stats](Sync.PullTransfer.md#stats)
 
 ### Methods
 
-- [cancel](Sync.PullTransfer.md#cancel)
-- [on](Sync.PullTransfer.md#on)
-- [write](Sync.PullTransfer.md#write)
+-   [cancel](Sync.PullTransfer.md#cancel)
+-   [on](Sync.PullTransfer.md#on)
+-   [write](Sync.PullTransfer.md#write)
 
 ## Constructors
 
@@ -34,8 +34,8 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type               |
+| :------ | :----------------- |
 | `opts?` | `TransformOptions` |
 
 #### Inherited from
@@ -70,7 +70,7 @@ node_modules/@types/node/stream.d.ts:1049
 
 [src/sync/pulltransfer.ts:9](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/pulltransfer.ts#L9)
 
-___
+---
 
 ### on
 
@@ -78,9 +78,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"close"`` |
+| Name       | Type         |
+| :--------- | :----------- |
+| `event`    | `"close"`    |
 | `listener` | () => `void` |
 
 #### Returns
@@ -99,9 +99,9 @@ PassThrough.on
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"data"`` |
+| Name       | Type                           |
+| :--------- | :----------------------------- |
+| `event`    | `"data"`                       |
 | `listener` | (`chunk`: `unknown`) => `void` |
 
 #### Returns
@@ -120,9 +120,9 @@ PassThrough.on
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"end"`` |
+| Name       | Type         |
+| :--------- | :----------- |
+| `event`    | `"end"`      |
 | `listener` | () => `void` |
 
 #### Returns
@@ -141,9 +141,9 @@ PassThrough.on
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"error"`` |
+| Name       | Type                       |
+| :--------- | :------------------------- |
+| `event`    | `"error"`                  |
 | `listener` | (`err`: `Error`) => `void` |
 
 #### Returns
@@ -162,9 +162,9 @@ PassThrough.on
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"pause"`` |
+| Name       | Type         |
+| :--------- | :----------- |
+| `event`    | `"pause"`    |
 | `listener` | () => `void` |
 
 #### Returns
@@ -183,9 +183,9 @@ PassThrough.on
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"readable"`` |
+| Name       | Type         |
+| :--------- | :----------- |
+| `event`    | `"readable"` |
 | `listener` | () => `void` |
 
 #### Returns
@@ -204,9 +204,9 @@ PassThrough.on
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"resume"`` |
+| Name       | Type         |
+| :--------- | :----------- |
+| `event`    | `"resume"`   |
 | `listener` | () => `void` |
 
 #### Returns
@@ -225,9 +225,9 @@ PassThrough.on
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"progress"`` |
+| Name       | Type                                                                 |
+| :--------- | :------------------------------------------------------------------- |
+| `event`    | `"progress"`                                                         |
 | `listener` | (`stats`: [`StatsObject`](../modules/Util.md#statsobject)) => `void` |
 
 #### Returns
@@ -246,15 +246,15 @@ PassThrough.on
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `unknown`[] |
+| Name | Type                |
+| :--- | :------------------ |
+| `T`  | extends `unknown`[] |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | `string` \| `symbol` |
+| Name       | Type                       |
+| :--------- | :------------------------- |
+| `event`    | `string` \| `symbol`       |
 | `listener` | (...`args`: `T`) => `void` |
 
 #### Returns
@@ -269,7 +269,7 @@ PassThrough.on
 
 [src/sync/pulltransfer.ts:44](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/pulltransfer.ts#L44)
 
-___
+---
 
 ### write
 
@@ -277,11 +277,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `chunk` | `Buffer` |
-| `encoding?` | `BufferEncoding` |
-| `cb?` | (`error`: `undefined` \| ``null`` \| `Error`) => `void` |
+| Name        | Type                                                  |
+| :---------- | :---------------------------------------------------- |
+| `chunk`     | `Buffer`                                              |
+| `encoding?` | `BufferEncoding`                                      |
+| `cb?`       | (`error`: `undefined` \| `null` \| `Error`) => `void` |
 
 #### Returns
 
@@ -299,10 +299,10 @@ PassThrough.write
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `chunk` | `Buffer` |
-| `cb?` | (`error`: `undefined` \| ``null`` \| `Error`) => `void` |
+| Name    | Type                                                  |
+| :------ | :---------------------------------------------------- |
+| `chunk` | `Buffer`                                              |
+| `cb?`   | (`error`: `undefined` \| `null` \| `Error`) => `void` |
 
 #### Returns
 

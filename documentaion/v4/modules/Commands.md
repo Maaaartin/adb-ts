@@ -6,5 +6,5 @@
 
 ### Classes
 
-- [Command](../classes/Commands.Command.md)
-- [TransportCommand](../classes/Commands.TransportCommand.md)
+-   [Command](../classes/Commands.Command.md)
+-   [TransportCommand](../classes/Commands.TransportCommand.md)

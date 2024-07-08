@@ -6,19 +6,19 @@
 
 ## Hierarchy
 
-- `Socket`
+-   `Socket`
 
-  ↳ **`Connection`**
+    ↳ **`Connection`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Connection.Connection.md#constructor)
+-   [constructor](Connection.Connection.md#constructor)
 
 ### Properties
 
-- [parser](Connection.Connection.md#parser)
+-   [parser](Connection.Connection.md#parser)
 
 ## Constructors
 
@@ -28,8 +28,8 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name       | Type                    |
+| :--------- | :---------------------- |
 | `options?` | `SocketConstructorOpts` |
 
 #### Overrides

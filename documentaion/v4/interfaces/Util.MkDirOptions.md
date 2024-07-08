@@ -8,8 +8,8 @@
 
 ### Properties
 
-- [mode](Util.MkDirOptions.md#mode)
-- [parent](Util.MkDirOptions.md#parent)
+-   [mode](Util.MkDirOptions.md#mode)
+-   [parent](Util.MkDirOptions.md#parent)
 
 ## Properties
 
@@ -23,7 +23,7 @@ Adds `-m <value>` flag. Sets access mode
 
 [src/util/types.ts:319](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L319)
 
-___
+---
 
 ### parent
 

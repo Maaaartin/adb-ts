@@ -6,21 +6,21 @@
 
 ## Hierarchy
 
-- **`StartServiceOptions`**
+-   **`StartServiceOptions`**
 
-  ↳ [`StartActivityOptions`](Util.StartActivityOptions.md)
+    ↳ [`StartActivityOptions`](Util.StartActivityOptions.md)
 
 ## Table of contents
 
 ### Properties
 
-- [action](Util.StartServiceOptions.md#action)
-- [category](Util.StartServiceOptions.md#category)
-- [data](Util.StartServiceOptions.md#data)
-- [extras](Util.StartServiceOptions.md#extras)
-- [flags](Util.StartServiceOptions.md#flags)
-- [mimeType](Util.StartServiceOptions.md#mimetype)
-- [user](Util.StartServiceOptions.md#user)
+-   [action](Util.StartServiceOptions.md#action)
+-   [category](Util.StartServiceOptions.md#category)
+-   [data](Util.StartServiceOptions.md#data)
+-   [extras](Util.StartServiceOptions.md#extras)
+-   [flags](Util.StartServiceOptions.md#flags)
+-   [mimeType](Util.StartServiceOptions.md#mimetype)
+-   [user](Util.StartServiceOptions.md#user)
 
 ## Properties
 
@@ -34,7 +34,7 @@ Adds `-a` flag.
 
 [src/util/types.ts:78](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L78)
 
-___
+---
 
 ### category
 
@@ -46,7 +46,7 @@ Adds `-c` flag.
 
 [src/util/types.ts:90](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L90)
 
-___
+---
 
 ### data
 
@@ -58,7 +58,7 @@ Adds `-D` flag.
 
 [src/util/types.ts:82](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L82)
 
-___
+---
 
 ### extras
 
@@ -68,7 +68,7 @@ ___
 
 [src/util/types.ts:92](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L92)
 
-___
+---
 
 ### flags
 
@@ -78,7 +78,7 @@ ___
 
 [src/util/types.ts:91](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L91)
 
-___
+---
 
 ### mimeType
 
@@ -90,7 +90,7 @@ Adds `-t` flag.
 
 [src/util/types.ts:86](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L86)
 
-___
+---
 
 ### user
 

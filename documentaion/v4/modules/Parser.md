@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [Parser](../classes/Parser.Parser.md)
+-   [Parser](../classes/Parser.Parser.md)

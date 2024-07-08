@@ -6,23 +6,23 @@
 
 ## Hierarchy
 
-- [`StartServiceOptions`](Util.StartServiceOptions.md)
+-   [`StartServiceOptions`](Util.StartServiceOptions.md)
 
-  ↳ **`StartActivityOptions`**
+    ↳ **`StartActivityOptions`**
 
 ## Table of contents
 
 ### Properties
 
-- [action](Util.StartActivityOptions.md#action)
-- [category](Util.StartActivityOptions.md#category)
-- [data](Util.StartActivityOptions.md#data)
-- [debug](Util.StartActivityOptions.md#debug)
-- [extras](Util.StartActivityOptions.md#extras)
-- [flags](Util.StartActivityOptions.md#flags)
-- [mimeType](Util.StartActivityOptions.md#mimetype)
-- [user](Util.StartActivityOptions.md#user)
-- [wait](Util.StartActivityOptions.md#wait)
+-   [action](Util.StartActivityOptions.md#action)
+-   [category](Util.StartActivityOptions.md#category)
+-   [data](Util.StartActivityOptions.md#data)
+-   [debug](Util.StartActivityOptions.md#debug)
+-   [extras](Util.StartActivityOptions.md#extras)
+-   [flags](Util.StartActivityOptions.md#flags)
+-   [mimeType](Util.StartActivityOptions.md#mimetype)
+-   [user](Util.StartActivityOptions.md#user)
+-   [wait](Util.StartActivityOptions.md#wait)
 
 ## Properties
 
@@ -40,7 +40,7 @@ Adds `-a` flag.
 
 [src/util/types.ts:78](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L78)
 
-___
+---
 
 ### category
 
@@ -56,7 +56,7 @@ Adds `-c` flag.
 
 [src/util/types.ts:90](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L90)
 
-___
+---
 
 ### data
 
@@ -72,7 +72,7 @@ Adds `-D` flag.
 
 [src/util/types.ts:82](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L82)
 
-___
+---
 
 ### debug
 
@@ -84,7 +84,7 @@ Adds `-D` flag.
 
 [src/util/types.ts:99](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L99)
 
-___
+---
 
 ### extras
 
@@ -98,7 +98,7 @@ ___
 
 [src/util/types.ts:92](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L92)
 
-___
+---
 
 ### flags
 
@@ -112,7 +112,7 @@ ___
 
 [src/util/types.ts:91](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L91)
 
-___
+---
 
 ### mimeType
 
@@ -128,7 +128,7 @@ Adds `-t` flag.
 
 [src/util/types.ts:86](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L86)
 
-___
+---
 
 ### user
 
@@ -144,7 +144,7 @@ default `0`
 
 [src/util/types.ts:74](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L74)
 
-___
+---
 
 ### wait
 

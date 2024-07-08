@@ -8,20 +8,20 @@
 
 ### Constructors
 
-- [constructor](Logcat.LogcatEntry.md#constructor)
+-   [constructor](Logcat.LogcatEntry.md#constructor)
 
 ### Properties
 
-- [date](Logcat.LogcatEntry.md#date)
-- [message](Logcat.LogcatEntry.md#message)
-- [pid](Logcat.LogcatEntry.md#pid)
-- [priority](Logcat.LogcatEntry.md#priority)
-- [tag](Logcat.LogcatEntry.md#tag)
-- [tid](Logcat.LogcatEntry.md#tid)
+-   [date](Logcat.LogcatEntry.md#date)
+-   [message](Logcat.LogcatEntry.md#message)
+-   [pid](Logcat.LogcatEntry.md#pid)
+-   [priority](Logcat.LogcatEntry.md#priority)
+-   [tag](Logcat.LogcatEntry.md#tag)
+-   [tid](Logcat.LogcatEntry.md#tid)
 
 ### Methods
 
-- [toBinary](Logcat.LogcatEntry.md#tobinary)
+-   [toBinary](Logcat.LogcatEntry.md#tobinary)
 
 ## Constructors
 
@@ -39,7 +39,7 @@
 
 [src/logcat/entry.ts:4](https://github.com/Maaaartin/adb-ts/blob/5393493/src/logcat/entry.ts#L4)
 
-___
+---
 
 ### message
 
@@ -49,7 +49,7 @@ ___
 
 [src/logcat/entry.ts:9](https://github.com/Maaaartin/adb-ts/blob/5393493/src/logcat/entry.ts#L9)
 
-___
+---
 
 ### pid
 
@@ -59,7 +59,7 @@ ___
 
 [src/logcat/entry.ts:5](https://github.com/Maaaartin/adb-ts/blob/5393493/src/logcat/entry.ts#L5)
 
-___
+---
 
 ### priority
 
@@ -69,7 +69,7 @@ ___
 
 [src/logcat/entry.ts:7](https://github.com/Maaaartin/adb-ts/blob/5393493/src/logcat/entry.ts#L7)
 
-___
+---
 
 ### tag
 
@@ -79,7 +79,7 @@ ___
 
 [src/logcat/entry.ts:8](https://github.com/Maaaartin/adb-ts/blob/5393493/src/logcat/entry.ts#L8)
 
-___
+---
 
 ### tid
 

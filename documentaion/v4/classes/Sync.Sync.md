@@ -6,36 +6,36 @@
 
 ## Hierarchy
 
-- `EventEmitter`
+-   `EventEmitter`
 
-  ↳ **`Sync`**
+    ↳ **`Sync`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Sync.Sync.md#constructor)
+-   [constructor](Sync.Sync.md#constructor)
 
 ### Properties
 
-- [connection](Sync.Sync.md#connection)
-- [parser](Sync.Sync.md#parser)
+-   [connection](Sync.Sync.md#connection)
+-   [parser](Sync.Sync.md#parser)
 
 ### Methods
 
-- [end](Sync.Sync.md#end)
-- [error](Sync.Sync.md#error)
-- [getDrainAwaiter](Sync.Sync.md#getdrainawaiter)
-- [pull](Sync.Sync.md#pull)
-- [push](Sync.Sync.md#push)
-- [pushFile](Sync.Sync.md#pushfile)
-- [pushStream](Sync.Sync.md#pushstream)
-- [readData](Sync.Sync.md#readdata)
-- [readDir](Sync.Sync.md#readdir)
-- [sendCommandWithArg](Sync.Sync.md#sendcommandwitharg)
-- [sendCommandWithLength](Sync.Sync.md#sendcommandwithlength)
-- [writeData](Sync.Sync.md#writedata)
-- [temp](Sync.Sync.md#temp)
+-   [end](Sync.Sync.md#end)
+-   [error](Sync.Sync.md#error)
+-   [getDrainAwaiter](Sync.Sync.md#getdrainawaiter)
+-   [pull](Sync.Sync.md#pull)
+-   [push](Sync.Sync.md#push)
+-   [pushFile](Sync.Sync.md#pushfile)
+-   [pushStream](Sync.Sync.md#pushstream)
+-   [readData](Sync.Sync.md#readdata)
+-   [readDir](Sync.Sync.md#readdir)
+-   [sendCommandWithArg](Sync.Sync.md#sendcommandwitharg)
+-   [sendCommandWithLength](Sync.Sync.md#sendcommandwithlength)
+-   [writeData](Sync.Sync.md#writedata)
+-   [temp](Sync.Sync.md#temp)
 
 ## Constructors
 
@@ -45,8 +45,8 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name         | Type                                     |
+| :----------- | :--------------------------------------- |
 | `connection` | [`Connection`](Connection.Connection.md) |
 
 #### Overrides
@@ -67,7 +67,7 @@ EventEmitter.constructor
 
 [src/sync/sync.ts:21](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/sync.ts#L21)
 
-___
+---
 
 ### parser
 
@@ -91,7 +91,7 @@ ___
 
 [src/sync/sync.ts:273](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/sync.ts#L273)
 
-___
+---
 
 ### error
 
@@ -105,7 +105,7 @@ ___
 
 [src/sync/sync.ts:34](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/sync.ts#L34)
 
-___
+---
 
 ### getDrainAwaiter
 
@@ -115,16 +115,16 @@ ___
 
 `Object`
 
-| Name | Type |
-| :------ | :------ |
-| `unregisterDrainListener` | () => `void` |
-| `waitForDrain` | (`cb`: (`err`: ``null``) => `void`) => `void` |
+| Name                      | Type                                        |
+| :------------------------ | :------------------------------------------ |
+| `unregisterDrainListener` | () => `void`                                |
+| `waitForDrain`            | (`cb`: (`err`: `null`) => `void`) => `void` |
 
 #### Defined in
 
 [src/sync/sync.ts:47](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/sync.ts#L47)
 
-___
+---
 
 ### pull
 
@@ -132,8 +132,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `path` | `string` |
 
 #### Returns
@@ -144,7 +144,7 @@ ___
 
 [src/sync/sync.ts:232](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/sync.ts#L232)
 
-___
+---
 
 ### push
 
@@ -152,11 +152,11 @@ ___
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `contents` | `string` \| `Readable` | `undefined` |
-| `path` | `string` | `undefined` |
-| `mode` | ``null`` \| [`SyncMode`](../enums/Sync.SyncMode.md) | `null` |
+| Name       | Type                                              | Default value |
+| :--------- | :------------------------------------------------ | :------------ |
+| `contents` | `string` \| `Readable`                            | `undefined`   |
+| `path`     | `string`                                          | `undefined`   |
+| `mode`     | `null` \| [`SyncMode`](../enums/Sync.SyncMode.md) | `null`        |
 
 #### Returns
 
@@ -166,7 +166,7 @@ ___
 
 [src/sync/sync.ts:180](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/sync.ts#L180)
 
-___
+---
 
 ### pushFile
 
@@ -174,11 +174,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `file` | `string` |
-| `path` | `string` |
-| `mode?` | ``null`` \| [`SyncMode`](../enums/Sync.SyncMode.md) |
+| Name    | Type                                              |
+| :------ | :------------------------------------------------ |
+| `file`  | `string`                                          |
+| `path`  | `string`                                          |
+| `mode?` | `null` \| [`SyncMode`](../enums/Sync.SyncMode.md) |
 
 #### Returns
 
@@ -188,7 +188,7 @@ ___
 
 [src/sync/sync.ts:168](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/sync.ts#L168)
 
-___
+---
 
 ### pushStream
 
@@ -196,11 +196,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `stream` | `Readable` |
-| `path` | `string` |
-| `mode?` | ``null`` \| [`SyncMode`](../enums/Sync.SyncMode.md) |
+| Name     | Type                                              |
+| :------- | :------------------------------------------------ |
+| `stream` | `Readable`                                        |
+| `path`   | `string`                                          |
+| `mode?`  | `null` \| [`SyncMode`](../enums/Sync.SyncMode.md) |
 
 #### Returns
 
@@ -210,7 +210,7 @@ ___
 
 [src/sync/sync.ts:155](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/sync.ts#L155)
 
-___
+---
 
 ### readData
 
@@ -224,7 +224,7 @@ ___
 
 [src/sync/sync.ts:191](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/sync.ts#L191)
 
-___
+---
 
 ### readDir
 
@@ -232,8 +232,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `path` | `string` |
 
 #### Returns
@@ -244,7 +244,7 @@ ___
 
 [src/sync/sync.ts:237](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/sync.ts#L237)
 
-___
+---
 
 ### sendCommandWithArg
 
@@ -252,8 +252,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type     |
+| :---- | :------- |
 | `cmd` | `string` |
 | `arg` | `string` |
 
@@ -265,7 +265,7 @@ ___
 
 [src/sync/sync.ts:277](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/sync.ts#L277)
 
-___
+---
 
 ### sendCommandWithLength
 
@@ -273,10 +273,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cmd` | [`Reply`](../enums/Util.Reply.md) |
-| `length` | `number` |
+| Name     | Type                              |
+| :------- | :-------------------------------- |
+| `cmd`    | [`Reply`](../enums/Util.Reply.md) |
+| `length` | `number`                          |
 
 #### Returns
 
@@ -286,7 +286,7 @@ ___
 
 [src/sync/sync.ts:40](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/sync.ts#L40)
 
-___
+---
 
 ### writeData
 
@@ -294,10 +294,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `stream` | `Readable` |
-| `timestamp` | `number` |
+| Name        | Type       |
+| :---------- | :--------- |
+| `stream`    | `Readable` |
+| `timestamp` | `number`   |
 
 #### Returns
 
@@ -307,7 +307,7 @@ ___
 
 [src/sync/sync.ts:66](https://github.com/Maaaartin/adb-ts/blob/5393493/src/sync/sync.ts#L66)
 
-___
+---
 
 ### temp
 
@@ -315,8 +315,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `path` | `string` |
 
 #### Returns

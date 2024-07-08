@@ -6,17 +6,17 @@
 
 ## Hierarchy
 
-- **`InputOptions`**
+-   **`InputOptions`**
 
-  ↳ [`KeyEventOptions`](Util.KeyEventOptions.md)
+    ↳ [`KeyEventOptions`](Util.KeyEventOptions.md)
 
-  ↳ [`InputDurationOptions`](Util.InputDurationOptions.md)
+    ↳ [`InputDurationOptions`](Util.InputDurationOptions.md)
 
 ## Table of contents
 
 ### Properties
 
-- [source](Util.InputOptions.md#source)
+-   [source](Util.InputOptions.md#source)
 
 ## Properties
 

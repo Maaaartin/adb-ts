@@ -7,29 +7,29 @@
 ## Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Commands.Command.md#constructor)
+-   [constructor](Commands.Command.md#constructor)
 
 ### Properties
 
-- [autoEnd](Commands.Command.md#autoend)
-- [connection](Commands.Command.md#connection)
-- [parser](Commands.Command.md#parser)
+-   [autoEnd](Commands.Command.md#autoend)
+-   [connection](Commands.Command.md#connection)
+-   [parser](Commands.Command.md#parser)
 
 ### Methods
 
-- [endConnection](Commands.Command.md#endconnection)
-- [execute](Commands.Command.md#execute)
-- [initAndValidateReply](Commands.Command.md#initandvalidatereply)
-- [initExecute](Commands.Command.md#initexecute)
-- [readAndValidateReply](Commands.Command.md#readandvalidatereply)
-- [validateReply](Commands.Command.md#validatereply)
+-   [endConnection](Commands.Command.md#endconnection)
+-   [execute](Commands.Command.md#execute)
+-   [initAndValidateReply](Commands.Command.md#initandvalidatereply)
+-   [initExecute](Commands.Command.md#initexecute)
+-   [readAndValidateReply](Commands.Command.md#readandvalidatereply)
+-   [validateReply](Commands.Command.md#validatereply)
 
 ## Constructors
 
@@ -40,13 +40,13 @@
 #### Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name         | Type                                     |
+| :----------- | :--------------------------------------- |
 | `connection` | [`Connection`](Connection.Connection.md) |
 
 #### Defined in
@@ -63,7 +63,7 @@
 
 [src/commands/command.ts:9](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/command.ts#L9)
 
-___
+---
 
 ### connection
 
@@ -73,7 +73,7 @@ ___
 
 [src/commands/command.ts:7](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/command.ts#L7)
 
-___
+---
 
 ### parser
 
@@ -97,7 +97,7 @@ ___
 
 [src/commands/command.ts:34](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/command.ts#L34)
 
-___
+---
 
 ### execute
 
@@ -111,7 +111,7 @@ ___
 
 [src/commands/command.ts:55](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/command.ts#L55)
 
-___
+---
 
 ### initAndValidateReply
 
@@ -119,8 +119,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `args` | `string` |
 
 #### Returns
@@ -131,7 +131,7 @@ ___
 
 [src/commands/command.ts:38](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/command.ts#L38)
 
-___
+---
 
 ### initExecute
 
@@ -139,8 +139,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name   | Type     |
+| :----- | :------- |
 | `args` | `string` |
 
 #### Returns
@@ -151,7 +151,7 @@ ___
 
 [src/commands/command.ts:46](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/command.ts#L46)
 
-___
+---
 
 ### readAndValidateReply
 
@@ -165,7 +165,7 @@ ___
 
 [src/commands/command.ts:30](https://github.com/Maaaartin/adb-ts/blob/5393493/src/commands/command.ts#L30)
 
-___
+---
 
 ### validateReply
 
@@ -173,8 +173,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type                 |
+| :------ | :------------------- |
 | `reply` | `string` \| `Buffer` |
 
 #### Returns

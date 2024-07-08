@@ -6,39 +6,39 @@
 
 ## Implemented by
 
-- [`FileStat`](../classes/FileStat.FileStat.md)
+-   [`FileStat`](../classes/FileStat.FileStat.md)
 
 ## Table of contents
 
 ### Properties
 
-- [abits](FileStat.IFileStat.md#abits)
-- [aflags](FileStat.IFileStat.md#aflags)
-- [atime](FileStat.IFileStat.md#atime)
-- [atimeMs](FileStat.IFileStat.md#atimems)
-- [blksize](FileStat.IFileStat.md#blksize)
-- [blocks](FileStat.IFileStat.md#blocks)
-- [bytes](FileStat.IFileStat.md#bytes)
-- [ctime](FileStat.IFileStat.md#ctime)
-- [ctimeMs](FileStat.IFileStat.md#ctimems)
-- [dTypeMajor](FileStat.IFileStat.md#dtypemajor)
-- [dTypeMinor](FileStat.IFileStat.md#dtypeminor)
-- [dev](FileStat.IFileStat.md#dev)
-- [gid](FileStat.IFileStat.md#gid)
-- [gname](FileStat.IFileStat.md#gname)
-- [ino](FileStat.IFileStat.md#ino)
-- [lname](FileStat.IFileStat.md#lname)
-- [mode](FileStat.IFileStat.md#mode)
-- [moutpoint](FileStat.IFileStat.md#moutpoint)
-- [mtime](FileStat.IFileStat.md#mtime)
-- [mtimeMs](FileStat.IFileStat.md#mtimems)
-- [name](FileStat.IFileStat.md#name)
-- [nlink](FileStat.IFileStat.md#nlink)
-- [seccon](FileStat.IFileStat.md#seccon)
-- [size](FileStat.IFileStat.md#size)
-- [type](FileStat.IFileStat.md#type)
-- [uid](FileStat.IFileStat.md#uid)
-- [uname](FileStat.IFileStat.md#uname)
+-   [abits](FileStat.IFileStat.md#abits)
+-   [aflags](FileStat.IFileStat.md#aflags)
+-   [atime](FileStat.IFileStat.md#atime)
+-   [atimeMs](FileStat.IFileStat.md#atimems)
+-   [blksize](FileStat.IFileStat.md#blksize)
+-   [blocks](FileStat.IFileStat.md#blocks)
+-   [bytes](FileStat.IFileStat.md#bytes)
+-   [ctime](FileStat.IFileStat.md#ctime)
+-   [ctimeMs](FileStat.IFileStat.md#ctimems)
+-   [dTypeMajor](FileStat.IFileStat.md#dtypemajor)
+-   [dTypeMinor](FileStat.IFileStat.md#dtypeminor)
+-   [dev](FileStat.IFileStat.md#dev)
+-   [gid](FileStat.IFileStat.md#gid)
+-   [gname](FileStat.IFileStat.md#gname)
+-   [ino](FileStat.IFileStat.md#ino)
+-   [lname](FileStat.IFileStat.md#lname)
+-   [mode](FileStat.IFileStat.md#mode)
+-   [moutpoint](FileStat.IFileStat.md#moutpoint)
+-   [mtime](FileStat.IFileStat.md#mtime)
+-   [mtimeMs](FileStat.IFileStat.md#mtimems)
+-   [name](FileStat.IFileStat.md#name)
+-   [nlink](FileStat.IFileStat.md#nlink)
+-   [seccon](FileStat.IFileStat.md#seccon)
+-   [size](FileStat.IFileStat.md#size)
+-   [type](FileStat.IFileStat.md#type)
+-   [uid](FileStat.IFileStat.md#uid)
+-   [uname](FileStat.IFileStat.md#uname)
 
 ## Properties
 
@@ -50,7 +50,7 @@
 
 [src/filestats.ts:4](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L4)
 
-___
+---
 
 ### aflags
 
@@ -60,7 +60,7 @@ ___
 
 [src/filestats.ts:5](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L5)
 
-___
+---
 
 ### atime
 
@@ -70,7 +70,7 @@ ___
 
 [src/filestats.ts:6](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L6)
 
-___
+---
 
 ### atimeMs
 
@@ -80,7 +80,7 @@ ___
 
 [src/filestats.ts:7](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L7)
 
-___
+---
 
 ### blksize
 
@@ -90,7 +90,7 @@ ___
 
 [src/filestats.ts:8](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L8)
 
-___
+---
 
 ### blocks
 
@@ -100,7 +100,7 @@ ___
 
 [src/filestats.ts:9](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L9)
 
-___
+---
 
 ### bytes
 
@@ -110,7 +110,7 @@ ___
 
 [src/filestats.ts:10](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L10)
 
-___
+---
 
 ### ctime
 
@@ -120,7 +120,7 @@ ___
 
 [src/filestats.ts:11](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L11)
 
-___
+---
 
 ### ctimeMs
 
@@ -130,7 +130,7 @@ ___
 
 [src/filestats.ts:12](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L12)
 
-___
+---
 
 ### dTypeMajor
 
@@ -140,7 +140,7 @@ ___
 
 [src/filestats.ts:14](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L14)
 
-___
+---
 
 ### dTypeMinor
 
@@ -150,7 +150,7 @@ ___
 
 [src/filestats.ts:15](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L15)
 
-___
+---
 
 ### dev
 
@@ -160,7 +160,7 @@ ___
 
 [src/filestats.ts:13](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L13)
 
-___
+---
 
 ### gid
 
@@ -170,7 +170,7 @@ ___
 
 [src/filestats.ts:17](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L17)
 
-___
+---
 
 ### gname
 
@@ -180,7 +180,7 @@ ___
 
 [src/filestats.ts:18](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L18)
 
-___
+---
 
 ### ino
 
@@ -190,7 +190,7 @@ ___
 
 [src/filestats.ts:16](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L16)
 
-___
+---
 
 ### lname
 
@@ -200,7 +200,7 @@ ___
 
 [src/filestats.ts:25](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L25)
 
-___
+---
 
 ### mode
 
@@ -210,7 +210,7 @@ ___
 
 [src/filestats.ts:19](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L19)
 
-___
+---
 
 ### moutpoint
 
@@ -220,7 +220,7 @@ ___
 
 [src/filestats.ts:20](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L20)
 
-___
+---
 
 ### mtime
 
@@ -230,7 +230,7 @@ ___
 
 [src/filestats.ts:21](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L21)
 
-___
+---
 
 ### mtimeMs
 
@@ -240,7 +240,7 @@ ___
 
 [src/filestats.ts:22](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L22)
 
-___
+---
 
 ### name
 
@@ -250,7 +250,7 @@ ___
 
 [src/filestats.ts:23](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L23)
 
-___
+---
 
 ### nlink
 
@@ -260,7 +260,7 @@ ___
 
 [src/filestats.ts:24](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L24)
 
-___
+---
 
 ### seccon
 
@@ -270,7 +270,7 @@ ___
 
 [src/filestats.ts:26](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L26)
 
-___
+---
 
 ### size
 
@@ -280,7 +280,7 @@ ___
 
 [src/filestats.ts:27](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L27)
 
-___
+---
 
 ### type
 
@@ -290,7 +290,7 @@ ___
 
 [src/filestats.ts:28](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L28)
 
-___
+---
 
 ### uid
 
@@ -300,7 +300,7 @@ ___
 
 [src/filestats.ts:29](https://github.com/Maaaartin/adb-ts/blob/5393493/src/filestats.ts#L29)
 
-___
+---
 
 ### uname
 

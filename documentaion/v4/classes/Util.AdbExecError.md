@@ -6,19 +6,19 @@
 
 ## Hierarchy
 
-- `Error`
+-   `Error`
 
-  ↳ **`AdbExecError`**
+    ↳ **`AdbExecError`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Util.AdbExecError.md#constructor)
+-   [constructor](Util.AdbExecError.md#constructor)
 
 ### Properties
 
-- [command](Util.AdbExecError.md#command)
+-   [command](Util.AdbExecError.md#command)
 
 ## Constructors
 
@@ -28,10 +28,10 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type     |
+| :-------- | :------- |
 | `message` | `string` |
-| `cmd` | `string` |
+| `cmd`     | `string` |
 
 #### Overrides
 

@@ -6,8 +6,8 @@
 
 ### Classes
 
-- [FileStat](../classes/FileStat.FileStat.md)
+-   [FileStat](../classes/FileStat.FileStat.md)
 
 ### Interfaces
 
-- [IFileStat](../interfaces/FileStat.IFileStat.md)
+-   [IFileStat](../interfaces/FileStat.IFileStat.md)

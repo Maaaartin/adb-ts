@@ -6,18 +6,18 @@
 
 ### Enumerations
 
-- [Priority](../enums/Logcat.Priority.md)
+-   [Priority](../enums/Logcat.Priority.md)
 
 ### Classes
 
-- [Binary](../classes/Logcat.Binary.md)
-- [LogcatEntry](../classes/Logcat.LogcatEntry.md)
-- [LogcatReader](../classes/Logcat.LogcatReader.md)
-- [Parser](../classes/Logcat.Parser.md)
+-   [Binary](../classes/Logcat.Binary.md)
+-   [LogcatEntry](../classes/Logcat.LogcatEntry.md)
+-   [LogcatReader](../classes/Logcat.LogcatReader.md)
+-   [Parser](../classes/Logcat.Parser.md)
 
 ### Functions
 
-- [readStream](Logcat.md#readstream)
+-   [readStream](Logcat.md#readstream)
 
 ## Functions
 
@@ -27,9 +27,9 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `stream` | `Writable` |
+| Name      | Type                                                 |
+| :-------- | :--------------------------------------------------- |
+| `stream`  | `Writable`                                           |
 | `options` | [`LogcatReaderOptions`](Util.md#logcatreaderoptions) |
 
 #### Returns

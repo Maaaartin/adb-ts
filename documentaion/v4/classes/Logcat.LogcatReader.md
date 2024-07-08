@@ -6,32 +6,32 @@
 
 ## Hierarchy
 
-- `default`
+-   `default`
 
-  ↳ **`LogcatReader`**
+    ↳ **`LogcatReader`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Logcat.LogcatReader.md#constructor)
+-   [constructor](Logcat.LogcatReader.md#constructor)
 
 ### Properties
 
-- [filter](Logcat.LogcatReader.md#filter)
-- [parser](Logcat.LogcatReader.md#parser)
-- [stream\_](Logcat.LogcatReader.md#stream_)
+-   [filter](Logcat.LogcatReader.md#filter)
+-   [parser](Logcat.LogcatReader.md#parser)
+-   [stream\_](Logcat.LogcatReader.md#stream_)
 
 ### Accessors
 
-- [stream](Logcat.LogcatReader.md#stream)
+-   [stream](Logcat.LogcatReader.md#stream)
 
 ### Methods
 
-- [connect](Logcat.LogcatReader.md#connect)
-- [end](Logcat.LogcatReader.md#end)
-- [hook](Logcat.LogcatReader.md#hook)
-- [on](Logcat.LogcatReader.md#on)
+-   [connect](Logcat.LogcatReader.md#connect)
+-   [end](Logcat.LogcatReader.md#end)
+-   [hook](Logcat.LogcatReader.md#hook)
+-   [on](Logcat.LogcatReader.md#on)
 
 ## Constructors
 
@@ -41,8 +41,8 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name       | Type                                                            |
+| :--------- | :-------------------------------------------------------------- |
 | `options?` | [`LogcatReaderOptions`](../modules/Util.md#logcatreaderoptions) |
 
 #### Overrides
@@ -63,7 +63,7 @@ StreamHandler.constructor
 
 [src/logcat/reader.ts:9](https://github.com/Maaaartin/adb-ts/blob/5393493/src/logcat/reader.ts#L9)
 
-___
+---
 
 ### parser
 
@@ -73,11 +73,11 @@ ___
 
 [src/logcat/reader.ts:10](https://github.com/Maaaartin/adb-ts/blob/5393493/src/logcat/reader.ts#L10)
 
-___
+---
 
 ### stream\_
 
-• `Private` **stream\_**: ``null`` \| `Writable` = `null`
+• `Private` **stream\_**: `null` \| `Writable` = `null`
 
 #### Defined in
 
@@ -105,8 +105,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type       |
+| :------- | :--------- |
 | `stream` | `Writable` |
 
 #### Returns
@@ -117,7 +117,7 @@ ___
 
 [src/logcat/reader.ts:61](https://github.com/Maaaartin/adb-ts/blob/5393493/src/logcat/reader.ts#L61)
 
-___
+---
 
 ### end
 
@@ -135,7 +135,7 @@ StreamHandler.end
 
 [src/logcat/reader.ts:67](https://github.com/Maaaartin/adb-ts/blob/5393493/src/logcat/reader.ts#L67)
 
-___
+---
 
 ### hook
 
@@ -149,7 +149,7 @@ ___
 
 [src/logcat/reader.ts:24](https://github.com/Maaaartin/adb-ts/blob/5393493/src/logcat/reader.ts#L24)
 
-___
+---
 
 ### on
 
@@ -157,9 +157,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"error"`` |
+| Name       | Type                       |
+| :--------- | :------------------------- |
+| `event`    | `"error"`                  |
 | `listener` | (`err`: `Error`) => `void` |
 
 #### Returns
@@ -178,9 +178,9 @@ StreamHandler.on
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"entry"`` |
+| Name       | Type                                                        |
+| :--------- | :---------------------------------------------------------- |
+| `event`    | `"entry"`                                                   |
 | `listener` | (`entry`: [`LogcatEntry`](Logcat.LogcatEntry.md)) => `void` |
 
 #### Returns
@@ -199,10 +199,10 @@ StreamHandler.on
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `event` | ``"end"`` \| ``"finish"`` |
-| `listener` | () => `void` |
+| Name       | Type                  |
+| :--------- | :-------------------- |
+| `event`    | `"end"` \| `"finish"` |
+| `listener` | () => `void`          |
 
 #### Returns
 

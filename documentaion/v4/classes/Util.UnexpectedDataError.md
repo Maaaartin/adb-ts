@@ -6,21 +6,21 @@
 
 ## Hierarchy
 
-- `Error`
+-   `Error`
 
-  ↳ **`UnexpectedDataError`**
+    ↳ **`UnexpectedDataError`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Util.UnexpectedDataError.md#constructor)
+-   [constructor](Util.UnexpectedDataError.md#constructor)
 
 ### Properties
 
-- [expected](Util.UnexpectedDataError.md#expected)
-- [name](Util.UnexpectedDataError.md#name)
-- [unexpected](Util.UnexpectedDataError.md#unexpected)
+-   [expected](Util.UnexpectedDataError.md#expected)
+-   [name](Util.UnexpectedDataError.md#name)
+-   [unexpected](Util.UnexpectedDataError.md#unexpected)
 
 ## Constructors
 
@@ -30,10 +30,10 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name         | Type     |
+| :----------- | :------- |
 | `unexpected` | `string` |
-| `expected` | `string` |
+| `expected`   | `string` |
 
 #### Overrides
 
@@ -53,7 +53,7 @@ Error.constructor
 
 [src/util/errors.ts:4](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/errors.ts#L4)
 
-___
+---
 
 ### name
 
@@ -67,7 +67,7 @@ Error.name
 
 [src/util/errors.ts:2](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/errors.ts#L2)
 
-___
+---
 
 ### unexpected
 

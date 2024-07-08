@@ -6,21 +6,21 @@
 
 ## Hierarchy
 
-- `EventEmitter`
+-   `EventEmitter`
 
-  ↳ **`Parser`**
+    ↳ **`Parser`**
 
-  ↳↳ [`Binary`](Logcat.Binary.md)
+    ↳↳ [`Binary`](Logcat.Binary.md)
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Logcat.Parser.md#constructor)
+-   [constructor](Logcat.Parser.md#constructor)
 
 ### Methods
 
-- [parse](Logcat.Parser.md#parse)
+-   [parse](Logcat.Parser.md#parse)
 
 ## Constructors
 
@@ -30,8 +30,8 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name       | Type                  |
+| :--------- | :-------------------- |
 | `options?` | `EventEmitterOptions` |
 
 #### Inherited from
@@ -50,8 +50,8 @@ node_modules/@types/node/events.d.ts:76
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type        |
+| :-------- | :---------- |
 | `...data` | `unknown`[] |
 
 #### Returns

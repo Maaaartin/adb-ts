@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [Device](../classes/Device.Device.md)
+-   [Device](../classes/Device.Device.md)

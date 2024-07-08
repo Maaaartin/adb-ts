@@ -6,87 +6,87 @@
 
 ## Hierarchy
 
-- [`Api`](Monkey.Api.md)
+-   [`Api`](Monkey.Api.md)
 
-  ↳ **`CommandQueue`**
+    ↳ **`CommandQueue`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Monkey.CommandQueue.md#constructor)
+-   [constructor](Monkey.CommandQueue.md#constructor)
 
 ### Properties
 
-- [callback](Monkey.CommandQueue.md#callback)
-- [client](Monkey.CommandQueue.md#client)
-- [commands](Monkey.CommandQueue.md#commands)
-- [errors](Monkey.CommandQueue.md#errors)
-- [replies](Monkey.CommandQueue.md#replies)
-- [sent](Monkey.CommandQueue.md#sent)
+-   [callback](Monkey.CommandQueue.md#callback)
+-   [client](Monkey.CommandQueue.md#client)
+-   [commands](Monkey.CommandQueue.md#commands)
+-   [errors](Monkey.CommandQueue.md#errors)
+-   [replies](Monkey.CommandQueue.md#replies)
+-   [sent](Monkey.CommandQueue.md#sent)
 
 ### Accessors
 
-- [queue](Monkey.CommandQueue.md#queue)
+-   [queue](Monkey.CommandQueue.md#queue)
 
 ### Methods
 
-- [collector](Monkey.CommandQueue.md#collector)
-- [done](Monkey.CommandQueue.md#done)
-- [execute](Monkey.CommandQueue.md#execute)
-- [flipClose](Monkey.CommandQueue.md#flipclose)
-- [flipOpen](Monkey.CommandQueue.md#flipopen)
-- [forbidReuse](Monkey.CommandQueue.md#forbidreuse)
-- [get](Monkey.CommandQueue.md#get)
-- [getAmCurrentAction](Monkey.CommandQueue.md#getamcurrentaction)
-- [getAmCurrentCategories](Monkey.CommandQueue.md#getamcurrentcategories)
-- [getAmCurrentCompClass](Monkey.CommandQueue.md#getamcurrentcompclass)
-- [getAmCurrentCompPackage](Monkey.CommandQueue.md#getamcurrentcomppackage)
-- [getAmCurrentData](Monkey.CommandQueue.md#getamcurrentdata)
-- [getAmCurrentPackage](Monkey.CommandQueue.md#getamcurrentpackage)
-- [getBuildBoard](Monkey.CommandQueue.md#getbuildboard)
-- [getBuildBrand](Monkey.CommandQueue.md#getbuildbrand)
-- [getBuildCpuAbi](Monkey.CommandQueue.md#getbuildcpuabi)
-- [getBuildDevice](Monkey.CommandQueue.md#getbuilddevice)
-- [getBuildDisplay](Monkey.CommandQueue.md#getbuilddisplay)
-- [getBuildFingerprint](Monkey.CommandQueue.md#getbuildfingerprint)
-- [getBuildHost](Monkey.CommandQueue.md#getbuildhost)
-- [getBuildId](Monkey.CommandQueue.md#getbuildid)
-- [getBuildManufacturer](Monkey.CommandQueue.md#getbuildmanufacturer)
-- [getBuildModel](Monkey.CommandQueue.md#getbuildmodel)
-- [getBuildProduct](Monkey.CommandQueue.md#getbuildproduct)
-- [getBuildTags](Monkey.CommandQueue.md#getbuildtags)
-- [getBuildType](Monkey.CommandQueue.md#getbuildtype)
-- [getBuildUser](Monkey.CommandQueue.md#getbuilduser)
-- [getBuildVersionCodename](Monkey.CommandQueue.md#getbuildversioncodename)
-- [getBuildVersionIncremental](Monkey.CommandQueue.md#getbuildversionincremental)
-- [getBuildVersionRelease](Monkey.CommandQueue.md#getbuildversionrelease)
-- [getBuildVersionSdk](Monkey.CommandQueue.md#getbuildversionsdk)
-- [getClockMillis](Monkey.CommandQueue.md#getclockmillis)
-- [getClockRealtime](Monkey.CommandQueue.md#getclockrealtime)
-- [getClockUptime](Monkey.CommandQueue.md#getclockuptime)
-- [getCommands](Monkey.CommandQueue.md#getcommands)
-- [getDisplayDensity](Monkey.CommandQueue.md#getdisplaydensity)
-- [getDisplayHeight](Monkey.CommandQueue.md#getdisplayheight)
-- [getDisplayWidth](Monkey.CommandQueue.md#getdisplaywidth)
-- [keyDown](Monkey.CommandQueue.md#keydown)
-- [keyUp](Monkey.CommandQueue.md#keyup)
-- [list](Monkey.CommandQueue.md#list)
-- [maybeFinish](Monkey.CommandQueue.md#maybefinish)
-- [press](Monkey.CommandQueue.md#press)
-- [pushCommands](Monkey.CommandQueue.md#pushcommands)
-- [quit](Monkey.CommandQueue.md#quit)
-- [send](Monkey.CommandQueue.md#send)
-- [sendAndParse](Monkey.CommandQueue.md#sendandparse)
-- [sendInternal](Monkey.CommandQueue.md#sendinternal)
-- [sleep](Monkey.CommandQueue.md#sleep)
-- [tap](Monkey.CommandQueue.md#tap)
-- [touchDown](Monkey.CommandQueue.md#touchdown)
-- [touchMove](Monkey.CommandQueue.md#touchmove)
-- [touchUp](Monkey.CommandQueue.md#touchup)
-- [trackball](Monkey.CommandQueue.md#trackball)
-- [type](Monkey.CommandQueue.md#type)
-- [wake](Monkey.CommandQueue.md#wake)
+-   [collector](Monkey.CommandQueue.md#collector)
+-   [done](Monkey.CommandQueue.md#done)
+-   [execute](Monkey.CommandQueue.md#execute)
+-   [flipClose](Monkey.CommandQueue.md#flipclose)
+-   [flipOpen](Monkey.CommandQueue.md#flipopen)
+-   [forbidReuse](Monkey.CommandQueue.md#forbidreuse)
+-   [get](Monkey.CommandQueue.md#get)
+-   [getAmCurrentAction](Monkey.CommandQueue.md#getamcurrentaction)
+-   [getAmCurrentCategories](Monkey.CommandQueue.md#getamcurrentcategories)
+-   [getAmCurrentCompClass](Monkey.CommandQueue.md#getamcurrentcompclass)
+-   [getAmCurrentCompPackage](Monkey.CommandQueue.md#getamcurrentcomppackage)
+-   [getAmCurrentData](Monkey.CommandQueue.md#getamcurrentdata)
+-   [getAmCurrentPackage](Monkey.CommandQueue.md#getamcurrentpackage)
+-   [getBuildBoard](Monkey.CommandQueue.md#getbuildboard)
+-   [getBuildBrand](Monkey.CommandQueue.md#getbuildbrand)
+-   [getBuildCpuAbi](Monkey.CommandQueue.md#getbuildcpuabi)
+-   [getBuildDevice](Monkey.CommandQueue.md#getbuilddevice)
+-   [getBuildDisplay](Monkey.CommandQueue.md#getbuilddisplay)
+-   [getBuildFingerprint](Monkey.CommandQueue.md#getbuildfingerprint)
+-   [getBuildHost](Monkey.CommandQueue.md#getbuildhost)
+-   [getBuildId](Monkey.CommandQueue.md#getbuildid)
+-   [getBuildManufacturer](Monkey.CommandQueue.md#getbuildmanufacturer)
+-   [getBuildModel](Monkey.CommandQueue.md#getbuildmodel)
+-   [getBuildProduct](Monkey.CommandQueue.md#getbuildproduct)
+-   [getBuildTags](Monkey.CommandQueue.md#getbuildtags)
+-   [getBuildType](Monkey.CommandQueue.md#getbuildtype)
+-   [getBuildUser](Monkey.CommandQueue.md#getbuilduser)
+-   [getBuildVersionCodename](Monkey.CommandQueue.md#getbuildversioncodename)
+-   [getBuildVersionIncremental](Monkey.CommandQueue.md#getbuildversionincremental)
+-   [getBuildVersionRelease](Monkey.CommandQueue.md#getbuildversionrelease)
+-   [getBuildVersionSdk](Monkey.CommandQueue.md#getbuildversionsdk)
+-   [getClockMillis](Monkey.CommandQueue.md#getclockmillis)
+-   [getClockRealtime](Monkey.CommandQueue.md#getclockrealtime)
+-   [getClockUptime](Monkey.CommandQueue.md#getclockuptime)
+-   [getCommands](Monkey.CommandQueue.md#getcommands)
+-   [getDisplayDensity](Monkey.CommandQueue.md#getdisplaydensity)
+-   [getDisplayHeight](Monkey.CommandQueue.md#getdisplayheight)
+-   [getDisplayWidth](Monkey.CommandQueue.md#getdisplaywidth)
+-   [keyDown](Monkey.CommandQueue.md#keydown)
+-   [keyUp](Monkey.CommandQueue.md#keyup)
+-   [list](Monkey.CommandQueue.md#list)
+-   [maybeFinish](Monkey.CommandQueue.md#maybefinish)
+-   [press](Monkey.CommandQueue.md#press)
+-   [pushCommands](Monkey.CommandQueue.md#pushcommands)
+-   [quit](Monkey.CommandQueue.md#quit)
+-   [send](Monkey.CommandQueue.md#send)
+-   [sendAndParse](Monkey.CommandQueue.md#sendandparse)
+-   [sendInternal](Monkey.CommandQueue.md#sendinternal)
+-   [sleep](Monkey.CommandQueue.md#sleep)
+-   [tap](Monkey.CommandQueue.md#tap)
+-   [touchDown](Monkey.CommandQueue.md#touchdown)
+-   [touchMove](Monkey.CommandQueue.md#touchmove)
+-   [touchUp](Monkey.CommandQueue.md#touchup)
+-   [trackball](Monkey.CommandQueue.md#trackball)
+-   [type](Monkey.CommandQueue.md#type)
+-   [wake](Monkey.CommandQueue.md#wake)
 
 ## Constructors
 
@@ -96,8 +96,8 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type                         |
+| :------- | :--------------------------- |
 | `client` | [`Monkey`](Monkey.Monkey.md) |
 
 #### Overrides
@@ -112,7 +112,7 @@
 
 ### callback
 
-• `Private` `Optional` **callback**: (`err`: ``null`` \| `Error`, `data`: `unknown`[]) => `void`
+• `Private` `Optional` **callback**: (`err`: `null` \| `Error`, `data`: `unknown`[]) => `void`
 
 #### Type declaration
 
@@ -120,10 +120,10 @@
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `err` | ``null`` \| `Error` |
-| `data` | `unknown`[] |
+| Name   | Type              |
+| :----- | :---------------- |
+| `err`  | `null` \| `Error` |
+| `data` | `unknown`[]       |
 
 ##### Returns
 
@@ -133,7 +133,7 @@
 
 [src/monkey/commandqueue.ts:11](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/commandqueue.ts#L11)
 
-___
+---
 
 ### client
 
@@ -143,7 +143,7 @@ ___
 
 [src/monkey/commandqueue.ts:6](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/commandqueue.ts#L6)
 
-___
+---
 
 ### commands
 
@@ -153,7 +153,7 @@ ___
 
 [src/monkey/commandqueue.ts:7](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/commandqueue.ts#L7)
 
-___
+---
 
 ### errors
 
@@ -163,7 +163,7 @@ ___
 
 [src/monkey/commandqueue.ts:9](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/commandqueue.ts#L9)
 
-___
+---
 
 ### replies
 
@@ -173,7 +173,7 @@ ___
 
 [src/monkey/commandqueue.ts:8](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/commandqueue.ts#L8)
 
-___
+---
 
 ### sent
 
@@ -201,8 +201,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type                                                 |
+| :------ | :--------------------------------------------------- |
 | `queue` | [`BaseCommand`](Monkey.BaseCommand.md)<`unknown`\>[] |
 
 #### Returns
@@ -221,11 +221,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `err` | ``null`` \| `Error` |
-| `value` | `unknown` |
-| `command` | `string` |
+| Name      | Type              |
+| :-------- | :---------------- |
+| `err`     | `null` \| `Error` |
+| `value`   | `unknown`         |
+| `command` | `string`          |
 
 #### Returns
 
@@ -235,7 +235,7 @@ ___
 
 [src/monkey/commandqueue.ts:25](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/commandqueue.ts#L25)
 
-___
+---
 
 ### done
 
@@ -243,8 +243,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type                                                  |
+| :---- | :---------------------------------------------------- |
 | `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
 
 #### Returns
@@ -259,7 +259,7 @@ ___
 
 [src/monkey/api.ts:122](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L122)
 
-___
+---
 
 ### execute
 
@@ -267,9 +267,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb` | (`err`: ``null`` \| `Error`, `data`: `unknown`[]) => `void` |
+| Name | Type                                                      |
+| :--- | :-------------------------------------------------------- |
+| `cb` | (`err`: `null` \| `Error`, `data`: `unknown`[]) => `void` |
 
 #### Returns
 
@@ -279,7 +279,7 @@ ___
 
 [src/monkey/commandqueue.ts:97](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/commandqueue.ts#L97)
 
-___
+---
 
 ### flipClose
 
@@ -287,8 +287,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type                                                  |
+| :---- | :---------------------------------------------------- |
 | `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
 
 #### Returns
@@ -303,7 +303,7 @@ ___
 
 [src/monkey/api.ts:79](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L79)
 
-___
+---
 
 ### flipOpen
 
@@ -311,8 +311,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type                                                  |
+| :---- | :---------------------------------------------------- |
 | `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
 
 #### Returns
@@ -327,7 +327,7 @@ ___
 
 [src/monkey/api.ts:75](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L75)
 
-___
+---
 
 ### forbidReuse
 
@@ -341,7 +341,7 @@ ___
 
 [src/monkey/commandqueue.ts:51](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/commandqueue.ts#L51)
 
-___
+---
 
 ### get
 
@@ -349,10 +349,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `name` | `string` |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name   | Type                                                                       |
+| :----- | :------------------------------------------------------------------------- |
+| `name` | `string`                                                                   |
+| `cb?`  | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -366,7 +366,7 @@ ___
 
 [src/monkey/api.ts:110](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L110)
 
-___
+---
 
 ### getAmCurrentAction
 
@@ -374,9 +374,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -390,7 +390,7 @@ ___
 
 [src/monkey/api.ts:129](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L129)
 
-___
+---
 
 ### getAmCurrentCategories
 
@@ -398,9 +398,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`[]\> |
+| Name  | Type                                                                         |
+| :---- | :--------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`[]\> |
 
 #### Returns
 
@@ -414,7 +414,7 @@ ___
 
 [src/monkey/api.ts:133](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L133)
 
-___
+---
 
 ### getAmCurrentCompClass
 
@@ -422,9 +422,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -438,7 +438,7 @@ ___
 
 [src/monkey/api.ts:141](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L141)
 
-___
+---
 
 ### getAmCurrentCompPackage
 
@@ -446,9 +446,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -462,7 +462,7 @@ ___
 
 [src/monkey/api.ts:145](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L145)
 
-___
+---
 
 ### getAmCurrentData
 
@@ -470,9 +470,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -486,7 +486,7 @@ ___
 
 [src/monkey/api.ts:149](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L149)
 
-___
+---
 
 ### getAmCurrentPackage
 
@@ -494,9 +494,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -510,7 +510,7 @@ ___
 
 [src/monkey/api.ts:153](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L153)
 
-___
+---
 
 ### getBuildBoard
 
@@ -518,9 +518,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -534,7 +534,7 @@ ___
 
 [src/monkey/api.ts:157](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L157)
 
-___
+---
 
 ### getBuildBrand
 
@@ -542,9 +542,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -558,7 +558,7 @@ ___
 
 [src/monkey/api.ts:161](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L161)
 
-___
+---
 
 ### getBuildCpuAbi
 
@@ -566,9 +566,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -582,7 +582,7 @@ ___
 
 [src/monkey/api.ts:165](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L165)
 
-___
+---
 
 ### getBuildDevice
 
@@ -590,9 +590,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -606,7 +606,7 @@ ___
 
 [src/monkey/api.ts:169](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L169)
 
-___
+---
 
 ### getBuildDisplay
 
@@ -614,9 +614,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -630,7 +630,7 @@ ___
 
 [src/monkey/api.ts:173](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L173)
 
-___
+---
 
 ### getBuildFingerprint
 
@@ -638,9 +638,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -654,7 +654,7 @@ ___
 
 [src/monkey/api.ts:177](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L177)
 
-___
+---
 
 ### getBuildHost
 
@@ -662,9 +662,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -678,7 +678,7 @@ ___
 
 [src/monkey/api.ts:181](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L181)
 
-___
+---
 
 ### getBuildId
 
@@ -686,9 +686,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -702,7 +702,7 @@ ___
 
 [src/monkey/api.ts:185](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L185)
 
-___
+---
 
 ### getBuildManufacturer
 
@@ -710,9 +710,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -726,7 +726,7 @@ ___
 
 [src/monkey/api.ts:189](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L189)
 
-___
+---
 
 ### getBuildModel
 
@@ -734,9 +734,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -750,7 +750,7 @@ ___
 
 [src/monkey/api.ts:193](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L193)
 
-___
+---
 
 ### getBuildProduct
 
@@ -758,9 +758,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -774,7 +774,7 @@ ___
 
 [src/monkey/api.ts:197](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L197)
 
-___
+---
 
 ### getBuildTags
 
@@ -782,9 +782,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`[]\> |
+| Name  | Type                                                                         |
+| :---- | :--------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`[]\> |
 
 #### Returns
 
@@ -798,7 +798,7 @@ ___
 
 [src/monkey/api.ts:201](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L201)
 
-___
+---
 
 ### getBuildType
 
@@ -806,9 +806,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -822,7 +822,7 @@ ___
 
 [src/monkey/api.ts:209](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L209)
 
-___
+---
 
 ### getBuildUser
 
@@ -830,9 +830,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -846,7 +846,7 @@ ___
 
 [src/monkey/api.ts:213](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L213)
 
-___
+---
 
 ### getBuildVersionCodename
 
@@ -854,9 +854,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -870,7 +870,7 @@ ___
 
 [src/monkey/api.ts:217](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L217)
 
-___
+---
 
 ### getBuildVersionIncremental
 
@@ -878,9 +878,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -894,7 +894,7 @@ ___
 
 [src/monkey/api.ts:221](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L221)
 
-___
+---
 
 ### getBuildVersionRelease
 
@@ -902,9 +902,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`\> |
 
 #### Returns
 
@@ -918,7 +918,7 @@ ___
 
 [src/monkey/api.ts:227](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L227)
 
-___
+---
 
 ### getBuildVersionSdk
 
@@ -926,9 +926,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `number`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `number`\> |
 
 #### Returns
 
@@ -942,7 +942,7 @@ ___
 
 [src/monkey/api.ts:231](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L231)
 
-___
+---
 
 ### getClockMillis
 
@@ -950,9 +950,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `number`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `number`\> |
 
 #### Returns
 
@@ -966,7 +966,7 @@ ___
 
 [src/monkey/api.ts:235](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L235)
 
-___
+---
 
 ### getClockRealtime
 
@@ -974,9 +974,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `number`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `number`\> |
 
 #### Returns
 
@@ -990,7 +990,7 @@ ___
 
 [src/monkey/api.ts:239](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L239)
 
-___
+---
 
 ### getClockUptime
 
@@ -998,9 +998,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `number`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `number`\> |
 
 #### Returns
 
@@ -1014,7 +1014,7 @@ ___
 
 [src/monkey/api.ts:243](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L243)
 
-___
+---
 
 ### getCommands
 
@@ -1028,7 +1028,7 @@ ___
 
 [src/monkey/commandqueue.ts:86](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/commandqueue.ts#L86)
 
-___
+---
 
 ### getDisplayDensity
 
@@ -1036,9 +1036,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `number`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `number`\> |
 
 #### Returns
 
@@ -1052,7 +1052,7 @@ ___
 
 [src/monkey/api.ts:247](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L247)
 
-___
+---
 
 ### getDisplayHeight
 
@@ -1060,9 +1060,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `number`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `number`\> |
 
 #### Returns
 
@@ -1076,7 +1076,7 @@ ___
 
 [src/monkey/api.ts:251](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L251)
 
-___
+---
 
 ### getDisplayWidth
 
@@ -1084,9 +1084,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `number`\> |
+| Name  | Type                                                                       |
+| :---- | :------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `number`\> |
 
 #### Returns
 
@@ -1100,7 +1100,7 @@ ___
 
 [src/monkey/api.ts:255](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L255)
 
-___
+---
 
 ### keyDown
 
@@ -1108,10 +1108,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `keyCode` | `number` |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
+| Name      | Type                                                  |
+| :-------- | :---------------------------------------------------- |
+| `keyCode` | `number`                                              |
+| `cb?`     | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
 
 #### Returns
 
@@ -1125,7 +1125,7 @@ ___
 
 [src/monkey/api.ts:51](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L51)
 
-___
+---
 
 ### keyUp
 
@@ -1133,10 +1133,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `keyCode` | `number` |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
+| Name      | Type                                                  |
+| :-------- | :---------------------------------------------------- |
+| `keyCode` | `number`                                              |
+| `cb?`     | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
 
 #### Returns
 
@@ -1150,7 +1150,7 @@ ___
 
 [src/monkey/api.ts:55](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L55)
 
-___
+---
 
 ### list
 
@@ -1158,9 +1158,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<``null`` \| `string`[]\> |
+| Name  | Type                                                                         |
+| :---- | :--------------------------------------------------------------------------- |
+| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback)<`null` \| `string`[]\> |
 
 #### Returns
 
@@ -1174,7 +1174,7 @@ ___
 
 [src/monkey/api.ts:104](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L104)
 
-___
+---
 
 ### maybeFinish
 
@@ -1188,7 +1188,7 @@ ___
 
 [src/monkey/commandqueue.ts:37](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/commandqueue.ts#L37)
 
-___
+---
 
 ### press
 
@@ -1196,10 +1196,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `keyCode` | `number` |
-| `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
+| Name      | Type                                                  |
+| :-------- | :---------------------------------------------------- |
+| `keyCode` | `number`                                              |
+| `cb?`     | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
 
 #### Returns
 
@@ -1213,7 +1213,7 @@ ___
 
 [src/monkey/api.ts:91](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L91)
 
-___
+---
 
 ### pushCommands
 
@@ -1227,7 +1227,7 @@ ___
 
 [src/monkey/commandqueue.ts:93](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/commandqueue.ts#L93)
 
-___
+---
 
 ### quit
 
@@ -1235,8 +1235,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type                                                  |
+| :---- | :---------------------------------------------------- |
 | `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
 
 #### Returns
@@ -1251,7 +1251,7 @@ ___
 
 [src/monkey/api.ts:118](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L118)
 
-___
+---
 
 ### send
 
@@ -1259,8 +1259,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type     |
+| :-------- | :------- |
 | `command` | `string` |
 
 #### Returns
@@ -1275,7 +1275,7 @@ ___
 
 [src/monkey/commandqueue.ts:77](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/commandqueue.ts#L77)
 
-___
+---
 
 ### sendAndParse
 
@@ -1284,16 +1284,16 @@ ___
 #### Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `command` | `string` |
-| `_cb` | `never` |
-| `parser` | (`data`: ``null`` \| `string`) => ``null`` \| `T` |
+| Name      | Type                                          |
+| :-------- | :-------------------------------------------- |
+| `command` | `string`                                      |
+| `_cb`     | `never`                                       |
+| `parser`  | (`data`: `null` \| `string`) => `null` \| `T` |
 
 #### Returns
 
@@ -1307,7 +1307,7 @@ ___
 
 [src/monkey/commandqueue.ts:63](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/commandqueue.ts#L63)
 
-___
+---
 
 ### sendInternal
 
@@ -1315,8 +1315,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name           | Type                                               |
+| :------------- | :------------------------------------------------- |
 | `cmdConstruct` | [`BaseCommand`](Monkey.BaseCommand.md)<`unknown`\> |
 
 #### Returns
@@ -1327,7 +1327,7 @@ ___
 
 [src/monkey/commandqueue.ts:57](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/commandqueue.ts#L57)
 
-___
+---
 
 ### sleep
 
@@ -1335,9 +1335,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `ms` | `number` |
+| Name  | Type                                                  |
+| :---- | :---------------------------------------------------- |
+| `ms`  | `number`                                              |
 | `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
 
 #### Returns
@@ -1352,7 +1352,7 @@ ___
 
 [src/monkey/api.ts:114](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L114)
 
-___
+---
 
 ### tap
 
@@ -1360,10 +1360,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `x` | `number` |
-| `y` | `number` |
+| Name  | Type                                                  |
+| :---- | :---------------------------------------------------- |
+| `x`   | `number`                                              |
+| `y`   | `number`                                              |
 | `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
 
 #### Returns
@@ -1378,7 +1378,7 @@ ___
 
 [src/monkey/api.ts:87](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L87)
 
-___
+---
 
 ### touchDown
 
@@ -1386,10 +1386,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `x` | `number` |
-| `y` | `number` |
+| Name  | Type                                                  |
+| :---- | :---------------------------------------------------- |
+| `x`   | `number`                                              |
+| `y`   | `number`                                              |
 | `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
 
 #### Returns
@@ -1404,7 +1404,7 @@ ___
 
 [src/monkey/api.ts:59](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L59)
 
-___
+---
 
 ### touchMove
 
@@ -1412,10 +1412,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `x` | `number` |
-| `y` | `number` |
+| Name  | Type                                                  |
+| :---- | :---------------------------------------------------- |
+| `x`   | `number`                                              |
+| `y`   | `number`                                              |
 | `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
 
 #### Returns
@@ -1430,7 +1430,7 @@ ___
 
 [src/monkey/api.ts:67](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L67)
 
-___
+---
 
 ### touchUp
 
@@ -1438,10 +1438,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `x` | `number` |
-| `y` | `number` |
+| Name  | Type                                                  |
+| :---- | :---------------------------------------------------- |
+| `x`   | `number`                                              |
+| `y`   | `number`                                              |
 | `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
 
 #### Returns
@@ -1456,7 +1456,7 @@ ___
 
 [src/monkey/api.ts:63](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L63)
 
-___
+---
 
 ### trackball
 
@@ -1464,10 +1464,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `dx` | `number` |
-| `dy` | `number` |
+| Name  | Type                                                  |
+| :---- | :---------------------------------------------------- |
+| `dx`  | `number`                                              |
+| `dy`  | `number`                                              |
 | `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
 
 #### Returns
@@ -1482,7 +1482,7 @@ ___
 
 [src/monkey/api.ts:71](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L71)
 
-___
+---
 
 ### type
 
@@ -1490,9 +1490,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `str` | `string` |
+| Name  | Type                                                  |
+| :---- | :---------------------------------------------------- |
+| `str` | `string`                                              |
 | `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
 
 #### Returns
@@ -1507,7 +1507,7 @@ ___
 
 [src/monkey/api.ts:95](https://github.com/Maaaartin/adb-ts/blob/5393493/src/monkey/api.ts#L95)
 
-___
+---
 
 ### wake
 
@@ -1515,8 +1515,8 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name  | Type                                                  |
+| :---- | :---------------------------------------------------- |
 | `cb?` | [`MonkeyCallback`](../modules/Util.md#monkeycallback) |
 
 #### Returns

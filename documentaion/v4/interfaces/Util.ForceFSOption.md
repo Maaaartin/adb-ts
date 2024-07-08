@@ -6,17 +6,17 @@
 
 ## Hierarchy
 
-- **`ForceFSOption`**
+-   **`ForceFSOption`**
 
-  ↳ [`RmOptions`](Util.RmOptions.md)
+    ↳ [`RmOptions`](Util.RmOptions.md)
 
-  ↳ [`MvOptions`](Util.MvOptions.md)
+    ↳ [`MvOptions`](Util.MvOptions.md)
 
 ## Table of contents
 
 ### Properties
 
-- [force](Util.ForceFSOption.md#force)
+-   [force](Util.ForceFSOption.md#force)
 
 ## Properties
 

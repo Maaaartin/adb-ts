@@ -18,8 +18,8 @@ export default class KeyEvent extends Input {
             variant === 'longpress'
                 ? '--longpress'
                 : variant === 'doubletap'
-                ? '--doubletap'
-                : '',
+                  ? '--doubletap'
+                  : '',
             ...[code].flat()
         ]);
     }

@@ -6,22 +6,22 @@
 
 ## Hierarchy
 
-- `Error`
+-   `Error`
 
-  ↳ **`AdbError`**
+    ↳ **`AdbError`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Util.AdbError.md#constructor)
+-   [constructor](Util.AdbError.md#constructor)
 
 ### Properties
 
-- [code](Util.AdbError.md#code)
-- [errno](Util.AdbError.md#errno)
-- [name](Util.AdbError.md#name)
-- [path](Util.AdbError.md#path)
+-   [code](Util.AdbError.md#code)
+-   [errno](Util.AdbError.md#errno)
+-   [name](Util.AdbError.md#name)
+-   [path](Util.AdbError.md#path)
 
 ## Constructors
 
@@ -31,12 +31,12 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name      | Type     |
+| :-------- | :------- |
 | `message` | `string` |
-| `errno` | `number` |
-| `code` | `string` |
-| `path` | `string` |
+| `errno`   | `number` |
+| `code`    | `string` |
+| `path`    | `string` |
 
 #### Overrides
 
@@ -56,7 +56,7 @@ Error.constructor
 
 [src/util/errors.ts:31](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/errors.ts#L31)
 
-___
+---
 
 ### errno
 
@@ -66,7 +66,7 @@ ___
 
 [src/util/errors.ts:30](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/errors.ts#L30)
 
-___
+---
 
 ### name
 
@@ -80,7 +80,7 @@ Error.name
 
 [src/util/errors.ts:29](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/errors.ts#L29)
 
-___
+---
 
 ### path
 

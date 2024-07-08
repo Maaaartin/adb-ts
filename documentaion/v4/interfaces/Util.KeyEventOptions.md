@@ -6,16 +6,16 @@
 
 ## Hierarchy
 
-- [`InputOptions`](Util.InputOptions.md)
+-   [`InputOptions`](Util.InputOptions.md)
 
-  ↳ **`KeyEventOptions`**
+    ↳ **`KeyEventOptions`**
 
 ## Table of contents
 
 ### Properties
 
-- [source](Util.KeyEventOptions.md#source)
-- [variant](Util.KeyEventOptions.md#variant)
+-   [source](Util.KeyEventOptions.md#source)
+-   [variant](Util.KeyEventOptions.md#variant)
 
 ## Properties
 
@@ -31,11 +31,11 @@
 
 [src/util/types.ts:249](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L249)
 
-___
+---
 
 ### variant
 
-• `Optional` **variant**: ``"longpress"`` \| ``"doubletap"``
+• `Optional` **variant**: `"longpress"` \| `"doubletap"`
 
 #### Defined in
 

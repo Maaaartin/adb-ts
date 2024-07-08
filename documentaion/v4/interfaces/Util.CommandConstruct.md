@@ -6,16 +6,16 @@
 
 ## Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `P` | extends `unknown`[] = `unknown`[] |
+| Name | Type                              |
+| :--- | :-------------------------------- |
+| `T`  | `T`                               |
+| `P`  | extends `unknown`[] = `unknown`[] |
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Util.CommandConstruct.md#constructor)
+-   [constructor](Util.CommandConstruct.md#constructor)
 
 ## Constructors
 
@@ -25,10 +25,10 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name         | Type                                                |
+| :----------- | :-------------------------------------------------- |
 | `connection` | [`Connection`](../classes/Connection.Connection.md) |
-| `...args` | `P` |
+| `...args`    | `P`                                                 |
 
 #### Defined in
 

@@ -6,12 +6,12 @@
 
 ### Enumerations
 
-- [SyncMode](../enums/Sync.SyncMode.md)
+-   [SyncMode](../enums/Sync.SyncMode.md)
 
 ### Classes
 
-- [PullTransfer](../classes/Sync.PullTransfer.md)
-- [PushTransfer](../classes/Sync.PushTransfer.md)
-- [Stats](../classes/Sync.Stats.md)
-- [Sync](../classes/Sync.Sync.md)
-- [SyncEntry](../classes/Sync.SyncEntry.md)
+-   [PullTransfer](../classes/Sync.PullTransfer.md)
+-   [PushTransfer](../classes/Sync.PushTransfer.md)
+-   [Stats](../classes/Sync.Stats.md)
+-   [Sync](../classes/Sync.Sync.md)
+-   [SyncEntry](../classes/Sync.SyncEntry.md)

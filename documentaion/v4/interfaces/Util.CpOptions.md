@@ -6,33 +6,33 @@
 
 ## Hierarchy
 
-- [`NoClobberFSOption`](Util.NoClobberFSOption.md)
+-   [`NoClobberFSOption`](Util.NoClobberFSOption.md)
 
-- [`SymlinkFSoption`](Util.SymlinkFSoption.md)
+-   [`SymlinkFSoption`](Util.SymlinkFSoption.md)
 
-- [`RecursiveFSOption`](Util.RecursiveFSOption.md)
+-   [`RecursiveFSOption`](Util.RecursiveFSOption.md)
 
-  ↳ **`CpOptions`**
+    ↳ **`CpOptions`**
 
 ## Table of contents
 
 ### Properties
 
-- [archive](Util.CpOptions.md#archive)
-- [copyToTarget](Util.CpOptions.md#copytotarget)
-- [delDest](Util.CpOptions.md#deldest)
-- [delFirst](Util.CpOptions.md#delfirst)
-- [followAllSymlinks](Util.CpOptions.md#followallsymlinks)
-- [followListedSymlinks](Util.CpOptions.md#followlistedsymlinks)
-- [hardLink](Util.CpOptions.md#hardlink)
-- [noClobber](Util.CpOptions.md#noclobber)
-- [noDereference](Util.CpOptions.md#nodereference)
-- [noFollowSymlinks](Util.CpOptions.md#nofollowsymlinks)
-- [preserve](Util.CpOptions.md#preserve)
-- [preserveTimestamps](Util.CpOptions.md#preservetimestamps)
-- [recursive](Util.CpOptions.md#recursive)
-- [symlink](Util.CpOptions.md#symlink)
-- [update](Util.CpOptions.md#update)
+-   [archive](Util.CpOptions.md#archive)
+-   [copyToTarget](Util.CpOptions.md#copytotarget)
+-   [delDest](Util.CpOptions.md#deldest)
+-   [delFirst](Util.CpOptions.md#delfirst)
+-   [followAllSymlinks](Util.CpOptions.md#followallsymlinks)
+-   [followListedSymlinks](Util.CpOptions.md#followlistedsymlinks)
+-   [hardLink](Util.CpOptions.md#hardlink)
+-   [noClobber](Util.CpOptions.md#noclobber)
+-   [noDereference](Util.CpOptions.md#nodereference)
+-   [noFollowSymlinks](Util.CpOptions.md#nofollowsymlinks)
+-   [preserve](Util.CpOptions.md#preserve)
+-   [preserveTimestamps](Util.CpOptions.md#preservetimestamps)
+-   [recursive](Util.CpOptions.md#recursive)
+-   [symlink](Util.CpOptions.md#symlink)
+-   [update](Util.CpOptions.md#update)
 
 ## Properties
 
@@ -47,7 +47,7 @@ Same as `-dpr`, if specified, `noDereference`, `preserve` and `recursive` attrib
 
 [src/util/types.ts:408](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L408)
 
-___
+---
 
 ### copyToTarget
 
@@ -59,7 +59,7 @@ Adds `-t` flag.
 
 [src/util/types.ts:420](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L420)
 
-___
+---
 
 ### delDest
 
@@ -71,7 +71,7 @@ Adds `-f` flag.
 
 [src/util/types.ts:403](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L403)
 
-___
+---
 
 ### delFirst
 
@@ -83,7 +83,7 @@ Adds `-F` flag.
 
 [src/util/types.ts:399](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L399)
 
-___
+---
 
 ### followAllSymlinks
 
@@ -95,7 +95,7 @@ Adds `-L` flag.
 
 [src/util/types.ts:387](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L387)
 
-___
+---
 
 ### followListedSymlinks
 
@@ -107,7 +107,7 @@ Adds `-H` flag.
 
 [src/util/types.ts:391](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L391)
 
-___
+---
 
 ### hardLink
 
@@ -119,7 +119,7 @@ Adds `-l` flag.
 
 [src/util/types.ts:375](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L375)
 
-___
+---
 
 ### noClobber
 
@@ -136,7 +136,7 @@ No override.
 
 [src/util/types.ts:297](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L297)
 
-___
+---
 
 ### noDereference
 
@@ -148,7 +148,7 @@ Adds `-d` flag.
 
 [src/util/types.ts:379](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L379)
 
-___
+---
 
 ### noFollowSymlinks
 
@@ -160,7 +160,7 @@ Adds `-P` flag.
 
 [src/util/types.ts:383](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L383)
 
-___
+---
 
 ### preserve
 
@@ -172,7 +172,7 @@ Adds `--preserve=[ATTRIBUTES]`.
 
 [src/util/types.ts:395](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L395)
 
-___
+---
 
 ### preserveTimestamps
 
@@ -184,7 +184,7 @@ Adds `-p` flag.
 
 [src/util/types.ts:416](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L416)
 
-___
+---
 
 ### recursive
 
@@ -200,7 +200,7 @@ Adds `-r` flag.
 
 [src/util/types.ts:310](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L310)
 
-___
+---
 
 ### symlink
 
@@ -217,7 +217,7 @@ Creates symlink.
 
 [src/util/types.ts:304](https://github.com/Maaaartin/adb-ts/blob/5393493/src/util/types.ts#L304)
 
-___
+---
 
 ### update
 
