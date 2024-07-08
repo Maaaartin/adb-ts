@@ -9,8 +9,7 @@ describe('Screencap', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:echo && screencap -p 2>/dev/null',
-                res: 'ab' + encodedImage,
-                rawRes: true
+                res: { value: 'ab' + encodedImage, raw: true }
             }
         ]);
         try {
@@ -27,8 +26,7 @@ describe('Screencap', () => {
             { res: 'fail' },
             {
                 cmd: 'shell:echo && screencap -p 2>/dev/null',
-                res: 'ab' + encodedImage,
-                rawRes: true
+                res: { value: 'ab' + encodedImage, raw: true }
             }
         ]);
         try {
@@ -46,9 +44,7 @@ describe('Screencap', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: 'fail',
-                res: 'ab' + encodedImage,
-                rawRes: true
+                res: 'fail'
             }
         ]);
         try {
@@ -69,8 +65,7 @@ describe('Screencap', () => {
             },
             {
                 cmd: 'shell:echo && screencap -p 2>/dev/null',
-                res: 'ab' + encodedImage,
-                rawRes: true
+                res: { value: 'ab' + encodedImage, raw: true }
             }
         ]);
         try {
@@ -90,12 +85,7 @@ describe('Screencap', () => {
                 cmd: 'host:transport:serial',
                 res: { raw: true }
             },
-            {
-                cmd: 'shell:echo && screencap -p 2>/dev/null',
-                res: 'ab' + encodedImage,
-                rawRes: true,
-                unexpected: true
-            }
+            { res: 'unexpected' }
         ]);
         try {
             const port = await adbMock.start();

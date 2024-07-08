@@ -48,8 +48,7 @@ describe('Press', () => {
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'fail',
-                res: { raw: true }
+                res: 'fail'
             },
             {
                 cmd: `shell:input trackball press`,
@@ -74,8 +73,7 @@ describe('Press', () => {
                 res: { raw: true }
             },
             {
-                cmd: 'fail',
-                res: { raw: true }
+                res: 'fail'
             }
         ]);
         try {
@@ -117,7 +115,6 @@ describe('Press', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:input trackball press`,
                 res: 'unexpected'
             }
         ]);

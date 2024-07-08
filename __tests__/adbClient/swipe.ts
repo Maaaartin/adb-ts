@@ -120,8 +120,7 @@ describe('Swipe', () => {
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'fail',
-                res: { raw: true }
+                res: 'fail'
             },
             {
                 cmd: `shell:input touchscreen swipe 100 200 100 10`,
@@ -146,8 +145,7 @@ describe('Swipe', () => {
                 res: { raw: true }
             },
             {
-                cmd: 'fail',
-                res: { raw: true }
+                res: 'fail'
             }
         ]);
         try {
@@ -189,7 +187,6 @@ describe('Swipe', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:input touchscreen swipe 100 200 100 10`,
                 res: 'unexpected'
             }
         ]);

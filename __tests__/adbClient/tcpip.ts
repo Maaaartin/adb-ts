@@ -8,8 +8,7 @@ describe('Tcpip', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `tcpip:5555`,
-                res: 'restarting in',
-                rawRes: true
+                res: { value: 'restarting in', raw: true }
             }
         ]);
         try {
@@ -31,8 +30,7 @@ describe('Tcpip', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `tcpip:3333`,
-                res: 'restarting in',
-                rawRes: true
+                res: { value: 'restarting in', raw: true }
             }
         ]);
         try {
@@ -54,8 +52,7 @@ describe('Tcpip', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `tcpip:5555`,
-                res: 'restarting in',
-                rawRes: true
+                res: { value: 'restarting in', raw: true }
             }
         ]);
         try {

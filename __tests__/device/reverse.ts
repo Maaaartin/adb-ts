@@ -7,8 +7,7 @@ describe('Reverse tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'reverse:forward:localabstract:chrome_devtools_remote;tcp:9222',
-                res: 'OKAY',
-                rawRes: true
+                res: { value: 'OKAY', raw: true }
             }
         ]);
         try {

@@ -48,8 +48,7 @@ describe('Roll', () => {
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'fail',
-                res: { raw: true }
+                res: 'fail'
             },
             {
                 cmd: `shell:input trackball roll 100 0`,
@@ -74,8 +73,7 @@ describe('Roll', () => {
                 res: { raw: true }
             },
             {
-                cmd: 'fail',
-                res: { raw: true }
+                res: 'fail'
             }
         ]);
         try {
@@ -117,7 +115,6 @@ describe('Roll', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:input trackball roll 100 0`,
                 res: 'unexpected'
             }
         ]);

@@ -9,13 +9,15 @@ describe('List features tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:pm list features 2>/dev/null',
-                res: `feature:one=1
+                res: {
+                    value: `feature:one=1
 feature:two=two
 feature:three=false
 feature:four=true
 feature:five=null
 feature:six`,
-                rawRes: true
+                    raw: true
+                }
             }
         ]);
         try {

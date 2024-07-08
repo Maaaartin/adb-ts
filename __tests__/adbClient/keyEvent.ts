@@ -163,8 +163,7 @@ describe('Key event', () => {
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'fail',
-                res: { raw: true }
+                res: 'fail'
             },
             {
                 cmd: `shell:input keyboard keyevent 37`,
@@ -189,8 +188,7 @@ describe('Key event', () => {
                 res: { raw: true }
             },
             {
-                cmd: 'fail',
-                res: { raw: true }
+                res: 'fail'
             }
         ]);
         try {

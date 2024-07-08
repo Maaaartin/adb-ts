@@ -43,7 +43,7 @@ describe('Get serial no', () => {
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
-            { cmd: 'test', res: { value: 'test', raw: true } }
+            { res: 'fail' }
         ]);
         try {
             const port = await adbMock.start();

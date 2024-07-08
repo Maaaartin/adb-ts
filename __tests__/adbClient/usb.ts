@@ -8,8 +8,7 @@ describe('Usb', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `usb:`,
-                res: 'restarting in',
-                rawRes: true
+                res: { value: 'restarting in', raw: true }
             }
         ]);
         try {
@@ -31,8 +30,7 @@ describe('Usb', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `usb:`,
-                res: 'restarting in',
-                rawRes: true
+                res: { value: 'restarting in', raw: true }
             }
         ]);
         try {

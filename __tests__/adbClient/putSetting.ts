@@ -169,8 +169,7 @@ describe('Put setting tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings put system 'setting' ''`,
-                res: ' \r\n\t ',
-                rawRes: true
+                res: { value: ' \r\n\t ', raw: true }
             }
         ]);
         try {
@@ -193,8 +192,7 @@ describe('Put setting tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings put system 'setting' ''`,
-                res: 'Failed',
-                rawRes: true
+                res: { value: 'Failed', raw: true }
             }
         ]);
         try {
@@ -273,7 +271,6 @@ describe('Put setting tests', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:settings put system 'setting' ''`,
                 res: 'unexpected'
             }
         ]);

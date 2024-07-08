@@ -9,14 +9,16 @@ describe('List properties tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop',
-                res: `[one]: [1]
+                res: {
+                    value: `[one]: [1]
 [two]: [two]
 [three]: [false]
 [four]: [true]
 [five]: [null]
 [six]: []
 [seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]`,
-                rawRes: true
+                    raw: true
+                }
             }
         ]);
         try {

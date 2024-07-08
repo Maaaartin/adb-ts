@@ -6,8 +6,7 @@ describe('Forward tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host-serial:serial:forward:tcp:9222;localabstract:chrome_devtools_remote',
-                res: 'OKAY',
-                rawRes: true
+                res: { value: 'OKAY', raw: true }
             }
         ]);
 

@@ -8,8 +8,10 @@ describe('List Reverses', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'reverse:list-forward',
-                res: `host-19 localabstract:chrome_devtools_remote tcp:9222
+                res: {
+                    value: `host-19 localabstract:chrome_devtools_remote tcp:9222
 host-19 localabstract:chrome_devtools_remote tcp:9223`
+                }
             }
         ]);
         try {
@@ -38,8 +40,10 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
             { res: 'fail' },
             {
                 cmd: 'reverse:list-forward',
-                res: `host-19 localabstract:chrome_devtools_remote tcp:9222
+                res: {
+                    value: `host-19 localabstract:chrome_devtools_remote tcp:9222
 host-19 localabstract:chrome_devtools_remote tcp:9223`
+                }
             }
         ]);
         try {
@@ -57,9 +61,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: 'fail',
-                res: `host-19 localabstract:chrome_devtools_remote tcp:9222
-host-19 localabstract:chrome_devtools_remote tcp:9223`
+                res: 'fail'
             }
         ]);
         try {
@@ -80,8 +82,10 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
             },
             {
                 cmd: 'reverse:list-forward',
-                res: `host-19 localabstract:chrome_devtools_remote tcp:9222
+                res: {
+                    value: `host-19 localabstract:chrome_devtools_remote tcp:9222
 host-19 localabstract:chrome_devtools_remote tcp:9223`
+                }
             }
         ]);
         try {
@@ -102,10 +106,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
                 res: { raw: true }
             },
             {
-                cmd: 'reverse:list-forward',
-                res: `host-19 localabstract:chrome_devtools_remote tcp:9222
-host-19 localabstract:chrome_devtools_remote tcp:9223`,
-                unexpected: true
+                res: `unexpected`
             }
         ]);
         try {

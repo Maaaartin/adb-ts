@@ -31,7 +31,8 @@ describe('Is installed', () => {
                 res: { raw: true }
             },
             {
-                res: 'fail'
+                cmd: `shell:pm path com.package 2>/dev/null`,
+                res: { value: 'fail:\n', raw: true }
             }
         ]);
         try {
@@ -69,8 +70,7 @@ describe('Is installed', () => {
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'fail',
-                res: { raw: true }
+                res: 'fail'
             },
             {
                 cmd: `shell:pm path com.package 2>/dev/null`,
@@ -95,8 +95,7 @@ describe('Is installed', () => {
                 res: { raw: true }
             },
             {
-                cmd: `fail`,
-                res: { value: 'package:\n', raw: true }
+                res: `fail`
             }
         ]);
         try {

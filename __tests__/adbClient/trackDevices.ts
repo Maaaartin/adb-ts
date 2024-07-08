@@ -6,8 +6,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 describe('Track devices', () => {
     it('Should command with autoEnd false', async () => {
         const adbMock = new AdbMock({
-            cmd: 'host:track-devices-l',
-            res: null
+            cmd: 'host:track-devices-l'
         });
 
         const port = await adbMock.start();
@@ -22,8 +21,7 @@ describe('Track devices', () => {
     });
     it('Should have device map of null at initialization', async () => {
         const adbMock = new AdbMock({
-            cmd: 'host:track-devices-l',
-            res: null
+            cmd: 'host:track-devices-l'
         });
 
         const port = await adbMock.start();
@@ -39,8 +37,7 @@ describe('Track devices', () => {
 
     it('Add', async () => {
         const adbMock = new AdbMock({
-            cmd: 'host:track-devices-l',
-            res: null
+            cmd: 'host:track-devices-l'
         });
 
         try {
@@ -81,8 +78,7 @@ describe('Track devices', () => {
 
     it('Devices emit add only once for the same device', async () => {
         const adbMock = new AdbMock({
-            cmd: 'host:track-devices-l',
-            res: null
+            cmd: 'host:track-devices-l'
         });
         try {
             const port = await adbMock.start();
@@ -209,7 +205,9 @@ describe('Track devices', () => {
     it('Error', async () => {
         const adbMock = new AdbMock({
             cmd: 'host:track-devices-l',
-            res: 'b137f5dc               unauthorized usb:337641472X transport_id1'
+            res: {
+                value: 'b137f5dc               unauthorized usb:337641472X transport_id1'
+            }
         });
 
         try {
@@ -234,7 +232,9 @@ describe('Track devices', () => {
     it('End after error', async () => {
         const adbMock = new AdbMock({
             cmd: 'host:track-devices-l',
-            res: 'b137f5dc               unauthorized usb:337641472X transport_id1'
+            res: {
+                value: 'b137f5dc               unauthorized usb:337641472X transport_id1'
+            }
         });
 
         try {
@@ -259,8 +259,7 @@ describe('Track devices', () => {
 
     it('End', async () => {
         const adbMock = new AdbMock({
-            cmd: 'host:track-devices-l',
-            res: null
+            cmd: 'host:track-devices-l'
         });
 
         try {
@@ -286,8 +285,7 @@ describe('Track devices', () => {
 
     it('Should emit end when connection ends', async () => {
         const adbMock = new AdbMock({
-            cmd: 'host:track-devices-l',
-            res: null
+            cmd: 'host:track-devices-l'
         });
 
         try {
@@ -310,8 +308,7 @@ describe('Track devices', () => {
 
     it('Should emit error when connection has error', async () => {
         const adbMock = new AdbMock({
-            cmd: 'host:track-devices-l',
-            res: null
+            cmd: 'host:track-devices-l'
         });
 
         try {
@@ -334,10 +331,7 @@ describe('Track devices', () => {
 
     it('FAIL', async () => {
         const adbMock = new AdbMock({
-            cmd: 'fail',
-            res: {
-                value: 'b137f5dc               unauthorized usb337641472X transport_id:1'
-            }
+            res: 'fail'
         });
 
         try {

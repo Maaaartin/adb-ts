@@ -11,8 +11,7 @@ describe('Uninstall', () => {
             },
             {
                 cmd: `shell:pm uninstall com.package`,
-                res: 'Success\n',
-                rawRes: true
+                res: { value: 'Success\n', raw: true }
             }
         ]);
         try {
@@ -33,8 +32,7 @@ describe('Uninstall', () => {
             },
             {
                 cmd: `shell:pm uninstall -k com.package`,
-                res: 'Success\n',
-                rawRes: true
+                res: { value: 'Success\n', raw: true }
             }
         ]);
         try {
@@ -57,8 +55,7 @@ describe('Uninstall', () => {
             },
             {
                 cmd: `shell:pm uninstall com.package`,
-                res: 'Failure [CODE]\n',
-                rawRes: true
+                res: { value: 'Failure [CODE]\n', raw: true }
             }
         ]);
         try {
@@ -82,8 +79,7 @@ describe('Uninstall', () => {
             },
             {
                 cmd: `shell:pm uninstall com.package`,
-                res: 'Unknown package:\n',
-                rawRes: true
+                res: { value: 'Unknown package:\n', raw: true }
             }
         ]);
         try {
@@ -105,13 +101,11 @@ describe('Uninstall', () => {
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'fail',
-                res: { raw: true }
+                res: 'fail'
             },
             {
                 cmd: `shell:pm uninstall com.package`,
-                res: 'Success\n',
-                rawRes: true
+                res: { value: 'Success\n', raw: true }
             }
         ]);
         try {
@@ -132,9 +126,7 @@ describe('Uninstall', () => {
                 res: { raw: true }
             },
             {
-                cmd: `fail`,
-                res: 'Success\n',
-                rawRes: true
+                res: `fail`
             }
         ]);
         try {
@@ -155,8 +147,7 @@ describe('Uninstall', () => {
             },
             {
                 cmd: `shell:pm uninstall com.package`,
-                res: 'Success\n',
-                rawRes: true
+                res: { value: 'Success\n', raw: true }
             }
         ]);
         try {
@@ -177,10 +168,7 @@ describe('Uninstall', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:pm uninstall com.package`,
-                res: 'Success\n',
-                rawRes: true,
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

@@ -11,8 +11,7 @@ describe('Clear tests', () => {
             },
             {
                 cmd: `shell:pm clear com.something`,
-                res: 'Success\n',
-                rawRes: true
+                res: { value: 'Success\n', raw: true }
             }
         ]);
         try {
@@ -32,8 +31,7 @@ describe('Clear tests', () => {
             },
             {
                 cmd: `shell:pm clear com.something`,
-                res: 'Failed\n',
-                rawRes: true
+                res: { value: 'Failed\n', raw: true }
             }
         ]);
         try {
@@ -56,8 +54,7 @@ describe('Clear tests', () => {
             },
             {
                 cmd: `shell:pm clear com.something`,
-                res: 'Something\n',
-                rawRes: true
+                res: { value: 'Something\n', raw: true }
             }
         ]);
         try {

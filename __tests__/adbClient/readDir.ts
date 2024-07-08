@@ -101,7 +101,10 @@ describe('Read dir', () => {
     it('Unexpected data', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
-            { res: 'unexpected' }
+            {
+                cmd: 'sync:',
+                res: { value: 'UNEX', raw: true }
+            }
         ]);
         try {
             const port = await adbMock.start();

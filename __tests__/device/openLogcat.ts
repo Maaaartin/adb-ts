@@ -22,8 +22,7 @@ describe('Open logcat tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:echo && logcat -B *:I 2>/dev/null`,
-                res: logCatRes,
-                rawRes: true
+                res: { value: logCatRes, raw: true }
             }
         ]);
         try {
@@ -40,8 +39,7 @@ describe('Open logcat tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:echo && logcat -c 2>/dev/null && logcat -B *:I 2>/dev/null`,
-                res: logCatRes,
-                rawRes: true
+                res: { value: logCatRes, raw: true }
             }
         ]);
         try {

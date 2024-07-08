@@ -8,10 +8,12 @@ describe('List packages tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:pm list packages 2>/dev/null',
-                res: `package:one
+                res: {
+                    value: `package:one
 package:two.three
 package:four`,
-                rawRes: true
+                    raw: true
+                }
             }
         ]);
         try {

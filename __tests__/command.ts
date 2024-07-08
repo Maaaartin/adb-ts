@@ -29,7 +29,7 @@ describe('Handle response', () => {
         });
     };
     it('OKAY', async () => {
-        const adbMock = new AdbMock({ cmd: 'mock', res: null });
+        const adbMock = new AdbMock({ cmd: 'mock' });
         try {
             const port = await adbMock.start();
             const conn = await getConnection(port);
@@ -42,7 +42,7 @@ describe('Handle response', () => {
     });
 
     it('FAIL', async () => {
-        const adbMock = new AdbMock({ cmd: 'wrong value', res: null });
+        const adbMock = new AdbMock({ res: 'fail' });
 
         try {
             const port = await adbMock.start();
@@ -58,9 +58,7 @@ describe('Handle response', () => {
 
     it('Unexpected', async () => {
         const adbMock = new AdbMock({
-            cmd: 'mock',
-            res: null,
-            unexpected: true
+            res: 'unexpected'
         });
 
         try {

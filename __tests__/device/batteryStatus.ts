@@ -8,7 +8,8 @@ describe('Device battery status tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:dumpsys battery',
-                res: `Current Battery Service state:
+                res: {
+                    value: `Current Battery Service state:
             AC powered: false
             USB powered: false
             Wireless powered: false
@@ -23,6 +24,7 @@ describe('Device battery status tests', () => {
             voltage: 5000
             temperature: 250
             technology: Li-ion`
+                }
             }
         ]);
         try {

@@ -9,8 +9,7 @@ describe('Device open monkey tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
-                res: ':Monkey:\n',
-                rawRes: true
+                res: { value: ':Monkey:\n', raw: true }
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'tcp:1080', res: { raw: true } }

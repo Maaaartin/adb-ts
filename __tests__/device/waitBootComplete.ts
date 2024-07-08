@@ -7,8 +7,7 @@ describe('Wait boot complete tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:while getprop sys.boot_completed 2>/dev/null; do sleep 1; done',
-                res: '2\n1\n',
-                rawRes: true
+                res: { value: '2\n1\n', raw: true }
             }
         ]);
         try {

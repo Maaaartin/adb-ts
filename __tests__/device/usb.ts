@@ -8,8 +8,7 @@ describe('Device usb tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `usb:`,
-                res: 'restarting in',
-                rawRes: true
+                res: { value: 'restarting in', raw: true }
             }
         ]);
         try {

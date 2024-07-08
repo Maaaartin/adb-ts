@@ -134,8 +134,7 @@ describe('Set prop tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:setprop 'prop' ''`,
-                res: ' \r\n\t ',
-                rawRes: true
+                res: { value: ' \r\n\t ', raw: true }
             }
         ]);
         try {
@@ -153,8 +152,7 @@ describe('Set prop tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:setprop 'prop' ''`,
-                res: 'Failed',
-                rawRes: true
+                res: { value: 'Failed', raw: true }
             }
         ]);
         try {
@@ -233,7 +231,6 @@ describe('Set prop tests', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:setprop 'prop' ''`,
                 res: 'unexpected'
             }
         ]);

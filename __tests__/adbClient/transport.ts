@@ -5,7 +5,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Transport tests', () => {
     it('OKAY', async () => {
-        const adbMock = new AdbMock({ cmd: 'host:transport:1234', res: null });
+        const adbMock = new AdbMock({ cmd: 'host:transport:1234' });
         try {
             const port = await adbMock.start();
             const client = new Client({
@@ -21,7 +21,7 @@ describe('Transport tests', () => {
     });
 
     it('FAIL', async () => {
-        const adbMock = new AdbMock({ cmd: 'host:transport:1234', res: null });
+        const adbMock = new AdbMock({ res: 'fail' });
         try {
             const port = await adbMock.start();
             const client = new Client({
@@ -38,9 +38,7 @@ describe('Transport tests', () => {
 
     it('unexpected', async () => {
         const adbMock = new AdbMock({
-            cmd: 'host:transport:1234',
-            res: null,
-            unexpected: true
+            res: 'unexpected'
         });
         try {
             const port = await adbMock.start();

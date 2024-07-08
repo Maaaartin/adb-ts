@@ -8,8 +8,7 @@ describe('Reverse', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'reverse:forward:localabstract:chrome_devtools_remote;tcp:9222',
-                res: 'OKAY',
-                rawRes: true
+                res: { value: 'OKAY', raw: true }
             }
         ]);
         try {
@@ -31,8 +30,7 @@ describe('Reverse', () => {
             { res: 'fail' },
             {
                 cmd: 'reverse:forward:localabstract:chrome_devtools_remote;tcp:9222',
-                res: 'OKAY',
-                rawRes: true
+                res: { value: 'OKAY', raw: true }
             }
         ]);
         try {
@@ -54,9 +52,7 @@ describe('Reverse', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: 'fail',
-                res: 'OKAY',
-                rawRes: true
+                res: 'fail'
             }
         ]);
         try {
@@ -81,8 +77,7 @@ describe('Reverse', () => {
             },
             {
                 cmd: 'reverse:forward:localabstract:chrome_devtools_remote;tcp:9222',
-                res: 'OKAY',
-                rawRes: true
+                res: { value: 'OKAY', raw: true }
             }
         ]);
         try {
@@ -106,12 +101,7 @@ describe('Reverse', () => {
                 cmd: 'host:transport:serial',
                 res: { raw: true }
             },
-            {
-                cmd: 'reverse:forward:localabstract:chrome_devtools_remote;tcp:9222',
-                res: 'OKAY',
-                rawRes: true,
-                unexpected: true
-            }
+            { res: 'unexpected' }
         ]);
         try {
             const port = await adbMock.start();

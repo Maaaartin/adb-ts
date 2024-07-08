@@ -3,7 +3,10 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Version tests', () => {
     it('OKAY', async () => {
-        const adbMock = new AdbMock({ cmd: 'host:version', res: '0029' });
+        const adbMock = new AdbMock({
+            cmd: 'host:version',
+            res: { value: '0029' }
+        });
         try {
             const port = await adbMock.start();
             const client = new Client({
@@ -19,8 +22,7 @@ describe('Version tests', () => {
 
     it('FAIL', async () => {
         const adbMock = new AdbMock({
-            cmd: 'fail',
-            res: 'host:something'
+            res: 'fail'
         });
         try {
             const port = await adbMock.start();
@@ -38,9 +40,7 @@ describe('Version tests', () => {
 
     it('unexpected', async () => {
         const adbMock = new AdbMock({
-            cmd: 'host:version',
-            res: null,
-            unexpected: true
+            res: 'unexpected'
         });
         try {
             const port = await adbMock.start();

@@ -7,8 +7,10 @@ describe('List reverses tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'reverse:list-forward',
-                res: `host-19 localabstract:chrome_devtools_remote tcp:9222
+                res: {
+                    value: `host-19 localabstract:chrome_devtools_remote tcp:9222
 host-19 localabstract:chrome_devtools_remote tcp:9223`
+                }
             }
         ]);
         try {

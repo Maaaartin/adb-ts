@@ -5,7 +5,10 @@ describe('Root tests', () => {
     it('Should root device', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
-            { cmd: 'root:', res: 'restarting adbd as root', rawRes: true }
+            {
+                cmd: 'root:',
+                res: { value: 'restarting adbd as root', raw: true }
+            }
         ]);
         try {
             const port = await adbMock.start();
@@ -19,7 +22,7 @@ describe('Root tests', () => {
     it('Should get error on invalid response', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
-            { cmd: 'root:', res: 'invalid', rawRes: true }
+            { cmd: 'root:', res: { value: 'invalid', raw: true } }
         ]);
         try {
             const port = await adbMock.start();

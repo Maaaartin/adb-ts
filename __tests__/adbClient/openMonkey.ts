@@ -10,8 +10,7 @@ describe('Open Monkey tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
-                res: ':Monkey:\n',
-                rawRes: true
+                res: { value: ':Monkey:\n', raw: true }
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'tcp:1080', res: { raw: true } }
@@ -34,8 +33,7 @@ describe('Open Monkey tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
-                res: ':Monkey:\n',
-                rawRes: true
+                res: { value: ':Monkey:\n', raw: true }
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'tcp:1080', res: { raw: true } }
@@ -58,8 +56,7 @@ describe('Open Monkey tests', () => {
             { res: 'fail' },
             {
                 cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
-                res: ':Monkey:\n',
-                rawRes: true
+                res: { value: ':Monkey:\n', raw: true }
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'tcp:1080', res: { raw: true } }
@@ -79,11 +76,7 @@ describe('Open Monkey tests', () => {
         const adbMock = new AdbMockMulti([
             { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'host:transport:serial', res: { raw: true } },
-            {
-                cmd: `fail`,
-                res: ':Monkey:\n',
-                rawRes: true
-            },
+            { res: `fail` },
             { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'tcp:1080', res: { raw: true } }
         ]);
@@ -104,8 +97,7 @@ describe('Open Monkey tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
-                res: ':Monkey:\n',
-                rawRes: true
+                res: { value: ':Monkey:\n', raw: true }
             },
             { res: 'fail' },
             { cmd: 'tcp:1080', res: { raw: true } }
@@ -128,8 +120,7 @@ describe('Open Monkey tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
-                res: ':Monkey:\n',
-                rawRes: true
+                res: { value: ':Monkey:\n', raw: true }
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
             { res: 'fail' }
@@ -154,8 +145,7 @@ describe('Open Monkey tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
-                res: ':Monkey:\n',
-                rawRes: true
+                res: { value: ':Monkey:\n', raw: true }
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'tcp:1080', res: { raw: true } }
@@ -182,8 +172,7 @@ describe('Open Monkey tests', () => {
             },
             {
                 cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
-                res: ':Monkey:\n',
-                rawRes: true
+                res: { value: ':Monkey:\n', raw: true }
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'tcp:1080', res: { raw: true } }
@@ -206,12 +195,7 @@ describe('Open Monkey tests', () => {
                 res: { raw: true }
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
-            {
-                cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
-                res: ':Monkey:\n',
-                rawRes: true,
-                unexpected: true
-            },
+            { res: 'unexpected' },
             { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'tcp:1080', res: { raw: true } }
         ]);
@@ -235,8 +219,7 @@ describe('Open Monkey tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
-                res: ':Monkey:\n',
-                rawRes: true
+                res: { value: ':Monkey:\n', raw: true }
             },
             ...Array(40).fill({
                 res: 'unexpected'
@@ -263,8 +246,7 @@ describe('Open Monkey tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
-                res: ':Monkey:\n',
-                rawRes: true
+                res: { value: ':Monkey:\n', raw: true }
             },
             {
                 cmd: 'host:transport:serial',

@@ -25,8 +25,7 @@ describe('Open logcat OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:echo && logcat -B *:I 2>/dev/null`,
-                res: logCatRes,
-                rawRes: true
+                res: { value: logCatRes, raw: true }
             }
         ]);
 
@@ -51,8 +50,7 @@ describe('Open logcat OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:echo && logcat -c 2>/dev/null && logcat -B *:I 2>/dev/null`,
-                res: logCatRes,
-                rawRes: true
+                res: { value: logCatRes, raw: true }
             }
         ]);
         try {
@@ -72,8 +70,7 @@ describe('Open logcat FAIL tests', () => {
             { res: 'fail' },
             {
                 cmd: `shell:echo && logcat -B *:I 2>/dev/null`,
-                res: logCatRes,
-                rawRes: true
+                res: { value: logCatRes, raw: true }
             }
         ]);
         try {
@@ -93,9 +90,7 @@ describe('Open logcat FAIL tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: `fail`,
-                res: logCatRes,
-                rawRes: true
+                res: `fail`
             }
         ]);
         try {
@@ -120,8 +115,7 @@ describe('Open logcat unexpected error tests', () => {
             },
             {
                 cmd: `shell:echo && logcat -B *:I 2>/dev/null`,
-                res: logCatRes,
-                rawRes: true
+                res: { value: logCatRes, raw: true }
             }
         ]);
         try {
@@ -146,10 +140,7 @@ describe('Open logcat unexpected error tests', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:echo && logcat -B *:I 2>/dev/null`,
-                res: logCatRes,
-                rawRes: true,
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

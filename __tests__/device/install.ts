@@ -21,7 +21,8 @@ describe('Install tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
-                res: { value: '123', raw: true, end: true }
+                res: { value: '123', raw: true },
+                end: true
             }
         ]);
         try {
@@ -53,7 +54,8 @@ describe('Install tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
-                res: { value: '123', raw: true, end: true }
+                res: { value: '123', raw: true },
+                end: true
             }
         ]);
         try {
@@ -92,7 +94,8 @@ describe('Install tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
-                res: { value: '123', raw: true, end: true }
+                res: { value: '123', raw: true },
+                end: true
             }
         ]);
         try {

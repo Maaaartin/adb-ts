@@ -544,8 +544,7 @@ describe('Start service', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:am startservice -n 'com.my.app/.Service' --user 0`,
-                res: 'Error: message\n',
-                rawRes: true
+                res: { value: 'Error: message\n', raw: true }
             }
         ]);
         try {
@@ -624,7 +623,6 @@ describe('Start service', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:am startservice -n 'com.my.app/.Service' --user 0`,
                 res: 'unexpected'
             }
         ]);

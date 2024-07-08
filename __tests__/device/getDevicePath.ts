@@ -5,7 +5,10 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 describe('Get device path tests', () => {
     it('Should get device path', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host-serial:serial:get-devpath', res: 'usb:336592896X' }
+            {
+                cmd: 'host-serial:serial:get-devpath',
+                res: { value: 'usb:336592896X' }
+            }
         ]);
         try {
             const port = await adbMock.start();

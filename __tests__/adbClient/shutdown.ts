@@ -75,7 +75,6 @@ describe('Shutdown', () => {
                 res: { raw: true }
             },
             {
-                cmd: 'shell:reboot -p',
                 res: 'unexpected'
             }
         ]);

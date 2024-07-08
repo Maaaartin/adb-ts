@@ -8,10 +8,12 @@ describe('List packages', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:pm list packages 2>/dev/null',
-                res: `package:one
+                res: {
+                    value: `package:one
 package:two.three
 package:four`,
-                rawRes: true
+                    raw: true
+                }
             }
         ]);
         try {
@@ -29,10 +31,12 @@ package:four`,
             { res: 'fail' },
             {
                 cmd: 'shell:pm list packages 2>/dev/null',
-                res: `package:one
+                res: {
+                    value: `package:one
 package:two.three
 package:four`,
-                rawRes: true
+                    raw: true
+                }
             }
         ]);
         try {
@@ -50,11 +54,7 @@ package:four`,
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: 'fail',
-                res: `package:one
-package:two.three
-package:four`,
-                rawRes: true
+                res: 'fail'
             }
         ]);
         try {
@@ -75,10 +75,12 @@ package:four`,
             },
             {
                 cmd: 'shell:pm list packages 2>/dev/null',
-                res: `package:one
+                res: {
+                    value: `package:one
 package:two.three
 package:four`,
-                rawRes: true
+                    raw: true
+                }
             }
         ]);
         try {
@@ -98,14 +100,7 @@ package:four`,
                 cmd: 'host:transport:serial',
                 res: { raw: true }
             },
-            {
-                cmd: 'shell:pm list packages 2>/dev/null',
-                res: `package:one
-package:two.three
-package:four`,
-                rawRes: true,
-                unexpected: true
-            }
+            { res: 'unexpected' }
         ]);
         try {
             const port = await adbMock.start();

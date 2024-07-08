@@ -83,8 +83,7 @@ describe('IP address', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: 'fail',
-                res: { value: '127.0.0.1', raw: true }
+                res: 'fail'
             }
         ]);
 

@@ -72,8 +72,7 @@ describe('Kill app FAIL tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: `fail`,
-                res: { value: 'message \n1-2-3-4-5', raw: true }
+                res: `fail`
             }
         ]);
         try {

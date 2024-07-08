@@ -8,8 +8,7 @@ describe('Screencap tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:echo && screencap -p 2>/dev/null',
-                res: 'ab' + encodedImage,
-                rawRes: true
+                res: { value: 'ab' + encodedImage, raw: true }
             }
         ]);
         try {

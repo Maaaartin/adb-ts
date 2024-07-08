@@ -5,7 +5,10 @@ import { UnexpectedDataError } from '../../lib/util';
 describe('Wait for', () => {
     it('OKAY with any type', async () => {
         const adbMock = new AdbMock([
-            { cmd: `host:wait-for-any-device`, res: 'OKAY', rawRes: true }
+            {
+                cmd: `host:wait-for-any-device`,
+                res: { value: 'OKAY', raw: true }
+            }
         ]);
         try {
             const port = await adbMock.start();
@@ -19,7 +22,10 @@ describe('Wait for', () => {
 
     it('OKAY with local type', async () => {
         const adbMock = new AdbMock([
-            { cmd: `host:wait-for-local-device`, res: 'OKAY', rawRes: true }
+            {
+                cmd: `host:wait-for-local-device`,
+                res: { value: 'OKAY', raw: true }
+            }
         ]);
         try {
             const port = await adbMock.start();
@@ -33,7 +39,10 @@ describe('Wait for', () => {
 
     it('OKAY with usb type', async () => {
         const adbMock = new AdbMock([
-            { cmd: `host:wait-for-usb-device`, res: 'OKAY', rawRes: true }
+            {
+                cmd: `host:wait-for-usb-device`,
+                res: { value: 'OKAY', raw: true }
+            }
         ]);
         try {
             const port = await adbMock.start();
@@ -47,7 +56,10 @@ describe('Wait for', () => {
 
     it('OKAY with bootloader state', async () => {
         const adbMock = new AdbMock([
-            { cmd: `host:wait-for-any-bootloader`, res: 'OKAY', rawRes: true }
+            {
+                cmd: `host:wait-for-any-bootloader`,
+                res: { value: 'OKAY', raw: true }
+            }
         ]);
         try {
             const port = await adbMock.start();
@@ -61,7 +73,10 @@ describe('Wait for', () => {
 
     it('OKAY with recovery state', async () => {
         const adbMock = new AdbMock([
-            { cmd: `host:wait-for-any-recovery`, res: 'OKAY', rawRes: true }
+            {
+                cmd: `host:wait-for-any-recovery`,
+                res: { value: 'OKAY', raw: true }
+            }
         ]);
         try {
             const port = await adbMock.start();
@@ -75,7 +90,10 @@ describe('Wait for', () => {
 
     it('OKAY with rescue state', async () => {
         const adbMock = new AdbMock([
-            { cmd: `host:wait-for-any-rescue`, res: 'OKAY', rawRes: true }
+            {
+                cmd: `host:wait-for-any-rescue`,
+                res: { value: 'OKAY', raw: true }
+            }
         ]);
         try {
             const port = await adbMock.start();
@@ -89,7 +107,10 @@ describe('Wait for', () => {
 
     it('OKAY with sideload state', async () => {
         const adbMock = new AdbMock([
-            { cmd: `host:wait-for-any-sideload`, res: 'OKAY', rawRes: true }
+            {
+                cmd: `host:wait-for-any-sideload`,
+                res: { value: 'OKAY', raw: true }
+            }
         ]);
         try {
             const port = await adbMock.start();
@@ -103,7 +124,10 @@ describe('Wait for', () => {
 
     it('OKAY with disconnect state', async () => {
         const adbMock = new AdbMock([
-            { cmd: `host:wait-for-any-disconnect`, res: 'OKAY', rawRes: true }
+            {
+                cmd: `host:wait-for-any-disconnect`,
+                res: { value: 'OKAY', raw: true }
+            }
         ]);
         try {
             const port = await adbMock.start();
@@ -116,9 +140,7 @@ describe('Wait for', () => {
     });
 
     it('FAIL first response', async () => {
-        const adbMock = new AdbMock([
-            { cmd: `fail`, res: 'OKAY', rawRes: true }
-        ]);
+        const adbMock = new AdbMock([{ res: `fail` }]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
@@ -134,8 +156,7 @@ describe('Wait for', () => {
         const adbMock = new AdbMock([
             {
                 cmd: `host:wait-for-any-disconnect`,
-                res: 'FAIL0003Err',
-                rawRes: true
+                res: { value: 'FAIL0003Err', raw: true }
             }
         ]);
         try {
@@ -153,8 +174,7 @@ describe('Wait for', () => {
         const adbMock = new AdbMock([
             {
                 cmd: `host:wait-for-any-disconnect`,
-                res: 'FAIL',
-                rawRes: true
+                res: { value: 'FAIL', raw: true }
             }
         ]);
         try {
@@ -172,8 +192,7 @@ describe('Wait for', () => {
         const adbMock = new AdbMock([
             {
                 cmd: `host:wait-for-any-disconnect`,
-                res: 'UNEX',
-                rawRes: true
+                res: { value: 'UNEX', raw: true }
             }
         ]);
         try {

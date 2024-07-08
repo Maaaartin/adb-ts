@@ -118,7 +118,6 @@ describe('Mkdir unexpected tests', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:(mkdir /dir) || echo '1-2-3-4-5'`,
                 res: 'unexpected'
             }
         ]);

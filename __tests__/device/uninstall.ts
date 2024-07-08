@@ -10,8 +10,7 @@ describe('Uninstall tests', () => {
             },
             {
                 cmd: `shell:pm uninstall com.package`,
-                res: 'Success\n',
-                rawRes: true
+                res: { value: 'Success\n', raw: true }
             }
         ]);
         try {
@@ -31,8 +30,7 @@ describe('Uninstall tests', () => {
             },
             {
                 cmd: `shell:pm uninstall -k com.package`,
-                res: 'Success\n',
-                rawRes: true
+                res: { value: 'Success\n', raw: true }
             }
         ]);
         try {

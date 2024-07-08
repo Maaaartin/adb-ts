@@ -8,14 +8,16 @@ describe('List properties', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop',
-                res: `[one]: [1]
+                res: {
+                    value: `[one]: [1]
 [two]: [two]
 [three]: [false]
 [four]: [true]
 [five]: [null]
 [six]: []
 [seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]`,
-                rawRes: true
+                    raw: true
+                }
             }
         ]);
         try {
@@ -48,14 +50,16 @@ describe('List properties', () => {
             { res: 'fail' },
             {
                 cmd: 'shell:getprop',
-                res: `[one]: [1]
+                res: {
+                    value: `[one]: [1]
 [two]: [two]
 [three]: [false]
 [four]: [true]
 [five]: [null]
 [six]: []
 [seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]`,
-                rawRes: true
+                    raw: true
+                }
             }
         ]);
         try {
@@ -73,15 +77,7 @@ describe('List properties', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: 'fail',
-                res: `[one]: [1]
-[two]: [two]
-[three]: [false]
-[four]: [true]
-[five]: [null]
-[six]: []
-[seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]`,
-                rawRes: true
+                res: 'fail'
             }
         ]);
         try {
@@ -103,14 +99,16 @@ describe('List properties', () => {
             },
             {
                 cmd: 'shell:getprop',
-                res: `[one]: [1]
+                res: {
+                    value: `[one]: [1]
 [two]: [two]
 [three]: [false]
 [four]: [true]
 [five]: [null]
 [six]: []
 [seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]`,
-                rawRes: true
+                    raw: true
+                }
             }
         ]);
         try {
@@ -131,16 +129,7 @@ describe('List properties', () => {
                 res: { raw: true }
             },
             {
-                cmd: 'shell:getprop',
-                res: `[one]: [1]
-[two]: [two]
-[three]: [false]
-[four]: [true]
-[five]: [null]
-[six]: []
-[seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]`,
-                rawRes: true,
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
 

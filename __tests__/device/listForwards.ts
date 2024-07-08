@@ -6,8 +6,10 @@ describe('List forwards tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host-serial:serial:list-forward',
-                res: `serial tcp:9222 localabstract:chrome_devtools_remote
+                res: {
+                    value: `serial tcp:9222 localabstract:chrome_devtools_remote
 serial tcp:9223 localabstract:chrome_devtools_remote`
+                }
             }
         ]);
 

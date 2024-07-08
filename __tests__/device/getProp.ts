@@ -7,8 +7,7 @@ describe('Get prop tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop prop',
-                res: `string\n`,
-                rawRes: true
+                res: { value: `string\n`, raw: true }
             }
         ]);
         try {

@@ -31,7 +31,7 @@ describe('Is installed tests', () => {
             },
             {
                 cmd: `shell:pm path com.package 2>/dev/null`,
-                res: 'fail'
+                res: { value: 'fail:\n', raw: true }
             }
         ]);
         try {

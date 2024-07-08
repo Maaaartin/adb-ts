@@ -49,8 +49,7 @@ describe('Open TCP', () => {
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'fail',
-                res: { raw: true }
+                res: 'fail'
             },
             {
                 cmd: 'tcp:5555',
@@ -75,8 +74,7 @@ describe('Open TCP', () => {
                 res: { raw: true }
             },
             {
-                cmd: 'fail',
-                res: { raw: true }
+                res: 'fail'
             }
         ]);
         try {
@@ -118,7 +116,6 @@ describe('Open TCP', () => {
                 res: { raw: true }
             },
             {
-                cmd: 'tcp:5555',
                 res: 'unexpected'
             }
         ]);

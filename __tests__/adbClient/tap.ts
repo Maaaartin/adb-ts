@@ -48,8 +48,7 @@ describe('Tap', () => {
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'fail',
-                res: { raw: true }
+                res: 'fail'
             },
             {
                 cmd: `shell:input touchscreen tap 100 0`,
@@ -74,8 +73,7 @@ describe('Tap', () => {
                 res: { raw: true }
             },
             {
-                cmd: 'fail',
-                res: { raw: true }
+                res: 'fail'
             }
         ]);
         try {
@@ -117,7 +115,6 @@ describe('Tap', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:input touchscreen tap 100 0`,
                 res: 'unexpected'
             }
         ]);

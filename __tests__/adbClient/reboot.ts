@@ -74,7 +74,7 @@ describe('Reboot', () => {
                 cmd: 'host:transport:serial',
                 res: { raw: true }
             },
-            { cmd: 'reboot:', res: { raw: true }, unexpected: true }
+            { res: 'unexpected' }
         ]);
         try {
             const port = await adbMock.start();
