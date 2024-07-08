@@ -33,8 +33,7 @@ describe('Mkdir OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(mkdir -m 'x' -p /dir) || echo '1-2-3-4-5'`,
-                res: 'data',
-                rawRes: true
+                res: { value: 'data', raw: true }
             }
         ]);
         try {
@@ -54,7 +53,7 @@ describe('Mkdir OKAY tests', () => {
 describe('Mkdir FAIL tests', () => {
     it('First response should FAIL', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: `shell:(mkdir /dir) || echo '1-2-3-4-5'`,
                 res: { raw: true }
@@ -75,8 +74,7 @@ describe('Mkdir FAIL tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: `fail`,
-                res: { raw: true }
+                res: 'fail'
             }
         ]);
         try {
@@ -96,8 +94,7 @@ describe('Mkdir unexpected tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:(mkdir /dir) || echo '1-2-3-4-5'`,
@@ -123,8 +120,7 @@ describe('Mkdir unexpected tests', () => {
             },
             {
                 cmd: `shell:(mkdir /dir) || echo '1-2-3-4-5'`,
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

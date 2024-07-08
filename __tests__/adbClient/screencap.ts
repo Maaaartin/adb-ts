@@ -24,7 +24,7 @@ describe('Screencap', () => {
     });
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: 'shell:echo && screencap -p 2>/dev/null',
                 res: 'ab' + encodedImage,
@@ -66,8 +66,7 @@ describe('Screencap', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: 'shell:echo && screencap -p 2>/dev/null',

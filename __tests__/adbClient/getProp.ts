@@ -8,8 +8,7 @@ describe('Gep prop tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop prop',
-                res: `string\n`,
-                rawRes: true
+                res: { value: `string\n`, raw: true }
             }
         ]);
         try {
@@ -27,8 +26,7 @@ describe('Gep prop tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop prop',
-                res: `0\n`,
-                rawRes: true
+                res: { value: `0\n`, raw: true }
             }
         ]);
         try {
@@ -46,8 +44,7 @@ describe('Gep prop tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop prop',
-                res: `false\n`,
-                rawRes: true
+                res: { value: `false\n`, raw: true }
             }
         ]);
         try {
@@ -65,8 +62,7 @@ describe('Gep prop tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop prop',
-                res: `null\n`,
-                rawRes: true
+                res: { value: `null\n`, raw: true }
             }
         ]);
         try {
@@ -84,8 +80,7 @@ describe('Gep prop tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop prop',
-                res: `\n`,
-                rawRes: true
+                res: { value: `\n`, raw: true }
             }
         ]);
         try {
@@ -104,8 +99,7 @@ describe('Gep prop tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop prop',
-                res: `${date.toISOString()}\n`,
-                rawRes: true
+                res: { value: `${date.toISOString()}\n`, raw: true }
             }
         ]);
         try {
@@ -120,11 +114,10 @@ describe('Gep prop tests', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: 'shell:getprop',
-                res: `prop\n`,
-                rawRes: true
+                res: { value: `prop\n`, raw: true }
             }
         ]);
         try {
@@ -141,11 +134,7 @@ describe('Gep prop tests', () => {
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
-            {
-                cmd: 'fail',
-                res: `prop`,
-                rawRes: true
-            }
+            { res: 'fail' }
         ]);
         try {
             const port = await adbMock.start();
@@ -161,14 +150,11 @@ describe('Gep prop tests', () => {
     it('Unexpected first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: 'shell:getprop prop',
-                res: 'prop',
-                rawRes: true
+                res: { value: 'prop', raw: true }
             }
         ]);
         try {
@@ -188,12 +174,7 @@ describe('Gep prop tests', () => {
                 cmd: 'host:transport:serial',
                 res: { raw: true }
             },
-            {
-                cmd: 'shell:getprop prop',
-                res: 'prop',
-                rawRes: true,
-                unexpected: true
-            }
+            { res: 'unexpected' }
         ]);
         try {
             const port = await adbMock.start();

@@ -6,7 +6,10 @@ describe('Get serial no tests', () => {
     it('Should get serial no', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
-            { cmd: 'shell:getprop ro.serialno', res: 'test', rawRes: true }
+            {
+                cmd: 'shell:getprop ro.serialno',
+                res: { value: 'test', raw: true }
+            }
         ]);
         try {
             const port = await adbMock.start();

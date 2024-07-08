@@ -207,9 +207,7 @@ describe('Key event', () => {
     it('Unexpected first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:input keyboard keyevent 37`,
@@ -234,9 +232,7 @@ describe('Key event', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:input keyboard keyevent 37`,
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

@@ -152,8 +152,7 @@ describe('Uninstall', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:pm uninstall com.package`,

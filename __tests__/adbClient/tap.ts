@@ -93,8 +93,7 @@ describe('Tap', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:input touchscreen tap 100 0`,
@@ -120,8 +119,7 @@ describe('Tap', () => {
             },
             {
                 cmd: `shell:input touchscreen tap 100 0`,
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

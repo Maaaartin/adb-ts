@@ -93,8 +93,7 @@ describe('Press', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:input trackball press`,
@@ -120,8 +119,7 @@ describe('Press', () => {
             },
             {
                 cmd: `shell:input trackball press`,
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

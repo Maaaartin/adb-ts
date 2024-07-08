@@ -20,7 +20,7 @@ describe('Reboot', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             { cmd: 'reboot:', res: { raw: true } }
         ]);
         try {
@@ -37,7 +37,7 @@ describe('Reboot', () => {
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
-            { cmd: 'fail', res: { raw: true } }
+            { res: 'fail' }
         ]);
         try {
             const port = await adbMock.start();
@@ -54,8 +54,7 @@ describe('Reboot', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             { cmd: 'reboot:', res: { raw: true } }
         ]);

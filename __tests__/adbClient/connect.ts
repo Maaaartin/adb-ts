@@ -4,7 +4,10 @@ import { Client } from '../../lib/client';
 describe('Connect', () => {
     it('Connect to default port', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:connect:127.0.0.1:5555', res: 'connected to' }
+            {
+                cmd: 'host:connect:127.0.0.1:5555',
+                res: { value: 'connected to' }
+            }
         ]);
         try {
             const port = await adbMock.start();
@@ -18,7 +21,10 @@ describe('Connect', () => {
 
     it('Connect to passed port', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:connect:127.0.0.1:4444', res: 'connected to' }
+            {
+                cmd: 'host:connect:127.0.0.1:4444',
+                res: { value: 'connected to' }
+            }
         ]);
         try {
             const port = await adbMock.start();
@@ -32,7 +38,10 @@ describe('Connect', () => {
 
     it('Connect - host containing port', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:connect:127.0.0.1:4444', res: 'connected to' }
+            {
+                cmd: 'host:connect:127.0.0.1:4444',
+                res: { value: 'connected to' }
+            }
         ]);
         try {
             const port = await adbMock.start();
@@ -46,7 +55,7 @@ describe('Connect', () => {
 
     it('Invalid reply', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:connect:127.0.0.1:4444', res: 'invalid' }
+            { cmd: 'host:connect:127.0.0.1:4444', res: { value: 'invalid' } }
         ]);
         try {
             const port = await adbMock.start();
@@ -60,7 +69,7 @@ describe('Connect', () => {
     });
 
     it('FAIL', async () => {
-        const adbMock = new AdbMock([{ cmd: 'test', res: 'connected to' }]);
+        const adbMock = new AdbMock([{ res: 'fail' }]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });

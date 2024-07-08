@@ -8,8 +8,7 @@ describe('Get setting OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings get system 'prop'`,
-                res: `string\n`,
-                rawRes: true
+                res: { value: `string\n`, raw: true }
             }
         ]);
         try {
@@ -27,8 +26,7 @@ describe('Get setting OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings get system 'prop'`,
-                res: `0\n`,
-                rawRes: true
+                res: { value: `0\n`, raw: true }
             }
         ]);
         try {
@@ -46,8 +44,7 @@ describe('Get setting OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings get system 'prop'`,
-                res: `false\n`,
-                rawRes: true
+                res: { value: `false\n`, raw: true }
             }
         ]);
         try {
@@ -65,8 +62,7 @@ describe('Get setting OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings get system 'prop'`,
-                res: `null\n`,
-                rawRes: true
+                res: { value: `null\n`, raw: true }
             }
         ]);
         try {
@@ -84,8 +80,7 @@ describe('Get setting OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings get system 'prop'`,
-                res: `\n`,
-                rawRes: true
+                res: { value: `\n`, raw: true }
             }
         ]);
         try {
@@ -104,8 +99,7 @@ describe('Get setting OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings get system 'prop'`,
-                res: `${date.toISOString()}\n`,
-                rawRes: true
+                res: { value: `${date.toISOString()}\n`, raw: true }
             }
         ]);
         try {
@@ -122,11 +116,10 @@ describe('Get setting OKAY tests', () => {
 describe('Get setting FAIL tests', () => {
     it('Should fail first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: `shell:settings get system 'prop'`,
-                res: `\n`,
-                rawRes: true
+                res: { value: `\n`, raw: true }
             }
         ]);
         try {
@@ -143,11 +136,7 @@ describe('Get setting FAIL tests', () => {
     it('Should second first response', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
-            {
-                cmd: `fail`,
-                res: `\n`,
-                rawRes: true
-            }
+            { res: `fail` }
         ]);
         try {
             const port = await adbMock.start();
@@ -165,14 +154,11 @@ describe('Get setting unexpected response tests', () => {
     it('Should have unexpected first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:settings get system 'prop'`,
-                res: `\n`,
-                rawRes: true
+                res: { value: `\n` }
             }
         ]);
         try {
@@ -192,12 +178,7 @@ describe('Get setting unexpected response tests', () => {
                 cmd: 'host:transport:serial',
                 res: { raw: true }
             },
-            {
-                cmd: `shell:settings get system 'prop'`,
-                res: `\n`,
-                rawRes: true,
-                unexpected: true
-            }
+            { res: 'unexpected' }
         ]);
         try {
             const port = await adbMock.start();

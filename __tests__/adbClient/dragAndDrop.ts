@@ -119,10 +119,7 @@ describe('Drag and drop', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            {
-                cmd: 'host:transport:serial',
-                res: 'fail'
-            },
+            { res: 'fail' },
             {
                 cmd: `shell:input touchscreen draganddrop 100 200 100 10`,
                 res: { raw: true }
@@ -145,10 +142,7 @@ describe('Drag and drop', () => {
                 cmd: 'host:transport:serial',
                 res: { raw: true }
             },
-            {
-                cmd: `shell:input touchscreen draganddrop 100 200 100 10`,
-                res: 'fail'
-            }
+            { res: 'fail' }
         ]);
         try {
             const port = await adbMock.start();
@@ -164,7 +158,6 @@ describe('Drag and drop', () => {
     it('Unexpected first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
                 res: 'unexpected'
             },
             {
@@ -190,7 +183,6 @@ describe('Drag and drop', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:input touchscreen draganddrop 100 200 100 10`,
                 res: 'unexpected'
             }
         ]);

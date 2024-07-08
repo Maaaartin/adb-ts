@@ -31,7 +31,7 @@ describe('Custom command tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'test',
-                res: '10'
+                res: { value: '10' }
             }
         ]);
         try {

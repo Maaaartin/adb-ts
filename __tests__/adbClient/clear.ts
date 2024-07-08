@@ -75,12 +75,14 @@ describe('Clear', () => {
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
                 res: 'fail'
             },
             {
                 cmd: `shell:pm clear com.something`,
-                res: 'fail'
+                res: {
+                    value: `Something\n`,
+                    raw: true
+                }
             }
         ]);
         try {
@@ -101,7 +103,6 @@ describe('Clear', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:pm clear com.something`,
                 res: 'fail'
             }
         ]);
@@ -123,7 +124,6 @@ describe('Clear', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:pm clear com.something`,
                 res: 'unexpected'
             }
         ]);

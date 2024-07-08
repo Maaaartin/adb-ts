@@ -5,7 +5,7 @@ describe('Remount tests', () => {
     it('Should remount device', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
-            { cmd: 'remount:', res: '', rawRes: true }
+            { cmd: 'remount:', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();

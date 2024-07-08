@@ -210,7 +210,7 @@ describe('Put setting tests', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: `shell:settings put system 'setting' ''`,
                 res: { raw: true }
@@ -231,8 +231,7 @@ describe('Put setting tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: `fail`,
-                res: { raw: true }
+                res: 'fail'
             }
         ]);
         try {
@@ -250,8 +249,7 @@ describe('Put setting tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:settings put system 'setting' ''`,
@@ -277,8 +275,7 @@ describe('Put setting tests', () => {
             },
             {
                 cmd: `shell:settings put system 'setting' ''`,
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

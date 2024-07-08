@@ -5,20 +5,19 @@ import { NonEmptyArray, Reply } from '../lib/util';
 import { encodeData } from '../lib/util';
 import { promisify } from 'util';
 
-interface Sequence {
-    cmd: string;
-    res:
-        | 'fail'
-        | 'unexpected'
-        | {
+type Sequence =
+    | { res: 'fail' | 'unexpected' }
+    | {
+          cmd: string;
+          res?: {
               value?: string | Buffer;
               raw?: true;
           };
-}
+      };
 
-interface SequenceWithIndex extends Sequence {
+type SequenceWithIndex = Sequence & {
     end?: boolean;
-}
+};
 
 export const FailureError: Readonly<Error> = new Error('Failure');
 
@@ -88,24 +87,22 @@ export class AdbMock {
     }
 
     protected writeResponse(seq: Sequence, value: string | undefined): void {
-        if (seq.res === 'unexpected') {
-            this.writeUnexpected();
-            return;
-        }
-        if (seq.res === 'fail') {
-            this.writeFail();
-            return;
-        }
+        switch (seq.res) {
+            case 'unexpected':
+                return this.writeUnexpected();
+            case 'fail':
+                return this.writeFail();
+            default: {
+                if (seq.res?.raw) {
+                    return this.writeRaw(seq.res.value);
+                }
+                if (seq.cmd === value) {
+                    return this.writeOkay(seq.res?.value);
+                }
 
-        if (seq.res.raw) {
-            this.writeRaw(seq.res.value);
-            return;
+                throw new Error(`Expected ${seq.cmd} but got ${value}`);
+            }
         }
-        if (seq.cmd === value) {
-            this.writeOkay(seq.res.value);
-        }
-
-        throw new Error(`Expected ${seq.cmd} but got ${value}`);
     }
 
     protected readableHandler(): void {

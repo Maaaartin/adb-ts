@@ -31,8 +31,7 @@ describe('Device touch tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(touch -c -h -r '/file' /file) || echo '1-2-3-4-5'`,
-                res: 'data',
-                rawRes: true
+                res: { value: 'data', raw: true }
             }
         ]);
         try {

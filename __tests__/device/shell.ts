@@ -33,8 +33,7 @@ describe('Shell tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
-                res: 'message \n1-2-3-4-5',
-                rawRes: true
+                res: { value: 'message \n1-2-3-4-5', raw: true }
             }
         ]);
         try {

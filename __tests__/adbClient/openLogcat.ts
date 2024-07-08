@@ -69,7 +69,7 @@ describe('Open logcat OKAY tests', () => {
 describe('Open logcat FAIL tests', () => {
     it('Should fail first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: `shell:echo && logcat -B *:I 2>/dev/null`,
                 res: logCatRes,
@@ -117,8 +117,7 @@ describe('Open logcat unexpected error tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:echo && logcat -B *:I 2>/dev/null`,

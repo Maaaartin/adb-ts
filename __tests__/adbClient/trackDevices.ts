@@ -119,7 +119,9 @@ describe('Track devices', () => {
     it('Remove', async () => {
         const adbMock = new AdbMock({
             cmd: 'host:track-devices-l',
-            res: 'b137f5dc               unauthorized usb:337641472X transport_id:1'
+            res: {
+                value: 'b137f5dc               unauthorized usb:337641472X transport_id:1'
+            }
         });
 
         try {
@@ -161,7 +163,9 @@ describe('Track devices', () => {
     it('Change', async () => {
         const adbMock = new AdbMock({
             cmd: 'host:track-devices-l',
-            res: 'b137f5dc               unauthorized usb:337641472X transport_id:1'
+            res: {
+                value: 'b137f5dc               unauthorized usb:337641472X transport_id:1'
+            }
         });
 
         try {
@@ -331,7 +335,9 @@ describe('Track devices', () => {
     it('FAIL', async () => {
         const adbMock = new AdbMock({
             cmd: 'fail',
-            res: 'b137f5dc               unauthorized usb337641472X transport_id:1'
+            res: {
+                value: 'b137f5dc               unauthorized usb337641472X transport_id:1'
+            }
         });
 
         try {

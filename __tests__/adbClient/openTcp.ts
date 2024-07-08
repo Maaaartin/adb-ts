@@ -94,8 +94,7 @@ describe('Open TCP', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: 'tcp:5555',
@@ -121,8 +120,7 @@ describe('Open TCP', () => {
             },
             {
                 cmd: 'tcp:5555',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

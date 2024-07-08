@@ -45,7 +45,7 @@ describe('List properties', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: 'shell:getprop',
                 res: `[one]: [1]
@@ -100,8 +100,7 @@ describe('List properties', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: 'shell:getprop',

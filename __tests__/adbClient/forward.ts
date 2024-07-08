@@ -7,8 +7,7 @@ describe('Forward tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host-serial:serial:forward:tcp:9222;localabstract:chrome_devtools_remote',
-                res: 'OKAY',
-                rawRes: true
+                res: { value: 'OKAY', raw: true }
             }
         ]);
         try {
@@ -28,9 +27,7 @@ describe('Forward tests', () => {
     it('FAIL', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'fail',
-                res: 'OKAY',
-                rawRes: true
+                res: 'fail'
             }
         ]);
         try {
@@ -51,10 +48,7 @@ describe('Forward tests', () => {
     it('Unexpected', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host-serial:serial:forward:tcp:9222;localabstract:chrome_devtools_remote',
-                res: 'OKAY',
-                rawRes: true,
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

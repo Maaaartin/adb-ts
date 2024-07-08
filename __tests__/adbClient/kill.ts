@@ -4,7 +4,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('Kill server tests', () => {
     it('Should kill server', async () => {
-        const adbMock = new AdbMock({ cmd: 'host:kill', res: null });
+        const adbMock = new AdbMock({ cmd: 'host:kill' });
         try {
             const port = await adbMock.start();
             const client = new Client({
@@ -19,7 +19,7 @@ describe('Kill server tests', () => {
     });
 
     it('Should ignore error when cannot connect to server', async () => {
-        new AdbMock({ cmd: 'host:kill', res: null });
+        new AdbMock({ cmd: 'host:kill' });
         const client = new Client({
             noAutoStart: true
         });
@@ -29,8 +29,7 @@ describe('Kill server tests', () => {
 
     it('Should throw error after failure', async () => {
         const adbMock = new AdbMock({
-            cmd: 'fail',
-            res: null
+            res: 'fail'
         });
         try {
             const port = await adbMock.start();
@@ -48,9 +47,7 @@ describe('Kill server tests', () => {
 
     it('Should throw UnexpectedDataError', async () => {
         const adbMock = new AdbMock({
-            cmd: 'host:kill',
-            res: null,
-            unexpected: true
+            res: 'unexpected'
         });
         try {
             const port = await adbMock.start();

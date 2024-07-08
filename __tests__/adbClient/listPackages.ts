@@ -26,7 +26,7 @@ package:four`,
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: 'shell:pm list packages 2>/dev/null',
                 res: `package:one
@@ -72,8 +72,7 @@ package:four`,
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: 'shell:pm list packages 2>/dev/null',

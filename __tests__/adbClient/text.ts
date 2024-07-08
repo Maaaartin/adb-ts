@@ -134,8 +134,7 @@ describe('Text', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:input touchscreen text 'something'`,
@@ -161,8 +160,7 @@ describe('Text', () => {
             },
             {
                 cmd: `shell:input touchscreen text 'something'`,
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

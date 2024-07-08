@@ -9,23 +9,19 @@ describe('Install tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'OKAY' + buff.toString(),
-                rawRes: true,
+                res: { value: 'OKAY' + buff.toString(), raw: true },
                 end: true
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
-                res: 'Success\n',
-                rawRes: true,
+                res: { value: 'Success\n', raw: true },
                 end: true
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
-                res: '123',
-                rawRes: true,
-                end: true
+                res: { value: '123', raw: true, end: true }
             }
         ]);
         try {
@@ -45,23 +41,19 @@ describe('Install tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'OKAY' + buff.toString(),
-                rawRes: true,
+                res: { value: 'OKAY' + buff.toString(), raw: true },
                 end: true
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
-                res: 'Failure [6]\n',
-                rawRes: true,
+                res: { value: 'Failure [6]\n', raw: true },
                 end: true
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
-                res: '123',
-                rawRes: true,
-                end: true
+                res: { value: '123', raw: true, end: true }
             }
         ]);
         try {
@@ -88,23 +80,19 @@ describe('Install tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'OKAY' + buff.toString(),
-                rawRes: true,
+                res: { value: 'OKAY' + buff.toString(), raw: true },
                 end: true
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:pm install -r -t -f -d -g "/data/local/tmp/_stream.apk" args`,
-                res: 'Success\n',
-                rawRes: true,
+                res: { value: 'Success\n', raw: true },
                 end: true
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
-                res: '123',
-                rawRes: true,
-                end: true
+                res: { value: '123', raw: true, end: true }
             }
         ]);
         try {

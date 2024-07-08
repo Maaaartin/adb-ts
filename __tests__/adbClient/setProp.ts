@@ -170,7 +170,7 @@ describe('Set prop tests', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: `shell:setprop 'prop' ''`,
                 res: { raw: true }
@@ -191,8 +191,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: `fail`,
-                res: { raw: true }
+                res: 'fail'
             }
         ]);
         try {
@@ -210,8 +209,7 @@ describe('Set prop tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:setprop 'prop' ''`,
@@ -237,8 +235,7 @@ describe('Set prop tests', () => {
             },
             {
                 cmd: `shell:setprop 'prop' ''`,
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

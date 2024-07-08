@@ -165,8 +165,7 @@ describe('Swipe', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:input touchscreen swipe 100 200 100 10`,
@@ -192,8 +191,7 @@ describe('Swipe', () => {
             },
             {
                 cmd: `shell:input touchscreen swipe 100 200 100 10`,
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

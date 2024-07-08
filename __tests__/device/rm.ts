@@ -31,8 +31,7 @@ describe('Device rm tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(rm -f -rR /file) || echo '1-2-3-4-5'`,
-                res: 'data',
-                rawRes: true
+                res: { value: 'data', raw: true }
             }
         ]);
         try {

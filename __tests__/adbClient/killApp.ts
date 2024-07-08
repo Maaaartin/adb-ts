@@ -33,8 +33,7 @@ describe('Kill app OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(am force-stop package) || echo '1-2-3-4-5'`,
-                res: 'message \n1-2-3-4-5',
-                rawRes: true
+                res: { value: 'message \n1-2-3-4-5', raw: true }
             }
         ]);
         try {
@@ -52,11 +51,10 @@ describe('Kill app OKAY tests', () => {
 describe('Kill app FAIL tests', () => {
     it('Should fail first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: `shell:(am force-stop package) || echo '1-2-3-4-5'`,
-                res: 'message \n1-2-3-4-5',
-                rawRes: true
+                res: { value: 'message \n1-2-3-4-5', raw: true }
             }
         ]);
         try {
@@ -75,8 +73,7 @@ describe('Kill app FAIL tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `fail`,
-                res: 'message \n1-2-3-4-5',
-                rawRes: true
+                res: { value: 'message \n1-2-3-4-5', raw: true }
             }
         ]);
         try {
@@ -95,9 +92,7 @@ describe('Kill app unexpected response tests', () => {
     it('Should have unexpected error for first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:(am force-stop package) || echo '1-2-3-4-5'`,
@@ -119,9 +114,7 @@ describe('Kill app unexpected response tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: `shell:(am force-stop package) || echo '1-2-3-4-5'`,
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

@@ -33,8 +33,7 @@ describe('Cp OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(cp -F -H -L -P -d -f -l -n -p -r -s -t -u /file /other) || echo '1-2-3-4-5'`,
-                res: 'data',
-                rawRes: true
+                res: { value: 'data', raw: true }
             }
         ]);
         try {
@@ -66,8 +65,7 @@ describe('Cp OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(cp -F -H -L -P -a -f -l -n -s -t -u /file /other) || echo '1-2-3-4-5'`,
-                res: 'data',
-                rawRes: true
+                res: { value: 'data', raw: true }
             }
         ]);
         try {
@@ -100,8 +98,7 @@ describe('Cp OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(cp --preserve=motcx /file /other) || echo '1-2-3-4-5'`,
-                res: 'data',
-                rawRes: true
+                res: { value: 'data', raw: true }
             }
         ]);
         try {
@@ -127,8 +124,7 @@ describe('Cp OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(cp --preserve=a /file /other) || echo '1-2-3-4-5'`,
-                res: 'data',
-                rawRes: true
+                res: { value: 'data', raw: true }
             }
         ]);
         try {
@@ -154,7 +150,7 @@ describe('Cp OKAY tests', () => {
 describe('Cp FAIL tests', () => {
     it('First response should FAIL', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
                 res: { raw: true }
@@ -175,8 +171,7 @@ describe('Cp FAIL tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: `fail`,
-                res: { raw: true }
+                res: 'fail'
             }
         ]);
         try {
@@ -195,9 +190,7 @@ describe('Cp unexpected tests', () => {
     it('Should throw unexpected error for first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
@@ -222,9 +215,7 @@ describe('Cp unexpected tests', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

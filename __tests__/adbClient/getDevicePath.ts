@@ -4,7 +4,10 @@ import { Client } from '../../lib/client';
 describe('Get device path', () => {
     it('OKAY', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host-serial:serial:get-devpath', res: 'usb:336592896X' }
+            {
+                cmd: 'host-serial:serial:get-devpath',
+                res: { value: 'usb:336592896X' }
+            }
         ]);
         try {
             const port = await adbMock.start();
@@ -17,7 +20,7 @@ describe('Get device path', () => {
     });
 
     it('FAIL', async () => {
-        const adbMock = new AdbMock([{ cmd: 'fail', res: 'usb:336592896X' }]);
+        const adbMock = new AdbMock([{ res: 'fail' }]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });

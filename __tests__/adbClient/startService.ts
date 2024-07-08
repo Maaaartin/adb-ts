@@ -561,7 +561,7 @@ describe('Start service', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: `shell:am startservice -n 'com.my.app/.Service' --user 0`,
                 res: { raw: true }
@@ -582,8 +582,7 @@ describe('Start service', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: `fail`,
-                res: { raw: true }
+                res: 'fail'
             }
         ]);
         try {
@@ -601,8 +600,7 @@ describe('Start service', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:am startservice -n 'com.my.app/.Service' --user 0`,
@@ -628,8 +626,7 @@ describe('Start service', () => {
             },
             {
                 cmd: `shell:am startservice -n 'com.my.app/.Service' --user 0`,
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

@@ -15,8 +15,7 @@ describe('Rm OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(rm -f -rR /file) || echo '1-2-3-4-5'`,
-                res: 'data',
-                rawRes: true
+                res: { value: 'data', raw: true }
             }
         ]);
         try {
@@ -36,7 +35,7 @@ describe('Rm OKAY tests', () => {
 describe('Rm FAIL tests', () => {
     it('First response should FAIL', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: `shell:(rm /file) || echo '1-2-3-4-5'`,
                 res: { raw: true }
@@ -57,8 +56,7 @@ describe('Rm FAIL tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: `fail`,
-                res: { raw: true }
+                res: 'fail'
             }
         ]);
         try {
@@ -78,8 +76,7 @@ describe('Rm unexpected tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:(rm /file) || echo '1-2-3-4-5'`,
@@ -105,8 +102,7 @@ describe('Rm unexpected tests', () => {
             },
             {
                 cmd: `shell:(rm /file) || echo '1-2-3-4-5'`,
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

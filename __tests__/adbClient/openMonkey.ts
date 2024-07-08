@@ -30,7 +30,7 @@ describe('Open Monkey tests', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMockMulti([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
@@ -55,7 +55,7 @@ describe('Open Monkey tests', () => {
     it('FAIL second response', async () => {
         const adbMock = new AdbMockMulti([
             { cmd: 'host:transport:serial', res: { raw: true } },
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
                 res: ':Monkey:\n',
@@ -107,7 +107,7 @@ describe('Open Monkey tests', () => {
                 res: ':Monkey:\n',
                 rawRes: true
             },
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             { cmd: 'tcp:1080', res: { raw: true } }
         ]);
 
@@ -132,7 +132,7 @@ describe('Open Monkey tests', () => {
                 rawRes: true
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
-            { cmd: 'fail', res: { raw: true } }
+            { res: 'fail' }
         ]);
 
         const port = await adbMock.start();
@@ -150,8 +150,7 @@ describe('Open Monkey tests', () => {
         const adbMock = new AdbMockMulti([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
@@ -181,8 +180,7 @@ describe('Open Monkey tests', () => {
             },
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:EXTERNAL_STORAGE=/data/local/tmp monkey --port 1080 -v`,
@@ -244,8 +242,7 @@ describe('Open Monkey tests', () => {
             },
             ...Array(40).fill({
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             }),
             { cmd: 'tcp:1080', res: { raw: true } }
         ]);
@@ -278,8 +275,7 @@ describe('Open Monkey tests', () => {
             },
             ...Array(40).fill({
                 cmd: 'tcp:1080',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             })
         ]);
         try {

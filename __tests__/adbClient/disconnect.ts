@@ -6,7 +6,7 @@ describe('Disconnect', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:disconnect:127.0.0.1:5555',
-                res: 'disconnected'
+                res: { value: 'disconnected' }
             }
         ]);
         try {
@@ -23,7 +23,7 @@ describe('Disconnect', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:disconnect:127.0.0.1:4444',
-                res: 'disconnected'
+                res: { value: 'disconnected' }
             }
         ]);
         try {
@@ -40,7 +40,7 @@ describe('Disconnect', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:disconnect:127.0.0.1:4444',
-                res: 'disconnected'
+                res: { value: 'disconnected' }
             }
         ]);
         try {
@@ -57,7 +57,7 @@ describe('Disconnect', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:disconnect:127.0.0.1:4444',
-                res: 'invalid'
+                res: { value: 'invalid' }
             }
         ]);
         try {
@@ -76,8 +76,7 @@ describe('Disconnect', () => {
     it('FAIL', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'test',
-                res: null
+                res: 'fail'
             }
         ]);
         try {

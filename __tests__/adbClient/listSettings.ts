@@ -49,7 +49,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:settings list system',
-                res: 'test',
+                res: { value: 'test' },
                 rawRes: true
             }
         ]);
@@ -65,7 +65,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: 'shell:settings list system',
                 res: `one=1
@@ -119,8 +119,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: 'shell:settings list system',

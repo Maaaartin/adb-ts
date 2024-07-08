@@ -36,7 +36,7 @@ describe('Root', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             { cmd: 'root:', res: { raw: true } }
         ]);
         try {
@@ -53,7 +53,7 @@ describe('Root', () => {
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
-            { cmd: 'fail', res: { raw: true } }
+            { res: 'fail' }
         ]);
         try {
             const port = await adbMock.start();
@@ -70,8 +70,7 @@ describe('Root', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             { cmd: 'root:', res: { raw: true } }
         ]);

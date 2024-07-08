@@ -6,7 +6,7 @@ describe('Remount', () => {
     it('OKAY', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
-            { cmd: 'remount:', res: '', rawRes: true }
+            { cmd: 'remount:', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();
@@ -68,7 +68,7 @@ describe('Remount', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             { cmd: 'remount:', res: { raw: true } }
         ]);
         try {
@@ -85,7 +85,7 @@ describe('Remount', () => {
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
-            { cmd: 'fail', res: { raw: true } }
+            { res: 'fail' }
         ]);
         try {
             const port = await adbMock.start();
@@ -102,8 +102,7 @@ describe('Remount', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             { cmd: 'remount:', res: { raw: true } }
         ]);

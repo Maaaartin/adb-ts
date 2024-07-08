@@ -11,8 +11,7 @@ describe('Is installed tests', () => {
             },
             {
                 cmd: `shell:pm path com.package 2>/dev/null`,
-                res: 'package:\n',
-                rawRes: true
+                res: { value: 'package:\n', raw: true }
             }
         ]);
         try {
@@ -32,8 +31,7 @@ describe('Is installed tests', () => {
             },
             {
                 cmd: `shell:pm path com.package 2>/dev/null`,
-                res: 'fail:\n',
-                rawRes: true
+                res: 'fail'
             }
         ]);
         try {
@@ -53,8 +51,7 @@ describe('Is installed tests', () => {
             },
             {
                 cmd: `shell:pm path com.package 2>/dev/null`,
-                res: 'badValue\n',
-                rawRes: true
+                res: { value: 'badValue\n', raw: true }
             }
         ]);
         try {

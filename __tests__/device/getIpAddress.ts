@@ -7,8 +7,7 @@ describe('Get ip address tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: "shell:ip route | awk '{ print $9 }'",
-                res: '127.0.0.1',
-                rawRes: true
+                res: { value: '127.0.0.1', raw: true }
             }
         ]);
 
@@ -26,8 +25,7 @@ describe('Get ip address tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: "shell:ip route | awk '{ print $9 }'",
-                res: '127.0.0.1\n127.0.0.2',
-                rawRes: true
+                res: { value: '127.0.0.1\n127.0.0.2', raw: true }
             }
         ]);
 

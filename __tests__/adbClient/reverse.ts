@@ -28,7 +28,7 @@ describe('Reverse', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: 'reverse:forward:localabstract:chrome_devtools_remote;tcp:9222',
                 res: 'OKAY',
@@ -78,8 +78,7 @@ describe('Reverse', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: 'reverse:forward:localabstract:chrome_devtools_remote;tcp:9222',

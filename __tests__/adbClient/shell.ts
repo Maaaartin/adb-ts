@@ -34,8 +34,7 @@ describe('Shell tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
-                res: 'message \n1-2-3-4-5',
-                rawRes: true
+                res: { value: 'message \n1-2-3-4-5', raw: true }
             }
         ]);
         try {
@@ -51,11 +50,10 @@ describe('Shell tests', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
-                res: 'message \n1-2-3-4-5',
-                rawRes: true
+                res: { value: 'message \n1-2-3-4-5', raw: true }
             }
         ]);
         try {
@@ -74,8 +72,7 @@ describe('Shell tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `fail`,
-                res: 'message \n1-2-3-4-5',
-                rawRes: true
+                res: { value: 'message \n1-2-3-4-5', raw: true }
             }
         ]);
         try {
@@ -93,13 +90,11 @@ describe('Shell tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
-                res: 'message \n1-2-3-4-5',
-                rawRes: true
+                res: { value: 'message \n1-2-3-4-5', raw: true }
             }
         ]);
         try {
@@ -121,8 +116,7 @@ describe('Shell tests', () => {
             },
             {
                 cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
-                res: 'message \n1-2-3-4-5',
-                rawRes: true,
+                res: { value: 'message \n1-2-3-4-5', raw: true },
                 unexpected: true
             }
         ]);

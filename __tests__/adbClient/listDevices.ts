@@ -5,7 +5,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 
 describe('List devices', () => {
     it('FAIL', async () => {
-        const adbMock = new AdbMock([{ cmd: 'fail', res: null }]);
+        const adbMock = new AdbMock([{ res: 'fail' }]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ port, noAutoStart: true });
@@ -18,9 +18,7 @@ describe('List devices', () => {
     });
 
     it('Unexpected', async () => {
-        const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, unexpected: true }
-        ]);
+        const adbMock = new AdbMock([{ res: 'unexpected' }]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ port, noAutoStart: true });
@@ -36,7 +34,9 @@ describe('List devices', () => {
         const mock = new AdbMock([
             {
                 cmd: 'host:devices-l',
-                res: 'b137f5dc               unauthorized usb:337641472X transport_id:1'
+                res: {
+                    value: 'b137f5dc               unauthorized usb:337641472X transport_id:1'
+                }
             }
         ]);
 
@@ -67,7 +67,9 @@ describe('List devices', () => {
                     'b137f5dd               device usb:337641472Y product:FP4eeb model:FP3 device:FP3 transport_id:2'
                 );
 
-        const adbMock = new AdbMock([{ cmd: 'host:devices-l', res: raw }]);
+        const adbMock = new AdbMock([
+            { cmd: 'host:devices-l', res: { value: raw } }
+        ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
@@ -101,7 +103,9 @@ describe('List devices', () => {
     });
 
     it('Throw error when id or state is invalid', async () => {
-        const adbMock = new AdbMock([{ cmd: 'host:devices-l', res: 'test' }]);
+        const adbMock = new AdbMock([
+            { cmd: 'host:devices-l', res: { value: 'test' } }
+        ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
@@ -116,7 +120,9 @@ describe('List devices', () => {
     it('Throw error when properties are invalid', async () => {
         const adbMock = new AdbMock({
             cmd: 'host:devices-l',
-            res: 'b137f5dc               unauthorized usb337641472X transport_id:1'
+            res: {
+                value: 'b137f5dc               unauthorized usb337641472X transport_id:1'
+            }
         });
         try {
             const port = await adbMock.start();
@@ -131,8 +137,7 @@ describe('List devices', () => {
 
     it('No devices', async () => {
         const adbMock = new AdbMock({
-            cmd: 'host:devices-l',
-            res: ''
+            cmd: 'host:devices-l'
         });
         try {
             const port = await adbMock.start();
@@ -148,7 +153,7 @@ describe('List devices', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:devices-l',
-                res: 'usb:337641472X'
+                res: { value: 'usb:337641472X' }
             }
         ]);
 
@@ -170,7 +175,9 @@ describe('List devices', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:devices-l',
-                res: 'b137f5dc               unauthorized usb:337641472X'
+                res: {
+                    value: 'b137f5dc               unauthorized usb:337641472X'
+                }
             }
         ]);
 

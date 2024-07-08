@@ -44,8 +44,7 @@ describe('Touch OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(touch -a -t '${formattedTime}' /file) || echo '1-2-3-4-5'`,
-                res: 'data',
-                rawRes: true
+                res: { value: 'data', raw: true }
             }
         ]);
         try {
@@ -66,8 +65,7 @@ describe('Touch OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(touch -a -t '${formattedTime}' /file) || echo '1-2-3-4-5'`,
-                res: 'data',
-                rawRes: true
+                res: { value: 'data', raw: true }
             }
         ]);
         try {
@@ -88,8 +86,7 @@ describe('Touch OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(touch -d '2022-12-13T12:41:42.418Z' -m /file) || echo '1-2-3-4-5'`,
-                res: 'data',
-                rawRes: true
+                res: { value: 'data', raw: true }
             }
         ]);
         try {
@@ -110,8 +107,7 @@ describe('Touch OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(touch -d '2022-12-13T12:41:42.418Z' -m /file) || echo '1-2-3-4-5'`,
-                res: 'data',
-                rawRes: true
+                res: { value: 'data', raw: true }
             }
         ]);
         try {
@@ -132,8 +128,7 @@ describe('Touch OKAY tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(touch -c -h -r '/file' /file) || echo '1-2-3-4-5'`,
-                res: 'data',
-                rawRes: true
+                res: { value: 'data', raw: true }
             }
         ]);
         try {
@@ -154,7 +149,7 @@ describe('Touch OKAY tests', () => {
 describe('Touch FAIL tests', () => {
     it('First response should FAIL', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: { raw: true } },
+            { res: 'fail' },
             {
                 cmd: `shell:(touch /file) || echo '1-2-3-4-5'`,
                 res: { raw: true }
@@ -175,8 +170,7 @@ describe('Touch FAIL tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                cmd: `fail`,
-                res: { raw: true }
+                res: 'fail'
             }
         ]);
         try {
@@ -196,8 +190,7 @@ describe('Touch unexpected tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:(touch /file) || echo '1-2-3-4-5'`,
@@ -223,8 +216,7 @@ describe('Touch unexpected tests', () => {
             },
             {
                 cmd: `shell:(touch /file) || echo '1-2-3-4-5'`,
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

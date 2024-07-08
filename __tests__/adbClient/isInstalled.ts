@@ -11,8 +11,7 @@ describe('Is installed', () => {
             },
             {
                 cmd: `shell:pm path com.package 2>/dev/null`,
-                res: 'package:\n',
-                rawRes: true
+                res: { value: 'package:\n', raw: true }
             }
         ]);
         try {
@@ -32,9 +31,7 @@ describe('Is installed', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:pm path com.package 2>/dev/null`,
-                res: 'fail:\n',
-                rawRes: true
+                res: 'fail'
             }
         ]);
         try {
@@ -55,8 +52,7 @@ describe('Is installed', () => {
             },
             {
                 cmd: `shell:pm path com.package 2>/dev/null`,
-                res: 'badValue\n',
-                rawRes: true
+                res: { value: 'badValue\n', raw: true }
             }
         ]);
         try {
@@ -78,8 +74,7 @@ describe('Is installed', () => {
             },
             {
                 cmd: `shell:pm path com.package 2>/dev/null`,
-                res: 'package:\n',
-                rawRes: true
+                res: { value: 'package:\n', raw: true }
             }
         ]);
         try {
@@ -101,8 +96,7 @@ describe('Is installed', () => {
             },
             {
                 cmd: `fail`,
-                res: 'package:\n',
-                rawRes: true
+                res: { value: 'package:\n', raw: true }
             }
         ]);
         try {
@@ -119,14 +113,11 @@ describe('Is installed', () => {
     it('Unexpected first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
-                res: { raw: true },
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:pm path com.package 2>/dev/null`,
-                res: 'package:\n',
-                rawRes: true
+                res: { value: 'package:\n', raw: true }
             }
         ]);
         try {
@@ -147,10 +138,7 @@ describe('Is installed', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:pm path com.package 2>/dev/null`,
-                res: 'package:\n',
-                rawRes: true,
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {
