@@ -5,8 +5,8 @@ import { UnexpectedDataError } from '../../lib/util';
 describe('Shutdown', () => {
     it('OKAY', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
-            { cmd: 'shell:reboot -p', res: null, rawRes: true }
+            { cmd: 'host:transport:serial', res: { raw: true } },
+            { cmd: 'shell:reboot -p', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();
@@ -20,8 +20,8 @@ describe('Shutdown', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
-            { cmd: 'shell:reboot -p', res: null, rawRes: true }
+            { cmd: 'fail', res: { raw: true } },
+            { cmd: 'shell:reboot -p', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();
@@ -36,8 +36,8 @@ describe('Shutdown', () => {
 
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
-            { cmd: 'fail', res: null, rawRes: true }
+            { cmd: 'host:transport:serial', res: { raw: true } },
+            { cmd: 'fail', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();
@@ -54,11 +54,10 @@ describe('Shutdown', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
-            { cmd: 'shell:reboot -p', res: null, rawRes: true }
+            { cmd: 'shell:reboot -p', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();
@@ -75,13 +74,11 @@ describe('Shutdown', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'shell:reboot -p',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             }
         ]);

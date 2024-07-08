@@ -11,11 +11,10 @@ beforeAll(() => {
 describe('Device mkdir tests', () => {
     it('Should run mkdir command without options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(mkdir /dir) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -29,7 +28,7 @@ describe('Device mkdir tests', () => {
 
     it('Should run mkdir command with options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(mkdir -m 'x' -p /dir) || echo '1-2-3-4-5'`,
                 res: 'data',

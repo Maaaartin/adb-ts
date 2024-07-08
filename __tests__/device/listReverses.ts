@@ -4,7 +4,7 @@ import { getDevice } from '../../mockery/testDevice';
 describe('List reverses tests', () => {
     it('Should list reverses', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'reverse:list-forward',
                 res: `host-19 localabstract:chrome_devtools_remote tcp:9222

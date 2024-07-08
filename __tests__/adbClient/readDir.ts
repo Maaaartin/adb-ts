@@ -9,7 +9,7 @@ describe('Read dir', () => {
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 0, 0, 0
         ]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'DENT' + buff.toString() + 'nameDONE' + buff.toString(),
@@ -31,7 +31,7 @@ describe('Read dir', () => {
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0
         ]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'DENT' + buff.toString() + '.DONE' + buff.toString(),
@@ -53,7 +53,7 @@ describe('Read dir', () => {
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0
         ]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'DENT' + buff.toString() + '..DONE' + buff.toString(),
@@ -72,7 +72,7 @@ describe('Read dir', () => {
 
     it('FAIL', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'FAIL0003Err',
@@ -93,7 +93,7 @@ describe('Read dir', () => {
 
     it('Unexpected data', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'UNEX',

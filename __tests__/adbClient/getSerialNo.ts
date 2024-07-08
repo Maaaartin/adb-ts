@@ -5,7 +5,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 describe('Get serial no', () => {
     it('OKAY', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'shell:getprop ro.serialno', res: 'test', rawRes: true }
         ]);
         try {
@@ -20,7 +20,7 @@ describe('Get serial no', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             { cmd: 'shell:getprop ro.serialno', res: 'test', rawRes: true }
         ]);
         try {
@@ -36,7 +36,7 @@ describe('Get serial no', () => {
 
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'test', res: 'test', rawRes: true }
         ]);
         try {
@@ -54,8 +54,7 @@ describe('Get serial no', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             { cmd: 'shell:getprop ro.serialno', res: 'test', rawRes: true }
@@ -75,8 +74,7 @@ describe('Get serial no', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'shell:getprop ro.serialno',

@@ -9,7 +9,7 @@ describe('Adb Push tests', () => {
     it('Should return push transfer without sync mode', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'OKAY' + buff.toString(),
@@ -43,7 +43,7 @@ describe('Adb Push tests', () => {
     it('Should emit progress event', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'OKAY' + buff.toString(),
@@ -73,7 +73,7 @@ describe('Adb Push tests', () => {
     it('Should return push transfer with sync mode', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'OKAY' + buff.toString(),
@@ -108,7 +108,7 @@ describe('Adb Push tests', () => {
     it('Should handle FAIL response', async () => {
         const buff = Buffer.from([5, 0, 0, 0]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'FAIL' + buff.toString() + 'Error',
@@ -143,7 +143,7 @@ describe('Adb Push tests', () => {
     it('Should handle unexpected response', async () => {
         const buff = Buffer.from([5, 0, 0, 0]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'UNEX' + buff.toString() + 'Error',
@@ -178,7 +178,7 @@ describe('Adb Push tests', () => {
     it('No error if transfer is cancelled', async () => {
         const buff = Buffer.from([5, 0, 0, 0]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'FAIL' + buff.toString() + 'Error',

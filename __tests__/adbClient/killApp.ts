@@ -12,11 +12,10 @@ beforeAll(() => {
 describe('Kill app OKAY tests', () => {
     it('Should execute without error', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(am force-stop package) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -31,7 +30,7 @@ describe('Kill app OKAY tests', () => {
 
     it('Should execute with error', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(am force-stop package) || echo '1-2-3-4-5'`,
                 res: 'message \n1-2-3-4-5',
@@ -53,7 +52,7 @@ describe('Kill app OKAY tests', () => {
 describe('Kill app FAIL tests', () => {
     it('Should fail first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: `shell:(am force-stop package) || echo '1-2-3-4-5'`,
                 res: 'message \n1-2-3-4-5',
@@ -73,7 +72,7 @@ describe('Kill app FAIL tests', () => {
 
     it('Should fail second response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `fail`,
                 res: 'message \n1-2-3-4-5',
@@ -97,14 +96,12 @@ describe('Kill app unexpected response tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
                 cmd: `shell:(am force-stop package) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -120,11 +117,10 @@ describe('Kill app unexpected response tests', () => {
 
     it('Should have unexpected error for second response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(am force-stop package) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             }
         ]);

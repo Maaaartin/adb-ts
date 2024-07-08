@@ -12,7 +12,7 @@ beforeAll(() => {
 describe('Shell tests', () => {
     it('Should execute without error', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:("one && "two") || echo '1-2-3-4-5'`,
                 res: '0',
@@ -30,7 +30,7 @@ describe('Shell tests', () => {
 
     it('Should execute with error', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
                 res: 'message \n1-2-3-4-5',

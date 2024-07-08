@@ -7,13 +7,11 @@ describe('Roll', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input trackball roll 100 0`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -30,13 +28,11 @@ describe('Roll', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input gamepad roll 100 0`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -53,13 +49,11 @@ describe('Roll', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'fail',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input trackball roll 100 0`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -77,13 +71,11 @@ describe('Roll', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'fail',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -101,14 +93,12 @@ describe('Roll', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
                 cmd: `shell:input trackball roll 100 0`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -126,13 +116,11 @@ describe('Roll', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input trackball roll 100 0`,
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             }
         ]);

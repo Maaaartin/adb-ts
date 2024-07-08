@@ -6,7 +6,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 describe('List features tests', () => {
     it('Should list features', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:pm list features 2>/dev/null',
                 res: `feature:one=1

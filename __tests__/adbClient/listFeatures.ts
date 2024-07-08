@@ -5,7 +5,7 @@ import { PropertyValue, UnexpectedDataError } from '../../lib/util';
 describe('List properties', () => {
     it('OKAY', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:pm list features 2>/dev/null',
                 res: `feature:one=1
@@ -37,7 +37,7 @@ feature:six`,
     });
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: 'shell:pm list features 2>/dev/null',
                 res: `feature:one=1
@@ -62,7 +62,7 @@ feature:six`,
 
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'fail',
                 res: `feature:one=1
@@ -89,8 +89,7 @@ feature:six`,
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
@@ -120,8 +119,7 @@ feature:six`,
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'shell:pm list features 2>/dev/null',

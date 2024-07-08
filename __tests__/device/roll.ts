@@ -6,13 +6,11 @@ describe('Device roll tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input trackball roll 100 0`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -28,13 +26,11 @@ describe('Device roll tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input gamepad roll 100 0`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {

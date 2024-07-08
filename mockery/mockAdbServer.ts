@@ -5,26 +5,32 @@ import { NonEmptyArray, Reply } from '../lib/util';
 import { encodeData } from '../lib/util';
 import { promisify } from 'util';
 
-type Sequence = {
+interface Sequence {
     cmd: string;
-    res: string | Buffer | null;
-    rawRes?: true;
-    unexpected?: true;
-};
+    res:
+        | 'fail'
+        | 'unexpected'
+        | {
+              value?: string | Buffer;
+              raw?: true;
+          };
+}
 
-type SequenceWithIndex = {
-    cmd: string;
-    res: string | Buffer | null;
-    rawRes?: true;
-    unexpected?: true;
+interface SequenceWithIndex extends Sequence {
     end?: boolean;
-};
+}
+
+export const FailureError: Readonly<Error> = new Error('Failure');
+
 export class AdbMock {
     protected server_ = new net.Server();
     protected parser: Parser | null = null;
     protected seq: Sequence[];
 
-    protected get socket(): net.Socket | undefined {
+    protected get socket(): net.Socket {
+        if (!this.parser) {
+            throw new Error('Parser not initialized');
+        }
         return this.parser?.socket;
     }
 
@@ -40,33 +46,33 @@ export class AdbMock {
         return info.port;
     }
 
-    protected writeOkay(data: string | Buffer | null): void {
+    protected writeOkay(data: string | Buffer | void): void {
         const encoded = encodeData(data || '');
         const toWrite = Reply.OKAY.concat(encoded.toString());
-        this.socket?.write(toWrite);
+        this.socket.write(toWrite);
     }
 
     protected writeFail(): void {
         const encoded = encodeData('Failure');
         const toWrite = Reply.FAIL.concat(encoded.toString());
-        this.socket?.write(toWrite);
+        this.socket.write(toWrite);
     }
 
-    protected writeRaw(data: string | Buffer | null): void {
-        this.socket?.write(
+    protected writeRaw(data: string | Buffer | void): void {
+        this.socket.write(
             Buffer.concat([Buffer.from(Reply.OKAY), Buffer.from(data || '')])
         );
     }
 
     protected writeUnexpected(msg = 'UNEX'): void {
-        this.socket?.write(msg);
+        this.socket.write(msg);
     }
 
     protected next(): Sequence | null {
         return this.seq.shift() || null;
     }
 
-    protected async connectionHandler(socket: net.Socket): Promise<void> {
+    private async connectionHandler(socket: net.Socket): Promise<void> {
         this.parser = new Parser(socket);
         const value = (await this.parser.readValue()).toString();
         this.readableHandler();
@@ -82,24 +88,28 @@ export class AdbMock {
     }
 
     protected writeResponse(seq: Sequence, value: string | undefined): void {
-        if (seq.unexpected) {
+        if (seq.res === 'unexpected') {
             this.writeUnexpected();
             return;
         }
-
-        if (seq.cmd === value) {
-            if (seq.rawRes) {
-                this.writeRaw(seq.res);
-                return;
-            }
-            this.writeOkay(seq.res);
+        if (seq.res === 'fail') {
+            this.writeFail();
             return;
         }
-        this.writeFail();
+
+        if (seq.res.raw) {
+            this.writeRaw(seq.res.value);
+            return;
+        }
+        if (seq.cmd === value) {
+            this.writeOkay(seq.res.value);
+        }
+
+        throw new Error(`Expected ${seq.cmd} but got ${value}`);
     }
 
     protected readableHandler(): void {
-        this.socket?.once('readable', async () => {
+        this.socket.once('readable', async () => {
             for await (const seq of this.seq) {
                 this.writeResponse(seq, await this.readValue());
             }
@@ -108,7 +118,7 @@ export class AdbMock {
     }
 
     protected hook(): void {
-        this.server_.on('connection', async (socket) => {
+        this.server_.on('connection', (socket) => {
             this.connectionHandler(socket);
         });
     }
@@ -119,7 +129,7 @@ export class AdbMock {
 
     forceWriteData(data: string): void {
         const encoded = encodeData(data || '');
-        this.socket?.write(encoded);
+        this.socket.write(encoded);
     }
 
     forceWrite(data: string): void {
@@ -165,14 +175,14 @@ export class AdbMockMulti extends AdbMock {
 
             this.writeResponse(seq, await this.readValue());
             if (seq.end) {
-                this.socket?.removeAllListeners('readable');
-                this.socket?.end();
+                this.socket.removeAllListeners('readable');
+                this.socket.end();
                 this.parser?.end();
             }
         });
     }
 
     protected readableHandler(): void {
-        this.socket?.on('readable', this.runner.bind(this));
+        this.socket.on('readable', this.runner.bind(this));
     }
 }

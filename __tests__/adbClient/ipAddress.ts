@@ -4,7 +4,7 @@ import { Client } from '../../lib/client';
 describe('IP address', () => {
     it('Single address', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: "shell:ip route | awk '{ print $9 }'",
                 res: '127.0.0.1',
@@ -24,7 +24,7 @@ describe('IP address', () => {
 
     it('Multiple addresses', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: "shell:ip route | awk '{ print $9 }'",
                 res: '127.0.0.1\n127.0.0.2',
@@ -44,11 +44,10 @@ describe('IP address', () => {
 
     it('No address', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: "shell:ip route | awk '{ print $9 }'",
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
 
@@ -64,7 +63,7 @@ describe('IP address', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: "shell:ip route | awk '{ print $9 }'",
                 res: '127.0.0.1',
@@ -85,7 +84,7 @@ describe('IP address', () => {
 
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'fail',
                 res: '127.0.0.1',

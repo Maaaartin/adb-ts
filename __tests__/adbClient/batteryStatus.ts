@@ -5,10 +5,11 @@ import { PrimitiveType } from '../../lib/util';
 describe('Battery status tests', () => {
     it('Should parse battery status', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:dumpsys battery',
-                res: `Current Battery Service state:
+                res: {
+                    value: `Current Battery Service state:
             AC powered: false
             USB powered: false
             Wireless powered: false
@@ -23,6 +24,7 @@ describe('Battery status tests', () => {
             voltage: 5000
             temperature: 250
             technology: Li-ion`
+                }
             }
         ]);
         try {

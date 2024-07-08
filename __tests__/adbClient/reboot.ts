@@ -5,8 +5,8 @@ import { UnexpectedDataError } from '../../lib/util';
 describe('Reboot', () => {
     it('OKAY', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
-            { cmd: 'reboot:', res: null, rawRes: true }
+            { cmd: 'host:transport:serial', res: { raw: true } },
+            { cmd: 'reboot:', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();
@@ -20,8 +20,8 @@ describe('Reboot', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
-            { cmd: 'reboot:', res: null, rawRes: true }
+            { cmd: 'fail', res: { raw: true } },
+            { cmd: 'reboot:', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();
@@ -36,8 +36,8 @@ describe('Reboot', () => {
 
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
-            { cmd: 'fail', res: null, rawRes: true }
+            { cmd: 'host:transport:serial', res: { raw: true } },
+            { cmd: 'fail', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();
@@ -54,11 +54,10 @@ describe('Reboot', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
-            { cmd: 'reboot:', res: null, rawRes: true }
+            { cmd: 'reboot:', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();
@@ -75,10 +74,9 @@ describe('Reboot', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
-            { cmd: 'reboot:', res: null, rawRes: true, unexpected: true }
+            { cmd: 'reboot:', res: { raw: true }, unexpected: true }
         ]);
         try {
             const port = await adbMock.start();

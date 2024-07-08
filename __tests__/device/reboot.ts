@@ -4,8 +4,8 @@ import { getDevice } from '../../mockery/testDevice';
 describe('Reboot tests', () => {
     it('Should reboot device', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
-            { cmd: 'reboot:', res: null, rawRes: true }
+            { cmd: 'host:transport:serial', res: { raw: true } },
+            { cmd: 'reboot:', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();

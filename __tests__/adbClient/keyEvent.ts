@@ -7,13 +7,11 @@ describe('Key event', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input keyboard keyevent 37`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -30,13 +28,11 @@ describe('Key event', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input keyboard keyevent --longpress 37`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -55,13 +51,11 @@ describe('Key event', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input keyboard keyevent --doubletap 37`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -80,13 +74,11 @@ describe('Key event', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input keyboard keyevent 37 37 42`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -103,13 +95,11 @@ describe('Key event', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input keyboard keyevent --longpress 37 37 42`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -128,13 +118,11 @@ describe('Key event', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input keyboard keyevent --doubletap 37 37 42`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -153,13 +141,11 @@ describe('Key event', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input gamepad keyevent 37`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -178,13 +164,11 @@ describe('Key event', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'fail',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input keyboard keyevent 37`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -202,13 +186,11 @@ describe('Key event', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'fail',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -226,14 +208,12 @@ describe('Key event', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
                 cmd: `shell:input keyboard keyevent 37`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -251,13 +231,11 @@ describe('Key event', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input keyboard keyevent 37`,
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             }
         ]);

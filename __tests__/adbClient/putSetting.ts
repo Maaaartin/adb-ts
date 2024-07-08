@@ -5,11 +5,10 @@ import { UnexpectedDataError } from '../../lib/util';
 describe('Put setting tests', () => {
     it('OKAY with empty string', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings put system 'setting' ''`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -29,11 +28,10 @@ describe('Put setting tests', () => {
 
     it('OKAY with single quotation marks', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings put system 'setting' ''"'"'text'"'"''`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -53,11 +51,10 @@ describe('Put setting tests', () => {
 
     it('OKAY with double quotation marks', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings put system 'setting' '"text"'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -77,11 +74,10 @@ describe('Put setting tests', () => {
 
     it('OKAY with undefined value', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings put system 'setting' ''`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -101,11 +97,10 @@ describe('Put setting tests', () => {
 
     it('OKAY with boolean value', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings put system 'setting' false`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -125,11 +120,10 @@ describe('Put setting tests', () => {
 
     it('OKAY with int value', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings put system 'setting' 0`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -149,11 +143,10 @@ describe('Put setting tests', () => {
 
     it('OKAY with float value', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings put system 'setting' 0.1`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -173,7 +166,7 @@ describe('Put setting tests', () => {
 
     it('No error for white space response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings put system 'setting' ''`,
                 res: ' \r\n\t ',
@@ -197,7 +190,7 @@ describe('Put setting tests', () => {
 
     it('Error for non empty response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings put system 'setting' ''`,
                 res: 'Failed',
@@ -217,11 +210,10 @@ describe('Put setting tests', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: `shell:settings put system 'setting' ''`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -237,11 +229,10 @@ describe('Put setting tests', () => {
 
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `fail`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -259,14 +250,12 @@ describe('Put setting tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
                 cmd: `shell:settings put system 'setting' ''`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -284,13 +273,11 @@ describe('Put setting tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:settings put system 'setting' ''`,
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             }
         ]);

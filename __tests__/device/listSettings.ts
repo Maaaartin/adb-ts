@@ -5,7 +5,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 describe('List settings tests', () => {
     it('Should list settings', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:settings list system',
                 res: `one=1

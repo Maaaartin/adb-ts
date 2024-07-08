@@ -5,7 +5,7 @@ import { UnexpectedDataError } from '../../lib/util';
 describe('List Reverses', () => {
     it('OKAY', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'reverse:list-forward',
                 res: `host-19 localabstract:chrome_devtools_remote tcp:9222
@@ -35,7 +35,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: 'reverse:list-forward',
                 res: `host-19 localabstract:chrome_devtools_remote tcp:9222
@@ -55,7 +55,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
 
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'fail',
                 res: `host-19 localabstract:chrome_devtools_remote tcp:9222
@@ -77,8 +77,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
@@ -102,8 +101,7 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'reverse:list-forward',

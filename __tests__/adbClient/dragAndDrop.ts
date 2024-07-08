@@ -7,13 +7,11 @@ describe('Drag and drop', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input touchscreen draganddrop 100 200 100 10`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -30,13 +28,11 @@ describe('Drag and drop', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input gamepad draganddrop 100 200 100 10`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -55,13 +51,11 @@ describe('Drag and drop', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input touchscreen draganddrop 100 200 100 10`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -80,13 +74,11 @@ describe('Drag and drop', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input touchscreen draganddrop 100 200 100 10`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -105,13 +97,11 @@ describe('Drag and drop', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input gamepad draganddrop 100 200 100 10 3000`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -130,14 +120,12 @@ describe('Drag and drop', () => {
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'fail',
-                res: null,
-                rawRes: true
+                cmd: 'host:transport:serial',
+                res: 'fail'
             },
             {
                 cmd: `shell:input touchscreen draganddrop 100 200 100 10`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -155,13 +143,11 @@ describe('Drag and drop', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
-                cmd: 'fail',
-                res: null,
-                rawRes: true
+                cmd: `shell:input touchscreen draganddrop 100 200 100 10`,
+                res: 'fail'
             }
         ]);
         try {
@@ -179,14 +165,11 @@ describe('Drag and drop', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
-                unexpected: true
+                res: 'unexpected'
             },
             {
                 cmd: `shell:input touchscreen draganddrop 100 200 100 10`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -204,14 +187,11 @@ describe('Drag and drop', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input touchscreen draganddrop 100 200 100 10`,
-                res: null,
-                rawRes: true,
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

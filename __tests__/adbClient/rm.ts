@@ -12,7 +12,7 @@ beforeAll(() => {
 describe('Rm OKAY tests', () => {
     it('Should execute with options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(rm -f -rR /file) || echo '1-2-3-4-5'`,
                 res: 'data',
@@ -36,11 +36,10 @@ describe('Rm OKAY tests', () => {
 describe('Rm FAIL tests', () => {
     it('First response should FAIL', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: `shell:(rm /file) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -56,11 +55,10 @@ describe('Rm FAIL tests', () => {
 
     it('Second response should FAIL', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `fail`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -80,14 +78,12 @@ describe('Rm unexpected tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
                 cmd: `shell:(rm /file) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -105,13 +101,11 @@ describe('Rm unexpected tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:(rm /file) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             }
         ]);

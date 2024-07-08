@@ -5,7 +5,7 @@ import { Client } from '../../lib';
 describe('Device tcpip tests', () => {
     it('Should restart tcp connection', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `tcpip:5555`,
                 res: 'restarting in',
@@ -28,7 +28,7 @@ describe('Device tcpip tests', () => {
 
     it('Should restart tcp connection with passed port', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `tcpip:3333`,
                 res: 'restarting in',

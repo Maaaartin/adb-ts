@@ -4,7 +4,7 @@ import { getDevice } from '../../mockery/testDevice';
 describe('Get ip address tests', () => {
     it('Should get single address', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: "shell:ip route | awk '{ print $9 }'",
                 res: '127.0.0.1',
@@ -23,7 +23,7 @@ describe('Get ip address tests', () => {
 
     it('Should get array of addresses', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: "shell:ip route | awk '{ print $9 }'",
                 res: '127.0.0.1\n127.0.0.2',
@@ -42,11 +42,10 @@ describe('Get ip address tests', () => {
 
     it('Should get null address', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: "shell:ip route | awk '{ print $9 }'",
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
 

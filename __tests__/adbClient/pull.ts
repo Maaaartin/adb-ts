@@ -7,7 +7,7 @@ describe('Pull tests', () => {
     it('Should pull data', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'DATA' + buff.toString() + 'dataDONE' + buff.toString(),
@@ -37,7 +37,7 @@ describe('Pull tests', () => {
     it('Should emit progress event', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'DATA' + buff.toString() + 'dataDONE' + buff.toString(),
@@ -62,7 +62,7 @@ describe('Pull tests', () => {
     it('FAIL', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'FAIL' + buff.toString() + 'data',
@@ -93,7 +93,7 @@ describe('Pull tests', () => {
     it('Unexpected error', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'UNEX' + buff.toString() + 'data',

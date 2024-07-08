@@ -22,7 +22,7 @@ const logCatRes = Buffer.from([
 describe('Open logcat OKAY tests', () => {
     it('Should read logs and safely exit', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:echo && logcat -B *:I 2>/dev/null`,
                 res: logCatRes,
@@ -48,7 +48,7 @@ describe('Open logcat OKAY tests', () => {
 
     it('Should clear read logs', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:echo && logcat -c 2>/dev/null && logcat -B *:I 2>/dev/null`,
                 res: logCatRes,
@@ -69,7 +69,7 @@ describe('Open logcat OKAY tests', () => {
 describe('Open logcat FAIL tests', () => {
     it('Should fail first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: `shell:echo && logcat -B *:I 2>/dev/null`,
                 res: logCatRes,
@@ -91,7 +91,7 @@ describe('Open logcat FAIL tests', () => {
 
     it('Should second first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `fail`,
                 res: logCatRes,
@@ -117,8 +117,7 @@ describe('Open logcat unexpected error tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
@@ -146,8 +145,7 @@ describe('Open logcat unexpected error tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:echo && logcat -B *:I 2>/dev/null`,

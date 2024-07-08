@@ -6,7 +6,7 @@ import { UnexpectedDataError } from '../../lib/util';
 describe('List settings tests', () => {
     it('OKAY', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:settings list system',
                 res: `one=1
@@ -46,7 +46,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
 
     it('OKAY with non matching response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:settings list system',
                 res: 'test',
@@ -65,7 +65,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: 'shell:settings list system',
                 res: `one=1
@@ -91,7 +91,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
 
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'fail',
                 res: `one=1
@@ -119,8 +119,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
@@ -149,8 +148,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'shell:settings list system',

@@ -6,7 +6,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 describe('List properties tests', () => {
     it('Should list properties', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop',
                 res: `[one]: [1]

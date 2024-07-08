@@ -7,21 +7,21 @@ describe('Install OKAY tests', () => {
     it('Should install with Success response', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMockMulti([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'OKAY' + buff.toString(),
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
                 res: 'Success\n',
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
@@ -46,21 +46,21 @@ describe('Install OKAY tests', () => {
     it('Should install with Failure response', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMockMulti([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'OKAY' + buff.toString(),
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
                 res: 'Failure [6]\n',
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
@@ -89,21 +89,21 @@ describe('Install OKAY tests', () => {
     it('Should install with options and Success response', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMockMulti([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'OKAY' + buff.toString(),
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:pm install -r -t -f -d -g "/data/local/tmp/_stream.apk" args`,
                 res: 'Success\n',
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
@@ -139,21 +139,21 @@ describe('Install FAIL tests', () => {
     it('Should fail first response', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMockMulti([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'OKAY' + buff.toString(),
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
                 res: 'Success\n',
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
@@ -177,21 +177,21 @@ describe('Install FAIL tests', () => {
     it('Should fail second response', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMockMulti([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'fail',
                 res: 'OKAY' + buff.toString(),
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
                 res: 'Success\n',
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
@@ -215,21 +215,21 @@ describe('Install FAIL tests', () => {
     it('Should fail third response', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMockMulti([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'OKAY' + buff.toString(),
                 rawRes: true,
                 end: true
             },
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
                 res: 'Success\n',
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
@@ -254,21 +254,21 @@ describe('Install FAIL tests', () => {
     it('Should fail fourth response', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMockMulti([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'OKAY' + buff.toString(),
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `fail`,
                 res: 'Success\n',
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
@@ -293,21 +293,21 @@ describe('Install FAIL tests', () => {
     it('Should fail fifth response', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMockMulti([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'OKAY' + buff.toString(),
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
                 res: 'Success\n',
                 rawRes: true,
                 end: true
             },
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
@@ -332,21 +332,21 @@ describe('Install FAIL tests', () => {
     it('Should fail sixth response', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMockMulti([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'OKAY' + buff.toString(),
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
                 res: 'Success\n',
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `fail`,
                 res: '123',
@@ -375,8 +375,7 @@ describe('Install unexpected test', () => {
         const adbMock = new AdbMockMulti([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
@@ -385,14 +384,14 @@ describe('Install unexpected test', () => {
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
                 res: 'Success\n',
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
@@ -419,8 +418,7 @@ describe('Install unexpected test', () => {
         const adbMock = new AdbMockMulti([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'sync:',
@@ -429,14 +427,14 @@ describe('Install unexpected test', () => {
                 end: true,
                 unexpected: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
                 res: 'Success\n',
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
@@ -463,8 +461,7 @@ describe('Install unexpected test', () => {
         const adbMock = new AdbMockMulti([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'sync:',
@@ -474,8 +471,7 @@ describe('Install unexpected test', () => {
             },
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
@@ -484,7 +480,7 @@ describe('Install unexpected test', () => {
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
@@ -511,8 +507,7 @@ describe('Install unexpected test', () => {
         const adbMock = new AdbMockMulti([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'sync:',
@@ -520,7 +515,7 @@ describe('Install unexpected test', () => {
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
                 res: 'Success\n',
@@ -528,7 +523,7 @@ describe('Install unexpected test', () => {
                 end: true,
                 unexpected: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',
@@ -555,8 +550,7 @@ describe('Install unexpected test', () => {
         const adbMock = new AdbMockMulti([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'sync:',
@@ -564,7 +558,7 @@ describe('Install unexpected test', () => {
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
                 res: 'Success\n',
@@ -573,8 +567,7 @@ describe('Install unexpected test', () => {
             },
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
@@ -603,8 +596,7 @@ describe('Install unexpected test', () => {
         const adbMock = new AdbMockMulti([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'sync:',
@@ -612,14 +604,14 @@ describe('Install unexpected test', () => {
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:pm install "/data/local/tmp/_stream.apk"`,
                 res: 'Success\n',
                 rawRes: true,
                 end: true
             },
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:rm -f '/data/local/tmp/_stream.apk'`,
                 res: '123',

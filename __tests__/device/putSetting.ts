@@ -4,11 +4,10 @@ import { getDevice } from '../../mockery/testDevice';
 describe('Device put setting tests', () => {
     it('Should put setting', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings put system 'setting' ''`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {

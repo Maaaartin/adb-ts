@@ -11,11 +11,10 @@ beforeAll(() => {
 describe('Device cp tests', () => {
     it('Should run cp command without options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -29,7 +28,7 @@ describe('Device cp tests', () => {
 
     it('Should run cp command with options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(cp -F -H -L -P -d -f -l -n -p -r -s -t -u /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',

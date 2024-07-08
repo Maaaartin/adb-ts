@@ -5,7 +5,7 @@ import { UnexpectedDataError } from '../../lib/util';
 describe('Gep prop tests', () => {
     it('OKAY with string value', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop prop',
                 res: `string\n`,
@@ -24,7 +24,7 @@ describe('Gep prop tests', () => {
 
     it('OKAY with number value', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop prop',
                 res: `0\n`,
@@ -43,7 +43,7 @@ describe('Gep prop tests', () => {
 
     it('OKAY with boolean value', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop prop',
                 res: `false\n`,
@@ -62,7 +62,7 @@ describe('Gep prop tests', () => {
 
     it('OKAY with null value', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop prop',
                 res: `null\n`,
@@ -81,7 +81,7 @@ describe('Gep prop tests', () => {
 
     it('OKAY with undefined value', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop prop',
                 res: `\n`,
@@ -101,7 +101,7 @@ describe('Gep prop tests', () => {
     it('OKAY with date value', async () => {
         const date = new Date();
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop prop',
                 res: `${date.toISOString()}\n`,
@@ -120,7 +120,7 @@ describe('Gep prop tests', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: 'shell:getprop',
                 res: `prop\n`,
@@ -140,7 +140,7 @@ describe('Gep prop tests', () => {
 
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'fail',
                 res: `prop`,
@@ -162,8 +162,7 @@ describe('Gep prop tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
@@ -187,8 +186,7 @@ describe('Gep prop tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'shell:getprop prop',

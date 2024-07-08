@@ -11,11 +11,10 @@ beforeAll(() => {
 describe('Device rm tests', () => {
     it('Should run rm command without options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(rm /file) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -29,7 +28,7 @@ describe('Device rm tests', () => {
 
     it('Should run rm command with options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(rm -f -rR /file) || echo '1-2-3-4-5'`,
                 res: 'data',

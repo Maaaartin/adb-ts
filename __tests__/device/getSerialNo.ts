@@ -5,7 +5,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 describe('Get serial no tests', () => {
     it('Should get serial no', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'shell:getprop ro.serialno', res: 'test', rawRes: true }
         ]);
         try {

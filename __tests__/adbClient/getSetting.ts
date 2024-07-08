@@ -5,7 +5,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 describe('Get setting OKAY tests', () => {
     it('Should get string value', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings get system 'prop'`,
                 res: `string\n`,
@@ -24,7 +24,7 @@ describe('Get setting OKAY tests', () => {
 
     it('Should get number value', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings get system 'prop'`,
                 res: `0\n`,
@@ -43,7 +43,7 @@ describe('Get setting OKAY tests', () => {
 
     it('Should get boolean value', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings get system 'prop'`,
                 res: `false\n`,
@@ -62,7 +62,7 @@ describe('Get setting OKAY tests', () => {
 
     it('Should get null value', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings get system 'prop'`,
                 res: `null\n`,
@@ -81,7 +81,7 @@ describe('Get setting OKAY tests', () => {
 
     it('Should get undefined value', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings get system 'prop'`,
                 res: `\n`,
@@ -101,7 +101,7 @@ describe('Get setting OKAY tests', () => {
     it('Should get date value', async () => {
         const date = new Date();
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:settings get system 'prop'`,
                 res: `${date.toISOString()}\n`,
@@ -122,7 +122,7 @@ describe('Get setting OKAY tests', () => {
 describe('Get setting FAIL tests', () => {
     it('Should fail first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: `shell:settings get system 'prop'`,
                 res: `\n`,
@@ -142,7 +142,7 @@ describe('Get setting FAIL tests', () => {
 
     it('Should second first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `fail`,
                 res: `\n`,
@@ -166,8 +166,7 @@ describe('Get setting unexpected response tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
@@ -191,8 +190,7 @@ describe('Get setting unexpected response tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:settings get system 'prop'`,

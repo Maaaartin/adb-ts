@@ -8,7 +8,7 @@ describe('Device Read dir', () => {
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 0, 0, 0
         ]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'DENT' + buff.toString() + 'nameDONE' + buff.toString(),

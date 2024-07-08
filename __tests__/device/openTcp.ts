@@ -7,13 +7,11 @@ describe('Open tcp tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'tcp:5555',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -29,13 +27,11 @@ describe('Open tcp tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'tcp:localhost:5555',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {

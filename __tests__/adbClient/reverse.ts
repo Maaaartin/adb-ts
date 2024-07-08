@@ -5,7 +5,7 @@ import { AdbMock } from '../../mockery/mockAdbServer';
 describe('Reverse', () => {
     it('OKAY', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'reverse:forward:localabstract:chrome_devtools_remote;tcp:9222',
                 res: 'OKAY',
@@ -28,7 +28,7 @@ describe('Reverse', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: 'reverse:forward:localabstract:chrome_devtools_remote;tcp:9222',
                 res: 'OKAY',
@@ -52,7 +52,7 @@ describe('Reverse', () => {
 
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'fail',
                 res: 'OKAY',
@@ -78,8 +78,7 @@ describe('Reverse', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
@@ -107,8 +106,7 @@ describe('Reverse', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'reverse:forward:localabstract:chrome_devtools_remote;tcp:9222',

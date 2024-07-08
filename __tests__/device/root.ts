@@ -4,7 +4,7 @@ import { getDevice } from '../../mockery/testDevice';
 describe('Root tests', () => {
     it('Should root device', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'root:', res: 'restarting adbd as root', rawRes: true }
         ]);
         try {
@@ -18,7 +18,7 @@ describe('Root tests', () => {
 
     it('Should get error on invalid response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'root:', res: 'invalid', rawRes: true }
         ]);
         try {

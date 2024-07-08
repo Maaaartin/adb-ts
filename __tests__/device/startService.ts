@@ -4,11 +4,10 @@ import { getDevice } from '../../mockery/testDevice';
 describe('Start service tests', () => {
     it('Should start service without options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:am startservice -n 'com.my.app/.Service' --user 0`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -25,11 +24,10 @@ describe('Start service tests', () => {
 
     it('Should start service with primitive type options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:am startservice -a 'action' -d 'data' -t 'mimeType' -f 1 -n 'com.my.app/.Service' --user 1`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -53,11 +51,10 @@ describe('Start service tests', () => {
 
     it('Should start service with extras options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:am startservice -a 'action' -d 'data' -t 'mimeType' -f 1 -n 'com.my.app/.Service' --user 1`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {

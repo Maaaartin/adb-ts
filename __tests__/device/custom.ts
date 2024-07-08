@@ -21,13 +21,11 @@ describe('Device custom command tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'test arg',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {

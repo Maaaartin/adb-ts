@@ -5,7 +5,7 @@ import { UnexpectedDataError } from '../../lib/util';
 describe('Remount', () => {
     it('OKAY', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'remount:', res: '', rawRes: true }
         ]);
         try {
@@ -20,7 +20,7 @@ describe('Remount', () => {
 
     it('OKAY not running as root', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'remount:', res: 'Not running as root', rawRes: true }
         ]);
         try {
@@ -36,7 +36,7 @@ describe('Remount', () => {
 
     it('OKAY inaccessible', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'remount:', res: 'inaccessible', rawRes: true }
         ]);
         try {
@@ -52,7 +52,7 @@ describe('Remount', () => {
 
     it('OKAY not found', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'remount:', res: 'not found', rawRes: true }
         ]);
         try {
@@ -68,8 +68,8 @@ describe('Remount', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
-            { cmd: 'remount:', res: null, rawRes: true }
+            { cmd: 'fail', res: { raw: true } },
+            { cmd: 'remount:', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();
@@ -84,8 +84,8 @@ describe('Remount', () => {
 
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
-            { cmd: 'fail', res: null, rawRes: true }
+            { cmd: 'host:transport:serial', res: { raw: true } },
+            { cmd: 'fail', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();
@@ -102,11 +102,10 @@ describe('Remount', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
-            { cmd: 'remount:', res: null, rawRes: true }
+            { cmd: 'remount:', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();
@@ -123,10 +122,9 @@ describe('Remount', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
-            { cmd: 'remount:', res: null, rawRes: true, unexpected: true }
+            { cmd: 'remount:', res: { raw: true }, unexpected: true }
         ]);
         try {
             const port = await adbMock.start();

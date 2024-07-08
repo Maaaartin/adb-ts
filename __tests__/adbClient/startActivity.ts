@@ -5,11 +5,10 @@ import { Client } from '../../lib/client';
 describe('Start activity', () => {
     it('OKAY without options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:am start -n 'com.my.app/.Activity' --user 0`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -28,11 +27,10 @@ describe('Start activity', () => {
 
     it('OKAY with debug option', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:am start -D -n 'com.my.app/.Activity' --user 0`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -52,11 +50,10 @@ describe('Start activity', () => {
 
     it('OKAY with wait option', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:am start -W -n 'com.my.app/.Activity' --user 0`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {

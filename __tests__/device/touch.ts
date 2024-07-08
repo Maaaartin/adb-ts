@@ -11,11 +11,10 @@ beforeAll(() => {
 describe('Device touch tests', () => {
     it('Should run touch command without options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(touch /file) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -29,7 +28,7 @@ describe('Device touch tests', () => {
 
     it('Should run touch command with options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(touch -c -h -r '/file' /file) || echo '1-2-3-4-5'`,
                 res: 'data',

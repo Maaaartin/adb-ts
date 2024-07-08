@@ -5,7 +5,7 @@ import { PrematureEOFError } from '../../lib/util';
 describe('Wait boot complete', () => {
     it('OKAY with matching response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:while getprop sys.boot_completed 2>/dev/null; do sleep 1; done',
                 res: '2\n1\n',
@@ -24,7 +24,7 @@ describe('Wait boot complete', () => {
 
     it('FAIL with non matching response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:while getprop sys.boot_completed 2>/dev/null; do sleep 1; done',
                 res: '2\n3\n',

@@ -6,13 +6,11 @@ describe('Device swipe tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input touchscreen swipe 100 200 100 10`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -28,13 +26,11 @@ describe('Device swipe tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:input gamepad swipe 100 200 100 10`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {

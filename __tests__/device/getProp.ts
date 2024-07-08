@@ -4,7 +4,7 @@ import { getDevice } from '../../mockery/testDevice';
 describe('Get prop tests', () => {
     it('Should get prop', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:getprop prop',
                 res: `string\n`,

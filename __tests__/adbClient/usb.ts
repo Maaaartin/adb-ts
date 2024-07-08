@@ -5,7 +5,7 @@ import { Client } from '../../lib/client';
 describe('Usb', () => {
     it('OKAY', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `usb:`,
                 res: 'restarting in',
@@ -28,7 +28,7 @@ describe('Usb', () => {
 
     it('Should fail when awaiter rejects', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `usb:`,
                 res: 'restarting in',

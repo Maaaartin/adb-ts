@@ -8,7 +8,7 @@ describe('Device Push tests', () => {
     it('Should push file', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'OKAY' + buff.toString(),
@@ -40,7 +40,7 @@ describe('Device Push tests', () => {
     it('Should push file with sync mode', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'OKAY' + buff.toString(),

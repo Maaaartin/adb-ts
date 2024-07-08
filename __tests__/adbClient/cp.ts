@@ -12,11 +12,10 @@ beforeAll(() => {
 describe('Cp OKAY tests', () => {
     it('Should execute without options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -31,7 +30,7 @@ describe('Cp OKAY tests', () => {
 
     it('Should execute with simple parameters without archive', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(cp -F -H -L -P -d -f -l -n -p -r -s -t -u /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
@@ -64,7 +63,7 @@ describe('Cp OKAY tests', () => {
 
     it('Should execute with simple parameters with archive', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(cp -F -H -L -P -a -f -l -n -s -t -u /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
@@ -98,7 +97,7 @@ describe('Cp OKAY tests', () => {
 
     it('Should execute with preserve option without all', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(cp --preserve=motcx /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
@@ -125,7 +124,7 @@ describe('Cp OKAY tests', () => {
 
     it('Should execute with preserve option with all', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(cp --preserve=a /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
@@ -155,11 +154,10 @@ describe('Cp OKAY tests', () => {
 describe('Cp FAIL tests', () => {
     it('First response should FAIL', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -175,11 +173,10 @@ describe('Cp FAIL tests', () => {
 
     it('Second response should FAIL', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `fail`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -199,14 +196,12 @@ describe('Cp unexpected tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
                 cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -224,13 +219,11 @@ describe('Cp unexpected tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:(cp /file /other) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             }
         ]);

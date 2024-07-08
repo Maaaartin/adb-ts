@@ -23,11 +23,10 @@ const formattedTime = formatDate(date);
 describe('Touch OKAY tests', () => {
     it('Should execute without parameters', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(touch /file) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -42,7 +41,7 @@ describe('Touch OKAY tests', () => {
 
     it('Should execute with time as Date parameter', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(touch -a -t '${formattedTime}' /file) || echo '1-2-3-4-5'`,
                 res: 'data',
@@ -64,7 +63,7 @@ describe('Touch OKAY tests', () => {
 
     it('Should execute with time as string parameter', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(touch -a -t '${formattedTime}' /file) || echo '1-2-3-4-5'`,
                 res: 'data',
@@ -86,7 +85,7 @@ describe('Touch OKAY tests', () => {
 
     it('Should execute with date as Date parameter', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(touch -d '2022-12-13T12:41:42.418Z' -m /file) || echo '1-2-3-4-5'`,
                 res: 'data',
@@ -108,7 +107,7 @@ describe('Touch OKAY tests', () => {
 
     it('Should execute with date as string parameter', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(touch -d '2022-12-13T12:41:42.418Z' -m /file) || echo '1-2-3-4-5'`,
                 res: 'data',
@@ -130,7 +129,7 @@ describe('Touch OKAY tests', () => {
 
     it('Should execute with other parameter', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(touch -c -h -r '/file' /file) || echo '1-2-3-4-5'`,
                 res: 'data',
@@ -155,11 +154,10 @@ describe('Touch OKAY tests', () => {
 describe('Touch FAIL tests', () => {
     it('First response should FAIL', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: `shell:(touch /file) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -175,11 +173,10 @@ describe('Touch FAIL tests', () => {
 
     it('Second response should FAIL', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `fail`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -199,14 +196,12 @@ describe('Touch unexpected tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
                 cmd: `shell:(touch /file) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -224,13 +219,11 @@ describe('Touch unexpected tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:(touch /file) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             }
         ]);

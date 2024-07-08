@@ -12,7 +12,7 @@ beforeAll(() => {
 describe('Mv OKAY tests', () => {
     it('Should execute without parameters', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
@@ -31,7 +31,7 @@ describe('Mv OKAY tests', () => {
 
     it('Should execute with options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(mv -f -n /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
@@ -55,11 +55,10 @@ describe('Mv OKAY tests', () => {
 describe('Mv FAIL tests', () => {
     it('First response should FAIL', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -75,11 +74,10 @@ describe('Mv FAIL tests', () => {
 
     it('Second response should FAIL', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `fail`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -99,14 +97,12 @@ describe('Mv unexpected tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
                 cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true
+                res: { raw: true }
             }
         ]);
         try {
@@ -124,13 +120,11 @@ describe('Mv unexpected tests', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             }
         ]);

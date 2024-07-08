@@ -4,8 +4,8 @@ import { getDevice } from '../../mockery/testDevice';
 describe('Shutdown tests', () => {
     it('Should shutdown device', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
-            { cmd: 'shell:reboot -p', res: null, rawRes: true }
+            { cmd: 'host:transport:serial', res: { raw: true } },
+            { cmd: 'shell:reboot -p', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();

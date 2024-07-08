@@ -5,7 +5,7 @@ const encodedImage = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYA
 describe('Screencap tests', () => {
     it('Should take screencap', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:echo && screencap -p 2>/dev/null',
                 res: 'ab' + encodedImage,

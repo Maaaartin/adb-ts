@@ -4,7 +4,7 @@ import { getDevice } from '../../mockery/testDevice';
 describe('Remount tests', () => {
     it('Should remount device', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'remount:', res: '', rawRes: true }
         ]);
         try {

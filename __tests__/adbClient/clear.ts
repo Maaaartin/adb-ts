@@ -7,13 +7,11 @@ describe('Clear', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:pm clear com.something`,
-                res: 'Success\n',
-                rawRes: true
+                res: { value: 'Success\n', raw: true }
             }
         ]);
         try {
@@ -30,13 +28,11 @@ describe('Clear', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:pm clear com.something`,
-                res: 'Failed\n',
-                rawRes: true
+                res: { value: 'Failed\n', raw: true }
             }
         ]);
         try {
@@ -56,13 +52,11 @@ describe('Clear', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:pm clear com.something`,
-                res: 'Something\n',
-                rawRes: true
+                res: { value: 'Something\n', raw: true }
             }
         ]);
         try {
@@ -81,20 +75,18 @@ describe('Clear', () => {
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'fail',
-                res: null,
-                rawRes: true
+                cmd: 'host:transport:serial',
+                res: 'fail'
             },
             {
                 cmd: `shell:pm clear com.something`,
-                res: 'Success\n',
-                rawRes: true
+                res: 'fail'
             }
         ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(adb.getProp('serial', 'prop')).rejects.toEqual(
+            await expect(adb.clear('serial', 'com.something')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -106,19 +98,17 @@ describe('Clear', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
-                cmd: `fail`,
-                res: 'Success\n',
-                rawRes: true
+                cmd: `shell:pm clear com.something`,
+                res: 'fail'
             }
         ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(adb.getProp('serial', 'prop')).rejects.toEqual(
+            await expect(adb.clear('serial', 'com.something')).rejects.toEqual(
                 new Error('Failure')
             );
         } finally {
@@ -130,20 +120,17 @@ describe('Clear', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:pm clear com.something`,
-                res: 'Success\n',
-                rawRes: true,
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
-            await expect(adb.getProp('serial', 'prop')).rejects.toEqual(
+            await expect(adb.clear('serial', 'com.something')).rejects.toEqual(
                 new UnexpectedDataError('UNEX', 'OKAY or FAIL')
             );
         } finally {

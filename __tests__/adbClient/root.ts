@@ -5,7 +5,7 @@ import { UnexpectedDataError } from '../../lib/util';
 describe('Root', () => {
     it('OKAY', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'root:', res: 'restarting adbd as root', rawRes: true }
         ]);
         try {
@@ -20,7 +20,7 @@ describe('Root', () => {
 
     it('OKAY invalid response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             { cmd: 'root:', res: 'invalid', rawRes: true }
         ]);
         try {
@@ -36,8 +36,8 @@ describe('Root', () => {
 
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
-            { cmd: 'root:', res: null, rawRes: true }
+            { cmd: 'fail', res: { raw: true } },
+            { cmd: 'root:', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();
@@ -52,8 +52,8 @@ describe('Root', () => {
 
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
-            { cmd: 'fail', res: null, rawRes: true }
+            { cmd: 'host:transport:serial', res: { raw: true } },
+            { cmd: 'fail', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();
@@ -70,11 +70,10 @@ describe('Root', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
-            { cmd: 'root:', res: null, rawRes: true }
+            { cmd: 'root:', res: { raw: true } }
         ]);
         try {
             const port = await adbMock.start();
@@ -91,10 +90,9 @@ describe('Root', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
-            { cmd: 'root:', res: null, rawRes: true, unexpected: true }
+            { cmd: 'root:', res: { raw: true }, unexpected: true }
         ]);
         try {
             const port = await adbMock.start();

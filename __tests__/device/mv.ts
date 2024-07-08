@@ -11,7 +11,7 @@ beforeAll(() => {
 describe('Device mv tests', () => {
     it('Should run mv command without options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',
@@ -29,7 +29,7 @@ describe('Device mv tests', () => {
 
     it('Should run mv command with options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:(mv -f -n /file /other) || echo '1-2-3-4-5'`,
                 res: 'data',

@@ -7,8 +7,7 @@ describe('Is installed', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:pm path com.package 2>/dev/null`,
@@ -30,8 +29,7 @@ describe('Is installed', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:pm path com.package 2>/dev/null`,
@@ -53,8 +51,7 @@ describe('Is installed', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:pm path com.package 2>/dev/null`,
@@ -77,8 +74,7 @@ describe('Is installed', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'fail',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:pm path com.package 2>/dev/null`,
@@ -101,8 +97,7 @@ describe('Is installed', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `fail`,
@@ -125,8 +120,7 @@ describe('Is installed', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
@@ -150,8 +144,7 @@ describe('Is installed', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: `shell:pm path com.package 2>/dev/null`,

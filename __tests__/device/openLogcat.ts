@@ -19,7 +19,7 @@ const logCatRes = Buffer.from([
 describe('Open logcat tests', () => {
     it('Should open logcat without options', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:echo && logcat -B *:I 2>/dev/null`,
                 res: logCatRes,
@@ -37,7 +37,7 @@ describe('Open logcat tests', () => {
 
     it('Should open logcat with clear option', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:echo && logcat -c 2>/dev/null && logcat -B *:I 2>/dev/null`,
                 res: logCatRes,

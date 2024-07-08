@@ -5,7 +5,7 @@ import { Client } from '../../lib';
 describe('Device usb tests', () => {
     it('Should restart usb connection', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `usb:`,
                 res: 'restarting in',

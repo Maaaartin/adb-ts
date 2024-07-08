@@ -6,7 +6,7 @@ const encodedImage = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYA
 describe('Screencap', () => {
     it('OKAY', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:echo && screencap -p 2>/dev/null',
                 res: 'ab' + encodedImage,
@@ -24,7 +24,7 @@ describe('Screencap', () => {
     });
     it('FAIL first response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'fail', res: null, rawRes: true },
+            { cmd: 'fail', res: { raw: true } },
             {
                 cmd: 'shell:echo && screencap -p 2>/dev/null',
                 res: 'ab' + encodedImage,
@@ -44,7 +44,7 @@ describe('Screencap', () => {
 
     it('FAIL second response', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'fail',
                 res: 'ab' + encodedImage,
@@ -66,8 +66,7 @@ describe('Screencap', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true,
+                res: { raw: true },
                 unexpected: true
             },
             {
@@ -91,8 +90,7 @@ describe('Screencap', () => {
         const adbMock = new AdbMock([
             {
                 cmd: 'host:transport:serial',
-                res: null,
-                rawRes: true
+                res: { raw: true }
             },
             {
                 cmd: 'shell:echo && screencap -p 2>/dev/null',

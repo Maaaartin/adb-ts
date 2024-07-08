@@ -5,7 +5,7 @@ import { getDevice } from '../../mockery/testDevice';
 describe('Device battery status tests', () => {
     it('Should parse battery status', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'shell:dumpsys battery',
                 res: `Current Battery Service state:

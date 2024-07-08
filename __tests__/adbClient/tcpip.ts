@@ -5,7 +5,7 @@ import { Client } from '../../lib/client';
 describe('Tcpip', () => {
     it('OKAY with default port', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `tcpip:5555`,
                 res: 'restarting in',
@@ -28,7 +28,7 @@ describe('Tcpip', () => {
 
     it('OKAY with passed port', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `tcpip:3333`,
                 res: 'restarting in',
@@ -51,7 +51,7 @@ describe('Tcpip', () => {
 
     it('Should fail when awaiter rejects', async () => {
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `tcpip:5555`,
                 res: 'restarting in',

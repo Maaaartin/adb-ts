@@ -6,7 +6,7 @@ describe('Device Pull tests', () => {
     it('Should pull file', async () => {
         const buff = Buffer.from([4, 0, 0, 0]);
         const adbMock = new AdbMock([
-            { cmd: 'host:transport:serial', res: null, rawRes: true },
+            { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
                 res: 'DATA' + buff.toString() + 'dataDONE' + buff.toString(),
