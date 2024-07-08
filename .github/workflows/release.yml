@@ -17,7 +17,7 @@ jobs:
             - name: Install Node, NPM and Yarn
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: 18
                   registry-url: 'https://registry.npmjs.org'
 
             - name: Install modules
@@ -37,7 +37,9 @@ jobs:
                   yarn test
 
             - name: Git config
-              run: git config --global user.email "bot@google.com" && git config --global user.name "bot"
+              run: |
+                  git config --global user.email "bot@google.com" && git config --global user.name "bot"
+                  password=${{ secrets.GITHUB_TOKEN }}
 
             - name: Apply version major
               if: contains(github.event.pull_request.labels.*.name, 'major')

@@ -3,28 +3,47 @@ import { Connection } from '../../connection';
 import { DeviceState, IDevice } from '../../util';
 import { UnexpectedDataError } from '../../util';
 import Command from '../command';
-const checkValues = ([_1, _2]: [string, string], expected: string[]): void => {
-    if (!_1 || !_2) {
-        throw new UnexpectedDataError([_1, _2].join(', '), expected.join(', '));
-    }
+
+const expectedKeys = [
+    'usb',
+    'product',
+    'model',
+    'device',
+    'transport_id'
+] as const;
+
+const throwUnexpected = (received: string): never => {
+    throw new UnexpectedDataError(
+        received,
+        `<id> <state> <${expectedKeys.join('|')}>:<value>`
+    );
 };
 
-const parseProps = (values: string[]): Record<string, string | undefined> =>
-    values.slice(2).reduce<Record<string, string | undefined>>((acc, curr) => {
-        const [key, value] = curr.split(':');
-        checkValues(
-            [key, value],
-            ['usb', 'product', 'model', 'device', 'transport_id']
+const parseProps = (values: string[]): Record<string, string | undefined> => {
+    return values.reduce<Record<string, string | undefined>>((acc, curr) => {
+        const match = curr.match(
+            new RegExp(`(${expectedKeys.join('|')}):(\\S+)(?=\\s|$)`)
         );
+        if (!match) {
+            return acc;
+        }
+        const [key, value] = match.slice(1);
         acc[key] = value;
         return acc;
     }, {});
+};
 
-export function constructDevice(values: string[]): IDevice {
+export function constructDevice(line: string): IDevice {
+    const values = line.split(/\s+/);
     const [id, state] = values;
-    checkValues([id, state], ['id', 'state']);
+    if (!id || !state) {
+        return throwUnexpected(line);
+    }
 
-    const { usb, product, model, device, transport_id } = parseProps(values);
+    const { usb, product, model, device, transport_id } = parseProps(
+        values.slice(2)
+    );
+    if (typeof transport_id === 'undefined') return throwUnexpected(line);
     return {
         id: id,
         state:
@@ -35,7 +54,7 @@ export function constructDevice(values: string[]): IDevice {
         product: product,
         model: model,
         device: device,
-        transportId: transport_id as string,
+        transportId: transport_id,
         transport: net.isIPv4(/^(.*?):([0-9]+)$/.exec(id)?.[1] || '')
             ? 'local'
             : 'usb'
@@ -52,8 +71,7 @@ export default abstract class DevicesCommand extends Command<IDevice[]> {
     }
 
     private parse(value: string): IDevice[] {
-        const lines = value.split('\n').filter(Boolean);
-        return lines.map((line) => constructDevice(line.split(/\s+/)));
+        return value.split('\n').filter(Boolean).map(constructDevice);
     }
 
     public async readDevices(): Promise<IDevice[]> {

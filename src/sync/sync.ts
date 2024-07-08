@@ -1,4 +1,4 @@
-import { Reply } from '../util';
+import { Reply, autoUnregister } from '../util';
 import { Connection } from '../connection';
 import { EventEmitter } from 'events';
 import { Parser } from '../parser';
@@ -10,7 +10,6 @@ import Stats from './stats';
 import SyncEntry from './entry';
 import fs from 'fs';
 import { promisify } from 'util';
-import EventUnregister from '../util/eventUnregister';
 
 export enum SyncMode {
     DEFAULT_CHMOD = 0x1a4,
@@ -78,9 +77,6 @@ export class Sync extends EventEmitter {
 
         let canceled = false;
         const writeData = async (): Promise<void> => {
-            const streamUnregister = new EventUnregister(stream);
-            const connectionUnregister = new EventUnregister(this.connection);
-
             const { waitForDrain, unregisterDrainListener } =
                 this.getDrainAwaiter();
             const promise = new Promise<void>((resolve, reject) => {
@@ -97,26 +93,24 @@ export class Sync extends EventEmitter {
                         return writeNext();
                     }
                 };
-                streamUnregister.register((stream_) =>
-                    stream_
-                        .on('end', (): void => {
-                            this.sendCommandWithLength(Reply.DONE, timestamp);
-                            resolve();
-                        })
-                        .on('readable', writeNext)
-                        .on('error', reject)
-                );
-                connectionUnregister.register((connection) =>
-                    connection.on('error', (err): void => {
-                        stream.destroy();
-                        this.connection.end();
-                        reject(err);
+
+                stream
+                    .on('end', (): void => {
+                        this.sendCommandWithLength(Reply.DONE, timestamp);
+                        resolve();
                     })
-                );
+                    .on('readable', writeNext)
+                    .on('error', reject);
+
+                this.connection.on('error', (err): void => {
+                    stream.destroy();
+                    this.connection.end();
+                    reject(err);
+                });
             });
             await Promise.all([
-                streamUnregister.unregisterAfter(promise),
-                connectionUnregister.unregisterAfter(promise)
+                autoUnregister(stream, promise),
+                autoUnregister(this.connection, promise)
             ]);
             unregisterDrainListener();
         };
@@ -155,7 +149,7 @@ export class Sync extends EventEmitter {
     private pushStream(
         stream: Readable,
         path: string,
-        mode?: SyncMode | null
+        mode?: SyncMode
     ): PushTransfer {
         if (mode == null) {
             mode = SyncMode.DEFAULT_CHMOD;
@@ -168,7 +162,7 @@ export class Sync extends EventEmitter {
     private pushFile(
         file: string,
         path: string,
-        mode?: SyncMode | null
+        mode?: SyncMode | void
     ): PushTransfer {
         if (mode === null) {
             mode = SyncMode.DEFAULT_CHMOD;
@@ -180,7 +174,7 @@ export class Sync extends EventEmitter {
     public push(
         contents: string | Readable,
         path: string,
-        mode: SyncMode | null = null
+        mode?: SyncMode
     ): PushTransfer {
         if (typeof contents === 'string') {
             return this.pushFile(contents, path, mode);

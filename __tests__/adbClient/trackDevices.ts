@@ -79,6 +79,43 @@ describe('Track devices', () => {
         }
     });
 
+    it('Devices emit add only once for the same device', async () => {
+        const adbMock = new AdbMock({
+            cmd: 'host:track-devices-l',
+            res: null
+        });
+        try {
+            const port = await adbMock.start();
+            const adb = new Client({ noAutoStart: true, port });
+            const tracker = await adb.trackDevices();
+            let addCount = 0;
+            const result = await promisify((cb) => {
+                tracker.on('add', () => {
+                    addCount++;
+                });
+                tracker.on('error', (err) => {
+                    cb(err, null);
+                });
+                adbMock.forceWriteData(
+                    'b137f5dc               unauthorized usb:337641472X transport_id:1\n'
+                );
+                adbMock.forceWriteData(
+                    'b137f5dc               unauthorized usb:337641472X transport_id:1\n'
+                );
+                setTimeout(() => {
+                    cb(null, addCount);
+                }, 1000);
+            })();
+            try {
+                expect(result).toBe(1);
+            } finally {
+                tracker.end();
+            }
+        } finally {
+            await adbMock.end();
+        }
+    });
+
     it('Remove', async () => {
         const adbMock = new AdbMock({
             cmd: 'host:track-devices-l',
@@ -100,6 +137,9 @@ describe('Track devices', () => {
                 adbMock.forceWrite('');
             })();
             try {
+                expect(
+                    Object.prototype.hasOwnProperty.call(result, 'client')
+                ).toBe(false);
                 expect(result).toEqual({
                     id: 'b137f5dc',
                     state: 'unauthorized',
@@ -141,6 +181,7 @@ describe('Track devices', () => {
                 );
             })();
             try {
+                expect(result === tracker.Devices[0]).toBe(true);
                 expect(result).toEqual(
                     new Device(adb, {
                         id: 'b137f5dc',
@@ -164,7 +205,7 @@ describe('Track devices', () => {
     it('Error', async () => {
         const adbMock = new AdbMock({
             cmd: 'host:track-devices-l',
-            res: 'b137f5dc               unauthorized usb337641472X transport_id:1'
+            res: 'b137f5dc               unauthorized usb:337641472X transport_id1'
         });
 
         try {
@@ -189,7 +230,7 @@ describe('Track devices', () => {
     it('End after error', async () => {
         const adbMock = new AdbMock({
             cmd: 'host:track-devices-l',
-            res: 'b137f5dc               unauthorized usb337641472X transport_id:1'
+            res: 'b137f5dc               unauthorized usb:337641472X transport_id1'
         });
 
         try {
@@ -197,7 +238,7 @@ describe('Track devices', () => {
             const adb = new Client({ noAutoStart: true, port });
             const tracker = await adb.trackDevices();
             const result = await promisify((cb) => {
-                tracker.on('error', () => null);
+                tracker.on('error', () => {});
                 tracker.on('end', () => {
                     cb(null, undefined);
                 });

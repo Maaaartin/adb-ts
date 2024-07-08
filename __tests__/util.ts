@@ -1,18 +1,15 @@
+import { EventEmitter } from 'events';
 import {
     decodeLength,
     encodeLength,
     encodeData,
     stringToType,
-    nodeify,
-    parseCbParam,
-    parseValueParam,
     parsePrimitiveParam,
     findMatches,
-    buildInputParams,
     PropertyValue,
     escape,
     escapeCompat,
-    buildFsParams
+    autoUnregister
 } from '../lib/util';
 
 describe('Encode/decode length', () => {
@@ -107,92 +104,6 @@ describe('String to type', () => {
     });
 });
 
-describe('Nodeify', () => {
-    it('Resolve Promise', async () => {
-        const result = await nodeify(Promise.resolve(null), undefined);
-        expect(result).toBeNull();
-    });
-
-    it('Reject Promise', async () => {
-        try {
-            await nodeify(Promise.reject(new Error('message')), undefined);
-        } catch (e: unknown) {
-            expect(e).toEqual(new Error('message'));
-        }
-    });
-
-    it('Resolve Callback', () => {
-        const result = nodeify(Promise.resolve(null), (err, value) => {
-            expect(err).toBeNull();
-            expect(value).toBeNull();
-        });
-        expect(result).toBeUndefined();
-    });
-
-    it('Reject Callback', () => {
-        const result = nodeify(
-            Promise.reject(new Error('message')),
-            (err, value) => {
-                expect(err?.message).toBe('message');
-                expect(value).toBeUndefined();
-            }
-        );
-        expect(result).toBeUndefined();
-    });
-});
-
-describe('Parse value param', () => {
-    it('undefined', () => {
-        const result = parseValueParam(undefined);
-        expect(result).toBeUndefined();
-    });
-
-    it('function', () => {
-        const result = parseValueParam(() => null);
-        expect(result).toBeUndefined();
-    });
-
-    it('object', () => {
-        const result = parseValueParam({ one: 1 });
-        expect(result).toEqual({ one: 1 });
-    });
-});
-
-describe('Parse cb params', () => {
-    it('undefined/undefined', () => {
-        const result = parseCbParam(undefined, undefined);
-        expect(result).toBeUndefined();
-    });
-
-    it('function/undefined', () => {
-        const result = parseCbParam(() => null, undefined);
-        expect(typeof result).toBe('function');
-    });
-
-    it('object/undefined', () => {
-        const result = parseCbParam({ one: 1 }, undefined);
-        expect(result).toBeUndefined();
-    });
-
-    it('object/function', () => {
-        const result = parseCbParam({ one: 1 }, () => null);
-        expect(typeof result).toBe('function');
-    });
-
-    it('undefined/function', () => {
-        const result = parseCbParam(undefined, () => null);
-        expect(typeof result).toBe('function');
-    });
-
-    it('function/function', () => {
-        const result = parseCbParam(
-            () => 1,
-            () => 2
-        );
-        expect(result?.(null, null)).toBe(1);
-    });
-});
-
 describe('Parse primitive type', () => {
     it('undefined', () => {
         const result = parsePrimitiveParam(1, undefined);
@@ -202,26 +113,6 @@ describe('Parse primitive type', () => {
     it('non undefined', () => {
         const result = parsePrimitiveParam(1, 2);
         expect(result).toBe(2);
-    });
-});
-
-describe('Build fs params', () => {
-    it('Options is function, cb is undefined', () => {
-        const { options_, cb_ } = buildFsParams(() => undefined, undefined);
-        expect(options_).toBeUndefined();
-        expect(typeof cb_).toBe('function');
-    });
-
-    it('Options is object, cb is undefined', () => {
-        const { options_, cb_ } = buildFsParams({}, undefined);
-        expect(options_).toEqual({});
-        expect(cb_).toBeUndefined();
-    });
-
-    it('Options is object, cb is function', () => {
-        const { options_, cb_ } = buildFsParams({}, () => undefined);
-        expect(options_).toEqual({});
-        expect(typeof cb_).toBe('function');
     });
 });
 
@@ -311,35 +202,6 @@ describe('Find matches', () => {
     });
 });
 
-describe('Build input params', () => {
-    it('Params is function, cb is undefined', () => {
-        const { params, cb_ } = buildInputParams(() => undefined, undefined);
-        expect(params).toBeUndefined();
-        expect(typeof cb_).toBe('function');
-    });
-
-    it('Params is InputOptions, cb is function', () => {
-        const { params, cb_ } = buildInputParams(
-            { source: 'dpad' },
-            () => undefined
-        );
-        expect(params).toEqual({ source: 'dpad' });
-        expect(typeof cb_).toBe('function');
-    });
-
-    it('Params is InputSource, cb is function', () => {
-        const { params, cb_ } = buildInputParams('dpad', () => undefined);
-        expect(params).toEqual('dpad');
-        expect(typeof cb_).toBe('function');
-    });
-
-    it('Params is InputSource, cb is undefined', () => {
-        const { params, cb_ } = buildInputParams('dpad', undefined);
-        expect(params).toEqual('dpad');
-        expect(typeof cb_).toBe('undefined');
-    });
-});
-
 describe('Escape tests', () => {
     it('escape undefined', () => {
         const result = escape(undefined);
@@ -383,5 +245,41 @@ describe('Escape compat tests', () => {
     it('escape bool', () => {
         const result = escapeCompat(true);
         expect(result).toBe(`${true}`);
+    });
+});
+
+describe('Auto unregister', () => {
+    it('Unregister after success', async () => {
+        const emitter = new EventEmitter();
+        const listener1 = jest.fn();
+        emitter.on('test', listener1);
+        await autoUnregister(emitter, async (emitter) => {
+            const listener2 = jest.fn();
+            emitter.on('test', listener2);
+        });
+        const listeners = emitter
+            .eventNames()
+            .flatMap((event) => emitter.listeners(event));
+        expect(listeners).toEqual([listener1]);
+    });
+
+    it('Unregister after error', async () => {
+        const emitter = new EventEmitter();
+        const listener1 = jest.fn();
+        emitter.on('test', listener1);
+        try {
+            await autoUnregister(emitter, async (emitter) => {
+                const listener2 = jest.fn();
+                emitter.on('test', listener2);
+                throw new Error('Test');
+            });
+        } catch {
+            /* empty */
+        } finally {
+            const listeners = emitter
+                .eventNames()
+                .flatMap((event) => emitter.listeners(event));
+            expect(listeners).toEqual([listener1]);
+        }
     });
 });

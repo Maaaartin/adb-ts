@@ -17,10 +17,6 @@ export enum Reply {
     QUIT = 'QUIT'
 }
 
-export type Callback = (err: null | Error) => void;
-
-export type ValueCallback<T> = (err: null | Error, value: T) => void;
-
 export type DeviceState =
     | 'offline'
     | 'device'
@@ -326,11 +322,11 @@ export interface MkDirOptions {
 
 export interface TouchOptions extends SymlinkFSoption {
     /**
-     * Adds `-a` flag. Changes access time.
+     * Adds `-a` flag. Changes access time. UTC time.
      */
     aTime?: boolean;
     /**
-     * Adds `-m` flag. Changes modification time.
+     * Adds `-m` flag. Changes modification time. UTC time.
      */
     mTime?: boolean;
     /**
@@ -338,11 +334,11 @@ export interface TouchOptions extends SymlinkFSoption {
      */
     noCreate?: boolean;
     /**
-     * Adds `-d <date>` flag.
+     * Adds `-d <date>` flag. UTC time.
      */
     date?: Date | string;
     /**
-     * Adds `-t <time>` flag.
+     * Adds `-t <time>` flag. UTC time.
      */
     time?: Date | string;
     /**
@@ -425,8 +421,6 @@ export type PropertyMap = Map<string, PropertyValue>;
 export type NonFunctionPropertyNames<T> = {
     [K in keyof T]: T[K] extends () => void ? never : K;
 }[keyof T];
-
-export type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
 
 export type NonNullable<T> = Exclude<T, undefined>;
 
