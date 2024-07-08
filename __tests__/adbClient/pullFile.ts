@@ -19,8 +19,11 @@ describe('Pull file tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'DATA' + buff.toString() + 'dataDONE' + buff.toString(),
-                rawRes: true
+                res: {
+                    value:
+                        'DATA' + buff.toString() + 'dataDONE' + buff.toString(),
+                    raw: true
+                }
             }
         ]);
         try {
@@ -39,8 +42,7 @@ describe('Pull file tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'FAIL' + buff.toString() + 'data',
-                rawRes: true
+                res: { value: 'FAIL' + buff.toString() + 'data', raw: true }
             }
         ]);
         try {
@@ -60,8 +62,7 @@ describe('Pull file tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'UNEX' + buff.toString() + 'data',
-                rawRes: true
+                res: { value: 'UNEX' + buff.toString() + 'data', raw: true }
             }
         ]);
         try {

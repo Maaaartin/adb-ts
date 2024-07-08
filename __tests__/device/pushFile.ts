@@ -16,8 +16,7 @@ describe('Device Push file', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'OKAY' + buff.toString(),
-                rawRes: true
+                res: { value: 'OKAY' + buff.toString(), raw: true }
             }
         ]);
         try {

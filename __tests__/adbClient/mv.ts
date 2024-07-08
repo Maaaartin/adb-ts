@@ -93,7 +93,6 @@ describe('Mv unexpected tests', () => {
     it('Should throw unexpected error for first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
                 res: 'unexpected'
             },
             {
@@ -119,7 +118,6 @@ describe('Mv unexpected tests', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:(mv /file /other) || echo '1-2-3-4-5'`,
                 res: 'unexpected'
             }
         ]);

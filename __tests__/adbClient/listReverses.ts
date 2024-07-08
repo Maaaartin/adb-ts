@@ -76,7 +76,6 @@ host-19 localabstract:chrome_devtools_remote tcp:9223`
     it('Unexpected first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
                 res: 'unexpected'
             },
             {

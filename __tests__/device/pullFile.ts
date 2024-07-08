@@ -18,8 +18,11 @@ describe('Device Pull file', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'DATA' + buff.toString() + 'dataDONE' + buff.toString(),
-                rawRes: true
+                res: {
+                    value:
+                        'DATA' + buff.toString() + 'dataDONE' + buff.toString(),
+                    raw: true
+                }
             }
         ]);
         try {

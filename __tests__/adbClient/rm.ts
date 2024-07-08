@@ -75,7 +75,6 @@ describe('Rm unexpected tests', () => {
     it('Should throw unexpected error for first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
                 res: 'unexpected'
             },
             {

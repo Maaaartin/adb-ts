@@ -13,7 +13,9 @@ describe('Map tests', () => {
                     'b137f5dd               device usb:337641472Y product:FP4eeb model:FP3 device:FP3 transport_id:2'
                 );
 
-        const adbMock = new AdbMock([{ cmd: 'host:devices-l', res: raw }]);
+        const adbMock = new AdbMock([
+            { cmd: 'host:devices-l', res: { value: raw } }
+        ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
@@ -56,7 +58,9 @@ describe('Map tests', () => {
                     'b137f5dd               device usb337641472Y product:FP4eeb model:FP3 device:FP3 transport_id:2'
                 );
 
-        const adbMock = new AdbMock([{ cmd: 'host:devices-l', res: raw }]);
+        const adbMock = new AdbMock([
+            { cmd: 'host:devices-l', res: { value: raw } }
+        ]);
         try {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });

@@ -118,7 +118,6 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
     it('Unexpected first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
                 res: 'unexpected'
             },
             {

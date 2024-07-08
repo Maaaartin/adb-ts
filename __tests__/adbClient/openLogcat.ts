@@ -116,7 +116,6 @@ describe('Open logcat unexpected error tests', () => {
     it('Should receive unexpected first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
                 res: 'unexpected'
             },
             {

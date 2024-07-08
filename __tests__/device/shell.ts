@@ -15,8 +15,7 @@ describe('Shell tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:("one && "two") || echo '1-2-3-4-5'`,
-                res: '0',
-                rawRes: true
+                res: { value: '0', raw: true }
             }
         ]);
         try {

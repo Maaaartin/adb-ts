@@ -12,8 +12,11 @@ describe('Read dir', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'DENT' + buff.toString() + 'nameDONE' + buff.toString(),
-                rawRes: true
+                res: {
+                    value:
+                        'DENT' + buff.toString() + 'nameDONE' + buff.toString(),
+                    raw: true
+                }
             }
         ]);
         try {
@@ -34,8 +37,10 @@ describe('Read dir', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'DENT' + buff.toString() + '.DONE' + buff.toString(),
-                rawRes: true
+                res: {
+                    value: 'DENT' + buff.toString() + '.DONE' + buff.toString(),
+                    raw: true
+                }
             }
         ]);
         try {
@@ -56,8 +61,11 @@ describe('Read dir', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'DENT' + buff.toString() + '..DONE' + buff.toString(),
-                rawRes: true
+                res: {
+                    value:
+                        'DENT' + buff.toString() + '..DONE' + buff.toString(),
+                    raw: true
+                }
             }
         ]);
         try {
@@ -75,8 +83,7 @@ describe('Read dir', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'FAIL0003Err',
-                rawRes: true
+                res: { value: 'FAIL0003Err', raw: true }
             }
         ]);
         try {
@@ -94,11 +101,7 @@ describe('Read dir', () => {
     it('Unexpected data', async () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
-            {
-                cmd: 'sync:',
-                res: 'UNEX',
-                rawRes: true
-            }
+            { res: 'unexpected' }
         ]);
         try {
             const port = await adbMock.start();

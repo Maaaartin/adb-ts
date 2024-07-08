@@ -11,8 +11,11 @@ describe('Device Read dir', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'DENT' + buff.toString() + 'nameDONE' + buff.toString(),
-                rawRes: true
+                res: {
+                    value:
+                        'DENT' + buff.toString() + 'nameDONE' + buff.toString(),
+                    raw: true
+                }
             }
         ]);
         try {

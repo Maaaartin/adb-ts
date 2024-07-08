@@ -17,8 +17,7 @@ describe('Push data to file', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'OKAY' + buff.toString(),
-                rawRes: true
+                res: { value: 'OKAY' + buff.toString(), raw: true }
             }
         ]);
         try {
@@ -37,8 +36,7 @@ describe('Push data to file', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'FAIL' + buff.toString() + 'Error',
-                rawRes: true
+                res: { value: 'FAIL' + buff.toString() + 'Error', raw: true }
             }
         ]);
         try {
@@ -58,8 +56,7 @@ describe('Push data to file', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: 'sync:',
-                res: 'UNEX' + buff.toString() + 'Error',
-                rawRes: true
+                res: { value: 'UNEX' + buff.toString() + 'Error', raw: true }
             }
         ]);
         try {

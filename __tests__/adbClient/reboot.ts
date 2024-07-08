@@ -53,7 +53,6 @@ describe('Reboot', () => {
     it('Unexpected first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
                 res: 'unexpected'
             },
             { cmd: 'reboot:', res: { raw: true } }

@@ -149,7 +149,6 @@ describe('Open Monkey tests', () => {
     it('Unexpected first response', async () => {
         const adbMock = new AdbMockMulti([
             {
-                cmd: 'host:transport:serial',
                 res: 'unexpected'
             },
             { cmd: 'host:transport:serial', res: { raw: true } },
@@ -179,7 +178,6 @@ describe('Open Monkey tests', () => {
                 res: { raw: true }
             },
             {
-                cmd: 'host:transport:serial',
                 res: 'unexpected'
             },
             {
@@ -241,7 +239,6 @@ describe('Open Monkey tests', () => {
                 rawRes: true
             },
             ...Array(40).fill({
-                cmd: 'host:transport:serial',
                 res: 'unexpected'
             }),
             { cmd: 'tcp:1080', res: { raw: true } }

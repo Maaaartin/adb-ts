@@ -15,8 +15,7 @@ describe('Shell tests', () => {
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
                 cmd: `shell:("one && "two") || echo '1-2-3-4-5'`,
-                res: '0',
-                rawRes: true
+                res: { value: '0', raw: true }
             }
         ]);
         try {
@@ -89,7 +88,6 @@ describe('Shell tests', () => {
     it('Unexpected first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
                 res: 'unexpected'
             },
             {
@@ -115,9 +113,7 @@ describe('Shell tests', () => {
                 res: { raw: true }
             },
             {
-                cmd: `shell:(cmd) || echo '1-2-3-4-5'`,
-                res: { value: 'message \n1-2-3-4-5', raw: true },
-                unexpected: true
+                res: 'unexpected'
             }
         ]);
         try {

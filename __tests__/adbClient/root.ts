@@ -69,7 +69,6 @@ describe('Root', () => {
     it('Unexpected first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
                 res: 'unexpected'
             },
             { cmd: 'root:', res: { raw: true } }

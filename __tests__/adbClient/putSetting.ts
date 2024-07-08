@@ -248,7 +248,6 @@ describe('Put setting tests', () => {
     it('Unexpected first response', async () => {
         const adbMock = new AdbMock([
             {
-                cmd: 'host:transport:serial',
                 res: 'unexpected'
             },
             {
