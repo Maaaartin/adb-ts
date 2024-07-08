@@ -84,8 +84,8 @@ adb.listDevices((devices) => {
 });
 ```
 
-## Change log
+## Changes from V5
 
-Touch converts to UTC.
-Tracker has device instances.
-Install/uninstall validates response.
+-   `time` option in `touch` method is converted to UTC time.
+-   Tracker `change` event emits the same instance of the device instead of creating a new device object every time.
+-   `install` and `uninstall` commands will fail if any other response than `Success` is received. Until V5 the promise could have resolved even when the operation was not successful.
