@@ -77,6 +77,3 @@ jobs:
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: ./docs
-
-            - name: Git push version
-              run: git push -u origin master --follow-tags
