@@ -15,10 +15,12 @@
     "extends": [
         "plugin:@typescript-eslint/recommended",
         "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended"
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:prettier/recommended"
     ],
-    "plugins": ["jest"],
+    "plugins": ["jest", "prettier"],
     "rules": {
+        "prettier/prettier": "error",
         "no-const-assign": "warn",
         "no-this-before-super": "warn",
         "no-undef": "error",
