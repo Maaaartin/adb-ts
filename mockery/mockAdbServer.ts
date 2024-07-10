@@ -34,14 +34,6 @@ export class AdbMock<T extends Sequence> {
         this.seq = ([seq].flat() as T[])[Symbol.iterator]();
     }
 
-    protected get Port(): number {
-        const info = this.server_.address();
-        if (typeof info === 'string' || info === null) {
-            throw new Error('Could not get server port');
-        }
-        return info.port;
-    }
-
     protected writeOkay(data: string | Buffer | void): void {
         const encoded = encodeData(data || '');
         const toWrite = Reply.OKAY.concat(encoded.toString());
@@ -111,12 +103,6 @@ export class AdbMock<T extends Sequence> {
         });
     }
 
-    protected hook(): void {
-        this.server_.on('connection', (socket) => {
-            this.connectionHandler(socket);
-        });
-    }
-
     public end(): Promise<void> {
         return promisify<void>((cb) => this.server_.close(cb))();
     }
@@ -138,8 +124,15 @@ export class AdbMock<T extends Sequence> {
             this.server_.once('error', reject);
             this.server_.listen(() => {
                 try {
-                    this.hook();
-                    resolve(this.Port);
+                    this.server_.on(
+                        'connection',
+                        this.connectionHandler.bind(this)
+                    );
+                    const info = this.server_.address();
+                    if (typeof info === 'string' || info === null) {
+                        return reject(new Error('Could not get server port'));
+                    }
+                    resolve(info.port);
                     this.server_.removeListener('error', reject);
                 } catch (e: unknown) {
                     reject(e);
