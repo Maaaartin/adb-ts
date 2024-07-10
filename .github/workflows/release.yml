@@ -12,10 +12,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repo
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Install Node, NPM and Yarn
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   node-version: 18
                   registry-url: 'https://registry.npmjs.org'
@@ -62,12 +62,12 @@ jobs:
               run: |
                   yarn docs
             - name: Upload docs
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v3
               with:
                   name: docs-files
                   path: ./docs
             - name: Download artifact
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v3
               with:
                   name: docs-files
                   path: ./docs
