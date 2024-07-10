@@ -104,7 +104,7 @@ export class AdbMock<T extends Sequence> {
 
     protected readableHandler(): void {
         this.socket.once('readable', async () => {
-            for await (const seq of this.seq) {
+            for (const seq of this.seq) {
                 this.writeResponse(seq, await this.readValue());
             }
             this.parser?.end();
