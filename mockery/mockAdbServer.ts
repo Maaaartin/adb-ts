@@ -63,7 +63,7 @@ export class AdbMock<T extends Sequence> {
     private async connectionHandler(socket: net.Socket): Promise<void> {
         this.parser = new Parser(socket);
         const value = (await this.parser.readValue()).toString();
-        this.readableHandler();
+        this.socket.on('readable', this.readableHandler.bind(this));
         const nextSeq = this.Next;
         if (!nextSeq) {
             return this.writeFail();
@@ -94,13 +94,11 @@ export class AdbMock<T extends Sequence> {
         }
     }
 
-    protected readableHandler(): void {
-        this.socket.once('readable', async () => {
-            for (const seq of this.seq) {
-                this.writeResponse(seq, await this.readValue());
-            }
-            this.parser?.end();
-        });
+    protected async readableHandler(): Promise<void> {
+        for (const seq of this.seq) {
+            this.writeResponse(seq, await this.readValue());
+        }
+        this.parser?.end();
     }
 
     public end(): Promise<void> {
@@ -143,24 +141,18 @@ export class AdbMock<T extends Sequence> {
 }
 
 export class AdbMockMulti extends AdbMock<EndSequence> {
-    private runner(): void {
-        setImmediate(async () => {
-            const seq = this.Next;
-            if (!seq) {
-                this.parser?.end();
-                return;
-            }
+    protected async readableHandler(): Promise<void> {
+        const seq = this.Next;
+        if (!seq) {
+            this.parser?.end();
+            return;
+        }
 
-            this.writeResponse(seq, await this.readValue());
-            if (seq.end) {
-                this.socket.removeAllListeners('readable');
-                this.socket.end();
-                this.parser?.end();
-            }
-        });
-    }
-
-    protected readableHandler(): void {
-        this.socket.on('readable', this.runner.bind(this));
+        this.writeResponse(seq, await this.readValue());
+        if (seq.end) {
+            this.socket.removeAllListeners('readable');
+            this.socket.end();
+            this.parser?.end();
+        }
     }
 }
