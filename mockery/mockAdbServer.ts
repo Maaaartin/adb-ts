@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import net from 'net';
 import { Parser } from '../lib/parser';
 import { NonEmptyArray, Reply } from '../lib/util';
@@ -15,16 +14,14 @@ type Sequence =
           };
       };
 
-type SequenceWithIndex = Sequence & {
+type EndSequence = Sequence & {
     end?: boolean;
 };
 
-export const FailureError: Readonly<Error> = new Error('Failure');
-
-export class AdbMock {
+export class AdbMock<T extends Sequence> {
     protected server_ = new net.Server();
     protected parser: Parser | null = null;
-    protected seq: Sequence[];
+    protected seq: IterableIterator<T>;
 
     protected get socket(): net.Socket {
         if (!this.parser) {
@@ -33,11 +30,11 @@ export class AdbMock {
         return this.parser?.socket;
     }
 
-    constructor(seq: Sequence | NonEmptyArray<Sequence>) {
-        this.seq = [seq].flat();
+    constructor(seq: T | NonEmptyArray<T>) {
+        this.seq = ([seq].flat() as T[])[Symbol.iterator]();
     }
 
-    protected getPort(): number {
+    protected get Port(): number {
         const info = this.server_.address();
         if (typeof info === 'string' || info === null) {
             throw new Error('Could not get server port');
@@ -67,26 +64,26 @@ export class AdbMock {
         this.socket.write(msg);
     }
 
-    protected next(): Sequence | null {
-        return this.seq.shift() || null;
+    protected get Next(): T | void {
+        return this.seq.next()?.value;
     }
 
     private async connectionHandler(socket: net.Socket): Promise<void> {
         this.parser = new Parser(socket);
         const value = (await this.parser.readValue()).toString();
         this.readableHandler();
-        const nextSeq = this.next();
+        const nextSeq = this.Next;
         if (!nextSeq) {
             return this.writeFail();
         }
         this.writeResponse(nextSeq, value);
     }
 
-    protected async readValue(): Promise<string | undefined> {
+    protected async readValue(): Promise<string | void> {
         return (await this.parser?.readValue())?.toString();
     }
 
-    protected writeResponse(seq: Sequence, value: string | undefined): void {
+    protected writeResponse(seq: T, value: string | void): void {
         switch (seq.res) {
             case 'unexpected':
                 return this.writeUnexpected();
@@ -120,51 +117,42 @@ export class AdbMock {
         });
     }
 
-    end(): Promise<void> {
+    public end(): Promise<void> {
         return promisify<void>((cb) => this.server_.close(cb))();
     }
 
-    forceWriteData(data: string): void {
+    public forceWriteData(data: string): void {
         const encoded = encodeData(data || '');
         this.socket.write(encoded);
     }
 
-    forceWrite(data: string): void {
+    public forceWrite(data: string): void {
         this.writeOkay(data);
     }
 
-    start(): Promise<number> {
+    public start(): Promise<number> {
         return new Promise((resolve, reject) => {
-            if (!this.server_.listening) {
-                this.server_.once('error', reject);
-                this.server_.listen(() => {
-                    try {
-                        this.hook();
-                        resolve(this.getPort());
-                        this.server_.removeListener('error', reject);
-                    } catch (e: unknown) {
-                        reject(e);
-                    }
-                });
-            } else {
+            if (this.server_.listening) {
+                return reject(new Error('Server already started'));
+            }
+            this.server_.once('error', reject);
+            this.server_.listen(() => {
                 try {
-                    resolve(this.getPort());
+                    this.hook();
+                    resolve(this.Port);
+                    this.server_.removeListener('error', reject);
                 } catch (e: unknown) {
                     reject(e);
                 }
-            }
+            });
         });
     }
 }
 
-export class AdbMockMulti extends AdbMock {
-    constructor(seq: SequenceWithIndex | NonEmptyArray<SequenceWithIndex>) {
-        super(seq);
-    }
-
+export class AdbMockMulti extends AdbMock<EndSequence> {
     private runner(): void {
         setImmediate(async () => {
-            const seq = this.next() as SequenceWithIndex | null;
+            const seq = this.Next;
             if (!seq) {
                 this.parser?.end();
                 return;
