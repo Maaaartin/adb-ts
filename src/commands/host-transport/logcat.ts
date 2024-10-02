@@ -9,7 +9,7 @@ import TransportCommand from '../abstract/transport';
 export default class LogcatCommand extends TransportCommand<LogcatReader> {
     private options: LogcatOptions | void;
     protected Cmd = 'shell:echo && ';
-    protected keepAlive = false;
+    protected keepAlive = true;
 
     constructor(
         connection: Connection,
