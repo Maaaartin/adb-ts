@@ -1,4 +1,3 @@
-import { promisify } from 'util';
 import { Connection } from '../../connection';
 import LineTransform from '../../linetransform';
 import LogcatReader from '../../logcat/v2/reader';
@@ -24,13 +23,10 @@ export default class LogcatCommandV2 extends TransportCommand<LogcatReader> {
         this.Cmd = `shell:echo && ${cmd}`;
     }
 
-    protected async postExecute(): Promise<LogcatReader> {
+    protected postExecute(): LogcatReader {
         const stream = new LineTransform({ autoDetect: true });
         this.connection.pipe(stream);
-        await promisify<unknown>((cb) => stream.once('readable', cb))();
+        stream.once('end', () => this.endConnection());
         return new LogcatReader(stream, this.options);
-        // TODO test connection
-        // this.connection.on('error', (err) => logCat.emit('error', err));
-        // logCat.on('end', () => this.endConnection());
     }
 }
