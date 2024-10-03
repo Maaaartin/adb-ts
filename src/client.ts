@@ -61,7 +61,9 @@ import ListPropertiesCommand from './commands/host-transport/listproperties';
 import ListReversesCommand from './commands/host-transport/listreverses';
 import ListSettingsCommand from './commands/host-transport/listSettings';
 import LogcatCommand from './commands/host-transport/logcat';
+import LogcatCommandV2 from './commands/host-transport/logcatV2';
 import { LogcatReader } from './logcat/reader';
+import LogcatReaderV2 from './logcat/v2/reader';
 import MkDirCommand from './commands/host-transport/fileSystem/mkdir';
 import { Monkey } from './monkey/client';
 import MonkeyCommand from './commands/host-transport/monkey';
@@ -678,6 +680,17 @@ export class Client {
         options?: LogcatOptions
     ): Promise<LogcatReader> {
         return new LogcatCommand(
+            await this.connection(),
+            serial,
+            options
+        ).execute();
+    }
+
+    public async openLogcatV2(
+        serial: string,
+        options?: LogcatOptions
+    ): Promise<LogcatReaderV2> {
+        return new LogcatCommandV2(
             await this.connection(),
             serial,
             options
