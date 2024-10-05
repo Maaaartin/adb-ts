@@ -1,67 +1,70 @@
 import { LogcatEntry } from '../entry';
 import { Parser as ParserParent } from '../parser';
+import { charToPriority } from '../priority';
 
 export default class Parser extends ParserParent {
     private buffer = Buffer.alloc(0);
-    private readonly HEADER_SIZE_V1 = 20;
-    private readonly HEADER_SIZE_MAX = 100;
+    private static readonly DATE_LEN = 23;
+    private static readonly ID_LEN = 6;
+    private static readonly DASH_BYTE = 45;
+    private static readonly NEW_LINE_BYTE = 10;
+    private static readonly COLON_BYTE = 58;
 
     public *parse(chunk: Buffer): IterableIterator<LogcatEntry> {
+        let cursor = 0;
         this.buffer = Buffer.concat([this.buffer, chunk]);
-        while (this.buffer.length > 4) {
-            let cursor = 0;
-            const length = this.buffer.readUInt16LE(cursor);
-            cursor += 2;
-            let headerSize = this.buffer.readUInt16LE(cursor);
-            if (
-                headerSize < this.HEADER_SIZE_V1 ||
-                headerSize > this.HEADER_SIZE_MAX
-            ) {
-                headerSize = this.HEADER_SIZE_V1;
-            }
-            cursor += 2;
-            if (this.buffer.length < headerSize + length) {
-                break;
+        const readUntil = this.buffer.lastIndexOf(10);
+
+        while (cursor < readUntil) {
+            if (this.buffer[cursor] === 45) {
+                const newLineIndex = this.buffer.indexOf(
+                    Parser.NEW_LINE_BYTE,
+                    cursor
+                );
+                cursor = newLineIndex + 1;
+                continue;
             }
             const entry = new LogcatEntry();
-            entry.pid = this.buffer.readInt32LE(cursor);
-            cursor += 4;
-            entry.tid = this.buffer.readInt32LE(cursor);
-            cursor += 4;
-            const sec = this.buffer.readInt32LE(cursor);
-            cursor += 4;
-            const nsec = this.buffer.readInt32LE(cursor);
-            entry.date = new Date(sec * 1000 + nsec / 1000000);
-            cursor += 4;
-            cursor = headerSize;
-            const data = this.buffer.subarray(cursor, cursor + length);
-            cursor += length;
-            this.buffer = this.buffer.subarray(cursor);
-            yield this.processEntry(entry, data);
-        }
 
-        // if (this.buffer.length) {
-        //     this.emit('wait');
-        // } else {
-        //     this.emit('drain');
-        // }
-    }
-
-    private processEntry(entry: LogcatEntry, data: Buffer): LogcatEntry {
-        entry.priority = data[0];
-        let cursor = 1;
-        const length = data.length;
-        while (cursor < length) {
-            if (data[cursor] === 0) {
-                entry.tag = data.subarray(1, cursor).toString();
-                entry.message = data
-                    .subarray(cursor + 1, length - 1)
-                    .toString();
-                return entry;
+            const dateBuff = this.buffer.subarray(
+                cursor,
+                cursor + Parser.DATE_LEN
+            );
+            entry.date = new Date(dateBuff.toString());
+            cursor += Parser.DATE_LEN;
+            const pidBuff = this.buffer.subarray(
+                cursor,
+                cursor + Parser.ID_LEN
+            );
+            entry.pid = parseInt(pidBuff.toString(), 10);
+            cursor += Parser.ID_LEN;
+            const tidBuff = this.buffer.subarray(
+                cursor,
+                cursor + Parser.ID_LEN
+            );
+            entry.tid = parseInt(tidBuff.toString(), 10);
+            cursor += Parser.ID_LEN;
+            cursor++;
+            const priorityBuff = this.buffer.subarray(cursor, cursor + 1);
+            // TODO check if adb can provide int priority
+            entry.priority = charToPriority(priorityBuff.toString());
+            cursor += 2;
+            const tagBuffArr = [];
+            for (; this.buffer[cursor] !== Parser.COLON_BYTE; cursor++) {
+                tagBuffArr.push(this.buffer[cursor]);
             }
+            cursor += 2;
+            entry.tag = Buffer.from(tagBuffArr).toString();
+            const messageBuffArr = [];
+            for (; this.buffer[cursor] !== Parser.NEW_LINE_BYTE; cursor++) {
+                messageBuffArr.push(this.buffer[cursor]);
+            }
+            entry.message = Buffer.from(messageBuffArr).toString();
             cursor += 1;
+            yield entry;
         }
-        throw new Error("Unprocessable entry data '" + data + "'");
+        this.buffer = this.buffer.subarray(readUntil);
+        // console.log('after', this.buffer.length);
     }
 
     public on(event: 'entry', listener: (entry: LogcatEntry) => void): this;
