@@ -4,7 +4,7 @@ export class LogcatEntry {
     public date = new Date();
     public pid = -1;
     public tid = -1;
-    public priority = Priority.SILENT;
+    public priority: Priority = Priority.SILENT;
     public tag = '';
     public message = '';
 

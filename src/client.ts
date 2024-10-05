@@ -30,7 +30,8 @@ import {
     KeyCode,
     parsePrimitiveParam,
     AdbExecError,
-    autoUnregister
+    autoUnregister,
+    LogcatOptionsV2
 } from './util';
 import { Sync, SyncMode } from './sync';
 import { execFile } from 'child_process';
@@ -688,7 +689,7 @@ export class Client {
 
     public async openLogcatV2(
         serial: string,
-        options?: LogcatOptions
+        options?: LogcatOptionsV2
     ): Promise<LogcatReaderV2> {
         return new LogcatCommandV2(
             await this.connection(),

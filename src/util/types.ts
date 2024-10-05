@@ -3,6 +3,7 @@ import IpConnect from '../commands/abstract/ipConnect';
 import TransportCommand from '../commands/abstract/transport';
 import { Connection } from '../connection';
 import { LogcatEntry } from '../logcat/entry';
+import { PriorityV2 } from '../logcat';
 
 export enum Reply {
     OKAY = 'OKAY',
@@ -197,6 +198,17 @@ export type LogcatOptions = {
             entry.priority >= Priority.FATAL`
      */
     filter?: (entry: LogcatEntry) => boolean;
+};
+
+type FilterSpec = {
+    tag: string;
+    priority: PriorityV2;
+};
+export type FilterSpecs = FilterSpec | FilterSpec[];
+
+export type LogcatOptionsV2 = LogcatOptions & {
+    filterSpecs?: FilterSpecs;
+    silenceOthers?: boolean;
 };
 
 /**

@@ -9,6 +9,17 @@ export enum Priority {
     SILENT = 8
 }
 
+export enum PriorityV2 {
+    // DEFAULT = 'D',
+    VERBOSE = 'V',
+    DEBUG = 'D',
+    INFO = 'I',
+    WARN = 'W',
+    ERROR = 'E',
+    FATAL = 'F',
+    SILENT = 'S'
+}
+
 export function charToPriority(char: string): Priority {
     // console.log(char);
     switch (char) {
