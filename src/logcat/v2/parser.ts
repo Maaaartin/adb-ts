@@ -13,10 +13,10 @@ export default class Parser extends ParserParent {
     public *parse(chunk: Buffer): IterableIterator<LogcatEntry> {
         let cursor = 0;
         this.buffer = Buffer.concat([this.buffer, chunk]);
-        const readUntil = this.buffer.lastIndexOf(10);
+        const readUntil = this.buffer.lastIndexOf(Parser.NEW_LINE_BYTE);
 
         while (cursor < readUntil) {
-            if (this.buffer[cursor] === 45) {
+            if (this.buffer[cursor] === Parser.DASH_BYTE) {
                 const newLineIndex = this.buffer.indexOf(
                     Parser.NEW_LINE_BYTE,
                     cursor
