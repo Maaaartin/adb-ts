@@ -1,17 +1,49 @@
 import { Client } from '../../lib/client';
 import { AdbExecError } from '../../lib/util';
-import { mockExec } from '../../mockery/execMock';
+import { execFile } from 'child_process';
+
+jest.mock('child_process', () => ({
+    execFile: jest.fn()
+}));
+
+const mockExecFile = execFile as unknown as jest.Mock;
 
 describe('Exec tests', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
     it('Should execute without error', async () => {
-        mockExec(null, '', '');
+        let callback;
+        mockExecFile.mockImplementation((_cmd, _args, callback_) => {
+            callback = callback_;
+            callback_(null, '', '');
+        });
         const adb = new Client({ noAutoStart: true });
         const result = await adb.exec('cmd');
         expect(result).toBe('');
+        expect(mockExecFile).toHaveBeenCalledWith('adb', ['cmd'], callback);
+    });
+
+    it('Should execute with multiple parameters', async () => {
+        let callback;
+        mockExecFile.mockImplementation((_cmd, _args, callback_) => {
+            callback = callback_;
+            callback_(null, '', '');
+        });
+        const adb = new Client({ noAutoStart: true });
+        const result = await adb.exec(['cmd', 'param']);
+        expect(result).toBe('');
+        expect(mockExecFile).toHaveBeenCalledWith(
+            'adb',
+            ['cmd', 'param'],
+            callback
+        );
     });
 
     it('Should execute with error', async () => {
-        mockExec(new Error('message'), '', '');
+        mockExecFile.mockImplementation((_cmd, _args, callback_) => {
+            callback_(new Error('message'), '', '');
+        });
         const adb = new Client({ noAutoStart: true });
         await expect(() => adb.exec('cmd')).rejects.toEqual(
             new Error('message')
@@ -19,7 +51,9 @@ describe('Exec tests', () => {
     });
 
     it('Should execute with std error', async () => {
-        mockExec(null, '', 'message');
+        mockExecFile.mockImplementation((_cmd, _args, callback_) => {
+            callback_(null, '', 'message');
+        });
         const adb = new Client({ noAutoStart: true });
         try {
             await adb.exec('cmd');
@@ -31,7 +65,9 @@ describe('Exec tests', () => {
     });
 
     it('Should execute with std out matching error reg exp', async () => {
-        mockExec(null, 'Error: message', '');
+        mockExecFile.mockImplementation((_cmd, _args, callback_) => {
+            callback_(null, 'Error: message', '');
+        });
         const adb = new Client({ noAutoStart: true });
         try {
             await adb.exec('cmd');
