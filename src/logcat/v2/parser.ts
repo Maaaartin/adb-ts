@@ -1,4 +1,4 @@
-import { LogcatEntry } from '../entry';
+import { LogcatEntry, LogcatEntryV2 } from '../entry';
 import { Parser as ParserParent } from '../parser';
 import { charToPriority } from '../priority';
 
@@ -10,7 +10,7 @@ export default class Parser extends ParserParent {
     private static readonly NEW_LINE_BYTE = 10;
     private static readonly COLON_BYTE = 58;
 
-    public *parse(chunk: Buffer): IterableIterator<LogcatEntry> {
+    public *parse(chunk: Buffer): IterableIterator<LogcatEntryV2> {
         let cursor = 0;
         this.buffer = Buffer.concat([this.buffer, chunk]);
         const readUntil = this.buffer.lastIndexOf(Parser.NEW_LINE_BYTE);
@@ -24,30 +24,29 @@ export default class Parser extends ParserParent {
                 cursor = newLineIndex + 1;
                 continue;
             }
-            const entry = new LogcatEntry();
 
             const dateBuff = this.buffer.subarray(
                 cursor,
                 cursor + Parser.DATE_LEN
             );
-            entry.date = new Date(dateBuff.toString());
+            const date = new Date(dateBuff.toString());
             cursor += Parser.DATE_LEN;
             const pidBuff = this.buffer.subarray(
                 cursor,
                 cursor + Parser.ID_LEN
             );
-            entry.pid = parseInt(pidBuff.toString(), 10);
+            const pid = parseInt(pidBuff.toString(), 10);
             cursor += Parser.ID_LEN;
             const tidBuff = this.buffer.subarray(
                 cursor,
                 cursor + Parser.ID_LEN
             );
-            entry.tid = parseInt(tidBuff.toString(), 10);
+            const tid = parseInt(tidBuff.toString(), 10);
             cursor += Parser.ID_LEN;
             cursor++;
             const priorityBuff = this.buffer.subarray(cursor, cursor + 1);
             // TODO check if adb can provide int priority
-            entry.priority = charToPriority(priorityBuff.toString());
+            const priority = charToPriority(priorityBuff.toString());
             cursor += 2;
             const colonAtIndex = this.buffer.indexOf(Parser.COLON_BYTE, cursor);
             const tagBuff = this.buffer.subarray(
@@ -57,7 +56,7 @@ export default class Parser extends ParserParent {
             );
             cursor = colonAtIndex;
             cursor += 2;
-            entry.tag = tagBuff.toString();
+            const tag = tagBuff.toString();
             const newLineAtIndex = this.buffer.indexOf(
                 Parser.NEW_LINE_BYTE,
                 cursor
@@ -68,10 +67,10 @@ export default class Parser extends ParserParent {
                 newLineAtIndex
             );
 
-            entry.message = messageBuff.toString();
+            const message = messageBuff.toString();
             cursor = newLineAtIndex;
             cursor += 1;
-            yield entry;
+            yield { date, pid, tid, priority, tag, message };
         }
         this.buffer = this.buffer.subarray(readUntil);
         // console.log('after', this.buffer.length);

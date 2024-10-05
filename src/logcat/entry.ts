@@ -1,6 +1,14 @@
-import { Priority } from './priority';
+import { Priority, PriorityV2 } from './priority';
 
-export class LogcatEntry {
+interface ILogcatEntry<P extends number | string> {
+    date: Date;
+    pid: number;
+    tid: number;
+    priority: P;
+    tag: string;
+    message: string;
+}
+export class LogcatEntry implements ILogcatEntry<Priority> {
     public date = new Date();
     public pid = -1;
     public tid = -1;
@@ -39,3 +47,5 @@ export class LogcatEntry {
         return buffer;
     }
 }
+
+export type LogcatEntryV2 = ILogcatEntry<PriorityV2>;

@@ -18,7 +18,7 @@ export default class LogcatCommandV2 extends TransportCommand<LogcatReader> {
     ) {
         super(connection, serial);
         this.options = options;
-        let cmd = `logcat ${this.buildFilterSpecs(options?.filterSpecs)} ${options?.silenceOthers ? `*:${PriorityV2.SILENT}` : ''} --format=printable,year 2>/dev/null`;
+        let cmd = `logcat ${this.buildFilterSpecs(options?.filterSpecs)} ${options?.filterSpecs?.silenceOthers ? `*:${PriorityV2.SILENT}` : ''} --format=printable,year 2>/dev/null`;
         if (options?.clear) {
             cmd = 'logcat -c 2>/dev/null && ' + cmd;
         }
@@ -29,8 +29,7 @@ export default class LogcatCommandV2 extends TransportCommand<LogcatReader> {
         if (!filterSpecs) {
             return '';
         }
-        return [filterSpecs]
-            .flat()
+        return filterSpecs.filters
             .map((filterSpec) => `${filterSpec.tag}:${filterSpec.priority}`)
             .join(' ');
     }
@@ -43,6 +42,6 @@ export default class LogcatCommandV2 extends TransportCommand<LogcatReader> {
         // stream.pipe(fileStream);
         // return null;
         stream.once('end', () => this.endConnection());
-        return new LogcatReader(stream, this.options);
+        return new LogcatReader(stream);
     }
 }

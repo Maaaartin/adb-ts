@@ -1,3 +1,5 @@
+import { UnexpectedDataError } from '../util';
+
 export enum Priority {
     DEFAULT = 1,
     VERBOSE = 2,
@@ -20,25 +22,27 @@ export enum PriorityV2 {
     SILENT = 'S'
 }
 
-export function charToPriority(char: string): Priority {
+export function charToPriority(char: string): PriorityV2 {
     // console.log(char);
     switch (char) {
         case 'V':
-            return Priority.VERBOSE;
+            return PriorityV2.VERBOSE;
         case 'D':
-            return Priority.DEBUG;
+            return PriorityV2.DEBUG;
         case 'I':
-            return Priority.INFO;
+            return PriorityV2.INFO;
         case 'W':
-            return Priority.WARN;
+            return PriorityV2.WARN;
         case 'E':
-            return Priority.ERROR;
+            return PriorityV2.ERROR;
         case 'F':
-            return Priority.FATAL;
+            return PriorityV2.FATAL;
         case 'S':
-            return Priority.SILENT;
+            return PriorityV2.SILENT;
         default:
-            // TODO should throw?
-            return Priority.DEFAULT;
+            throw new UnexpectedDataError(
+                char,
+                Object.values(PriorityV2).join('|')
+            );
     }
 }

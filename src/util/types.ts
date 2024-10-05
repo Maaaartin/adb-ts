@@ -190,8 +190,11 @@ export type AdbClientOptions = {
     [K in keyof AdbClientOptionsValues]?: AdbClientOptionsValues[K];
 };
 
-export type LogcatOptions = {
+type LogcatOptionsBase = {
     clear?: boolean;
+};
+
+export type LogcatOptions = LogcatOptionsBase & {
     /**
      * e.g. `(entry) =>
             entry.message.includes('some string') &&
@@ -204,11 +207,10 @@ type FilterSpec = {
     tag: string;
     priority: PriorityV2;
 };
-export type FilterSpecs = FilterSpec | FilterSpec[];
+export type FilterSpecs = { filters: FilterSpec[]; silenceOthers?: boolean };
 
-export type LogcatOptionsV2 = LogcatOptions & {
+export type LogcatOptionsV2 = LogcatOptionsBase & {
     filterSpecs?: FilterSpecs;
-    silenceOthers?: boolean;
 };
 
 /**
