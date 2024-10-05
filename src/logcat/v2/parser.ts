@@ -49,17 +49,27 @@ export default class Parser extends ParserParent {
             // TODO check if adb can provide int priority
             entry.priority = charToPriority(priorityBuff.toString());
             cursor += 2;
-            const tagBuffArr = [];
-            for (; this.buffer[cursor] !== Parser.COLON_BYTE; cursor++) {
-                tagBuffArr.push(this.buffer[cursor]);
-            }
+            const colonAtIndex = this.buffer.indexOf(Parser.COLON_BYTE, cursor);
+            const tagBuff = this.buffer.subarray(
+                cursor,
+                // TODO check -1 result
+                colonAtIndex
+            );
+            cursor = colonAtIndex;
             cursor += 2;
-            entry.tag = Buffer.from(tagBuffArr).toString();
-            const messageBuffArr = [];
-            for (; this.buffer[cursor] !== Parser.NEW_LINE_BYTE; cursor++) {
-                messageBuffArr.push(this.buffer[cursor]);
-            }
-            entry.message = Buffer.from(messageBuffArr).toString();
+            entry.tag = tagBuff.toString();
+            const newLineAtIndex = this.buffer.indexOf(
+                Parser.NEW_LINE_BYTE,
+                cursor
+            );
+            const messageBuff = this.buffer.subarray(
+                cursor,
+                // TODO check -1 result
+                newLineAtIndex
+            );
+
+            entry.message = messageBuff.toString();
+            cursor = newLineAtIndex;
             cursor += 1;
             yield entry;
         }
