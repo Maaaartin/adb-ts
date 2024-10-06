@@ -26,7 +26,7 @@ export default class LogcatCommandV2 extends TransportCommand<LogcatReader> {
     }
 
     private buildFilterSpecs(filterSpecs: FilterSpecs | void): string {
-        if (!filterSpecs) {
+        if (!filterSpecs?.filters) {
             return '';
         }
         return filterSpecs.filters
@@ -37,7 +37,7 @@ export default class LogcatCommandV2 extends TransportCommand<LogcatReader> {
     protected postExecute(): LogcatReader {
         const stream = new LineTransform({ autoDetect: true });
         this.connection.pipe(stream);
-        // const fileStream = createWriteStream('./output_binary.log');
+        // const fileStream = createWriteStream('./output.log');
 
         // stream.pipe(fileStream);
         // return null;

@@ -14,7 +14,6 @@ export default class Parser extends ParserParent {
         let cursor = 0;
         this.buffer = Buffer.concat([this.buffer, chunk]);
         const readUntil = this.buffer.lastIndexOf(Parser.NEW_LINE_BYTE);
-
         while (cursor < readUntil) {
             if (this.buffer[cursor] === Parser.DASH_BYTE) {
                 const newLineIndex = this.buffer.indexOf(
@@ -29,6 +28,7 @@ export default class Parser extends ParserParent {
                 cursor,
                 cursor + Parser.DATE_LEN
             );
+
             const date = new Date(dateBuff.toString());
             cursor += Parser.DATE_LEN;
             const pidBuff = this.buffer.subarray(
@@ -45,8 +45,8 @@ export default class Parser extends ParserParent {
             cursor += Parser.ID_LEN;
             cursor++;
             const priorityBuff = this.buffer.subarray(cursor, cursor + 1);
-            // TODO check if adb can provide int priority
             const priority = charToPriority(priorityBuff.toString());
+
             cursor += 2;
             const colonAtIndex = this.buffer.indexOf(Parser.COLON_BYTE, cursor);
             const tagBuff = this.buffer.subarray(
@@ -70,10 +70,10 @@ export default class Parser extends ParserParent {
             const message = messageBuff.toString();
             cursor = newLineAtIndex;
             cursor += 1;
+
             yield { date, pid, tid, priority, tag, message };
         }
-        this.buffer = this.buffer.subarray(readUntil);
-        // console.log('after', this.buffer.length);
+        this.buffer = this.buffer.subarray(readUntil + 1);
     }
 
     public on(event: 'entry', listener: (entry: LogcatEntry) => void): this;
