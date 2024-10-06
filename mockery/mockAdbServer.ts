@@ -3,6 +3,7 @@ import { Parser } from '../lib/parser';
 import { NonEmptyArray, Reply } from '../lib/util';
 import { encodeData } from '../lib/util';
 import { promisify } from 'util';
+import Timers from 'timers/promises';
 
 type Sequence =
     | { res: 'fail' | 'unexpected' }
@@ -14,8 +15,12 @@ type Sequence =
           };
       };
 
-type EndSequence = Sequence & {
+type MultiSequence = Sequence & {
     end?: boolean;
+    writeAsync?: {
+        delay: number;
+        data: Buffer;
+    };
 };
 
 export class AdbMock<T extends Sequence> {
@@ -140,7 +145,7 @@ export class AdbMock<T extends Sequence> {
     }
 }
 
-export class AdbMockMulti extends AdbMock<EndSequence> {
+export class AdbMockMulti extends AdbMock<MultiSequence> {
     protected async readableHandler(): Promise<void> {
         const seq = this.Next;
         if (!seq) {
@@ -149,6 +154,11 @@ export class AdbMockMulti extends AdbMock<EndSequence> {
         }
 
         this.writeResponse(seq, await this.readValue());
+        // TODO write proper seq types
+        if (seq.writeAsync) {
+            await Timers.setTimeout(seq.writeAsync.delay);
+            this.socket.write(seq.writeAsync.data);
+        }
         if (seq.end) {
             this.socket.removeAllListeners('readable');
             this.socket.end();
