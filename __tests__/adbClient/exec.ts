@@ -9,9 +9,6 @@ jest.mock('child_process', () => ({
 const mockExecFile = execFile as unknown as jest.Mock;
 
 describe('Exec tests', () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
-    });
     it('Should execute without error', async () => {
         let callback;
         mockExecFile.mockImplementation((_cmd, _args, callback_) => {

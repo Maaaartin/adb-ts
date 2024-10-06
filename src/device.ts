@@ -342,11 +342,11 @@ export class Device implements IDevice {
         return this.client.killApp(this.id, pkg);
     }
 
-    public exec(cmd: string): Promise<string> {
+    public exec(cmd: string | string[]): Promise<string> {
         return this.client.execDevice(this.id, cmd);
     }
 
-    public execShell(cmd: string): Promise<string> {
+    public execShell(cmd: string | string[]): Promise<string> {
         return this.client.execDeviceShell(this.id, cmd);
     }
 

@@ -1,7 +1,13 @@
 import { Client } from '../../lib/client';
 import { Device } from '../../lib/device';
 import { AdbExecError } from '../../lib/util';
-import { mockExec } from '../../mockery/execMock';
+import { execFile } from 'child_process';
+
+jest.mock('child_process', () => ({
+    execFile: jest.fn()
+}));
+
+const mockExecFile = execFile as unknown as jest.Mock;
 
 const device = new Device(new Client({ noAutoStart: true }), {
     id: 'serial',
@@ -16,20 +22,48 @@ const device = new Device(new Client({ noAutoStart: true }), {
 
 describe('Device exec tests', () => {
     it('Should execute without error', async () => {
-        mockExec(null, '', '');
+        let callback;
+        mockExecFile.mockImplementation((_cmd, _args, callback_) => {
+            callback = callback_;
+            callback_(null, '', '');
+        });
         const result = await device.exec('cmd');
         expect(result).toBe('');
+        expect(mockExecFile).toHaveBeenCalledWith(
+            'adb',
+            ['-s', 'serial', 'cmd'],
+            callback
+        );
+    });
+
+    it('Should execute with multiple params', async () => {
+        let callback;
+        mockExecFile.mockImplementation((_cmd, _args, callback_) => {
+            callback = callback_;
+            callback_(null, '', '');
+        });
+        const result = await device.exec(['cmd', 'param']);
+        expect(result).toBe('');
+        expect(mockExecFile).toHaveBeenCalledWith(
+            'adb',
+            ['-s', 'serial', 'cmd', 'param'],
+            callback
+        );
     });
 
     it('Should execute with error', async () => {
-        mockExec(new Error('message'), '', '');
+        mockExecFile.mockImplementation((_cmd, _args, callback_) => {
+            callback_(new Error('message'), '', '');
+        });
         await expect(() => device.exec('cmd')).rejects.toEqual(
             new Error('message')
         );
     });
 
     it('Should execute with std error', async () => {
-        mockExec(null, '', 'message');
+        mockExecFile.mockImplementation((_cmd, _args, callback_) => {
+            callback_(null, '', 'message');
+        });
         try {
             await device.exec('cmd');
         } catch (e: unknown) {
@@ -40,7 +74,9 @@ describe('Device exec tests', () => {
     });
 
     it('Should execute with std out matching error reg exp', async () => {
-        mockExec(null, 'Error: message', '');
+        mockExecFile.mockImplementation((_cmd, _args, callback_) => {
+            callback_(null, 'Error: message', '');
+        });
         try {
             await device.exec('cmd');
         } catch (e: unknown) {
