@@ -1,6 +1,6 @@
 import { Priority, PriorityV2 } from './priority';
 
-interface ILogcatEntry<P extends number | string> {
+export interface ILogcatEntry<P extends number | string> {
     date: Date;
     pid: number;
     tid: number;

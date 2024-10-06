@@ -190,7 +190,7 @@ export type AdbClientOptions = {
     [K in keyof AdbClientOptionsValues]?: AdbClientOptionsValues[K];
 };
 
-type LogcatOptionsBase = {
+export type LogcatOptionsBase = {
     clear?: boolean;
 };
 
@@ -203,7 +203,7 @@ export type LogcatOptions = LogcatOptionsBase & {
     filter?: (entry: LogcatEntry) => boolean;
 };
 
-type FilterSpec = {
+export type FilterSpec = {
     tag: string;
     priority: PriorityV2;
 };
