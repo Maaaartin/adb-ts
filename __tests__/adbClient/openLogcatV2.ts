@@ -10,19 +10,14 @@ const readFile = (
 ): Promise<Buffer> =>
     fs.readFile(path.join(__dirname, `../../mockery/data/${dir}/${file}`));
 
-type OutputArray = Record<string, unknown>[];
-
-const getLogcatTestData = (dir: string): Promise<[Buffer, OutputArray]> =>
+const getLogcatTestData = (dir: string): Promise<[Buffer, string[]]> =>
     Promise.all([
         readFile(dir, 'raw.log'),
         readFile(dir, 'output.json')
             .then(String)
             .then(JSON.parse)
             .then((output_) =>
-                (output_ as OutputArray).map((entry) => ({
-                    ...entry,
-                    date: new Date(entry.date as string)
-                }))
+                output_.map((val: string) => JSON.stringify(val))
             )
     ]);
 
@@ -48,7 +43,7 @@ describe('Open logcat OKAY tests', () => {
             for (const outputEntry of output) {
                 count++;
                 const entry = await logsIterator.next();
-                expect(entry.value).toEqual(outputEntry);
+                expect(JSON.stringify(entry.value)).toEqual(outputEntry);
             }
             const { done } = await logsIterator.next();
             expect(done).toBe(true);
@@ -84,7 +79,7 @@ describe('Open logcat OKAY tests', () => {
             for (const outputEntry of output) {
                 count++;
                 const entry = await logsIterator.next();
-                expect(entry.value).toEqual(outputEntry);
+                expect(JSON.stringify(entry.value)).toEqual(outputEntry);
             }
             const { done } = await logsIterator.next();
             expect(done).toBe(true);
