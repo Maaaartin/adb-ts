@@ -18,7 +18,13 @@ export default class LogcatCommandV2 extends TransportCommand<LogcatReader> {
     ) {
         super(connection, serial);
         this.options = options;
-        let cmd = `logcat ${this.buildFilterSpecs(options?.filterSpecs)} ${options?.filterSpecs?.silenceOthers ? `*:${PriorityV2.SILENT}` : ''} --format=printable,year 2>/dev/null`;
+        const filters = [
+            this.buildFilterSpecs(options?.filterSpecs),
+            options?.filterSpecs?.silenceOthers ? `*:${PriorityV2.SILENT}` : ''
+        ]
+            .filter(Boolean)
+            .join(' ');
+        let cmd = `logcat ${filters} --format=printable,year 2>/dev/null`;
         if (options?.clear) {
             cmd = 'logcat -c 2>/dev/null && ' + cmd;
         }
