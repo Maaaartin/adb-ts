@@ -1,0 +1,234 @@
+[
+    {
+        "date": "2024-10-06T11:39:41.475Z",
+        "pid": 568,
+        "tid": 568,
+        "priority": "I",
+        "tag": "ActivityManager",
+        "message": "Memory class: 192"
+    },
+    {
+        "date": "2024-10-06T11:39:42.578Z",
+        "pid": 568,
+        "tid": 603,
+        "priority": "I",
+        "tag": "ActivityManager",
+        "message": "Connection with lmkd established"
+    },
+    {
+        "date": "2024-10-06T11:39:43.048Z",
+        "pid": 568,
+        "tid": 601,
+        "priority": "D",
+        "tag": "ActivityManager",
+        "message": "Freezer enabled"
+    },
+    {
+        "date": "2024-10-06T11:39:43.049Z",
+        "pid": 568,
+        "tid": 601,
+        "priority": "D",
+        "tag": "ActivityManager",
+        "message": "freezer override set to false"
+    },
+    {
+        "date": "2024-10-06T11:39:46.330Z",
+        "pid": 568,
+        "tid": 568,
+        "priority": "I",
+        "tag": "ActivityManager",
+        "message": "System now ready"
+    },
+    {
+        "date": "2024-10-06T11:39:46.350Z",
+        "pid": 568,
+        "tid": 568,
+        "priority": "W",
+        "tag": "ActivityManager",
+        "message": "Too early to start/bind service in system_server: Phase=550 ComponentInfo{com.android.server.telecom/com.android.server.telecom.components.TelecomService}"
+    },
+    {
+        "date": "2024-10-06T11:39:46.351Z",
+        "pid": 568,
+        "tid": 568,
+        "priority": "W",
+        "tag": "ActivityManager",
+        "message": "Too early to start/bind service in system_server: Phase=550 ComponentInfo{com.android.server.telecom/com.android.server.telecom.components.TelecomService}"
+    },
+    {
+        "date": "2024-10-06T11:39:46.515Z",
+        "pid": 568,
+        "tid": 602,
+        "priority": "W",
+        "tag": "ActivityManager",
+        "message": "Slow operation: 57ms so far, now at startProcess: returned from zygote!"
+    },
+    {
+        "date": "2024-10-06T11:39:46.522Z",
+        "pid": 568,
+        "tid": 602,
+        "priority": "W",
+        "tag": "ActivityManager",
+        "message": "Slow operation: 64ms so far, now at startProcess: done updating battery stats"
+    },
+    {
+        "date": "2024-10-06T11:39:46.522Z",
+        "pid": 568,
+        "tid": 602,
+        "priority": "W",
+        "tag": "ActivityManager",
+        "message": "Slow operation: 64ms so far, now at startProcess: building log message"
+    },
+    {
+        "date": "2024-10-06T11:39:46.522Z",
+        "pid": 568,
+        "tid": 602,
+        "priority": "I",
+        "tag": "ActivityManager",
+        "message": "Start proc 759:com.android.systemui/u0a139 for service {com.android.systemui/com.android.systemui.ImageWallpaper}"
+    },
+    {
+        "date": "2024-10-06T11:39:46.522Z",
+        "pid": 568,
+        "tid": 602,
+        "priority": "W",
+        "tag": "ActivityManager",
+        "message": "Slow operation: 64ms so far, now at startProcess: starting to update pids map"
+    },
+    {
+        "date": "2024-10-06T11:39:46.522Z",
+        "pid": 568,
+        "tid": 602,
+        "priority": "W",
+        "tag": "ActivityManager",
+        "message": "Slow operation: 65ms so far, now at startProcess: done updating pids map"
+    },
+    {
+        "date": "2024-10-06T11:39:46.906Z",
+        "pid": 568,
+        "tid": 602,
+        "priority": "I",
+        "tag": "ActivityManager",
+        "message": "Start proc 786:WebViewLoader-x86_64/1037 [android.webkit.WebViewLibraryLoader$RelroFileCreator] for "
+    },
+    {
+        "date": "2024-10-06T11:40:21.716Z",
+        "pid": 568,
+        "tid": 660,
+        "priority": "E",
+        "tag": "ActivityManager",
+        "message": "Sending non-protected broadcast com.android.bluetooth.btservice.BLUETOOTH_COUNTER_METRICS_ACTION from system uid 1002 pkg com.android.bluetooth"
+    },
+    {
+        "date": "2024-10-06T11:40:21.716Z",
+        "pid": 568,
+        "tid": 660,
+        "priority": "E",
+        "tag": "ActivityManager",
+        "message": "java.lang.Throwable"
+    },
+    {
+        "date": "2024-10-06T11:40:21.716Z",
+        "pid": 568,
+        "tid": 660,
+        "priority": "E",
+        "tag": "ActivityManager",
+        "message": "\tat com.android.server.am.ActivityManagerService.checkBroadcastFromSystem(ActivityManagerService.java:13527)"
+    },
+    {
+        "date": "2024-10-06T11:40:21.716Z",
+        "pid": 568,
+        "tid": 660,
+        "priority": "E",
+        "tag": "ActivityManager",
+        "message": "\tat com.android.server.am.ActivityManagerService.broadcastIntentLocked(ActivityManagerService.java:14245)"
+    },
+    {
+        "date": "2024-10-06T11:40:21.716Z",
+        "pid": 568,
+        "tid": 660,
+        "priority": "E",
+        "tag": "ActivityManager",
+        "message": "\tat com.android.server.am.ActivityManagerService.broadcastIntentInPackage(ActivityManagerService.java:14429)"
+    },
+    {
+        "date": "2024-10-06T11:40:21.716Z",
+        "pid": 568,
+        "tid": 660,
+        "priority": "E",
+        "tag": "ActivityManager",
+        "message": "\tat com.android.server.am.ActivityManagerService$LocalService.broadcastIntentInPackage(ActivityManagerService.java:16932)"
+    },
+    {
+        "date": "2024-10-06T11:40:21.716Z",
+        "pid": 568,
+        "tid": 660,
+        "priority": "E",
+        "tag": "ActivityManager",
+        "message": "\tat com.android.server.am.PendingIntentRecord.sendInner(PendingIntentRecord.java:508)"
+    },
+    {
+        "date": "2024-10-06T11:40:21.716Z",
+        "pid": 568,
+        "tid": 660,
+        "priority": "E",
+        "tag": "ActivityManager",
+        "message": "\tat com.android.server.am.PendingIntentRecord.sendWithResult(PendingIntentRecord.java:309)"
+    },
+    {
+        "date": "2024-10-06T11:40:21.716Z",
+        "pid": 568,
+        "tid": 660,
+        "priority": "E",
+        "tag": "ActivityManager",
+        "message": "\tat com.android.server.am.ActivityManagerService.sendIntentSender(ActivityManagerService.java:5381)"
+    },
+    {
+        "date": "2024-10-06T11:40:21.716Z",
+        "pid": 568,
+        "tid": 660,
+        "priority": "E",
+        "tag": "ActivityManager",
+        "message": "\tat android.app.PendingIntent.sendAndReturnResult(PendingIntent.java:1012)"
+    },
+    {
+        "date": "2024-10-06T11:40:21.716Z",
+        "pid": 568,
+        "tid": 660,
+        "priority": "E",
+        "tag": "ActivityManager",
+        "message": "\tat android.app.PendingIntent.send(PendingIntent.java:983)"
+    },
+    {
+        "date": "2024-10-06T11:40:21.716Z",
+        "pid": 568,
+        "tid": 660,
+        "priority": "E",
+        "tag": "ActivityManager",
+        "message": "\tat com.android.server.alarm.AlarmManagerService$DeliveryTracker.deliverLocked(AlarmManagerService.java:5527)"
+    },
+    {
+        "date": "2024-10-06T11:40:21.716Z",
+        "pid": 568,
+        "tid": 660,
+        "priority": "E",
+        "tag": "ActivityManager",
+        "message": "\tat com.android.server.alarm.AlarmManagerService.deliverAlarmsLocked(AlarmManagerService.java:4429)"
+    },
+    {
+        "date": "2024-10-06T11:40:21.716Z",
+        "pid": 568,
+        "tid": 660,
+        "priority": "E",
+        "tag": "ActivityManager",
+        "message": "\tat com.android.server.alarm.AlarmManagerService$AlarmThread.run(AlarmManagerService.java:4740)"
+    },
+    {
+        "date": "2024-10-06T11:40:24.478Z",
+        "pid": 568,
+        "tid": 602,
+        "priority": "W",
+        "tag": "ActivityManager",
+        "message": "Slow operation: 156ms so far, now at startProcess: returned from zygote!"
+    }
+]

@@ -109,4 +109,4 @@ lib
 script.*
 *.apk
 docs/
-!/mockery/data/*
+!/mockery/data/*/*
