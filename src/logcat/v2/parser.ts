@@ -1,6 +1,6 @@
 import { LogcatEntry, LogcatEntryV2 } from '../entry';
 import { Parser as ParserParent } from '../parser';
-import { charToPriority } from '../priority';
+import { charToPriority, PriorityV2 } from '../priority';
 
 export default class Parser extends ParserParent {
     private buffer = Buffer.alloc(0);
@@ -19,8 +19,65 @@ export default class Parser extends ParserParent {
         return index;
     }
 
+    private parseDate(): Date {
+        const dateBuff = this.buffer.subarray(
+            this.cursor,
+            this.cursor + Parser.DATE_LEN
+        );
+        const date = new Date(dateBuff.toString());
+        this.cursor += Parser.DATE_LEN;
+        return date;
+    }
+
+    private parsePid(): number {
+        const pidBuff = this.buffer.subarray(
+            this.cursor,
+            this.cursor + Parser.ID_LEN
+        );
+        const pid = parseInt(pidBuff.toString(), 10);
+        this.cursor += Parser.ID_LEN;
+        return pid;
+    }
+
+    private parseTid(): number {
+        const tidBuff = this.buffer.subarray(
+            this.cursor,
+            this.cursor + Parser.ID_LEN
+        );
+        const tid = parseInt(tidBuff.toString(), 10);
+        this.cursor += Parser.ID_LEN;
+        this.cursor++;
+        return tid;
+    }
+
+    private parsePriority(): PriorityV2 {
+        const priorityBuff = this.buffer.subarray(this.cursor, this.cursor + 1);
+        const priority = charToPriority(priorityBuff.toString());
+
+        this.cursor += 2;
+        return priority;
+    }
+
+    private parseTag(): string {
+        const colonAtIndex = this.indexOf(Parser.COLON_BYTE);
+        const tagBuff = this.buffer.subarray(this.cursor, colonAtIndex);
+        this.cursor = colonAtIndex;
+        this.cursor += 2;
+        return tagBuff.toString();
+    }
+
+    private parseMessage(): string {
+        const newLineAtIndex = this.indexOf(Parser.NEW_LINE_BYTE);
+        const messageBuff = this.buffer.subarray(this.cursor, newLineAtIndex);
+
+        this.cursor = newLineAtIndex;
+        this.cursor += 1;
+        return messageBuff.toString();
+    }
+
     public *parse(chunk: Buffer): IterableIterator<LogcatEntryV2> {
         this.buffer = Buffer.concat([this.buffer, chunk]);
+        this.cursor = 0;
         const readUntil = this.buffer.lastIndexOf(Parser.NEW_LINE_BYTE);
         while (this.cursor < readUntil) {
             if (this.buffer[this.cursor] === Parser.DASH_BYTE) {
@@ -29,52 +86,15 @@ export default class Parser extends ParserParent {
                 continue;
             }
 
-            const dateBuff = this.buffer.subarray(
-                this.cursor,
-                this.cursor + Parser.DATE_LEN
-            );
-
-            const date = new Date(dateBuff.toString());
-            this.cursor += Parser.DATE_LEN;
-            const pidBuff = this.buffer.subarray(
-                this.cursor,
-                this.cursor + Parser.ID_LEN
-            );
-            const pid = parseInt(pidBuff.toString(), 10);
-            this.cursor += Parser.ID_LEN;
-            const tidBuff = this.buffer.subarray(
-                this.cursor,
-                this.cursor + Parser.ID_LEN
-            );
-            const tid = parseInt(tidBuff.toString(), 10);
-            this.cursor += Parser.ID_LEN;
-            this.cursor++;
-            const priorityBuff = this.buffer.subarray(
-                this.cursor,
-                this.cursor + 1
-            );
-            const priority = charToPriority(priorityBuff.toString());
-
-            this.cursor += 2;
-            const colonAtIndex = this.indexOf(Parser.COLON_BYTE);
-            const tagBuff = this.buffer.subarray(this.cursor, colonAtIndex);
-            this.cursor = colonAtIndex;
-            this.cursor += 2;
-            const tag = tagBuff.toString();
-            const newLineAtIndex = this.indexOf(Parser.NEW_LINE_BYTE);
-            const messageBuff = this.buffer.subarray(
-                this.cursor,
-                newLineAtIndex
-            );
-
-            const message = messageBuff.toString();
-            this.cursor = newLineAtIndex;
-            this.cursor += 1;
-
+            const date = this.parseDate();
+            const pid = this.parsePid();
+            const tid = this.parseTid();
+            const priority = this.parsePriority();
+            const tag = this.parseTag();
+            const message = this.parseMessage();
             yield { date, pid, tid, priority, tag, message };
         }
         this.buffer = this.buffer.subarray(readUntil + 1);
-        this.cursor = 0;
     }
 
     public on(event: 'entry', listener: (entry: LogcatEntry) => void): this;
