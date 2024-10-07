@@ -19,59 +19,49 @@ export default class Parser extends ParserParent {
         return index;
     }
 
+    private subarrayFromCursor(end?: number): Buffer {
+        return this.buffer.subarray(this.cursor, end);
+    }
+
     private parseDate(): Date {
-        const dateBuff = this.buffer.subarray(
-            this.cursor,
-            this.cursor + Parser.DATE_LEN
-        );
+        const dateBuff = this.subarrayFromCursor(this.cursor + Parser.DATE_LEN);
         const date = new Date(dateBuff.toString());
         this.cursor += Parser.DATE_LEN;
         return date;
     }
 
     private parsePid(): number {
-        const pidBuff = this.buffer.subarray(
-            this.cursor,
-            this.cursor + Parser.ID_LEN
-        );
+        const pidBuff = this.subarrayFromCursor(this.cursor + Parser.ID_LEN);
         const pid = parseInt(pidBuff.toString(), 10);
         this.cursor += Parser.ID_LEN;
         return pid;
     }
 
     private parseTid(): number {
-        const tidBuff = this.buffer.subarray(
-            this.cursor,
-            this.cursor + Parser.ID_LEN
-        );
+        const tidBuff = this.subarrayFromCursor(this.cursor + Parser.ID_LEN);
         const tid = parseInt(tidBuff.toString(), 10);
-        this.cursor += Parser.ID_LEN;
-        this.cursor++;
+        this.cursor += Parser.ID_LEN + 1;
         return tid;
     }
 
     private parsePriority(): PriorityV2 {
-        const priorityBuff = this.buffer.subarray(this.cursor, this.cursor + 1);
+        const priorityBuff = this.subarrayFromCursor(this.cursor + 1);
         const priority = charToPriority(priorityBuff.toString());
-
         this.cursor += 2;
         return priority;
     }
 
     private parseTag(): string {
         const colonAtIndex = this.indexOf(Parser.COLON_BYTE);
-        const tagBuff = this.buffer.subarray(this.cursor, colonAtIndex);
-        this.cursor = colonAtIndex;
-        this.cursor += 2;
+        const tagBuff = this.subarrayFromCursor(colonAtIndex);
+        this.cursor = colonAtIndex + 2;
         return tagBuff.toString();
     }
 
     private parseMessage(): string {
         const newLineAtIndex = this.indexOf(Parser.NEW_LINE_BYTE);
-        const messageBuff = this.buffer.subarray(this.cursor, newLineAtIndex);
-
-        this.cursor = newLineAtIndex;
-        this.cursor += 1;
+        const messageBuff = this.subarrayFromCursor(newLineAtIndex);
+        this.cursor = newLineAtIndex + 1;
         return messageBuff.toString();
     }
 
