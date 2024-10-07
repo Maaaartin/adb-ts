@@ -1,7 +1,8 @@
+import { EventEmitter } from 'stream';
 import { LogcatEntry } from '../entry';
 import { Parser } from '../parser';
 
-export class Binary extends Parser {
+export class Binary extends EventEmitter implements Parser {
     private buffer = Buffer.alloc(0);
     private readonly HEADER_SIZE_V1 = 20;
     private readonly HEADER_SIZE_MAX = 100;
