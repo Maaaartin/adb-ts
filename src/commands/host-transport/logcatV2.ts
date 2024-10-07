@@ -24,7 +24,7 @@ export default class LogcatCommandV2 extends TransportCommand<LogcatReader> {
         ]
             .filter(Boolean)
             .join(' ');
-        let cmd = `logcat ${filters} --format=printable,year 2>/dev/null`;
+        let cmd = `logcat ${filters} --format=printable,year,UTC 2>/dev/null`;
         if (options?.clear) {
             cmd = 'logcat -c 2>/dev/null && ' + cmd;
         }

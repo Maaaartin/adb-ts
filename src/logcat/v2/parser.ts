@@ -4,7 +4,7 @@ import { charToPriority } from '../priority';
 
 export default class Parser extends ParserParent {
     private buffer = Buffer.alloc(0);
-    private static readonly DATE_LEN = 23;
+    private static readonly DATE_LEN = 29;
     private static readonly ID_LEN = 6;
     private static readonly DASH_BYTE = 45;
     private static readonly NEW_LINE_BYTE = 10;
