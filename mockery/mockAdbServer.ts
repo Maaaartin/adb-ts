@@ -87,14 +87,13 @@ export class AdbMock<T extends Sequence> {
             case 'fail':
                 return this.writeFail();
             default: {
+                if (seq.cmd !== value) {
+                    throw new Error(`Expected '${seq.cmd}' but got '${value}'`);
+                }
                 if (seq.res?.raw) {
                     return this.writeRaw(seq.res.value);
                 }
-                if (seq.cmd === value) {
-                    return this.writeOkay(seq.res?.value);
-                }
-
-                throw new Error(`Expected ${seq.cmd} but got ${value}`);
+                return this.writeOkay(seq.res?.value);
             }
         }
     }
@@ -154,7 +153,6 @@ export class AdbMockMulti extends AdbMock<MultiSequence> {
         }
 
         this.writeResponse(seq, await this.readValue());
-        // TODO write proper seq types
         if (seq.writeAsync) {
             await Timers.setTimeout(seq.writeAsync.delay);
             this.socket.write(seq.writeAsync.data);

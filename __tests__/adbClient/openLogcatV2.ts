@@ -27,8 +27,7 @@ describe('Open logcat OKAY tests', () => {
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                // TODO test passes with incorrect command
-                cmd: `shell:echo && logcat -B *:I 2>/dev/null`,
+                cmd: `shell:echo && logcat --format=printable,year,UTC 2>/dev/null`,
                 res: { value: data, raw: true }
             }
         ]);
@@ -62,8 +61,7 @@ describe('Open logcat OKAY tests', () => {
         const adbMock = new AdbMockMulti([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
-                // TODO test passes with incorrect command
-                cmd: `shell:echo && logcat -B *:I 2>/dev/null`,
+                cmd: `shell:echo && logcat --format=printable,year,UTC 2>/dev/null`,
                 res: { value: firstChunk, raw: true },
                 end: true,
                 writeAsync: { data: secondChunk, delay: 500 }
