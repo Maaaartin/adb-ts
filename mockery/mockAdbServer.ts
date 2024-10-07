@@ -88,6 +88,7 @@ export class AdbMock<T extends Sequence> {
                 return this.writeFail();
             default: {
                 if (seq.cmd !== value) {
+                    this.socket.end();
                     throw new Error(`Expected '${seq.cmd}' but got '${value}'`);
                 }
                 if (seq.res?.raw) {
