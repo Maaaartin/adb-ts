@@ -7,7 +7,6 @@ import TransportCommand from '../abstract/transport';
 // import { createWriteStream } from 'fs';
 
 export default class LogcatCommandV2 extends TransportCommand<LogcatReader> {
-    private options: LogcatOptionsV2 | void;
     protected Cmd = 'shell:echo && ';
     protected keepAlive = true;
 
@@ -17,7 +16,6 @@ export default class LogcatCommandV2 extends TransportCommand<LogcatReader> {
         options: LogcatOptionsV2 | void
     ) {
         super(connection, serial);
-        this.options = options;
         let cmd = [
             'logcat',
             this.buildFilterSpecs(options?.filterSpecs),
