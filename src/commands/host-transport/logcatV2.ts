@@ -1,12 +1,12 @@
 import { Connection } from '../../connection';
 import LineTransform from '../../linetransform';
 import { PriorityV2 } from '../../logcat';
-import LogcatReader from '../../logcat/v2/reader';
+import { LogcatReaderV2 } from '../../logcat/reader';
 import { FilterSpecs, LogcatOptionsV2 } from '../../util';
 import TransportCommand from '../abstract/transport';
 // import { createWriteStream } from 'fs';
 
-export default class LogcatCommandV2 extends TransportCommand<LogcatReader> {
+export default class LogcatCommandV2 extends TransportCommand<LogcatReaderV2> {
     protected Cmd = 'shell:echo && ';
     protected keepAlive = true;
 
@@ -39,7 +39,7 @@ export default class LogcatCommandV2 extends TransportCommand<LogcatReader> {
             .join(' ');
     }
 
-    protected postExecute(): LogcatReader {
+    protected postExecute(): LogcatReaderV2 {
         const stream = new LineTransform({ autoDetect: true });
         this.connection.pipe(stream);
         // const fileStream = createWriteStream('./output.log');
@@ -47,6 +47,6 @@ export default class LogcatCommandV2 extends TransportCommand<LogcatReader> {
         // stream.pipe(fileStream);
         // return null;
         stream.once('end', () => this.endConnection());
-        return new LogcatReader(stream);
+        return new LogcatReaderV2(stream);
     }
 }

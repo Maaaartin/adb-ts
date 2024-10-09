@@ -1,4 +1,4 @@
-import { Binary } from '../../lib/logcat/parser/binary';
+import { BinaryParser } from '../../lib/logcat/parser';
 import { LogcatEntry } from '../../lib/logcat/entry';
 
 const logCatRes = Buffer.from([
@@ -33,7 +33,7 @@ entry2.tid = 212;
 
 describe('Binary parser tests', () => {
     it('Should emit entries', (done) => {
-        const parser = new Binary();
+        const parser = new BinaryParser();
         const entryPool = [entry1, entry2];
         parser.on('entry', (entry) => {
             expect(entry).toEqual(entryPool.shift());
@@ -46,7 +46,7 @@ describe('Binary parser tests', () => {
     });
 
     it('Should emit wait', (done) => {
-        const parser = new Binary();
+        const parser = new BinaryParser();
         parser.on('wait', () => {
             done();
         });
@@ -54,7 +54,7 @@ describe('Binary parser tests', () => {
     });
 
     it('Should emit drain', (done) => {
-        const parser = new Binary();
+        const parser = new BinaryParser();
         parser.on('drain', () => {
             done();
         });
@@ -62,7 +62,7 @@ describe('Binary parser tests', () => {
     });
 
     it('Should emit error', (done) => {
-        const parser = new Binary();
+        const parser = new BinaryParser();
         parser.on('error', (err) => {
             expect(err).toEqual(
                 new Error(

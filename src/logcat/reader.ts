@@ -1,13 +1,14 @@
 import { NotConnectedError } from '../util';
 import StreamHandler from '../streamHandler';
-import { Binary } from './parser/binary';
-import { LogcatEntry } from './entry';
+import { BinaryParser, TextParser } from './parser';
+import { LogcatEntry, LogcatEntryV2 } from './entry';
 import { Writable } from 'stream';
 import { LogcatReaderOptions } from '../util';
+import LineTransform from '../linetransform';
 
 export class LogcatReader extends StreamHandler {
     private filter: ((entry: LogcatEntry) => boolean) | void;
-    private parser = new Binary();
+    private parser = new BinaryParser();
     private stream_: Writable | null = null;
     constructor(options?: LogcatReaderOptions) {
         super();
@@ -62,6 +63,28 @@ export class LogcatReader extends StreamHandler {
         this.stream_ = stream;
         this.hook();
         return this;
+    }
+
+    public end(): void {
+        this.stream.end();
+    }
+}
+
+export class LogcatReaderV2 {
+    private parser = new TextParser();
+    private stream: LineTransform;
+    constructor(stream: LineTransform) {
+        this.stream = stream;
+    }
+
+    public async *logs(): AsyncIterableIterator<LogcatEntryV2> {
+        for await (const chunk of this.stream.iterator({
+            destroyOnReturn: false
+        })) {
+            for (const entry of this.parser.parse(chunk)) {
+                yield entry;
+            }
+        }
     }
 
     public end(): void {
