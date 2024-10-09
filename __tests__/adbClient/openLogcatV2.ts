@@ -9,21 +9,16 @@ const readFile = (
     file: 'raw.log' | 'output.json'
 ): Promise<Buffer> =>
     fs.readFile(path.join(__dirname, `../../mockery/data/${dir}/${file}`));
-
-const getLogcatTestData = (dir: string): Promise<[Buffer, string[]]> =>
-    Promise.all([
-        readFile(dir, 'raw.log'),
-        readFile(dir, 'output.json')
-            .then(String)
-            .then(JSON.parse)
-            .then((output_) =>
-                output_.map((val: string) => JSON.stringify(val))
-            )
-    ]);
+const readOutputFile = (dir: string): Promise<string[]> =>
+    readFile(dir, 'output.json')
+        .then(String)
+        .then(JSON.parse)
+        .then((output_) => output_.map((val: string) => JSON.stringify(val)));
 
 describe('Open logcat OKAY tests', () => {
+    const logDir = 'logsEndingWithNewLine';
     it('Should read all logs when logs buffer ends with a new line', async () => {
-        const [data, output] = await getLogcatTestData('logsEndingWithNewLine');
+        const data = await readFile(logDir, 'raw.log');
         const adbMock = new AdbMock([
             { cmd: 'host:transport:serial', res: { raw: true } },
             {
@@ -39,6 +34,7 @@ describe('Open logcat OKAY tests', () => {
             expect(result).toBeInstanceOf(LogcatReaderV2);
             const logsIterator = result.logs();
             let count = 0;
+            const output = await readOutputFile(logDir);
             for (const outputEntry of output) {
                 count++;
                 const entry = await logsIterator.next();
@@ -53,7 +49,7 @@ describe('Open logcat OKAY tests', () => {
     });
 
     it('Should read all logs from incoming data', async () => {
-        const [data, output] = await getLogcatTestData('logsEndingWithNewLine');
+        const data = await readFile(logDir, 'raw.log');
         const halfLength = Math.floor(data.length / 2);
         const firstChunk = data.subarray(0, halfLength);
         const secondChunk = data.subarray(halfLength);
@@ -74,6 +70,7 @@ describe('Open logcat OKAY tests', () => {
             expect(result).toBeInstanceOf(LogcatReaderV2);
             const logsIterator = result.logs();
             let count = 0;
+            const output = await readOutputFile(logDir);
             for (const outputEntry of output) {
                 count++;
                 const entry = await logsIterator.next();
