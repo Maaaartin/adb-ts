@@ -1,5 +1,11 @@
 import { Client } from '../../lib/client';
-import { mockExec } from '../../mockery/execMock';
+import { execFile } from 'child_process';
+
+jest.mock('child_process', () => ({
+    execFile: jest.fn()
+}));
+
+const mockExecFile = execFile as unknown as jest.Mock;
 
 describe('Client constructor tests', () => {
     it('Create Adb client instance', () => {
@@ -25,7 +31,9 @@ describe('Client constructor tests', () => {
 
 describe('Start server tests', () => {
     it('Start adb server', async () => {
-        mockExec(null);
+        mockExecFile.mockImplementation((_cmd, _args, callback_) => {
+            callback_(null, '', '');
+        });
         const client = new Client();
         await expect(client.startServer()).resolves.toBeUndefined();
     });

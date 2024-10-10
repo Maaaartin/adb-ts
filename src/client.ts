@@ -1291,7 +1291,7 @@ export class Client {
         await this.shell(serial, `am force-stop ${pkg}`);
     }
 
-    private execInternal(...args: ReadonlyArray<string>): Promise<string> {
+    private execInternal(args: ReadonlyArray<string>): Promise<string> {
         return new Promise<string>((resolve, reject) => {
             execFile(this.options.bin, args, (err, stdout, stderr) => {
                 if (err) {
@@ -1314,25 +1314,30 @@ export class Client {
 
     /**
      * Executes a given command via adb console interface.
+     * If cmd contains arguments, they need to be passed as and string[], not string. @see https://github.com/Maaaartin/adb-ts/issues/13
      */
-    public exec(cmd: string): Promise<string> {
-        return this.execInternal(cmd);
+    public exec(cmd: string | string[]): Promise<string> {
+        return this.execInternal([cmd].flat());
     }
 
     /**
      * Executes a given command on specific device via adb console interface.
-     *  Analogous to `adb -s <serial> <command>`.
+     * Analogous to `adb -s <serial> <command>`.
+     * If cmd contains arguments, they need to be passed as and string[], not string. @see https://github.com/Maaaartin/adb-ts/issues/13
      */
-    public execDevice(serial: string, cmd: string): Promise<string> {
-        return this.execInternal(...['-s', serial, cmd]);
+    public execDevice(serial: string, cmd: string | string[]): Promise<string> {
+        return this.execInternal(['-s', serial].concat(cmd));
     }
 
     /**
      * Executes a given command on specific device shell via adb console interface.
      * Analogous to `adb -s <serial> shell <command>` .
      */
-    public execDeviceShell(serial: string, cmd: string): Promise<string> {
-        return this.execInternal(...['-s', serial, 'shell', cmd]);
+    public execDeviceShell(
+        serial: string,
+        cmd: string | string[]
+    ): Promise<string> {
+        return this.execInternal(['-s', serial, 'shell'].concat(cmd));
     }
 
     /**
