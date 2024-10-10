@@ -342,11 +342,14 @@ export class Device implements IDevice {
         return this.client.killApp(this.id, pkg);
     }
 
-    public exec(cmd: string): Promise<string> {
+    /**
+     * If cmd contains arguments, they need to be passed as and string[], not string. @see https://github.com/Maaaartin/adb-ts/issues/13
+     */
+    public exec(cmd: string | string[]): Promise<string> {
         return this.client.execDevice(this.id, cmd);
     }
 
-    public execShell(cmd: string): Promise<string> {
+    public execShell(cmd: string | string[]): Promise<string> {
         return this.client.execDeviceShell(this.id, cmd);
     }
 
