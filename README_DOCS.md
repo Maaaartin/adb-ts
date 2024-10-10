@@ -89,3 +89,9 @@ adb.listDevices((devices) => {
 -   `time` option in `touch` method is converted to UTC time.
 -   Tracker `change` event emits the same instance of the device instead of creating a new device object every time.
 -   `install` and `uninstall` commands will fail if any other response than `Success` is received. Until V5 the promise could have resolved even when the operation was not successful.
+
+## Change log
+
+### 6.2
+
+`exec` methods accept `string[]` as an argument. Fix for https://github.com/Maaaartin/adb-ts/issues/13.

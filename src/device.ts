@@ -342,6 +342,9 @@ export class Device implements IDevice {
         return this.client.killApp(this.id, pkg);
     }
 
+    /**
+     * If cmd contains arguments, they need to be passed as and string[], not string. @see https://github.com/Maaaartin/adb-ts/issues/13
+     */
     public exec(cmd: string | string[]): Promise<string> {
         return this.client.execDevice(this.id, cmd);
     }
