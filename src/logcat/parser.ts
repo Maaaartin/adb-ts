@@ -6,6 +6,8 @@ export interface IParser {
     parse(...data: unknown[]): void;
 }
 
+type A = Record<keyof Omit<LogcatEntryV2, 'message'>, Buffer>;
+type AWithMessage = A & { message: Buffer };
 export class BinaryParser extends EventEmitter implements IParser {
     private buffer = Buffer.alloc(0);
     private readonly HEADER_SIZE_V1 = 20;
@@ -104,52 +106,66 @@ export class TextParser implements IParser {
         return this.buffer.subarray(this.cursor, end);
     }
 
-    private parseDate(): Date {
+    private parseDate(): Buffer {
         const dateBuff = this.subarrayFromCursor(
             this.cursor + TextParser.DATE_LEN
         );
-        const date = new Date(dateBuff.toString());
         this.cursor += TextParser.DATE_LEN;
-        return date;
+        return dateBuff;
     }
 
-    private parsePid(): number {
+    private parsePid(): Buffer {
         const pidBuff = this.subarrayFromCursor(
             this.cursor + TextParser.ID_LEN
         );
-        const pid = parseInt(pidBuff.toString(), 10);
         this.cursor += TextParser.ID_LEN;
-        return pid;
+        return pidBuff;
     }
 
-    private parseTid(): number {
+    private parseTid(): Buffer {
         const tidBuff = this.subarrayFromCursor(
             this.cursor + TextParser.ID_LEN
         );
-        const tid = parseInt(tidBuff.toString(), 10);
         this.cursor += TextParser.ID_LEN + 1;
-        return tid;
+        return tidBuff;
     }
 
-    private parsePriority(): PriorityV2 {
+    private parsePriority(): Buffer {
         const priorityBuff = this.subarrayFromCursor(this.cursor + 1);
-        const priority = charToPriority(priorityBuff.toString());
         this.cursor += 2;
-        return priority;
+        return priorityBuff;
     }
 
-    private parseTag(): string {
+    private parseTag(): Buffer {
         const colonAtIndex = this.indexOf(TextParser.COLON_BYTE);
         const tagBuff = this.subarrayFromCursor(colonAtIndex);
         this.cursor = colonAtIndex + 2;
-        return tagBuff.toString();
+        return tagBuff;
     }
 
-    private parseMessage(): string {
+    private parseMessage(): Buffer {
         const newLineAtIndex = this.indexOf(TextParser.NEW_LINE_BYTE);
         const messageBuff = this.subarrayFromCursor(newLineAtIndex);
         this.cursor = newLineAtIndex + 1;
-        return messageBuff.toString();
+        return messageBuff;
+    }
+
+    private bufferToEntry({
+        date,
+        pid,
+        tid,
+        priority,
+        tag,
+        message
+    }: AWithMessage): LogcatEntryV2 {
+        return {
+            date: new Date(date.toString()),
+            pid: parseInt(pid.toString(), 10),
+            tid: parseInt(tid.toString(), 10),
+            priority: charToPriority(priority.toString()),
+            tag: tag.toString(),
+            message: message.toString()
+        };
     }
 
     public *parse(chunk: Buffer): IterableIterator<LogcatEntryV2> {
@@ -169,8 +185,70 @@ export class TextParser implements IParser {
             const priority = this.parsePriority();
             const tag = this.parseTag();
             const message = this.parseMessage();
-            yield { date, pid, tid, priority, tag, message };
+            yield this.bufferToEntry({
+                date,
+                pid,
+                tid,
+                priority,
+                tag,
+                message
+            });
         }
         this.buffer = this.buffer.subarray(readUntil + 1);
+    }
+
+    public *parseGrouped(chunk: Buffer): IterableIterator<LogcatEntryV2> {
+        this.buffer = Buffer.concat([this.buffer, chunk]);
+        this.cursor = 0;
+        let prevEntry: A = null!;
+        let matchingEntries: AWithMessage[] = [];
+        const readUntil = this.buffer.lastIndexOf(TextParser.NEW_LINE_BYTE);
+        while (this.cursor < readUntil) {
+            if (this.buffer[this.cursor] === TextParser.DASH_BYTE) {
+                const newLineIndex = this.indexOf(TextParser.NEW_LINE_BYTE);
+                this.cursor = newLineIndex + 1;
+                continue;
+            }
+
+            const date = this.parseDate();
+            const pid = this.parsePid();
+            const tid = this.parseTid();
+            const priority = this.parsePriority();
+            const tag = this.parseTag();
+            const message = this.parseMessage();
+            const entry = { date, pid, tid, priority, tag, message };
+
+            if (
+                prevEntry &&
+                Object.entries(prevEntry).every(
+                    ([key, value]) =>
+                        key in entry && value.equals(entry[key as keyof A])
+                )
+            ) {
+                matchingEntries.push({ ...entry });
+            } else {
+                if (matchingEntries.length) {
+                    yield this.bufferToEntry({
+                        ...prevEntry,
+                        message: Buffer.concat(
+                            matchingEntries.map((e) => e.message)
+                        )
+                    });
+                    matchingEntries = [];
+                } else {
+                    yield this.bufferToEntry(entry);
+                }
+            }
+            prevEntry = { ...entry };
+            delete (prevEntry as Record<string, unknown>).message;
+        }
+        this.buffer = this.buffer.subarray(readUntil + 1);
+        if (matchingEntries.length && this.buffer.length === 0) {
+            yield this.bufferToEntry({
+                ...prevEntry,
+                message: Buffer.concat(matchingEntries.map((e) => e.message))
+            });
+            matchingEntries = [];
+        }
     }
 }
