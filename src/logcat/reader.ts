@@ -81,9 +81,7 @@ export class LogcatReaderV2 {
         for await (const chunk of this.stream.iterator({
             destroyOnReturn: false
         })) {
-            for (const entry of this.parser.parse(chunk)) {
-                yield entry;
-            }
+            yield* this.parser.parse(chunk);
         }
     }
 

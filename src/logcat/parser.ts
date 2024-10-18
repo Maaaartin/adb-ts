@@ -151,15 +151,15 @@ export class TextParser implements IParser {
         return messageBuff;
     }
 
-    private bufferToEntry({
+    private *yieldEntry({
         date,
         pid,
         tid,
         priority,
         tag,
         message
-    }: RawEntry): LogcatEntryV2 {
-        return {
+    }: RawEntry): Iterable<LogcatEntryV2> {
+        yield {
             date: new Date(date.toString()),
             pid: parseInt(pid.toString(), 10),
             tid: parseInt(tid.toString(), 10),
@@ -186,7 +186,7 @@ export class TextParser implements IParser {
             const priority = this.parsePriority();
             const tag = this.parseTag();
             const message = this.parseMessage();
-            yield this.bufferToEntry({
+            yield* this.yieldEntry({
                 date,
                 pid,
                 tid,
@@ -200,13 +200,13 @@ export class TextParser implements IParser {
 
     private *yieldGrouped(): Iterable<LogcatEntryV2> {
         if (this.groupedMessages.length) {
-            yield this.bufferToEntry({
+            yield* this.yieldEntry({
                 ...this.prevEntry,
                 message: this.groupedMessages
             });
             this.groupedMessages = Buffer.alloc(0);
         } else {
-            yield this.bufferToEntry(this.prevEntry);
+            yield* this.yieldEntry(this.prevEntry);
         }
     }
 
