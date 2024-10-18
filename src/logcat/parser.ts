@@ -206,8 +206,11 @@ export class TextParser extends TextParserBase {
 
 export class TextParserGrouped extends TextParserBase {
     private groupedMessages: Buffer = Buffer.alloc(0);
-    private prevEntry: RawEntry = null!;
+    private prevEntry: RawEntry | null = null;
     private *yieldGrouped(): Iterable<LogcatEntryV2> {
+        if (!this.prevEntry) {
+            return;
+        }
         if (this.groupedMessages.length) {
             yield* this.yieldEntry({
                 ...this.prevEntry,
@@ -249,7 +252,7 @@ export class TextParserGrouped extends TextParserBase {
         yield* super.parse(chunk);
         if (this.Empty) {
             yield* this.yieldGrouped();
-            this.prevEntry = null!;
+            this.prevEntry = null;
         }
     }
 }
