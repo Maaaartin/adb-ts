@@ -1,12 +1,12 @@
 import { EventEmitter } from 'stream';
 import { LogcatEntry, LogcatEntryV2 } from './entry';
-import { charToPriority, PriorityV2 } from './priority';
+import { charToPriority } from './priority';
 
 export interface IParser {
     parse(...data: unknown[]): void;
 }
 
-type AWithMessage = Record<keyof LogcatEntryV2, Buffer>;
+type RawEntry = Record<keyof LogcatEntryV2, Buffer>;
 export class BinaryParser extends EventEmitter implements IParser {
     private buffer = Buffer.alloc(0);
     private readonly HEADER_SIZE_V1 = 20;
@@ -88,6 +88,7 @@ export class TextParser implements IParser {
     private buffer = Buffer.alloc(0);
     private cursor = 0;
     private groupedMessages: Buffer = Buffer.alloc(0);
+    private prevEntry: RawEntry = null!;
     private static readonly DATE_LEN = 29;
     private static readonly ID_LEN = 6;
     private static readonly DASH_BYTE = 45;
@@ -157,7 +158,7 @@ export class TextParser implements IParser {
         priority,
         tag,
         message
-    }: AWithMessage): LogcatEntryV2 {
+    }: RawEntry): LogcatEntryV2 {
         return {
             date: new Date(date.toString()),
             pid: parseInt(pid.toString(), 10),
@@ -197,10 +198,21 @@ export class TextParser implements IParser {
         this.buffer = this.buffer.subarray(readUntil + 1);
     }
 
+    private *yieldGrouped(): Iterable<LogcatEntryV2> {
+        if (this.groupedMessages.length) {
+            yield this.bufferToEntry({
+                ...this.prevEntry,
+                message: this.groupedMessages
+            });
+            this.groupedMessages = Buffer.alloc(0);
+        } else {
+            yield this.bufferToEntry(this.prevEntry);
+        }
+    }
+
     public *parseGrouped(chunk: Buffer): IterableIterator<LogcatEntryV2> {
         this.buffer = Buffer.concat([this.buffer, chunk]);
         this.cursor = 0;
-        let prevEntry: AWithMessage = null!;
         const readUntil = this.buffer.lastIndexOf(TextParser.NEW_LINE_BYTE);
         while (this.cursor < readUntil) {
             if (this.buffer[this.cursor] === TextParser.DASH_BYTE) {
@@ -216,47 +228,34 @@ export class TextParser implements IParser {
             const tag = this.parseTag();
             const message = this.parseMessage();
             const entry = { date, pid, tid, priority, tag, message };
-            // if (tag.toString() === 'SoundTriggerMiddlewareImpl') {
-            //     debugger;
-            // }
+            if (!this.prevEntry) {
+                this.prevEntry = { ...entry };
+                continue;
+            }
+            const match = (
+                Object.entries(this.prevEntry) as [keyof RawEntry, Buffer][]
+            ).every(
+                ([key, value]) =>
+                    key === 'message' ||
+                    (key in entry && value.equals(entry[key]))
+            );
 
-            if (
-                (
-                    prevEntry &&
-                    (Object.entries(prevEntry) as [
-                        keyof AWithMessage,
-                        Buffer
-                    ][])
-                ).every(
-                    ([key, value]) =>
-                        key === 'message' ||
-                        (key in entry && value.equals(entry[key]))
-                )
-            ) {
+            if (match) {
                 this.groupedMessages = Buffer.concat([
                     this.groupedMessages,
+                    this.prevEntry.message,
+                    Buffer.from([TextParser.NEW_LINE_BYTE]),
                     entry.message
                 ]);
             } else {
-                if (this.groupedMessages.length) {
-                    yield this.bufferToEntry({
-                        ...prevEntry,
-                        message: this.groupedMessages
-                    });
-                    this.groupedMessages = Buffer.alloc(0);
-                } else {
-                    yield this.bufferToEntry(entry);
-                }
+                yield* this.yieldGrouped();
             }
-            prevEntry = { ...entry };
+            this.prevEntry = { ...entry };
         }
         this.buffer = this.buffer.subarray(readUntil + 1);
-        if (this.groupedMessages.length && this.buffer.length === 0) {
-            yield this.bufferToEntry({
-                ...prevEntry,
-                message: this.groupedMessages
-            });
-            this.groupedMessages = Buffer.alloc(0);
+        if (this.buffer.length === 0) {
+            yield* this.yieldGrouped();
+            this.prevEntry = null!;
         }
     }
 }

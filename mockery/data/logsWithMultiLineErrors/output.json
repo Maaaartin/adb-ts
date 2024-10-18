@@ -1,0 +1,362 @@
+[
+    {
+        "date": "2024-10-16T19:21:11.729Z",
+        "pid": 174,
+        "tid": 174,
+        "priority": "E",
+        "tag": "HidlServiceManagement",
+        "message": "Service android.system.suspend@1.0::ISystemSuspend/default must be in VINTF manifest in order to register/get."
+    },
+    {
+        "date": "2024-10-16T19:21:11.792Z",
+        "pid": 166,
+        "tid": 166,
+        "priority": "E",
+        "tag": "vold    ",
+        "message": "Error getting bootctrl v1.0 module."
+    },
+    {
+        "date": "2024-10-16T19:21:12.452Z",
+        "pid": 175,
+        "tid": 184,
+        "priority": "E",
+        "tag": "keystore2",
+        "message": "system/security/keystore2/src/maintenance.rs:192 - Call to earlyBootEnded failed for security level STRONGBOX: system/security/keystore2/src/maintenance.rs:167: getting keymint device.\nsystem/security/keystore2/src/error.rs:180 - system/security/keystore2/src/maintenance.rs:167: getting keymint devicesystem/security/keystore2/src/error.rs:180 - system/security/keystore2/src/maintenance.rs:167: getting keymint device\n\nCaused by:Caused by:\n    0: system/security/keystore2/src/globals.rs:335: Cannot connect to Keymint    0: system/security/keystore2/src/globals.rs:335: Cannot connect to Keymint\n    1: system/security/keystore2/src/globals.rs:246: Trying to get Legacy wrapper.    1: system/security/keystore2/src/globals.rs:246: Trying to get Legacy wrapper.\n    2: Error::Km(r#HARDWARE_TYPE_UNAVAILABLE)"
+    },
+    {
+        "date": "2024-10-16T19:21:12.452Z",
+        "pid": 166,
+        "tid": 166,
+        "priority": "E",
+        "tag": "vold    ",
+        "message": "keystore2 Keystore earlyBootEnded returned service specific error: -68"
+    },
+    {
+        "date": "2024-10-16T19:21:13.189Z",
+        "pid": 351,
+        "tid": 351,
+        "priority": "E",
+        "tag": "TcUtils ",
+        "message": "NLMSG_ERROR message return error: -2\nNLMSG_ERROR message return error: -2NLMSG_ERROR message return error: -2\nNLMSG_ERROR message return error: -2NLMSG_ERROR message return error: -2\nNLMSG_ERROR message return error: -2NLMSG_ERROR message return error: -2\nNLMSG_ERROR message return error: -2"
+    },
+    {
+        "date": "2024-10-16T19:21:13.190Z",
+        "pid": 351,
+        "tid": 351,
+        "priority": "E",
+        "tag": "TcUtils ",
+        "message": "NLMSG_ERROR message return error: -2\nNLMSG_ERROR message return error: -2NLMSG_ERROR message return error: -2\nNLMSG_ERROR message return error: -2NLMSG_ERROR message return error: -2\nNLMSG_ERROR message return error: -2NLMSG_ERROR message return error: -2\nNLMSG_ERROR message return error: -2NLMSG_ERROR message return error: -2\nNLMSG_ERROR message return error: -2NLMSG_ERROR message return error: -2\nNLMSG_ERROR message return error: -2NLMSG_ERROR message return error: -2\nNLMSG_ERROR message return error: -2NLMSG_ERROR message return error: -2\nNLMSG_ERROR message return error: -2NLMSG_ERROR message return error: -2\nNLMSG_ERROR message return error: -2NLMSG_ERROR message return error: -2\nNLMSG_ERROR message return error: -2"
+    },
+    {
+        "date": "2024-10-16T19:21:13.196Z",
+        "pid": 369,
+        "tid": 369,
+        "priority": "E",
+        "tag": "SensorsMultiHal",
+        "message": "Failed to load subHal config file: /odm/etc/sensors/hals.conf"
+    },
+    {
+        "date": "2024-10-16T19:21:13.337Z",
+        "pid": 424,
+        "tid": 424,
+        "priority": "E",
+        "tag": "bootstat",
+        "message": "Failed to read /metadata/bootstat/persist.sys.boot.reason: No such file or directory"
+    },
+    {
+        "date": "2024-10-16T19:21:13.337Z",
+        "pid": 429,
+        "tid": 429,
+        "priority": "E",
+        "tag": "bt_vhci_forwarder",
+        "message": "setTerminalRaw failed /dev/bluetooth0: Inappropriate ioctl for device"
+    },
+    {
+        "date": "2024-10-16T19:21:13.341Z",
+        "pid": 424,
+        "tid": 424,
+        "priority": "E",
+        "tag": "bootstat",
+        "message": "Failed to unlink /metadata/bootstat/persist.sys.boot.reason: No such file or directory"
+    },
+    {
+        "date": "2024-10-16T19:21:13.351Z",
+        "pid": 357,
+        "tid": 357,
+        "priority": "E",
+        "tag": "ProcessState",
+        "message": "vndservicemanager is not started on this device, you can save resources/threads by not initializing ProcessState with /dev/vndbinder."
+    },
+    {
+        "date": "2024-10-16T19:21:13.393Z",
+        "pid": 354,
+        "tid": 354,
+        "priority": "E",
+        "tag": "LegacySupport",
+        "message": "Could not get passthrough implementation for android.hardware.soundtrigger@2.3::ISoundTriggerHw/default.\nCould not get passthrough implementation for android.hardware.soundtrigger@2.2::ISoundTriggerHw/default.Could not get passthrough implementation for android.hardware.soundtrigger@2.2::ISoundTriggerHw/default.\nCould not get passthrough implementation for android.hardware.soundtrigger@2.1::ISoundTriggerHw/default.Could not get passthrough implementation for android.hardware.soundtrigger@2.1::ISoundTriggerHw/default.\nCould not get passthrough implementation for android.hardware.soundtrigger@2.0::ISoundTriggerHw/default.Could not get passthrough implementation for android.hardware.soundtrigger@2.0::ISoundTriggerHw/default.\nCould not get passthrough implementation for android.hardware.bluetooth.audio@2.2::IBluetoothAudioProvidersFactory/default.Could not get passthrough implementation for android.hardware.bluetooth.audio@2.2::IBluetoothAudioProvidersFactory/default.\nCould not get passthrough implementation for android.hardware.bluetooth.audio@2.1::IBluetoothAudioProvidersFactory/default.Could not get passthrough implementation for android.hardware.bluetooth.audio@2.1::IBluetoothAudioProvidersFactory/default.\nCould not get passthrough implementation for android.hardware.bluetooth.audio@2.0::IBluetoothAudioProvidersFactory/default.Could not get passthrough implementation for android.hardware.bluetooth.audio@2.0::IBluetoothAudioProvidersFactory/default.\nCould not get passthrough implementation for android.hardware.bluetooth.a2dp@1.0::IBluetoothAudioOffload/default."
+    },
+    {
+        "date": "2024-10-16T19:21:13.403Z",
+        "pid": 354,
+        "tid": 354,
+        "priority": "E",
+        "tag": "audiohalservice",
+        "message": "Failed to dlopen android.hardware.audio.sounddose-vendor-impl.so: dlopen failed: library \"android.hardware.audio.sounddose-vendor-impl.so\" not found"
+    },
+    {
+        "date": "2024-10-16T19:21:13.421Z",
+        "pid": 354,
+        "tid": 354,
+        "priority": "E",
+        "tag": "android.hardware.audio@7.1-impl.ranchu",
+        "message": "setLatencyModeCallback:572 failure: Result::NOT_SUPPORTED"
+    },
+    {
+        "date": "2024-10-16T19:21:13.422Z",
+        "pid": 354,
+        "tid": 354,
+        "priority": "E",
+        "tag": "android.hardware.audio@7.1-impl.ranchu",
+        "message": "getParameters:211 failure: Result::NOT_SUPPORTED"
+    },
+    {
+        "date": "2024-10-16T19:21:13.422Z",
+        "pid": 386,
+        "tid": 386,
+        "priority": "E",
+        "tag": "APM_AudioPolicyManager",
+        "message": "invalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index range"
+    },
+    {
+        "date": "2024-10-16T19:21:13.422Z",
+        "pid": 354,
+        "tid": 354,
+        "priority": "E",
+        "tag": "android.hardware.audio@7.1-impl.ranchu",
+        "message": "getPresentationPosition:510 failure: Result::INVALID_STATE"
+    },
+    {
+        "date": "2024-10-16T19:21:13.427Z",
+        "pid": 386,
+        "tid": 386,
+        "priority": "E",
+        "tag": "APM_AudioPolicyManager",
+        "message": "invalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index range"
+    },
+    {
+        "date": "2024-10-16T19:21:13.458Z",
+        "pid": 386,
+        "tid": 386,
+        "priority": "E",
+        "tag": "APM_AudioPolicyManager",
+        "message": "invalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index range"
+    },
+    {
+        "date": "2024-10-16T19:21:13.459Z",
+        "pid": 386,
+        "tid": 386,
+        "priority": "E",
+        "tag": "APM_AudioPolicyManager",
+        "message": "invalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index range"
+    },
+    {
+        "date": "2024-10-16T19:21:13.464Z",
+        "pid": 354,
+        "tid": 354,
+        "priority": "E",
+        "tag": "android.hardware.audio@7.1-impl.ranchu",
+        "message": "setLatencyModeCallback:572 failure: Result::NOT_SUPPORTED\ngetPresentationPosition:510 failure: Result::INVALID_STATEgetPresentationPosition:510 failure: Result::INVALID_STATE\ngetParameters:211 failure: Result::NOT_SUPPORTED"
+    },
+    {
+        "date": "2024-10-16T19:21:13.465Z",
+        "pid": 386,
+        "tid": 386,
+        "priority": "E",
+        "tag": "APM_AudioPolicyManager",
+        "message": "invalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index range"
+    },
+    {
+        "date": "2024-10-16T19:21:13.467Z",
+        "pid": 386,
+        "tid": 386,
+        "priority": "E",
+        "tag": "APM_AudioPolicyManager",
+        "message": "invalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index range"
+    },
+    {
+        "date": "2024-10-16T19:21:13.469Z",
+        "pid": 386,
+        "tid": 386,
+        "priority": "E",
+        "tag": "APM_AudioPolicyManager",
+        "message": "invalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index rangeinvalid volume index range\ninvalid volume index range"
+    },
+    {
+        "date": "2024-10-16T19:21:13.471Z",
+        "pid": 357,
+        "tid": 357,
+        "priority": "E",
+        "tag": "GCH_CameraProvider",
+        "message": "Initialize: HWL doesn't support vendor buffer allocation Function not implemented(-38)"
+    },
+    {
+        "date": "2024-10-16T19:21:13.493Z",
+        "pid": 389,
+        "tid": 389,
+        "priority": "E",
+        "tag": "SurfaceFlinger",
+        "message": "Unrecognized RenderEngineType ; ignoring!"
+    },
+    {
+        "date": "2024-10-16T19:21:13.578Z",
+        "pid": 430,
+        "tid": 430,
+        "priority": "E",
+        "tag": "CameraProviderManager",
+        "message": "addDynamicDepthTags: Advertised depth exclusive tag but value is not present!"
+    },
+    {
+        "date": "2024-10-16T19:21:13.578Z",
+        "pid": 430,
+        "tid": 430,
+        "priority": "E",
+        "tag": "cameraserver",
+        "message": "AidlDeviceInfo3: Failed appending dynamic depth tags: Invalid argument (-22)"
+    },
+    {
+        "date": "2024-10-16T19:21:13.662Z",
+        "pid": 377,
+        "tid": 377,
+        "priority": "E",
+        "tag": "RanchuHwc",
+        "message": "loadPersistentKeyValues: persistent key-value store path not available.\ngetPersistentKeyValue: failed to load pmem jsongetPersistentKeyValue: failed to load pmem json\ngetBootConfigId: display:0 failed to get persistent boot configgetBootConfigId: display:0 failed to get persistent boot config\nstart: failed to set Vsync thread name: Math result not representablestart: failed to set Vsync thread name: Math result not representable\nstart: failed to set Vsync thread priority: Invalid argument"
+    },
+    {
+        "date": "2024-10-16T19:21:13.675Z",
+        "pid": 389,
+        "tid": 389,
+        "priority": "E",
+        "tag": "HwcComposer",
+        "message": "getPerFrameMetadataKeys failed Status(-8, EX_SERVICE_SPECIFIC): '8: '"
+    },
+    {
+        "date": "2024-10-16T19:21:13.694Z",
+        "pid": 389,
+        "tid": 389,
+        "priority": "E",
+        "tag": "HidlServiceManagement",
+        "message": "Service android.frameworks.displayservice@1.0::IDisplayService/default must be in VINTF manifest in order to register/get."
+    },
+    {
+        "date": "2024-10-16T19:21:13.694Z",
+        "pid": 389,
+        "tid": 389,
+        "priority": "E",
+        "tag": "SurfaceFlinger",
+        "message": "Did not register (deprecated) IDisplayService service."
+    },
+    {
+        "date": "2024-10-16T19:21:13.867Z",
+        "pid": 527,
+        "tid": 533,
+        "priority": "E",
+        "tag": "emuglGLESv2_enc",
+        "message": "device/generic/goldfish-opengl/system/GLESv2_enc/GL2Encoder.cpp:s_glEnable:5076 GL error 0x500 condition [!GLESv2Validation::allowedEnable(ctx->majorVersion(), ctx->minorVersion(), what)]"
+    },
+    {
+        "date": "2024-10-16T19:21:14.071Z",
+        "pid": 352,
+        "tid": 352,
+        "priority": "E",
+        "tag": "ActivityRecognitionHardware",
+        "message": "activity_recognition HAL is deprecated. class_init is effectively a no-op"
+    },
+    {
+        "date": "2024-10-16T19:21:14.492Z",
+        "pid": 352,
+        "tid": 352,
+        "priority": "E",
+        "tag": "zygote64",
+        "message": "Unable to find pattern file or unable to map it for am"
+    },
+    {
+        "date": "2024-10-16T19:21:14.661Z",
+        "pid": 543,
+        "tid": 543,
+        "priority": "E",
+        "tag": "system_server",
+        "message": "Not starting debugger since process cannot load the jdwp agent."
+    },
+    {
+        "date": "2024-10-16T19:21:15.050Z",
+        "pid": 543,
+        "tid": 543,
+        "priority": "E",
+        "tag": "HidlServiceManagement",
+        "message": "Service android.frameworks.stats@1.0::IStats/default must be in VINTF manifest in order to register/get."
+    },
+    {
+        "date": "2024-10-16T19:21:15.068Z",
+        "pid": 543,
+        "tid": 576,
+        "priority": "E",
+        "tag": "BatteryStatsService",
+        "message": "Unable to load Power.Stats.HAL. Setting rail availability to false"
+    },
+    {
+        "date": "2024-10-16T19:21:15.069Z",
+        "pid": 543,
+        "tid": 576,
+        "priority": "E",
+        "tag": "BluetoothAdapter",
+        "message": "Bluetooth service is null"
+    },
+    {
+        "date": "2024-10-16T19:21:15.670Z",
+        "pid": 431,
+        "tid": 471,
+        "priority": "E",
+        "tag": "idmap2d ",
+        "message": "no resources were overlaid"
+    },
+    {
+        "date": "2024-10-16T19:21:15.703Z",
+        "pid": 431,
+        "tid": 471,
+        "priority": "E",
+        "tag": "idmap2d ",
+        "message": "no resources were overlaid"
+    },
+    {
+        "date": "2024-10-16T19:21:15.770Z",
+        "pid": 543,
+        "tid": 576,
+        "priority": "E",
+        "tag": "BluetoothAdapter",
+        "message": "Bluetooth service is null"
+    },
+    {
+        "date": "2024-10-16T19:21:15.839Z",
+        "pid": 543,
+        "tid": 543,
+        "priority": "E",
+        "tag": "DeviceStateManagerService",
+        "message": "Cannot notify device state info change before the initial state has been committed."
+    },
+    {
+        "date": "2024-10-16T19:21:15.875Z",
+        "pid": 543,
+        "tid": 543,
+        "priority": "E",
+        "tag": "IntegrityFileManager",
+        "message": "Error creating staging and rules directory"
+    },
+    {
+        "date": "2024-10-16T19:21:16.083Z",
+        "pid": 543,
+        "tid": 543,
+        "priority": "E",
+        "tag": "SoundTriggerMiddlewareImpl",
+        "message": "Failed to add a SoundTriggerModule instance\njava.util.NoSuchElementExceptionjava.util.NoSuchElementException\n\tat android.os.HwBinder.getService(Native Method)\tat android.os.HwBinder.getService(Native Method)\n\tat android.hardware.soundtrigger.V2_0.ISoundTriggerHw.getService(ISoundTriggerHw.java:57)\tat android.hardware.soundtrigger.V2_0.ISoundTriggerHw.getService(ISoundTriggerHw.java:57)\n\tat android.hardware.soundtrigger.V2_0.ISoundTriggerHw.getService(ISoundTriggerHw.java:64)\tat android.hardware.soundtrigger.V2_0.ISoundTriggerHw.getService(ISoundTriggerHw.java:64)\n\tat com.android.server.soundtrigger_middleware.DefaultHalFactory.create(DefaultHalFactory.java:76)\tat com.android.server.soundtrigger_middleware.DefaultHalFactory.create(DefaultHalFactory.java:76)\n\tat com.android.server.soundtrigger_middleware.SoundTriggerModule.attachToHal(SoundTriggerModule.java:176)\tat com.android.server.soundtrigger_middleware.SoundTriggerModule.attachToHal(SoundTriggerModule.java:176)\n\tat com.android.server.soundtrigger_middleware.SoundTriggerModule.<init>(SoundTriggerModule.java:105)\tat com.android.server.soundtrigger_middleware.SoundTriggerModule.<init>(SoundTriggerModule.java:105)\n\tat com.android.server.soundtrigger_middleware.SoundTriggerMiddlewareImpl.<init>(SoundTriggerMiddlewareImpl.java:86)\tat com.android.server.soundtrigger_middleware.SoundTriggerMiddlewareImpl.<init>(SoundTriggerMiddlewareImpl.java:86)\n\tat com.android.server.soundtrigger_middleware.SoundTriggerMiddlewareService$Lifecycle.onStart(SoundTriggerMiddlewareService.java:248)\tat com.android.server.soundtrigger_middleware.SoundTriggerMiddlewareService$Lifecycle.onStart(SoundTriggerMiddlewareService.java:248)\n\tat com.android.server.SystemServiceManager.startService(SystemServiceManager.java:255)\tat com.android.server.SystemServiceManager.startService(SystemServiceManager.java:255)\n\tat com.android.server.SystemServiceManager.startService(SystemServiceManager.java:233)\tat com.android.server.SystemServiceManager.startService(SystemServiceManager.java:233)\n\tat com.android.server.SystemServer.startOtherServices(SystemServer.java:2208)\tat com.android.server.SystemServer.startOtherServices(SystemServer.java:2208)\n\tat com.android.server.SystemServer.run(SystemServer.java:942)\tat com.android.server.SystemServer.run(SystemServer.java:942)\n\tat com.android.server.SystemServer.main(SystemServer.java:664)\tat com.android.server.SystemServer.main(SystemServer.java:664)\n\tat java.lang.reflect.Method.invoke(Native Method)"
+    }
+]

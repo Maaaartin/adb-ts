@@ -1,19 +1,7 @@
 import { Client } from '../../lib/client';
 import { AdbMock, AdbMockMulti } from '../../mockery/mockAdbServer';
-import fs from 'fs/promises';
-import path from 'path';
 import { LogcatReaderV2 } from '../../lib/logcat';
-
-const readFile = (
-    dir: string,
-    file: 'raw.log' | 'output.json'
-): Promise<Buffer> =>
-    fs.readFile(path.join(__dirname, `../../mockery/data/${dir}/${file}`));
-const readOutputFile = (dir: string): Promise<string[]> =>
-    readFile(dir, 'output.json')
-        .then(String)
-        .then(JSON.parse)
-        .then((output_) => output_.map((val: string) => JSON.stringify(val)));
+import { readFile, readOutputFile } from '../../mockery/dataHelpers';
 
 describe('Open logcat OKAY tests', () => {
     const logDir = 'logsEndingWithNewLine';

@@ -1,0 +1,133 @@
+--------- beginning of main
+2024-10-16 19:21:11.729 +0000   174   174 E HidlServiceManagement: Service android.system.suspend@1.0::ISystemSuspend/default must be in VINTF manifest in order to register/get.
+--------- beginning of system
+2024-10-16 19:21:11.792 +0000   166   166 E vold    : Error getting bootctrl v1.0 module.
+2024-10-16 19:21:12.452 +0000   175   184 E keystore2: system/security/keystore2/src/maintenance.rs:192 - Call to earlyBootEnded failed for security level STRONGBOX: system/security/keystore2/src/maintenance.rs:167: getting keymint device.
+2024-10-16 19:21:12.452 +0000   175   184 E keystore2: system/security/keystore2/src/error.rs:180 - system/security/keystore2/src/maintenance.rs:167: getting keymint device
+2024-10-16 19:21:12.452 +0000   175   184 E keystore2: 
+2024-10-16 19:21:12.452 +0000   175   184 E keystore2: Caused by:
+2024-10-16 19:21:12.452 +0000   175   184 E keystore2:     0: system/security/keystore2/src/globals.rs:335: Cannot connect to Keymint
+2024-10-16 19:21:12.452 +0000   175   184 E keystore2:     1: system/security/keystore2/src/globals.rs:246: Trying to get Legacy wrapper.
+2024-10-16 19:21:12.452 +0000   175   184 E keystore2:     2: Error::Km(r#HARDWARE_TYPE_UNAVAILABLE)
+2024-10-16 19:21:12.452 +0000   166   166 E vold    : keystore2 Keystore earlyBootEnded returned service specific error: -68
+2024-10-16 19:21:13.189 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.189 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.189 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.189 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.189 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.190 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.190 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.190 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.190 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.190 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.190 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.190 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.190 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.190 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.190 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.190 +0000   351   351 E TcUtils : NLMSG_ERROR message return error: -2
+2024-10-16 19:21:13.196 +0000   369   369 E SensorsMultiHal: Failed to load subHal config file: /odm/etc/sensors/hals.conf
+2024-10-16 19:21:13.337 +0000   424   424 E bootstat: Failed to read /metadata/bootstat/persist.sys.boot.reason: No such file or directory
+2024-10-16 19:21:13.337 +0000   429   429 E bt_vhci_forwarder: setTerminalRaw failed /dev/bluetooth0: Inappropriate ioctl for device
+2024-10-16 19:21:13.341 +0000   424   424 E bootstat: Failed to unlink /metadata/bootstat/persist.sys.boot.reason: No such file or directory
+2024-10-16 19:21:13.351 +0000   357   357 E ProcessState: vndservicemanager is not started on this device, you can save resources/threads by not initializing ProcessState with /dev/vndbinder.
+2024-10-16 19:21:13.393 +0000   354   354 E LegacySupport: Could not get passthrough implementation for android.hardware.soundtrigger@2.3::ISoundTriggerHw/default.
+2024-10-16 19:21:13.393 +0000   354   354 E LegacySupport: Could not get passthrough implementation for android.hardware.soundtrigger@2.2::ISoundTriggerHw/default.
+2024-10-16 19:21:13.393 +0000   354   354 E LegacySupport: Could not get passthrough implementation for android.hardware.soundtrigger@2.1::ISoundTriggerHw/default.
+2024-10-16 19:21:13.393 +0000   354   354 E LegacySupport: Could not get passthrough implementation for android.hardware.soundtrigger@2.0::ISoundTriggerHw/default.
+2024-10-16 19:21:13.393 +0000   354   354 E LegacySupport: Could not get passthrough implementation for android.hardware.bluetooth.audio@2.2::IBluetoothAudioProvidersFactory/default.
+2024-10-16 19:21:13.393 +0000   354   354 E LegacySupport: Could not get passthrough implementation for android.hardware.bluetooth.audio@2.1::IBluetoothAudioProvidersFactory/default.
+2024-10-16 19:21:13.393 +0000   354   354 E LegacySupport: Could not get passthrough implementation for android.hardware.bluetooth.audio@2.0::IBluetoothAudioProvidersFactory/default.
+2024-10-16 19:21:13.393 +0000   354   354 E LegacySupport: Could not get passthrough implementation for android.hardware.bluetooth.a2dp@1.0::IBluetoothAudioOffload/default.
+2024-10-16 19:21:13.403 +0000   354   354 E audiohalservice: Failed to dlopen android.hardware.audio.sounddose-vendor-impl.so: dlopen failed: library "android.hardware.audio.sounddose-vendor-impl.so" not found
+2024-10-16 19:21:13.421 +0000   354   354 E android.hardware.audio@7.1-impl.ranchu: setLatencyModeCallback:572 failure: Result::NOT_SUPPORTED
+2024-10-16 19:21:13.422 +0000   354   354 E android.hardware.audio@7.1-impl.ranchu: getParameters:211 failure: Result::NOT_SUPPORTED
+2024-10-16 19:21:13.422 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.422 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.422 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.422 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.422 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.422 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.422 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.422 +0000   354   354 E android.hardware.audio@7.1-impl.ranchu: getPresentationPosition:510 failure: Result::INVALID_STATE
+2024-10-16 19:21:13.427 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.427 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.427 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.427 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.458 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.458 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.458 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.458 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.458 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.458 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.458 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.458 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.459 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.459 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.459 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.464 +0000   354   354 E android.hardware.audio@7.1-impl.ranchu: setLatencyModeCallback:572 failure: Result::NOT_SUPPORTED
+2024-10-16 19:21:13.464 +0000   354   354 E android.hardware.audio@7.1-impl.ranchu: getPresentationPosition:510 failure: Result::INVALID_STATE
+2024-10-16 19:21:13.464 +0000   354   354 E android.hardware.audio@7.1-impl.ranchu: getParameters:211 failure: Result::NOT_SUPPORTED
+2024-10-16 19:21:13.465 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.465 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.465 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.465 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.465 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.465 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.465 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.467 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.467 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.467 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.467 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.469 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.469 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.469 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.469 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.469 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.469 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.469 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.469 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.469 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.469 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.469 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.469 +0000   386   386 E APM_AudioPolicyManager: invalid volume index range
+2024-10-16 19:21:13.471 +0000   357   357 E GCH_CameraProvider: Initialize: HWL doesn't support vendor buffer allocation Function not implemented(-38)
+2024-10-16 19:21:13.493 +0000   389   389 E SurfaceFlinger: Unrecognized RenderEngineType ; ignoring!
+2024-10-16 19:21:13.578 +0000   430   430 E CameraProviderManager: addDynamicDepthTags: Advertised depth exclusive tag but value is not present!
+2024-10-16 19:21:13.578 +0000   430   430 E cameraserver: AidlDeviceInfo3: Failed appending dynamic depth tags: Invalid argument (-22)
+2024-10-16 19:21:13.662 +0000   377   377 E RanchuHwc: loadPersistentKeyValues: persistent key-value store path not available.
+2024-10-16 19:21:13.662 +0000   377   377 E RanchuHwc: getPersistentKeyValue: failed to load pmem json
+2024-10-16 19:21:13.662 +0000   377   377 E RanchuHwc: getBootConfigId: display:0 failed to get persistent boot config
+2024-10-16 19:21:13.662 +0000   377   377 E RanchuHwc: start: failed to set Vsync thread name: Math result not representable
+2024-10-16 19:21:13.662 +0000   377   377 E RanchuHwc: start: failed to set Vsync thread priority: Invalid argument
+2024-10-16 19:21:13.675 +0000   389   389 E HwcComposer: getPerFrameMetadataKeys failed Status(-8, EX_SERVICE_SPECIFIC): '8: '
+2024-10-16 19:21:13.694 +0000   389   389 E HidlServiceManagement: Service android.frameworks.displayservice@1.0::IDisplayService/default must be in VINTF manifest in order to register/get.
+2024-10-16 19:21:13.694 +0000   389   389 E SurfaceFlinger: Did not register (deprecated) IDisplayService service.
+2024-10-16 19:21:13.867 +0000   527   533 E emuglGLESv2_enc: device/generic/goldfish-opengl/system/GLESv2_enc/GL2Encoder.cpp:s_glEnable:5076 GL error 0x500 condition [!GLESv2Validation::allowedEnable(ctx->majorVersion(), ctx->minorVersion(), what)]
+2024-10-16 19:21:14.071 +0000   352   352 E ActivityRecognitionHardware: activity_recognition HAL is deprecated. class_init is effectively a no-op
+2024-10-16 19:21:14.492 +0000   352   352 E zygote64: Unable to find pattern file or unable to map it for am
+2024-10-16 19:21:14.661 +0000   543   543 E system_server: Not starting debugger since process cannot load the jdwp agent.
+2024-10-16 19:21:15.050 +0000   543   543 E HidlServiceManagement: Service android.frameworks.stats@1.0::IStats/default must be in VINTF manifest in order to register/get.
+2024-10-16 19:21:15.068 +0000   543   576 E BatteryStatsService: Unable to load Power.Stats.HAL. Setting rail availability to false
+2024-10-16 19:21:15.069 +0000   543   576 E BluetoothAdapter: Bluetooth service is null
+2024-10-16 19:21:15.670 +0000   431   471 E idmap2d : no resources were overlaid
+2024-10-16 19:21:15.703 +0000   431   471 E idmap2d : no resources were overlaid
+2024-10-16 19:21:15.770 +0000   543   576 E BluetoothAdapter: Bluetooth service is null
+2024-10-16 19:21:15.839 +0000   543   543 E DeviceStateManagerService: Cannot notify device state info change before the initial state has been committed.
+2024-10-16 19:21:15.875 +0000   543   543 E IntegrityFileManager: Error creating staging and rules directory
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: Failed to add a SoundTriggerModule instance
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: java.util.NoSuchElementException
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: 	at android.os.HwBinder.getService(Native Method)
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: 	at android.hardware.soundtrigger.V2_0.ISoundTriggerHw.getService(ISoundTriggerHw.java:57)
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: 	at android.hardware.soundtrigger.V2_0.ISoundTriggerHw.getService(ISoundTriggerHw.java:64)
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: 	at com.android.server.soundtrigger_middleware.DefaultHalFactory.create(DefaultHalFactory.java:76)
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: 	at com.android.server.soundtrigger_middleware.SoundTriggerModule.attachToHal(SoundTriggerModule.java:176)
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: 	at com.android.server.soundtrigger_middleware.SoundTriggerModule.<init>(SoundTriggerModule.java:105)
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: 	at com.android.server.soundtrigger_middleware.SoundTriggerMiddlewareImpl.<init>(SoundTriggerMiddlewareImpl.java:86)
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: 	at com.android.server.soundtrigger_middleware.SoundTriggerMiddlewareService$Lifecycle.onStart(SoundTriggerMiddlewareService.java:248)
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: 	at com.android.server.SystemServiceManager.startService(SystemServiceManager.java:255)
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: 	at com.android.server.SystemServiceManager.startService(SystemServiceManager.java:233)
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: 	at com.android.server.SystemServer.startOtherServices(SystemServer.java:2208)
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: 	at com.android.server.SystemServer.run(SystemServer.java:942)
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: 	at com.android.server.SystemServer.main(SystemServer.java:664)
+2024-10-16 19:21:16.083 +0000   543   543 E SoundTriggerMiddlewareImpl: 	at java.lang.reflect.Method.invoke(Native Method)
