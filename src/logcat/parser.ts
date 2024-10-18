@@ -93,7 +93,22 @@ abstract class TextParserBase implements IParser {
     protected static readonly NEW_LINE_BYTE = 10;
     protected static readonly COLON_BYTE = 58;
 
-    public abstract parse(...data: unknown[]): IterableIterator<LogcatEntryV2>;
+    protected abstract loop(): Iterable<LogcatEntryV2>;
+
+    public *parse(chunk: Buffer): IterableIterator<LogcatEntryV2> {
+        this.buffer = Buffer.concat([this.buffer, chunk]);
+        this.cursor = 0;
+        const readUntil = this.buffer.lastIndexOf(TextParser.NEW_LINE_BYTE);
+        while (this.cursor < readUntil) {
+            if (this.buffer[this.cursor] === TextParser.DASH_BYTE) {
+                const newLineIndex = this.indexOf(TextParser.NEW_LINE_BYTE);
+                this.cursor = newLineIndex + 1;
+                continue;
+            }
+            yield* this.loop();
+        }
+        this.buffer = this.buffer.subarray(readUntil + 1);
+    }
 
     protected indexOf(value: string | number): number | never {
         const index = this.buffer.indexOf(value, this.cursor);
@@ -171,33 +186,21 @@ abstract class TextParserBase implements IParser {
 }
 
 export class TextParser extends TextParserBase {
-    public *parse(chunk: Buffer): IterableIterator<LogcatEntryV2> {
-        this.buffer = Buffer.concat([this.buffer, chunk]);
-        this.cursor = 0;
-        const readUntil = this.buffer.lastIndexOf(TextParser.NEW_LINE_BYTE);
-        while (this.cursor < readUntil) {
-            if (this.buffer[this.cursor] === TextParser.DASH_BYTE) {
-                const newLineIndex = this.indexOf(TextParser.NEW_LINE_BYTE);
-                this.cursor = newLineIndex + 1;
-                continue;
-            }
-
-            const date = this.parseDate();
-            const pid = this.parsePid();
-            const tid = this.parseTid();
-            const priority = this.parsePriority();
-            const tag = this.parseTag();
-            const message = this.parseMessage();
-            yield* this.yieldEntry({
-                date,
-                pid,
-                tid,
-                priority,
-                tag,
-                message
-            });
-        }
-        this.buffer = this.buffer.subarray(readUntil + 1);
+    protected *loop(): IterableIterator<LogcatEntryV2> {
+        const date = this.parseDate();
+        const pid = this.parsePid();
+        const tid = this.parseTid();
+        const priority = this.parsePriority();
+        const tag = this.parseTag();
+        const message = this.parseMessage();
+        yield* this.yieldEntry({
+            date,
+            pid,
+            tid,
+            priority,
+            tag,
+            message
+        });
     }
 }
 
@@ -216,49 +219,40 @@ export class TextParserGrouped extends TextParserBase {
         }
     }
 
-    public *parse(chunk: Buffer): IterableIterator<LogcatEntryV2> {
-        this.buffer = Buffer.concat([this.buffer, chunk]);
-        this.cursor = 0;
-        const readUntil = this.buffer.lastIndexOf(TextParser.NEW_LINE_BYTE);
-        while (this.cursor < readUntil) {
-            if (this.buffer[this.cursor] === TextParser.DASH_BYTE) {
-                const newLineIndex = this.indexOf(TextParser.NEW_LINE_BYTE);
-                this.cursor = newLineIndex + 1;
-                continue;
-            }
-
-            const date = this.parseDate();
-            const pid = this.parsePid();
-            const tid = this.parseTid();
-            const priority = this.parsePriority();
-            const tag = this.parseTag();
-            const message = this.parseMessage();
-            const entry = { date, pid, tid, priority, tag, message };
-            if (!this.prevEntry) {
-                this.prevEntry = { ...entry };
-                continue;
-            }
-            const match = (
-                Object.entries(this.prevEntry) as [keyof RawEntry, Buffer][]
-            ).every(
-                ([key, value]) =>
-                    key === 'message' ||
-                    (key in entry && value.equals(entry[key]))
-            );
-
-            if (match) {
-                this.groupedMessages = Buffer.concat([
-                    this.groupedMessages,
-                    this.prevEntry.message,
-                    Buffer.from([TextParser.NEW_LINE_BYTE]),
-                    entry.message
-                ]);
-            } else {
-                yield* this.yieldGrouped();
-            }
+    protected *loop(): Iterable<LogcatEntryV2> {
+        const date = this.parseDate();
+        const pid = this.parsePid();
+        const tid = this.parseTid();
+        const priority = this.parsePriority();
+        const tag = this.parseTag();
+        const message = this.parseMessage();
+        const entry = { date, pid, tid, priority, tag, message };
+        if (!this.prevEntry) {
             this.prevEntry = { ...entry };
+            return;
         }
-        this.buffer = this.buffer.subarray(readUntil + 1);
+        const match = (
+            Object.entries(this.prevEntry) as [keyof RawEntry, Buffer][]
+        ).every(
+            ([key, value]) =>
+                key === 'message' || (key in entry && value.equals(entry[key]))
+        );
+
+        if (match) {
+            this.groupedMessages = Buffer.concat([
+                this.groupedMessages,
+                this.prevEntry.message,
+                Buffer.from([TextParser.NEW_LINE_BYTE]),
+                entry.message
+            ]);
+        } else {
+            yield* this.yieldGrouped();
+        }
+        this.prevEntry = { ...entry };
+    }
+
+    public *parse(chunk: Buffer): IterableIterator<LogcatEntryV2> {
+        yield* super.parse(chunk);
         if (this.buffer.length === 0) {
             yield* this.yieldGrouped();
             this.prevEntry = null!;
