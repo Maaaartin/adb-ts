@@ -85,14 +85,17 @@ export class BinaryParser extends EventEmitter implements IParser {
 }
 
 abstract class TextParserBase implements IParser {
-    protected buffer = Buffer.alloc(0);
-    protected cursor = 0;
+    private buffer = Buffer.alloc(0);
+    private cursor = 0;
     protected static readonly DATE_LEN = 29;
     protected static readonly ID_LEN = 6;
     protected static readonly DASH_BYTE = 45;
     protected static readonly NEW_LINE_BYTE = 10;
     protected static readonly COLON_BYTE = 58;
 
+    protected get Empty(): boolean {
+        return this.buffer.length === 0;
+    }
     protected abstract loop(): Iterable<LogcatEntryV2>;
 
     public *parse(chunk: Buffer): IterableIterator<LogcatEntryV2> {
@@ -110,7 +113,7 @@ abstract class TextParserBase implements IParser {
         this.buffer = this.buffer.subarray(readUntil + 1);
     }
 
-    protected indexOf(value: string | number): number | never {
+    private indexOf(value: string | number): number | never {
         const index = this.buffer.indexOf(value, this.cursor);
         if (index === -1) {
             throw new Error("Unprocessable entry data '" + this.buffer + "'");
@@ -118,11 +121,11 @@ abstract class TextParserBase implements IParser {
         return index;
     }
 
-    protected subarrayFromCursor(end?: number): Buffer {
+    private subarrayFromCursor(end?: number): Buffer {
         return this.buffer.subarray(this.cursor, end);
     }
 
-    protected parseDate(): Buffer {
+    private parseDate(): Buffer {
         const dateBuff = this.subarrayFromCursor(
             this.cursor + TextParserBase.DATE_LEN
         );
@@ -130,7 +133,7 @@ abstract class TextParserBase implements IParser {
         return dateBuff;
     }
 
-    protected parsePid(): Buffer {
+    private parsePid(): Buffer {
         const pidBuff = this.subarrayFromCursor(
             this.cursor + TextParserBase.ID_LEN
         );
@@ -138,7 +141,7 @@ abstract class TextParserBase implements IParser {
         return pidBuff;
     }
 
-    protected parseTid(): Buffer {
+    private parseTid(): Buffer {
         const tidBuff = this.subarrayFromCursor(
             this.cursor + TextParserBase.ID_LEN
         );
@@ -146,24 +149,34 @@ abstract class TextParserBase implements IParser {
         return tidBuff;
     }
 
-    protected parsePriority(): Buffer {
+    private parsePriority(): Buffer {
         const priorityBuff = this.subarrayFromCursor(this.cursor + 1);
         this.cursor += 2;
         return priorityBuff;
     }
 
-    protected parseTag(): Buffer {
+    private parseTag(): Buffer {
         const colonAtIndex = this.indexOf(TextParserBase.COLON_BYTE);
         const tagBuff = this.subarrayFromCursor(colonAtIndex);
         this.cursor = colonAtIndex + 2;
         return tagBuff;
     }
 
-    protected parseMessage(): Buffer {
+    private parseMessage(): Buffer {
         const newLineAtIndex = this.indexOf(TextParserBase.NEW_LINE_BYTE);
         const messageBuff = this.subarrayFromCursor(newLineAtIndex);
         this.cursor = newLineAtIndex + 1;
         return messageBuff;
+    }
+
+    protected getRawEntry(): RawEntry {
+        const date = this.parseDate();
+        const pid = this.parsePid();
+        const tid = this.parseTid();
+        const priority = this.parsePriority();
+        const tag = this.parseTag();
+        const message = this.parseMessage();
+        return { date, pid, tid, priority, tag, message };
     }
 
     protected *yieldEntry({
@@ -187,20 +200,7 @@ abstract class TextParserBase implements IParser {
 
 export class TextParser extends TextParserBase {
     protected *loop(): IterableIterator<LogcatEntryV2> {
-        const date = this.parseDate();
-        const pid = this.parsePid();
-        const tid = this.parseTid();
-        const priority = this.parsePriority();
-        const tag = this.parseTag();
-        const message = this.parseMessage();
-        yield* this.yieldEntry({
-            date,
-            pid,
-            tid,
-            priority,
-            tag,
-            message
-        });
+        yield* this.yieldEntry(this.getRawEntry());
     }
 }
 
@@ -220,13 +220,7 @@ export class TextParserGrouped extends TextParserBase {
     }
 
     protected *loop(): Iterable<LogcatEntryV2> {
-        const date = this.parseDate();
-        const pid = this.parsePid();
-        const tid = this.parseTid();
-        const priority = this.parsePriority();
-        const tag = this.parseTag();
-        const message = this.parseMessage();
-        const entry = { date, pid, tid, priority, tag, message };
+        const entry = this.getRawEntry();
         if (!this.prevEntry) {
             this.prevEntry = { ...entry };
             return;
@@ -253,7 +247,7 @@ export class TextParserGrouped extends TextParserBase {
 
     public *parse(chunk: Buffer): IterableIterator<LogcatEntryV2> {
         yield* super.parse(chunk);
-        if (this.buffer.length === 0) {
+        if (this.Empty) {
             yield* this.yieldGrouped();
             this.prevEntry = null!;
         }
