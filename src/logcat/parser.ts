@@ -3,7 +3,7 @@ import { LogcatEntry, LogcatEntryV2 } from './entry';
 import { charToPriority } from './priority';
 
 export interface IParser {
-    parse(...data: unknown[]): void;
+    parse(chunk: Buffer): void;
 }
 
 type RawEntry = Record<keyof LogcatEntryV2, Buffer>;
@@ -84,18 +84,18 @@ export class BinaryParser extends EventEmitter implements IParser {
     }
 }
 
-export class TextParser implements IParser {
-    private buffer = Buffer.alloc(0);
-    private cursor = 0;
-    private groupedMessages: Buffer = Buffer.alloc(0);
-    private prevEntry: RawEntry = null!;
-    private static readonly DATE_LEN = 29;
-    private static readonly ID_LEN = 6;
-    private static readonly DASH_BYTE = 45;
-    private static readonly NEW_LINE_BYTE = 10;
-    private static readonly COLON_BYTE = 58;
+abstract class TextParserBase implements IParser {
+    protected buffer = Buffer.alloc(0);
+    protected cursor = 0;
+    protected static readonly DATE_LEN = 29;
+    protected static readonly ID_LEN = 6;
+    protected static readonly DASH_BYTE = 45;
+    protected static readonly NEW_LINE_BYTE = 10;
+    protected static readonly COLON_BYTE = 58;
 
-    private indexOf(value: string | number): number | never {
+    public abstract parse(...data: unknown[]): IterableIterator<LogcatEntryV2>;
+
+    protected indexOf(value: string | number): number | never {
         const index = this.buffer.indexOf(value, this.cursor);
         if (index === -1) {
             throw new Error("Unprocessable entry data '" + this.buffer + "'");
@@ -103,55 +103,55 @@ export class TextParser implements IParser {
         return index;
     }
 
-    private subarrayFromCursor(end?: number): Buffer {
+    protected subarrayFromCursor(end?: number): Buffer {
         return this.buffer.subarray(this.cursor, end);
     }
 
-    private parseDate(): Buffer {
+    protected parseDate(): Buffer {
         const dateBuff = this.subarrayFromCursor(
-            this.cursor + TextParser.DATE_LEN
+            this.cursor + TextParserBase.DATE_LEN
         );
-        this.cursor += TextParser.DATE_LEN;
+        this.cursor += TextParserBase.DATE_LEN;
         return dateBuff;
     }
 
-    private parsePid(): Buffer {
+    protected parsePid(): Buffer {
         const pidBuff = this.subarrayFromCursor(
-            this.cursor + TextParser.ID_LEN
+            this.cursor + TextParserBase.ID_LEN
         );
-        this.cursor += TextParser.ID_LEN;
+        this.cursor += TextParserBase.ID_LEN;
         return pidBuff;
     }
 
-    private parseTid(): Buffer {
+    protected parseTid(): Buffer {
         const tidBuff = this.subarrayFromCursor(
-            this.cursor + TextParser.ID_LEN
+            this.cursor + TextParserBase.ID_LEN
         );
-        this.cursor += TextParser.ID_LEN + 1;
+        this.cursor += TextParserBase.ID_LEN + 1;
         return tidBuff;
     }
 
-    private parsePriority(): Buffer {
+    protected parsePriority(): Buffer {
         const priorityBuff = this.subarrayFromCursor(this.cursor + 1);
         this.cursor += 2;
         return priorityBuff;
     }
 
-    private parseTag(): Buffer {
-        const colonAtIndex = this.indexOf(TextParser.COLON_BYTE);
+    protected parseTag(): Buffer {
+        const colonAtIndex = this.indexOf(TextParserBase.COLON_BYTE);
         const tagBuff = this.subarrayFromCursor(colonAtIndex);
         this.cursor = colonAtIndex + 2;
         return tagBuff;
     }
 
-    private parseMessage(): Buffer {
-        const newLineAtIndex = this.indexOf(TextParser.NEW_LINE_BYTE);
+    protected parseMessage(): Buffer {
+        const newLineAtIndex = this.indexOf(TextParserBase.NEW_LINE_BYTE);
         const messageBuff = this.subarrayFromCursor(newLineAtIndex);
         this.cursor = newLineAtIndex + 1;
         return messageBuff;
     }
 
-    private *yieldEntry({
+    protected *yieldEntry({
         date,
         pid,
         tid,
@@ -168,7 +168,9 @@ export class TextParser implements IParser {
             message: message.toString()
         };
     }
+}
 
+export class TextParser extends TextParserBase {
     public *parse(chunk: Buffer): IterableIterator<LogcatEntryV2> {
         this.buffer = Buffer.concat([this.buffer, chunk]);
         this.cursor = 0;
@@ -197,7 +199,11 @@ export class TextParser implements IParser {
         }
         this.buffer = this.buffer.subarray(readUntil + 1);
     }
+}
 
+export class TextParserGrouped extends TextParserBase {
+    private groupedMessages: Buffer = Buffer.alloc(0);
+    private prevEntry: RawEntry = null!;
     private *yieldGrouped(): Iterable<LogcatEntryV2> {
         if (this.groupedMessages.length) {
             yield* this.yieldEntry({
@@ -210,7 +216,7 @@ export class TextParser implements IParser {
         }
     }
 
-    public *parseGrouped(chunk: Buffer): IterableIterator<LogcatEntryV2> {
+    public *parse(chunk: Buffer): IterableIterator<LogcatEntryV2> {
         this.buffer = Buffer.concat([this.buffer, chunk]);
         this.cursor = 0;
         const readUntil = this.buffer.lastIndexOf(TextParser.NEW_LINE_BYTE);
