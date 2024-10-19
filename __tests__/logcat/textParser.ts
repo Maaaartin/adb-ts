@@ -2,11 +2,15 @@ import { TextParserGrouped } from '../../lib/logcat';
 import { readFile, readOutputFile } from '../../mockery/dataHelpers';
 
 describe('TextParserGrouped tests', () => {
-    it('should parse all logs', async () => {
+    let buffer: Buffer;
+    let results: string[];
+    beforeAll(async () => {
         const dir = 'logsWithMultiLineErrors';
+        buffer = await readFile(dir, 'raw.log');
+        results = await readOutputFile(dir);
+    });
+    it('should parse all logs', () => {
         const parser = new TextParserGrouped();
-        const buffer = await readFile(dir, 'raw.log');
-        const results = await readOutputFile(dir);
         const iterator = parser.parse(buffer);
         results.forEach((line) => {
             const { value } = iterator.next();
@@ -16,23 +20,17 @@ describe('TextParserGrouped tests', () => {
         expect(done).toBe(true);
     });
 
-    it('should parse logs coming in chunks', async () => {
-        const dir = 'logsWithMultiLineErrors';
+    it('should parse logs coming in chunks', () => {
         const parser = new TextParserGrouped();
-        const buffer = await readFile(dir, 'raw.log');
         const halfLength = Math.floor(buffer.length / 2);
         const firstChunk = buffer.subarray(0, halfLength);
-
-        const results = await readOutputFile(dir);
-        const resultsIterator = results.values();
-        for (const entry of parser.parse(firstChunk)) {
-            const { value } = resultsIterator.next();
-            expect(JSON.stringify(entry)).toEqual(value);
-        }
         const secondChunk = buffer.subarray(halfLength);
-        for (const entry of parser.parse(secondChunk)) {
-            const { value } = resultsIterator.next();
-            expect(JSON.stringify(entry)).toEqual(value);
+        const resultsIterator = results.values();
+        for (const currChunk of [firstChunk, secondChunk]) {
+            for (const entry of parser.parse(currChunk)) {
+                const { value } = resultsIterator.next();
+                expect(JSON.stringify(entry)).toEqual(value);
+            }
         }
         const { done } = resultsIterator.next();
         expect(done).toBe(true);
