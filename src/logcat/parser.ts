@@ -6,7 +6,8 @@ export interface IParser {
     parse(chunk: Buffer): void;
 }
 
-export type RawEntry = Record<keyof LogcatEntryV2, Buffer>;
+type RawEntry = Record<keyof LogcatEntryV2, Buffer>;
+
 export class BinaryParser extends EventEmitter implements IParser {
     private buffer = Buffer.alloc(0);
     private readonly HEADER_SIZE_V1 = 20;

@@ -3,6 +3,8 @@ module.exports = {
     treatWarningsAsErrors: true,
     excludeExternals: true,
     externalPattern: '**/node_modules/**',
+    excludePrivate: true,
+    excludeProtected: true,
     out: './docs',
     entryPoints: 'src/indexDocs.ts',
     githubPages: true,

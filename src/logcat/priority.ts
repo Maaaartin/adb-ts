@@ -22,8 +22,10 @@ export enum PriorityV2 {
     SILENT = 'S'
 }
 
+/**
+ * @ignore
+ */
 export function charToPriority(char: string): PriorityV2 {
-    // console.log(char);
     switch (char) {
         case 'V':
             return PriorityV2.VERBOSE;

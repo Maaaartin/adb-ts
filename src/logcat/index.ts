@@ -11,6 +11,9 @@ export * from './parser';
 export * from './priority';
 export * from './entry';
 
+/**
+ * @ignore
+ */
 export function readStream(
     stream: Writable,
     options: LogcatReaderOptions
