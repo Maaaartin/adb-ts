@@ -211,6 +211,7 @@ export type FilterSpecs = { filters: FilterSpec[]; silenceOthers?: boolean };
 
 export type LogcatOptionsV2 = LogcatOptionsBase & {
     filterSpecs?: FilterSpecs;
+    groupLogs?: boolean;
 };
 
 /**

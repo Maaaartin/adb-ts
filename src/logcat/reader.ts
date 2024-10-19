@@ -1,6 +1,6 @@
 import { NotConnectedError } from '../util';
 import StreamHandler from '../streamHandler';
-import { BinaryParser, TextParser } from './parser';
+import { BinaryParser, TextParserBase } from './parser';
 import { LogcatEntry, LogcatEntryV2 } from './entry';
 import { Writable } from 'stream';
 import { LogcatReaderOptions } from '../util';
@@ -70,11 +70,16 @@ export class LogcatReader extends StreamHandler {
     }
 }
 
+export interface TextParserConstruct {
+    new (): TextParserBase;
+}
+
 export class LogcatReaderV2 {
-    private parser = new TextParser();
+    private parser: TextParserBase;
     private stream: LineTransform;
-    constructor(stream: LineTransform) {
+    constructor(stream: LineTransform, parserCtor: TextParserConstruct) {
         this.stream = stream;
+        this.parser = new parserCtor();
     }
 
     public async *logs(): AsyncIterableIterator<LogcatEntryV2> {

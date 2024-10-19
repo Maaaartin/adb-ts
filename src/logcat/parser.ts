@@ -85,7 +85,7 @@ export class BinaryParser extends EventEmitter implements IParser {
     }
 }
 
-abstract class TextParserBase implements IParser {
+export abstract class TextParserBase implements IParser {
     private buffer = Buffer.alloc(0);
     private cursor = 0;
     protected static readonly DATE_LEN = 29;

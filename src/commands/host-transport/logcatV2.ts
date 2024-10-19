@@ -1,7 +1,7 @@
 import { Connection } from '../../connection';
 import LineTransform from '../../linetransform';
-import { PriorityV2 } from '../../logcat';
-import { LogcatReaderV2 } from '../../logcat/reader';
+import { PriorityV2, TextParser, TextParserGrouped } from '../../logcat';
+import { LogcatReaderV2, TextParserConstruct } from '../../logcat/reader';
 import { FilterSpecs, LogcatOptionsV2 } from '../../util';
 import TransportCommand from '../abstract/transport';
 // import { createWriteStream } from 'fs';
@@ -9,6 +9,7 @@ import TransportCommand from '../abstract/transport';
 export default class LogcatCommandV2 extends TransportCommand<LogcatReaderV2> {
     protected Cmd = 'shell:echo && ';
     protected keepAlive = true;
+    private parserClass: TextParserConstruct;
 
     constructor(
         connection: Connection,
@@ -26,6 +27,11 @@ export default class LogcatCommandV2 extends TransportCommand<LogcatReaderV2> {
             .join(' ');
         if (options?.clear) {
             cmd = 'logcat -c 2>/dev/null && ' + cmd;
+        }
+        if (options?.groupLogs) {
+            this.parserClass = TextParserGrouped;
+        } else {
+            this.parserClass = TextParser;
         }
         this.Cmd = `shell:echo && ${cmd}`;
     }
@@ -47,6 +53,6 @@ export default class LogcatCommandV2 extends TransportCommand<LogcatReaderV2> {
         // stream.pipe(fileStream);
         // return null;
         stream.once('end', () => this.endConnection());
-        return new LogcatReaderV2(stream);
+        return new LogcatReaderV2(stream, this.parserClass);
     }
 }
