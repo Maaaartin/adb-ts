@@ -4,7 +4,6 @@ import { PriorityV2, TextParser, TextParserGrouped } from '../../logcat';
 import { LogcatReaderV2, TextParserConstruct } from '../../logcat/reader';
 import { FilterSpecs, LogcatOptionsV2 } from '../../util';
 import TransportCommand from '../abstract/transport';
-// import { createWriteStream } from 'fs';
 
 export default class LogcatCommandV2 extends TransportCommand<LogcatReaderV2> {
     protected Cmd = 'shell:echo && ';
@@ -48,10 +47,6 @@ export default class LogcatCommandV2 extends TransportCommand<LogcatReaderV2> {
     protected postExecute(): LogcatReaderV2 {
         const stream = new LineTransform({ autoDetect: true });
         this.connection.pipe(stream);
-        // const fileStream = createWriteStream('./output.log');
-
-        // stream.pipe(fileStream);
-        // return null;
         stream.once('end', () => this.endConnection());
         return new LogcatReaderV2(stream, this.parserClass);
     }
