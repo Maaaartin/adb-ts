@@ -266,7 +266,7 @@ describe('Track devices', () => {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
             const tracker = await adb.trackDevices();
-            const result = await promisify(async (cb) => {
+            const result = await promisify((cb) => {
                 tracker.on('end', () => {
                     cb(null, undefined);
                 });
