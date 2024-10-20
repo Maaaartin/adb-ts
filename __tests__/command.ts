@@ -3,6 +3,8 @@ import { Connection } from '../lib/connection';
 import { Parser } from '../lib/parser';
 import { AdbMock } from '../mockery/mockAdbServer';
 import { UnexpectedDataError } from '../lib/util';
+import LogcatCommandV2 from '../lib/commands/host-transport/logcatV2';
+import { TextParser, TextParserGrouped } from '../lib/logcat/parser';
 
 describe('Constructor tests', () => {
     it('Test parser', () => {
@@ -75,5 +77,19 @@ describe('Handle response', () => {
         } finally {
             await adbMock.end();
         }
+    });
+});
+
+describe('Logcat commands', () => {
+    it('should have TextParser when logs are not grouped', () => {
+        const command = new LogcatCommandV2(new Connection(), '');
+        expect(command).toHaveProperty('parserClass', TextParser);
+    });
+
+    it('should have TextParserGrouped when logs are grouped', () => {
+        const command = new LogcatCommandV2(new Connection(), '', {
+            groupLogs: true
+        });
+        expect(command).toHaveProperty('parserClass', TextParserGrouped);
     });
 });
