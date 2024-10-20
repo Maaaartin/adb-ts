@@ -1,4 +1,4 @@
-export * as Commands from './commands/indexDocs';
+export * as Commands from './commands';
 export * as Client from './client';
 export * as Logcat from './logcat';
 export * as Util from './util/indexDocs';

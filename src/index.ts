@@ -1,5 +1,5 @@
 export * as Util from './util';
-export * as Commands from './commands/indexDocs';
+export * as Commands from './commands';
 
 export { Client } from './client';
 export { Device } from './device';

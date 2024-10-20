@@ -6,7 +6,7 @@ module.exports = {
     excludePrivate: true,
     excludeProtected: true,
     out: './docs',
-    entryPoints: 'src/indexDocs.ts',
+    entryPoints: 'src/indexDocs.d.ts',
     githubPages: true,
     name: 'adb-ts'
 };
