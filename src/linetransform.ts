@@ -3,7 +3,9 @@ import { Transform, TransformOptions } from 'stream';
 export interface LineTransformOptions extends TransformOptions {
     autoDetect: boolean;
 }
-
+/**
+ * @ignore
+ */
 export default class LineTransform extends Transform {
     private savedR: Buffer | null = null;
     private autoDetect: boolean;

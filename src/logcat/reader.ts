@@ -77,6 +77,9 @@ export interface TextParserConstruct {
 export class LogcatReaderV2 {
     private parser: TextParserBase;
     private stream: LineTransform;
+    /**
+     * @ignore
+     */
     constructor(stream: LineTransform, parserCtor: TextParserConstruct) {
         this.stream = stream;
         this.parser = new parserCtor();
