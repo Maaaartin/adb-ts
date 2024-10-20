@@ -689,7 +689,8 @@ export class Client {
      * import { Client, PriorityV2 } from 'adb-ts';
      * const adb = new Client();
      * const logcat = await adb.openLogcatV2('serial', {
-     *     filterSpecs: { filters: [{ tag: 'ActivityManager', priority: PriorityV2 }] }
+     *     filterSpecs: { filters: [{ tag: 'ActivityManager', priority: PriorityV2.INFO },
+     *                  { tag: '*', priority: PriorityV2.SILENT }] }
      *  });
      * for await (const entry of logcat.logs()) {
      *   console.log(entry);

@@ -1,8 +1,8 @@
 import { Connection } from '../../connection';
 import LineTransform from '../../linetransform';
-import { PriorityV2, TextParser, TextParserGrouped } from '../../logcat';
+import { TextParser, TextParserGrouped } from '../../logcat';
 import { LogcatReaderV2, TextParserConstruct } from '../../logcat/reader';
-import { FilterSpecs, LogcatOptionsV2 } from '../../util';
+import { FilterSpec, LogcatOptionsV2 } from '../../util';
 import LogcatBase from '../abstract/logcat';
 
 export default class LogcatCommandV2 extends LogcatBase<
@@ -13,9 +13,6 @@ export default class LogcatCommandV2 extends LogcatBase<
     protected logcatCmd = [
         'logcat',
         this.buildFilterSpecs(this.options?.filterSpecs),
-        this.options?.filterSpecs?.silenceOthers
-            ? `*:${PriorityV2.SILENT}`
-            : '',
         '--format=printable,year,UTC 2>/dev/null'
     ]
         .filter(Boolean)
@@ -37,11 +34,11 @@ export default class LogcatCommandV2 extends LogcatBase<
         return new LogcatReaderV2(stream, this.parserClass);
     }
 
-    private buildFilterSpecs(filterSpecs: FilterSpecs | void): string {
-        if (!filterSpecs?.filters) {
+    private buildFilterSpecs(filterSpecs: FilterSpec[] | void): string {
+        if (!filterSpecs) {
             return '';
         }
-        return filterSpecs.filters
+        return filterSpecs
             .map((filterSpec) => `${filterSpec.tag}:${filterSpec.priority}`)
             .join(' ');
     }

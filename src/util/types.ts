@@ -207,10 +207,9 @@ export type FilterSpec = {
     tag: string;
     priority: PriorityV2;
 };
-export type FilterSpecs = { filters: FilterSpec[]; silenceOthers?: boolean };
 
 export type LogcatOptionsV2 = LogcatOptionsBase & {
-    filterSpecs?: FilterSpecs;
+    filterSpecs?: FilterSpec[];
     groupLogs?: boolean;
 };
 
