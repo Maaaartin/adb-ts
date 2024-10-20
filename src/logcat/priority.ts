@@ -12,7 +12,6 @@ export enum Priority {
 }
 
 export enum PriorityV2 {
-    // DEFAULT = 'D',
     VERBOSE = 'V',
     DEBUG = 'D',
     INFO = 'I',

@@ -1,7 +1,7 @@
 export * as Commands from './commands/indexDocs';
 export * as Client from './client';
 export * as Logcat from './logcat';
-export * as Util from './util';
+export * as Util from './util/indexDocs';
 export * as Sync from './sync';
 export * as FileStat from './filestats';
 export * as Monkey from './monkey';
