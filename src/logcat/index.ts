@@ -1,11 +1,6 @@
 import { Writable } from 'stream';
 import { LogcatReaderOptions } from '../util';
 import { LogcatReader } from './reader';
-
-export {
-    default as LineTransform,
-    LineTransformOptions
-} from '../linetransform';
 export * from './reader';
 export * from './parser';
 export * from './priority';

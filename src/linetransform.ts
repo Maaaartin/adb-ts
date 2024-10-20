@@ -1,6 +1,6 @@
 import { Transform, TransformOptions } from 'stream';
 
-export interface LineTransformOptions extends TransformOptions {
+interface LineTransformOptions extends TransformOptions {
     autoDetect: boolean;
 }
 /**

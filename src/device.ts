@@ -22,13 +22,14 @@ import {
     PropertyValue,
     KeyEventOptions,
     InputDurationOptions,
-    NonEmptyArray
+    NonEmptyArray,
+    LogcatOptionsV2
 } from './util';
 import { Client } from './client';
 import { Connection } from './connection';
 import { FileStat } from './filestats';
 import { KeyCode } from './util/keycode';
-import { LogcatReader } from './logcat/reader';
+import { LogcatReader, LogcatReaderV2 } from './logcat/reader';
 import { Monkey } from './monkey/client';
 import { PullTransfer } from './sync/pulltransfer';
 import { PushTransfer } from './sync/pushtransfer';
@@ -128,7 +129,11 @@ export class Device implements IDevice {
     }
 
     public openLogcat(options?: LogcatOptions): Promise<LogcatReader> {
-        return this.client.openLogcat(this.id, options as LogcatOptions);
+        return this.client.openLogcat(this.id, options);
+    }
+
+    public openLogcatV2(options?: LogcatOptionsV2): Promise<LogcatReaderV2> {
+        return this.client.openLogcatV2(this.id, options);
     }
 
     public clear(pkg: string): Promise<void> {

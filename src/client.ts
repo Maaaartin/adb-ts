@@ -670,11 +670,6 @@ export class Client {
      *     console.log(entry);
      * });
      */
-    public async openLogcat(serial: string): Promise<LogcatReader>;
-    public async openLogcat(
-        serial: string,
-        options: LogcatOptions
-    ): Promise<LogcatReader>;
     public async openLogcat(
         serial: string,
         options?: LogcatOptions
@@ -686,6 +681,20 @@ export class Client {
         ).execute();
     }
 
+    /**
+     * Opens logcat, uses TextParser instead of BinaryParser
+     * Allows filtering based on Priority @see `PriorityV2` @see `LogcatOptionsV2`
+     * Better performance that LogcatReader as filtering is done by ADB cli itself.
+     * @example
+     * import { Client, PriorityV2 } from 'adb-ts';
+     * const adb = new Client();
+     * const logcat = await adb.openLogcatV2('serial', {
+     *     filterSpecs: { filters: [{ tag: 'ActivityManager', priority: PriorityV2 }] }
+     *  });
+     * for await (const entry of logcat.logs()) {
+     *   console.log(entry);
+     *  }
+     */
     public async openLogcatV2(
         serial: string,
         options?: LogcatOptionsV2

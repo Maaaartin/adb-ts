@@ -70,6 +70,9 @@ export class LogcatReader extends StreamHandler {
     }
 }
 
+/**
+ * @ignore
+ */
 export interface TextParserConstruct {
     new (): TextParserBase;
 }
