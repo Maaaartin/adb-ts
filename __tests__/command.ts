@@ -92,4 +92,14 @@ describe('Logcat commands', () => {
         });
         expect(command).toHaveProperty('parserClass', TextParserGrouped);
     });
+
+    it('should add a flag from clear option', () => {
+        const command = new LogcatCommandV2(new Connection(), '', {
+            clear: true
+        });
+        expect(command).toHaveProperty(
+            'Cmd',
+            'shell:echo && logcat -c 2>/dev/null && logcat --format=printable,year,UTC 2>/dev/null'
+        );
+    });
 });
