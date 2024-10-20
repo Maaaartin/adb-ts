@@ -3,36 +3,38 @@ import LineTransform from '../../linetransform';
 import { PriorityV2, TextParser, TextParserGrouped } from '../../logcat';
 import { LogcatReaderV2, TextParserConstruct } from '../../logcat/reader';
 import { FilterSpecs, LogcatOptionsV2 } from '../../util';
-import TransportCommand from '../abstract/transport';
+import LogcatBase from '../abstract/logcat';
 
-export default class LogcatCommandV2 extends TransportCommand<LogcatReaderV2> {
-    protected Cmd = 'shell:echo && ';
-    protected keepAlive = true;
+export default class LogcatCommandV2 extends LogcatBase<
+    LogcatReaderV2,
+    LogcatOptionsV2
+> {
     private parserClass: TextParserConstruct;
-
+    protected logcatCmd = [
+        'logcat',
+        this.buildFilterSpecs(this.options?.filterSpecs),
+        this.options?.filterSpecs?.silenceOthers
+            ? `*:${PriorityV2.SILENT}`
+            : '',
+        '--format=printable,year,UTC 2>/dev/null'
+    ]
+        .filter(Boolean)
+        .join(' ');
     constructor(
         connection: Connection,
         serial: string,
         options: LogcatOptionsV2 | void
     ) {
-        super(connection, serial);
-        let cmd = [
-            'logcat',
-            this.buildFilterSpecs(options?.filterSpecs),
-            options?.filterSpecs?.silenceOthers ? `*:${PriorityV2.SILENT}` : '',
-            '--format=printable,year,UTC 2>/dev/null'
-        ]
-            .filter(Boolean)
-            .join(' ');
-        if (options?.clear) {
-            cmd = 'logcat -c 2>/dev/null && ' + cmd;
-        }
+        super(connection, serial, options);
         if (options?.groupLogs) {
             this.parserClass = TextParserGrouped;
         } else {
             this.parserClass = TextParser;
         }
-        this.Cmd = `shell:echo && ${cmd}`;
+    }
+
+    protected getReader(stream: LineTransform): LogcatReaderV2 {
+        return new LogcatReaderV2(stream, this.parserClass);
     }
 
     private buildFilterSpecs(filterSpecs: FilterSpecs | void): string {
@@ -42,12 +44,5 @@ export default class LogcatCommandV2 extends TransportCommand<LogcatReaderV2> {
         return filterSpecs.filters
             .map((filterSpec) => `${filterSpec.tag}:${filterSpec.priority}`)
             .join(' ');
-    }
-
-    protected postExecute(): LogcatReaderV2 {
-        const stream = new LineTransform({ autoDetect: true });
-        this.connection.pipe(stream);
-        stream.once('end', () => this.endConnection());
-        return new LogcatReaderV2(stream, this.parserClass);
     }
 }
