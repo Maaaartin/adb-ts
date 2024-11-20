@@ -106,7 +106,7 @@ describe('Get setting OKAY tests', () => {
             const port = await adbMock.start();
             const adb = new Client({ noAutoStart: true, port });
             const result = await adb.getSetting('serial', 'system', 'prop');
-            expect(result).toEqual(date);
+            expect(result).toEqual(date.toISOString());
         } finally {
             await adbMock.end();
         }
