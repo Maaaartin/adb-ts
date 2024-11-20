@@ -26,10 +26,6 @@ export const stringToType = (value: string): PropertyValue => {
         }
         return parsed;
     } catch {
-        const date = new Date(value);
-        if (!isNaN(date.getMilliseconds())) {
-            return date;
-        }
         return value || undefined;
     }
 };
