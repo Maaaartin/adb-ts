@@ -92,6 +92,11 @@ adb.listDevices((devices) => {
 
 ## Change log
 
-### 6.2
+### 6.1
 
 `exec` methods accept `string[]` as an argument. Fix for https://github.com/Maaaartin/adb-ts/issues/13.
+
+### 6.2
+
+`PropertyMap` values do not contain `Date` type. This is because parsing date is tricky https://github.com/Maaaartin/adb-ts/issues/15.
+`listFeatures` types are determined from `getprop -T` command. Types returned from this method are `number | boolean | string`.
