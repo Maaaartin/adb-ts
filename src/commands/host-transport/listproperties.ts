@@ -1,12 +1,10 @@
-import { findMatches, PropertyValue } from '../../util';
-import { PropertyMap } from '../../util';
+import { findMatches, ListPropertiesMap } from '../../util';
 import TransportParseAllCommand from '../abstract/transportParseAll';
 
-type ParsedPropertyValue = Exclude<PropertyValue, null | undefined>;
 const valueParser = (
     type: string | undefined,
     value: string
-): ParsedPropertyValue => {
+): string | boolean | number => {
     switch (type) {
         case 'bool':
         case 'int':
@@ -20,12 +18,10 @@ const valueParser = (
     }
 };
 
-export default class ListPropertiesCommand extends TransportParseAllCommand<
-    PropertyMap<ParsedPropertyValue>
-> {
+export default class ListPropertiesCommand extends TransportParseAllCommand<ListPropertiesMap> {
     protected Cmd = 'shell:getprop -T && getprop';
 
-    protected parse(value: string): PropertyMap<ParsedPropertyValue> {
+    protected parse(value: string): ListPropertiesMap {
         const matches = findMatches(
             value,
             /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm
