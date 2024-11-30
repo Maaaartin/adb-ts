@@ -14,7 +14,7 @@ feature:two=two
 feature:three=false
 feature:four=true
 feature:five=null
-feature:six`,
+feature:six=`,
                     raw: true
                 }
             }
@@ -48,7 +48,7 @@ feature:two=two
 feature:three=false
 feature:four=true
 feature:five=null
-feature:six`,
+feature:six=`,
                     raw: true
                 }
             }
@@ -95,7 +95,7 @@ feature:six`,
     feature:three=false
     feature:four=true
     feature:five=null
-    feature:six`,
+    feature:six=`,
                     raw: true
                 }
             }
