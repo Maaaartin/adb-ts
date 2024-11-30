@@ -129,9 +129,10 @@ export interface ForwardsObject extends ReversesForwardsBase {
 
 export type PrimitiveType = string | boolean | number | null | undefined;
 
-export type PropertyValue = PrimitiveType | Date;
-
-export type PrimitiveDictionary = Record<string, PropertyValue>;
+/**
+ * @deprecated Will not contain Date type anymore, will replaced by PrimitiveType
+ */
+export type PropertyValue = PrimitiveType;
 
 export type InstallOptions = {
     /**
@@ -416,7 +417,10 @@ export interface CpOptions
     copyToTarget?: boolean;
 }
 
-export type PropertyMap = Map<string, PropertyValue>;
+export type PropertyMap<T = PropertyValue> = Map<string, T>;
+export type ListPropertiesMap = PropertyMap<
+    Exclude<PropertyValue, null | undefined>
+>;
 
 export type NonFunctionPropertyNames<T> = {
     [K in keyof T]: T[K] extends () => void ? never : K;

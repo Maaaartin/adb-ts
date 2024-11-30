@@ -10,13 +10,19 @@ describe('List properties tests', () => {
             {
                 cmd: 'shell:getprop',
                 res: {
-                    value: `[one]: [1]
+                    value: `[one]: [int]
+[two]: [string]
+[three]: [bool]
+[four]: [bool]
+[five]: [string]
+[six]: [string]
+[one]: [1]
 [two]: [two]
 [three]: [false]
 [four]: [true]
 [five]: [null]
 [six]: []
-[seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]`,
+`,
                     raw: true
                 }
             }
@@ -40,14 +46,8 @@ describe('List properties tests', () => {
                     ['two', 'two'],
                     ['three', false],
                     ['four', true],
-                    ['five', null],
-                    ['six', undefined],
-                    [
-                        'seven',
-                        new Date(
-                            'Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)'
-                        )
-                    ]
+                    ['five', 'null'],
+                    ['six', '']
                 ])
             );
         } finally {

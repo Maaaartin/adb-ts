@@ -91,17 +91,6 @@ describe('String to type', () => {
         const result = stringToType('[]');
         expect(result).toBe('[]');
     });
-
-    it('Cast string date as Date', () => {
-        const result = stringToType('Mon Dec 20 15:05:47 UTC 2021');
-        expect(result).toEqual(new Date('Mon Dec 20 15:05:47 UTC 2021'));
-    });
-
-    it('Cast iso date as Date', () => {
-        const date = new Date();
-        const result = stringToType(date.toISOString());
-        expect(result).toEqual(date);
-    });
 });
 
 describe('Parse primitive type', () => {
@@ -125,8 +114,7 @@ describe('Find matches', () => {
 [four]: [true]
 [five]: [null]
 [six]: [[]]
-[seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]
-[eight]: []`,
+[seven]: []`,
             /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm
         );
         expect(result).toEqual([
@@ -136,11 +124,7 @@ describe('Find matches', () => {
             ['four', 'true'],
             ['five', 'null'],
             ['six', '[]'],
-            [
-                'seven',
-                'Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)'
-            ],
-            ['eight', '']
+            ['seven', '']
         ]);
     });
 
@@ -152,8 +136,7 @@ describe('Find matches', () => {
 [four]: [true]
 [five]: [null]
 [six]: [[]]
-[seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]
-[eight]: []`,
+[seven]: []`,
             /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm,
             'map'
         );
@@ -165,13 +148,7 @@ describe('Find matches', () => {
                 ['four', true],
                 ['five', null],
                 ['six', '[]'],
-                [
-                    'seven',
-                    new Date(
-                        'Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)'
-                    )
-                ],
-                ['eight', undefined]
+                ['seven', undefined]
             ])
         );
     });
@@ -184,8 +161,7 @@ describe('Find matches', () => {
 [four]: [true]
 [five]: [null]
 [six]: [[]]
-[seven]: [Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)]
-[eight]: []`,
+[seven]: []`,
             /^\[([\s\S]*?)\]: \[([\s\S]*?)\]?$/gm,
             'list'
         );
@@ -196,8 +172,7 @@ describe('Find matches', () => {
             'four',
             'five',
             'six',
-            'seven',
-            'eight'
+            'seven'
         ]);
     });
 });

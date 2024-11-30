@@ -15,8 +15,7 @@ two="two"
 three=false
 four=true
 five=null
-six=
-seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
+six=`,
                     raw: true
                 }
             }
@@ -32,13 +31,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
                     ['three', false],
                     ['four', true],
                     ['five', null],
-                    ['six', undefined],
-                    [
-                        'seven',
-                        new Date(
-                            'Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)'
-                        )
-                    ]
+                    ['six', undefined]
                 ])
             );
         } finally {
@@ -75,8 +68,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
     three=false
     four=true
     five=null
-    six=
-    seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
+    six=`,
                     raw: true
                 }
             }
@@ -123,8 +115,7 @@ seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
     three=false
     four=true
     five=null
-    six=
-    seven=Sun Jul 17 2022 21:11:48 GMT+0200 (Central European Summer Time)`,
+    six=`,
                     raw: true
                 }
             }
